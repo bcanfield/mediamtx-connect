@@ -3,7 +3,8 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   output: "standalone",
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config, { webpack }) => {
+    // https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/573#issuecomment-1629414369
     config.plugins.push(
       new webpack.DefinePlugin({
         "process.env.FLUENTFFMPEG_COV": false,

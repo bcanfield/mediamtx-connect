@@ -11,41 +11,43 @@ import dayjs from "dayjs";
 import fs from "fs";
 import { Video } from "lucide-react";
 import Link from "next/link";
-import { MediaMtxItem, PathsList, pathsList } from "./_actions/mediamtx";
+import { MtxItem, MtxPathsList, mtxPathsList } from "./_actions/mediamtx/paths";
+import { appConfig } from "./_actions/mediamtx/globalConfig";
 
 export default async function Home() {
-  const recordingsDir = process.env.MEDIAMTX_RECORDINGS_DIR;
-  const recordingsDirExists =
-    recordingsDir && (await fs.existsSync(recordingsDir));
+  // const mediaMtxContext = useContext(MediaMtxContext);
+  const { recordingsDirectory, url, apiAddress } = await appConfig();
+
+  // Get MTX Recording Directories
+  const recordingsDirExists = await fs.existsSync(recordingsDirectory);
   const streamRecordingDirectories =
-    recordingsDirExists &&
-    fs
-      .readdirSync(recordingsDir)
-      .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item));
-  console.log({ streamRecordingDirectories });
-  let paths: PathsList | undefined = undefined;
+    recordingsDirExists && recordingsDirExists
+      ? fs
+          .readdirSync(recordingsDirectory)
+          .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
+      : [];
+
+  // Get Online MTX Streams
+  let mtxItems: MtxPathsList["items"] = [];
   try {
-    paths = await pathsList();
+    const paths = await mtxPathsList({ mediaMtxUrl: `${url}${apiAddress}` });
+    mtxItems = paths.items;
   } catch {
-console.error('Error getting paths')
+    console.error("Error getting paths");
   }
 
-  interface DashboardItem extends Partial<MediaMtxItem> {
-    hasRecordings?: boolean;
-  }
-  const dashboardItems: DashboardItem[] = paths?.items || [];
+  const dashboardItems: DashboardItem[] = mtxItems;
 
-  if (streamRecordingDirectories) {
-    streamRecordingDirectories.forEach((d) => {
-      const matchingIndex = dashboardItems.findIndex((item) => item.name === d);
-      if (matchingIndex !== -1) {
-        dashboardItems[matchingIndex].hasRecordings = true;
-        console.log({ b: dashboardItems[matchingIndex] });
-      } else {
-        dashboardItems.push({ name: d });
-      }
-    });
-  }
+  // Attempt to create dashboard items by matching available recording directories with online mtx items
+  // This is necessary in the case where the cam is offline but we want to still see the recordings
+  streamRecordingDirectories.forEach((d) => {
+    const mtxItemIndex = mtxItems.findIndex((item) => item.name === d);
+    if (mtxItemIndex !== -1) {
+      dashboardItems[mtxItemIndex].hasRecordings = true;
+    } else {
+      dashboardItems.push({ name: d });
+    }
+  });
 
   return (
     <main className="flex flex-col w-full h-full gap-4 items-center p-2">
@@ -78,7 +80,6 @@ console.error('Error getting paths')
                     query: { page: 1, take: 5 },
                   }}
                 >
-                  {" "}
                   Recordings
                 </Link>
               </Button>
@@ -97,4 +98,8 @@ console.error('Error getting paths')
       ))}
     </main>
   );
+}
+
+interface DashboardItem extends Partial<MtxItem> {
+  hasRecordings?: boolean;
 }
