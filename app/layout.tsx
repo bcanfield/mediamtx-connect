@@ -31,8 +31,11 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="flex items-center h-16 border-b sticky px-4 text-lg top-0 bg-background">
-            <Link href="/">Cams</Link>
+          <header className="flex items-center h-16 border-b sticky px-4  top-0 bg-background">
+            <div className="flex-auto text-lg font-bold">
+              <Link href="/">Cams</Link>
+            </div>
+            <Link href="/config">Config</Link>
           </header>
           {children}
         </ThemeProvider>
