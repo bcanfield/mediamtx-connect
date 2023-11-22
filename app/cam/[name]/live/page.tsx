@@ -1,12 +1,13 @@
-import Iframe from "./_components/iframe";
+import { appConfig } from "@/app/_actions/mediamtx/globalConfig";
 
-export default function Cam({ params }: { params: { name: string } }) {
-  const mediaMtxUrl = process.env.MEDIAMTX_API_URL;
-  const location = `${mediaMtxUrl}:8888/${params.name}`;
+export default async function Cam({ params }: { params: { name: string } }) {
+  const { url, hlsAddress } = await appConfig();
+
+  const camUrl = `${url}${hlsAddress}/${params.name}`;
   return (
     <div className="flex-auto w-screen flex flex-col">
       <div className="w-full h-1/2 relative">
-        <Iframe camUrl={location}></Iframe>
+        <iframe className="w-full aspect-video" src={camUrl}></iframe>
       </div>
     </div>
   );
