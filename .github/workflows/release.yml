@@ -1,0 +1,35 @@
+name: "Release"
+
+on:
+  push:
+    branches: [main, beta]
+  pull_request:
+    branches: [main, beta]
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npx ci
+      - name: Build
+        run: npm run build
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: npm run release
