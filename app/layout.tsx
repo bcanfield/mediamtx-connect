@@ -36,7 +36,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center",
-          inter.variable
+          inter.variable,
         )}
       >
         <ThemeProvider
@@ -89,7 +89,7 @@ export default async function RootLayout({
               </div>
             </div>
           </header>
-          <div className="max-w-7xl">{children}</div>
+          <div className="max-w-7xl w-full">{children}</div>
         </ThemeProvider>
       </body>
     </html>
