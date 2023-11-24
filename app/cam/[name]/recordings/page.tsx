@@ -19,6 +19,14 @@ export default async function Recordings({
   searchParams: { take: number; page: number };
 }) {
   const { recordingsDirectory, screenshotsDirectory } = await appConfig();
+  // Check if the directory exists
+  if (!fs.existsSync(screenshotsDirectory)) {
+    // If it doesn't exist, create it
+    fs.mkdirSync(screenshotsDirectory);
+    console.log("Screenshots Directory created successfully.");
+  } else {
+    console.log("Screenshots Directory already exists.");
+  }
 
   const page = searchParams.page || 1;
   const take = searchParams.take || 5;
