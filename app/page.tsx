@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover";
 import api from "@/lib/MediaMTX/api";
 import appConfig from "@/lib/appConfig";
-import fs from "fs";
+import dayjs from "dayjs";
 import { Film, Info, Video, VideoOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,23 +32,10 @@ export default async function Home({
 
   const mtxItems = paths.data.items;
 
-  const getThumbnail = (streamName: string) => {
-    if (
-      streamScreenshots[streamName] &&
-      streamScreenshots[streamName].length > 0
-    ) {
-      const imageData = fs.readFileSync(streamScreenshots[streamName][0]);
-      const base64Image = imageData
-        ? Buffer.from(imageData).toString("base64")
-        : undefined;
-      return `data:image/png;base64,${base64Image}`;
-    }
-  };
-
   return (
     <main className="grid sm:grid-cols-2 grid-cols-1 gap-4 ">
       {mtxItems?.map(({ name, readyTime }, index) => {
-        const thumbnail = name && getThumbnail(name);
+        const thumbnail = name && streamScreenshots[name][0].base64;
         if (name) {
           return (
             <Card key={index} className="py-2 flex flex-col">
@@ -101,9 +88,12 @@ export default async function Home({
                   </Link>
                 )}
 
-                <Button variant={"outline"} className="flex-auto" size={"sm"}>
-                  <Film className="h-4 w-4"></Film>
-                </Button>
+                <Link href={`/recordings/${name}`} className="flex-auto">
+                  <Button variant={"outline"} className="w-full" size={"sm"}>
+                    <Film className="h-4 w-4"></Film>
+                  </Button>
+                </Link>
+
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant={"outline"} size={"sm"}>
@@ -125,7 +115,9 @@ export default async function Home({
                         </div>
                         <div className="flex items-center gap-4">
                           <span className="text-sm">Online:</span>
-                          <span>{readyTime}</span>
+                          <span>
+                            {dayjs(readyTime).format("MMMM D, YYYY h:mm A")}
+                          </span>
                         </div>
                       </div>
                     </div>

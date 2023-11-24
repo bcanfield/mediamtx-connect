@@ -6,7 +6,7 @@ import path from "path";
 import { readdir, stat } from "fs/promises";
 
 interface ScreenshotResponse {
-  [streamName: string]: string[];
+  [streamName: string]: { fileName: string; base64?: string; date?: Date }[];
 }
 export default async function generateScreenshots({
   recordingsDirectory,
@@ -34,10 +34,12 @@ export default async function generateScreenshots({
   const startIndex = (page - 1) * +take;
   const endIndex = startIndex + +take;
 
+  console.log({ streamName });
   try {
     const files = (await readdir(recordingsDirectory)).filter(
-      (file) => !streamName || file === streamName
+      (file) => !streamName || file === streamName,
     );
+    console.log({ files });
 
     for (const file of files) {
       console.log("generating screenshot for stream dir", file);
@@ -46,25 +48,40 @@ export default async function generateScreenshots({
 
       if (fileStat.isDirectory()) {
         const streamRecordingDir = path.join(recordingsDirectory, file);
-        const streamrecordings = (await readdir(streamRecordingDir)).slice(
-          startIndex,
-          endIndex
+        const streamrecordings = await readdir(streamRecordingDir);
+        const filesWithStats = await Promise.all(
+          streamrecordings.map(async (file) => {
+            const filePath = path.join(streamRecordingDir, file);
+            const fileStat = await stat(filePath);
+            return {
+              name: file,
+              birthtimeMs: fileStat.birthtimeMs,
+            };
+          }),
         );
-        for (const streamRecording of streamrecordings) {
+        //   .sort((a, b) => b.birthtimeMs - a.birthtimeMs)
+        //   .slice(startIndex, endIndex);
+        for (const streamRecording of filesWithStats
+          .sort((a, b) => b.birthtimeMs - a.birthtimeMs)
+          .slice(startIndex, endIndex)) {
           console.log({ streamRecording });
           const streamRecordingPath = path.join(
             streamRecordingDir,
-            streamRecording
+            streamRecording.name,
           );
+          const recordingStat = await stat(streamRecordingPath);
+
           const streamScreenshotDirectory = path.join(
             screenshotsDirectory,
-            file
+            file,
           );
-          const screenshotFileName = `${streamRecording.split(".")[0]}.png`;
+          const screenshotFileName = `${
+            streamRecording.name.split(".")[0]
+          }.png`;
           console.log({ screenshotFileName });
           if (
             fs.existsSync(
-              path.join(streamScreenshotDirectory, screenshotFileName)
+              path.join(streamScreenshotDirectory, screenshotFileName),
             )
           ) {
             console.log("Screenshot already exists");
@@ -86,12 +103,27 @@ export default async function generateScreenshots({
                 });
             });
           }
+
+          const newThumbnailFilePath = path.join(
+            streamScreenshotDirectory,
+            screenshotFileName,
+          );
+          const imageData = fs.readFileSync(newThumbnailFilePath);
+          const base64Image = imageData
+            ? Buffer.from(imageData).toString("base64")
+            : undefined;
+
+          const thumbnail = {
+            date: recordingStat.birthtime,
+            fileName: newThumbnailFilePath,
+            base64: base64Image
+              ? `data:image/png;base64,${base64Image}`
+              : undefined,
+          };
+
           generated[file] = generated[file]
-            ? [
-                ...generated[file],
-                path.join(streamScreenshotDirectory, screenshotFileName),
-              ]
-            : [path.join(streamScreenshotDirectory, screenshotFileName)];
+            ? [...generated[file], thumbnail]
+            : [thumbnail];
         }
       }
     }
