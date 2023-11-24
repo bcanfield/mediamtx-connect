@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 import RecordingCard from "./_components/recordingCard";
 
-import { appConfig } from "@/app/_actions/mediamtx/globalConfig";
 import ffmpeg from "fluent-ffmpeg";
+import appConfig from "@/lib/appConfig";
 
 interface Recording {
   fileName: string;
@@ -18,7 +18,7 @@ export default async function Recordings({
   };
   searchParams: { take: number; page: number };
 }) {
-  const { recordingsDirectory, screenshotsDirectory } = await appConfig();
+  const { recordingsDirectory, screenshotsDirectory } = appConfig;
   // Check if the directory exists
   if (!fs.existsSync(screenshotsDirectory)) {
     // If it doesn't exist, create it
@@ -62,7 +62,7 @@ export default async function Recordings({
           await takeScreenshots(
             recordingFilePath,
             streamScreenshotsDir,
-            fileName
+            fileName,
           );
           const image = fs.readFileSync(screenshotFilePath);
           newRecordings.push({ fileName, imageData: image });
@@ -76,7 +76,7 @@ export default async function Recordings({
       const image = fs.readFileSync(screenshotFilePath);
 
       newRecordings.push({ fileName, imageData: image });
-    })
+    }),
   );
 
   return (
@@ -108,7 +108,7 @@ export default async function Recordings({
 function takeScreenshots(
   recordingFilePath: string,
   streamScreenshotsDir: string,
-  fileName: string
+  fileName: string,
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     ffmpeg(recordingFilePath)
