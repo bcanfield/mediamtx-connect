@@ -1,0 +1,2710 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "MediaMTX API",
+    "description": "API of MediaMTX, a server and proxy that supports various protocols.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9997"
+    }
+  ],
+  "security": [],
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "GlobalConf": {
+        "type": "object",
+        "properties": {
+          "logLevel": {
+            "type": "string"
+          },
+          "logDestinations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "logFile": {
+            "type": "string"
+          },
+          "readTimeout": {
+            "type": "string"
+          },
+          "writeTimeout": {
+            "type": "string"
+          },
+          "writeQueueSize": {
+            "type": "integer"
+          },
+          "udpMaxPayloadSize": {
+            "type": "integer"
+          },
+          "externalAuthenticationURL": {
+            "type": "string"
+          },
+          "api": {
+            "type": "boolean"
+          },
+          "apiAddress": {
+            "type": "string"
+          },
+          "metrics": {
+            "type": "boolean"
+          },
+          "metricsAddress": {
+            "type": "string"
+          },
+          "pprof": {
+            "type": "boolean"
+          },
+          "pprofAddress": {
+            "type": "string"
+          },
+          "runOnConnect": {
+            "type": "string"
+          },
+          "runOnConnectRestart": {
+            "type": "boolean"
+          },
+          "runOnDisconnect": {
+            "type": "string"
+          },
+          "rtsp": {
+            "type": "boolean"
+          },
+          "protocols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "encryption": {
+            "type": "string"
+          },
+          "rtspAddress": {
+            "type": "string"
+          },
+          "rtspsAddress": {
+            "type": "string"
+          },
+          "rtpAddress": {
+            "type": "string"
+          },
+          "rtcpAddress": {
+            "type": "string"
+          },
+          "multicastIPRange": {
+            "type": "string"
+          },
+          "multicastRTPPort": {
+            "type": "integer"
+          },
+          "multicastRTCPPort": {
+            "type": "integer"
+          },
+          "serverKey": {
+            "type": "string"
+          },
+          "serverCert": {
+            "type": "string"
+          },
+          "authMethods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rtmp": {
+            "type": "boolean"
+          },
+          "rtmpAddress": {
+            "type": "string"
+          },
+          "rtmpEncryption": {
+            "type": "string"
+          },
+          "rtmpsAddress": {
+            "type": "string"
+          },
+          "rtmpServerKey": {
+            "type": "string"
+          },
+          "rtmpServerCert": {
+            "type": "string"
+          },
+          "hls": {
+            "type": "boolean"
+          },
+          "hlsAddress": {
+            "type": "string"
+          },
+          "hlsEncryption": {
+            "type": "boolean"
+          },
+          "hlsServerKey": {
+            "type": "string"
+          },
+          "hlsServerCert": {
+            "type": "string"
+          },
+          "hlsAlwaysRemux": {
+            "type": "boolean"
+          },
+          "hlsVariant": {
+            "type": "string"
+          },
+          "hlsSegmentCount": {
+            "type": "integer"
+          },
+          "hlsSegmentDuration": {
+            "type": "string"
+          },
+          "hlsPartDuration": {
+            "type": "string"
+          },
+          "hlsSegmentMaxSize": {
+            "type": "string"
+          },
+          "hlsAllowOrigin": {
+            "type": "string"
+          },
+          "hlsTrustedProxies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "hlsDirectory": {
+            "type": "string"
+          },
+          "webrtc": {
+            "type": "boolean"
+          },
+          "webrtcAddress": {
+            "type": "string"
+          },
+          "webrtcEncryption": {
+            "type": "boolean"
+          },
+          "webrtcServerKey": {
+            "type": "string"
+          },
+          "webrtcServerCert": {
+            "type": "string"
+          },
+          "webrtcAllowOrigin": {
+            "type": "string"
+          },
+          "webrtcTrustedProxies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "webrtcLocalUDPAddress": {
+            "type": "string"
+          },
+          "webrtcLocalTCPAddress": {
+            "type": "string"
+          },
+          "webrtcIPsFromInterfaces": {
+            "type": "boolean"
+          },
+          "webrtcIPsFromInterfacesList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "webrtcAdditionalHosts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "webrtcICEServers2": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "srt": {
+            "type": "boolean"
+          },
+          "srtAddress": {
+            "type": "string"
+          },
+          "record": {
+            "type": "boolean"
+          },
+          "recordPath": {
+            "type": "string"
+          },
+          "recordFormat": {
+            "type": "string"
+          },
+          "recordPartDuration": {
+            "type": "string"
+          },
+          "recordSegmentDuration": {
+            "type": "string"
+          },
+          "recordDeleteAfter": {
+            "type": "string"
+          }
+        }
+      },
+      "PathConf": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceFingerprint": {
+            "type": "string"
+          },
+          "sourceOnDemand": {
+            "type": "boolean"
+          },
+          "sourceOnDemandStartTimeout": {
+            "type": "string"
+          },
+          "sourceOnDemandCloseAfter": {
+            "type": "string"
+          },
+          "maxReaders": {
+            "type": "integer"
+          },
+          "srtReadPassphrase": {
+            "type": "string"
+          },
+          "record": {
+            "type": "boolean"
+          },
+          "publishUser": {
+            "type": "string"
+          },
+          "publishPass": {
+            "type": "string"
+          },
+          "publishIPs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "readUser": {
+            "type": "string"
+          },
+          "readPass": {
+            "type": "string"
+          },
+          "readIPs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "overridePublisher": {
+            "type": "boolean"
+          },
+          "fallback": {
+            "type": "string"
+          },
+          "srtPublishPassphrase": {
+            "type": "string"
+          },
+          "rtspTransport": {
+            "type": "string"
+          },
+          "rtspAnyPort": {
+            "type": "boolean"
+          },
+          "rtspRangeType": {
+            "type": "string"
+          },
+          "rtspRangeStart": {
+            "type": "string"
+          },
+          "sourceRedirect": {
+            "type": "string"
+          },
+          "rpiCameraCamID": {
+            "type": "integer"
+          },
+          "rpiCameraWidth": {
+            "type": "integer"
+          },
+          "rpiCameraHeight": {
+            "type": "integer"
+          },
+          "rpiCameraHFlip": {
+            "type": "boolean"
+          },
+          "rpiCameraVFlip": {
+            "type": "boolean"
+          },
+          "rpiCameraBrightness": {
+            "type": "number"
+          },
+          "rpiCameraContrast": {
+            "type": "number"
+          },
+          "rpiCameraSaturation": {
+            "type": "number"
+          },
+          "rpiCameraSharpness": {
+            "type": "number"
+          },
+          "rpiCameraExposure": {
+            "type": "string"
+          },
+          "rpiCameraAWB": {
+            "type": "string"
+          },
+          "rpiCameraDenoise": {
+            "type": "string"
+          },
+          "rpiCameraShutter": {
+            "type": "integer"
+          },
+          "rpiCameraMetering": {
+            "type": "string"
+          },
+          "rpiCameraGain": {
+            "type": "number"
+          },
+          "rpiCameraEV": {
+            "type": "number"
+          },
+          "rpiCameraROI": {
+            "type": "string"
+          },
+          "rpiCameraHDR": {
+            "type": "boolean"
+          },
+          "rpiCameraTuningFile": {
+            "type": "string"
+          },
+          "rpiCameraMode": {
+            "type": "string"
+          },
+          "rpiCameraFPS": {
+            "type": "number"
+          },
+          "rpiCameraIDRPeriod": {
+            "type": "integer"
+          },
+          "rpiCameraBitrate": {
+            "type": "integer"
+          },
+          "rpiCameraProfile": {
+            "type": "string"
+          },
+          "rpiCameraLevel": {
+            "type": "string"
+          },
+          "rpiCameraAfMode": {
+            "type": "string"
+          },
+          "rpiCameraAfRange": {
+            "type": "string"
+          },
+          "rpiCameraAfSpeed": {
+            "type": "string"
+          },
+          "rpiCameraLensPosition": {
+            "type": "number"
+          },
+          "rpiCameraAfWindow": {
+            "type": "string"
+          },
+          "rpiCameraTextOverlayEnable": {
+            "type": "boolean"
+          },
+          "rpiCameraTextOverlay": {
+            "type": "string"
+          },
+          "runOnInit": {
+            "type": "string"
+          },
+          "runOnInitRestart": {
+            "type": "boolean"
+          },
+          "runOnDemand": {
+            "type": "string"
+          },
+          "runOnDemandRestart": {
+            "type": "boolean"
+          },
+          "runOnDemandStartTimeout": {
+            "type": "string"
+          },
+          "runOnDemandCloseAfter": {
+            "type": "string"
+          },
+          "runOnUnDemand": {
+            "type": "string"
+          },
+          "runOnReady": {
+            "type": "string"
+          },
+          "runOnReadyRestart": {
+            "type": "boolean"
+          },
+          "runOnNotReady": {
+            "type": "string"
+          },
+          "runOnRead": {
+            "type": "string"
+          },
+          "runOnReadRestart": {
+            "type": "boolean"
+          },
+          "runOnUnread": {
+            "type": "string"
+          },
+          "runOnRecordSegmentCreate": {
+            "type": "string"
+          },
+          "runOnRecordSegmentComplete": {
+            "type": "string"
+          }
+        }
+      },
+      "PathConfList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PathConf"
+            }
+          }
+        }
+      },
+      "Path": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "confName": {
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PathSource",
+            "nullable": true
+          },
+          "ready": {
+            "type": "boolean"
+          },
+          "readyTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "tracks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "readers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PathReader"
+            }
+          }
+        }
+      },
+      "PathList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Path"
+            }
+          }
+        }
+      },
+      "PathSource": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "hlsSource",
+              "redirect",
+              "rpiCameraSource",
+              "rtmpConn",
+              "rtmpSource",
+              "rtspSession",
+              "rtspSource",
+              "rtspsSession",
+              "srtConn",
+              "srtSource",
+              "udpSource",
+              "webRTCSession",
+              "webRTCSource"
+            ]
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PathReader": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "hlsMuxer",
+              "rtmpConn",
+              "rtspSession",
+              "rtspsSession",
+              "srtConn",
+              "webRTCSession"
+            ]
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "HLSMuxer": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "lastRequest": {
+            "type": "string"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "HLSMuxerList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HLSMuxer"
+            }
+          }
+        }
+      },
+      "RTMPConn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "remoteAddr": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "idle",
+              "read",
+              "publish"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RTMPConnList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RTMPConn"
+            }
+          }
+        }
+      },
+      "RTSPConn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "remoteAddr": {
+            "type": "string"
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RTSPConnList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RTSPConn"
+            }
+          }
+        }
+      },
+      "RTSPSession": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "remoteAddr": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "idle",
+              "read",
+              "publish"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "transport": {
+            "type": "string",
+            "nullable": true
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RTSPSessionList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RTSPSession"
+            }
+          }
+        }
+      },
+      "SRTConn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "remoteAddr": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "idle",
+              "read",
+              "publish"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "SRTConnList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SRTConn"
+            }
+          }
+        }
+      },
+      "WebRTCSession": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "remoteAddr": {
+            "type": "string"
+          },
+          "peerConnectionEstablished": {
+            "type": "boolean"
+          },
+          "localCandidate": {
+            "type": "string"
+          },
+          "remoteCandidate": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "read",
+              "publish"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "bytesReceived": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bytesSent": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "WebRTCSessionList": {
+        "type": "object",
+        "properties": {
+          "pageCount": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebRTCSession"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v3/config/global/get": {
+      "get": {
+        "operationId": "configGlobalGet",
+        "summary": "returns the global configuration.",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GlobalConf"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/global/patch": {
+      "patch": {
+        "operationId": "configGlobalSet",
+        "summary": "patches the global configuration.",
+        "description": "all fields are optional.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GlobalConf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/pathdefaults/get": {
+      "get": {
+        "operationId": "configPathDefaultsGet",
+        "summary": "returns the default path configuration.",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PathConf"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/pathdefaults/patch": {
+      "patch": {
+        "operationId": "configPathDefaultsPatch",
+        "summary": "patches the default path configuration.",
+        "description": "all fields are optional.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathConf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/list": {
+      "get": {
+        "operationId": "configPathsList",
+        "summary": "returns all path configurations.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PathConfList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/get/{name}": {
+      "get": {
+        "operationId": "configPathsGet",
+        "summary": "returns a path configuration.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "the name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PathConf"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/add/{name}": {
+      "post": {
+        "operationId": "configPathsAdd",
+        "summary": "adds a path configuration.",
+        "description": "all fields are optional.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "the name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathConf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/patch/{name}": {
+      "patch": {
+        "operationId": "configPathsPatch",
+        "summary": "patches a path configuration.",
+        "description": "all fields are optional.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "the name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathConf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/replace/{name}": {
+      "post": {
+        "operationId": "configPathsReplace",
+        "summary": "replaces all values of a path configuration.",
+        "description": "all fields are optional.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "the name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathConf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/config/paths/delete/{name}": {
+      "delete": {
+        "operationId": "configPathsDelete",
+        "summary": "removes a path configuration.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "the name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/hlsmuxers/list": {
+      "get": {
+        "operationId": "hlsMuxersList",
+        "summary": "returns all HLS muxers.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HLSMuxerList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/hlsmuxers/get/{name}": {
+      "get": {
+        "operationId": "hlsMuxersGet",
+        "summary": "returns a HLS muxer.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "name of the muxer.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HLSMuxer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/paths/list": {
+      "get": {
+        "operationId": "pathsList",
+        "summary": "returns all paths.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PathList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/paths/get/{name}": {
+      "get": {
+        "operationId": "pathsGet",
+        "summary": "returns a path.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "name of the path.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Path"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspconns/list": {
+      "get": {
+        "operationId": "rtspConnsList",
+        "summary": "returns all RTSP connections.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPConnList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspconns/get/{id}": {
+      "get": {
+        "operationId": "rtspConnsGet",
+        "summary": "returns a RTSP connection.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPConn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspsessions/list": {
+      "get": {
+        "operationId": "rtspSessionsList",
+        "summary": "returns all RTSP sessions.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPSessionList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspsessions/get/{id}": {
+      "get": {
+        "operationId": "rtspSessionsGet",
+        "summary": "returns a RTSP session.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspsessions/kick/{id}": {
+      "post": {
+        "operationId": "rtspSessionsKick",
+        "summary": "kicks out a RTSP session from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the session.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspsconns/list": {
+      "get": {
+        "operationId": "rtspsConnsList",
+        "summary": "returns all RTSPS connections.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPConnList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspsconns/get/{id}": {
+      "get": {
+        "operationId": "rtspsConnsGet",
+        "summary": "returns a RTSPS connection.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPConn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspssessions/list": {
+      "get": {
+        "operationId": "rtspsSessionsList",
+        "summary": "returns all RTSPS sessions.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPSessionList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspssessions/get/{id}": {
+      "get": {
+        "operationId": "rtspsSessionsGet",
+        "summary": "returns a RTSPS session.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTSPSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtspssessions/kick/{id}": {
+      "post": {
+        "operationId": "rtspsSessionsKick",
+        "summary": "kicks out a RTSPS session from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the session.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpconns/list": {
+      "get": {
+        "operationId": "rtmpConnsList",
+        "summary": "returns all RTMP connections.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTMPConnList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpconns/get/{id}": {
+      "get": {
+        "operationId": "rtmpConnectionsGet",
+        "summary": "returns a RTMP connection.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTMPConn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpconns/kick/{id}": {
+      "post": {
+        "operationId": "rtmpConnsKick",
+        "summary": "kicks out a RTMP connection from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpsconns/list": {
+      "get": {
+        "operationId": "rtmpsConnsList",
+        "summary": "returns all RTMPS connections.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTMPConnList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpsconns/get/{id}": {
+      "get": {
+        "operationId": "rtmpsConnectionsGet",
+        "summary": "returns a RTMPS connection.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RTMPConn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/rtmpsconns/kick/{id}": {
+      "post": {
+        "operationId": "rtmpsConnsKick",
+        "summary": "kicks out a RTMPS connection from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/srtconns/list": {
+      "get": {
+        "operationId": "srtConnsList",
+        "summary": "returns all SRT connections.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SRTConnList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/srtconns/get/{id}": {
+      "get": {
+        "operationId": "srtConnsGet",
+        "summary": "returns a SRT connection.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SRTConn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/srtconns/kick/{id}": {
+      "post": {
+        "operationId": "srtConnsKick",
+        "summary": "kicks out a SRT connection from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the connection.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/webrtcsessions/list": {
+      "get": {
+        "operationId": "webrtcSessionsList",
+        "summary": "returns all WebRTC sessions.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "items per page.",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebRTCSessionList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/webrtcsessions/get/{id}": {
+      "get": {
+        "operationId": "webrtcSessionsGet",
+        "summary": "returns a WebRTC session.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the session.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebRTCSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/webrtcsessions/kick/{id}": {
+      "post": {
+        "operationId": "webrtcSessionsKick",
+        "summary": "kicks out a WebRTC session from the server.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the session.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the request was successful."
+          },
+          "400": {
+            "description": "invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
