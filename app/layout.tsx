@@ -27,7 +27,7 @@ export default async function RootLayout({
 }) {
   const links = (
     <>
-      <Link href="/">Cams</Link>
+      <Link href="/recordings">Recordings</Link>
       <Link href="/">Cams</Link>
     </>
   );
