@@ -5,27 +5,23 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import dayjs from "dayjs";
 import fs from "fs";
-import { Video } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { MtxItem, MtxPathsList, mtxPathsList } from "./_actions/mediamtx/paths";
 import { appConfig } from "./_actions/mediamtx/globalConfig";
+import { MtxItem, MtxPathsList, mtxPathsList } from "./_actions/mediamtx/paths";
+import generateScreenshots from "./_actions/screenshots/generate";
 
 export default async function Home() {
-  // const mediaMtxContext = useContext(MediaMtxContext);
-  const { recordingsDirectory, url, apiAddress } = await appConfig();
+  const { recordingsDirectory, url, apiAddress, screenshotsDirectory } =
+    await appConfig();
 
-  // Get MTX Recording Directories
-  const recordingsDirExists = await fs.existsSync(recordingsDirectory);
-  const streamRecordingDirectories =
-    recordingsDirExists && recordingsDirExists
-      ? fs
-          .readdirSync(recordingsDirectory)
-          .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
-      : [];
+  const streamScreenshots = await generateScreenshots({
+    recordingsDirectory,
+    screenshotsDirectory,
+  });
 
   // Get Online MTX Streams
   let mtxItems: MtxPathsList["items"] = [];
@@ -36,25 +32,32 @@ export default async function Home() {
     console.error("Error getting paths");
   }
 
-  const dashboardItems: DashboardItem[] = mtxItems;
+  const dashboardItems: DashboardItem[] = [];
 
-  // Attempt to create dashboard items by matching available recording directories with online mtx items
-  // This is necessary in the case where the cam is offline but we want to still see the recordings
-  streamRecordingDirectories.forEach((d) => {
-    const mtxItemIndex = mtxItems.findIndex((item) => item.name === d);
-    if (mtxItemIndex !== -1) {
-      dashboardItems[mtxItemIndex].hasRecordings = true;
+  mtxItems.forEach((mtxItem) => {
+    if (
+      streamScreenshots[mtxItem.name] &&
+      streamScreenshots[mtxItem.name].length > 0
+    ) {
+      const imageData = fs.readFileSync(streamScreenshots[mtxItem.name][0]);
+      const base64Image = imageData
+        ? Buffer.from(imageData).toString("base64")
+        : undefined;
+
+      dashboardItems.push({
+        ...mtxItem,
+        thumbnail: base64Image,
+      });
     } else {
-      dashboardItems.push({ name: d });
+      dashboardItems.push({ ...mtxItem });
     }
   });
 
   return (
-    <main className="flex flex-col w-full h-full gap-4 items-center p-2">
-      {dashboardItems.map(({ name, readyTime, hasRecordings }, index) => (
-        <Card key={name} className="flex flex-col p-2 items-center w-full">
+    <main className="grid grid-cols-2 gap-4">
+      {dashboardItems.map(({ name, readyTime, thumbnail }, index) => (
+        <Card key={name}>
           <CardHeader>
-            <CardTitle>{name}</CardTitle>
             <CardDescription>
               {readyTime
                 ? `Online since: ${dayjs(readyTime).format(
@@ -64,12 +67,17 @@ export default async function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Video className="w-12 h-12"></Video>
+            <Image
+              width={500}
+              height={500}
+              alt=""
+              src={`data:image/png;base64,${thumbnail}`}
+            ></Image>
           </CardContent>
           <CardFooter>
             <div className="flex gap-4 w-full">
               <Button
-                disabled={!hasRecordings}
+                disabled={!thumbnail}
                 variant="outline"
                 className="flex-1"
               >
@@ -102,4 +110,5 @@ export default async function Home() {
 
 interface DashboardItem extends Partial<MtxItem> {
   hasRecordings?: boolean;
+  thumbnail?: string;
 }

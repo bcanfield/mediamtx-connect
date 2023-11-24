@@ -17,7 +17,7 @@ interface AppConfig extends MtxConfig {
 
 export async function appConfig() {
   console.log("getting global config");
-  const mediaMtxUrl = process.env.MEDIAMTX_URL || "http://mediamtx";
+  const mediaMtxUrl = process.env.MEDIAMTX_URL || "http://localhost";
   const mediaMtxApiPort = process.env.MEDIAMTX_API_PORT || 9997;
   const res = await fetch(
     `${mediaMtxUrl}:${mediaMtxApiPort}/v3/config/global/get`
