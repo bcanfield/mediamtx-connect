@@ -51,5 +51,13 @@ export default function Cam({ props }: { props: { address: string } }) {
       hls?.destroy();
     };
   }, [props.address]);
-  return <video ref={videoRef} muted={true} autoPlay controls />;
+  return (
+    <video
+      className="w-full h-full"
+      ref={videoRef}
+      muted={true}
+      autoPlay
+      controls
+    />
+  );
 }

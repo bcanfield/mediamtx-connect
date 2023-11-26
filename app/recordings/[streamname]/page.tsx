@@ -5,6 +5,8 @@ import appConfig from "@/lib/appConfig";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import dayjs from "dayjs";
+import GridLayout from "@/app/_components/grid-layout";
+import PageLayout from "@/app/_components/page-layout";
 export default async function Recordings({
   params,
   searchParams,
@@ -37,30 +39,32 @@ export default async function Recordings({
   });
 
   return (
-    <main className="grid sm:grid-cols-2 grid-cols-1 gap-4 ">
-      {Object.entries(streamScreenshots).map(([key, value]) =>
-        value.map(({ base64, date }) => (
-          <Card key={key} className="py-2 flex flex-col">
-            <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
-              {date && (
-                <span>{dayjs(date).format("dddd, MMMM D, YYYY h:mm A")}</span>
-              )}
+    <PageLayout header="Recordings" subHeader={params.streamname}>
+      <GridLayout columnLayout="small">
+        {Object.entries(streamScreenshots).map(([key, value]) =>
+          value.map(({ base64, date }) => (
+            <Card key={key} className="py-2 flex flex-col">
+              <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
+                {date && (
+                  <span>{dayjs(date).format("dddd, MMMM D, YYYY h:mm A")}</span>
+                )}
 
-              {base64 ? (
-                <Image
-                  className="w-full h-full"
-                  width={500}
-                  height={500}
-                  alt=""
-                  src={base64}
-                ></Image>
-              ) : (
-                "er"
-              )}
-            </CardContent>
-          </Card>
-        )),
-      )}
-    </main>
+                {base64 ? (
+                  <Image
+                    className="w-full h-full"
+                    width={500}
+                    height={500}
+                    alt=""
+                    src={base64}
+                  ></Image>
+                ) : (
+                  "er"
+                )}
+              </CardContent>
+            </Card>
+          )),
+        )}
+      </GridLayout>
+    </PageLayout>
   );
 }
