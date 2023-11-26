@@ -34,19 +34,20 @@ export default async function generateScreenshots({
     console.log("Screenshots Directory already exists.");
   }
 
-  const generated: ScreenshotResponse = {};
-
   const startIndex = (page - 1) * +take;
   const endIndex = startIndex + +take;
 
-  console.log({ streamName });
-  try {
-    const files = (await readdir(recordingsDirectory)).filter(
-      (file) => !streamName || file === streamName,
-    );
-    console.log({ files });
+  const generated: ScreenshotResponse = {};
 
-    for (const file of files) {
+  try {
+    // Get
+    const recordingDirectoriesToGenerate = (
+      await readdir(recordingsDirectory)
+    ).filter((file) => !streamName || file === streamName);
+    console.log(
+      `Generating screenshots for ${recordingDirectoriesToGenerate.length} stream(s)`,
+    );
+    for (const file of recordingDirectoriesToGenerate) {
       console.log("generating screenshot for stream dir", file);
       const filePath = path.join(recordingsDirectory, file);
       const fileStat = await stat(filePath);
@@ -68,7 +69,6 @@ export default async function generateScreenshots({
         );
 
         for (const streamRecording of filesWithStats) {
-          console.log({ streamRecording });
           const streamRecordingPath = path.join(
             streamRecordingDir,
             streamRecording.name,
@@ -112,11 +112,12 @@ export default async function generateScreenshots({
             streamScreenshotDirectory,
             screenshotFileName,
           );
-          const imageData = fs.readFileSync(newThumbnailFilePath);
-          const base64Image = imageData
-            ? Buffer.from(imageData).toString("base64")
-            : undefined;
-
+          let imageData: Buffer;
+          let base64Image: string | undefined = undefined;
+          if (fs.existsSync(newThumbnailFilePath)) {
+            imageData = fs.readFileSync(newThumbnailFilePath);
+            base64Image = Buffer.from(imageData).toString("base64");
+          }
           const thumbnail = {
             date: recordingStat.birthtime,
             fileName: newThumbnailFilePath,
