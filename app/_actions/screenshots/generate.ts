@@ -6,7 +6,12 @@ import path from "path";
 import { readdir, stat } from "fs/promises";
 
 interface ScreenshotResponse {
-  [streamName: string]: { fileName: string; base64?: string; date?: Date }[];
+  [streamName: string]: {
+    fileName: string;
+    base64?: string;
+    date?: Date;
+    recordingFileName: string;
+  }[];
 }
 export default async function generateScreenshots({
   recordingsDirectory,
@@ -48,7 +53,9 @@ export default async function generateScreenshots({
 
       if (fileStat.isDirectory()) {
         const streamRecordingDir = path.join(recordingsDirectory, file);
-        const streamrecordings = await readdir(streamRecordingDir);
+        const streamrecordings = (await readdir(streamRecordingDir))
+          .sort((a, b) => (a > b ? -1 : 1))
+          .slice(startIndex, endIndex);
         const filesWithStats = await Promise.all(
           streamrecordings.map(async (file) => {
             const filePath = path.join(streamRecordingDir, file);
@@ -59,11 +66,8 @@ export default async function generateScreenshots({
             };
           }),
         );
-        //   .sort((a, b) => b.birthtimeMs - a.birthtimeMs)
-        //   .slice(startIndex, endIndex);
-        for (const streamRecording of filesWithStats
-          .sort((a, b) => b.birthtimeMs - a.birthtimeMs)
-          .slice(startIndex, endIndex)) {
+
+        for (const streamRecording of filesWithStats) {
           console.log({ streamRecording });
           const streamRecordingPath = path.join(
             streamRecordingDir,
@@ -119,6 +123,7 @@ export default async function generateScreenshots({
             base64: base64Image
               ? `data:image/png;base64,${base64Image}`
               : undefined,
+            recordingFileName: streamRecording.name,
           };
 
           generated[file] = generated[file]

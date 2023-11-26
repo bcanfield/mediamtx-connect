@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 
 export default function DownloadVideo({
   filePath,
+  streamName,
 }: {
+  streamName: string;
   filePath: string;
 }) {
   const handleDownload = async () => {
     try {
-      const response = await fetch(`/api/download-recording/${filePath}`);
+      const response = await fetch(
+        `/api/download-recording/${streamName}/${filePath}`,
+      );
       if (response.ok) {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
@@ -23,7 +27,7 @@ export default function DownloadVideo({
         console.error(
           "Failed to download video:",
           response.status,
-          response.statusText
+          response.statusText,
         );
       }
     } catch (error) {
@@ -33,7 +37,8 @@ export default function DownloadVideo({
   };
 
   return (
-    <Button onClick={handleDownload}>Download</Button>
- 
+    <Button variant={"outline"} onClick={handleDownload}>
+      Download
+    </Button>
   );
 }

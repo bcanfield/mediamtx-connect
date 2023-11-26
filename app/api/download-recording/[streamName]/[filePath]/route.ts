@@ -1,4 +1,4 @@
-import { appConfig } from "@/app/_actions/mediamtx/globalConfig";
+import appConfig from "@/lib/appConfig";
 import { ReadStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
 import { NextResponse } from "next/server";
@@ -6,14 +6,14 @@ import path from "path";
 
 export async function GET(
   request: Request,
-  { params }: { params: { streamName: string; filePath: string } } //streamName/fileName
+  { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
 ) {
-  const { recordingsDirectory } = await appConfig();
+  const { recordingsDirectory } = appConfig;
 
   const recordingPath = path.join(
     recordingsDirectory,
     params.streamName,
-    params.filePath
+    params.filePath,
   );
   const stats = await stat(recordingPath);
   const data: ReadableStream = streamFile(recordingPath);
@@ -21,7 +21,7 @@ export async function GET(
     status: 200,
     headers: new Headers({
       "content-disposition": `attachment; filename=${path.basename(
-        recordingPath
+        recordingPath,
       )}`,
       "content-type": "application/zip",
       "content-length": stats.size + "",
@@ -48,7 +48,7 @@ async function* nodeStreamToIterator(stream: ReadStream) {
  * https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
  */
 function iteratorToStream(
-  iterator: AsyncGenerator<any, void, unknown>
+  iterator: AsyncGenerator<any, void, unknown>,
 ): ReadableStream {
   return new ReadableStream({
     async pull(controller) {
@@ -68,7 +68,7 @@ function iteratorToStream(
 function streamFile(path: string): ReadableStream {
   const downloadStream = createReadStream(path);
   const data: ReadableStream = iteratorToStream(
-    nodeStreamToIterator(downloadStream)
+    nodeStreamToIterator(downloadStream),
   );
   return data;
 }
