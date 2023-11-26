@@ -1,24 +1,20 @@
-import fs from "fs";
-
-import getRecordings from "@/app/_actions/screenshots/generate";
-import appConfig from "@/lib/appConfig";
+import getScreenshot from "@/app/_actions/getScreenshot";
+import getRecordings from "@/app/_actions/getStreamRecordings";
+import GridLayout from "@/app/_components/grid-layout";
+import PageLayout from "@/app/_components/page-layout";
+import { getFilesInDirectory } from "@/app/utils/file-operations";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import Image from "next/image";
+import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
-import GridLayout from "@/app/_components/grid-layout";
-import PageLayout from "@/app/_components/page-layout";
-import { getFilesInDirectory } from "@/app/utils/file-operations";
-import path from "path";
 import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import DownloadVideo from "@/app/recordings/[streamname]/_components/downloadVideo";
-import getRecordingScreenshot from "@/app/_actions/screenshots/getScreenshot";
+import path from "path";
 export default async function Recordings({
   params,
   searchParams,
@@ -29,14 +25,6 @@ export default async function Recordings({
   searchParams: { take: number; page: number };
 }) {
   const { recordingsDirectory, screenshotsDirectory } = appConfig;
-  // Check if the directory exists
-  if (!fs.existsSync(screenshotsDirectory)) {
-    // If it doesn't exist, create it
-    fs.mkdirSync(screenshotsDirectory);
-    console.log("Screenshots Directory created successfully.");
-  } else {
-    console.log("Screenshots Directory already exists.");
-  }
 
   const page = searchParams.page || 1;
   const take = searchParams.take || 10;
@@ -71,8 +59,8 @@ export default async function Recordings({
       </div>
       <GridLayout columnLayout="medium">
         {streamRecordings.map(async ({ name, createdAt }) => {
-          const base64 = await getRecordingScreenshot({
-            recordingName: name,
+          const base64 = await getScreenshot({
+            recordingFileName: name,
             streamName: params.streamname,
           });
           return (
