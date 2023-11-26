@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import generateScreenshots from "@/app/_actions/screenshots/generate";
+import getRecordings from "@/app/_actions/screenshots/generate";
 import appConfig from "@/lib/appConfig";
 import {
   Card,
@@ -18,6 +18,7 @@ import path from "path";
 import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
 import Link from "next/link";
 import DownloadVideo from "@/app/recordings/[streamname]/_components/downloadVideo";
+import getRecordingScreenshot from "@/app/_actions/screenshots/getScreenshot";
 export default async function Recordings({
   params,
   searchParams,
@@ -47,7 +48,7 @@ export default async function Recordings({
   const startIndex = (page - 1) * +take;
   const endIndex = startIndex + +take;
 
-  const streamScreenshots = await generateScreenshots({
+  const streamRecordings = await getRecordings({
     recordingsDirectory,
     screenshotsDirectory,
     streamName: params.streamname,
@@ -69,16 +70,18 @@ export default async function Recordings({
         </div>
       </div>
       <GridLayout columnLayout="medium">
-        {Object.entries(streamScreenshots).map(([key, value]) =>
-          value.map(({ base64, date, recordingFileName }) => (
-            <Card key={key} className="flex flex-col">
+        {streamRecordings.map(async ({ name, createdAt }) => {
+          const base64 = await getRecordingScreenshot({
+            recordingName: name,
+            streamName: params.streamname,
+          });
+          return (
+            <Card key={name} className="flex flex-col">
               <CardHeader>
                 <CardDescription className="text-xs">
-                  {date && (
-                    <span>
-                      {dayjs(date).format("dddd, MMMM D, YYYY h:mm A")}
-                    </span>
-                  )}
+                  <span>
+                    {dayjs(createdAt).format("dddd, MMMM D, YYYY h:mm A")}
+                  </span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-2 flex-auto">
@@ -96,15 +99,15 @@ export default async function Recordings({
                   </div>
                 )}
               </CardContent>
-              <CardFooter>
+              {/* <CardFooter>
                 <DownloadVideo
                   streamName={params.streamname}
                   filePath={recordingFileName}
                 ></DownloadVideo>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
-          )),
-        )}
+          );
+        })}
       </GridLayout>
     </PageLayout>
   );
