@@ -19,7 +19,7 @@ export default async function Home({
 }: {
   searchParams: { liveCams: string };
 }) {
-  const { recordingsDirectory, screenshotsDirectory, url } = appConfig;
+  const { recordingsDirectory, screenshotsDirectory } = appConfig;
 
   const streamScreenshots = await generateScreenshots({
     recordingsDirectory,
@@ -41,7 +41,11 @@ export default async function Home({
             <Card key={index} className="py-2 flex flex-col">
               <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
                 {queryIncludes(searchParams.liveCams, name) ? (
-                  <Cam props={{ address: `${url}${hlsAddress}/${name}` }}></Cam>
+                  <Cam
+                    props={{
+                      address: `${process.env.MEDIAMTX_EXTERNAL_URL}${hlsAddress}/${name}/index.m3u8`,
+                    }}
+                  ></Cam>
                 ) : thumbnail ? (
                   <Image
                     className="w-full h-full"

@@ -40,7 +40,8 @@
     "react-dom": "^18",
     "semantic-release": "^18.0.1",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "hls.js": "^1.1.5"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
