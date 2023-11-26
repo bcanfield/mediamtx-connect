@@ -15,7 +15,7 @@ import GridLayout from "@/app/_components/grid-layout";
 import PageLayout from "@/app/_components/page-layout";
 import { getFilesInDirectory } from "@/app/utils/file-operations";
 import path from "path";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
 import Link from "next/link";
 import DownloadVideo from "@/app/recordings/[streamname]/_components/downloadVideo";
 export default async function Recordings({
@@ -71,8 +71,8 @@ export default async function Recordings({
       <GridLayout columnLayout="medium">
         {Object.entries(streamScreenshots).map(([key, value]) =>
           value.map(({ base64, date, recordingFileName }) => (
-            <Card key={key}>
-              <CardHeader className="flex-auto">
+            <Card key={key} className="flex flex-col">
+              <CardHeader>
                 <CardDescription className="text-xs">
                   {date && (
                     <span>
@@ -84,14 +84,16 @@ export default async function Recordings({
               <CardContent className="flex flex-col gap-2 flex-auto">
                 {base64 ? (
                   <Image
-                    className="w-full h-full"
+                    className="flex-auto"
                     width={500}
                     height={500}
                     alt=""
                     src={base64}
                   ></Image>
                 ) : (
-                  "er"
+                  <div className="border flex-auto flex items-center justify-center">
+                    <ImageOff></ImageOff>
+                  </div>
                 )}
               </CardContent>
               <CardFooter>
