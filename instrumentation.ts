@@ -1,12 +1,9 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
-    // const { readdir, stat } = await import("fs/promises");
     const cron = await import("node-cron");
     const cp = await import("child_process");
     const fs = await import("fs");
     const path = await import("path");
-    // const { default: ffmpeg } = await import("fluent-ffmpeg");
-    // process.env.FLUENTFFMPEG_COV = "false";
 
     const screenshotsDirectory =
       process.env.MEDIAMTX_SCREENSHOTS_DIR || "/screenshots";
@@ -30,6 +27,36 @@ export async function register() {
     } else {
       console.log("Reocrdings Directory already exists.");
     }
+
+    const cleanupScreenshots = () => {
+      console.log("Cleaning up sccreenshots");
+      // DDeletes screenshots older than 2 days
+      try {
+        const streamRecordingDirectories =
+          getSubdirectories(screenshotsDirectory);
+
+        streamRecordingDirectories.forEach((subdirectory) => {
+          const streamRecordingDirectory = path.join(
+            screenshotsDirectory,
+            subdirectory,
+          );
+          const files = fs.readdirSync(streamRecordingDirectory);
+          const twoDaysAgo = Date.now() - 2 * 24 * 60 * 60 * 1000; // Calculate the timestamp for 2 days ago
+
+          files.forEach((file) => {
+            const filePath = path.join(streamRecordingDirectory, file);
+            const fileStat = fs.statSync(filePath);
+
+            if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {
+              fs.unlinkSync(filePath); // Delete the file if it's older than 2 days
+              console.log(`Deleted screenshot: ${filePath}`);
+            }
+          });
+        });
+      } catch (err) {
+        throw new Error(`Error deleting files: ${err}`);
+      }
+    };
 
     const getFileNamesWithoutExtension = (directoryPath: string) => {
       try {
@@ -119,8 +146,16 @@ export async function register() {
     };
 
     generateScreenshots();
+    cleanupScreenshots();
+
+    // Run every 30 mins
     cron.schedule("*/30 * * * *", async function () {
       generateScreenshots();
+    });
+
+    // Run every day at midnight
+    cron.schedule("0 0 0 * * *", async function () {
+      cleanupScreenshots();
     });
   } else {
     console.log("INVALID NEXT RUNTIME. BACKGROUND TASKS WILL NOT WORK");
