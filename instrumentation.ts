@@ -28,9 +28,9 @@ export async function register() {
       console.log("Reocrdings Directory already exists.");
     }
 
+    // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
       console.log("Cleaning up sccreenshots");
-      // DDeletes screenshots older than 2 days
       try {
         const streamRecordingDirectories =
           getSubdirectories(screenshotsDirectory);
@@ -75,7 +75,6 @@ export async function register() {
           return fs.statSync(filePath).isDirectory() && !file.startsWith(".");
         });
         return subdirectories;
-        // return subdirectories.map((subdir) => path.join(dirPath, subdir));
       } catch (err) {
         throw new Error(`Error reading directory: ${err}`);
       }
@@ -83,7 +82,6 @@ export async function register() {
 
     const generateScreenshots = () => {
       console.log("Scanning new recordings to generate new screenshots");
-
       const streamRecordingDirectories = getSubdirectories(recordingsDirectory);
 
       streamRecordingDirectories.forEach((subdirectory) => {
@@ -115,28 +113,17 @@ export async function register() {
             subdirectory,
             `${recording}.png`,
           );
-          // console.log({ inputFile, outputFile });
           const args = [
             "-ss",
             "00:00:00",
             "-i",
             inputFile,
-            // "-s",
-            // "320x240",
             "-frames:v",
             "1",
             outputFile,
           ];
           const proc = cp.spawn(cmd, args);
-
-          proc.stdout.on("data", function (data) {
-            // console.log(data);
-          });
-
           proc.stderr.setEncoding("utf8");
-          proc.stderr.on("data", function (data) {
-            // console.log(data);
-          });
 
           proc.on("close", function () {
             console.log(`Finished Generating screenshot ${outputFile}`);
