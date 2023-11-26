@@ -4,21 +4,12 @@ import path from "path";
 
 import appConfig from "@/lib/appConfig";
 
-const getFileNamesWithoutExtension = (directoryPath: string) => {
-  try {
-    const files = fs.readdirSync(directoryPath);
-    return files.map((file) => path.parse(file).name);
-  } catch (err) {
-    throw new Error(`Error reading directory: ${err}`);
-  }
-};
-
-export default async function getRecordingScreenshot({
+export default async function getScreenshot({
   streamName,
-  recordingName,
+  recordingFileName,
 }: {
   streamName: string;
-  recordingName: string;
+  recordingFileName: string;
 }) {
   console.log("Getting Recordings");
   const { screenshotsDirectory } = appConfig;
@@ -28,7 +19,7 @@ export default async function getRecordingScreenshot({
   const screenshotPath = path.join(
     screenshotsDirectory,
     streamName,
-    `${path.parse(recordingName).name}.png`,
+    `${path.parse(recordingFileName).name}.png`,
   );
 
   console.log({ screenshotPath });

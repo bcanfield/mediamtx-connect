@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import { Film, Info, Video, VideoOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import getFirstScreenshot from "./_actions/screenshots/getFirstScreenshot";
+import getFirstScreenshot from "./_actions/getFirstScreenshot";
 import Cam from "./_components/cam";
 import GridLayout from "./_components/grid-layout";
 import PageLayout from "./_components/page-layout";
