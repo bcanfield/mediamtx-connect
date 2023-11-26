@@ -6,12 +6,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import api from "@/lib/MediaMTX/api";
-import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
 import { Film, Info, Video, VideoOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import generateScreenshots from "./_actions/screenshots/generate";
+import getFirstScreenshot from "./_actions/screenshots/getFirstScreenshot";
 import Cam from "./_components/cam";
 import GridLayout from "./_components/grid-layout";
 import PageLayout from "./_components/page-layout";
@@ -21,13 +20,6 @@ export default async function Home({
 }: {
   searchParams: { liveCams: string };
 }) {
-  const { recordingsDirectory, screenshotsDirectory } = appConfig;
-
-  const streamScreenshots = await generateScreenshots({
-    recordingsDirectory,
-    screenshotsDirectory,
-  });
-
   const paths = await api.v3.pathsList();
   const mediaMtxConfig = await api.v3.configGlobalGet();
   const { hlsAddress } = mediaMtxConfig.data;
@@ -37,9 +29,10 @@ export default async function Home({
   return (
     <PageLayout header="Online Cams">
       <GridLayout columnLayout="small">
-        {mtxItems?.map(({ name, readyTime }, index) => {
-          const thumbnail = name && streamScreenshots[name][0].base64;
+        {mtxItems?.map(async ({ name, readyTime }, index) => {
           if (name) {
+            const thumbnail = await getFirstScreenshot({ streamName: name });
+
             return (
               <Card key={index} className="py-2 flex flex-col">
                 <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
@@ -49,7 +42,9 @@ export default async function Home({
                         address: `${process.env.MEDIAMTX_EXTERNAL_URL}${hlsAddress}/${name}/index.m3u8`,
                       }}
                     ></Cam>
-                  ) : thumbnail ? (
+                  ) : !thumbnail ? (
+                    <span>blah</span>
+                  ) : (
                     <Image
                       className="w-full h-full"
                       width={500}
@@ -57,8 +52,7 @@ export default async function Home({
                       alt=""
                       src={thumbnail}
                     ></Image>
-                  ) : (
-                    <span>error getting thumbnail</span>
+                    // <span>error getting thumbnail</span>
                   )}
                 </CardContent>
                 <div className="flex gap-2 px-2">
