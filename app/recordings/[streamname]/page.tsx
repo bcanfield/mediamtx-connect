@@ -7,14 +7,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
 } from "@/components/ui/card";
 import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
 import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
+import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
 import path from "path";
+import DownloadVideo from "./_components/downloadVideo";
 export default async function Recordings({
   params,
   searchParams,
@@ -48,13 +51,22 @@ export default async function Recordings({
     <PageLayout header="Recordings" subHeader={params.streamname}>
       <div className="flex justify-end text-xs">
         <div className="flex  gap-2">
-          <Link href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}>
+          <LinkWrapper
+            href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
+            disabled={+page === 1}
+          >
             <ChevronLeft className="w-4 h-4"></ChevronLeft>
-          </Link>
-          {`Showing ${startIndex} - ${endIndex} of ${filesInDirectory.length}`}
-          <Link href={{ query: { page: +page + 1 } }}>
+          </LinkWrapper>
+          {`Showing ${startIndex} - ${Math.min(
+            endIndex,
+            filesInDirectory.length,
+          )} of ${filesInDirectory.length}`}
+          <LinkWrapper
+            href={{ query: { page: +page + 1 } }}
+            disabled={endIndex >= filesInDirectory.length}
+          >
             <ChevronRight className="w-4 h-4"></ChevronRight>
-          </Link>
+          </LinkWrapper>
         </div>
       </div>
       <GridLayout columnLayout="medium">
@@ -87,12 +99,12 @@ export default async function Recordings({
                   </div>
                 )}
               </CardContent>
-              {/* <CardFooter>
+              <CardFooter>
                 <DownloadVideo
                   streamName={params.streamname}
-                  filePath={recordingFileName}
+                  filePath={name}
                 ></DownloadVideo>
-              </CardFooter> */}
+              </CardFooter>
             </Card>
           );
         })}
@@ -100,3 +112,18 @@ export default async function Recordings({
     </PageLayout>
   );
 }
+
+const LinkWrapper = ({
+  href,
+  children,
+  disabled = false,
+}: {
+  href: Url;
+  children: React.ReactNode;
+  disabled?: boolean;
+}) => {
+  if (disabled) {
+    return <div className="text-secondary">{children}</div>;
+  }
+  return <Link href={href}>{children}</Link>;
+};
