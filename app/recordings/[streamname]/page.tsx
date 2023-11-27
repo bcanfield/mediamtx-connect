@@ -12,7 +12,12 @@ import {
 } from "@/components/ui/card";
 import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
-import { ChevronLeft, ChevronRight, ImageOff, Play } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Image as ImageIcon,
+  Play,
+} from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -96,7 +101,7 @@ export default async function Recordings({
                   ></Image>
                 ) : (
                   <div className="border flex-auto flex items-center justify-center">
-                    <ImageOff></ImageOff>
+                    <ImageIcon></ImageIcon>
                   </div>
                 )}
               </CardContent>

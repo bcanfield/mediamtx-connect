@@ -6,8 +6,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import api from "@/lib/MediaMTX/api";
+
 import dayjs from "dayjs";
-import { Film, Info, Video, VideoOff } from "lucide-react";
+import { Film, Info, Video, VideoOff, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import getFirstScreenshot from "./_actions/getFirstScreenshot";
@@ -48,7 +49,7 @@ export default async function Home({
               }}
             ></Cam>
           ) : !thumbnail ? (
-            <span>blah</span>
+            <ImageIcon></ImageIcon>
           ) : (
             <Image
               className="w-full h-full"
