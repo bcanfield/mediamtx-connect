@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/card";
 import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
-import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
+import { ChevronLeft, ChevronRight, ImageOff, Play } from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
 import path from "path";
 import DownloadVideo from "./_components/downloadVideo";
+import { Button } from "@/components/ui/button";
 export default async function Recordings({
   params,
   searchParams,
@@ -99,11 +100,18 @@ export default async function Recordings({
                   </div>
                 )}
               </CardContent>
-              <CardFooter>
-                <DownloadVideo
-                  streamName={params.streamname}
-                  filePath={name}
-                ></DownloadVideo>
+              <CardFooter className="flex gap-2">
+                <div className="flex-1">
+                  <DownloadVideo
+                    streamName={params.streamname}
+                    filePath={name}
+                  ></DownloadVideo>
+                </div>
+                <Link className="flex-1" href={`${params.streamname}/${name}`}>
+                  <Button className="w-full" variant="outline">
+                    <Play className="w-4 h-4"></Play>
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           );
