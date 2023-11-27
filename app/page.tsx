@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import api from "@/lib/MediaMTX/api";
 
 import appConfig from "@/lib/appConfig";
@@ -13,23 +12,19 @@ export default async function Home() {
   const { remoteMediaMtxUrl } = appConfig;
 
   const mtxItems = paths.data.items;
-  console.log({ mtxItems });
   return (
     <PageLayout header="Online Cams">
       <GridLayout columnLayout="small">
         {mtxItems?.map(({ name, readyTime }, index) => (
-          <Card key={index} className="py-2 flex flex-col">
-            <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
-              <StreamCard
-                props={{
-                  streamName: name,
-                  readyTime,
-                  hlsAddress,
-                  remoteMediaMtxUrl,
-                }}
-              ></StreamCard>
-            </CardContent>
-          </Card>
+          <StreamCard
+            key={index}
+            props={{
+              streamName: name,
+              readyTime,
+              hlsAddress,
+              remoteMediaMtxUrl,
+            }}
+          ></StreamCard>
         ))}
       </GridLayout>
     </PageLayout>
