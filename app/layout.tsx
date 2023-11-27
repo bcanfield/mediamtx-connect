@@ -7,7 +7,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { PanelLeft } from "lucide-react";
+import { Menu } from "lucide-react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export default async function RootLayout({
                   <div className="flex md:hidden items-center">
                     <Sheet>
                       <SheetTrigger>
-                        <PanelLeft className="w-6 h-6" />
+                        <Menu className="w-6 h-6" />
                       </SheetTrigger>
                       <SheetContent
                         side={"left"}
