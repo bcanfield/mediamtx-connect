@@ -28,6 +28,7 @@ export default async function RootLayout({
   const links = (
     <>
       <Link href="/recordings">Recordings</Link>
+      <Link href="/config">Config</Link>
     </>
   );
   return (
@@ -84,7 +85,7 @@ export default async function RootLayout({
               </div>
 
               <div className="flex flex-1 items-center space-x-4 justify-end">
-                <nav className="flex space-x-4">User</nav>
+                {/* <nav className="flex space-x-4">User</nav> */}
               </div>
             </div>
           </header>

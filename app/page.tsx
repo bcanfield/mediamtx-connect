@@ -45,7 +45,7 @@ export default async function Home({
           {queryIncludes(searchParams.liveCams, props.streamName) ? (
             <Cam
               props={{
-                address: `${process.env.MEDIAMTX_EXTERNAL_URL}${hlsAddress}/${props.streamName}/index.m3u8`,
+                address: `${process.env.REMOTE_BROWSER_MEDIAMTX_URL}${hlsAddress}/${props.streamName}/index.m3u8`,
               }}
             ></Cam>
           ) : !thumbnail ? (
