@@ -5,28 +5,31 @@ export async function register() {
     const fs = await import("fs");
     const path = await import("path");
 
-    const screenshotsDirectory =
-      process.env.MEDIAMTX_SCREENSHOTS_DIR || "/screenshots";
+    const screenshotsDirectory = "/screenshots";
 
-    if (!fs.existsSync(screenshotsDirectory)) {
-      fs.mkdirSync(screenshotsDirectory);
-      console.log("Screenshots Directory created successfully.");
-    } else {
-      console.log("Screenshots Directory already exists.");
+    if (!screenshotsDirectory) {
+      console.error("NO SCREENSHOT DIRECTORY CONFIGURED");
+      return;
     }
+    // if (!fs.existsSync(screenshotsDirectory)) {
+    //   fs.mkdirSync(screenshotsDirectory);
+    //   console.log("Screenshots Directory created successfully.");
+    // } else {
+    //   console.log("Screenshots Directory already exists.");
+    // }
 
-    const recordingsDirectory = process.env.MEDIAMTX_RECORDINGS_DIR;
+    const recordingsDirectory = "/recordings";
 
     if (!recordingsDirectory) {
       console.error("NO RECORDING DIRECTORY CONFIGURED");
       return;
     }
-    if (!fs.existsSync(recordingsDirectory)) {
-      fs.mkdirSync(recordingsDirectory);
-      console.log("Recordings Directory created successfully.");
-    } else {
-      console.log("Reocrdings Directory already exists.");
-    }
+    // if (!fs.existsSync(recordingsDirectory)) {
+    //   fs.mkdirSync(recordingsDirectory);
+    //   console.log("Recordings Directory created successfully.");
+    // } else {
+    //   console.log("Reocrdings Directory already exists.");
+    // }
 
     // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
@@ -40,7 +43,9 @@ export async function register() {
             screenshotsDirectory,
             subdirectory,
           );
-          const files = fs.readdirSync(streamRecordingDirectory);
+          const files = fs
+            .readdirSync(streamRecordingDirectory)
+            .filter((f) => !f.startsWith("."));
           const twoDaysAgo = Date.now() - 2 * 24 * 60 * 60 * 1000; // Calculate the timestamp for 2 days ago
 
           files.forEach((file) => {
@@ -60,7 +65,9 @@ export async function register() {
 
     const getFileNamesWithoutExtension = (directoryPath: string) => {
       try {
-        const files = fs.readdirSync(directoryPath);
+        const files = fs
+          .readdirSync(directoryPath)
+          .filter((f) => !f.startsWith("."));
         return files.map((file) => path.parse(file).name);
       } catch (err) {
         throw new Error(`Error reading directory: ${err}`);
@@ -69,10 +76,10 @@ export async function register() {
 
     const getSubdirectories = (dirPath: string) => {
       try {
-        const files = fs.readdirSync(dirPath);
+        const files = fs.readdirSync(dirPath).filter((f) => !f.startsWith("."));
         const subdirectories = files.filter((file) => {
           const filePath = path.join(dirPath, file);
-          return fs.statSync(filePath).isDirectory() && !file.startsWith(".");
+          return fs.statSync(filePath).isDirectory();
         });
         return subdirectories;
       } catch (err) {
@@ -85,11 +92,19 @@ export async function register() {
       const streamRecordingDirectories = getSubdirectories(recordingsDirectory);
 
       streamRecordingDirectories.forEach((subdirectory) => {
+        const streamScreenshotDirectory = path.join(
+          screenshotsDirectory,
+          subdirectory,
+        );
+        if (!fs.existsSync(streamScreenshotDirectory)) {
+          fs.mkdirSync(streamScreenshotDirectory);
+          console.log("Screenshots Directory created successfully.");
+        }
         const filesInSubdir = getFileNamesWithoutExtension(
           path.join(recordingsDirectory, subdirectory),
         );
         const filesInOtherDirectory = getFileNamesWithoutExtension(
-          path.join(screenshotsDirectory, subdirectory),
+          path.join(streamScreenshotDirectory),
         );
 
         const recordingsWithoutScreenshots = filesInSubdir.filter(
@@ -102,15 +117,13 @@ export async function register() {
         // For each recording without a screenshot, generate it and put it in the screenshots directory
         recordingsWithoutScreenshots.forEach((recording) => {
           const cmd = "ffmpeg";
-
           const inputFile = path.join(
             recordingsDirectory,
             subdirectory,
             `${recording}.mp4`,
           );
           const outputFile = path.join(
-            screenshotsDirectory,
-            subdirectory,
+            streamScreenshotDirectory,
             `${recording}.png`,
           );
           const args = [

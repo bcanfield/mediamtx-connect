@@ -10,6 +10,8 @@ services:
       - MTX_RECORD=yes
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+    networks:
+      - mtx
     ports:
       - 8554:8554
       - 8890:8890/udp
@@ -17,3 +19,20 @@ services:
       - 8888:8888
       - 8889:8889
       - 9997:9997
+  mtxui:
+    build:
+      context: ./
+    container_name: mtxui
+    restart: unless-stopped
+    volumes:
+      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+    environment:
+      - BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx
+      - REMOTE_BROWSER_MEDIAMTX_URL=http://192.168.0.250
+    networks:
+      - mtx
+    ports:
+      - 3000:3000
+networks:
+  mtx:
+    name: mtx

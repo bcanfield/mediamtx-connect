@@ -4,12 +4,9 @@ export interface AppConfig {
   screenshotsDirectory: string;
 }
 
-// process.env.BRANDIN = "brandin";
-
-// console.log("test: ", process.env.BRANDIN);
 const appConfig: AppConfig = {
-  url: process.env.MEDIAMTX_URL || "http://localhost",
-  recordingsDirectory: process.env.MEDIAMTX_RECORDINGS_DIR || "/recordings",
-  screenshotsDirectory: process.env.MEDIAMTX_SCREENSHOTS_DIR || "/screenshots",
+  url: process.env.BACKEND_SERVER_MEDIAMTX_URL || "http://localhost",
+  recordingsDirectory: "/recordings",
+  screenshotsDirectory: "/screenshots",
 };
 export default appConfig;
