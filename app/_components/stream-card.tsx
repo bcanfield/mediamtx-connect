@@ -1,5 +1,10 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cam from "./cam";
@@ -31,7 +36,6 @@ export default function StreamCard({
   const searchParams = useSearchParams();
   const [thumbnailError, setThumbnailError] = useState<boolean>(false);
 
-  console.log({ props });
   if (!props.streamName) {
     return <>Error getting stream</>;
   }
@@ -40,7 +44,6 @@ export default function StreamCard({
     // now you got a read/write object
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
     let currentSelectedCams = current.get("liveCams")?.split(",");
-    console.log({ current, currentSelectedCams });
     if (currentSelectedCams) {
       if (currentSelectedCams.includes(streamName)) {
         currentSelectedCams = currentSelectedCams.filter(
@@ -70,82 +73,88 @@ export default function StreamCard({
     ?.split(",")
     .filter(Boolean)
     .includes(props.streamName);
-  console.log({ isLive, streamName: props.streamName });
 
   return (
-    <Card className="py-2 flex flex-col">
-      <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
-        {isLive ? (
-          <Cam
-            props={{
-              address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${streamName}/index.m3u8`,
-            }}
-          ></Cam>
-        ) : thumbnailError ? (
-          <ImageIcon className="h-full w-full"></ImageIcon>
-        ) : (
-          <Image
-            className="w-full h-full"
-            width={500}
-            height={500}
-            alt=""
-            onError={() => setThumbnailError(true)}
-            src={`/api/${streamName}/first-screenshot`}
-          ></Image>
-        )}
-      </CardContent>
-      <div className="flex gap-2 px-2">
-        <Button
-          variant={"outline"}
-          onClick={() => onCamSelect(streamName)}
-          className="w-full"
-          size={"sm"}
-        >
+    <Card className="flex flex-col">
+      <CardHeader className="text-xs">
+        <CardDescription>{streamName}</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2">
+        <div className="min-h-[14rem] flex items-center">
           {isLive ? (
-            <VideoOff className="h-4 w-4"></VideoOff>
+            <Cam
+              props={{
+                address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${streamName}/index.m3u8`,
+              }}
+            ></Cam>
+          ) : thumbnailError ? (
+            <ImageIcon className="h-full w-full"></ImageIcon>
           ) : (
-            <Video className="h-4 w-4"></Video>
+            <Image
+              // className="w-full h-full"
+              width={640}
+              height={480}
+              // fill={true}
+              alt=""
+              onError={() => setThumbnailError(true)}
+              src={`/api/${streamName}/first-screenshot`}
+            ></Image>
           )}
-        </Button>
+        </div>
 
-        <Link href={`/recordings/${streamName}`} className="flex-auto">
-          <Button variant={"outline"} className="w-full" size={"sm"}>
-            <Film className="h-4 w-4"></Film>
+        <div className="flex gap-2">
+          <Button
+            variant={"outline"}
+            onClick={() => onCamSelect(streamName)}
+            className="w-full"
+            size={"sm"}
+          >
+            {isLive ? (
+              <VideoOff className="h-4 w-4"></VideoOff>
+            ) : (
+              <Video className="h-4 w-4"></Video>
+            )}
           </Button>
-        </Link>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant={"outline"} size={"sm"}>
-              <Info className="h-4 w-4"></Info>
+          <Link href={`/recordings/${streamName}`} className="flex-auto">
+            <Button variant={"outline"} className="w-full" size={"sm"}>
+              <Film className="h-4 w-4"></Film>
             </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-80 p-2">
-            <div className="grid gap-4">
-              <div className="space-y-2">
-                <h4 className="font-medium leading-none">{streamName}</h4>
-                <p className="text-sm text-muted-foreground">
-                  Info about the stream
-                </p>
-              </div>
-              <div className="grid gap-2 text-sm">
-                <div className="flex items-center gap-4">
-                  <span>Name:</span>
-                  <span>{streamName}</span>
+          </Link>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant={"outline"} size={"sm"}>
+                <Info className="h-4 w-4"></Info>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-2">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium leading-none">{streamName}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Info about the stream
+                  </p>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-sm">Online:</span>
-                  {props.readyTime && (
-                    <span>
-                      {dayjs(props.readyTime).format("MMMM D, YYYY h:mm A")}
-                    </span>
-                  )}
+                <div className="grid gap-2 text-sm">
+                  <div className="flex items-center gap-4">
+                    <span>Name:</span>
+                    <span>{streamName}</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm">Online:</span>
+                    {props.readyTime && (
+                      <span>
+                        {dayjs(props.readyTime).format("MMMM D, YYYY h:mm A")}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-      </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </CardContent>
     </Card>
   );
 }

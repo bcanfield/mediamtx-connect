@@ -75,7 +75,7 @@ export default async function Recordings({
           </LinkWrapper>
         </div>
       </div>
-      <GridLayout columnLayout="medium">
+      <GridLayout columnLayout="small">
         {streamRecordings.map(async ({ name, createdAt }) => {
           const base64 = await getScreenshot({
             recordingFileName: name,
@@ -90,20 +90,22 @@ export default async function Recordings({
                   </span>
                 </CardDescription>
               </CardHeader>
-              <CardContent className="flex flex-col gap-2 flex-auto">
-                {base64 ? (
-                  <Image
-                    className="flex-auto"
-                    width={500}
-                    height={500}
-                    alt=""
-                    src={base64}
-                  ></Image>
-                ) : (
-                  <div className="border flex-auto flex items-center justify-center">
-                    <ImageIcon></ImageIcon>
-                  </div>
-                )}
+              <CardContent className="flex flex-col gap-2 ">
+                <div className="min-h-[14rem] flex items-center">
+                  {base64 ? (
+                    <Image
+                      // className="flex-auto"
+                      width={640}
+                      height={480}
+                      alt=""
+                      src={base64}
+                    ></Image>
+                  ) : (
+                    <div className=" flex-auto flex items-center justify-center">
+                      <ImageIcon></ImageIcon>
+                    </div>
+                  )}
+                </div>
               </CardContent>
               <CardFooter className="flex gap-2">
                 <div className="flex-1">
