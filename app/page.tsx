@@ -15,6 +15,8 @@ import getFirstScreenshot from "./_actions/getFirstScreenshot";
 import Cam from "./_components/cam";
 import GridLayout from "./_components/grid-layout";
 import PageLayout from "./_components/page-layout";
+import StreamCard from "./_components/stream-card";
+import appConfig from "@/lib/appConfig";
 
 export default async function Home({
   searchParams,
@@ -24,139 +26,29 @@ export default async function Home({
   const paths = await api.v3.pathsList();
   const mediaMtxConfig = await api.v3.configGlobalGet();
   const { hlsAddress } = mediaMtxConfig.data;
+  const { remoteMediaMtxUrl } = appConfig;
 
   const mtxItems = paths.data.items;
-
-  const StreamCard = async ({
-    props,
-  }: {
-    props: {
-      streamName: string;
-      hlsAddress?: string;
-      readyTime?: string | null;
-    };
-  }) => {
-    const thumbnail = await getFirstScreenshot({
-      streamName: props.streamName,
-    });
-    return (
-      <Card className="py-2 flex flex-col">
-        <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
-          {queryIncludes(searchParams.liveCams, props.streamName) ? (
-            <Cam
-              props={{
-                address: `${process.env.REMOTE_BROWSER_MEDIAMTX_URL}${hlsAddress}/${props.streamName}/index.m3u8`,
-              }}
-            ></Cam>
-          ) : !thumbnail ? (
-            <ImageIcon></ImageIcon>
-          ) : (
-            <Image
-              className="w-full h-full"
-              width={500}
-              height={500}
-              alt=""
-              src={thumbnail}
-            ></Image>
-          )}
-        </CardContent>
-        <div className="flex gap-2 px-2">
-          {queryIncludes(searchParams.liveCams, props.streamName) ? (
-            <Link
-              href={{
-                pathname: "/",
-                query: {
-                  liveCams: removeItemFromQuery(
-                    searchParams.liveCams,
-                    props.streamName,
-                  ),
-                },
-              }}
-              className="flex-auto"
-            >
-              <Button variant={"outline"} className="w-full" size={"sm"}>
-                <VideoOff className="h-4 w-4"></VideoOff>
-              </Button>
-            </Link>
-          ) : (
-            <Link
-              href={{
-                pathname: "/",
-                query: {
-                  liveCams: addItemToQuery(
-                    searchParams.liveCams,
-                    props.streamName,
-                  ),
-                },
-              }}
-              className="flex-auto border"
-            >
-              <Button variant={"outline"} className="w-full" size={"sm"}>
-                <Video className="h-4 w-4"></Video>
-              </Button>
-            </Link>
-          )}
-
-          <Link href={`/recordings/${props.streamName}`} className="flex-auto">
-            <Button variant={"outline"} className="w-full" size={"sm"}>
-              <Film className="h-4 w-4"></Film>
-            </Button>
-          </Link>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant={"outline"} size={"sm"}>
-                <Info className="h-4 w-4"></Info>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-2">
-              <div className="grid gap-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium leading-none">
-                    {props.streamName}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    Info about the stream
-                  </p>
-                </div>
-                <div className="grid gap-2 text-sm">
-                  <div className="flex items-center gap-4">
-                    <span>Name:</span>
-                    <span>{props.streamName}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm">Online:</span>
-                    {props.readyTime && (
-                      <span>
-                        {dayjs(props.readyTime).format("MMMM D, YYYY h:mm A")}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </Card>
-    );
-  };
 
   return (
     <PageLayout header="Online Cams">
       <GridLayout columnLayout="small">
-        {mtxItems?.map(({ name, readyTime }, index) => {
-          if (name) {
-            return (
-              <Card key={index} className="py-2 flex flex-col">
-                <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
-                  <StreamCard
-                    props={{ streamName: name, readyTime }}
-                  ></StreamCard>
-                </CardContent>
-              </Card>
-            );
-          }
-        })}
+        {mtxItems
+          ?.filter((i) => !!i.name)
+          .map(({ name, readyTime }, index) => (
+            <Card key={index} className="py-2 flex flex-col">
+              <CardContent className="flex flex-col gap-2 flex-auto min-h-[20rem]">
+                <StreamCard
+                  props={{
+                    streamName: name,
+                    readyTime,
+                    hlsAddress,
+                    remoteMediaMtxUrl,
+                  }}
+                ></StreamCard>
+              </CardContent>
+            </Card>
+          ))}
       </GridLayout>
     </PageLayout>
   );

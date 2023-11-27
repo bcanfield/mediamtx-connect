@@ -1,11 +1,12 @@
+import appConfig from "./lib/appConfig";
+
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const cron = await import("node-cron");
     const cp = await import("child_process");
     const fs = await import("fs");
     const path = await import("path");
-
-    const screenshotsDirectory = "/screenshots";
+    const { recordingsDirectory, screenshotsDirectory } = appConfig;
 
     if (!screenshotsDirectory) {
       console.error("NO SCREENSHOT DIRECTORY CONFIGURED");
@@ -17,8 +18,6 @@ export async function register() {
     // } else {
     //   console.log("Screenshots Directory already exists.");
     // }
-
-    const recordingsDirectory = "/recordings";
 
     if (!recordingsDirectory) {
       console.error("NO RECORDING DIRECTORY CONFIGURED");
