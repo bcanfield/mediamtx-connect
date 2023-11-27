@@ -5,7 +5,10 @@ import { useEffect, useRef } from "react";
 export default function Cam({ props }: { props: { address: string } }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   useEffect(() => {
+    console.log("useeffect");
     const create = (video: HTMLVideoElement) => {
+      console.log("create");
+
       const hls = new Hls({
         maxLiveSyncPlaybackRate: 1.5,
       });
@@ -58,6 +61,7 @@ export default function Cam({ props }: { props: { address: string } }) {
       muted={true}
       autoPlay
       controls
+      playsInline
     />
   );
 }
