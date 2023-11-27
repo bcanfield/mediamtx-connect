@@ -3,9 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cam from "./cam";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import getFirstScreenshot from "../_actions/getFirstScreenshot";
 import { Film, Info, Video, VideoOff, Image as ImageIcon } from "lucide-react";
 import {
   Popover,
@@ -21,7 +20,7 @@ export default function StreamCard({
 }: {
   props: {
     remoteMediaMtxUrl: string;
-    streamName: string;
+    streamName?: string;
     hlsAddress?: string;
     readyTime?: string | null;
     thumbnail?: string | null;
@@ -30,7 +29,13 @@ export default function StreamCard({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [thumbnailError, setThumbnailError] = useState<boolean>(false);
 
+  console.log({ props });
+  if (!props.streamName) {
+    return <>Error getting stream</>;
+  }
+  const streamName = props.streamName;
   const onCamSelect = (streamName: string) => {
     // now you got a read/write object
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
@@ -54,9 +59,7 @@ export default function StreamCard({
       current.delete("liveCams");
     }
 
-    // cast to string
     const search = current.toString();
-    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
     const query = search ? `?${search}` : "";
 
     router.push(`${pathname}${query}`);
@@ -68,7 +71,6 @@ export default function StreamCard({
     .filter(Boolean)
     .includes(props.streamName);
   console.log({ isLive, streamName: props.streamName });
-  const [thumbnailError, setThumbnailError] = useState<boolean>(false);
 
   return (
     <Card className="py-2 flex flex-col">
@@ -76,7 +78,7 @@ export default function StreamCard({
         {isLive ? (
           <Cam
             props={{
-              address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${props.streamName}/index.m3u8`,
+              address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${streamName}/index.m3u8`,
             }}
           ></Cam>
         ) : thumbnailError ? (
@@ -88,14 +90,14 @@ export default function StreamCard({
             height={500}
             alt=""
             onError={() => setThumbnailError(true)}
-            src={`/api/${props.streamName}/first-screenshot`}
+            src={`/api/${streamName}/first-screenshot`}
           ></Image>
         )}
       </CardContent>
       <div className="flex gap-2 px-2">
         <Button
           variant={"outline"}
-          onClick={() => onCamSelect(props.streamName)}
+          onClick={() => onCamSelect(streamName)}
           className="w-full"
           size={"sm"}
         >
@@ -106,7 +108,7 @@ export default function StreamCard({
           )}
         </Button>
 
-        <Link href={`/recordings/${props.streamName}`} className="flex-auto">
+        <Link href={`/recordings/${streamName}`} className="flex-auto">
           <Button variant={"outline"} className="w-full" size={"sm"}>
             <Film className="h-4 w-4"></Film>
           </Button>
@@ -121,7 +123,7 @@ export default function StreamCard({
           <PopoverContent className="w-80 p-2">
             <div className="grid gap-4">
               <div className="space-y-2">
-                <h4 className="font-medium leading-none">{props.streamName}</h4>
+                <h4 className="font-medium leading-none">{streamName}</h4>
                 <p className="text-sm text-muted-foreground">
                   Info about the stream
                 </p>
@@ -129,7 +131,7 @@ export default function StreamCard({
               <div className="grid gap-2 text-sm">
                 <div className="flex items-center gap-4">
                   <span>Name:</span>
-                  <span>{props.streamName}</span>
+                  <span>{streamName}</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-sm">Online:</span>
