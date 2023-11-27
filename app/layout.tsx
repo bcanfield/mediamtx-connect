@@ -28,7 +28,6 @@ export default async function RootLayout({
   const links = (
     <>
       <Link href="/recordings">Recordings</Link>
-      <Link href="/">Cams</Link>
     </>
   );
   return (

@@ -12,13 +12,8 @@ import {
 import appConfig from "@/lib/appConfig";
 import { redirect } from "next/navigation";
 import { countFilesInSubdirectories } from "../utils/file-operations";
-export default async function Recordings({
-  params,
-}: {
-  params: {
-    streamname: string;
-  };
-}) {
+import Link from "next/link";
+export default async function Recordings() {
   const { recordingsDirectory } = appConfig;
   if (!fs.existsSync(recordingsDirectory)) {
     redirect("/");
@@ -27,7 +22,7 @@ export default async function Recordings({
     countFilesInSubdirectories(recordingsDirectory);
 
   return (
-    <PageLayout header="Recordings" subHeader={params.streamname}>
+    <PageLayout header="Recordings">
       <GridLayout columnLayout="xs">
         {Object.entries(streamRecordingDirectories).map(([key, value]) => (
           <Card key={key} className="flex items-center">
@@ -36,7 +31,9 @@ export default async function Recordings({
               <CardDescription>{value} Recordings</CardDescription>
             </CardHeader>
             <div className="p-4">
-              <Button variant={"outline"}>View Recordings</Button>
+              <Link href={`recordings/${key}`}>
+                <Button variant={"outline"}>View Recordings</Button>
+              </Link>
             </div>
           </Card>
         ))}
