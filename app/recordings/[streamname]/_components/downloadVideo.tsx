@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function DownloadVideo({
   filePath,
@@ -9,8 +11,10 @@ export default function DownloadVideo({
   streamName: string;
   filePath: string;
 }) {
+  const [loading, setLoading] = useState(false);
   const handleDownload = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `/api/download-recording/${streamName}/${filePath}`,
       );
@@ -34,11 +38,15 @@ export default function DownloadVideo({
       // Handle network or other errors
       console.error("Error downloading video:", error);
     }
+    setLoading(false);
   };
 
   return (
-    <Button variant={"outline"} onClick={handleDownload}>
-      Download
-    </Button>
+    <div className="flex items-center gap-2">
+      <Button variant={"outline"} onClick={handleDownload}>
+        Download
+      </Button>
+      {loading && <Loader2 className="h-4 w-4 animate-spin"></Loader2>}
+    </div>
   );
 }
