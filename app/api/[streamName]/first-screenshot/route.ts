@@ -1,6 +1,5 @@
 import appConfig from "@/lib/appConfig";
 import { ReadStream, createReadStream } from "fs";
-import { stat } from "fs/promises";
 import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
@@ -9,9 +8,7 @@ export async function GET(
   request: Request,
   { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
 ) {
-  console.log("in here");
   const { screenshotsDirectory, recordingsDirectory } = appConfig;
-  let base64: string | null = null;
 
   try {
     const firstRecording = fs
@@ -27,22 +24,15 @@ export async function GET(
       `${path.parse(firstRecording[0]).name}.png`,
     );
 
-    // const stream = fs.createReadStream(screenshotPath)
     const data: ReadableStream = streamFile(screenshotPath);
 
     const res = new NextResponse(data, {
       status: 200,
       headers: new Headers({
         "content-type": "image/png",
-        //   "content-length": stats.size + "",
       }),
     });
     return res;
-
-    // const imageData = fs.readFileSync(screenshotPath);
-    // base64 = `data:image/png;base64,${Buffer.from(imageData).toString(
-    //   "base64",
-    // )}`;
   } catch (error: any) {
     console.error(`Error Getting First Screenshot: `, error);
   }

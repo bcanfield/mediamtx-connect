@@ -27,8 +27,7 @@ services:
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
     environment:
-      - BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx
-      - REMOTE_BROWSER_MEDIAMTX_URL=http://192.168.0.250
+      - REMOTE_BROWSER_MEDIAMTX_URL=${REMOTE_BROWSER_MEDIAMTX_URL}
     networks:
       - mtx
     ports:
