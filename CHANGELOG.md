@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/bcanfield/nextstream/compare/v1.0.1...v1.1.0) (2023-11-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @typescript-eslint/eslint-plugin to v6.13.1 ([f7ec68a](https://github.com/bcanfield/nextstream/commit/f7ec68a375d97ca62c89d685043b6418f6f06407))
+
+
+### Features
+
+* Live Stream, Recordings, other general project enhancements ([#22](https://github.com/bcanfield/nextstream/issues/22)) ([60793c1](https://github.com/bcanfield/nextstream/commit/60793c179a2a26bbdd42978c576ea0f3ecf5a9cc))
+
 ## [1.0.1](https://github.com/bcanfield/nextstream/compare/v1.0.0...v1.0.1) (2023-11-27)
 
 
