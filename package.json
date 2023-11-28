@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3929",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "release": "semantic-release",
     "start-test-stream": "STREAM_COUNT=5 ./dev/ffmpeg-test.sh",
-    "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts"
+    "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts",
+    "test": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\""
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.4",
@@ -46,6 +47,7 @@
     "react": "^18",
     "react-dom": "^18",
     "semantic-release": "^18.0.1",
+    "start-server-and-test": "^2.0.3",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -58,6 +60,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "cypress": "^12.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.0.0",

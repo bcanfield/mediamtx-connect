@@ -27,6 +27,8 @@ jobs:
         run: npx ci
       - name: Build
         run: npm run build
+      - name: Test
+        run: npm run test
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
