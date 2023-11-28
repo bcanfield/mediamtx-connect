@@ -52,7 +52,7 @@ export default async function RootLayout({
                   href="/"
                   className="hidden md:flex items-center space-x-2"
                 >
-                  <span className="font-bold inline-block">{"NextCams"}</span>
+                  <span className="font-bold inline-block">{"Connect"}</span>
                 </Link>
                 <>
                   <nav className="hidden gap-6 md:flex">{links}</nav>
