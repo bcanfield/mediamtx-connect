@@ -5,6 +5,7 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     instrumentationHook: true,
+    webpackBuildWorker: true,
   },
   webpack: (config, { webpack }) => {
     // https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/573#issuecomment-1629414369
