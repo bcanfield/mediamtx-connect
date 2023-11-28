@@ -22,8 +22,8 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     dir: "auto",
     lang: "en-US",
-    name: "nextstream",
-    short_name: "nextstream",
+    name: "mediamtx-connect",
+    short_name: "mediamtx-connect",
     start_url: "/",
     scope: "/",
   };
