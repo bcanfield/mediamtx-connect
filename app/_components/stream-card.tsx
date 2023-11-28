@@ -41,7 +41,6 @@ export default function StreamCard({
   }
   const streamName = props.streamName;
   const onCamSelect = (streamName: string) => {
-    // now you got a read/write object
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
     let currentSelectedCams = current.get("liveCams")?.split(",");
     if (currentSelectedCams) {
@@ -75,12 +74,12 @@ export default function StreamCard({
     .includes(props.streamName);
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col aspect-square">
       <CardHeader className="text-xs">
         <CardDescription>{streamName}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        <div className="min-h-[14rem] flex items-center">
+      <CardContent className="flex flex-col flex-auto justify-between gap-2">
+        <div className="flex items-center flex-auto w-full">
           {isLive ? (
             <Cam
               props={{
@@ -90,15 +89,14 @@ export default function StreamCard({
           ) : thumbnailError ? (
             <ImageIcon className="h-full w-full"></ImageIcon>
           ) : (
-            <Image
-              // className="w-full h-full"
-              width={640}
-              height={480}
-              // fill={true}
-              alt=""
-              onError={() => setThumbnailError(true)}
-              src={`/api/${streamName}/first-screenshot`}
-            ></Image>
+            <div className="w-full h-full relative">
+              <Image
+                layout="fill"
+                alt=""
+                onError={() => setThumbnailError(true)}
+                src={`/api/${streamName}/first-screenshot`}
+              ></Image>
+            </div>
           )}
         </div>
 

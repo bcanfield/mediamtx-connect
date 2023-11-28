@@ -20,10 +20,7 @@ export async function GET(
   const res = new NextResponse(data, {
     status: 200,
     headers: new Headers({
-      "content-disposition": `attachment; filename=${path.basename(
-        recordingPath,
-      )}`,
-      "content-type": "application/zip",
+      "content-type": "video/mp4",
       "content-length": stats.size + "",
     }),
   });

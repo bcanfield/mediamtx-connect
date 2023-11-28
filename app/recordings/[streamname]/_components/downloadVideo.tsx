@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Download, Loader2 } from "lucide-react";
+import { Download } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
+import { Progress } from "@/components/ui/progress";
 
 export default function DownloadVideo({
   filePath,
@@ -12,14 +14,25 @@ export default function DownloadVideo({
   filePath: string;
 }) {
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   const handleDownload = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `/api/${streamName}/${filePath}/download-recording`,
-      );
-      if (response.ok) {
-        const blob = await response.blob();
+      const response = await axios({
+        method: "get",
+        url: `/api/${streamName}/${filePath}/download-recording`,
+        responseType: "blob",
+        onDownloadProgress: (progressEvent) => {
+          const progress = progressEvent.progress;
+          if (progress) {
+            setProgress(progress * 100);
+          }
+        },
+      });
+
+      if (response.status === 200) {
+        const blob = await response.data;
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -38,6 +51,7 @@ export default function DownloadVideo({
       // Handle network or other errors
       console.error("Error downloading video:", error);
     }
+    setProgress(0);
     setLoading(false);
   };
 
@@ -49,7 +63,7 @@ export default function DownloadVideo({
       onClick={handleDownload}
     >
       {loading ? (
-        <Loader2 className="h-4 w-4 animate-spin"></Loader2>
+        <Progress value={progress} className="w-full" />
       ) : (
         <Download className="w-4 h-4"></Download>
       )}
