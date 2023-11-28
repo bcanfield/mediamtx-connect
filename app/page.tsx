@@ -4,36 +4,43 @@ import appConfig from "@/lib/appConfig";
 import GridLayout from "./_components/grid-layout";
 import PageLayout from "./_components/page-layout";
 import StreamCard from "./_components/stream-card";
+import {
+  Error,
+  GlobalConf,
+  HttpResponse,
+  PathList,
+} from "@/lib/MediaMTX/generated";
 
 export default async function Home() {
-  const paths = await api.v3.pathsList();
-  const mediaMtxConfig = await api.v3.configGlobalGet();
-  const hlsAddress = mediaMtxConfig.error
-    ? undefined
-    : mediaMtxConfig.data.hlsAddress;
+  const { remoteMediaMtxUrl, url } = appConfig;
 
-  const { remoteMediaMtxUrl } = appConfig;
-
-  const mtxItems = mediaMtxConfig.error ? [] : paths.data.items;
+  let paths: HttpResponse<PathList, Error> | undefined;
+  let mediaMtxConfig: HttpResponse<GlobalConf, Error> | undefined;
+  try {
+    paths = await api.v3.pathsList();
+    mediaMtxConfig = await api.v3.configGlobalGet();
+  } catch {
+    console.error("Error reaching MediaMTX at: ", url);
+  }
 
   return (
     <PageLayout header="Online Cams">
-      {hlsAddress ? (
+      {mediaMtxConfig?.data.hlsAddress ? (
         <GridLayout columnLayout="small">
-          {mtxItems?.map(({ name, readyTime }, index) => (
+          {paths?.data.items?.map(({ name, readyTime }, index) => (
             <StreamCard
               key={index}
               props={{
                 streamName: name,
                 readyTime,
-                hlsAddress,
+                hlsAddress: mediaMtxConfig?.data.hlsAddress,
                 remoteMediaMtxUrl,
               }}
             ></StreamCard>
           ))}
         </GridLayout>
       ) : (
-        <span>No HLS Address Configured for Live Viewing</span>
+        <span>Could not retrieve HLS Address from MediaMTX</span>
       )}
     </PageLayout>
   );
