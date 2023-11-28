@@ -12,13 +12,6 @@ export async function register() {
       console.error("NO SCREENSHOT DIRECTORY CONFIGURED");
       return;
     }
-    // if (!fs.existsSync(screenshotsDirectory)) {
-    //   fs.mkdirSync(screenshotsDirectory);
-    //   console.log("Screenshots Directory created successfully.");
-    // } else {
-    //   console.log("Screenshots Directory already exists.");
-    // }
-
     if (!recordingsDirectory) {
       console.error("NO RECORDING DIRECTORY CONFIGURED");
       return;
@@ -137,19 +130,25 @@ export async function register() {
         });
       });
     };
-
-    generateScreenshots();
-    cleanupScreenshots();
-
-    // Run every 30 mins
-    cron.schedule("*/30 * * * *", async function () {
+    try {
       generateScreenshots();
-    });
+      // Run every 30 mins
+      cron.schedule("*/30 * * * *", async function () {
+        generateScreenshots();
+      });
+    } catch (error) {
+      console.error("Unable to start generateScreenshots process\n", error);
+    }
 
-    // Run every day at midnight
-    cron.schedule("0 0 0 * * *", async function () {
+    try {
       cleanupScreenshots();
-    });
+      // Run every day at midnight
+      cron.schedule("0 0 0 * * *", async function () {
+        cleanupScreenshots();
+      });
+    } catch (error) {
+      console.error("Unable to start cleanupScreenshots process\n", error);
+    }
   } else {
     console.log("INVALID NEXT RUNTIME. BACKGROUND TASKS WILL NOT WORK");
   }
