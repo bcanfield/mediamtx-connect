@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/bcanfield/mediamtx-connect/compare/v1.1.0...v1.2.0) (2023-11-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency next to v14.0.3 ([44ac2a0](https://github.com/bcanfield/mediamtx-connect/commit/44ac2a0e8ea88915a2d7025a7a4011a47added4e))
+
+
+### Features
+
+* Rename app ([#25](https://github.com/bcanfield/mediamtx-connect/issues/25)) ([e9acd20](https://github.com/bcanfield/mediamtx-connect/commit/e9acd2080ab5f4fc67970efaafdb942eebd4250e))
+
 # [1.1.0](https://github.com/bcanfield/nextstream/compare/v1.0.1...v1.1.0) (2023-11-28)
 
 
