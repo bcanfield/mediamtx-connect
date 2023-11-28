@@ -47,6 +47,17 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
+# Create Screenshots and Recordings Directories
+RUN mkdir /screenshots
+RUN chown nextjs:nodejs /screenshots
+
+RUN mkdir /recordings
+RUN chown nextjs:nodejs /recordings
+
+RUN apk update
+RUN apk upgrade
+RUN apk add --no-cache ffmpeg
+
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

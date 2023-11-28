@@ -4,15 +4,34 @@ services:
     image: bluenviron/mediamtx:1.3.1@sha256:209f2f88114779015d07905d3002bdc8bdebdb773ab99674fbe613cd4a2f16e8
     container_name: mediamtx
     restart: unless-stopped
+    environment:
+      - MTX_API=yes
+      - MTX_APIADDRESS=:9997
+      - MTX_RECORD=yes
     volumes:
-      - type: bind
-        source: ${MEDIAMTX_CONFIG_DIR}/mediamtx.yml
-        target: /mediamtx.yml
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+    networks:
+      - mtx
     ports:
       - 8554:8554
-      - 8890:8890/udp 
+      - 8890:8890/udp
       - 1935:1935
       - 8888:8888
       - 8889:8889
       - 9997:9997
+  mtxui:
+    build:
+      context: ./
+    container_name: mtxui
+    restart: unless-stopped
+    volumes:
+      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+    environment:
+      - REMOTE_BROWSER_MEDIAMTX_URL=${REMOTE_BROWSER_MEDIAMTX_URL}
+    networks:
+      - mtx
+    ports:
+      - 3000:3000
+networks:
+  mtx:
+    name: mtx

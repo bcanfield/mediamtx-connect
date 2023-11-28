@@ -1,0 +1,9 @@
+.git/
+docker-cam/
+.next/
+.env
+*.md 
+**/*.DS_Store
+LICENSE
+.gitignore
+.docker-compose.yml
