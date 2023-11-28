@@ -1,35 +1,38 @@
 module.exports = {
-    branches: [
-      "main",
+  branches: [
+    "main",
+    {
+      name: "beta",
+      prerelease: true,
+    },
+  ],
+  plugins: [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
       {
-        name: "beta",
-        prerelease: true,
+        changelogFile: "CHANGELOG.md",
       },
     ],
-    plugins: [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/changelog",
-        {
-          changelogFile: "CHANGELOG.md",
-        },
-      ],
-      "@semantic-release/github",
-      [
-        "@semantic-release/git",
-        {
-          assets: ["CHANGELOG.md", "package.json"],
-        },
-      ],
-      ["@semantic-release/exec", {
-        "prepareCmd": "docker build -t bcanfield/nextstream ."
-      }],
-      [
-        "@semantic-release-plus/docker",
-        {
-          "name": "bcanfield/nextstream"
-        }
-      ]
+    "@semantic-release/github",
+    [
+      "@semantic-release/git",
+      {
+        assets: ["CHANGELOG.md", "package.json"],
+      },
     ],
-  };
+    [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "docker build -t bcanfield/mediamtx-connect .",
+      },
+    ],
+    [
+      "@semantic-release-plus/docker",
+      {
+        name: "bcanfield/mediamtx-connect",
+      },
+    ],
+  ],
+};
