@@ -19,7 +19,7 @@ services:
       - 8888:8888
       - 8889:8889
       - 9997:9997
-  mtxui:
+  mediamtx-connect:
     build:
       context: ./
     container_name: mtxui
