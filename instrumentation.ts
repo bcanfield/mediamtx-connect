@@ -23,12 +23,6 @@ export async function register() {
       console.error("NO RECORDING DIRECTORY CONFIGURED");
       return;
     }
-    // if (!fs.existsSync(recordingsDirectory)) {
-    //   fs.mkdirSync(recordingsDirectory);
-    //   console.log("Recordings Directory created successfully.");
-    // } else {
-    //   console.log("Reocrdings Directory already exists.");
-    // }
 
     // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
