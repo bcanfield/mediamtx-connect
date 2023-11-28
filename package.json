@@ -39,7 +39,7 @@
     "fs": "^0.0.1-security",
     "hls.js": "^1.1.5",
     "lucide-react": "^0.292.0",
-    "next": "14.0.1",
+    "next": "14.0.3",
     "next-themes": "^0.2.1",
     "node-cron": "^3.0.3",
     "path": "^0.12.7",
