@@ -1,4 +1,5 @@
 module.exports = {
+  tagFormat: "${version}",
   branches: [
     "main",
     {
@@ -22,17 +23,5 @@ module.exports = {
         assets: ["CHANGELOG.md", "package.json"],
       },
     ],
-    // [
-    //   "@semantic-release/exec",
-    //   {
-    //     prepareCmd: "docker build -t bcanfield/mediamtx-connect .",
-    //   },
-    // ],
-    // [
-    //   "@semantic-release-plus/docker",
-    //   {
-    //     name: "bcanfield/mediamtx-connect",
-    //   },
-    // ],
   ],
 };
