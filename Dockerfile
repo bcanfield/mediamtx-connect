@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20.10.0-alpine@sha256:5ffaaf1eed5668f16f2d59130993b6b4e91263ea73d7556e44faa341d7d1c78a AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -25,7 +25,7 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 # If using npm comment out above and use below instead
 RUN npm run build
@@ -36,7 +36,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -57,6 +57,7 @@ RUN chown nextjs:nodejs /recordings
 RUN apk update
 RUN apk upgrade
 RUN apk add --no-cache ffmpeg
+RUN apk --no-cache add curl
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

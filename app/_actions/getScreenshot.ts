@@ -29,7 +29,9 @@ export default async function getScreenshot({
       "base64",
     )}`;
   } catch {
-    console.error("error generating screenshot");
+    console.error(
+      `Error fetching screenshot for:\n stream: ${streamName}\nrecording: ${recordingFileName}`,
+    );
   }
 
   return base64;

@@ -2,6 +2,9 @@
   "name": "mediamtx-connect",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +13,11 @@
     "release": "semantic-release",
     "start-test-stream": "STREAM_COUNT=5 ./dev/ffmpeg-test.sh",
     "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts",
-    "test": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\""
+    "cross-browser-tests": "npm-run-all test:*",
+    "test:chrome": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser chrome\"",
+    "test:firefox": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser firefox\"",
+    "test:edge": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser edge\"",
+    "test:safari": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser webkit\""
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.4",
@@ -65,6 +72,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.0.0",
+    "npm-run-all": "^4.1.5",
+    "playwright-webkit": "1.34",
     "postcss": "^8",
     "swagger-typescript-api": "^13.0.3",
     "tailwindcss": "^3.3.0",

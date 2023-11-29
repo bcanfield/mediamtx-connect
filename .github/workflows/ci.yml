@@ -1,4 +1,4 @@
-name: "Release"
+name: "CI"
 
 on:
   push:
@@ -28,10 +28,10 @@ jobs:
       - name: Build
         run: npm run build
       - name: Test
-        run: npm run test
+        run: npm run cross-browser-tests
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          # DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          # DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: npm run release

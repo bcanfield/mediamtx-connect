@@ -22,7 +22,7 @@ services:
   mediamtx-connect:
     build:
       context: ./
-    container_name: mtxui
+    container_name: mediamtx-connect
     restart: unless-stopped
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings

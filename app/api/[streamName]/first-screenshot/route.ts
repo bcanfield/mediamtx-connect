@@ -8,20 +8,21 @@ export async function GET(
   request: Request,
   { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
 ) {
-  const { screenshotsDirectory, recordingsDirectory } = appConfig;
+  const { screenshotsDirectory } = appConfig;
 
   try {
-    const firstRecording = fs
-      .readdirSync(path.join(recordingsDirectory, params.streamName))
+    const streamScreenshots = fs
+      .readdirSync(path.join(screenshotsDirectory, params.streamName))
       .filter((f) => !f.startsWith("."));
-    if (firstRecording.length === 0) {
-      throw new Error(`No recordings found for stream: ${params.streamName}`);
+    if (streamScreenshots.length === 0) {
+      throw new Error(`No screenshots found for stream: ${params.streamName}`);
     }
 
+    const firstScreenshot = streamScreenshots[0];
     const screenshotPath = path.join(
       screenshotsDirectory,
       params.streamName,
-      `${path.parse(firstRecording[0]).name}.png`,
+      `${path.parse(firstScreenshot).name}.png`,
     );
 
     const data: ReadableStream = streamFile(screenshotPath);
