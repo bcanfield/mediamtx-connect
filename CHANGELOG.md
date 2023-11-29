@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/bcanfield/mediamtx-connect/compare/v1.2.0...v1.3.0) (2023-11-29)
+
+
+### Bug Fixes
+
+* Add Linux webkit dependency ([1a64149](https://github.com/bcanfield/mediamtx-connect/commit/1a64149aedcc95ebcc4324fe221424ddfbbc76cd))
+
+
+### Features
+
+* Cross-browser testing and bugfixes on Docker setup ([d76134e](https://github.com/bcanfield/mediamtx-connect/commit/d76134e857e2bc1bd7c6c1226732e9074ffd7730))
+
 # [1.2.0](https://github.com/bcanfield/mediamtx-connect/compare/v1.1.0...v1.2.0) (2023-11-28)
 
 
