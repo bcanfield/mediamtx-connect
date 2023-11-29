@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import appConfig from "@/lib/appConfig";
 
 export default async function Config() {
