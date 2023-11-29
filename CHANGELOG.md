@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/bcanfield/mediamtx-connect/compare/v1.3.0...1.3.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* Fix semantic release tag format ([7bcb8af](https://github.com/bcanfield/mediamtx-connect/commit/7bcb8af5db631bf8b9fdcc100fa4cb1afb498396))
+
 # [1.3.0](https://github.com/bcanfield/mediamtx-connect/compare/v1.2.0...v1.3.0) (2023-11-29)
 
 
