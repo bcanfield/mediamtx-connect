@@ -7,3 +7,12 @@ docker-cam/
 LICENSE
 .gitignore
 .docker-compose.yml
+coverage/
+cypress/
+dev/
+node_modules/
+recordings/
+screenshots/
+.dockerignore
+Dockerfile
+cypress.config.js

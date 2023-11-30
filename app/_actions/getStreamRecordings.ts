@@ -4,6 +4,10 @@ import path from "path";
 
 import appConfig from "@/lib/appConfig";
 
+export interface StreamRecording {
+  name: string;
+  createdAt: Date;
+}
 export default async function getRecordings({
   page = 1,
   take = 1,
@@ -27,7 +31,7 @@ export default async function getRecordings({
     .sort((one, two) => (one > two ? -1 : 1))
     .slice(startIndex, endIndex);
 
-  const recordingsWithTime = recordingFiles.map((r) => ({
+  const recordingsWithTime: StreamRecording[] = recordingFiles.map((r) => ({
     name: r,
     createdAt: fs.statSync(path.join(recordingsDirectory, streamName, r))
       .birthtime,

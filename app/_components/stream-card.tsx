@@ -87,7 +87,9 @@ export default function StreamCard({
               }}
             ></Cam>
           ) : thumbnailError ? (
-            <ImageIcon className="h-full w-full"></ImageIcon>
+            <div className="flex items-center justify-center  w-full h-full">
+              <ImageIcon className="h-12 w-12"></ImageIcon>
+            </div>
           ) : (
             <div className="w-full h-full relative">
               <Image
