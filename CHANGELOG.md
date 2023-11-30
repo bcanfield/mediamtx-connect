@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/bcanfield/mediamtx-connect/compare/1.3.1...1.3.2) (2023-11-30)
+
+
+### Bug Fixes
+
+* Add alerts when directories dont exist ([92ae1e5](https://github.com/bcanfield/mediamtx-connect/commit/92ae1e5255cda879aeb90217d4ea6d2cf116675a))
+
 ## [1.3.1](https://github.com/bcanfield/mediamtx-connect/compare/v1.3.0...1.3.1) (2023-11-29)
 
 
