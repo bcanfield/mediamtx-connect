@@ -46,8 +46,6 @@ services:
     restart: unless-stopped
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
-    environment:
-      - REMOTE_BROWSER_MEDIAMTX_URL=${REMOTE_BROWSER_MEDIAMTX_URL}
     networks:
       - mtx
     ports:
