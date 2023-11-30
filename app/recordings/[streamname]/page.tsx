@@ -1,5 +1,7 @@
 import getScreenshot from "@/app/_actions/getScreenshot";
-import getRecordings from "@/app/_actions/getStreamRecordings";
+import getRecordings, {
+  StreamRecording,
+} from "@/app/_actions/getStreamRecordings";
 import GridLayout from "@/app/_components/grid-layout";
 import PageLayout from "@/app/_components/page-layout";
 import { getFilesInDirectory } from "@/app/utils/file-operations";
@@ -13,6 +15,7 @@ import {
 import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
 import {
+  AlertTriangle,
   ChevronLeft,
   ChevronRight,
   Image as ImageIcon,
@@ -24,6 +27,7 @@ import Link from "next/link";
 import path from "path";
 import DownloadVideo from "./_components/downloadVideo";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export default async function Recordings({
   params,
   searchParams,
@@ -40,41 +44,59 @@ export default async function Recordings({
 
   const p = path.join(recordingsDirectory, params.streamname);
   console.log({ p });
-  const filesInDirectory = getFilesInDirectory(p);
 
   const startIndex = (page - 1) * +take;
   const endIndex = startIndex + +take;
 
-  const streamRecordings = await getRecordings({
-    recordingsDirectory,
-    screenshotsDirectory,
-    streamName: params.streamname,
-    page: page,
-    take: take,
-  });
+  let filesInDirectory: string[] = [];
+  let streamRecordings: StreamRecording[] = [];
+  let error = false;
+  try {
+    filesInDirectory = getFilesInDirectory(p);
+    streamRecordings = await getRecordings({
+      recordingsDirectory,
+      screenshotsDirectory,
+      streamName: params.streamname,
+      page: page,
+      take: take,
+    });
+  } catch {
+    error = true;
+  }
 
   return (
     <PageLayout header="Recordings" subHeader={params.streamname}>
-      <div className="flex justify-end text-xs">
-        <div className="flex  gap-2">
-          <LinkWrapper
-            href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
-            disabled={+page === 1}
-          >
-            <ChevronLeft className="w-4 h-4"></ChevronLeft>
-          </LinkWrapper>
-          {`Showing ${startIndex} - ${Math.min(
-            endIndex,
-            filesInDirectory.length,
-          )} of ${filesInDirectory.length}`}
-          <LinkWrapper
-            href={{ query: { page: +page + 1 } }}
-            disabled={endIndex >= filesInDirectory.length}
-          >
-            <ChevronRight className="w-4 h-4"></ChevronRight>
-          </LinkWrapper>
+      {error ? (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Uh oh!</AlertTitle>
+          <AlertDescription>
+            {`Could not read recordings directory. Please make sure the directory exists`}
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <div className="flex justify-end text-xs">
+          <div className="flex  gap-2">
+            <LinkWrapper
+              href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
+              disabled={+page === 1}
+            >
+              <ChevronLeft className="w-4 h-4"></ChevronLeft>
+            </LinkWrapper>
+            {`Showing ${startIndex} - ${Math.min(
+              endIndex,
+              filesInDirectory.length,
+            )} of ${filesInDirectory.length}`}
+            <LinkWrapper
+              href={{ query: { page: +page + 1 } }}
+              disabled={endIndex >= filesInDirectory.length}
+            >
+              <ChevronRight className="w-4 h-4"></ChevronRight>
+            </LinkWrapper>
+          </div>
         </div>
-      </div>
+      )}
+
       <GridLayout columnLayout="small">
         {streamRecordings.map(async ({ name, createdAt }) => {
           const base64 = await getScreenshot({

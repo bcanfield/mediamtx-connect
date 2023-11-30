@@ -13,6 +13,7 @@
     "release": "semantic-release",
     "start-test-stream": "STREAM_COUNT=5 ./dev/ffmpeg-test.sh",
     "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts",
+    "start-test-streams": "./dev/ffmpeg-test.sh 5",
     "cross-browser-tests": "npm-run-all test:*",
     "test:install-deps": "npx playwright install-deps webkit",
     "test:chrome": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser chrome\"",

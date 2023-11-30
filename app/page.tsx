@@ -29,6 +29,15 @@ export default async function Home() {
 
   return (
     <PageLayout header="Online Cams">
+      {!paths?.data.items !== undefined && paths?.data.items?.length === 0 && (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Set up some streams!</AlertTitle>
+          <AlertDescription>
+            {`No live streams detected. Add some streams to MediaMTX to view`}
+          </AlertDescription>
+        </Alert>
+      )}
       {mediaMtxConfig?.data.hlsAddress ? (
         <GridLayout columnLayout="small">
           {paths?.data.items?.map(({ name, readyTime }, index) => (

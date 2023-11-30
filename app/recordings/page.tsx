@@ -1,7 +1,6 @@
-import fs from "fs";
-
 import GridLayout from "@/app/_components/grid-layout";
 import PageLayout from "@/app/_components/page-layout";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,19 +9,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import appConfig from "@/lib/appConfig";
-import { redirect } from "next/navigation";
-import { countFilesInSubdirectories } from "../utils/file-operations";
+import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
+import { countFilesInSubdirectories } from "../utils/file-operations";
 export default async function Recordings() {
   const { recordingsDirectory } = appConfig;
-  if (!fs.existsSync(recordingsDirectory)) {
-    redirect("/");
+  let error = false;
+  let streamRecordingDirectories: Record<string, number> = {};
+  try {
+    streamRecordingDirectories =
+      countFilesInSubdirectories(recordingsDirectory);
+  } catch {
+    error = true;
   }
-  const streamRecordingDirectories =
-    countFilesInSubdirectories(recordingsDirectory);
 
   return (
     <PageLayout header="Recordings">
+      {error && (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Whoops!</AlertTitle>
+          <AlertDescription>
+            {`There was an issue reading your recordings directory. Please make sure the directory exists.`}
+          </AlertDescription>
+        </Alert>
+      )}
       <GridLayout columnLayout="xs">
         {Object.entries(streamRecordingDirectories).map(([key, value]) => (
           <Card key={key} className="flex items-center">
