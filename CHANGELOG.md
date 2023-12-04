@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/bcanfield/mediamtx-connect/compare/1.3.2...1.3.3) (2023-12-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency tailwind-merge to v2.1.0 ([e1ce8ea](https://github.com/bcanfield/mediamtx-connect/commit/e1ce8ea7d722bb5b6a5ddbfa69e5d37ebc684caa))
+
 ## [1.3.2](https://github.com/bcanfield/mediamtx-connect/compare/1.3.1...1.3.2) (2023-11-30)
 
 
