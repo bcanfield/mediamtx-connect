@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/bcanfield/mediamtx-connect/compare/1.3.4...1.3.5) (2023-12-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency hls.js to v1.4.13 ([9a957d4](https://github.com/bcanfield/mediamtx-connect/commit/9a957d44079c7de072f6735a4c3ddf63bd188679))
+
 ## [1.3.4](https://github.com/bcanfield/mediamtx-connect/compare/1.3.3...1.3.4) (2023-12-05)
 
 
