@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.3.1@sha256:209f2f88114779015d07905d3002bdc8bdebdb773ab99674fbe613cd4a2f16e8
+    image: bluenviron/mediamtx:1.4.0@sha256:8611ad6c3343d4b9f0329d63edf00ed62766ba2bec2701ee5f3fcb04365ad428
     container_name: mediamtx
     restart: unless-stopped
     environment:
