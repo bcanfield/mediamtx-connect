@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/bcanfield/mediamtx-connect/compare/1.3.5...1.3.6) (2023-12-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @typescript-eslint/eslint-plugin to v6.14.0 ([bdfbe0f](https://github.com/bcanfield/mediamtx-connect/commit/bdfbe0fc104f1dee69d1b904001be269ff359dd6))
+
 ## [1.3.5](https://github.com/bcanfield/mediamtx-connect/compare/1.3.4...1.3.5) (2023-12-07)
 
 
