@@ -93,11 +93,12 @@ export default function StreamCard({
           ) : (
             <div className="w-full h-full relative">
               <Image
-                layout="fill"
                 alt=""
+                fill
                 onError={() => setThumbnailError(true)}
                 src={`/api/${streamName}/first-screenshot`}
-              ></Image>
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
           )}
         </div>
