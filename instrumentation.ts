@@ -16,7 +16,32 @@ export async function register() {
       console.error("NO RECORDING DIRECTORY CONFIGURED");
       return;
     }
+    const createDirectoryIfNotExists = async (
+      directoryPath: string,
+    ): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        fs.access(directoryPath, fs.constants.F_OK, (err) => {
+          if (err) {
+            // Directory doesn't exist, creating it
+            fs.mkdir(directoryPath, { recursive: true }, (mkdirErr) => {
+              if (mkdirErr) {
+                reject(mkdirErr);
+              } else {
+                console.log(`Directory "${directoryPath}" created.`);
+                resolve();
+              }
+            });
+          } else {
+            // Directory already exists
+            console.log(`Directory "${directoryPath}" already exists.`);
+            resolve();
+          }
+        });
+      });
+    };
 
+    await createDirectoryIfNotExists(screenshotsDirectory);
+    await createDirectoryIfNotExists(recordingsDirectory);
     // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
       console.log("Cleaning up sccreenshots");
