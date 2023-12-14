@@ -46,7 +46,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <header className="sticky top-0 z-40 w-full bg-background shadow border-b px-4">
-            <div className="flex h-16 items-center max-w-8xl space-x-4 sm:justify-between sm:space-x-0 mx-auto px-4">
+            <div className="flex h-16 items-center max-w-8xl space-x-4 sm:justify-between sm:space-x-0 mx-auto">
               <div className="flex gap-6 md:gap-10">
                 <Link
                   href="/"
