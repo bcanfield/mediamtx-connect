@@ -9,15 +9,20 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { GridFormItem } from "@/components/grid-form-item";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { GlobalConf } from "@/lib/MediaMTX/generated";
 import { Plus, Trash } from "lucide-react";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 
 export default function ConfigForm({
   globalConf,
@@ -33,9 +38,6 @@ export default function ConfigForm({
     control: form.control,
     name: "webrtcICEServers2",
   });
-  useEffect(() => {
-    console.log({ fields });
-  }, [fields]);
 
   const onSubmit = (values: z.infer<typeof EvaluatorInfoFormSchema>) => {
     console.log({ values });
@@ -51,13 +53,20 @@ export default function ConfigForm({
 
   return (
     <Form {...form}>
-      <form className="space-y-2 py-2" onSubmit={form.handleSubmit(onSubmit)}>
-        <Button
-          type="submit"
-          disabled={!form.formState.isDirty || !form.formState.isValid}
-        >
-          Submit
-        </Button>
+      <form
+        className="space-y-2 py-2 flex flex-col"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <div className="flex justify-end py-2">
+          <Button
+            type="submit"
+            disabled={!form.formState.isValid}
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            Submit
+          </Button>
+        </div>
+
         <FormField
           name="logLevel"
           control={form.control}
@@ -191,12 +200,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="API">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -224,12 +244,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="Metrics">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -257,12 +288,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="PPROF">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -305,12 +347,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="Run on Connect Restart">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -338,12 +391,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="RTSP">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -533,12 +597,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="RTMP">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -626,12 +701,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="HLS">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -659,12 +745,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="HLS Encryption">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -707,12 +804,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="HLS Always Remux">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -851,12 +959,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="WebRTC">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -884,12 +1003,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="WebRTC Encryption">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -998,12 +1128,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="WebRTC IPs From Interfaces">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -1053,7 +1194,7 @@ export default function ConfigForm({
           )}
         ></FormField>
 
-        <div className="flex flex-col gap-2 border">
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div>
               <span className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-default">
@@ -1147,12 +1288,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="SRT">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>
@@ -1180,12 +1332,23 @@ export default function ConfigForm({
           render={({ field }) => (
             <GridFormItem label="Record">
               <>
-                <FormControl {...field}>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value === "true" ? true : false);
+                  }}
+                  defaultValue={String(field.value)}
+                  value={String(field.value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">True</SelectItem>
+                    <SelectItem value="false">False</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormDescription />
                 <FormMessage />
               </>

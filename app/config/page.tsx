@@ -19,7 +19,12 @@ export default async function Config() {
     console.error("Error reaching MediaMTX at: ", url);
   }
   return (
-    <div className="border border-red-500 px-4">
+    <div className="flex flex-col gap-4 px-4">
+      <header id="header" className="relative z-2">
+        <div className="flex flex-col">
+          <h2 className="text-3xl font-bold tracking-tight">Global Config</h2>
+        </div>
+      </header>
       <ConfigForm globalConf={globalConf} />
     </div>
   );
