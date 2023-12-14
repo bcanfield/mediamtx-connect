@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/bcanfield/mediamtx-connect/compare/1.3.7...1.3.8) (2023-12-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pino to v8.17.1 ([f8ff227](https://github.com/bcanfield/mediamtx-connect/commit/f8ff22760e9f649542f55b706d518f75a37488be))
+
 ## [1.3.7](https://github.com/bcanfield/mediamtx-connect/compare/1.3.6...1.3.7) (2023-12-13)
 
 
