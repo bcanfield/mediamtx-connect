@@ -22,12 +22,12 @@ export default function NavBar({ items }: Props) {
 
   return (
     <div className="flex h-16 items-center max-w-8xl space-x-4 sm:justify-between sm:space-x-0 mx-auto">
-      <div className="flex gap-6 md:gap-10">
-        <Link href="/" className="hidden md:flex items-center space-x-2">
+      <div className="flex gap-6 sm:gap-10">
+        <Link href="/" className="hidden sm:flex items-center space-x-2">
           <span className="font-bold inline-block">{"Connect"}</span>
         </Link>
         <>
-          <nav className="hidden gap-6 md:flex">
+          <nav className="hidden gap-6 sm:flex">
             {items?.map(({ location, name }) => (
               <Link
                 key={location}
@@ -41,7 +41,7 @@ export default function NavBar({ items }: Props) {
               </Link>
             ))}
           </nav>
-          <div className="flex md:hidden items-center">
+          <div className="flex sm:hidden items-center">
             <Sheet>
               <SheetTrigger>
                 <Menu className="w-6 h-6" />

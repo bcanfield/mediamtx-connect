@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import SW from "./_components/sw";
 import "./globals.css";
 import NavBar from "./nav-bar";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,12 +37,16 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="sticky top-0 z-40 w-full bg-background shadow border-b px-4">
-            <NavBar items={navItems}></NavBar>
+          <header className="flex sticky top-0 z-40 w-full bg-background shadow border-b justify-center">
+            <div className="px-4 w-full max-w-7xl">
+              <NavBar items={navItems}></NavBar>
+            </div>
           </header>
           <div className="max-w-7xl w-full">{children}</div>
         </ThemeProvider>
+        <Toaster></Toaster>
       </body>
+
       <SW></SW>
     </html>
   );
