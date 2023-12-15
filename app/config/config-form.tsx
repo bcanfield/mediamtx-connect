@@ -23,12 +23,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { GlobalConf } from "@/lib/MediaMTX/generated";
 import { Plus, Trash } from "lucide-react";
 import { ChangeEvent } from "react";
+import updateGlobalConfig from "../_actions/updateGlobalConfig";
+import { useToast } from "@/components/ui/use-toast";
+import { Separator } from "@/components/ui/separator";
 
 export default function ConfigForm({
   globalConf,
 }: {
   globalConf?: GlobalConf;
 }) {
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof EvaluatorInfoFormSchema>>({
     resolver: zodResolver(EvaluatorInfoFormSchema),
     mode: "onBlur",
@@ -39,8 +44,19 @@ export default function ConfigForm({
     name: "webrtcICEServers2",
   });
 
-  const onSubmit = (values: z.infer<typeof EvaluatorInfoFormSchema>) => {
-    console.log({ values });
+  const onSubmit = async (values: z.infer<typeof EvaluatorInfoFormSchema>) => {
+    const updated = await updateGlobalConfig({ globalConfig: values });
+    if (updated) {
+      toast({
+        title: "Updated Global Config",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "There was an issue updating the Global Config",
+        description: "Please double check your form values.",
+      });
+    }
   };
   const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
@@ -119,11 +135,12 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
         <FormField
           name="readTimeout"
           control={form.control}
           render={({ field }) => (
-            <GridFormItem label="Log File">
+            <GridFormItem label="Read Timeout">
               <>
                 <FormControl {...field}>
                   <Input />
@@ -194,6 +211,7 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
         <FormField
           name="api"
           control={form.control}
@@ -238,6 +256,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="metrics"
           control={form.control}
@@ -282,6 +302,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="pprof"
           control={form.control}
@@ -326,6 +348,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="runOnConnect"
           control={form.control}
@@ -385,6 +409,7 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
         <FormField
           name="rtsp"
           control={form.control}
@@ -540,6 +565,7 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
         <FormField
           name="serverKey"
           control={form.control}
@@ -591,6 +617,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="rtmp"
           control={form.control}
@@ -695,6 +723,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="hls"
           control={form.control}
@@ -953,6 +983,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="webrtc"
           control={form.control}
@@ -1281,6 +1313,7 @@ export default function ConfigForm({
             </div>
           ))}
         </div>
+        <Separator />
 
         <FormField
           name="srt"
@@ -1326,6 +1359,8 @@ export default function ConfigForm({
             </GridFormItem>
           )}
         ></FormField>
+        <Separator />
+
         <FormField
           name="record"
           control={form.control}

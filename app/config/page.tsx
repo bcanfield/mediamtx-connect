@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { Api, GlobalConf } from "@/lib/MediaMTX/generated";
 import appConfig from "@/lib/appConfig";
 import ConfigForm from "./config-form";
+import PageLayout from "../_components/page-layout";
 
 export default async function Config() {
   const { url, port } = appConfig;
@@ -19,13 +20,8 @@ export default async function Config() {
     console.error("Error reaching MediaMTX at: ", url);
   }
   return (
-    <div className="flex flex-col gap-4 px-4">
-      <header id="header" className="relative z-2">
-        <div className="flex flex-col">
-          <h2 className="text-3xl font-bold tracking-tight">Global Config</h2>
-        </div>
-      </header>
+    <PageLayout header="Global Config">
       <ConfigForm globalConf={globalConf} />
-    </div>
+    </PageLayout>
   );
 }
