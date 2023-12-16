@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+import getAppConfig from "@/app/_actions/getAppConfig";
 import getScreenshot from "@/app/_actions/getScreenshot";
 import getRecordings, {
   StreamRecording,
@@ -5,6 +8,8 @@ import getRecordings, {
 import GridLayout from "@/app/_components/grid-layout";
 import PageLayout from "@/app/_components/page-layout";
 import { getFilesInDirectory } from "@/app/utils/file-operations";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +17,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import appConfig from "@/lib/appConfig";
 import dayjs from "dayjs";
 import {
   AlertTriangle,
@@ -26,8 +30,6 @@ import Image from "next/image";
 import Link from "next/link";
 import path from "path";
 import DownloadVideo from "./_components/downloadVideo";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export default async function Recordings({
   params,
   searchParams,
@@ -37,12 +39,15 @@ export default async function Recordings({
   };
   searchParams: { take: number; page: number };
 }) {
-  const { recordingsDirectory, screenshotsDirectory } = appConfig;
-
+  const config = await getAppConfig();
+  console.log({ config });
+  if (!config) {
+    return <div>Invalid Config</div>;
+  }
   const page = searchParams.page || 1;
   const take = searchParams.take || 10;
 
-  const p = path.join(recordingsDirectory, params.streamname);
+  const p = path.join(config.recordingsDirectory, params.streamname);
   console.log({ p });
 
   const startIndex = (page - 1) * +take;
@@ -54,8 +59,8 @@ export default async function Recordings({
   try {
     filesInDirectory = getFilesInDirectory(p);
     streamRecordings = await getRecordings({
-      recordingsDirectory,
-      screenshotsDirectory,
+      recordingsDirectory: config.recordingsDirectory,
+      screenshotsDirectory: config.screenshotsDirectory,
       streamName: params.streamname,
       page: page,
       take: take,

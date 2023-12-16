@@ -1,8 +1,14 @@
 .git/
+.github/
 docker-cam/
 .next/
+.eslintrc.json
+.gitignore
+renovate.json
+release.config.json
 .env
 *.md 
+*.db*
 **/*.DS_Store
 LICENSE
 .gitignore

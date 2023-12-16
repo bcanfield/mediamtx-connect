@@ -1,17 +1,21 @@
 "use server";
 
-import appConfig from "@/lib/appConfig";
 import { Api, GlobalConf } from "@/lib/MediaMTX/generated";
+import getAppConfig from "./getAppConfig";
 
 export default async function updateGlobalConfig({
   globalConfig,
 }: {
   globalConfig: GlobalConf;
 }): Promise<boolean> {
-  const { url, port } = appConfig;
-
+  const config = await getAppConfig();
+  if (!config) {
+    return false;
+  }
   console.log("Updating Global Config");
-  const api = new Api({ baseUrl: `${url}:${port}` });
+  const api = new Api({
+    baseUrl: `${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
+  });
 
   try {
     const resp = await api.v3.configGlobalSet(globalConfig);

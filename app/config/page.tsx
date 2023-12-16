@@ -1,23 +1,25 @@
 export const dynamic = "force-dynamic";
 
 import { Api, GlobalConf } from "@/lib/MediaMTX/generated";
-import appConfig from "@/lib/appConfig";
-import ConfigForm from "./config-form";
+import getAppConfig from "../_actions/getAppConfig";
 import PageLayout from "../_components/page-layout";
+import ConfigForm from "./config-form";
 
 export default async function Config() {
-  const { url, port } = appConfig;
-  // const config = appConfig;
-  // let paths: HttpResponse<PathList, Error> | undefined;
-  // let mediaMtxConfig: HttpResponse<GlobalConf, Error> | undefined;
+  const config = await getAppConfig();
+  if (!config) {
+    return <div>Invalid Config</div>;
+  }
   let globalConf: GlobalConf | undefined;
-  const api = new Api({ baseUrl: `${url}:${port}` });
+  const api = new Api({
+    baseUrl: `${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
+  });
 
   try {
     const mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-cache" });
     globalConf = mediaMtxConfig?.data;
   } catch {
-    console.error("Error reaching MediaMTX at: ", url);
+    console.error("Error reaching MediaMTX at: ", config.mediaMtxUrl);
   }
   return (
     <PageLayout header="Global Config">

@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import appConfig from "@/lib/appConfig";
 import GridLayout from "./_components/grid-layout";
 import PageLayout from "./_components/page-layout";
 import StreamCard from "./_components/stream-card";
@@ -13,18 +12,25 @@ import {
 } from "@/lib/MediaMTX/generated";
 import { AlertTriangle } from "lucide-react";
 
+import getAppConfig from "./_actions/getAppConfig";
+
 export default async function Home() {
-  const { remoteMediaMtxUrl, url, port } = appConfig;
+  const config = await getAppConfig();
+  if (!config) {
+    return <div>Invalid Config</div>;
+  }
 
   let paths: HttpResponse<PathList, Error> | undefined;
   let mediaMtxConfig: HttpResponse<GlobalConf, Error> | undefined;
-  const api = new Api({ baseUrl: `${url}:${port}` });
+  const api = new Api({
+    baseUrl: `${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
+  });
 
   try {
     paths = await api.v3.pathsList();
     mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-cache" });
   } catch {
-    console.error("Error reaching MediaMTX at: ", url);
+    console.error("Error reaching MediaMTX at: ", config.mediaMtxUrl);
   }
 
   return (
@@ -47,7 +53,7 @@ export default async function Home() {
                 streamName: name,
                 readyTime,
                 hlsAddress: mediaMtxConfig?.data.hlsAddress,
-                remoteMediaMtxUrl,
+                remoteMediaMtxUrl: config.remoteMediaMtxUrl,
               }}
             ></StreamCard>
           ))}
