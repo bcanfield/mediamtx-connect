@@ -81,7 +81,7 @@ export default async function Recordings({
         </Alert>
       ) : (
         <div className="flex justify-end text-xs">
-          <div className="flex  gap-2">
+          <div className="flex gap-2">
             <LinkWrapper
               href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
               disabled={+page === 1}
