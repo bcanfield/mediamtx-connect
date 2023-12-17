@@ -6,19 +6,25 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Cam from "./cam";
-import { useState } from "react";
-import Image from "next/image";
-import { Film, Info, Video, VideoOff, Image as ImageIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
+import {
+  Film,
+  Image as ImageIcon,
+  Info,
+  PauseCircle,
+  PlayCircle,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import Cam from "./cam";
 
 export default function StreamCard({
   props,
@@ -64,7 +70,7 @@ export default function StreamCard({
     const search = current.toString();
     const query = search ? `?${search}` : "";
 
-    router.push(`${pathname}${query}`);
+    router.push(`${pathname}${query}`, { scroll: false });
   };
 
   const isLive = searchParams
@@ -79,7 +85,7 @@ export default function StreamCard({
         <CardDescription>{streamName}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
-        <div className="flex items-center flex-auto w-full border border-red-500">
+        <div className="flex items-center flex-auto w-full ">
           {isLive ? (
             <Cam
               props={{
@@ -112,9 +118,10 @@ export default function StreamCard({
             size={"sm"}
           >
             {isLive ? (
-              <VideoOff className="h-4 w-4"></VideoOff>
+              <PauseCircle className="h-4 w-4  animate-pulse"></PauseCircle>
             ) : (
-              <Video className="h-4 w-4"></Video>
+              // <Video className="h-4 w-4"></Video>
+              <PlayCircle className="h-4 w-4"></PlayCircle>
             )}
           </Button>
 
