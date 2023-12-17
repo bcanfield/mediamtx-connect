@@ -20,7 +20,6 @@ import {
   PlayCircle,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import DownloadVideo from "../recordings/[streamname]/_components/downloadVideo";
@@ -124,12 +123,12 @@ export default function RecordingCard({
             )}
           </Button>
 
-          <Link href={`/recordings/${streamName}`} className="basis-1/4">
+          <div className="basis-1/4">
             <DownloadVideo
               streamName={streamName}
               filePath={fileName}
             ></DownloadVideo>
-          </Link>
+          </div>
 
           <Popover>
             <PopoverTrigger asChild className="basis-1/4">
