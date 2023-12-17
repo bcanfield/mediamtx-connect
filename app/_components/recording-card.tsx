@@ -79,7 +79,11 @@ export default function RecordingCard({
   return (
     <Card className="flex flex-col aspect-square">
       <CardHeader className="text-xs">
-        <CardDescription>{streamName}</CardDescription>
+        <CardDescription>
+          <div className="flex flex-col gap-2">
+            <div>{dayjs(props.createdAt).format("MMMM D, YYYY h:mm A")}</div>
+          </div>
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
         <div className="flex items-center flex-auto w-full ">
