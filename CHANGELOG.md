@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/bcanfield/mediamtx-connect/compare/1.3.8...1.4.0) (2023-12-17)
+
+
+### Bug Fixes
+
+* Migrate Prisma before Cross-Browser Tests ([72d0424](https://github.com/bcanfield/mediamtx-connect/commit/72d0424ffdb43ade18177330d977289f5f7263bd))
+* Update Cypress Tests to match updated UI ([5ae62cf](https://github.com/bcanfield/mediamtx-connect/commit/5ae62cf3e0431687becf278d4b2209dfdb88e23e))
+
+
+### Features
+
+* Add forms for configuring MediaMTX API ([#57](https://github.com/bcanfield/mediamtx-connect/issues/57)) ([bbb2b0a](https://github.com/bcanfield/mediamtx-connect/commit/bbb2b0a3dbc578d432de8a2fab6e9f86dce7422e))
+
 ## [1.3.8](https://github.com/bcanfield/mediamtx-connect/compare/1.3.7...1.3.8) (2023-12-14)
 
 
