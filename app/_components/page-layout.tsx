@@ -19,7 +19,7 @@ export default async function PageLayout({
         </Suspense>
       </header>
       <Separator />
-      <div>{children}</div>
+      {children}
     </main>
   );
 }
