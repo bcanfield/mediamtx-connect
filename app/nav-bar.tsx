@@ -10,8 +10,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { ModeToggle } from "./_components/mode-toggle";
 
 type Props = {
   items?: { name: string; location: string }[];
@@ -21,9 +22,9 @@ export default function NavBar({ items }: Props) {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-16 items-center max-w-8xl space-x-4 sm:justify-between sm:space-x-0 mx-auto">
+    <div className="flex h-16 items-center max-w-8xl sm:justify-between sm:space-x-0 mx-auto">
       <div className="flex gap-6 sm:gap-10 w-full">
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href="/" className="items-center space-x-2 hidden sm:flex">
           <span className="font-bold inline-block">{"Connect"}</span>
         </Link>
         <>
@@ -41,15 +42,24 @@ export default function NavBar({ items }: Props) {
               </Link>
             ))}
           </nav>
-          <div className="flex w-full sm:hidden items-center justify-end">
+          <div className="flex w-full sm:hidden items-center justify-start ">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild className="flex items-center p-2">
-                <Button variant="ghost">
+              <DropdownMenuTrigger asChild className="flex items-center  ">
+                <Button variant="ghost" size={"icon"}>
                   <Menu></Menu>
-                  <ChevronDown className="w-4 h-4"></ChevronDown>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href={"/"}
+                    className={cn(
+                      "text-primary font-extrabold transition-colors hover:text-primary",
+                    )}
+                  >
+                    Home
+                  </Link>
+                </DropdownMenuItem>
                 {items?.map(({ location, name }, index) => (
                   <DropdownMenuItem asChild key={index}>
                     <Link
@@ -70,8 +80,10 @@ export default function NavBar({ items }: Props) {
         </>
       </div>
 
-      <div className="flex flex-1 items-center space-x-4 justify-end">
-        {/* <nav className="flex space-x-4">User</nav> */}
+      <div className="flex flex-1 items-center justify-end">
+        <nav className="flex space-x-4 px-2">
+          <ModeToggle />
+        </nav>
       </div>
     </div>
   );

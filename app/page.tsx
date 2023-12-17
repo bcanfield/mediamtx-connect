@@ -33,8 +33,10 @@ export default async function Home() {
     console.error("Error reaching MediaMTX at: ", config.mediaMtxUrl);
   }
 
+  const remoteMediaMtxUrl = config.remoteMediaMtxUrl;
+
   return (
-    <PageLayout header="Online Cams">
+    <PageLayout header="Streams" subHeader="Live views of your active streams">
       {!paths?.data.items !== undefined && paths?.data.items?.length === 0 && (
         <Alert>
           <AlertTriangle className="h-4 w-4" />
@@ -44,7 +46,16 @@ export default async function Home() {
           </AlertDescription>
         </Alert>
       )}
-      {mediaMtxConfig?.data.hlsAddress ? (
+      {!remoteMediaMtxUrl && (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Set up your Remote MediaMTX Url!</AlertTitle>
+          <AlertDescription>
+            {`Head over to the config page. You need to set up your remote MediaMTX Url to view your streams`}
+          </AlertDescription>
+        </Alert>
+      )}
+      {mediaMtxConfig?.data.hlsAddress && remoteMediaMtxUrl !== null ? (
         <GridLayout columnLayout="small">
           {paths?.data.items?.map(({ name, readyTime }, index) => (
             <StreamCard
@@ -53,7 +64,7 @@ export default async function Home() {
                 streamName: name,
                 readyTime,
                 hlsAddress: mediaMtxConfig?.data.hlsAddress,
-                remoteMediaMtxUrl: config.remoteMediaMtxUrl,
+                remoteMediaMtxUrl: remoteMediaMtxUrl,
               }}
             ></StreamCard>
           ))}
