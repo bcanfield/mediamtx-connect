@@ -14,27 +14,24 @@ import {
 } from "@/components/ui/popover";
 import dayjs from "dayjs";
 import {
-  Film,
   Image as ImageIcon,
   Info,
   PauseCircle,
   PlayCircle,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import Cam from "./cam";
+import DownloadVideo from "../recordings/[streamname]/_components/downloadVideo";
 
-export default function StreamCard({
+export default function RecordingCard({
   props,
 }: {
   props: {
-    remoteMediaMtxUrl: string;
     streamName?: string;
-    hlsAddress?: string;
-    readyTime?: string | null;
+    fileName?: string;
     thumbnail?: string | null;
+    createdAt: Date;
   };
 }) {
   const router = useRouter();
@@ -42,23 +39,22 @@ export default function StreamCard({
   const searchParams = useSearchParams();
   const [thumbnailError, setThumbnailError] = useState<boolean>(false);
 
-  if (!props.streamName) {
+  if (!props.streamName || !props.fileName) {
     return <>Error getting stream</>;
   }
   const streamName = props.streamName;
-  const onCamSelect = (streamName: string) => {
+  const fileName = props.fileName;
+  const onCamSelect = (fileName: string) => {
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
     let currentSelectedCams = current.get("liveCams")?.split(",");
     if (currentSelectedCams) {
-      if (currentSelectedCams.includes(streamName)) {
-        currentSelectedCams = currentSelectedCams.filter(
-          (c) => c !== streamName,
-        );
+      if (currentSelectedCams.includes(fileName)) {
+        currentSelectedCams = currentSelectedCams.filter((c) => c !== fileName);
       } else {
-        currentSelectedCams.push(streamName);
+        currentSelectedCams.push(fileName);
       }
     } else {
-      currentSelectedCams = [streamName];
+      currentSelectedCams = [fileName];
     }
 
     if (currentSelectedCams.length > 0) {
@@ -77,21 +73,26 @@ export default function StreamCard({
     .get("liveCams")
     ?.split(",")
     .filter(Boolean)
-    .includes(props.streamName);
+    .includes(fileName);
 
+  console.log({ fileName });
   return (
     <Card className="flex flex-col aspect-square">
       <CardHeader className="text-xs">
-        <CardDescription>{streamName}</CardDescription>
+        <CardDescription>
+          {dayjs(props.createdAt).format("MMMM D, YYYY h:mm A")}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
         <div className="flex items-center flex-auto w-full ">
           {isLive ? (
-            <Cam
-              props={{
-                address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${streamName}/index.m3u8`,
-              }}
-            ></Cam>
+            <video
+              className="w-full"
+              autoPlay
+              controls
+              playsInline
+              src={`/api/${props.streamName}/${props.fileName}/view-recording`}
+            ></video>
           ) : thumbnailError ? (
             <div className="flex items-center justify-center  w-full h-full">
               <ImageIcon className="h-12 w-12"></ImageIcon>
@@ -110,26 +111,26 @@ export default function StreamCard({
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Button
             variant={"outline"}
-            onClick={() => onCamSelect(streamName)}
+            onClick={() => onCamSelect(fileName)}
             className="basis-1/2"
             size={"sm"}
           >
             {isLive ? (
               <PauseCircle className="h-4 w-4  animate-pulse"></PauseCircle>
             ) : (
-              // <Video className="h-4 w-4"></Video>
               <PlayCircle className="h-4 w-4"></PlayCircle>
             )}
           </Button>
 
-          <Link href={`/recordings/${streamName}`} className="basis-1/4">
-            <Button variant={"outline"} className="w-full" size={"sm"}>
-              <Film className="h-4 w-4"></Film>
-            </Button>
-          </Link>
+          <div className="basis-1/4">
+            <DownloadVideo
+              streamName={streamName}
+              filePath={fileName}
+            ></DownloadVideo>
+          </div>
 
           <Popover>
             <PopoverTrigger asChild className="basis-1/4">
@@ -140,18 +141,18 @@ export default function StreamCard({
             <PopoverContent className="w-80 p-2">
               <div className="grid gap-4">
                 <div className="space-y-2">
-                  <p className="text-md text-muted-foreground">Stream</p>
+                  <p className="text-md text-muted-foreground">Recording</p>
                 </div>
                 <div className="grid gap-2 text-sm">
                   <div className="flex items-center gap-4">
                     <span>Name:</span>
-                    <span>{streamName}</span>
+                    <span>{fileName}</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-sm">Online:</span>
-                    {props.readyTime && (
+                    <span className="text-sm">Created:</span>
+                    {props.createdAt && (
                       <span>
-                        {dayjs(props.readyTime).format("MMMM D, YYYY h:mm A")}
+                        {dayjs(props.createdAt).format("MMMM D, YYYY h:mm A")}
                       </span>
                     )}
                   </div>

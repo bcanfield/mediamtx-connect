@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 
-import appConfig from "@/lib/appConfig";
+import getAppConfig from "./getAppConfig";
 
 export default async function getScreenshot({
   streamName,
@@ -12,12 +12,14 @@ export default async function getScreenshot({
   recordingFileName: string;
 }) {
   console.log("Getting Recordings");
-  const { screenshotsDirectory } = appConfig;
-
+  const config = await getAppConfig();
+  if (!config) {
+    return null;
+  }
   let base64: string | null = null;
 
   const screenshotPath = path.join(
-    screenshotsDirectory,
+    config.screenshotsDirectory,
     streamName,
     `${path.parse(recordingFileName).name}.png`,
   );

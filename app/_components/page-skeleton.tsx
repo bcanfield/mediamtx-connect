@@ -3,7 +3,7 @@ import GridLayout from "./grid-layout";
 
 export default async function PageSkeleton() {
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-4">
       <header className="flex flex-col gap-2">
         <Skeleton className="h-6 w-24 rounded-md" />
         <Skeleton className="h-4 w-12 rounded-md" />

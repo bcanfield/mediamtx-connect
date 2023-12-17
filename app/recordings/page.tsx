@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import GridLayout from "@/app/_components/grid-layout";
 import PageLayout from "@/app/_components/page-layout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -8,23 +10,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import appConfig from "@/lib/appConfig";
 import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
+import getAppConfig from "../_actions/getAppConfig";
 import { countFilesInSubdirectories } from "../utils/file-operations";
 export default async function Recordings() {
-  const { recordingsDirectory } = appConfig;
+  const config = await getAppConfig();
+  if (!config) {
+    return <div>Invalid Config</div>;
+  }
   let error = false;
   let streamRecordingDirectories: Record<string, number> = {};
   try {
-    streamRecordingDirectories =
-      countFilesInSubdirectories(recordingsDirectory);
+    streamRecordingDirectories = countFilesInSubdirectories(
+      config.recordingsDirectory,
+    );
   } catch {
     error = true;
   }
 
   return (
-    <PageLayout header="Recordings">
+    <PageLayout
+      header="Recordings"
+      subHeader="Browse your recordings across your various streams"
+    >
       {error && (
         <Alert>
           <AlertTriangle className="h-4 w-4" />

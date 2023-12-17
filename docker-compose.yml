@@ -22,14 +22,26 @@ services:
   mediamtx-connect:
     build:
       context: ./
+    depends_on:
+      - mediamtx
     container_name: mediamtx-connect
     restart: unless-stopped
-    volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
     networks:
       - mtx
+    volumes:
+      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
     ports:
       - 3000:3000
+  demo-streams:
+    tty: true
+    build:
+      context: ./dev
+    depends_on:
+      - mediamtx
+    container_name: demo-streams
+    restart: unless-stopped
+    networks:
+      - mtx
 networks:
   mtx:
     name: mtx

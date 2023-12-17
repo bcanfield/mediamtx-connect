@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:database.db"
+}
+
+model Config {
+  id                   Int      @id @default(autoincrement())
+  mediaMtxUrl          String   @default("http://mediamtx")
+  mediaMtxApiPort      Int      @default(9997)
+  remoteMediaMtxUrl    String?  @default("http://localhost")
+  recordingsDirectory  String   @default("/recordings")
+  screenshotsDirectory String   @default("/screenshots")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}

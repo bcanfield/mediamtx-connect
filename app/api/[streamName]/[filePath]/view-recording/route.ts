@@ -1,4 +1,4 @@
-import appConfig from "@/lib/appConfig";
+import getAppConfig from "@/app/_actions/getAppConfig";
 import { ReadStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
 import { NextResponse } from "next/server";
@@ -8,10 +8,14 @@ export async function GET(
   request: Request,
   { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
 ) {
-  const { recordingsDirectory } = appConfig;
-
+  const config = await getAppConfig();
+  if (!config) {
+    return new NextResponse(null, {
+      status: 500,
+    });
+  }
   const recordingPath = path.join(
-    recordingsDirectory,
+    config.recordingsDirectory,
     params.streamName,
     params.filePath,
   );

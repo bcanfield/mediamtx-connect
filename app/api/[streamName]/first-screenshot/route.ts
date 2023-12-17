@@ -1,18 +1,22 @@
-import appConfig from "@/lib/appConfig";
-import { ReadStream, createReadStream } from "fs";
+import getAppConfig from "@/app/_actions/getAppConfig";
+import fs, { ReadStream, createReadStream } from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
-import fs from "fs";
 
 export async function GET(
   request: Request,
   { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
 ) {
-  const { screenshotsDirectory } = appConfig;
+  const config = await getAppConfig();
+  if (!config) {
+    return new NextResponse(null, {
+      status: 500,
+    });
+  }
 
   try {
     const streamScreenshots = fs
-      .readdirSync(path.join(screenshotsDirectory, params.streamName))
+      .readdirSync(path.join(config.screenshotsDirectory, params.streamName))
       .filter((f) => !f.startsWith("."));
     if (streamScreenshots.length === 0) {
       throw new Error(`No screenshots found for stream: ${params.streamName}`);
@@ -20,7 +24,7 @@ export async function GET(
 
     const firstScreenshot = streamScreenshots[0];
     const screenshotPath = path.join(
-      screenshotsDirectory,
+      config.screenshotsDirectory,
       params.streamName,
       `${path.parse(firstScreenshot).name}.png`,
     );

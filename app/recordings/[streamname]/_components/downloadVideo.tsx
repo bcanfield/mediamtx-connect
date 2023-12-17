@@ -60,6 +60,7 @@ export default function DownloadVideo({
       disabled={loading}
       className="w-full"
       variant={"outline"}
+      size={"sm"}
       onClick={handleDownload}
     >
       {loading ? (
