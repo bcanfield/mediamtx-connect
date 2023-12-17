@@ -27,6 +27,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Migrate
+        run: npm run migrate
       - name: Test
         run: npm run cross-browser-tests
       - name: Release
