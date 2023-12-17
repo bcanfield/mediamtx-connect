@@ -56,7 +56,7 @@ export default function Cam({ props }: { props: { address: string } }) {
   }, [props.address]);
   return (
     <video
-      className="w-full h-full"
+      className="w-full"
       ref={videoRef}
       muted={true}
       autoPlay

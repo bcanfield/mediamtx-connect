@@ -1,4 +1,4 @@
-import appConfig from "./lib/appConfig";
+import prisma from "@/lib/prisma";
 
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
@@ -6,17 +6,54 @@ export async function register() {
     const cp = await import("child_process");
     const fs = await import("fs");
     const path = await import("path");
-    const { recordingsDirectory, screenshotsDirectory } = appConfig;
+    const NODE_ENV = process.env.NODE_ENV || "development";
+    console.log({ NODE_ENV });
 
-    if (!screenshotsDirectory) {
-      console.error("NO SCREENSHOT DIRECTORY CONFIGURED");
-      return;
-    }
-    if (!recordingsDirectory) {
-      console.error("NO RECORDING DIRECTORY CONFIGURED");
-      return;
+    let config = await prisma.config.findFirst();
+    if (!config) {
+      config = await prisma.config.create({
+        data: {
+          mediaMtxApiPort: 9997,
+          mediaMtxUrl: "http://mediamtx",
+          recordingsDirectory:
+            NODE_ENV === "production" ? "/recordings" : "./recordings",
+          screenshotsDirectory:
+            NODE_ENV === "production" ? "/screenshots" : "./screenshots",
+          remoteMediaMtxUrl: "http://localhost",
+        },
+      });
     }
 
+    console.log({ config });
+    const recordingsDirectory = config.recordingsDirectory;
+    const screenshotsDirectory = config.screenshotsDirectory;
+
+    const createDirectoryIfNotExists = async (
+      directoryPath: string,
+    ): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        fs.access(directoryPath, fs.constants.F_OK, (err) => {
+          if (err) {
+            // Directory doesn't exist, creating it
+            fs.mkdir(directoryPath, { recursive: true }, (mkdirErr) => {
+              if (mkdirErr) {
+                reject(mkdirErr);
+              } else {
+                console.log(`Directory "${directoryPath}" created.`);
+                resolve();
+              }
+            });
+          } else {
+            // Directory already exists
+            console.log(`Directory "${directoryPath}" already exists.`);
+            resolve();
+          }
+        });
+      });
+    };
+
+    await createDirectoryIfNotExists(screenshotsDirectory);
+    await createDirectoryIfNotExists(recordingsDirectory);
     // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
       console.log("Cleaning up sccreenshots");

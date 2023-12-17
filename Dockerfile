@@ -8,13 +8,9 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+COPY --chown=node:node prisma ./prisma
 
+RUN npm ci && npx prisma generate
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -63,6 +59,13 @@ RUN apk --no-cache add curl
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=node:node /app/node_modules/prisma/ ./node_modules/prisma/
+COPY --from=builder --chown=node:node /app/node_modules/@prisma/ ./node_modules/@prisma/
+
+COPY --chown=node:node --from=builder /app/scripts/start.sh ./start.sh
+COPY --chown=node:node --from=builder /app/prisma ./prisma
+RUN chown -R nextjs:nodejs ./prisma
+RUN chmod -R 777 ./prisma
 
 USER nextjs
 
@@ -72,6 +75,5 @@ ENV PORT 3000
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["node", "server.js"]
+ENTRYPOINT [ "/bin/sh" ]
+CMD ["./start.sh"]

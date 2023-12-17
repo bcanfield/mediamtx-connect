@@ -2,11 +2,13 @@
 import fs from "fs";
 import path from "path";
 
-import appConfig from "@/lib/appConfig";
+import getAppConfig from "./getAppConfig";
+import getScreenshot from "./getScreenshot";
 
 export interface StreamRecording {
   name: string;
   createdAt: Date;
+  base64: string | null;
 }
 export default async function getRecordings({
   page = 1,
@@ -19,22 +21,32 @@ export default async function getRecordings({
   take?: number;
   streamName: string;
 }) {
+  const config = await getAppConfig();
   console.log("Getting Recordings");
-  const { recordingsDirectory } = appConfig;
-
+  if (!config) {
+    return [];
+  }
   const startIndex = (page - 1) * +take;
   const endIndex = startIndex + +take;
 
   const recordingFiles = fs
-    .readdirSync(path.join(recordingsDirectory, streamName))
+    .readdirSync(path.join(config.recordingsDirectory, streamName))
     .filter((f) => !f.startsWith("."))
     .sort((one, two) => (one > two ? -1 : 1))
     .slice(startIndex, endIndex);
 
-  const recordingsWithTime: StreamRecording[] = recordingFiles.map((r) => ({
-    name: r,
-    createdAt: fs.statSync(path.join(recordingsDirectory, streamName, r))
-      .birthtime,
-  }));
+  const recordingsWithTime: StreamRecording[] = await Promise.all(
+    recordingFiles.map(async (r) => ({
+      name: r,
+      createdAt: fs.statSync(
+        path.join(config.recordingsDirectory, streamName, r),
+      ).birthtime,
+      base64: await getScreenshot({
+        recordingFileName: r,
+        streamName: streamName,
+      }),
+    })),
+  );
+
   return recordingsWithTime;
 }
