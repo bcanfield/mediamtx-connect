@@ -78,8 +78,8 @@ export default function StreamCard({
       <CardHeader className="text-xs">
         <CardDescription>{streamName}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col flex-auto justify-between gap-2">
-        <div className="flex items-center flex-auto w-full">
+      <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
+        <div className="flex items-center flex-auto w-full border border-red-500">
           {isLive ? (
             <Cam
               props={{
@@ -95,6 +95,7 @@ export default function StreamCard({
               <Image
                 alt=""
                 fill
+                objectFit="contain"
                 onError={() => setThumbnailError(true)}
                 src={`/api/${streamName}/first-screenshot`}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
