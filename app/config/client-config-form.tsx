@@ -118,7 +118,10 @@ export default function ClientConfigForm({
                 <FormControl {...field}>
                   <Input placeholder="/recordings" />
                 </FormControl>
-                <FormDescription />
+                <FormDescription>
+                  Directory containing MediaMTX recordings (Not recommended to
+                  change if using Docker)
+                </FormDescription>
                 <FormMessage />
               </>
             </GridFormItem>
@@ -133,7 +136,10 @@ export default function ClientConfigForm({
                 <FormControl {...field}>
                   <Input placeholder="/screenshots" />
                 </FormControl>
-                <FormDescription />
+                <FormDescription>
+                  Directory to store generated screenshots (Not recommended to
+                  change if using Docker)
+                </FormDescription>
                 <FormMessage />
               </>
             </GridFormItem>
