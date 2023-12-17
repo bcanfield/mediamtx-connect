@@ -15,7 +15,7 @@ export function GridFormItem({
     <FormItem>
       <div
         className={cn(
-          "grid grid-cols-2 w-full items-center",
+          "grid grid-cols-2 gap-2 w-full items-center",
           hidden && "hidden",
         )}
       >

@@ -1,3 +1,6 @@
+import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
+
 export default async function PageLayout({
   children,
   header,
@@ -8,15 +11,15 @@ export default async function PageLayout({
   subHeader?: string;
 }) {
   return (
-    <main className="flex flex-col gap-4 p-4">
-      <header id="header" className="relative z-2">
-        <div className="flex flex-col">
-          <h2 className="text-2xl font-bold tracking-tight">{header}</h2>
-          {subHeader && <h2 className="text-md">{subHeader}</h2>}
-        </div>
+    <main className="flex flex-col gap-4">
+      <header className="space-y-0.5">
+        <h2 className="text-2xl font-bold tracking-tight">{header}</h2>
+        <Suspense fallback={<p>Loading feed...</p>}>
+          {subHeader && <p className="text-muted-foreground">{subHeader}</p>}
+        </Suspense>
       </header>
-
-      {children}
+      <Separator />
+      <div>{children}</div>
     </main>
   );
 }

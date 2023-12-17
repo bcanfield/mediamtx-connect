@@ -24,9 +24,9 @@ export async function register() {
       });
     }
 
+    console.log({ config });
     const recordingsDirectory = config.recordingsDirectory;
     const screenshotsDirectory = config.screenshotsDirectory;
-    console.log({ recordingsDirectory, screenshotsDirectory });
 
     const createDirectoryIfNotExists = async (
       directoryPath: string,

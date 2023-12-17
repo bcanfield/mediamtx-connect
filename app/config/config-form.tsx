@@ -34,8 +34,8 @@ export default function ConfigForm({
 }) {
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof EvaluatorInfoFormSchema>>({
-    resolver: zodResolver(EvaluatorInfoFormSchema),
+  const form = useForm<z.infer<typeof GlobalConfigFormSchema>>({
+    resolver: zodResolver(GlobalConfigFormSchema),
     mode: "onBlur",
     defaultValues: globalConf,
   });
@@ -44,7 +44,7 @@ export default function ConfigForm({
     name: "webrtcICEServers2",
   });
 
-  const onSubmit = async (values: z.infer<typeof EvaluatorInfoFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof GlobalConfigFormSchema>) => {
     const updated = await updateGlobalConfig({ globalConfig: values });
     if (updated) {
       toast({
@@ -76,8 +76,7 @@ export default function ConfigForm({
         <div className="flex justify-end py-2">
           <Button
             type="submit"
-            disabled={!form.formState.isValid}
-            onClick={form.handleSubmit(onSubmit)}
+            disabled={!form.formState.isValid || !form.formState.isDirty}
           >
             Submit
           </Button>
@@ -1470,7 +1469,7 @@ export default function ConfigForm({
   );
 }
 
-export const EvaluatorInfoFormSchema = z.object({
+export const GlobalConfigFormSchema = z.object({
   logLevel: z.string().optional(),
   logDestinations: z.array(z.string()).optional(),
   logFile: z.string().optional(),

@@ -12,11 +12,11 @@ datasource db {
 
 model Config {
   id                   Int      @id @default(autoincrement())
-  mediaMtxUrl          String
-  mediaMtxApiPort      Int
-  remoteMediaMtxUrl    String
-  recordingsDirectory  String
-  screenshotsDirectory String
+  mediaMtxUrl          String   @default("http://mediamtx")
+  mediaMtxApiPort      Int      @default(9997)
+  remoteMediaMtxUrl    String?  @default("http://localhost")
+  recordingsDirectory  String   @default("/recordings")
+  screenshotsDirectory String   @default("/screenshots")
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }

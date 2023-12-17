@@ -30,7 +30,10 @@ export default async function Recordings() {
   }
 
   return (
-    <PageLayout header="Recordings">
+    <PageLayout
+      header="Recordings"
+      subHeader="Browse your recordings across your various streams"
+    >
       {error && (
         <Alert>
           <AlertTriangle className="h-4 w-4" />

@@ -37,12 +37,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="flex sticky top-0 z-40 w-full bg-background shadow border-b justify-center">
+          <header className="flex sticky top-0 z-40 w-full bg-background/75 shadow border-b justify-center backdrop-blur">
             <div className="px-4 w-full max-w-7xl">
               <NavBar items={navItems}></NavBar>
             </div>
           </header>
-          <div className="max-w-7xl w-full">{children}</div>
+          <div className="max-w-7xl p-4 w-full">{children}</div>
         </ThemeProvider>
         <Toaster></Toaster>
       </body>
