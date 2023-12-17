@@ -1,7 +1,6 @@
 export const dynamic = "force-dynamic";
 
 import getAppConfig from "@/app/_actions/getAppConfig";
-import getScreenshot from "@/app/_actions/getScreenshot";
 import getRecordings, {
   StreamRecording,
 } from "@/app/_actions/getStreamRecordings";
@@ -54,7 +53,10 @@ export default async function Recordings({
   }
 
   return (
-    <PageLayout header="Recordings" subHeader={params.streamname}>
+    <PageLayout
+      header="Recordings"
+      subHeader={`Recordings for: ${params.streamname}`}
+    >
       {error ? (
         <Alert>
           <AlertTriangle className="h-4 w-4" />
@@ -87,23 +89,17 @@ export default async function Recordings({
       )}
 
       <GridLayout columnLayout="small">
-        {streamRecordings.map(async ({ name, createdAt }) => {
-          const base64 = await getScreenshot({
-            recordingFileName: name,
-            streamName: params.streamname,
-          });
-          return (
-            <RecordingCard
-              key={name}
-              props={{
-                thumbnail: base64,
-                createdAt: createdAt,
-                fileName: name,
-                streamName: params.streamname,
-              }}
-            ></RecordingCard>
-          );
-        })}
+        {streamRecordings.map(({ name, createdAt, base64 }) => (
+          <RecordingCard
+            key={name}
+            props={{
+              thumbnail: base64,
+              createdAt: createdAt,
+              fileName: name,
+              streamName: params.streamname,
+            }}
+          ></RecordingCard>
+        ))}
       </GridLayout>
     </PageLayout>
   );
