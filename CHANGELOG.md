@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/bcanfield/mediamtx-connect/compare/1.4.1...1.4.2) (2023-12-21)
+
+
+### Bug Fixes
+
+* Enhance recording viewing ([55cbe8e](https://github.com/bcanfield/mediamtx-connect/commit/55cbe8e89cb91961ab2be01aabd6c7f8584d7ed6))
+
 ## [1.4.1](https://github.com/bcanfield/mediamtx-connect/compare/1.4.0...1.4.1) (2023-12-21)
 
 
