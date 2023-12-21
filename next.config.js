@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/app",
   reactStrictMode: false,
   swcMinify: true,
   output: "standalone",
