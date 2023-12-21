@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/bcanfield/mediamtx-connect/compare/1.4.0...1.4.1) (2023-12-21)
+
+
+### Bug Fixes
+
+* Add base path to work smoothly behind nginx reverse proxy ([fcba828](https://github.com/bcanfield/mediamtx-connect/commit/fcba8288e302cea9aee5bedbef6a822447e70e48))
+* Add redirect following up basepath addition ([23edc04](https://github.com/bcanfield/mediamtx-connect/commit/23edc04c7b183ac0ce143e1a56ed0e0fdbe6e5b7))
+
 # [1.4.0](https://github.com/bcanfield/mediamtx-connect/compare/1.3.8...1.4.0) (2023-12-17)
 
 
