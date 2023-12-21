@@ -3,7 +3,9 @@
   MediaMTX Connect
 </h1>
   
-  <strong>User Interface for [MediaMTX](https://github.com/bluenviron/mediamtx)</strong>
+  <strong>Interface for viewing and managing media streams of various formats </strong>
+  
+  <strong>Leveraging the power of [MediaMTX](https://github.com/bluenviron/mediamtx) </strong>
 
   ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI)
   [![Docker Hub](https://img.shields.io/badge/bcanfield/mediamtx--connect-docker?label=docker&color=blue)](https://hub.docker.com/r/bcanfield/mediamtx-connect)
@@ -11,13 +13,13 @@
 </div>
 <br>
 
-⚠️ Docs in Progress ⚠️
 
-
+https://github.com/bcanfield/mediamtx-connect/assets/12603953/ae1e3e0f-401e-4560-a373-b46ea5679870
 
 ## Usage
 
-docker-compose (recomended)
+docker-compose
+
 ```
 version: "3.4"
 services:
@@ -55,10 +57,3 @@ networks:
     name: mtx
 
 ```
-
-<strong>Browser Support:</strong>
-
-![Safari](https://img.shields.io/badge/Safari-000000?style=for-the-badge&logo=Safari&logoColor=white)
-![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white)
-![Firefox](https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&logo=Firefox-Browser&logoColor=white)
-![Edge](https://img.shields.io/badge/Edge-0078D7?style=for-the-badge&logo=Microsoft-edge&logoColor=white)
