@@ -40,7 +40,7 @@ export default async function getRecordings({
       name: r,
       createdAt: fs.statSync(
         path.join(config.recordingsDirectory, streamName, r),
-      ).birthtime,
+      ).mtime,
       base64: await getScreenshot({
         recordingFileName: r,
         streamName: streamName,
