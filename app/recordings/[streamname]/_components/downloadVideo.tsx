@@ -5,6 +5,7 @@ import { Download } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function DownloadVideo({
   filePath,
@@ -15,6 +16,7 @@ export default function DownloadVideo({
 }) {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const { toast } = useToast();
 
   const handleDownload = async () => {
     try {
@@ -46,10 +48,18 @@ export default function DownloadVideo({
           response.status,
           response.statusText,
         );
+        toast({
+          variant: "destructive",
+          title: "Error downloading video",
+        });
       }
     } catch (error) {
       // Handle network or other errors
       console.error("Error downloading video:", error);
+      toast({
+        variant: "destructive",
+        title: "Error downloading video",
+      });
     }
     setProgress(0);
     setLoading(false);

@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, RefreshCcw } from "lucide-react";
 import { ModeToggle } from "./_components/mode-toggle";
 
 type Props = {
@@ -81,7 +81,10 @@ export default function NavBar({ items }: Props) {
       </div>
 
       <div className="flex flex-1 items-center justify-end">
-        <nav className="flex space-x-4 px-2">
+        <nav className="flex space-x-4 px-2 items-center">
+          <Button variant={"ghost"} onClick={() => window.location.reload()}>
+            <RefreshCcw></RefreshCcw>
+          </Button>
           <ModeToggle />
         </nav>
       </div>

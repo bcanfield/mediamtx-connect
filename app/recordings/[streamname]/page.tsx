@@ -27,6 +27,7 @@ export default async function Recordings({
   if (!config) {
     return <div>Invalid Config</div>;
   }
+
   const page = searchParams.page || 1;
   const take = searchParams.take || 10;
 
@@ -89,7 +90,7 @@ export default async function Recordings({
       )}
 
       <GridLayout columnLayout="small">
-        {streamRecordings.map(({ name, createdAt, base64 }) => (
+        {streamRecordings.map(({ name, createdAt, base64, fileSize }) => (
           <RecordingCard
             key={name}
             props={{
@@ -97,6 +98,7 @@ export default async function Recordings({
               createdAt: createdAt,
               fileName: name,
               streamName: params.streamname,
+              fileSize,
             }}
           ></RecordingCard>
         ))}

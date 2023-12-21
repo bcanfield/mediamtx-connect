@@ -22,7 +22,7 @@ export async function GET(
       throw new Error(`No screenshots found for stream: ${params.streamName}`);
     }
 
-    const firstScreenshot = streamScreenshots[0];
+    const firstScreenshot = streamScreenshots[streamScreenshots.length - 1];
     const screenshotPath = path.join(
       config.screenshotsDirectory,
       params.streamName,
