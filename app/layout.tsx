@@ -12,6 +12,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const viewport: Viewport = {
   themeColor: "#020817",
+  userScalable: false,
+  initialScale: 1,
+  maximumScale: 1,
+  width: "device-width",
 };
 
 export default async function RootLayout({
