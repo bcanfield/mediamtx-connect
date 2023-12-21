@@ -30,6 +30,7 @@ services:
       - mtx
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+      - ${MEDIAMTX_SCREENSHOTS_DIR}:/screenshots
     ports:
       - 3000:3000
   demo-streams:

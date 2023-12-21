@@ -33,38 +33,49 @@ export default async function handler(
 
   // Get the file stats
   const stats = await stat(recordingPath);
+  //https://blog.logrocket.com/streaming-video-in-safari/
+  if (req.method === "HEAD") {
+    res.statusCode = 200;
+    res.setHeader("accept-ranges", "bytes");
 
-  // Calculate range
-  const range = req.headers.range;
-  const fileSize = stats.size;
-  // const CHUNK_SIZE = 10 ** 6; // 1MB chunk size, you can adjust this
+    // This is our chance to tell the frontend
+    // the full size of the video file.
+    res.setHeader("content-length", stats.size);
 
-  if (range) {
-    const parts = range.replace(/bytes=/, "").split("-");
-    console.log({ parts });
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-    const chunkSize = end - start + 1;
-
-    res.writeHead(206, {
-      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-      "Accept-Ranges": "bytes",
-      "Content-Length": chunkSize,
-      "Content-Type": "video/mp4", // Change the content type according to your video format
-    });
-
-    const fileStream = createReadStream(recordingPath, { start, end });
-
-    fileStream.pipe(res);
+    res.end();
   } else {
-    res.writeHead(200, {
-      "Content-Length": fileSize,
-      "Content-Type": "video/mp4", // Change the content type according to your video format
-    });
+    // Calculate range
+    const range = req.headers.range;
+    const fileSize = stats.size;
+    // const CHUNK_SIZE = 10 ** 6; // 1MB chunk size, you can adjust this
 
-    const fileStream = createReadStream(recordingPath);
+    if (range) {
+      const parts = range.replace(/bytes=/, "").split("-");
+      console.log({ parts });
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
 
-    fileStream.pipe(res);
+      const chunkSize = end - start + 1;
+
+      res.writeHead(206, {
+        "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": chunkSize,
+        "Content-Type": "video/mp4", // Change the content type according to your video format
+      });
+
+      const fileStream = createReadStream(recordingPath, { start, end });
+
+      fileStream.pipe(res);
+    } else {
+      res.writeHead(200, {
+        "Content-Length": fileSize,
+        "Content-Type": "video/mp4", // Change the content type according to your video format
+      });
+
+      const fileStream = createReadStream(recordingPath);
+
+      fileStream.pipe(res);
+    }
   }
 }

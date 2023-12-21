@@ -61,6 +61,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=node:node /app/node_modules/prisma/ ./node_modules/prisma/
 COPY --from=builder --chown=node:node /app/node_modules/@prisma/ ./node_modules/@prisma/
+COPY --from=builder --chown=node:node /app/node_modules/sharp/ ./node_modules/sharp/
 
 COPY --chown=node:node --from=builder /app/scripts/start.sh ./start.sh
 COPY --chown=node:node --from=builder /app/prisma ./prisma
