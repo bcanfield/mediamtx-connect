@@ -25,6 +25,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Cam from "./cam";
+import { cn } from "@/lib/utils";
 
 export default function StreamCard({
   props,
@@ -47,7 +48,9 @@ export default function StreamCard({
   }
   const streamName = props.streamName;
   const onCamSelect = (streamName: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+    const current = new URLSearchParams(
+      searchParams ? Array.from(searchParams.entries()) : [],
+    );
     let currentSelectedCams = current.get("liveCams")?.split(",");
     if (currentSelectedCams) {
       if (currentSelectedCams.includes(streamName)) {
@@ -74,7 +77,7 @@ export default function StreamCard({
   };
 
   const isLive = searchParams
-    .get("liveCams")
+    ?.get("liveCams")
     ?.split(",")
     .filter(Boolean)
     .includes(props.streamName);
@@ -114,13 +117,12 @@ export default function StreamCard({
           <Button
             variant={"outline"}
             onClick={() => onCamSelect(streamName)}
-            className="basis-1/2"
+            className={cn("basis-1/2", { "bg-accent animate-pulse": isLive })}
             size={"sm"}
           >
             {isLive ? (
-              <PauseCircle className="h-4 w-4  animate-pulse"></PauseCircle>
+              <PauseCircle className="h-4 w-4"></PauseCircle>
             ) : (
-              // <Video className="h-4 w-4"></Video>
               <PlayCircle className="h-4 w-4"></PlayCircle>
             )}
           </Button>

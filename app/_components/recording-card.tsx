@@ -32,6 +32,7 @@ export default function RecordingCard({
     fileName?: string;
     thumbnail?: string | null;
     createdAt: Date;
+    fileSize: number;
   };
 }) {
   const router = useRouter();
@@ -45,7 +46,9 @@ export default function RecordingCard({
   const streamName = props.streamName;
   const fileName = props.fileName;
   const onCamSelect = (fileName: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+    const current = new URLSearchParams(
+      searchParams ? Array.from(searchParams.entries()) : [],
+    );
     let currentSelectedCams = current.get("liveCams")?.split(",");
     if (currentSelectedCams) {
       if (currentSelectedCams.includes(fileName)) {
@@ -70,7 +73,7 @@ export default function RecordingCard({
   };
 
   const isLive = searchParams
-    .get("liveCams")
+    ?.get("liveCams")
     ?.split(",")
     .filter(Boolean)
     .includes(fileName);
@@ -79,8 +82,9 @@ export default function RecordingCard({
   return (
     <Card className="flex flex-col aspect-square">
       <CardHeader className="text-xs">
-        <CardDescription>
-          {dayjs(props.createdAt).format("MMMM D, YYYY h:mm A")}
+        <CardDescription className="flex justify-between">
+          <span> {dayjs(props.createdAt).format("MMMM D, YYYY h:mm A")}</span>
+          <span>{(props.fileSize / (1024 * 1024)).toFixed(1) + " MB"}</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
@@ -91,7 +95,7 @@ export default function RecordingCard({
               autoPlay
               controls
               playsInline
-              src={`/api/${props.streamName}/${props.fileName}/view-recording`}
+              src={`/api/pages/${props.streamName}/${props.fileName}/view-recording`}
             ></video>
           ) : thumbnailError ? (
             <div className="flex items-center justify-center  w-full h-full">

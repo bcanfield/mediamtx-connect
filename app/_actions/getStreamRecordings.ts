@@ -9,6 +9,7 @@ export interface StreamRecording {
   name: string;
   createdAt: Date;
   base64: string | null;
+  fileSize: number;
 }
 export default async function getRecordings({
   page = 1,
@@ -36,16 +37,20 @@ export default async function getRecordings({
     .slice(startIndex, endIndex);
 
   const recordingsWithTime: StreamRecording[] = await Promise.all(
-    recordingFiles.map(async (r) => ({
-      name: r,
-      createdAt: fs.statSync(
+    recordingFiles.map(async (r) => {
+      const stat = fs.statSync(
         path.join(config.recordingsDirectory, streamName, r),
-      ).mtime,
-      base64: await getScreenshot({
-        recordingFileName: r,
-        streamName: streamName,
-      }),
-    })),
+      );
+      return {
+        name: r,
+        createdAt: stat.mtime,
+        base64: await getScreenshot({
+          recordingFileName: r,
+          streamName: streamName,
+        }),
+        fileSize: stat.size,
+      };
+    }),
   );
 
   return recordingsWithTime;

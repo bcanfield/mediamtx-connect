@@ -33,7 +33,6 @@ export default function ConfigForm({
   globalConf?: GlobalConf;
 }) {
   const { toast } = useToast();
-
   const form = useForm<z.infer<typeof GlobalConfigFormSchema>>({
     resolver: zodResolver(GlobalConfigFormSchema),
     mode: "onBlur",
@@ -1360,7 +1359,7 @@ export default function ConfigForm({
         ></FormField>
         <Separator />
 
-        <FormField
+        {/* <FormField
           name="record"
           control={form.control}
           render={({ field }) => (
@@ -1463,7 +1462,7 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        ></FormField> */}
       </form>
     </Form>
   );
