@@ -23,14 +23,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "lts/*"
-      - name: Install dependencies
+      - name: Install dependencies (without Cypress binary)
         run: npm ci
+        env:
+          CYPRESS_INSTALL_BINARY: 0
       - name: Build
         run: npm run build
       - name: Migrate
         run: npm run migrate
-      - name: Test
-        run: npm run cross-browser-tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev
+          wait-on: "http://localhost:3000"
+          browser: chrome
+          spec: cypress/e2e/**/*.cy.js
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
