@@ -189,6 +189,9 @@ mediamtx-connect/
 │   └── page.tsx           # Home page (streams)
 ├── components/
 │   └── ui/                # shadcn/ui components
+├── examples/
+│   ├── fake-streams/      # Test streams for development
+│   └── raspberry-pi-camera/  # Pi camera streaming setup
 ├── lib/
 │   ├── MediaMTX/          # Generated API client
 │   ├── prisma.ts          # Prisma client singleton

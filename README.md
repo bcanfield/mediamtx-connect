@@ -209,6 +209,13 @@ echo "MEDIAMTX_RECORDINGS_DIR=./recordings" > .env
 2. Check that the recordings directory is mounted in both containers
 3. Ensure the directory has correct permissions
 
+## Examples
+
+The `examples/` directory contains additional setups:
+
+- **[Fake Streams](examples/fake-streams/)** - Generate test RTSP streams for development without real cameras
+- **[Raspberry Pi Camera](examples/raspberry-pi-camera/)** - Stream from a Raspberry Pi camera module via GStreamer
+
 ## License
 
 [MIT](LICENSE)
