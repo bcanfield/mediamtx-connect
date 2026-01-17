@@ -19,7 +19,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["Inter", "system-ui", "sans-serif", ...fontFamily.sans],
       },
       maxWidth: {
         "7xl": "80rem",
