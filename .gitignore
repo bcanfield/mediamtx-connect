@@ -7,6 +7,7 @@
 # dev
 /recordings
 /screenshots
+/test-data
 # dependencies
 /node_modules
 /.pnp
