@@ -2,13 +2,10 @@ export const dynamic = "force-dynamic";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { Viewport } from "next";
-import { Inter } from "next/font/google";
 import SW from "./_components/sw";
 import "./globals.css";
 import NavBar from "./nav-bar";
 import { Toaster } from "@/components/ui/toaster";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const viewport: Viewport = {
   themeColor: "#020817",
@@ -28,8 +25,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center",
-          inter.variable,
+          "min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center"
         )}
       >
         <ThemeProvider
