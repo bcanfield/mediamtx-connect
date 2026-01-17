@@ -92,9 +92,8 @@ npm run start-test-streams
 | `npm run setup:test-data` | Create mock recordings only |
 | `npm run db:seed` | Seed database with dev config |
 | `npm run db:reset` | Reset database (destructive) |
-| `npm run test:e2e` | Run e2e tests headless |
-| `npm run test:e2e:open` | Open Cypress UI |
-| `npm run test:e2e:chrome` | Run e2e tests in Chrome |
+| `npm run test:e2e` | Run e2e tests (production build) |
+| `npm run test:e2e:dev` | Open Cypress UI (dev server) |
 
 ## Project Structure
 
@@ -137,14 +136,11 @@ We use Cypress for end-to-end testing. Tests are organized by feature:
 Run tests:
 
 ```bash
-# Headless
+# Headless (uses production build)
 npm run test:e2e
 
-# With Cypress UI
-npm run test:e2e:open
-
-# Specific browser
-npm run test:e2e:chrome
+# With Cypress UI (uses dev server)
+npm run test:e2e:dev
 ```
 
 ### Test Data
