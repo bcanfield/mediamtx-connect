@@ -12,15 +12,19 @@
     "lint": "next lint",
     "release": "semantic-release",
     "migrate": "prisma migrate deploy",
+    "db:seed": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "db:reset": "prisma migrate reset --force",
+    "setup": "./scripts/setup-dev.sh",
+    "setup:test-data": "./scripts/setup-test-data.sh",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 'cypress run'",
+    "test:e2e:open": "start-server-and-test dev http://localhost:3000 'cypress open'",
+    "test:e2e:chrome": "start-server-and-test dev http://localhost:3000 'cypress run --browser chrome'",
     "start-test-stream": "STREAM_COUNT=5 ./dev/ffmpeg-test.sh",
     "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts",
-    "start-test-streams": "./dev/ffmpeg-test.sh 5",
-    "cross-browser-tests": "npm-run-all test:*",
-    "test:install-deps": "npx playwright install-deps webkit",
-    "test:chrome": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser chrome\"",
-    "test:firefox": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser firefox\"",
-    "test:edge": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser edge\"",
-    "test:safari": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e --browser webkit\""
+    "start-test-streams": "./dev/ffmpeg-test.sh 5"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -64,6 +68,7 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^20",
+    "ts-node": "^10.9.2",
     "@types/node-cron": "^3.0.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
