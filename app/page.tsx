@@ -11,10 +11,11 @@ import {
   HttpResponse,
   PathList,
 } from "@/lib/MediaMTX/generated";
-import { AlertTriangle, Settings, RefreshCw } from "lucide-react";
+import { AlertTriangle, Settings } from "lucide-react";
 import Link from "next/link";
 
 import getAppConfig from "./_actions/getAppConfig";
+import RefreshButton from "./_components/refresh-button";
 
 export default async function Home() {
   const config = await getAppConfig();
@@ -79,10 +80,7 @@ export default async function Home() {
                   Check Config
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Retry
-              </Button>
+              <RefreshButton />
             </div>
           </AlertDescription>
         </Alert>
