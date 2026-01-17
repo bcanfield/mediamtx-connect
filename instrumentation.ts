@@ -56,7 +56,7 @@ export async function register() {
     await createDirectoryIfNotExists(recordingsDirectory);
     // Deletes screenshots older than 2 days
     const cleanupScreenshots = () => {
-      console.log("Cleaning up sccreenshots");
+      console.log("Cleaning up screenshots");
       try {
         const streamRecordingDirectories =
           getSubdirectories(screenshotsDirectory);
