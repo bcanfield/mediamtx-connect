@@ -1,16 +1,12 @@
+# Production deployment - runs both MediaMTX and mediamtx-connect
+# Usage: docker compose up -d
 services:
   mediamtx:
     image: bluenviron/mediamtx:1.11.3
     container_name: mediamtx
     restart: unless-stopped
-    environment:
-      - MTX_API=yes
-      - MTX_APIADDRESS=:9997
-      - MTX_RECORD=yes
-      - MTX_RECORDPATH=/recordings/%path/%Y-%m-%d_%H-%M-%S
-      - MTX_HLS=yes
-      - MTX_HLSADDRESS=:8888
     volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
     networks:
       - mtx
@@ -29,9 +25,7 @@ services:
 
   mediamtx-connect:
     image: ghcr.io/bcanfield/mediamtx-connect:latest
-    # Uncomment below to build from source instead
-    # build:
-    #   context: ./
+    # build: .  # Uncomment to build from source
     depends_on:
       mediamtx:
         condition: service_healthy
@@ -49,18 +43,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-
-  # Optional: Uncomment to run demo streams for testing
-  # demo-streams:
-  #   tty: true
-  #   build:
-  #     context: ./dev
-  #   depends_on:
-  #     - mediamtx
-  #   container_name: demo-streams
-  #   restart: unless-stopped
-  #   networks:
-  #     - mtx
 
 networks:
   mtx:

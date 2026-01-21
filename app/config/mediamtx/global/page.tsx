@@ -15,7 +15,7 @@ export default async function Global() {
   });
 
   try {
-    const mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-cache" });
+    const mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-store" });
     globalConf = mediaMtxConfig?.data;
   } catch {
     console.error("Error reaching MediaMTX at: ", config.mediaMtxUrl);

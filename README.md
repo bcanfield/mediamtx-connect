@@ -22,204 +22,82 @@ https://github.com/bcanfield/mediamtx-connect/assets/12603953/ae1e3e0f-401e-4560
 - Auto-generated thumbnails for recordings
 - Configurable through web UI
 - Multi-architecture Docker support (amd64/arm64)
-- Health check endpoints for monitoring
 
 ## Quick Start
 
-### 1. Create environment file
-
 ```bash
-# Create .env file
-echo "MEDIAMTX_RECORDINGS_DIR=./recordings" > .env
-```
-
-### 2. Create docker-compose.yml
-
-```yaml
-services:
-  mediamtx:
-    image: bluenviron/mediamtx:1.11.3
-    container_name: mediamtx
-    restart: unless-stopped
-    environment:
-      - MTX_API=yes
-      - MTX_APIADDRESS=:9997
-      - MTX_RECORD=yes
-      - MTX_RECORDPATH=/recordings/%path/%Y-%m-%d_%H-%M-%S
-      - MTX_HLS=yes
-      - MTX_HLSADDRESS=:8888
-    volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
-    networks:
-      - mtx
-    ports:
-      - "8554:8554"      # RTSP
-      - "8890:8890/udp"  # WebRTC/ICE UDP
-      - "1935:1935"      # RTMP
-      - "8888:8888"      # HLS
-      - "8889:8889"      # WebRTC HTTP
-      - "9997:9997"      # API
-
-  mediamtx-connect:
-    image: ghcr.io/bcanfield/mediamtx-connect:latest
-    depends_on:
-      - mediamtx
-    container_name: mediamtx-connect
-    restart: unless-stopped
-    networks:
-      - mtx
-    volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
-      - mediamtx-connect-data:/app/prisma
-    ports:
-      - "3000:3000"
-
-networks:
-  mtx:
-    name: mtx
-
-volumes:
-  mediamtx-connect-data:
-```
-
-### 3. Start the services
-
-```bash
+git clone https://github.com/bcanfield/mediamtx-connect.git
+cd mediamtx-connect
 docker compose up -d
 ```
-
-### 4. Access the web interface
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Configuration
 
+On first launch, navigate to the **Config** page to set:
+
+1. **MediaMTX URL**: Internal URL to reach MediaMTX (default: `http://mediamtx`)
+2. **Remote MediaMTX URL**: External URL for browser stream access (e.g., `http://your-server-ip`)
+3. **Recordings/Screenshots Directory**: Paths inside container (defaults: `/recordings`, `/screenshots`)
+
 ### Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `MEDIAMTX_RECORDINGS_DIR` | Directory for storing recordings | `./recordings` |
-
-### Initial Setup
-
-On first launch, navigate to the **Config** page to set:
-
-1. **MediaMTX URL**: Internal URL to reach MediaMTX (default: `http://mediamtx`)
-2. **MediaMTX API Port**: API port (default: `9997`)
-3. **Remote MediaMTX URL**: External URL for accessing streams in browser (e.g., `http://your-server-ip`)
-4. **Recordings Directory**: Path to recordings inside container (default: `/recordings`)
-5. **Screenshots Directory**: Path for auto-generated thumbnails (default: `/screenshots`)
+| `MEDIAMTX_RECORDINGS_DIR` | Host directory for recordings | `./recordings` |
 
 ## Streaming to MediaMTX
 
-### RTSP Stream
-
 ```bash
+# RTSP
 ffmpeg -re -i input.mp4 -c copy -f rtsp rtsp://localhost:8554/mystream
-```
 
-### RTMP Stream
-
-```bash
+# RTMP
 ffmpeg -re -i input.mp4 -c copy -f flv rtmp://localhost:1935/mystream
 ```
 
-### OBS Studio
-
-1. Go to Settings > Stream
-2. Service: Custom
-3. Server: `rtmp://localhost:1935`
-4. Stream Key: `mystream`
-
-## Architecture Support
-
-Docker images are built for:
-- `linux/amd64` (Intel/AMD 64-bit)
-- `linux/arm64` (ARM 64-bit, Raspberry Pi 4, Apple Silicon)
+**OBS Studio**: Settings > Stream > Custom > Server: `rtmp://localhost:1935` > Stream Key: `mystream`
 
 ## Development
 
-### Prerequisites
-
-- Node.js 20+
-- npm
-
-### Setup
-
 ```bash
-# Install dependencies
-npm install
-
-# Generate Prisma client
-npx prisma generate
-
-# Run database migrations
-npx prisma migrate deploy
-
-# Start development server
+# Setup and run
+./scripts/setup-dev.sh
+docker compose -f docker-compose.dev.yml up -d
 npm run dev
+
+# Optional: add 5 fake test streams
+docker compose -f docker-compose.dev.yml --profile streams up -d
 ```
 
-### Building
+The app runs at [http://localhost:3000](http://localhost:3000).
 
-```bash
-# Build for production
-npm run build
+### Project Structure
 
-# Start production server
-npm start
-```
-
-### Docker Build
-
-```bash
-# Build Docker image
-docker build -t mediamtx-connect .
-
-# Run container
-docker run -p 3000:3000 mediamtx-connect
-```
+| File | Purpose |
+|------|---------|
+| `docker-compose.yml` | Production (both services) |
+| `docker-compose.dev.yml` | Development (MediaMTX only, optional fake streams) |
+| `mediamtx.yml` | MediaMTX config with API access enabled |
 
 ## Troubleshooting
 
-### "Error reaching MediaMTX"
+### "Cannot connect to MediaMTX"
 
-1. Ensure MediaMTX is running: `docker ps | grep mediamtx`
-2. Check the MediaMTX URL in Config page matches your setup
-3. If running outside Docker, use `http://localhost` instead of `http://mediamtx`
-4. Verify the API port (default: 9997) is correct
+1. Check MediaMTX is running: `docker ps | grep mediamtx`
+2. Verify URL in Config page (`http://localhost` for dev, `http://mediamtx` for Docker)
+3. MediaMTX v1.11+ requires the included `mediamtx.yml` for API access
 
-### "MEDIAMTX_RECORDINGS_DIR variable is not set"
+### Streams not showing
 
-Create a `.env` file in the same directory as your `docker-compose.yml`:
-
-```bash
-echo "MEDIAMTX_RECORDINGS_DIR=./recordings" > .env
-```
-
-### Streams not showing in browser
-
-1. Set the **Remote MediaMTX URL** in Config to your server's external IP/hostname
-2. Ensure port 8888 (HLS) is accessible from your browser
-3. Check browser console for CORS or connection errors
-
-### Recordings not appearing
-
-1. Verify `MTX_RECORD=yes` is set in MediaMTX environment
-2. Check that the recordings directory is mounted in both containers
-3. Ensure the directory has correct permissions
+Set **Remote MediaMTX URL** in Config to your server's external IP/hostname.
 
 ## Examples
 
-The `examples/` directory contains additional setups:
-
-- **[Fake Streams](examples/fake-streams/)** - Generate test RTSP streams for development without real cameras
-- **[Raspberry Pi Camera](examples/raspberry-pi-camera/)** - Stream from a Raspberry Pi camera module via GStreamer
+- **[Fake Streams](examples/fake-streams/)** - Test RTSP streams without cameras
+- **[Raspberry Pi Camera](examples/raspberry-pi-camera/)** - Stream from Pi camera via GStreamer
 
 ## License
 
 [MIT](LICENSE)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
