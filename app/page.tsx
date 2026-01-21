@@ -42,8 +42,8 @@ export default async function Home() {
   });
 
   try {
-    paths = await api.v3.pathsList();
-    mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-cache" });
+    paths = await api.v3.pathsList({}, { cache: "no-store" });
+    mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-store" });
   } catch (error) {
     connectionError = true;
     console.error(
