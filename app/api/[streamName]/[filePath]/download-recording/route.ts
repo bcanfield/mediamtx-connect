@@ -6,8 +6,9 @@ import path from "path";
 
 export async function GET(
   _request: Request,
-  { params }: { params: { streamName: string; filePath: string } },
+  { params }: { params: Promise<{ streamName: string; filePath: string }> },
 ) {
+  const { streamName, filePath } = await params;
   const config = await getAppConfig();
   if (!config) {
     return new NextResponse(null, { status: 500 });
@@ -15,8 +16,8 @@ export async function GET(
 
   const recordingPath = path.join(
     config.recordingsDirectory,
-    params.streamName,
-    params.filePath,
+    streamName,
+    filePath,
   );
 
   // Check if file exists before trying to read it

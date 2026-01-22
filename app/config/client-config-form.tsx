@@ -22,13 +22,12 @@ export default function ClientConfigForm({
   clientConfig: Config | null;
 }) {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof ClientConfigFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(ClientConfigFormSchema),
     mode: "onBlur",
-    defaultValues: clientConfig ? clientConfig : undefined,
+    defaultValues: clientConfig ?? undefined,
   });
-  const onSubmit = async (values: z.infer<typeof ClientConfigFormSchema>) => {
-    console.log({ values });
+  const onSubmit = async (values: z.output<typeof ClientConfigFormSchema>) => {
     const updated = await updateClientConfig({ clientConfig: values });
 
     if (updated) {

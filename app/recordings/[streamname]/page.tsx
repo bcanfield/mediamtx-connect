@@ -17,21 +17,22 @@ export default async function Recordings({
   params,
   searchParams,
 }: {
-  params: {
-    streamname: string;
-  };
-  searchParams: { take: number; page: number };
+  params: Promise<{ streamname: string }>;
+  searchParams: Promise<{ take?: number; page?: number }>;
 }) {
+  const { streamname } = await params;
+  const { take: takeParam, page: pageParam } = await searchParams;
+
   const config = await getAppConfig();
   console.log({ config });
   if (!config) {
     return <div>Invalid Config</div>;
   }
 
-  const page = searchParams.page || 1;
-  const take = searchParams.take || 10;
+  const page = pageParam || 1;
+  const take = takeParam || 10;
 
-  const p = path.join(config.recordingsDirectory, params.streamname);
+  const p = path.join(config.recordingsDirectory, streamname);
   console.log({ p });
 
   const startIndex = (page - 1) * +take;
@@ -45,7 +46,7 @@ export default async function Recordings({
     streamRecordings = await getRecordings({
       recordingsDirectory: config.recordingsDirectory,
       screenshotsDirectory: config.screenshotsDirectory,
-      streamName: params.streamname,
+      streamName: streamname,
       page: page,
       take: take,
     });
@@ -56,7 +57,7 @@ export default async function Recordings({
   return (
     <PageLayout
       header="Recordings"
-      subHeader={`Recordings for: ${params.streamname}`}
+      subHeader={`Recordings for: ${streamname}`}
     >
       {error ? (
         <Alert>
@@ -97,7 +98,7 @@ export default async function Recordings({
               thumbnail: base64,
               createdAt: createdAt,
               fileName: name,
-              streamName: params.streamname,
+              streamName: streamname,
               fileSize,
             }}
           ></RecordingCard>
