@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { Viewport } from "next";
-import SW from "./_components/sw";
+import SW from "../components/sw";
 import "./globals.css";
 import NavBar from "./nav-bar";
 import { Toaster } from "@/components/ui/toaster";

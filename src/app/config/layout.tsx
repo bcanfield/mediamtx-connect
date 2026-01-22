@@ -1,5 +1,5 @@
 import { SidebarNav } from "@/components/sidebar-nav";
-import PageLayout from "../_components/page-layout";
+import PageLayout from "../../components/page-layout";
 
 export default async function ConfigLayout({
   children,
