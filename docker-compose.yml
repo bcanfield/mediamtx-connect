@@ -1,27 +1,26 @@
-version: "3.4"
+# Production deployment - runs both MediaMTX and mediamtx-connect
+# Usage: docker compose up -d
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.4.0@sha256:8611ad6c3343d4b9f0329d63edf00ed62766ba2bec2701ee5f3fcb04365ad428
+    image: bluenviron/mediamtx:1.11.3
     container_name: mediamtx
     restart: unless-stopped
-    environment:
-      - MTX_API=yes
-      - MTX_APIADDRESS=:9997
-      - MTX_RECORD=yes
     volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+      - ./mediamtx.yml:/mediamtx.yml:ro
+      - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
     networks:
       - mtx
     ports:
-      - 8554:8554
-      - 8890:8890/udp
-      - 1935:1935
-      - 8888:8888
-      - 8889:8889
-      - 9997:9997
+      - '8554:8554' # RTSP
+      - '8890:8890/udp' # WebRTC/ICE UDP
+      - '1935:1935' # RTMP
+      - '8888:8888' # HLS
+      - '8889:8889' # WebRTC HTTP
+      - '9997:9997' # API
+
   mediamtx-connect:
-    build:
-      context: ./
+    # image: ghcr.io/bcanfield/mediamtx-connect:latest
+    build: . # Uncomment to build from source
     depends_on:
       - mediamtx
     container_name: mediamtx-connect
@@ -29,19 +28,19 @@ services:
     networks:
       - mtx
     volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+      - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
+      - mediamtx-connect-data:/app/prisma
     ports:
-      - 3000:3000
-  demo-streams:
-    tty: true
-    build:
-      context: ./dev
-    depends_on:
-      - mediamtx
-    container_name: demo-streams
-    restart: unless-stopped
-    networks:
-      - mtx
+      - '3000:3000'
+    healthcheck:
+      test: [CMD, curl, -f, 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 networks:
   mtx:
     name: mtx
+
+volumes:
+  mediamtx-connect-data:

@@ -1,4 +1,4 @@
-name: "CI"
+name: CI
 
 on:
   push:
@@ -6,34 +6,99 @@ on:
   pull_request:
     branches: [main, beta]
 
+env:
+  DATABASE_URL: 'file:./src/lib/prisma/database.db'
+
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build
+        run: npm run build
+
+  test:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Start MediaMTX with fake streams
+        run: ./scripts/start-mediamtx.sh
+      - name: Setup database and test data
+        run: |
+          npm run migrate
+          npm run db:seed
+          npm run setup:test-data
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Build application
+        run: npm run build
+      - name: Run E2E tests
+        run: npm run test:e2e
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== MediaMTX logs ==="
+          docker logs mediamtx 2>&1 | tail -50
+          echo "=== Fake streams logs ==="
+          docker logs fake-streams 2>&1 | tail -50
+      - name: Upload Playwright report on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+      - name: Cleanup
+        if: always()
+        run: docker compose -f docker-compose.dev.yml --profile streams down
+
   release:
     name: Release
     runs-on: ubuntu-latest
+    needs: [build, test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     permissions:
       packages: write
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: '20'
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Migrate
-        run: npm run migrate
-      - name: Test
-        run: npm run cross-browser-tests
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          # DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          # DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: npm run release
