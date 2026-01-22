@@ -47,7 +47,6 @@ jobs:
         run: |
           npm run migrate
           npm run db:seed
-          chmod +x ./scripts/setup-test-data.sh
           npm run setup:test-data
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
