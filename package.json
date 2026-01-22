@@ -15,7 +15,7 @@
     "release": "semantic-release",
     "generate": "prisma generate",
     "migrate": "prisma migrate deploy",
-    "db:seed": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "db:seed": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' src/lib/prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "setup": "./scripts/setup-dev.sh",
     "setup:test-data": "./scripts/setup-test-data.sh",
