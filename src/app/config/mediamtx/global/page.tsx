@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import getAppConfig from "@/app/_actions/getAppConfig";
+import getAppConfig from "@/actions/getAppConfig";
 import { Api, GlobalConf } from "@/lib/MediaMTX/generated";
 import ConfigForm from "../../config-form";
 

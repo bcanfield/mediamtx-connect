@@ -1,12 +1,12 @@
 export const dynamic = "force-dynamic";
 
-import getAppConfig from "@/app/_actions/getAppConfig";
+import getAppConfig from "@/actions/getAppConfig";
 import getRecordings, {
   StreamRecording,
-} from "@/app/_actions/getStreamRecordings";
-import GridLayout from "@/app/_components/grid-layout";
-import PageLayout from "@/app/_components/page-layout";
-import RecordingCard from "@/app/_components/recording-card";
+} from "@/actions/getStreamRecordings";
+import GridLayout from "@/components/grid-layout";
+import PageLayout from "@/components/page-layout";
+import RecordingCard from "@/components/recording-card";
 import { getFilesInDirectory } from "@/app/utils/file-operations";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";

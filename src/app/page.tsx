@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import GridLayout from "./_components/grid-layout";
-import PageLayout from "./_components/page-layout";
-import StreamCard from "./_components/stream-card";
+import GridLayout from "@/components/grid-layout";
+import PageLayout from "@/components/page-layout";
+import StreamCard from "@/components/stream-card";
 import {
   Api,
   Error,
@@ -14,8 +14,8 @@ import {
 import { AlertTriangle, Settings } from "lucide-react";
 import Link from "next/link";
 
-import getAppConfig from "./_actions/getAppConfig";
-import RefreshButton from "./_components/refresh-button";
+import getAppConfig from "@/actions/getAppConfig";
+import RefreshButton from "@/components/refresh-button";
 
 export default async function Home() {
   const config = await getAppConfig();

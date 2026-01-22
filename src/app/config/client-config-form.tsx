@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Config } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import updateClientConfig from "../_actions/updateClientConfig";
+import updateClientConfig from "@/actions/updateClientConfig";
 
 export default function ClientConfigForm({
   clientConfig,
