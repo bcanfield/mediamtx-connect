@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import GridLayout from "./grid-layout";
+import { Skeleton } from '@/components/ui/skeleton'
+import GridLayout from './grid-layout'
 
 export default async function PageSkeleton() {
   return (
@@ -9,12 +9,11 @@ export default async function PageSkeleton() {
         <Skeleton className="h-4 w-12 rounded-md" />
       </header>
       <GridLayout columnLayout="small">
-        {Array(4)
-          .fill(0)
-          .map((i, index) => (
-            <Skeleton key={index} className="h-12 w-full rounded-md" />
-          ))}
+        <Skeleton className="h-12 w-full rounded-md" />
+        <Skeleton className="h-12 w-full rounded-md" />
+        <Skeleton className="h-12 w-full rounded-md" />
+        <Skeleton className="h-12 w-full rounded-md" />
       </GridLayout>
     </main>
-  );
+  )
 }

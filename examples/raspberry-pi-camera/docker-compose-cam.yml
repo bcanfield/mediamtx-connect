@@ -1,16 +1,15 @@
-version: "3.4"
+version: '3.4'
 services:
-    gstreamer-video:
-      container_name: gstreamer-video
-      build: ./rpicam
-      restart: always
-      privileged: true
-      network_mode: "host"
-      volumes:
-        - /etc/timezone:/etc/timezone:ro
-        - /etc/localtime:/etc/localtime:ro
-      devices:
-        - "/dev/vchiq:/dev/vchiq"
-        - "/dev/snd:/dev/snd"
-      command: gst-launch-1.0 -v rtspclientsink name=sink protocols=tcp location=${MEDIAMTX_RTSP_URL}/mystream rpicamsrc preview=0 exposure-mode=night fullscreen=0 bitrate=800 annotation-mode=time+date annotation-text-size=20 ! videoconvert ! videoscale ! video/x-raw,width=640,height=480,framerate=15/1 ! x264enc speed-preset=veryfast tune=zerolatency bitrate=800 ! sink. alsasrc device=hw:1,0 ! voaacenc bitrate=800 ! aacparse ! sink.
-
+  gstreamer-video:
+    container_name: gstreamer-video
+    build: ./rpicam
+    restart: always
+    privileged: true
+    network_mode: host
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    devices:
+      - '/dev/vchiq:/dev/vchiq'
+      - '/dev/snd:/dev/snd'
+    command: gst-launch-1.0 -v rtspclientsink name=sink protocols=tcp location=${MEDIAMTX_RTSP_URL}/mystream rpicamsrc preview=0 exposure-mode=night fullscreen=0 bitrate=800 annotation-mode=time+date annotation-text-size=20 ! videoconvert ! videoscale ! video/x-raw,width=640,height=480,framerate=15/1 ! x264enc speed-preset=veryfast tune=zerolatency bitrate=800 ! sink. alsasrc device=hw:1,0 ! voaacenc bitrate=800 ! aacparse ! sink.

@@ -1,27 +1,28 @@
 module.exports = {
-  tagFormat: "${version}",
+  // eslint-disable-next-line no-template-curly-in-string
+  tagFormat: '${version}',
   branches: [
-    "main",
+    'main',
     {
-      name: "beta",
+      name: 'beta',
       prerelease: true,
     },
   ],
   plugins: [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
     [
-      "@semantic-release/changelog",
+      '@semantic-release/changelog',
       {
-        changelogFile: "CHANGELOG.md",
+        changelogFile: 'CHANGELOG.md',
       },
     ],
-    "@semantic-release/github",
+    '@semantic-release/github',
     [
-      "@semantic-release/git",
+      '@semantic-release/git',
       {
-        assets: ["CHANGELOG.md", "package.json"],
+        assets: ['CHANGELOG.md', 'package.json'],
       },
     ],
   ],
-};
+}

@@ -1,8 +1,8 @@
-"use server";
+'use server'
 
-import prisma from "@/lib/prisma";
-import { Config } from "@prisma/client";
+import type { Config } from '@prisma/client'
+import prisma from '@/lib/prisma'
 
 export default async function getAppConfig(): Promise<Config | null> {
-  return await prisma.config.findFirst();
+  return await prisma.config.findFirst()
 }

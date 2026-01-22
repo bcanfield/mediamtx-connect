@@ -1,15 +1,16 @@
-"use server";
+'use server'
 
-import prisma from "@/lib/prisma";
-import { Config } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import type { Config } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
+import logger from '@/app/utils/logger'
+import prisma from '@/lib/prisma'
 
 export default async function updateClientConfig({
   clientConfig,
 }: {
-  clientConfig: Config;
+  clientConfig: Config
 }): Promise<boolean> {
-  console.log("Updating Client Config");
+  logger.info('Updating Client Config')
 
   try {
     const updated = await prisma.config.update({
@@ -17,12 +18,13 @@ export default async function updateClientConfig({
         id: clientConfig.id,
       },
       data: clientConfig,
-    });
-    console.log({ updated });
-    revalidatePath("/");
-  } catch (error) {
-    console.error(error);
-    return false;
+    })
+    logger.debug('Updated config', { updated: updated as unknown as Record<string, unknown> })
+    revalidatePath('/')
   }
-  return true;
+  catch (error) {
+    logger.error('Failed to update client config', error)
+    return false
+  }
+  return true
 }

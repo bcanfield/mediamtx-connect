@@ -157,12 +157,12 @@ Tests should be resilient to different states:
 
 ```typescript
 // Good: Handle multiple possible states
-const cardCount = await page.locator('[class*="card"]').count();
-const hasEmptyMessage = await page.getByText("No Recordings").isVisible();
-expect(cardCount > 0 || hasEmptyMessage).toBe(true);
+const cardCount = await page.locator('[class*="card"]').count()
+const hasEmptyMessage = await page.getByText('No Recordings').isVisible()
+expect(cardCount > 0 || hasEmptyMessage).toBe(true)
 
 // Avoid: Assuming specific state
-await expect(page.locator('[class*="card"]')).toHaveCount(3); // Brittle
+await expect(page.locator('[class*="card"]')).toHaveCount(3) // Brittle
 ```
 
 ## Database

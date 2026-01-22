@@ -12,16 +12,16 @@ services:
       - ./mediamtx.yml:/mediamtx.yml:ro
       - ${MEDIAMTX_RECORDINGS_DIR:-./test-data/recordings}:/recordings
     ports:
-      - "8554:8554"      # RTSP
-      - "8890:8890/udp"  # WebRTC/ICE UDP
-      - "1935:1935"      # RTMP
-      - "8888:8888"      # HLS
-      - "8889:8889"      # WebRTC HTTP
-      - "9997:9997"      # API
+      - '8554:8554' # RTSP
+      - '8890:8890/udp' # WebRTC/ICE UDP
+      - '1935:1935' # RTMP
+      - '8888:8888' # HLS
+      - '8889:8889' # WebRTC HTTP
+      - '9997:9997' # API
 
   # Optional: generates 5 fake RTSP streams for testing
   fake-streams:
-    profiles: ["streams"]
+    profiles: [streams]
     build: ./examples/fake-streams
     container_name: fake-streams
     networks:

@@ -1,14 +1,14 @@
-import { Separator } from "@/components/ui/separator";
-import { Suspense } from "react";
+import { Suspense } from 'react'
+import { Separator } from '@/components/ui/separator'
 
 export default async function PageLayout({
   children,
   header,
   subHeader,
 }: {
-  children: React.ReactNode;
-  header?: string;
-  subHeader?: string;
+  children: React.ReactNode
+  header?: string
+  subHeader?: string
 }) {
   return (
     <main className="flex flex-col gap-4">
@@ -21,5 +21,5 @@ export default async function PageLayout({
       <Separator />
       {children}
     </main>
-  );
+  )
 }

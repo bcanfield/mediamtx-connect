@@ -1,31 +1,32 @@
-export const dynamic = "force-dynamic";
-import { ThemeProvider } from "@/components/theme-provider";
-import { cn } from "@/lib/utils";
-import { Viewport } from "next";
-import SW from "../components/sw";
-import "./globals.css";
-import NavBar from "./nav-bar";
-import { Toaster } from "@/components/ui/toaster";
+import type { Viewport } from 'next'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import { cn } from '@/lib/utils'
+import SW from '../components/sw'
+import NavBar from './nav-bar'
+import './globals.css'
+
+export const dynamic = 'force-dynamic'
 
 export const viewport: Viewport = {
-  themeColor: "#020817",
-};
+  themeColor: '#020817',
+}
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   const navItems = [
-    { name: "Recordings", location: "/recordings" },
-    { name: "Config", location: "/config" },
-  ];
+    { name: 'Recordings', location: '/recordings' },
+    { name: 'Config', location: '/config' },
+  ]
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center"
+          'min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center',
         )}
       >
         <ThemeProvider
@@ -46,5 +47,5 @@ export default async function RootLayout({
 
       <SW></SW>
     </html>
-  );
+  )
 }

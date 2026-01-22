@@ -1,32 +1,32 @@
-import prisma from "@/lib/prisma";
-
 export async function register() {
-  if (process.env.NEXT_RUNTIME === "nodejs") {
-    const cron = await import("node-cron");
-    const cp = await import("child_process");
-    const fs = await import("fs");
-    const path = await import("path");
-    const NODE_ENV = process.env.NODE_ENV || "development";
-    console.log({ NODE_ENV });
+  // eslint-disable-next-line node/prefer-global/process
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    const { default: cron } = await import('node-cron')
+    const { default: cp } = await import('node:child_process')
+    const { default: fs } = await import('node:fs')
+    const { default: path } = await import('node:path')
+    const { default: logger } = await import('@/app/utils/logger')
+    const { env, isProduction } = await import('@/env')
+    const { default: prisma } = await import('@/lib/prisma')
 
-    let config = await prisma.config.findFirst();
+    logger.info('Starting background tasks', { NODE_ENV: env.NODE_ENV })
+
+    let config = await prisma.config.findFirst()
     if (!config) {
       config = await prisma.config.create({
         data: {
           mediaMtxApiPort: 9997,
-          mediaMtxUrl: "http://mediamtx",
-          recordingsDirectory:
-            NODE_ENV === "production" ? "/recordings" : "./recordings",
-          screenshotsDirectory:
-            NODE_ENV === "production" ? "/screenshots" : "./screenshots",
-          remoteMediaMtxUrl: "http://localhost",
+          mediaMtxUrl: 'http://mediamtx',
+          recordingsDirectory: isProduction ? '/recordings' : './recordings',
+          screenshotsDirectory: isProduction ? '/screenshots' : './screenshots',
+          remoteMediaMtxUrl: 'http://localhost',
         },
-      });
+      })
     }
 
-    console.log({ config });
-    const recordingsDirectory = config.recordingsDirectory;
-    const screenshotsDirectory = config.screenshotsDirectory;
+    logger.debug('Using config', { config: config as Record<string, unknown> })
+    const recordingsDirectory = config.recordingsDirectory
+    const screenshotsDirectory = config.screenshotsDirectory
 
     const createDirectoryIfNotExists = async (
       directoryPath: string,
@@ -37,156 +37,161 @@ export async function register() {
             // Directory doesn't exist, creating it
             fs.mkdir(directoryPath, { recursive: true }, (mkdirErr) => {
               if (mkdirErr) {
-                reject(mkdirErr);
-              } else {
-                console.log(`Directory "${directoryPath}" created.`);
-                resolve();
+                reject(mkdirErr)
               }
-            });
-          } else {
-            // Directory already exists
-            console.log(`Directory "${directoryPath}" already exists.`);
-            resolve();
+              else {
+                logger.info(`Directory "${directoryPath}" created.`)
+                resolve()
+              }
+            })
           }
-        });
-      });
-    };
+          else {
+            // Directory already exists
+            logger.debug(`Directory "${directoryPath}" already exists.`)
+            resolve()
+          }
+        })
+      })
+    }
 
-    await createDirectoryIfNotExists(screenshotsDirectory);
-    await createDirectoryIfNotExists(recordingsDirectory);
-    // Deletes screenshots older than 2 days
-    const cleanupScreenshots = () => {
-      console.log("Cleaning up screenshots");
+    await createDirectoryIfNotExists(screenshotsDirectory)
+    await createDirectoryIfNotExists(recordingsDirectory)
+
+    const getSubdirectories = (dirPath: string) => {
       try {
-        const streamRecordingDirectories =
-          getSubdirectories(screenshotsDirectory);
-
-        streamRecordingDirectories.forEach((subdirectory) => {
-          const streamRecordingDirectory = path.join(
-            screenshotsDirectory,
-            subdirectory,
-          );
-          const files = fs
-            .readdirSync(streamRecordingDirectory)
-            .filter((f) => !f.startsWith("."));
-          const twoDaysAgo = Date.now() - 2 * 24 * 60 * 60 * 1000; // Calculate the timestamp for 2 days ago
-
-          files.forEach((file) => {
-            const filePath = path.join(streamRecordingDirectory, file);
-            const fileStat = fs.statSync(filePath);
-
-            if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {
-              fs.unlinkSync(filePath); // Delete the file if it's older than 2 days
-              console.log(`Deleted screenshot: ${filePath}`);
-            }
-          });
-        });
-      } catch (err) {
-        throw new Error(`Error deleting files: ${err}`);
+        const files = fs.readdirSync(dirPath).filter(f => !f.startsWith('.'))
+        const subdirectories = files.filter((file) => {
+          const filePath = path.join(dirPath, file)
+          return fs.statSync(filePath).isDirectory()
+        })
+        return subdirectories
       }
-    };
+      catch (err) {
+        throw new Error(`Error reading directory: ${err}`)
+      }
+    }
 
     const getFileNamesWithoutExtension = (directoryPath: string) => {
       try {
         const files = fs
           .readdirSync(directoryPath)
-          .filter((f) => !f.startsWith("."));
-        return files.map((file) => path.parse(file).name);
-      } catch (err) {
-        throw new Error(`Error reading directory: ${err}`);
+          .filter(f => !f.startsWith('.'))
+        return files.map(file => path.parse(file).name)
       }
-    };
+      catch (err) {
+        throw new Error(`Error reading directory: ${err}`)
+      }
+    }
 
-    const getSubdirectories = (dirPath: string) => {
+    // Deletes screenshots older than 2 days
+    const cleanupScreenshots = () => {
+      logger.info('Cleaning up screenshots')
       try {
-        const files = fs.readdirSync(dirPath).filter((f) => !f.startsWith("."));
-        const subdirectories = files.filter((file) => {
-          const filePath = path.join(dirPath, file);
-          return fs.statSync(filePath).isDirectory();
-        });
-        return subdirectories;
-      } catch (err) {
-        throw new Error(`Error reading directory: ${err}`);
+        const streamRecordingDirectories = getSubdirectories(screenshotsDirectory)
+
+        streamRecordingDirectories.forEach((subdirectory) => {
+          const streamRecordingDirectory = path.join(
+            screenshotsDirectory,
+            subdirectory,
+          )
+          const files = fs
+            .readdirSync(streamRecordingDirectory)
+            .filter(f => !f.startsWith('.'))
+          const twoDaysAgo = Date.now() - 2 * 24 * 60 * 60 * 1000 // Calculate the timestamp for 2 days ago
+
+          files.forEach((file) => {
+            const filePath = path.join(streamRecordingDirectory, file)
+            const fileStat = fs.statSync(filePath)
+
+            if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {
+              fs.unlinkSync(filePath) // Delete the file if it's older than 2 days
+              logger.info(`Deleted screenshot: ${filePath}`)
+            }
+          })
+        })
       }
-    };
+      catch (err) {
+        throw new Error(`Error deleting files: ${err}`)
+      }
+    }
 
     const generateScreenshots = () => {
-      console.log("Scanning new recordings to generate new screenshots");
-      const streamRecordingDirectories = getSubdirectories(recordingsDirectory);
+      logger.info('Scanning new recordings to generate new screenshots')
+      const streamRecordingDirectories = getSubdirectories(recordingsDirectory)
 
       streamRecordingDirectories.forEach((subdirectory) => {
         const streamScreenshotDirectory = path.join(
           screenshotsDirectory,
           subdirectory,
-        );
+        )
         if (!fs.existsSync(streamScreenshotDirectory)) {
-          fs.mkdirSync(streamScreenshotDirectory);
-          console.log("Screenshots Directory created successfully.");
+          fs.mkdirSync(streamScreenshotDirectory)
+          logger.info('Screenshots Directory created successfully.')
         }
         const filesInSubdir = getFileNamesWithoutExtension(
           path.join(recordingsDirectory, subdirectory),
-        );
+        )
         const filesInOtherDirectory = getFileNamesWithoutExtension(
           path.join(streamScreenshotDirectory),
-        );
+        )
 
         const recordingsWithoutScreenshots = filesInSubdir.filter(
-          (file) => !filesInOtherDirectory.includes(file),
-        );
+          file => !filesInOtherDirectory.includes(file),
+        )
 
-        console.log(
-          `${recordingsWithoutScreenshots.length} Recordings without screenshots in: ${subdirectory}:`,
-        );
-        // For each recording without a screenshot, generate it and put it in the screenshots directory
+        logger.info(
+          `${recordingsWithoutScreenshots.length} Recordings without screenshots in: ${subdirectory}`,
+        )
+
         recordingsWithoutScreenshots.forEach((recording) => {
-          const cmd = "ffmpeg";
+          const cmd = 'ffmpeg'
           const inputFile = path.join(
             recordingsDirectory,
             subdirectory,
             `${recording}.mp4`,
-          );
+          )
           const outputFile = path.join(
             streamScreenshotDirectory,
             `${recording}.png`,
-          );
+          )
           const args = [
-            "-ss",
-            "00:00:00",
-            "-i",
+            '-ss',
+            '00:00:00',
+            '-i',
             inputFile,
-            "-frames:v",
-            "1",
+            '-frames:v',
+            '1',
             outputFile,
-          ];
-          const proc = cp.spawn(cmd, args);
-          proc.stderr.setEncoding("utf8");
+          ]
+          const proc = cp.spawn(cmd, args)
+          proc.stderr.setEncoding('utf8')
 
-          proc.on("close", function () {
-            console.log(`Finished Generating screenshot ${outputFile}`);
-          });
-        });
-      });
-    };
+          proc.on('close', () => {
+            logger.info(`Finished Generating screenshot ${outputFile}`)
+          })
+        })
+      })
+    }
     try {
-      generateScreenshots();
+      generateScreenshots()
       // Run every 30 mins
-      cron.schedule("*/30 * * * *", async function () {
-        generateScreenshots();
-      });
-    } catch (error) {
-      console.error("Unable to start generateScreenshots process\n", error);
+      cron.schedule('*/30 * * * *', async () => {
+        generateScreenshots()
+      })
+    }
+    catch (error) {
+      logger.error('Unable to start generateScreenshots process', error)
     }
 
     try {
-      cleanupScreenshots();
+      cleanupScreenshots()
       // Run every day at midnight
-      cron.schedule("0 0 0 * * *", async function () {
-        cleanupScreenshots();
-      });
-    } catch (error) {
-      console.error("Unable to start cleanupScreenshots process\n", error);
+      cron.schedule('0 0 0 * * *', async () => {
+        cleanupScreenshots()
+      })
     }
-  } else {
-    console.log("INVALID NEXT RUNTIME. BACKGROUND TASKS WILL NOT WORK");
+    catch (error) {
+      logger.error('Unable to start cleanupScreenshots process', error)
+    }
   }
 }

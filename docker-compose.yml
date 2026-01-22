@@ -11,24 +11,18 @@ services:
     networks:
       - mtx
     ports:
-      - "8554:8554"      # RTSP
-      - "8890:8890/udp"  # WebRTC/ICE UDP
-      - "1935:1935"      # RTMP
-      - "8888:8888"      # HLS
-      - "8889:8889"      # WebRTC HTTP
-      - "9997:9997"      # API
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9997/v3/paths/list"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - '8554:8554' # RTSP
+      - '8890:8890/udp' # WebRTC/ICE UDP
+      - '1935:1935' # RTMP
+      - '8888:8888' # HLS
+      - '8889:8889' # WebRTC HTTP
+      - '9997:9997' # API
 
   mediamtx-connect:
-    image: ghcr.io/bcanfield/mediamtx-connect:latest
-    # build: .  # Uncomment to build from source
+    # image: ghcr.io/bcanfield/mediamtx-connect:latest
+    build: . # Uncomment to build from source
     depends_on:
-      mediamtx:
-        condition: service_healthy
+      - mediamtx
     container_name: mediamtx-connect
     restart: unless-stopped
     networks:
@@ -37,9 +31,9 @@ services:
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
       - mediamtx-connect-data:/app/prisma
     ports:
-      - "3000:3000"
+      - '3000:3000'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      test: [CMD, curl, -f, 'http://localhost:3000/api/health']
       interval: 30s
       timeout: 10s
       retries: 3
