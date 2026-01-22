@@ -3,23 +3,45 @@ import fs, { ReadStream, createReadStream } from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 
+// 1x1 transparent PNG to return when no screenshot exists
+// This prevents Next.js image optimizer errors
+const TRANSPARENT_PNG = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+  "base64"
+);
+
+function notFoundResponse() {
+  return new NextResponse(TRANSPARENT_PNG, {
+    status: 404,
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 export async function GET(
-  request: Request,
-  { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
+  _request: Request,
+  { params }: { params: { streamName: string; filePath: string } },
 ) {
   const config = await getAppConfig();
   if (!config) {
-    return new NextResponse(null, {
-      status: 500,
-    });
+    return notFoundResponse();
   }
 
   try {
+    const screenshotDir = path.join(config.screenshotsDirectory, params.streamName);
+
+    // Check if directory exists before trying to read it
+    if (!fs.existsSync(screenshotDir)) {
+      return notFoundResponse();
+    }
+
     const streamScreenshots = fs
-      .readdirSync(path.join(config.screenshotsDirectory, params.streamName))
+      .readdirSync(screenshotDir)
       .filter((f) => !f.startsWith("."));
     if (streamScreenshots.length === 0) {
-      throw new Error(`No screenshots found for stream: ${params.streamName}`);
+      return notFoundResponse();
     }
 
     const firstScreenshot = streamScreenshots[streamScreenshots.length - 1];
@@ -38,14 +60,10 @@ export async function GET(
       }),
     });
     return res;
-  } catch (error: any) {
+  } catch (error) {
     console.error(`Error Getting First Screenshot: `, error);
+    return notFoundResponse();
   }
-
-  return new NextResponse(null, {
-    status: 500,
-    headers: new Headers({}),
-  });
 }
 function streamFile(path: string): ReadableStream {
   const downloadStream = createReadStream(path);
@@ -68,7 +86,7 @@ async function* nodeStreamToIterator(stream: ReadStream) {
  * https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
  */
 function iteratorToStream(
-  iterator: AsyncGenerator<any, void, unknown>,
+  iterator: AsyncGenerator<Buffer, void, unknown>,
 ): ReadableStream {
   return new ReadableStream({
     async pull(controller) {

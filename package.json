@@ -17,11 +17,11 @@
     "db:reset": "prisma migrate reset --force",
     "setup": "./scripts/setup-dev.sh",
     "setup:test-data": "./scripts/setup-test-data.sh",
-    "test:e2e": "start-server-and-test 'npm run start' http://localhost:3000 'cypress run'",
-    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 'cypress open'",
-    "start-test-stream": "STREAM_COUNT=5 ./dev/ffmpeg-test.sh",
-    "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts",
-    "start-test-streams": "./dev/ffmpeg-test.sh 5"
+    "test:e2e": "playwright test",
+    "test:e2e:dev": "playwright test --ui",
+    "mediamtx": "./scripts/start-mediamtx.sh",
+    "mediamtx:stop": "docker compose -f docker-compose.dev.yml --profile streams down",
+    "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -67,13 +67,12 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "autoprefixer": "^10.0.1",
-    "cypress": "^13.0.0",
+    "@playwright/test": "^1.40.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "eslint-config-prettier": "^9.0.0",
     "postcss": "^8",
     "semantic-release": "^22.0.0",
-    "start-server-and-test": "^2.0.3",
     "swagger-typescript-api": "^13.0.3",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.2",

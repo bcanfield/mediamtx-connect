@@ -92,8 +92,8 @@ npm run start-test-streams
 | `npm run setup:test-data` | Create mock recordings only |
 | `npm run db:seed` | Seed database with dev config |
 | `npm run db:reset` | Reset database (destructive) |
-| `npm run test:e2e` | Run e2e tests (production build) |
-| `npm run test:e2e:dev` | Open Cypress UI (dev server) |
+| `npm run test:e2e` | Run Playwright e2e tests |
+| `npm run test:e2e:dev` | Open Playwright UI |
 
 ## Project Structure
 
@@ -106,8 +106,7 @@ mediamtx-connect/
 │   ├── config/            # Config pages
 │   └── recordings/        # Recordings pages
 ├── components/            # Shared UI components
-├── cypress/               # E2E tests
-│   └── e2e/              # Test specs
+├── tests/e2e/             # Playwright E2E tests
 ├── lib/                   # Utilities and clients
 │   ├── MediaMTX/         # MediaMTX API types
 │   └── prisma.ts         # Prisma client
@@ -126,20 +125,21 @@ mediamtx-connect/
 
 ### E2E Tests
 
-We use Cypress for end-to-end testing. Tests are organized by feature:
+We use Playwright for end-to-end testing. Tests are organized by feature:
 
-- `streams.cy.js` - Streams page tests
-- `recordings.cy.js` - Recordings page tests
-- `config.cy.js` - Configuration page tests
-- `api.cy.js` - API endpoint tests
+- `streams.spec.ts` - Streams page tests
+- `recordings.spec.ts` - Recordings page tests
+- `config.spec.ts` - Configuration page tests
+- `api.spec.ts` - API endpoint tests
+- `mediamtx.spec.ts` - MediaMTX connectivity tests
 
 Run tests:
 
 ```bash
-# Headless (uses production build)
+# Headless
 npm run test:e2e
 
-# With Cypress UI (uses dev server)
+# With Playwright UI
 npm run test:e2e:dev
 ```
 
@@ -155,16 +155,14 @@ The setup script creates mock recordings in `test-data/`:
 
 Tests should be resilient to different states:
 
-```javascript
+```typescript
 // Good: Handle multiple possible states
-cy.get("body").then(($body) => {
-  const hasRecordings = $body.find('[class*="card"]').length > 0;
-  const hasEmptyMessage = $body.text().includes("No Recordings");
-  expect(hasRecordings || hasEmptyMessage).to.be.true;
-});
+const cardCount = await page.locator('[class*="card"]').count();
+const hasEmptyMessage = await page.getByText("No Recordings").isVisible();
+expect(cardCount > 0 || hasEmptyMessage).toBe(true);
 
 // Avoid: Assuming specific state
-cy.get('[class*="card"]').should("have.length", 3); // Brittle
+await expect(page.locator('[class*="card"]')).toHaveCount(3); // Brittle
 ```
 
 ## Database

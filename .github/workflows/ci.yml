@@ -39,25 +39,36 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm ci
-      - name: Setup test data
+      - name: Start MediaMTX with fake streams
+        run: ./scripts/start-mediamtx.sh
+      - name: Setup database and test data
         run: |
           npm run migrate
           npm run db:seed
           npm run setup:test-data
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Build application
+        run: npm run build
       - name: Run E2E tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm run start
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
-      - name: Upload screenshots on failure
+        run: npm run test:e2e
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== MediaMTX logs ==="
+          docker logs mediamtx 2>&1 | tail -50
+          echo "=== Fake streams logs ==="
+          docker logs fake-streams 2>&1 | tail -50
+      - name: Upload Playwright report on failure
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+          name: playwright-report
+          path: playwright-report/
           retention-days: 7
+      - name: Cleanup
+        if: always()
+        run: docker compose -f docker-compose.dev.yml --profile streams down
 
   release:
     name: Release
