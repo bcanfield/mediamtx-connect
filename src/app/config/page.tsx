@@ -1,9 +1,5 @@
-import prisma from '@/lib/prisma'
-import ClientConfigForm from './client-config-form'
+import { ClientConfigPage } from '@/features/config/client'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Client() {
-  const clientConfig = await prisma.config.findFirst()
-  return <ClientConfigForm clientConfig={clientConfig} />
-}
+export default ClientConfigPage

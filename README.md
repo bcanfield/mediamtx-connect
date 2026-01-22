@@ -49,9 +49,16 @@ Settings → Stream → Custom
 ## Development
 
 ```bash
-./scripts/setup-dev.sh   # Initial setup
-npm run mediamtx         # Start MediaMTX with test streams
-npm run dev              # Start the app at localhost:3000
+cp .env.example .env
+
+# Initial setup
+./scripts/setup-dev.sh
+
+# Start MediaMTX with test streams
+npm run mediamtx
+
+# Start the app at localhost:3000
+npm run dev
 ```
 
 <details>

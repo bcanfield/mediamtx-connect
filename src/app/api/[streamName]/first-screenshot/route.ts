@@ -2,7 +2,7 @@ import type { ReadStream } from 'node:fs'
 import fs, { createReadStream } from 'node:fs'
 import path from 'node:path'
 import { NextResponse } from 'next/server'
-import getAppConfig from '@/actions/getAppConfig'
+import { getAppConfig } from '@/features/config/client'
 
 // 1x1 transparent PNG to return when no screenshot exists
 // This prevents Next.js image optimizer errors

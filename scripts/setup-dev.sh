@@ -31,7 +31,7 @@ npx prisma migrate deploy
 # Step 4: Seed the database
 echo ""
 echo "Step 4: Seeding database with development config..."
-npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed.ts
+npx ts-node --compiler-options '{"module":"CommonJS"}' src/lib/prisma/seed.ts
 
 # Step 5: Setup test data
 echo ""

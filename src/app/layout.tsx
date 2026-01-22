@@ -1,8 +1,9 @@
 import type { Viewport } from 'next'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
-import { cn } from '@/lib/utils'
-import SW from '../components/sw'
+
+import { ServiceWorker, ThemeProvider } from '@/shared/components/providers'
+import { Toaster } from '@/shared/components/ui/toaster'
+import { cn } from '@/shared/utils'
+
 import NavBar from './nav-bar'
 import './globals.css'
 
@@ -45,7 +46,7 @@ export default async function RootLayout({
         <Toaster></Toaster>
       </body>
 
-      <SW></SW>
+      <ServiceWorker></ServiceWorker>
     </html>
   )
 }

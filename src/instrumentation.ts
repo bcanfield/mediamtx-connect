@@ -5,7 +5,7 @@ export async function register() {
     const { default: cp } = await import('node:child_process')
     const { default: fs } = await import('node:fs')
     const { default: path } = await import('node:path')
-    const { default: logger } = await import('@/app/utils/logger')
+    const { default: logger } = await import('@/shared/utils/logger')
     const { env, isProduction } = await import('@/env')
     const { default: prisma } = await import('@/lib/prisma')
 
