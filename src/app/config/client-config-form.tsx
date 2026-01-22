@@ -1,47 +1,59 @@
-"use client";
-import { GridFormItem } from "@/components/grid-form-item";
-import { Button } from "@/components/ui/button";
+'use client'
+import type { Config } from '@prisma/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import updateClientConfig from '@/actions/updateClientConfig'
+import { GridFormItem } from '@/components/grid-form-item'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Config } from "@prisma/client";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import updateClientConfig from "@/actions/updateClientConfig";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
+
+export const ClientConfigFormSchema = z.object({
+  id: z.coerce.number(),
+  mediaMtxUrl: z.string().min(1),
+  mediaMtxApiPort: z.coerce.number().gt(0),
+  remoteMediaMtxUrl: z.string().nullable(),
+  recordingsDirectory: z.string().min(1),
+  screenshotsDirectory: z.string().min(1),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+}) satisfies z.ZodType<Config>
 
 export default function ClientConfigForm({
   clientConfig,
 }: {
-  clientConfig: Config | null;
+  clientConfig: Config | null
 }) {
-  const { toast } = useToast();
+  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(ClientConfigFormSchema),
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: clientConfig ?? undefined,
-  });
+  })
   const onSubmit = async (values: z.output<typeof ClientConfigFormSchema>) => {
-    const updated = await updateClientConfig({ clientConfig: values });
+    const updated = await updateClientConfig({ clientConfig: values })
 
     if (updated) {
       toast({
-        title: "Updated Global Config",
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "There was an issue updating the Global Config",
-        description: "Please double check your form values.",
-      });
+        title: 'Updated Global Config',
+      })
     }
-  };
+    else {
+      toast({
+        variant: 'destructive',
+        title: 'There was an issue updating the Global Config',
+        description: 'Please double check your form values.',
+      })
+    }
+  }
   return (
     <Form {...form}>
       <form
@@ -74,7 +86,8 @@ export default function ClientConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="mediaMtxApiPort"
           control={form.control}
@@ -89,7 +102,8 @@ export default function ClientConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="remoteMediaMtxUrl"
           control={form.control}
@@ -107,7 +121,8 @@ export default function ClientConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="recordingsDirectory"
           control={form.control}
@@ -125,7 +140,8 @@ export default function ClientConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="screenshotsDirectory"
           control={form.control}
@@ -143,19 +159,9 @@ export default function ClientConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
       </form>
     </Form>
-  );
+  )
 }
-
-export const ClientConfigFormSchema = z.object({
-  id: z.coerce.number(),
-  mediaMtxUrl: z.string().min(1),
-  mediaMtxApiPort: z.coerce.number().gt(0),
-  remoteMediaMtxUrl: z.string().nullable(),
-  recordingsDirectory: z.string().min(1),
-  screenshotsDirectory: z.string().min(1),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-}) satisfies z.ZodType<Config>;

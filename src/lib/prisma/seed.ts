@@ -1,33 +1,37 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
+import logger from '../../app/utils/logger'
+import { env } from '../../env'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function main() {
-  console.log("Seeding database...");
+  logger.info('Seeding database...')
 
   // Delete existing config to ensure clean state
-  await prisma.config.deleteMany();
+  await prisma.config.deleteMany()
 
   // Create development configuration
   const config = await prisma.config.create({
     data: {
-      mediaMtxUrl: process.env.MEDIAMTX_URL || "http://localhost",
-      mediaMtxApiPort: parseInt(process.env.MEDIAMTX_API_PORT || "9997"),
-      remoteMediaMtxUrl: process.env.REMOTE_MEDIAMTX_URL || "http://localhost",
-      recordingsDirectory: process.env.RECORDINGS_DIR || "./test-data/recordings",
-      screenshotsDirectory: process.env.SCREENSHOTS_DIR || "./test-data/screenshots",
+      mediaMtxUrl: env.BACKEND_SERVER_MEDIAMTX_URL,
+      mediaMtxApiPort: Number.parseInt(env.MEDIAMTX_API_PORT),
+      remoteMediaMtxUrl: env.REMOTE_MEDIAMTX_URL,
+      recordingsDirectory: env.MEDIAMTX_RECORDINGS_DIR,
+      screenshotsDirectory: env.MEDIAMTX_SCREENSHOTS_DIR,
     },
-  });
+  })
 
-  console.log("Created config:", config);
-  console.log("Database seeded successfully!");
+  logger.info('Created config:', { config })
+  logger.info('Database seeded successfully!')
 }
 
 main()
   .catch((e) => {
-    console.error("Error seeding database:", e);
-    process.exit(1);
+    logger.error('Error seeding database:', e)
+    // Using process.exit is necessary here for the seed script
+    // eslint-disable-next-line node/prefer-global/process
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

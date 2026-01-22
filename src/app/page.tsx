@@ -1,24 +1,28 @@
-export const dynamic = "force-dynamic";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import GridLayout from "@/components/grid-layout";
-import PageLayout from "@/components/page-layout";
-import StreamCard from "@/components/stream-card";
-import {
-  Api,
+import type {
   Error,
   GlobalConf,
   HttpResponse,
   PathList,
-} from "@/lib/MediaMTX/generated";
-import { AlertTriangle, Settings } from "lucide-react";
-import Link from "next/link";
+} from '@/lib/MediaMTX/generated'
+import { AlertTriangle, Settings } from 'lucide-react'
+import Link from 'next/link'
+import getAppConfig from '@/actions/getAppConfig'
+import logger from '@/app/utils/logger'
+import GridLayout from '@/components/grid-layout'
+import PageLayout from '@/components/page-layout'
+import RefreshButton from '@/components/refresh-button'
+import StreamCard from '@/components/stream-card'
 
-import getAppConfig from "@/actions/getAppConfig";
-import RefreshButton from "@/components/refresh-button";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import {
+  Api,
+} from '@/lib/MediaMTX/generated'
+
+export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const config = await getAppConfig();
+  const config = await getAppConfig()
   if (!config) {
     return (
       <PageLayout header="Streams" subHeader="Live views of your active streams">
@@ -30,31 +34,32 @@ export default async function Home() {
           </AlertDescription>
         </Alert>
       </PageLayout>
-    );
+    )
   }
 
-  let paths: HttpResponse<PathList, Error> | undefined;
-  let mediaMtxConfig: HttpResponse<GlobalConf, Error> | undefined;
-  let connectionError = false;
+  let paths: HttpResponse<PathList, Error> | undefined
+  let mediaMtxConfig: HttpResponse<GlobalConf, Error> | undefined
+  let connectionError = false
 
   const api = new Api({
     baseUrl: `${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
-  });
+  })
 
   try {
-    paths = await api.v3.pathsList({}, { cache: "no-store" });
-    mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-store" });
-  } catch (error) {
-    connectionError = true;
-    console.error(
+    paths = await api.v3.pathsList({}, { cache: 'no-store' })
+    mediaMtxConfig = await api.v3.configGlobalGet({ cache: 'no-store' })
+  }
+  catch (error) {
+    connectionError = true
+    logger.error(
       `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
-      error
-    );
+      error,
+    )
   }
 
-  const remoteMediaMtxUrl = config.remoteMediaMtxUrl;
-  const hasStreams = paths?.data.items && paths.data.items.length > 0;
-  const isConnected = mediaMtxConfig?.data.hlsAddress && !connectionError;
+  const remoteMediaMtxUrl = config.remoteMediaMtxUrl
+  const hasStreams = paths?.data.items && paths.data.items.length > 0
+  const isConnected = mediaMtxConfig?.data.hlsAddress && !connectionError
 
   return (
     <PageLayout header="Streams" subHeader="Live views of your active streams">
@@ -64,9 +69,12 @@ export default async function Home() {
           <AlertTitle>Cannot connect to MediaMTX</AlertTitle>
           <AlertDescription className="space-y-2">
             <p>
-              Unable to reach MediaMTX at{" "}
+              Unable to reach MediaMTX at
+              {' '}
               <code className="bg-muted px-1 rounded">
-                {config.mediaMtxUrl}:{config.mediaMtxApiPort}
+                {config.mediaMtxUrl}
+                :
+                {config.mediaMtxApiPort}
               </code>
             </p>
             <p className="text-sm">
@@ -118,19 +126,19 @@ export default async function Home() {
 
       {isConnected && hasStreams && remoteMediaMtxUrl && (
         <GridLayout columnLayout="small">
-          {paths?.data.items?.map(({ name, readyTime }, index) => (
+          {paths?.data.items?.map(({ name, readyTime }) => (
             <StreamCard
-              key={index}
+              key={name}
               props={{
                 streamName: name,
                 readyTime,
                 hlsAddress: mediaMtxConfig?.data.hlsAddress,
-                remoteMediaMtxUrl: remoteMediaMtxUrl,
+                remoteMediaMtxUrl,
               }}
             />
           ))}
         </GridLayout>
       )}
     </PageLayout>
-  );
+  )
 }

@@ -1,51 +1,53 @@
-import getAppConfig from "@/actions/getAppConfig";
-import { ReadStream, createReadStream, existsSync } from "fs";
-import { stat } from "fs/promises";
-import { NextResponse } from "next/server";
-import path from "path";
+import type { ReadStream } from 'node:fs'
+import { createReadStream, existsSync } from 'node:fs'
+import { stat } from 'node:fs/promises'
+import path from 'node:path'
+import { NextResponse } from 'next/server'
+import getAppConfig from '@/actions/getAppConfig'
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ streamName: string; filePath: string }> },
+  { params }: { params: Promise<{ streamName: string, filePath: string }> },
 ) {
-  const { streamName, filePath } = await params;
-  const config = await getAppConfig();
+  const { streamName, filePath } = await params
+  const config = await getAppConfig()
   if (!config) {
-    return new NextResponse(null, { status: 500 });
+    return new NextResponse(null, { status: 500 })
   }
 
   const recordingPath = path.join(
     config.recordingsDirectory,
     streamName,
     filePath,
-  );
+  )
 
   // Check if file exists before trying to read it
   if (!existsSync(recordingPath)) {
-    return new NextResponse("Recording not found", { status: 404 });
+    return new NextResponse('Recording not found', { status: 404 })
   }
 
-  let stats;
+  let stats
   try {
-    stats = await stat(recordingPath);
-  } catch {
-    return new NextResponse("Recording not found", { status: 404 });
+    stats = await stat(recordingPath)
+  }
+  catch {
+    return new NextResponse('Recording not found', { status: 404 })
   }
 
   // Create a read stream for the video file
-  const videoStream = streamFile(recordingPath);
+  const videoStream = streamFile(recordingPath)
 
   // Set response headers for video streaming
   const res = new NextResponse(videoStream, {
     status: 200,
     headers: new Headers({
-      "Content-Type": "video/mp4", // Change the content type according to your video format
-      "Accept-Ranges": "bytes", // Allow seeking within the video
-      "Content-Length": stats.size.toString(), // Set the content length of the video
+      'Content-Type': 'video/mp4', // Change the content type according to your video format
+      'Accept-Ranges': 'bytes', // Allow seeking within the video
+      'Content-Length': stats.size.toString(), // Set the content length of the video
     }),
-  });
+  })
 
-  return res;
+  return res
 }
 /**
  * Took this syntax from https://github.com/MattMorgis/async-stream-generator
@@ -54,7 +56,7 @@ export async function GET(
  */
 async function* nodeStreamToIterator(stream: ReadStream) {
   for await (const chunk of stream) {
-    yield chunk;
+    yield chunk
   }
 }
 
@@ -69,23 +71,24 @@ function iteratorToStream(
 ): ReadableStream {
   return new ReadableStream({
     async pull(controller) {
-      const { value, done } = await iterator.next();
+      const { value, done } = await iterator.next()
 
       if (done) {
-        controller.close();
-      } else {
+        controller.close()
+      }
+      else {
         // conversion to Uint8Array is important here otherwise the stream is not readable
         // @see https://github.com/vercel/next.js/issues/38736
-        controller.enqueue(new Uint8Array(value));
+        controller.enqueue(new Uint8Array(value))
       }
     },
-  });
+  })
 }
 
 function streamFile(path: string): ReadableStream {
-  const downloadStream = createReadStream(path);
+  const downloadStream = createReadStream(path)
   const data: ReadableStream = iteratorToStream(
     nodeStreamToIterator(downloadStream),
-  );
-  return data;
+  )
+  return data
 }

@@ -1,9 +1,9 @@
-###############################################
+# ##############################################
 # Global settings
 
 # Settings in this section are applied anywhere.
 
-###############################################
+# ##############################################
 # Global settings -> General
 
 # Verbosity of the program; available values are "error", "warn", "info", "debug".
@@ -69,7 +69,7 @@ runOnConnectRestart: no
 # Environment variables are the same of runOnConnect.
 runOnDisconnect:
 
-###############################################
+# ##############################################
 # Global settings -> RTSP
 
 # Allow publishing and reading streams with the RTSP protocol.
@@ -83,7 +83,7 @@ rtsp: yes
 protocols: [udp, multicast, tcp]
 # Encrypt handshakes and TCP streams with TLS (RTSPS).
 # Available values are "no", "strict", "optional".
-encryption: "no"
+encryption: no
 # Address of the TCP/RTSP listener. This is needed only when encryption is "no" or "optional".
 rtspAddress: :8554
 # Address of the TCP/TLS/RTSPS listener. This is needed only when encryption is "strict" or "optional".
@@ -109,7 +109,7 @@ serverCert: server.crt
 # "digest" doesn't provide any additional security and is available for compatibility reasons only.
 authMethods: [basic]
 
-###############################################
+# ##############################################
 # Global settings -> RTMP
 
 # Allow publishing and reading streams with the RTMP protocol.
@@ -118,7 +118,7 @@ rtmp: yes
 rtmpAddress: :1935
 # Encrypt connections with TLS (RTMPS).
 # Available values are "no", "strict", "optional".
-rtmpEncryption: "no"
+rtmpEncryption: no
 # Address of the RTMPS listener. This is needed only when encryption is "strict" or "optional".
 rtmpsAddress: :1936
 # Path to the server key. This is needed only when encryption is "strict" or "optional".
@@ -129,7 +129,7 @@ rtmpServerKey: server.key
 # Path to the server certificate. This is needed only when encryption is "strict" or "optional".
 rtmpServerCert: server.crt
 
-###############################################
+# ##############################################
 # Global settings -> HLS
 
 # Allow reading streams with the HLS protocol.
@@ -175,7 +175,7 @@ hlsPartDuration: 200ms
 hlsSegmentMaxSize: 50M
 # Value of the Access-Control-Allow-Origin header provided in every HTTP response.
 # This allows to play the HLS stream from an external website.
-hlsAllowOrigin: "*"
+hlsAllowOrigin: '*'
 # List of IPs or CIDRs of proxies placed before the HLS server.
 # If the server receives a request from one of these entries, IP in logs
 # will be taken from the X-Forwarded-For header.
@@ -183,9 +183,9 @@ hlsTrustedProxies: []
 # Directory in which to save segments, instead of keeping them in the RAM.
 # This decreases performance, since reading from disk is less performant than
 # reading from RAM, but allows to save RAM.
-hlsDirectory: ""
+hlsDirectory: ''
 
-###############################################
+# ##############################################
 # Global settings -> WebRTC
 
 # Allow publishing and reading streams with the WebRTC protocol.
@@ -203,7 +203,7 @@ webrtcServerKey: server.key
 webrtcServerCert: server.crt
 # Value of the Access-Control-Allow-Origin header provided in every HTTP response.
 # This allows to play the WebRTC stream from an external website.
-webrtcAllowOrigin: "*"
+webrtcAllowOrigin: '*'
 # List of IPs or CIDRs of proxies placed before the WebRTC server.
 # If the server receives a request from one of these entries, IP in logs
 # will be taken from the X-Forwarded-For header.
@@ -214,7 +214,7 @@ webrtcLocalUDPAddress: :8189
 # Address of a local TCP listener that will receive connections.
 # This is disabled by default since TCP is less efficient than UDP and
 # introduces a progressive delay when network is congested.
-webrtcLocalTCPAddress: ""
+webrtcLocalTCPAddress: ''
 # WebRTC clients need to know the IP of the server.
 # Gather IPs from interfaces and send them to clients.
 webrtcIPsFromInterfaces: yes
@@ -234,7 +234,7 @@ webrtcICEServers2:
   # username: ''
   # password: ''
 
-###############################################
+# ##############################################
 # Global settings -> SRT
 
 # Allow publishing and reading streams with the SRT protocol.
@@ -242,13 +242,13 @@ srt: yes
 # Address of the SRT listener.
 srtAddress: :8890
 
-###############################################
+# ##############################################
 # Default path settings
 
 # Settings in "pathDefaults" are applied anywhere,
 # unless they are overridden in "paths".
 pathDefaults:
-  ###############################################
+  # ##############################################
   # Default path settings -> General
 
   # Source of the stream. This can be:
@@ -286,7 +286,7 @@ pathDefaults:
   # SRT encryption passphrase require to read from this path
   srtReadPassphrase:
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Recording
 
   # Record streams to disk.
@@ -309,7 +309,7 @@ pathDefaults:
   # Set to 0s to disable automatic deletion.
   recordDeleteAfter: 24h
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Authentication
 
   # Username required to publish.
@@ -330,7 +330,7 @@ pathDefaults:
   # IPs or networks (x.x.x.x/24) allowed to read.
   readIPs: []
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Publisher source (when source is "publisher")
 
   # Allow another client to disconnect the current publisher and publish in its place.
@@ -341,7 +341,7 @@ pathDefaults:
   # SRT encryption passphrase required to publish to this path
   srtPublishPassphrase:
 
-  ###############################################
+  # ##############################################
   # Default path settings -> RTSP source (when source is a RTSP or a RTSPS URL)
 
   # Transport protocol used to pull the stream. available values are "automatic", "udp", "multicast", "tcp".
@@ -361,13 +361,13 @@ pathDefaults:
   # * smpte: duration such as "300ms", "1.5m" or "2h45m", valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
   rtspRangeStart:
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Redirect source (when source is "redirect")
 
   # RTSP URL which clients will be redirected to.
   sourceRedirect:
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Raspberry Pi Camera source (when source is "rpiCamera")
 
   # ID of the camera
@@ -396,7 +396,7 @@ pathDefaults:
   rpiCameraAWB: auto
   # denoise operating mode.
   # values: off, cdn_off, cdn_fast, cdn_hq
-  rpiCameraDenoise: "off"
+  rpiCameraDenoise: off
   # fixed shutter speed, in microseconds.
   rpiCameraShutter: 0
   # metering mode of the AEC/AGC algorithm.
@@ -424,7 +424,7 @@ pathDefaults:
   # H264 profile
   rpiCameraProfile: main
   # H264 level
-  rpiCameraLevel: "4.1"
+  rpiCameraLevel: '4.1'
   # Autofocus mode
   # values: auto, manual, continuous
   rpiCameraAfMode: continuous
@@ -447,9 +447,9 @@ pathDefaults:
   rpiCameraTextOverlayEnable: false
   # text that is printed on each frame.
   # format is the one of the strftime() function.
-  rpiCameraTextOverlay: "%Y-%m-%d %H:%M:%S - MediaMTX"
+  rpiCameraTextOverlay: '%Y-%m-%d %H:%M:%S - MediaMTX'
 
-  ###############################################
+  # ##############################################
   # Default path settings -> Hooks
 
   # Command to run when this path is initialized.
@@ -540,7 +540,7 @@ pathDefaults:
   # * MTX_SEGMENT_PATH: segment file path
   runOnRecordSegmentComplete:
 
-###############################################
+# ##############################################
 # Path settings
 
 # Settings in "paths" are applied to specific paths, and the map key

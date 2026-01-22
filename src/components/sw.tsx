@@ -1,18 +1,19 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
+import { useEffect } from 'react'
+import logger from '@/app/utils/logger'
 
 export default function SW() {
   useEffect(() => {
-    console.log("in here 1", { navigator });
-    if ("serviceWorker" in navigator) {
-      console.log("in here 2");
+    logger.debug('Registering service worker', { navigator })
+    if ('serviceWorker' in navigator) {
+      logger.debug('Service worker supported')
       navigator.serviceWorker
-        .register("/sw.js")
-        .then(() => console.log("service worker installed"))
-        .catch((err) => console.error("Error", err));
+        .register('/sw.js')
+        .then(() => logger.info('service worker installed'))
+        .catch(err => logger.error('Service worker registration failed', err))
     }
-  }, []);
+  }, [])
 
-  return <></>;
+  return <></>
 }
