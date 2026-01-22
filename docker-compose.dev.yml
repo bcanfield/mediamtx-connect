@@ -1,0 +1,34 @@
+# Development only - runs MediaMTX for local development with `npm run dev`
+# Usage: docker compose -f docker-compose.dev.yml up -d
+# With fake streams: docker compose -f docker-compose.dev.yml --profile streams up -d
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:1.11.3
+    container_name: mediamtx
+    restart: unless-stopped
+    networks:
+      - dev
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+      - ${MEDIAMTX_RECORDINGS_DIR:-./test-data/recordings}:/recordings
+    ports:
+      - '8554:8554' # RTSP
+      - '8890:8890/udp' # WebRTC/ICE UDP
+      - '1935:1935' # RTMP
+      - '8888:8888' # HLS
+      - '8889:8889' # WebRTC HTTP
+      - '9997:9997' # API
+
+  # Optional: generates 5 fake RTSP streams for testing
+  fake-streams:
+    profiles: [streams]
+    build: ./examples/fake-streams
+    container_name: fake-streams
+    networks:
+      - dev
+    depends_on:
+      - mediamtx
+    restart: unless-stopped
+
+networks:
+  dev:

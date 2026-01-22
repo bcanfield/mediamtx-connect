@@ -14,11 +14,13 @@ LICENSE
 .gitignore
 .docker-compose.yml
 coverage/
-cypress/
+tests/
+playwright-report/
+test-results/
 dev/
 node_modules/
 recordings/
 screenshots/
 .dockerignore
 Dockerfile
-cypress.config.js
+playwright.config.ts

@@ -1,0 +1,32 @@
+# ##############################################
+# MediaMTX configuration for mediamtx-connect
+# ##############################################
+
+# API settings
+api: yes
+apiAddress: :9997
+
+# Allow API access from any IP (needed for Docker bridge network)
+authInternalUsers:
+  - user: any
+    ips: []
+    permissions:
+      - action: api
+      - action: metrics
+      - action: pprof
+      - action: playback
+      - action: read
+      - action: publish
+
+# HLS settings
+hls: yes
+hlsAddress: :8888
+
+# Path defaults (recording settings)
+pathDefaults:
+  record: yes
+  recordPath: /recordings/%path/%Y-%m-%d_%H-%M-%S
+
+# Allow any stream path
+paths:
+  all_others:
