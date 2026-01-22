@@ -1,4 +1,4 @@
-import getAppConfig from "@/app/_actions/getAppConfig";
+import getAppConfig from "@/actions/getAppConfig";
 import fs, { ReadStream, createReadStream } from "fs";
 import { NextResponse } from "next/server";
 import path from "path";

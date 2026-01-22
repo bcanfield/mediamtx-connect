@@ -22,7 +22,7 @@ import {
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import DownloadVideo from "../recordings/[streamname]/_components/downloadVideo";
+import DownloadVideo from "../app/recordings/[streamname]/_components/downloadVideo";
 
 export default function RecordingCard({
   props,

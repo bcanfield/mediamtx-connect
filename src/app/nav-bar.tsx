@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Menu, RefreshCcw } from "lucide-react";
-import { ModeToggle } from "./_components/mode-toggle";
+import { ModeToggle } from "../components/mode-toggle";
 
 type Props = {
   items?: { name: string; location: string }[];

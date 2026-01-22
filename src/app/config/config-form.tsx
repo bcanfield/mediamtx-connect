@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { GlobalConf } from "@/lib/MediaMTX/generated";
 import { Plus, Trash } from "lucide-react";
 import { ChangeEvent } from "react";
-import updateGlobalConfig from "../_actions/updateGlobalConfig";
+import updateGlobalConfig from "@/actions/updateGlobalConfig";
 import { useToast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 
