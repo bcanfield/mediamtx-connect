@@ -1,25 +1,35 @@
 import getAppConfig from "@/app/_actions/getAppConfig";
-import { ReadStream, createReadStream } from "fs";
+import { ReadStream, createReadStream, existsSync } from "fs";
 import { stat } from "fs/promises";
 import { NextResponse } from "next/server";
 import path from "path";
 
 export async function GET(
-  request: Request,
-  { params }: { params: { streamName: string; filePath: string } }, //streamName/fileName
+  _request: Request,
+  { params }: { params: { streamName: string; filePath: string } },
 ) {
   const config = await getAppConfig();
   if (!config) {
-    return new NextResponse(null, {
-      status: 500,
-    });
+    return new NextResponse(null, { status: 500 });
   }
+
   const recordingPath = path.join(
     config.recordingsDirectory,
     params.streamName,
     params.filePath,
   );
-  const stats = await stat(recordingPath);
+
+  // Check if file exists before trying to read it
+  if (!existsSync(recordingPath)) {
+    return new NextResponse("Recording not found", { status: 404 });
+  }
+
+  let stats;
+  try {
+    stats = await stat(recordingPath);
+  } catch {
+    return new NextResponse("Recording not found", { status: 404 });
+  }
   const data: ReadableStream = streamFile(recordingPath);
   const res = new NextResponse(data, {
     status: 200,
@@ -49,7 +59,7 @@ async function* nodeStreamToIterator(stream: ReadStream) {
  * https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
  */
 function iteratorToStream(
-  iterator: AsyncGenerator<any, void, unknown>,
+  iterator: AsyncGenerator<Buffer, void, unknown>,
 ): ReadableStream {
   return new ReadableStream({
     async pull(controller) {
