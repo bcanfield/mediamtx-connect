@@ -172,7 +172,7 @@ Config {
 | Video | HLS.js (browser), ffmpeg (thumbnails) |
 | API Client | Auto-generated from MediaMTX OpenAPI spec |
 | Scheduling | node-cron |
-| Testing | Cypress (E2E) |
+| Testing | Playwright (E2E) |
 | Deployment | Docker (multi-arch: amd64/arm64) |
 
 ## File Structure

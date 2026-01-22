@@ -62,23 +62,34 @@ ffmpeg -re -i input.mp4 -c copy -f flv rtmp://localhost:1935/mystream
 ## Development
 
 ```bash
-# Setup and run
+# Setup
 ./scripts/setup-dev.sh
-docker compose -f docker-compose.dev.yml up -d
-npm run dev
 
-# Optional: add 5 fake test streams
-docker compose -f docker-compose.dev.yml --profile streams up -d
+# Start MediaMTX with 5 fake streams
+npm run mediamtx
+
+# Start the app
+npm run dev
 ```
 
 The app runs at [http://localhost:3000](http://localhost:3000).
+
+### Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run setup` | Initial dev environment setup |
+| `npm run mediamtx` | Start MediaMTX with fake streams |
+| `npm run mediamtx:stop` | Stop MediaMTX |
+| `npm run dev` | Start Next.js dev server |
+| `npm run test:e2e` | Run Playwright tests |
 
 ### Project Structure
 
 | File | Purpose |
 |------|---------|
 | `docker-compose.yml` | Production (both services) |
-| `docker-compose.dev.yml` | Development (MediaMTX only, optional fake streams) |
+| `docker-compose.dev.yml` | Development (MediaMTX + optional fake streams) |
 | `mediamtx.yml` | MediaMTX config with API access enabled |
 
 ## Troubleshooting
