@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main, beta]
 
+env:
+  DATABASE_URL: "file:./src/lib/prisma/database.db"
+
 jobs:
   build:
     name: Build

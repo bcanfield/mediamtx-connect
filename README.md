@@ -8,7 +8,8 @@
     <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
   </p>
 
-  <video src=".github/assets/demo.mov" controls autoplay muted loop></video>
+  <img src=".github/assets/demo.gif" alt="Cronicorn AI Adaptation" width="640">
+
 </div>
 
 ## Quick Start
