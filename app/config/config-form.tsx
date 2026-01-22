@@ -33,7 +33,7 @@ export default function ConfigForm({
   globalConf?: GlobalConf;
 }) {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof GlobalConfigFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(GlobalConfigFormSchema),
     mode: "onBlur",
     defaultValues: globalConf,
@@ -43,7 +43,7 @@ export default function ConfigForm({
     name: "webrtcICEServers2",
   });
 
-  const onSubmit = async (values: z.infer<typeof GlobalConfigFormSchema>) => {
+  const onSubmit = async (values: z.output<typeof GlobalConfigFormSchema>) => {
     const updated = await updateGlobalConfig({ globalConfig: values });
     if (updated) {
       toast({

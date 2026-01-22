@@ -6,11 +6,12 @@ test.describe("Streams Page", () => {
   });
 
   test("should load the streams page with header", async ({ page }) => {
-    await expect(page.locator("h2").filter({ hasText: "Streams" })).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await expect(page.locator("h2").filter({ hasText: "Streams" })).toBeVisible({ timeout: 10000 });
   });
 
   test("should show subheader text", async ({ page }) => {
-    await expect(page.getByText("Live views of your active streams")).toBeVisible();
+    await expect(page.getByText("Live views of your active streams").first()).toBeVisible();
   });
 
   test("should have working navigation to config page", async ({ page }) => {

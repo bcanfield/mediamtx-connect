@@ -22,15 +22,16 @@ function notFoundResponse() {
 
 export async function GET(
   _request: Request,
-  { params }: { params: { streamName: string; filePath: string } },
+  { params }: { params: Promise<{ streamName: string }> },
 ) {
+  const { streamName } = await params;
   const config = await getAppConfig();
   if (!config) {
     return notFoundResponse();
   }
 
   try {
-    const screenshotDir = path.join(config.screenshotsDirectory, params.streamName);
+    const screenshotDir = path.join(config.screenshotsDirectory, streamName);
 
     // Check if directory exists before trying to read it
     if (!fs.existsSync(screenshotDir)) {
@@ -47,7 +48,7 @@ export async function GET(
     const firstScreenshot = streamScreenshots[streamScreenshots.length - 1];
     const screenshotPath = path.join(
       config.screenshotsDirectory,
-      params.streamName,
+      streamName,
       `${path.parse(firstScreenshot).name}.png`,
     );
 
