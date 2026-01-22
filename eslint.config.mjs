@@ -6,6 +6,8 @@ export default antfu(
     nextjs: true,
     typescript: true,
     react: true,
+    // Disable markdown linting to avoid parsing errors with template code blocks
+    markdown: false,
     // Global rule overrides
     rules: {
       // Allow Buffer global - common in Node.js code
