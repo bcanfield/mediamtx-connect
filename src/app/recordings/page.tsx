@@ -1,22 +1,22 @@
-export const dynamic = "force-dynamic";
-
-import GridLayout from "@/components/grid-layout";
-import PageLayout from "@/components/page-layout";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { AlertTriangle, FolderOpen, Settings, Video } from 'lucide-react'
+import Link from 'next/link'
+import getAppConfig from '@/actions/getAppConfig'
+import GridLayout from '@/components/grid-layout'
+import PageLayout from '@/components/page-layout'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { AlertTriangle, FolderOpen, Settings, Video } from "lucide-react";
-import Link from "next/link";
-import getAppConfig from "@/actions/getAppConfig";
-import { countFilesInSubdirectories } from "../utils/file-operations";
+} from '@/components/ui/card'
+import { countFilesInSubdirectories } from '../utils/file-operations'
+
+export const dynamic = 'force-dynamic'
 
 export default async function Recordings() {
-  const config = await getAppConfig();
+  const config = await getAppConfig()
   if (!config) {
     return (
       <PageLayout
@@ -31,21 +31,22 @@ export default async function Recordings() {
           </AlertDescription>
         </Alert>
       </PageLayout>
-    );
+    )
   }
 
-  let error = false;
-  let streamRecordingDirectories: Record<string, number> = {};
+  let error = false
+  let streamRecordingDirectories: Record<string, number> = {}
 
   try {
     streamRecordingDirectories = countFilesInSubdirectories(
-      config.recordingsDirectory
-    );
-  } catch {
-    error = true;
+      config.recordingsDirectory,
+    )
+  }
+  catch {
+    error = true
   }
 
-  const hasRecordings = Object.keys(streamRecordingDirectories).length > 0;
+  const hasRecordings = Object.keys(streamRecordingDirectories).length > 0
 
   return (
     <PageLayout
@@ -58,7 +59,8 @@ export default async function Recordings() {
           <AlertTitle>Cannot Access Recordings Directory</AlertTitle>
           <AlertDescription className="space-y-2">
             <p>
-              Unable to read the recordings directory at{" "}
+              Unable to read the recordings directory at
+              {' '}
               <code className="bg-muted px-1 rounded">
                 {config.recordingsDirectory}
               </code>
@@ -86,7 +88,11 @@ export default async function Recordings() {
               once MediaMTX starts recording streams.
             </p>
             <p className="text-sm mt-2">
-              Make sure <code className="bg-muted px-1 rounded">MTX_RECORD=yes</code> is
+              Make sure
+              {' '}
+              <code className="bg-muted px-1 rounded">MTX_RECORD=yes</code>
+              {' '}
+              is
               set in your MediaMTX configuration.
             </p>
           </AlertDescription>
@@ -103,7 +109,9 @@ export default async function Recordings() {
                   {key}
                 </CardTitle>
                 <CardDescription>
-                  {value} {value === 1 ? "Recording" : "Recordings"}
+                  {value}
+                  {' '}
+                  {value === 1 ? 'Recording' : 'Recordings'}
                 </CardDescription>
               </CardHeader>
               <div className="p-4">
@@ -116,5 +124,5 @@ export default async function Recordings() {
         </GridLayout>
       )}
     </PageLayout>
-  );
+  )
 }

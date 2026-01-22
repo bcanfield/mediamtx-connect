@@ -1,24 +1,24 @@
-import { SidebarNav } from "@/components/sidebar-nav";
-import PageLayout from "../../components/page-layout";
+import { SidebarNav } from '@/components/sidebar-nav'
+import PageLayout from '../../components/page-layout'
 
 export default async function ConfigLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   const clientConfigItems = [
     {
-      title: "Client Config",
-      href: "/config",
+      title: 'Client Config',
+      href: '/config',
     },
-  ];
+  ]
 
   const mediaMtxConfigItems = [
     {
-      title: "MediaMTX Global Config",
-      href: "/config/mediamtx/global",
+      title: 'MediaMTX Global Config',
+      href: '/config/mediamtx/global',
     },
-  ];
+  ]
 
   return (
     <PageLayout header="Config" subHeader="Manage your App Configuration">
@@ -32,5 +32,5 @@ export default async function ConfigLayout({
         <div className="flex-1">{children}</div>
       </div>
     </PageLayout>
-  );
+  )
 }

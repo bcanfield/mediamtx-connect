@@ -1,70 +1,156 @@
-"use client";
+'use client'
+import type { ChangeEvent } from 'react'
+import type { GlobalConf } from '@/lib/MediaMTX/generated'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Plus, Trash } from 'lucide-react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import updateGlobalConfig from '@/actions/updateGlobalConfig'
+import { GridFormItem } from '@/components/grid-form-item'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { GridFormItem } from "@/components/grid-form-item";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { GlobalConf } from "@/lib/MediaMTX/generated";
-import { Plus, Trash } from "lucide-react";
-import { ChangeEvent } from "react";
-import updateGlobalConfig from "@/actions/updateGlobalConfig";
-import { useToast } from "@/components/ui/use-toast";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
+import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/components/ui/use-toast'
+
+export const GlobalConfigFormSchema = z.object({
+  logLevel: z.string().optional(),
+  logDestinations: z.array(z.string()).optional(),
+  logFile: z.string().optional(),
+  readTimeout: z.string().optional(),
+  writeTimeout: z.string().optional(),
+  writeQueueSize: z.coerce.number().optional(),
+  udpMaxPayloadSize: z.coerce.number().optional(),
+  externalAuthenticationURL: z.string().optional(),
+  api: z.boolean().optional(),
+  apiAddress: z.string().optional(),
+  metrics: z.boolean().optional(),
+  metricsAddress: z.string().optional(),
+  pprof: z.boolean().optional(),
+  pprofAddress: z.string().optional(),
+  runOnConnect: z.string().optional(),
+  runOnConnectRestart: z.boolean().optional(),
+  runOnDisconnect: z.string().optional(),
+  rtsp: z.boolean().optional(),
+  protocols: z.array(z.string()).optional(),
+  encryption: z.string().optional(),
+  rtspAddress: z.string().optional(),
+  rtspsAddress: z.string().optional(),
+  rtpAddress: z.string().optional(),
+  rtcpAddress: z.string().optional(),
+  multicastIPRange: z.string().optional(),
+  multicastRTPPort: z.coerce.number().optional(),
+  multicastRTCPPort: z.coerce.number().optional(),
+  serverKey: z.string().optional(),
+  serverCert: z.string().optional(),
+  authMethods: z.array(z.string()).optional(),
+  rtmp: z.boolean().optional(),
+  rtmpAddress: z.string().optional(),
+  rtmpEncryption: z.string().optional(),
+  rtmpsAddress: z.string().optional(),
+
+  rtmpServerKey: z.string().optional(),
+  rtmpServerCert: z.string().optional(),
+  hls: z.boolean().optional(),
+  hlsAddress: z.string().optional(),
+  hlsEncryption: z.boolean().optional(),
+  hlsServerKey: z.string().optional(),
+
+  hlsServerCert: z.string().optional(),
+  hlsAlwaysRemux: z.boolean().optional(),
+  hlsVariant: z.string().optional(),
+  hlsSegmentCount: z.coerce.number().optional(),
+  hlsSegmentDuration: z.string().optional(),
+  hlsPartDuration: z.string().optional(),
+  hlsSegmentMaxSize: z.string().optional(),
+  hlsAllowOrigin: z.string().optional(),
+  hlsTrustedProxies: z.array(z.string()).optional(),
+  hlsDirectory: z.string().optional(),
+  webrtc: z.boolean().optional(),
+  webrtcAddress: z.string().optional(),
+  webrtcEncryption: z.boolean().optional(),
+  webrtcServerKey: z.string().optional(),
+  webrtcServerCert: z.string().optional(),
+
+  webrtcAllowOrigin: z.string().optional(),
+  webrtcTrustedProxies: z.array(z.string()).optional(),
+  webrtcLocalUDPAddress: z.string().optional(),
+  webrtcLocalTCPAddress: z.string().optional(),
+  webrtcIPsFromInterfaces: z.boolean().optional(),
+  webrtcIPsFromInterfacesList: z.array(z.string()).optional(),
+  webrtcAdditionalHosts: z.array(z.string()).optional(),
+  webrtcICEServers2: z
+    .array(
+      z.object({
+        url: z.string().optional(),
+        username: z.string().optional(),
+        password: z.string().optional(),
+      }),
+    )
+    .optional(),
+  srt: z.boolean().optional(),
+  srtAddress: z.string().optional(),
+  record: z.boolean().optional(),
+  recordPath: z.string().optional(),
+  recordFormat: z.string().optional(),
+  recordPartDuration: z.string().optional(),
+  recordSegmentDuration: z.string().optional(),
+  recordDeleteAfter: z.string().optional(),
+}) satisfies z.ZodType<GlobalConf>
 
 export default function ConfigForm({
   globalConf,
 }: {
-  globalConf?: GlobalConf;
+  globalConf?: GlobalConf
 }) {
-  const { toast } = useToast();
+  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(GlobalConfigFormSchema),
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: globalConf,
-  });
+  })
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "webrtcICEServers2",
-  });
+    name: 'webrtcICEServers2',
+  })
 
   const onSubmit = async (values: z.output<typeof GlobalConfigFormSchema>) => {
-    const updated = await updateGlobalConfig({ globalConfig: values });
+    const updated = await updateGlobalConfig({ globalConfig: values })
     if (updated) {
       toast({
-        title: "Updated Global Config",
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "There was an issue updating the Global Config",
-        description: "Please double check your form values.",
-      });
+        title: 'Updated Global Config',
+      })
     }
-  };
+    else {
+      toast({
+        variant: 'destructive',
+        title: 'There was an issue updating the Global Config',
+        description: 'Please double check your form values.',
+      })
+    }
+  }
   const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const value = event.target.value;
-    const arrayOfLines = value.split("\n");
-    return arrayOfLines; // Return the array of lines to set the value in the form field
-  };
+    const value = event.target.value
+    const arrayOfLines = value.split('\n')
+    return arrayOfLines // Return the array of lines to set the value in the form field
+  }
   const handleTextareaValue = (value: string[] | undefined) => {
-    return value?.join("\n"); // Return the array of lines to set the value in the form field
-  };
+    return value?.join('\n') // Return the array of lines to set the value in the form field
+  }
 
   return (
     <Form {...form}>
@@ -95,7 +181,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="logDestinations"
           control={form.control}
@@ -107,7 +194,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -116,7 +203,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
 
         <FormField
           name="logFile"
@@ -132,7 +220,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
         <FormField
           name="readTimeout"
@@ -148,7 +237,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="writeTimeout"
           control={form.control}
@@ -163,7 +253,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="writeQueueSize"
           control={form.control}
@@ -178,7 +269,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="udpMaxPayloadSize"
           control={form.control}
@@ -193,7 +285,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="externalAuthenticationURL"
           control={form.control}
@@ -208,7 +301,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
         <FormField
           name="api"
@@ -218,7 +312,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -238,7 +332,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="apiAddress"
           control={form.control}
@@ -253,7 +348,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -264,7 +360,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -284,7 +380,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="metricsAddress"
           control={form.control}
@@ -299,7 +396,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -310,7 +408,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -330,7 +428,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="pprofAddress"
           control={form.control}
@@ -345,7 +444,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -362,7 +462,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="runOnConnectRestart"
           control={form.control}
@@ -371,7 +472,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -391,7 +492,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="runOnDisconnect"
           control={form.control}
@@ -406,7 +508,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
         <FormField
           name="rtsp"
@@ -416,7 +519,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -436,7 +539,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="protocols"
           control={form.control}
@@ -448,7 +552,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -457,7 +561,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="encryption"
           control={form.control}
@@ -472,7 +577,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtspAddress"
           control={form.control}
@@ -487,7 +593,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtpAddress"
           control={form.control}
@@ -502,7 +609,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtcpAddress"
           control={form.control}
@@ -517,7 +625,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="multicastIPRange"
           control={form.control}
@@ -532,7 +641,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="multicastRTPPort"
           control={form.control}
@@ -547,7 +657,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="multicastRTCPPort"
           control={form.control}
@@ -562,7 +673,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
         <FormField
           name="serverKey"
@@ -578,7 +690,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="serverCert"
           control={form.control}
@@ -593,7 +706,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="authMethods"
           control={form.control}
@@ -605,7 +719,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -614,7 +728,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -625,7 +740,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -645,7 +760,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtmpAddress"
           control={form.control}
@@ -660,7 +776,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtmpEncryption"
           control={form.control}
@@ -675,7 +792,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtmpsAddress"
           control={form.control}
@@ -690,7 +808,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtmpServerKey"
           control={form.control}
@@ -705,7 +824,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="rtmpServerCert"
           control={form.control}
@@ -720,7 +840,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -731,7 +852,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -751,7 +872,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsAddress"
           control={form.control}
@@ -766,7 +888,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsEncryption"
           control={form.control}
@@ -775,7 +898,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -795,7 +918,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsServerKey"
           control={form.control}
@@ -810,7 +934,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsServerCert"
           control={form.control}
@@ -825,7 +950,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsAlwaysRemux"
           control={form.control}
@@ -834,7 +960,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -854,7 +980,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsVariant"
           control={form.control}
@@ -869,7 +996,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsSegmentCount"
           control={form.control}
@@ -884,7 +1012,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsSegmentDuration"
           control={form.control}
@@ -899,7 +1028,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsPartDuration"
           control={form.control}
@@ -914,7 +1044,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsSegmentMaxSize"
           control={form.control}
@@ -929,7 +1060,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsAllowOrigin"
           control={form.control}
@@ -944,7 +1076,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsTrustedProxies"
           control={form.control}
@@ -956,7 +1089,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -965,7 +1098,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="hlsDirectory"
           control={form.control}
@@ -980,7 +1114,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         <FormField
@@ -991,7 +1126,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -1011,7 +1146,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcAddress"
           control={form.control}
@@ -1026,7 +1162,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcEncryption"
           control={form.control}
@@ -1035,7 +1172,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -1055,7 +1192,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcServerKey"
           control={form.control}
@@ -1070,7 +1208,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcServerCert"
           control={form.control}
@@ -1085,7 +1224,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcAllowOrigin"
           control={form.control}
@@ -1100,7 +1240,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcTrustedProxies"
           control={form.control}
@@ -1112,7 +1253,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -1121,7 +1262,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcLocalUDPAddress"
           control={form.control}
@@ -1136,7 +1278,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcLocalTCPAddress"
           control={form.control}
@@ -1151,7 +1294,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcIPsFromInterfaces"
           control={form.control}
@@ -1160,7 +1304,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -1180,7 +1324,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcIPsFromInterfacesList"
           control={form.control}
@@ -1192,7 +1337,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -1201,7 +1346,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="webrtcAdditionalHosts"
           control={form.control}
@@ -1213,7 +1359,7 @@ export default function ConfigForm({
                     {...field}
                     value={handleTextareaValue(field.value)}
                     onChange={(e) => {
-                      field.onChange(handleTextareaChange(e));
+                      field.onChange(handleTextareaChange(e))
                     }}
                   />
                 </FormControl>
@@ -1222,7 +1368,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
@@ -1237,11 +1384,10 @@ export default function ConfigForm({
               size="icon"
               onClick={() =>
                 append({
-                  password: "a",
-                  url: "b",
-                  username: "c",
-                })
-              }
+                  password: 'a',
+                  url: 'b',
+                  username: 'c',
+                })}
             >
               <Plus className="h-4 w-4" />
             </Button>
@@ -1249,7 +1395,7 @@ export default function ConfigForm({
           {fields.map((field, index) => (
             <div key={field.id} className="space-y-2 pl-5">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-default">{`ICE Server`}</span>
+                <span className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-default">ICE Server</span>
                 <Button
                   type="button"
                   variant="outline"
@@ -1321,7 +1467,7 @@ export default function ConfigForm({
               <>
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value === "true" ? true : false);
+                    field.onChange(value === 'true')
                   }}
                   defaultValue={String(field.value)}
                   value={String(field.value)}
@@ -1341,7 +1487,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <FormField
           name="srtAddress"
           control={form.control}
@@ -1356,7 +1503,8 @@ export default function ConfigForm({
               </>
             </GridFormItem>
           )}
-        ></FormField>
+        >
+        </FormField>
         <Separator />
 
         {/* <FormField
@@ -1465,90 +1613,5 @@ export default function ConfigForm({
         ></FormField> */}
       </form>
     </Form>
-  );
+  )
 }
-
-export const GlobalConfigFormSchema = z.object({
-  logLevel: z.string().optional(),
-  logDestinations: z.array(z.string()).optional(),
-  logFile: z.string().optional(),
-  readTimeout: z.string().optional(),
-  writeTimeout: z.string().optional(),
-  writeQueueSize: z.coerce.number().optional(),
-  udpMaxPayloadSize: z.coerce.number().optional(),
-  externalAuthenticationURL: z.string().optional(),
-  api: z.boolean().optional(),
-  apiAddress: z.string().optional(),
-  metrics: z.boolean().optional(),
-  metricsAddress: z.string().optional(),
-  pprof: z.boolean().optional(),
-  pprofAddress: z.string().optional(),
-  runOnConnect: z.string().optional(),
-  runOnConnectRestart: z.boolean().optional(),
-  runOnDisconnect: z.string().optional(),
-  rtsp: z.boolean().optional(),
-  protocols: z.array(z.string()).optional(),
-  encryption: z.string().optional(),
-  rtspAddress: z.string().optional(),
-  rtspsAddress: z.string().optional(),
-  rtpAddress: z.string().optional(),
-  rtcpAddress: z.string().optional(),
-  multicastIPRange: z.string().optional(),
-  multicastRTPPort: z.coerce.number().optional(),
-  multicastRTCPPort: z.coerce.number().optional(),
-  serverKey: z.string().optional(),
-  serverCert: z.string().optional(),
-  authMethods: z.array(z.string()).optional(),
-  rtmp: z.boolean().optional(),
-  rtmpAddress: z.string().optional(),
-  rtmpEncryption: z.string().optional(),
-  rtmpsAddress: z.string().optional(),
-
-  rtmpServerKey: z.string().optional(),
-  rtmpServerCert: z.string().optional(),
-  hls: z.boolean().optional(),
-  hlsAddress: z.string().optional(),
-  hlsEncryption: z.boolean().optional(),
-  hlsServerKey: z.string().optional(),
-
-  hlsServerCert: z.string().optional(),
-  hlsAlwaysRemux: z.boolean().optional(),
-  hlsVariant: z.string().optional(),
-  hlsSegmentCount: z.coerce.number().optional(),
-  hlsSegmentDuration: z.string().optional(),
-  hlsPartDuration: z.string().optional(),
-  hlsSegmentMaxSize: z.string().optional(),
-  hlsAllowOrigin: z.string().optional(),
-  hlsTrustedProxies: z.array(z.string()).optional(),
-  hlsDirectory: z.string().optional(),
-  webrtc: z.boolean().optional(),
-  webrtcAddress: z.string().optional(),
-  webrtcEncryption: z.boolean().optional(),
-  webrtcServerKey: z.string().optional(),
-  webrtcServerCert: z.string().optional(),
-
-  webrtcAllowOrigin: z.string().optional(),
-  webrtcTrustedProxies: z.array(z.string()).optional(),
-  webrtcLocalUDPAddress: z.string().optional(),
-  webrtcLocalTCPAddress: z.string().optional(),
-  webrtcIPsFromInterfaces: z.boolean().optional(),
-  webrtcIPsFromInterfacesList: z.array(z.string()).optional(),
-  webrtcAdditionalHosts: z.array(z.string()).optional(),
-  webrtcICEServers2: z
-    .array(
-      z.object({
-        url: z.string().optional(),
-        username: z.string().optional(),
-        password: z.string().optional(),
-      }),
-    )
-    .optional(),
-  srt: z.boolean().optional(),
-  srtAddress: z.string().optional(),
-  record: z.boolean().optional(),
-  recordPath: z.string().optional(),
-  recordFormat: z.string().optional(),
-  recordPartDuration: z.string().optional(),
-  recordSegmentDuration: z.string().optional(),
-  recordDeleteAfter: z.string().optional(),
-}) satisfies z.ZodType<GlobalConf>;

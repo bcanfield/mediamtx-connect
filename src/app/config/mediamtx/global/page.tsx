@@ -1,24 +1,27 @@
-export const dynamic = "force-dynamic";
+import type { GlobalConf } from '@/lib/MediaMTX/generated'
+import getAppConfig from '@/actions/getAppConfig'
+import logger from '@/app/utils/logger'
+import { Api } from '@/lib/MediaMTX/generated'
+import ConfigForm from '../../config-form'
 
-import getAppConfig from "@/actions/getAppConfig";
-import { Api, GlobalConf } from "@/lib/MediaMTX/generated";
-import ConfigForm from "../../config-form";
+export const dynamic = 'force-dynamic'
 
 export default async function Global() {
-  const config = await getAppConfig();
+  const config = await getAppConfig()
   if (!config) {
-    return <div>Invalid Config</div>;
+    return <div>Invalid Config</div>
   }
-  let globalConf: GlobalConf | undefined;
+  let globalConf: GlobalConf | undefined
   const api = new Api({
     baseUrl: `${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
-  });
+  })
 
   try {
-    const mediaMtxConfig = await api.v3.configGlobalGet({ cache: "no-store" });
-    globalConf = mediaMtxConfig?.data;
-  } catch {
-    console.error("Error reaching MediaMTX at: ", config.mediaMtxUrl);
+    const mediaMtxConfig = await api.v3.configGlobalGet({ cache: 'no-store' })
+    globalConf = mediaMtxConfig?.data
   }
-  return <ConfigForm globalConf={globalConf} />;
+  catch {
+    logger.error(`Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+  }
+  return <ConfigForm globalConf={globalConf} />
 }

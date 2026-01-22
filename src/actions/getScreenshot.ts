@@ -1,40 +1,42 @@
-"use server";
-import fs from "fs";
-import path from "path";
+'use server'
+import fs from 'node:fs'
+import path from 'node:path'
+import logger from '@/app/utils/logger'
 
-import getAppConfig from "./getAppConfig";
+import getAppConfig from './getAppConfig'
 
 export default async function getScreenshot({
   streamName,
   recordingFileName,
 }: {
-  streamName: string;
-  recordingFileName: string;
+  streamName: string
+  recordingFileName: string
 }) {
-  console.log("Getting Recordings");
-  const config = await getAppConfig();
+  logger.debug('Getting screenshot')
+  const config = await getAppConfig()
   if (!config) {
-    return null;
+    return null
   }
-  let base64: string | null = null;
+  let base64: string | null = null
 
   const screenshotPath = path.join(
     config.screenshotsDirectory,
     streamName,
     `${path.parse(recordingFileName).name}.png`,
-  );
+  )
 
-  console.log({ screenshotPath });
+  logger.debug('Screenshot path', { screenshotPath })
   try {
-    const imageData = fs.readFileSync(screenshotPath);
+    const imageData = fs.readFileSync(screenshotPath)
     base64 = `data:image/png;base64,${Buffer.from(imageData).toString(
-      "base64",
-    )}`;
-  } catch {
-    console.error(
-      `Error fetching screenshot for:\n stream: ${streamName}\nrecording: ${recordingFileName}`,
-    );
+      'base64',
+    )}`
+  }
+  catch {
+    logger.error(
+      `Error fetching screenshot for: stream: ${streamName}, recording: ${recordingFileName}`,
+    )
   }
 
-  return base64;
+  return base64
 }
