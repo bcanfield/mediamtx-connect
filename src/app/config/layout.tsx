@@ -1,5 +1,4 @@
-import { SidebarNav } from '@/components/sidebar-nav'
-import PageLayout from '../../components/page-layout'
+import { PageLayout, SidebarNav } from '@/shared/components/layout'
 
 export default async function ConfigLayout({
   children,

@@ -3,16 +3,16 @@
 import { Menu, RefreshCcw } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 
+import { ModeToggle } from '@/shared/components/feedback'
+import { Button } from '@/shared/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
-import { ModeToggle } from '../components/mode-toggle'
+} from '@/shared/components/ui/dropdown-menu'
+import { cn } from '@/shared/utils'
 
 interface Props {
   items?: { name: string, location: string }[]
