@@ -1,6 +1,6 @@
 import { cn } from '@/shared/utils'
 
-export default async function GridLayout({
+export default function GridLayout({
   children,
   columnLayout = 'medium',
 }: {

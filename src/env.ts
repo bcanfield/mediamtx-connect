@@ -9,6 +9,9 @@ const serverSchema = z.object({
   NEXT_RUNTIME: z.enum(['nodejs', 'edge']).optional(),
   CI: z.string().optional(),
 
+  // Database
+  DATABASE_URL: z.string().default('file:./prisma/dev.db'),
+
   // MediaMTX configuration (used in seed.ts)
   BACKEND_SERVER_MEDIAMTX_URL: z.string().default('http://localhost'),
   MEDIAMTX_API_PORT: z.string().default('9997'),
@@ -29,6 +32,7 @@ const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   NEXT_RUNTIME: process.env.NEXT_RUNTIME,
   CI: process.env.CI,
+  DATABASE_URL: process.env.DATABASE_URL,
   BACKEND_SERVER_MEDIAMTX_URL: process.env.BACKEND_SERVER_MEDIAMTX_URL,
   MEDIAMTX_API_PORT: process.env.MEDIAMTX_API_PORT,
   REMOTE_MEDIAMTX_URL: process.env.REMOTE_MEDIAMTX_URL,

@@ -24,6 +24,8 @@ export default antfu(
       // Auto-generated files
       'src/lib/MediaMTX/generated.ts',
       'src/lib/prisma/migrations/**',
+      // Documentation files
+      '**/*.md',
     ],
   },
   {

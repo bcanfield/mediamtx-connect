@@ -11,12 +11,12 @@ import Link from 'next/link'
 import { getAppConfig } from '@/features/config/client'
 import { Api } from '@/lib/MediaMTX/generated'
 import { RefreshButton } from '@/shared/components/feedback'
-import { GridLayout, PageLayout } from '@/shared/components/layout'
+import { PageLayout } from '@/shared/components/layout'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { Button } from '@/shared/components/ui/button'
 import { logger } from '@/shared/utils'
 
-import { StreamCard } from './StreamCard'
+import { StreamsGrid } from './StreamsGrid'
 
 export const dynamic = 'force-dynamic'
 
@@ -124,19 +124,11 @@ export async function LiveViewPage() {
       )}
 
       {isConnected && hasStreams && remoteMediaMtxUrl && (
-        <GridLayout columnLayout="small">
-          {paths?.data.items?.map(({ name, readyTime }) => (
-            <StreamCard
-              key={name}
-              props={{
-                streamName: name,
-                readyTime,
-                hlsAddress: mediaMtxConfig?.data.hlsAddress,
-                remoteMediaMtxUrl,
-              }}
-            />
-          ))}
-        </GridLayout>
+        <StreamsGrid
+          streams={paths?.data.items ?? []}
+          hlsAddress={mediaMtxConfig?.data.hlsAddress}
+          remoteMediaMtxUrl={remoteMediaMtxUrl}
+        />
       )}
     </PageLayout>
   )
