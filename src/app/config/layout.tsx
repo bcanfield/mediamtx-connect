@@ -17,6 +17,24 @@ export default async function ConfigLayout({
       title: 'MediaMTX Global Config',
       href: '/config/mediamtx/global',
     },
+    {
+      title: 'Stream Paths',
+      href: '/config/paths',
+    },
+  ]
+
+  const backupConfigItems = [
+    {
+      title: 'Backup Settings',
+      href: '/config/backup',
+    },
+  ]
+
+  const retentionConfigItems = [
+    {
+      title: 'Recording Retention',
+      href: '/config/retention',
+    },
   ]
 
   return (
@@ -26,6 +44,8 @@ export default async function ConfigLayout({
           <SidebarNav
             clientConfigItems={clientConfigItems}
             mediaMtxConfigItems={mediaMtxConfigItems}
+            backupConfigItems={backupConfigItems}
+            retentionConfigItems={retentionConfigItems}
           />
         </aside>
         <div className="flex-1">{children}</div>

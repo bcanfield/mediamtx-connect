@@ -1,4 +1,5 @@
 import { AlertTriangle, FolderOpen, Settings, Video } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
 import { getAppConfig } from '@/features/config/client'
@@ -12,22 +13,26 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card'
 import { countFilesInSubdirectories } from '@/shared/utils/file-operations'
+import { getStorageStats } from '../actions/getStorageStats'
+import { StorageStatus } from './StorageStatus'
 
 export const dynamic = 'force-dynamic'
 
 export async function RecordingsIndexPage() {
+  const t = await getTranslations('recordings')
+  const tErrors = await getTranslations('errors')
   const config = await getAppConfig()
   if (!config) {
     return (
       <PageLayout
-        header="Recordings"
-        subHeader="Browse your recordings across your various streams"
+        header={t('title')}
+        subHeader={t('subHeader')}
       >
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Configuration Error</AlertTitle>
+          <AlertTitle>{t('configurationError')}</AlertTitle>
           <AlertDescription>
-            Unable to load configuration. Please check your database connection.
+            {tErrors('loadingFailed')}
           </AlertDescription>
         </Alert>
       </PageLayout>
@@ -48,30 +53,38 @@ export async function RecordingsIndexPage() {
 
   const hasRecordings = Object.keys(streamRecordingDirectories).length > 0
 
+  // Get storage statistics
+  const storageStats = await getStorageStats(config.recordingsDirectory)
+
   return (
     <PageLayout
-      header="Recordings"
-      subHeader="Browse your recordings across your various streams"
+      header={t('title')}
+      subHeader={t('subHeader')}
     >
+      {/* Storage Status */}
+      {!error && storageStats && (
+        <StorageStatus stats={storageStats} />
+      )}
+
       {error && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Cannot Access Recordings Directory</AlertTitle>
+          <AlertTitle>{t('cannotAccessDirectory')}</AlertTitle>
           <AlertDescription className="space-y-2">
             <p>
-              Unable to read the recordings directory at
+              {t('unableToReadDirectory')}
               {' '}
               <code className="bg-muted px-1 rounded">
                 {config.recordingsDirectory}
               </code>
             </p>
             <p className="text-sm">
-              Make sure the directory exists and has the correct permissions.
+              {t('checkPermissions')}
             </p>
             <Link href="/config" className="mt-2 inline-block">
               <Button variant="outline" size="sm">
                 <Settings className="h-4 w-4 mr-2" />
-                Check Config
+                {t('checkConfig')}
               </Button>
             </Link>
           </AlertDescription>
@@ -81,19 +94,13 @@ export async function RecordingsIndexPage() {
       {!error && !hasRecordings && (
         <Alert>
           <FolderOpen className="h-4 w-4" />
-          <AlertTitle>No Recordings Found</AlertTitle>
+          <AlertTitle>{t('noRecordingsTitle')}</AlertTitle>
           <AlertDescription>
             <p>
-              No recordings have been saved yet. Recordings will appear here
-              once MediaMTX starts recording streams.
+              {t('noRecordingsDescription')}
             </p>
             <p className="text-sm mt-2">
-              Make sure
-              {' '}
-              <code className="bg-muted px-1 rounded">MTX_RECORD=yes</code>
-              {' '}
-              is
-              set in your MediaMTX configuration.
+              {t('recordingHint')}
             </p>
           </AlertDescription>
         </Alert>
@@ -111,12 +118,12 @@ export async function RecordingsIndexPage() {
                 <CardDescription>
                   {value}
                   {' '}
-                  {value === 1 ? 'Recording' : 'Recordings'}
+                  {value === 1 ? t('recordingSingular') : t('recordingPlural')}
                 </CardDescription>
               </CardHeader>
               <div className="p-4">
                 <Link href={`recordings/${key}`}>
-                  <Button variant="outline">View</Button>
+                  <Button variant="outline">{t('view')}</Button>
                 </Link>
               </div>
             </Card>

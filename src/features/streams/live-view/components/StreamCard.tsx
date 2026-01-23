@@ -113,7 +113,7 @@ export function StreamCard({
                     <Image
                       alt=""
                       fill
-                      objectFit="contain"
+                      style={{ objectFit: 'contain' }}
                       onError={() => setThumbnailError(true)}
                       src={`/api/${streamName}/first-screenshot`}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
