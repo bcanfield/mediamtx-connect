@@ -1,10 +1,11 @@
 'use client'
 
 import { Menu, RefreshCcw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { ModeToggle } from '@/shared/components/feedback'
+import { LanguageSwitcher, ModeToggle } from '@/shared/components/feedback'
 import { Button } from '@/shared/components/ui/button'
 import {
   DropdownMenu,
@@ -14,12 +15,15 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/utils'
 
-interface Props {
-  items?: { name: string, location: string }[]
-}
-
-export default function NavBar({ items }: Props) {
+export default function NavBar() {
   const pathname = usePathname()
+  const t = useTranslations('navigation')
+
+  const navItems = [
+    { name: t('dashboard'), location: '/dashboard' },
+    { name: t('recordings'), location: '/recordings' },
+    { name: t('config'), location: '/config' },
+  ]
 
   return (
     <div className="flex h-16 items-center max-w-8xl sm:justify-between sm:space-x-0 mx-auto">
@@ -29,7 +33,7 @@ export default function NavBar({ items }: Props) {
         </Link>
         <>
           <nav className="hidden gap-6 sm:flex">
-            {items?.map(({ location, name }) => (
+            {navItems.map(({ location, name }) => (
               <Link
                 key={location}
                 href={location}
@@ -47,6 +51,7 @@ export default function NavBar({ items }: Props) {
               <DropdownMenuTrigger asChild className="flex items-center  ">
                 <Button variant="ghost" size="icon">
                   <Menu></Menu>
+                  <span className="sr-only">{t('toggleNavigationMenu')}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -57,10 +62,10 @@ export default function NavBar({ items }: Props) {
                       'text-primary font-extrabold transition-colors hover:text-primary',
                     )}
                   >
-                    Home
+                    {t('home')}
                   </Link>
                 </DropdownMenuItem>
-                {items?.map(({ location, name }) => (
+                {navItems.map(({ location, name }) => (
                   <DropdownMenuItem asChild key={location}>
                     <Link
                       key={location}
@@ -85,6 +90,7 @@ export default function NavBar({ items }: Props) {
           <Button variant="ghost" onClick={() => window.location.reload()}>
             <RefreshCcw></RefreshCcw>
           </Button>
+          <LanguageSwitcher />
           <ModeToggle />
         </nav>
       </div>

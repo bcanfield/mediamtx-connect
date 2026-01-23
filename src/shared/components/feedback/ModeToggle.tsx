@@ -1,6 +1,7 @@
 'use client'
 
 import { Moon, Sun } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useCallback, useEffect, useSyncExternalStore } from 'react'
 
 import { Button } from '@/shared/components/ui/button'
@@ -35,6 +36,8 @@ function getServerSnapshot(): 'dark' | 'light' | 'system' | undefined {
 
 export function ModeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  const t = useTranslations('theme')
+  const tCommon = useTranslations('common')
 
   const updateTheme = useCallback((newTheme: 'dark' | 'light' | 'system') => {
     currentTheme = newTheme
@@ -64,18 +67,18 @@ export function ModeToggle() {
         <Button variant="ghost" size="icon">
           <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">{tCommon('toggleTheme')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => updateTheme('light')}>
-          Light
+          {t('light')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => updateTheme('dark')}>
-          Dark
+          {t('dark')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => updateTheme('system')}>
-          System
+          {t('system')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

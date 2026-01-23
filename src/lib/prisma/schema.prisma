@@ -21,3 +21,59 @@ model Config {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }
+
+model BackupConfig {
+  id                 Int      @id @default(autoincrement())
+  enabled            Boolean  @default(false)
+  schedule           String   @default("0 2 * * *") // Default: 2 AM daily
+  localBackupDir     String   @default("./backups")
+  maxLocalBackups    Int      @default(7)
+  remoteEnabled      Boolean  @default(false)
+  remoteType         String?  // "s3" | "gcs" | "azure"
+  remoteBucket       String?
+  remoteRegion       String?
+  remoteAccessKey    String?
+  remoteSecretKey    String?
+  remotePrefix       String?  @default("backups/")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model BackupHistory {
+  id           Int      @id @default(autoincrement())
+  timestamp    DateTime @default(now())
+  type         String   // "database" | "config" | "full"
+  status       String   // "success" | "failed" | "in_progress"
+  localPath    String?
+  remotePath   String?
+  sizeBytes    Int?
+  errorMessage String?
+  duration     Int?     // Duration in milliseconds
+  createdAt    DateTime @default(now())
+}
+
+model RetentionConfig {
+  id                     Int      @id @default(autoincrement())
+  enabled                Boolean  @default(false)
+  schedule               String   @default("0 3 * * *") // Default: 3 AM daily
+  maxAgeDays             Int      @default(30)          // Delete recordings older than X days
+  maxStoragePercent      Int      @default(90)          // Trigger cleanup when storage exceeds this %
+  minFreeSpaceGB         Float    @default(10.0)        // Ensure at least X GB free space
+  deleteOldestFirst      Boolean  @default(true)        // When cleaning for space, delete oldest first
+  perStreamRetentionDays String?  // JSON object for per-stream retention: {"stream1": 7, "stream2": 14}
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model CleanupHistory {
+  id              Int      @id @default(autoincrement())
+  timestamp       DateTime @default(now())
+  triggerType     String   // "scheduled" | "storage_threshold" | "manual"
+  filesDeleted    Int      @default(0)
+  bytesFreed      Int      @default(0)
+  status          String   // "success" | "failed" | "partial"
+  errorMessage    String?
+  duration        Int?     // Duration in milliseconds
+  deletedFiles    String?  // JSON array of deleted file paths
+  createdAt       DateTime @default(now())
+}

@@ -1,8 +1,10 @@
 import type { ReadStream } from 'node:fs'
 import fs, { createReadStream } from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { NextResponse } from 'next/server'
 import { getAppConfig } from '@/features/config/client'
+import { logger } from '@/shared/utils'
 
 // 1x1 transparent PNG to return when no screenshot exists
 // This prevents Next.js image optimizer errors
@@ -32,26 +34,38 @@ export async function GET(
   }
 
   try {
-    const screenshotDir = path.join(config.screenshotsDirectory, streamName)
+    const screenshotDir = path.resolve(config.screenshotsDirectory, streamName)
+    logger.info(`[first-screenshot] Looking for screenshots in: ${screenshotDir} (cwd: ${process.cwd()})`)
 
     // Check if directory exists before trying to read it
     if (!fs.existsSync(screenshotDir)) {
+      logger.info(`[first-screenshot] Screenshot directory doesn't exist: ${screenshotDir}`)
       return notFoundResponse()
     }
 
     const streamScreenshots = fs
       .readdirSync(screenshotDir)
-      .filter(f => !f.startsWith('.'))
+      .filter(f => !f.startsWith('.') && f.endsWith('.png'))
+      .sort()
+    logger.info(`[first-screenshot] Found ${streamScreenshots.length} screenshots in ${screenshotDir}`)
     if (streamScreenshots.length === 0) {
       return notFoundResponse()
     }
 
+    // Get the most recent screenshot (last when sorted alphabetically by timestamp)
     const firstScreenshot = streamScreenshots[streamScreenshots.length - 1]
-    const screenshotPath = path.join(
+    const screenshotPath = path.resolve(
       config.screenshotsDirectory,
       streamName,
-      `${path.parse(firstScreenshot).name}.png`,
+      firstScreenshot,
     )
+
+    logger.info(`[first-screenshot] Serving screenshot: ${screenshotPath}`)
+
+    if (!fs.existsSync(screenshotPath)) {
+      logger.info(`[first-screenshot] Screenshot file doesn't exist: ${screenshotPath}`)
+      return notFoundResponse()
+    }
 
     const data: ReadableStream = streamFile(screenshotPath)
 
@@ -64,7 +78,7 @@ export async function GET(
     return res
   }
   catch (error) {
-    console.error(`Error Getting First Screenshot: `, error)
+    logger.error(`Error getting first screenshot for ${streamName}: ${error}`)
     return notFoundResponse()
   }
 }
