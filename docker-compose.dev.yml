@@ -3,7 +3,7 @@
 # With fake streams: docker compose -f docker-compose.dev.yml --profile streams up -d
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.11.3
+    image: bluenviron/mediamtx:1.16.1
     container_name: mediamtx
     restart: unless-stopped
     networks:
