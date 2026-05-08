@@ -1,210 +1,163 @@
 # CLAUDE.md
 
-This file provides guidance for Claude Code when working with this repository.
+Guidance for Claude Code when working in this repo. Keep this file short and rule-oriented.
 
-## Project Overview
+## What this project is
 
-MediaMTX Connect is a Next.js web UI for viewing and managing media streams from a [MediaMTX](https://github.com/bluenviron/mediamtx) server. It provides live HLS stream viewing, recording browsing with auto-generated thumbnails, and web-based configuration.
+MediaMTX Connect — a Next.js web UI for viewing and managing media streams from a [MediaMTX](https://github.com/bluenviron/mediamtx) server. Live HLS viewing, recording browse/playback/download with auto-thumbnails, and a full web-based config editor.
 
-## Tech Stack
+## Source of truth for features
 
-- **Framework**: Next.js 16 (App Router) with React 19
-- **Styling**: Tailwind CSS 4 with shadcn/ui components (Radix UI)
-- **Database**: SQLite via Prisma ORM
-- **Video**: HLS.js for browser playback
-- **Forms**: React Hook Form + Zod validation
-- **Testing**: Playwright for E2E tests
-- **Linting**: ESLint 9 with @antfu/eslint-config
+**`docs/FEATURES.md` is the living source of truth for the current feature state of the app** — every route, server action, schema, background job, and shipped capability is catalogued there.
+
+> **Hard rule for every change:** if your change adds, removes, or modifies a user-visible feature, route, API endpoint, server action, schema, cron, or integration, you **must** update `docs/FEATURES.md` in the same change. A code change without a matching `FEATURES.md` update is incomplete. See the "Maintenance contract" section at the top of that file for the exact update conventions.
+
+Other living references:
+
+- `docs/FEATURES.md` — current feature inventory (read this before discussing what the app does).
+- `ARCHITECTURE.md` — high-level system diagram.
 
 ## Commands
 
 ```bash
-npm run dev          # Start Next.js dev server
-npm run build        # Production build
-npm run typecheck    # TypeScript type checking
-npm run lint         # Run ESLint
-npm run lint:fix     # Auto-fix lint issues
-npm run test:e2e     # Run Playwright E2E tests
-npm run setup        # Initial dev setup (./scripts/setup-dev.sh)
-npm run mediamtx     # Start MediaMTX with fake test streams
-npm run mediamtx:stop # Stop MediaMTX
-npm run generate     # Generate Prisma client
-npm run migrate      # Deploy Prisma migrations
-npm run db:seed      # Seed database
-npm run db:reset     # Reset database
+npm run dev            # Next.js dev server
+npm run build          # Production build
+npm run start          # Run prod server
+npm run typecheck      # TypeScript type check
+npm run lint           # ESLint
+npm run lint:fix       # ESLint autofix
+npm run test:e2e       # Playwright E2E
+npm run setup          # ./scripts/setup-dev.sh
+npm run mediamtx       # Start MediaMTX with fake test streams
+npm run mediamtx:stop  # Stop MediaMTX
+npm run generate       # prisma generate
+npm run migrate        # prisma migrate deploy
+npm run db:seed        # Seed DB
+npm run db:reset       # Reset DB
 ```
 
 ## Project Structure
 
-> **Full architecture documentation**: See `docs/FEATURE-ORGANIZATION-STRATEGY.md`
-
 ```
 src/
-├── features/               # Feature modules (domain-driven)
-│   ├── streams/           # Live streaming features
-│   │   └── live-view/     # Main stream viewing
-│   ├── recordings/        # Recording features
-│   │   ├── browse/        # Browse/list recordings
-│   │   └── playback/      # Video playback
-│   ├── config/            # Configuration features
-│   │   ├── client/        # Client settings
-│   │   ├── mediamtx/      # MediaMTX settings
-│   │   └── backup/        # Backup/restore
-│   ├── storage/           # Storage management
-│   └── system/            # System utilities
-│
-├── shared/                 # Shared code (used by 3+ features)
-│   ├── components/        # Shared React components
-│   │   ├── ui/           # shadcn/ui primitives
-│   │   ├── layout/       # Layout components
-│   │   ├── forms/        # Form utilities
-│   │   └── media/        # Media components
-│   ├── hooks/            # Shared React hooks
-│   ├── utils/            # Shared utilities
-│   └── types/            # Shared TypeScript types
-│
-├── lib/                    # External integrations
-│   ├── MediaMTX/          # Auto-generated API client
-│   └── prisma/            # Database schema & migrations
-│
-├── app/                    # Next.js routing (thin layer)
-│   ├── api/               # API route handlers
-│   ├── (main)/            # Main app routes
-│   ├── layout.tsx         # Root layout
-│   └── globals.css        # Global styles
-│
-├── env.ts                  # Centralized environment variables
-└── instrumentation.ts      # Background jobs
+├── features/              # Feature modules (domain-driven)
+│   ├── streams/           # Live streaming
+│   ├── recordings/        # Recording browse/playback
+│   └── config/            # App + MediaMTX configuration
+├── shared/                # Shared code (used by 3+ features)
+│   ├── components/        # ui/, layout/, forms/, feedback/, media/, providers/
+│   ├── hooks/  utils/  types/
+├── lib/                   # External integrations (MediaMTX client, Prisma)
+├── app/                   # Thin Next.js routing layer (pages + api routes)
+├── env.ts                 # Centralized env access
+└── instrumentation.ts     # Background jobs (cron)
 ```
+
+Reserved feature domains (currently empty, see `docs/FEATURES.md` §19): `storage`, `system`, `auth`, `analytics`, `integrations`, plus `config/backup`.
 
 ## Code Conventions
 
-### Environment Variables
-- All `process.env` access must go through `src/env.ts`
-- ESLint enforces this with `node/prefer-global/process` rule
-- Use `env.VARIABLE_NAME` instead of `process.env.VARIABLE_NAME`
+### Environment variables
+- All `process.env` access goes through `src/env.ts`. Use `env.VARIABLE_NAME`.
+- ESLint rule `node/prefer-global/process` enforces this.
 
 ### Logging
-- Use the logger from `@/shared/utils/logger` (Pino-based)
-- `console.*` is forbidden except in `logger.ts` and `env.ts`
+- Use `logger` from `@/shared/utils/logger` (Pino).
+- `console.*` is banned outside `logger.ts` and `env.ts`.
 
-### Auto-generated Files (Do Not Edit)
-- `src/lib/MediaMTX/generated.ts` - MediaMTX API client
-- `src/lib/prisma/migrations/` - Prisma migrations
+### Auto-generated (do not edit)
+- `src/lib/MediaMTX/generated.ts` — MediaMTX API client.
+- `src/lib/prisma/migrations/` — Prisma migrations.
 
 ### Forms
-- Use React Hook Form with Zod schemas for validation
-- Form components use shadcn/ui Form primitives
-- Schemas live in feature's `schemas/` directory
-
----
+- React Hook Form + Zod. Schemas live in the feature's `schemas/` directory.
 
 ## Feature Development Rules
 
-> **CRITICAL**: All AI agents MUST follow these rules when creating or modifying features.
+> **CRITICAL.** Every new or modified feature follows these rules.
 
-### Creating a New Feature
+### Domains
 
-1. **Identify the domain** for your feature:
-   | Domain | Purpose |
-   |--------|---------|
-   | `streams` | Live streaming (viewing, control, stats) |
-   | `recordings` | Recording management (browse, playback, export) |
-   | `config` | App configuration (settings, backup) |
-   | `storage` | Storage management (disk, cleanup, quotas) |
-   | `auth` | Authentication (login, users, permissions) |
-   | `system` | System utilities (health, logs, updates) |
-   | `analytics` | Usage analytics (stats, reports) |
-   | `integrations` | External integrations (webhooks, mqtt) |
+| Domain | Purpose |
+|--------|---------|
+| `streams` | Live streaming (viewing, control, stats) |
+| `recordings` | Recording management (browse, playback, export) |
+| `config` | App + MediaMTX configuration (settings, backup) |
+| `storage` | Storage management (disk, cleanup, quotas) |
+| `auth` | Authentication (login, users, permissions) |
+| `system` | System utilities (health, logs, updates) |
+| `analytics` | Usage analytics (stats, reports) |
+| `integrations` | External integrations (webhooks, MQTT) |
 
-2. **Create the feature directory**:
-   ```
-   src/features/[domain]/[feature-name]/
-   ```
+### Feature directory layout
 
-3. **Always create `index.ts`** that exports the public API
+```
+src/features/[domain]/[feature-name]/
+├── index.ts              # PUBLIC API — required
+├── components/           # [Feature]Page.tsx, [Feature]Form.tsx, …
+├── actions/              # [verb][Feature].ts (server actions)
+├── schemas/              # [feature].schema.ts (Zod)
+├── types/                # index.ts
+├── hooks/                # use[Feature].ts
+├── utils/
+└── __tests__/
+```
 
-4. **Use this internal structure** (create only what you need):
-   ```
-   features/[domain]/[feature-name]/
-   ├── index.ts              # PUBLIC API - Required
-   ├── components/           # React components
-   │   └── [Feature]Page.tsx
-   ├── actions/              # Server actions
-   │   └── get[Feature].ts
-   ├── schemas/              # Zod validation
-   │   └── [feature].schema.ts
-   ├── types/                # TypeScript types
-   │   └── index.ts
-   ├── hooks/                # React hooks
-   ├── utils/                # Feature utilities
-   └── __tests__/            # Tests
-   ```
+Create only the subfolders you need. **Always create `index.ts`** with explicit exports.
 
-### Naming Conventions
+### Naming conventions
 
 | Type | Pattern | Example |
 |------|---------|---------|
-| Page component | `[Feature]Page.tsx` | `BackupPage.tsx` |
-| Form component | `[Feature]Form.tsx` | `BackupForm.tsx` |
-| Card component | `[Feature]Card.tsx` | `BackupCard.tsx` |
-| List component | `[Feature]List.tsx` | `BackupList.tsx` |
+| Page | `[Feature]Page.tsx` | `BackupPage.tsx` |
+| Form | `[Feature]Form.tsx` | `BackupForm.tsx` |
+| Card | `[Feature]Card.tsx` | `BackupCard.tsx` |
+| List | `[Feature]List.tsx` | `BackupList.tsx` |
 | Server action | `[verb][Feature].ts` | `createBackup.ts`, `getBackups.ts` |
 | Hook | `use[Feature].ts` | `useBackupStatus.ts` |
 | Schema | `[feature].schema.ts` | `backup.schema.ts` |
-| Feature folder | kebab-case | `disk-usage`, `live-view` |
+| Folder | kebab-case | `disk-usage`, `live-view` |
 
-### Import Rules
+### Imports
 
 ```typescript
 import { env } from '@/env'
+
 // Other features: ONLY via index.ts
 import { RecordingCard } from '@/features/recordings/browse'
+// WRONG: import { RecordingCard } from '@/features/recordings/browse/components/RecordingCard'
+
 // Libraries
 import { prisma } from '@/lib/prisma'
 
-import { PageLayout } from '@/shared/components/layout/PageLayout'
-// WRONG: import { RecordingCard } from '@/features/recordings/browse/components/RecordingCard'
-
-// Shared code: use @/shared/
+// Shared
 import { Button } from '@/shared/components/ui/button'
+import { PageLayout } from '@/shared/components/layout/PageLayout'
 import { logger } from '@/shared/utils/logger'
 
+// Same feature: relative paths
 import { getBackups } from '../actions/getBackups'
-// Same feature: use relative paths
 import { BackupCard } from './components/BackupCard'
 ```
 
-### When to Use `shared/`
+### When to use `shared/`
 
-Move code to `shared/` when:
-- Used by **3 or more features**
-- Generic UI component with no business logic
-- App-wide utility (logging, formatting)
+Move code to `shared/` only when it's used by **3+ features**, is generic UI with no business logic, or is an app-wide utility. Don't preemptively share — keep code in features until it's actually reused.
 
-**Do NOT prematurely add to `shared/`** - keep code in features until it's reused.
+### Wiring features into routes
 
-### Feature Index.ts Template
+`app/` is a thin routing layer. Pages just import from features:
 
 ```typescript
-// features/config/backup/index.ts
+// app/config/backup/page.tsx
+import { BackupPage } from '@/features/config/backup'
 
-// Actions
-export { createBackup } from './actions/createBackup'
-export { getBackups } from './actions/getBackups'
-
-export { BackupForm } from './components/BackupForm'
-// Components
-export { BackupPage } from './components/BackupPage'
-
-// Schemas (if needed externally)
-export { CreateBackupSchema } from './schemas/backup.schema'
-
-// Types
-export type { Backup, BackupMetadata } from './types'
+export default BackupPage
 ```
 
-### Server Action Template
+### Templates
+
+**Server action**
 
 ```typescript
 // features/[domain]/[feature]/actions/[verb][Feature].ts
@@ -216,7 +169,6 @@ import { logger } from '@/shared/utils/logger'
 
 export async function verbFeature(params: ParamType): Promise<FeatureType | null> {
   try {
-    // Implementation
     return result
   }
   catch (error) {
@@ -226,7 +178,7 @@ export async function verbFeature(params: ParamType): Promise<FeatureType | null
 }
 ```
 
-### Page Component Template
+**Page component**
 
 ```typescript
 // features/[domain]/[feature]/components/[Feature]Page.tsx
@@ -235,7 +187,6 @@ import { getFeature } from '../actions/getFeature'
 
 export async function FeaturePage() {
   const data = await getFeature()
-
   return (
     <PageLayout title="Feature Title" subheader="Description">
       {/* Content */}
@@ -244,70 +195,52 @@ export async function FeaturePage() {
 }
 ```
 
-### Connecting Features to Routes
-
-The `app/` directory is a **thin routing layer**. Pages import from features:
+**Feature `index.ts`**
 
 ```typescript
-// app/config/backup/page.tsx
-import { BackupPage } from '@/features/config/backup'
-
-export default BackupPage
+// Actions
+export { createBackup } from './actions/createBackup'
+export { getBackups } from './actions/getBackups'
+// Components
+export { BackupForm } from './components/BackupForm'
+export { BackupPage } from './components/BackupPage'
+// Schemas (if exposed)
+export { CreateBackupSchema } from './schemas/backup.schema'
+// Types
+export type { Backup, BackupMetadata } from './types'
 ```
 
----
+## Tests
 
-## Database
+- E2E suites live under `tests/e2e/` (Playwright). Feature-specific tests can also be colocated in `features/[domain]/[feature]/__tests__/`.
+- Use `npm run mediamtx` to start test streams for live testing.
+- Detailed coverage map: `docs/FEATURES.md` §15.
 
-Single SQLite table `Config` stores app configuration:
-- MediaMTX server URL and API port
-- Remote MediaMTX URL (for external access)
-- Recordings and screenshots directories
+## Pointers (don't duplicate detail here)
 
-Schema location: `src/lib/prisma/schema.prisma`
+| Topic | Where it lives |
+|-------|----------------|
+| Current feature catalog | `docs/FEATURES.md` |
+| Routes / APIs / server actions / schemas | `docs/FEATURES.md` §10–§12 |
+| Background jobs (cron) | `docs/FEATURES.md` §4 |
+| Database schema | `src/lib/prisma/schema.prisma` (overview in `docs/FEATURES.md` §6) |
+| Docker / compose / deployment | `docs/FEATURES.md` §13 |
+| Tech stack versions | `docs/FEATURES.md` §17 |
 
-## Background Jobs
+## Quick checklist before finishing a change
 
-Defined in `src/instrumentation.ts`:
-- Thumbnail generation: every 30 minutes via ffmpeg
-- Screenshot cleanup: daily at midnight (removes files >2 days old)
+- [ ] Code lives in the right `features/[domain]/[feature]/` folder.
+- [ ] `index.ts` exports the public API; no deep imports from other features.
+- [ ] Naming patterns followed (`[Feature]Page.tsx`, `[verb][Feature].ts`, `[feature].schema.ts`).
+- [ ] `process.env` only accessed via `@/env`; no `console.*`.
+- [ ] Auto-generated files untouched.
+- [ ] **`docs/FEATURES.md` updated to reflect the change.**
+- [ ] `npm run typecheck` and `npm run lint` clean; tests added/updated where it makes sense.
 
-## Testing
+## Common mistakes
 
-- E2E tests use Playwright in `features/[domain]/[feature]/__tests__/`
-- Feature tests should be colocated with features
-- Use `npm run mediamtx` to start test streams for live testing
-
-## Docker
-
-Multi-arch support (amd64/arm64). Use `docker compose up -d` for local development with the full stack.
-
----
-
-## Quick Reference for AI Agents
-
-### Before Creating Any Feature
-
-1. Check if feature exists: `ls src/features/[domain]/`
-2. Read similar features for patterns
-3. Create feature folder with `index.ts`
-4. Follow naming conventions exactly
-
-### Checklist
-
-- [ ] Feature in correct domain?
-- [ ] `index.ts` created with exports?
-- [ ] Components follow `[Feature]Name.tsx` pattern?
-- [ ] Actions follow `[verb][Feature].ts` pattern?
-- [ ] Imports use correct paths?
-- [ ] No imports from other features' internal files?
-- [ ] Types in `types/index.ts`?
-- [ ] Schemas in `schemas/[feature].schema.ts`?
-
-### Common Mistakes to Avoid
-
-- Creating files in `app/` instead of `features/`
-- Importing internal files from other features
-- Putting feature-specific code in `shared/`
-- Forgetting to export from `index.ts`
-- Using wrong naming patterns
+- Putting feature code under `app/` instead of `src/features/`.
+- Importing from another feature's internal files instead of its `index.ts`.
+- Adding feature-specific code to `shared/` before it has 3+ consumers.
+- Forgetting to export from `index.ts`.
+- Shipping a feature change without updating `docs/FEATURES.md`.
