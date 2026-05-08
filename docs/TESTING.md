@@ -11,7 +11,6 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Contract | Vitest + MSW | MediaMTX HTTP client behavior (`v3/pathsList`, `v3/configGlobal*`), error paths | `src/lib/mediamtx/*.test.ts` |
 | Integration | Vitest + real Prisma (temp SQLite) | Server actions, `instrumentation.ts` cron + ffmpeg spawn | `*.int.test.ts` colocated |
 | E2E | Playwright | Full browser flows, byte-range MP4 streaming, accessibility | `tests/e2e/*.spec.ts` |
-| Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
 ## Decision: which layer for a new feature?
 
@@ -20,7 +19,6 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 - Added/changed a call to MediaMTX → **contract** (assert request shape + 4xx/5xx handling).
 - Added/changed a server action, query that hits Prisma, or `instrumentation.ts` → **integration**.
 - Added a route, navigation, byte-range, or cross-page flow → **E2E**.
-- Changed `Dockerfile`, Prisma binary targets, or boot order → ensure **image smoke** still passes.
 
 If a feature spans layers, write the lowest-cost test that proves it; only add an E2E when the value is end-to-end (routing, real HTTP, real video element).
 
@@ -50,11 +48,13 @@ npm run test:e2e:dev    # playwright UI
 
 `playwright.config.ts` runs:
 
-- `chromium` — primary
+- `chromium` — primary; runs every spec
 - `firefox`, `webkit` — catches HLS-native fallback regressions
 - `mobile-chrome` (Pixel 7), `mobile-safari` (iPhone 14) — covers the responsive grid
 
-Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`. Zero serious/critical violations.
+`firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`) run in `chromium` only — running them cross-browser doesn't change the outcome.
+
+Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates
 
@@ -64,7 +64,6 @@ PRs must pass, in order:
 2. `vitest run --coverage` — must pass; coverage uploaded to Codecov for the README badge (no threshold gate)
 3. `build`
 4. `test:e2e` (sharded across runners when wall-clock > 5 min)
-5. Docker image smoke (`/api/health` returns 200 against the built image)
 
 Coverage is reported, not gated. The Codecov badge on the README reflects the current %. Scope is everything under `src/` except `app/` (Next pages), `components/ui/` (shadcn primitives), generated MediaMTX, and Prisma migrations — see `vitest.config.ts`.
 
