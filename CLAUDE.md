@@ -41,7 +41,7 @@ npm run db:reset       # Reset DB
 - `process.env` access goes through the env module (`env.VARIABLE_NAME`); enforced by ESLint.
 - Use the shared `logger` (Pino). `console.*` is banned outside `logger.ts` and the env module.
 - Forms use React Hook Form + Zod.
-- Never edit `src/lib/MediaMTX/generated.ts` or `src/lib/prisma/migrations/`.
+- Never edit `src/lib/mediamtx/generated.ts` or `src/lib/prisma/migrations/`.
 - E2E tests live under `tests/e2e/` (Playwright); feature tests may colocate.
 
 ## Before finishing
