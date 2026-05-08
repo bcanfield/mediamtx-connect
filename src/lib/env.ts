@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const serverSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  NEXT_RUNTIME: z.enum(['nodejs', 'edge']).optional(),
+  NEXT_RUNTIME: z.string().optional(),
   CI: z.string().optional(),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 
