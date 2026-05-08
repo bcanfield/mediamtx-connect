@@ -1,4 +1,8 @@
+import path from 'node:path'
+
 import '@testing-library/jest-dom/vitest'
+
+process.env.DATABASE_URL = `file:${path.resolve(process.cwd(), 'prisma-test.db')}`
 
 if (typeof window !== 'undefined') {
   // Radix primitives need these in jsdom
