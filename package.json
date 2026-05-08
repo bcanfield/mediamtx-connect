@@ -82,6 +82,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
     "eslint-plugin-react-refresh": "^0.4.26",
+    "msw": "^2.14.5",
     "postcss": "^8",
     "semantic-release": "^25.0.2",
     "swagger-typescript-api": "^13.2.16",
