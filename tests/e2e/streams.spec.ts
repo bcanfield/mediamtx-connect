@@ -1,11 +1,5 @@
-import type { Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
-
-async function openMobileNavIfNeeded(page: Page) {
-  if ((page.viewportSize()?.width ?? 0) < 640) {
-    await page.getByRole('button', { name: 'Open navigation menu' }).click()
-  }
-}
+import { openMobileNavIfNeeded } from './open-mobile-nav'
 
 test.describe('Streams Page', () => {
   test.beforeEach(async ({ page }) => {
