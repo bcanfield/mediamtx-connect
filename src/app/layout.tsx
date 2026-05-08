@@ -1,4 +1,4 @@
-import type { Viewport } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { NavBar } from '@/components/nav-bar'
 import { ServiceWorker } from '@/components/service-worker'
@@ -9,6 +9,13 @@ import { cn } from '@/lib/utils'
 import './globals.css'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: {
+    default: 'MediaMTX Connect',
+    template: '%s | MediaMTX Connect',
+  },
+}
 
 export const viewport: Viewport = {
   themeColor: '#0c1016',

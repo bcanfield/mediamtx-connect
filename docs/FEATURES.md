@@ -25,7 +25,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 1.1 Live View page (`/`)
 - **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view-page.tsx`, `src/app/page.tsx`
 - **MediaMTX path discovery** — calls MediaMTX `v3/pathsList` to enumerate active streams. `src/features/streams/live-view-page.tsx`
-- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL with separate UI states and links into Config. `src/features/streams/live-view-page.tsx`
+- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL with separate UI states, links into Config, and a readable endpoint badge when connectivity fails. `src/features/streams/live-view-page.tsx`
 - **"Stream online since" metadata** — exposes `readyTime` per path in a popover.
 - **Cross-feature deep links** — quick links from Live View into Recordings and Config.
 
@@ -182,7 +182,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 8.5 Application chrome
 - **Sticky responsive NavBar** — Connect / Recordings / Config links with active-route highlighting, mobile menu access, refresh button, and theme toggle; icon controls carry screen-reader labels. `src/components/nav-bar.tsx`
-- **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color. `src/app/layout.tsx`
+- **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, and default document title metadata (`MediaMTX Connect`). `src/app/layout.tsx`
 - **Global CSS** — Tailwind 4. `src/app/globals.css`
 
 ---
