@@ -1,10 +1,11 @@
 import type { Viewport } from 'next'
 
-import { ServiceWorker, ThemeProvider } from '@/shared/components/providers'
-import { Toaster } from '@/shared/components/ui/toaster'
-import { cn } from '@/shared/utils'
+import { NavBar } from '@/components/nav-bar'
+import { ServiceWorker } from '@/components/service-worker'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import { cn } from '@/lib/utils'
 
-import NavBar from './nav-bar'
 import './globals.css'
 
 export const dynamic = 'force-dynamic'

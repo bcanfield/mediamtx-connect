@@ -37,7 +37,7 @@ npm run db:reset       # Reset DB
 ## Code rules
 
 - **Boring over clever.** Use the documented, mainstream way to do things. No bespoke abstractions, no defensive fallbacks for things that can't happen, no premature generality. Three similar lines beat a clever helper.
-- **No AI-sounding comments.** Write like you're leaving a note for a coworker — short, specific, and only when the *why* isn't obvious from the code. Skip preambles ("This function..."), restating the code, and over-explaining trivial logic.
+- **No AI-sounding comments.** Write like you're leaving a note for a coworker — short, specific, and only when the *why* isn't obvious from the code. Skip preambles ("This function..."), restating the code, and over-explaining trivial logic. We do love a human-like & concise one-liner above complex code
 - `process.env` access goes through the env module (`env.VARIABLE_NAME`); enforced by ESLint.
 - Use the shared `logger` (Pino). `console.*` is banned outside `logger.ts` and the env module.
 - Forms use React Hook Form + Zod.

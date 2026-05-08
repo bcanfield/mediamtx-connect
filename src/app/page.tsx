@@ -1,5 +1,7 @@
-import { LiveViewPage } from '@/features/streams/live-view'
+import { LiveViewPage } from '@/features/streams/live-view-page'
 
 export const dynamic = 'force-dynamic'
 
-export default LiveViewPage
+export default function Page() {
+  return <LiveViewPage />
+}

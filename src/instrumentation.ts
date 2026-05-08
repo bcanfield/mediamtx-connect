@@ -1,19 +1,18 @@
 export async function register() {
-  // eslint-disable-next-line node/prefer-global/process
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
+  const { env, isProduction } = await import('@/lib/env')
+  if (env.NEXT_RUNTIME === 'nodejs') {
     const { default: cron } = await import('node-cron')
     const { default: cp } = await import('node:child_process')
     const { default: fs } = await import('node:fs')
     const { default: path } = await import('node:path')
-    const { default: logger } = await import('@/shared/utils/logger')
-    const { env, isProduction } = await import('@/env')
-    const { default: prisma } = await import('@/lib/prisma')
+    const { logger } = await import('@/lib/logger')
+    const { db } = await import('@/lib/db')
 
     logger.info('Starting background tasks', { NODE_ENV: env.NODE_ENV })
 
-    let config = await prisma.config.findFirst()
+    let config = await db.config.findFirst()
     if (!config) {
-      config = await prisma.config.create({
+      config = await db.config.create({
         data: {
           mediaMtxApiPort: 9997,
           mediaMtxUrl: 'http://mediamtx',
