@@ -45,8 +45,8 @@ export function NavBar({ items }: Props) {
           <div className="flex w-full sm:hidden items-center justify-start ">
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="flex items-center  ">
-                <Button variant="ghost" size="icon">
-                  <Menu></Menu>
+                <Button variant="ghost" size="icon" aria-label="Open navigation menu">
+                  <Menu aria-hidden="true"></Menu>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -57,7 +57,7 @@ export function NavBar({ items }: Props) {
                       'text-primary font-extrabold transition-colors hover:text-primary',
                     )}
                   >
-                    Home
+                    Connect
                   </Link>
                 </DropdownMenuItem>
                 {items?.map(({ location, name }) => (
@@ -82,8 +82,12 @@ export function NavBar({ items }: Props) {
 
       <div className="flex flex-1 items-center justify-end">
         <nav className="flex space-x-4 px-2 items-center">
-          <Button variant="ghost" onClick={() => window.location.reload()}>
-            <RefreshCcw></RefreshCcw>
+          <Button
+            variant="ghost"
+            aria-label="Refresh page"
+            onClick={() => window.location.reload()}
+          >
+            <RefreshCcw aria-hidden="true"></RefreshCcw>
           </Button>
           <ModeToggle />
         </nav>

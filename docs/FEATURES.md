@@ -33,7 +33,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Auto-thumbnail tile** — shows latest screenshot via `/api/[streamName]/first-screenshot` with graceful fallback icon. `src/features/streams/stream-card.tsx`
 - **Click-to-play / pause toggle** — switches the card between thumbnail and live HLS player.
 - **URL-state-driven selection** — uses search params so the active live tile survives reload/share.
-- **Per-stream "View recordings" shortcut** — jumps to that stream's recording list.
+- **Per-stream action buttons** — play/pause, recordings shortcut, and details popover use labeled icon controls. `src/features/streams/stream-card.tsx`
 - **Square aspect-ratio grid** — responsive across mobile / sm / md / lg / xl breakpoints.
 
 ### 1.3 HLS video player
@@ -63,9 +63,9 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 2.3 Recording cards
 - **Per-recording thumbnail** — auto-generated PNG, base64-inlined to skip extra round trips. `src/features/recordings/recording-card.tsx`, `src/features/recordings/recordings.queries.ts`
 - **Filename + creation timestamp + formatted file size**.
-- **Inline play button** — opens the in-browser MP4 player via the view endpoint.
-- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts. `src/features/recordings/download-button.tsx`
-- **Metadata popover** — full file metadata for the recording.
+- **Inline playback control** — opens the in-browser MP4 player via the view endpoint with a labeled icon button. `src/features/recordings/recording-card.tsx`
+- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts, and labeled icon-only affordance. `src/features/recordings/download-button.tsx`
+- **Metadata popover** — full file metadata for the recording, launched from a labeled icon button. `src/features/recordings/recording-card.tsx`
 - **Configurable grid density** — small/medium card layouts.
 
 ### 2.4 Recording streaming endpoints
@@ -104,7 +104,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **RTSP** — enable, address, transport protocols, encryption, auth methods.
 - **RTMP** — enable, address, encryption, certificates.
 - **HLS** — enable, address, segment count/duration/size, variant, always-remux.
-- **WebRTC** — enable, addresses, trusted proxies, dynamic ICE-server array (add/remove rows).
+- **WebRTC** — enable, addresses, trusted proxies, dynamic ICE-server array (add/remove rows with labeled icon controls).
 - **SRT** — enable, address.
 - **Recording** — enable, path, format, part/segment duration, delete-after.
 - **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/mediamtx-config/`
@@ -181,7 +181,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **`countFilesInSubdirectories` / `getFilesInDirectory`** — feature-local fs helpers used by the recordings views. `src/features/recordings/file-operations.ts`
 
 ### 8.5 Application chrome
-- **Sticky responsive NavBar** — Home / Recordings / Config links with active-route highlighting, mobile hamburger, refresh button, and theme toggle. `src/components/nav-bar.tsx`
+- **Sticky responsive NavBar** — Connect / Recordings / Config links with active-route highlighting, mobile menu access, refresh button, and theme toggle; icon controls carry screen-reader labels. `src/components/nav-bar.tsx`
 - **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color. `src/app/layout.tsx`
 - **Global CSS** — Tailwind 4. `src/app/globals.css`
 

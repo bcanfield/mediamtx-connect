@@ -6,7 +6,7 @@ test.describe('Recordings Page', () => {
   })
 
   test('should load the recordings page with header', async ({ page }) => {
-    await expect(page.locator('h2').filter({ hasText: 'Recordings' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Recordings' }).first()).toBeVisible()
     await expect(page.getByText('Browse your recordings')).toBeVisible()
   })
 
