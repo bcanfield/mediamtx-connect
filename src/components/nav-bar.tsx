@@ -46,7 +46,7 @@ export function NavBar({ items }: Props) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="flex items-center  ">
                 <Button variant="ghost" size="icon" aria-label="Open navigation menu">
-                  <Menu aria-hidden="true"></Menu>
+                  <Menu aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -87,7 +87,7 @@ export function NavBar({ items }: Props) {
             aria-label="Refresh page"
             onClick={() => window.location.reload()}
           >
-            <RefreshCcw aria-hidden="true"></RefreshCcw>
+            <RefreshCcw aria-hidden="true" />
           </Button>
           <ModeToggle />
         </nav>
