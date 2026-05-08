@@ -130,6 +130,7 @@ export function RecordingCard({
         <div className="flex gap-2 items-center">
           <Button
             variant="outline"
+            aria-label={isLive ? `Pause recording playback for ${fileName}` : `Play recording ${fileName}`}
             onClick={() => onCamSelect(fileName)}
             className="basis-1/2"
             size="sm"
@@ -153,7 +154,11 @@ export function RecordingCard({
 
           <Popover>
             <PopoverTrigger asChild className="basis-1/4">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                aria-label={`View details for ${fileName}`}
+              >
                 <Info className="h-4 w-4"></Info>
               </Button>
             </PopoverTrigger>

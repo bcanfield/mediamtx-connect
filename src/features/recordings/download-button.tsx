@@ -71,6 +71,7 @@ export function DownloadButton({
       className="w-full"
       variant="outline"
       size="sm"
+      aria-label={`Download recording ${filePath}`}
       onClick={handleDownload}
     >
       {loading

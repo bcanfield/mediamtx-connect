@@ -125,6 +125,7 @@ export function StreamCard({
         <div className="flex gap-2">
           <Button
             variant="outline"
+            aria-label={isLive ? `Pause live view for ${streamName}` : `Play live view for ${streamName}`}
             onClick={() => onCamSelect(streamName)}
             className={cn('basis-1/2', { 'bg-accent animate-pulse': isLive })}
             size="sm"
@@ -139,14 +140,23 @@ export function StreamCard({
           </Button>
 
           <Link href={`/recordings/${streamName}`} className="basis-1/4">
-            <Button variant="outline" className="w-full" size="sm">
+            <Button
+              variant="outline"
+              className="w-full"
+              size="sm"
+              aria-label={`View recordings for ${streamName}`}
+            >
               <Film className="h-4 w-4"></Film>
             </Button>
           </Link>
 
           <Popover>
             <PopoverTrigger asChild className="basis-1/4">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                aria-label={`View details for ${streamName}`}
+              >
                 <Info className="h-4 w-4"></Info>
               </Button>
             </PopoverTrigger>

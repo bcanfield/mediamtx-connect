@@ -107,7 +107,13 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Run container
         run: |
-          docker run -d --name mediamtx-connect-smoke -p 3000:3000 mediamtx-connect:smoke
+          docker run -d --name mediamtx-connect-smoke -p 3000:3000 \
+            -e BACKEND_SERVER_MEDIAMTX_URL=http://localhost \
+            -e REMOTE_MEDIAMTX_URL=http://localhost \
+            -e MEDIAMTX_API_PORT=9997 \
+            -e MEDIAMTX_RECORDINGS_DIR=/recordings \
+            -e MEDIAMTX_SCREENSHOTS_DIR=/screenshots \
+            mediamtx-connect:smoke
       - name: Wait for /api/health
         run: |
           for i in $(seq 1 60); do
