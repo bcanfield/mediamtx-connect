@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { openMobileNavIfNeeded } from './open-mobile-nav'
+import { getNavItem, openMobileNavIfNeeded } from './open-mobile-nav'
 
 test.describe('Streams Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -17,13 +17,13 @@ test.describe('Streams Page', () => {
 
   test('should have working navigation to config page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await page.getByRole('link', { name: 'Config', exact: true }).first().click({ force: true })
+    await getNavItem(page, 'Config').click({ force: true })
     await expect(page).toHaveURL(/\/config/)
   })
 
   test('should have working navigation to recordings page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await page.getByRole('link', { name: 'Recordings', exact: true }).first().click({ force: true })
+    await getNavItem(page, 'Recordings').click({ force: true })
     await expect(page).toHaveURL(/\/recordings/)
   })
 })
