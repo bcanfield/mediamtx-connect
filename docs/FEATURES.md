@@ -182,7 +182,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 8.5 Application chrome
 - **Sticky responsive NavBar** — Connect / Recordings / Config links with active-route highlighting, mobile menu access, refresh button, and theme toggle; icon controls carry screen-reader labels. `src/components/nav-bar.tsx`
-- **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color. `src/app/layout.tsx`
+- **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, and default document title metadata (`MediaMTX Connect`). `src/app/layout.tsx`
 - **Global CSS** — Tailwind 4. `src/app/globals.css`
 
 ---
