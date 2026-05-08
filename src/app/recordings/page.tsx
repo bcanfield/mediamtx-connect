@@ -1,5 +1,7 @@
-import { RecordingsIndexPage } from '@/features/recordings/browse'
+import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 
 export const dynamic = 'force-dynamic'
 
-export default RecordingsIndexPage
+export default function Page() {
+  return <RecordingsIndexPage />
+}
