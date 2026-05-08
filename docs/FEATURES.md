@@ -190,7 +190,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 9. Theming, Accessibility, PWA
 
 - **Dark / Light / System theme** — persisted via `next-themes`, dark default.
-- **Web App Manifest** — installable PWA. App name, theme color `#020817`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
+- **Web App Manifest** — installable PWA. App name, theme color `#0c1016`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
 - **Service worker registration** — offline-friendly shell. `src/components/service-worker.tsx`, `public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Sub-path / reverse-proxy friendliness** — historical work to run cleanly behind nginx with a base path (`CHANGELOG` 1.4.1).

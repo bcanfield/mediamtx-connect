@@ -11,7 +11,7 @@ import './globals.css'
 export const dynamic = 'force-dynamic'
 
 export const viewport: Viewport = {
-  themeColor: '#020817',
+  themeColor: '#0c1016',
 }
 
 export default async function RootLayout({
