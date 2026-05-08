@@ -71,7 +71,7 @@ export async function LiveViewPage() {
             <p>
               Unable to reach MediaMTX at
               {' '}
-              <code className="bg-muted px-1 rounded">
+              <code className="bg-muted px-1 rounded text-foreground">
                 {config.mediaMtxUrl}
                 :
                 {config.mediaMtxApiPort}
