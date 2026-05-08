@@ -10,6 +10,7 @@ If your change adds, removes, or modifies a user-visible feature, route, API end
 | Layout, naming, imports, conventions | `docs/PROJECT-STRUCTURE.md` |
 | System diagram | `ARCHITECTURE.md` |
 | Dev setup, scripts, PR process | `CONTRIBUTING.md` |
+| Test layers, conventions, CI gates | `docs/TESTING.md` |
 | Database schema | `src/lib/prisma/schema.prisma` |
 
 ## Code rules
