@@ -77,7 +77,7 @@ test.describe('Config Save Flow', () => {
     await submitButton.click()
 
     // Wait for the toast notification indicating success (use exact match to avoid multiple matches)
-    await expect(page.getByText('Updated Global Config', { exact: true })).toBeVisible({ timeout: 5000 })
+    await expect(page.getByText('Updated Client Config', { exact: true })).toBeVisible({ timeout: 5000 })
 
     // Reload the page
     await page.reload()
@@ -91,7 +91,7 @@ test.describe('Config Save Flow', () => {
     await screenshotsInputAfterReload.fill(originalValue)
     const submitButtonAfterReload = page.getByRole('button', { name: 'Submit' }).first()
     await submitButtonAfterReload.click()
-    await expect(page.getByText('Updated Global Config', { exact: true })).toBeVisible({ timeout: 5000 })
+    await expect(page.getByText('Updated Client Config', { exact: true })).toBeVisible({ timeout: 5000 })
   })
 
   test('should disable submit button when form is pristine', async ({ page }) => {

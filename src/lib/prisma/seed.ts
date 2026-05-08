@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import logger from '@/shared/utils/logger'
-import { env } from '../../env'
+import { env } from '../env'
+import { logger } from '../logger'
 
 const prisma = new PrismaClient()
 
