@@ -163,6 +163,9 @@ export async function register() {
             outputFile,
           ]
           const proc = cp.spawn(cmd, args)
+          proc.on('error', (err) => {
+            logger.error(`Failed to spawn ffmpeg for ${outputFile}`, err)
+          })
           proc.stderr.setEncoding('utf8')
 
           proc.on('close', () => {
