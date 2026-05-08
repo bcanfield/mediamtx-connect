@@ -7,7 +7,7 @@ test.describe('Recordings Page', () => {
 
   test('should load the recordings page with header', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Recordings' }).first()).toBeVisible()
-    await expect(page.getByText('Browse your recordings')).toBeVisible()
+    await expect(page.getByText('Browse your recordings').first()).toBeVisible()
   })
 
   test('should display stream cards or appropriate message', async ({ page }) => {

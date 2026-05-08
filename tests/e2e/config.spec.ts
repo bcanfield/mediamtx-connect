@@ -1,6 +1,7 @@
+import type { Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
 
-async function openMobileNavIfNeeded(page: Parameters<typeof test>[0]['page']) {
+async function openMobileNavIfNeeded(page: Page) {
   if ((page.viewportSize()?.width ?? 0) < 640) {
     await page.getByRole('button', { name: 'Open navigation menu' }).click()
   }
