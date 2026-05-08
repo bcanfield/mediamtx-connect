@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { getNavItem, openMobileNavIfNeeded } from './open-mobile-nav'
 
 test.describe('Config Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -45,12 +46,14 @@ test.describe('Config Page', () => {
 test.describe('Config Navigation', () => {
   test('should have navigation when on config pages', async ({ page }) => {
     await page.goto('/config')
-    await expect(page.getByRole('link', { name: 'Recordings' })).toBeVisible()
+    await openMobileNavIfNeeded(page)
+    await expect(getNavItem(page, 'Recordings')).toBeVisible()
   })
 
   test('should navigate back to home from config', async ({ page, baseURL }) => {
     await page.goto('/config')
-    await page.getByRole('link', { name: 'Connect' }).click({ force: true })
+    await openMobileNavIfNeeded(page)
+    await getNavItem(page, 'Connect').click({ force: true })
     await expect(page).toHaveURL(`${baseURL}/`)
   })
 })
@@ -77,7 +80,7 @@ test.describe('Config Save Flow', () => {
     await submitButton.click()
 
     // Wait for the toast notification indicating success (use exact match to avoid multiple matches)
-    await expect(page.getByText('Updated Global Config', { exact: true })).toBeVisible({ timeout: 5000 })
+    await expect(page.getByText('Updated Client Config', { exact: true })).toBeVisible({ timeout: 5000 })
 
     // Reload the page
     await page.reload()
@@ -91,7 +94,7 @@ test.describe('Config Save Flow', () => {
     await screenshotsInputAfterReload.fill(originalValue)
     const submitButtonAfterReload = page.getByRole('button', { name: 'Submit' }).first()
     await submitButtonAfterReload.click()
-    await expect(page.getByText('Updated Global Config', { exact: true })).toBeVisible({ timeout: 5000 })
+    await expect(page.getByText('Updated Client Config', { exact: true })).toBeVisible({ timeout: 5000 })
   })
 
   test('should disable submit button when form is pristine', async ({ page }) => {

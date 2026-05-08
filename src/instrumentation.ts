@@ -1,25 +1,24 @@
 export async function register() {
-  // eslint-disable-next-line node/prefer-global/process
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
+  const { env } = await import('@/lib/env')
+  if (env.NEXT_RUNTIME === 'nodejs') {
     const { default: cron } = await import('node-cron')
     const { default: cp } = await import('node:child_process')
     const { default: fs } = await import('node:fs')
     const { default: path } = await import('node:path')
-    const { default: logger } = await import('@/shared/utils/logger')
-    const { env, isProduction } = await import('@/env')
-    const { default: prisma } = await import('@/lib/prisma')
+    const { logger } = await import('@/lib/logger')
+    const { db } = await import('@/lib/db')
 
     logger.info('Starting background tasks', { NODE_ENV: env.NODE_ENV })
 
-    let config = await prisma.config.findFirst()
+    let config = await db.config.findFirst()
     if (!config) {
-      config = await prisma.config.create({
+      config = await db.config.create({
         data: {
-          mediaMtxApiPort: 9997,
-          mediaMtxUrl: 'http://mediamtx',
-          recordingsDirectory: isProduction ? '/recordings' : './recordings',
-          screenshotsDirectory: isProduction ? '/screenshots' : './screenshots',
-          remoteMediaMtxUrl: 'http://localhost',
+          mediaMtxUrl: env.BACKEND_SERVER_MEDIAMTX_URL,
+          mediaMtxApiPort: Number.parseInt(env.MEDIAMTX_API_PORT),
+          remoteMediaMtxUrl: env.REMOTE_MEDIAMTX_URL,
+          recordingsDirectory: env.MEDIAMTX_RECORDINGS_DIR,
+          screenshotsDirectory: env.MEDIAMTX_SCREENSHOTS_DIR,
         },
       })
     }
@@ -164,6 +163,9 @@ export async function register() {
             outputFile,
           ]
           const proc = cp.spawn(cmd, args)
+          proc.on('error', (err) => {
+            logger.error(`Failed to spawn ffmpeg for ${outputFile}`, err)
+          })
           proc.stderr.setEncoding('utf8')
 
           proc.on('close', () => {
