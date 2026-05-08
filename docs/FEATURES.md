@@ -23,21 +23,21 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 1. Live Streaming
 
 ### 1.1 Live View page (`/`)
-- **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view/components/LiveViewPage.tsx`, `src/app/page.tsx`
-- **MediaMTX path discovery** — calls MediaMTX `v3/pathsList` to enumerate active streams. `src/features/streams/live-view/components/LiveViewPage.tsx`
-- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL with separate UI states and links into Config. `src/features/streams/live-view/components/LiveViewPage.tsx`
+- **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view-page.tsx`, `src/app/page.tsx`
+- **MediaMTX path discovery** — calls MediaMTX `v3/pathsList` to enumerate active streams. `src/features/streams/live-view-page.tsx`
+- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL with separate UI states and links into Config. `src/features/streams/live-view-page.tsx`
 - **"Stream online since" metadata** — exposes `readyTime` per path in a popover.
 - **Cross-feature deep links** — quick links from Live View into Recordings and Config.
 
 ### 1.2 Stream cards
-- **Auto-thumbnail tile** — shows latest screenshot via `/api/[streamName]/first-screenshot` with graceful fallback icon. `src/features/streams/live-view/components/StreamCard.tsx`
+- **Auto-thumbnail tile** — shows latest screenshot via `/api/[streamName]/first-screenshot` with graceful fallback icon. `src/features/streams/stream-card.tsx`
 - **Click-to-play / pause toggle** — switches the card between thumbnail and live HLS player.
 - **URL-state-driven selection** — uses search params so the active live tile survives reload/share.
 - **Per-stream "View recordings" shortcut** — jumps to that stream's recording list.
 - **Square aspect-ratio grid** — responsive across mobile / sm / md / lg / xl breakpoints.
 
 ### 1.3 HLS video player
-- **HLS.js streaming** — adaptive bitrate playback in any modern browser. `src/shared/components/media/VideoPlayer.tsx`
+- **HLS.js streaming** — adaptive bitrate playback in any modern browser. `src/components/video-player.tsx`
 - **Native HLS fallback** — uses `<video>` native HLS where supported (Safari).
 - **Live-edge sync** — caps `liveSyncPlaybackRate` at 1.5× to stay near the live edge.
 - **Automatic media-error recovery** — retries via `recoverMediaError` with a 2 s debounce.
@@ -49,22 +49,22 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 2. Recordings
 
 ### 2.1 Recordings index (`/recordings`)
-- **All-streams recording list** — shows every subdirectory of the recordings mount with a file count badge. `src/features/recordings/browse/components/RecordingsIndexPage.tsx`, `src/app/recordings/page.tsx`
+- **All-streams recording list** — shows every subdirectory of the recordings mount with a file count badge. `src/features/recordings/recordings-index-page.tsx`, `src/app/recordings/page.tsx`
 - **Drill-in "View" link per stream** — routes to `/recordings/[streamname]`.
 - **Misconfiguration alerts** — flags missing/inaccessible recordings directory with actionable copy.
 - **Empty state** — friendly UI when no recordings exist yet.
 
 ### 2.2 Per-stream recording browser (`/recordings/[streamname]`)
-- **Paginated recording list** — `?page` and `?take` query params, default 10/page. `src/features/recordings/browse/components/StreamRecordingsPage.tsx`, `src/app/recordings/[streamname]/page.tsx`
+- **Paginated recording list** — `?page` and `?take` query params, default 10/page. `src/features/recordings/stream-recordings-page.tsx`, `src/app/recordings/[streamname]/page.tsx`
 - **"Showing X–Y of Z" range display** with prev/next nav and disabled boundary states.
-- **Reverse-chronological sort** — newest recordings first. `src/features/recordings/browse/actions/getStreamRecordings.ts`
+- **Reverse-chronological sort** — newest recordings first. `src/features/recordings/recordings.queries.ts`
 - **Back-to-index navigation**.
 
 ### 2.3 Recording cards
-- **Per-recording thumbnail** — auto-generated PNG, base64-inlined to skip extra round trips. `src/features/recordings/browse/components/RecordingCard.tsx`, `src/features/recordings/browse/actions/getScreenshot.ts`
+- **Per-recording thumbnail** — auto-generated PNG, base64-inlined to skip extra round trips. `src/features/recordings/recording-card.tsx`, `src/features/recordings/recordings.queries.ts`
 - **Filename + creation timestamp + formatted file size**.
 - **Inline play button** — opens the in-browser MP4 player via the view endpoint.
-- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts. `src/features/recordings/browse/components/DownloadButton.tsx`
+- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts. `src/features/recordings/download-button.tsx`
 - **Metadata popover** — full file metadata for the recording.
 - **Configurable grid density** — small/medium card layouts.
 
@@ -83,19 +83,19 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 3. Configuration
 
 ### 3.1 Client (app) config — `/config`
-- **Single-table app settings UI** backed by SQLite. `src/features/config/client/components/ClientConfigPage.tsx`, `src/app/config/page.tsx`
-- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `src/features/config/client/components/ClientConfigForm.tsx`, `src/features/config/client/schemas/client-config.schema.ts`
+- **Single-table app settings UI** backed by SQLite. `src/features/client-config/client-config-page.tsx`, `src/app/config/page.tsx`
+- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `src/features/client-config/client-config-form.tsx`, `src/features/client-config/client-config.schemas.ts`
 - **Editable fields**:
   - `mediaMtxUrl` — internal/container hostname for MediaMTX API.
   - `mediaMtxApiPort` — API port (default 9997).
   - `remoteMediaMtxUrl` — browser-reachable HLS endpoint (the field that unlocks live playback for remote viewers).
   - `recordingsDirectory` — mount path for MP4s.
   - `screenshotsDirectory` — mount path for thumbnails.
-- **`getAppConfig` / `updateClientConfig` server actions** with `revalidatePath` cache busting. `src/features/config/client/actions/`
+- **`getAppConfig` / `updateClientConfig` server actions** with `revalidatePath` cache busting. `src/features/client-config/`
 - **Field-level help text** — each input has a description explaining its impact.
 
 ### 3.2 MediaMTX global server config — `/config/mediamtx/global`
-- **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3. `src/features/config/mediamtx/components/MediaMTXConfigForm.tsx`, `src/features/config/mediamtx/schemas/mediamtx-config.schema.ts`
+- **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3. `src/features/mediamtx-config/mediamtx-config-form.tsx`, `src/features/mediamtx-config/mediamtx-config.schemas.ts`
 - **Sectioned form** — Logging, API/Metrics/Profiling, RTSP, RTMP, HLS, WebRTC, SRT, Recording, with visual separators.
 - **Logging** — log level, multi-destination log targets, log file path, write timeouts.
 - **Limits** — read/write timeouts, write queue size, UDP payload size.
@@ -107,7 +107,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **WebRTC** — enable, addresses, trusted proxies, dynamic ICE-server array (add/remove rows).
 - **SRT** — enable, address.
 - **Recording** — enable, path, format, part/segment duration, delete-after.
-- **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/config/mediamtx/actions/`
+- **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/mediamtx-config/`
 - **Toast feedback** on success/error (success: `Updated Global Config`; error: `There was an issue updating the Global Config`); submit gated on dirty + valid.
 
 ### 3.3 Config navigation
@@ -127,8 +127,8 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 5. Health, Observability, and System
 
 - **`GET /api/health`** — JSON health endpoint with DB connectivity check via `SELECT 1`; returns 200 healthy or 503 degraded. Used by the Docker `HEALTHCHECK`. `src/app/api/health/route.ts`
-- **Pino logger** — structured logs across the app, with `console.*` lint-banned. `src/shared/utils/logger.ts`
-- **Centralized env loader** — `src/env.ts` validates env via Zod and exposes `isProduction` / `isDevelopment` / `isTest` / `isCI`. Lint rule (`node/prefer-global/process`) blocks raw `process.env` access elsewhere.
+- **Pino logger** — structured logs across the app, with `console.*` lint-banned. `src/lib/logger.ts`
+- **Centralized env loader** — `src/lib/env.ts` validates env via Zod and exposes `isProduction` / `isDevelopment` / `isTest` / `isCI`. Lint rule (`node/prefer-global/process`) blocks raw `process.env` access elsewhere.
 - **Force-dynamic rendering** on data-driven pages so server actions always see fresh state.
 
 ---
@@ -136,7 +136,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 6. Data Layer
 
 - **SQLite + Prisma ORM** — single `Config` table holds all app settings. `src/lib/prisma/schema.prisma`
-- **Prisma client singleton** — avoids dev-time client storms. `src/lib/prisma.ts`
+- **Prisma client singleton** — avoids dev-time client storms. `src/lib/db.ts`
 - **Migrations** — versioned under `src/lib/prisma/migrations/`:
   - `20231215194703_init` — initial schema.
   - `20231216215901_client_config_optional_fields` — relaxed field constraints.
@@ -147,7 +147,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ## 7. MediaMTX API Integration
 
-- **Auto-generated TypeScript client** from MediaMTX `swagger.json` (v1.11.3). `src/lib/MediaMTX/generated.ts`
+- **Auto-generated TypeScript client** from MediaMTX `swagger.json` (v1.11.3). `src/lib/mediamtx/generated.ts`
 - **Used endpoints**: `v3/pathsList`, `v3/configGlobalGet`, `v3/configGlobalSet`.
 - **Marked as auto-generated / do-not-edit** in `CLAUDE.md`.
 
@@ -155,34 +155,33 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ## 8. UI System / Shared Components
 
-### 8.1 shadcn/ui primitives (`src/shared/components/ui/`)
+### 8.1 shadcn/ui primitives (`src/components/ui/`)
 - Button (CVA variants: default / outline / ghost / destructive / …), Input, Textarea, Form (RHF integration: FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel), Card, Alert, Select, Popover, DropdownMenu, Separator, Progress, Label, Skeleton, Toast / Toaster / `use-toast`.
 
-### 8.2 Layout (`src/shared/components/layout/`)
-- **PageLayout** — title + subheader (Suspense-wrapped) + separator + content.
-- **GridLayout** — responsive `xs / small / medium / large` density modes built on Tailwind grid columns.
+### 8.2 Shared components (`src/components/`)
+- **PageLayout** — title + subheader (Suspense-wrapped) + separator + content. `src/components/page-layout.tsx`
+- **PageSkeleton** — loading state for `app/loading.tsx`. `src/components/page-skeleton.tsx`
+- **GridLayout** — responsive `xs / small / medium / large` density modes built on Tailwind grid columns. `src/components/grid-layout.tsx`
+- **GridFormItem** — consistent label / control / description grid wrapper used across both config forms. `src/components/grid-form-item.tsx`
+- **ModeToggle** — Light / Dark / System theme switcher using `useSyncExternalStore` + `matchMedia('prefers-color-scheme: dark')`. `src/components/mode-toggle.tsx`
+- **RefreshButton** — manual page reload control surfaced in the navbar and connection-error states. `src/components/refresh-button.tsx`
+- **VideoPlayer** — shared HLS.js component (see §1.3). `src/components/video-player.tsx`
+- **ThemeProvider** — `next-themes` wrapper, dark default. `src/components/theme-provider.tsx`
+- **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard. `src/components/service-worker.tsx`
+- **SidebarNav** — generic active-route-aware nav strip used by the config layout. `src/components/sidebar-nav.tsx`
+- **NavBar** — sticky responsive top nav (used by the root layout). `src/components/nav-bar.tsx`
 
-### 8.3 Forms (`src/shared/components/forms/`)
-- **GridFormItem** — consistent label / control / description grid wrapper used across both config forms.
+### 8.3 Lib (`src/lib/`)
+- **`cn`** — Tailwind class merger. `src/lib/utils.ts`
+- **`logger`** — Pino-backed logger. `src/lib/logger.ts`
+- **`db`** — Prisma client singleton. `src/lib/db.ts`
+- **`env`** — Zod-validated env loader. `src/lib/env.ts`
 
-### 8.4 Feedback (`src/shared/components/feedback/`)
-- **ModeToggle** — Light / Dark / System theme switcher using `useSyncExternalStore` + `matchMedia('prefers-color-scheme: dark')`.
-- **RefreshButton** — manual page reload control surfaced in the navbar and connection-error states.
+### 8.4 Recordings filesystem helpers
+- **`countFilesInSubdirectories` / `getFilesInDirectory`** — feature-local fs helpers used by the recordings views. `src/features/recordings/file-operations.ts`
 
-### 8.5 Media (`src/shared/components/media/`)
-- **VideoPlayer** — the shared HLS.js component (see §1.3).
-
-### 8.6 Providers (`src/shared/components/providers/`)
-- **ThemeProvider** — `next-themes` wrapper, dark default.
-- **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard.
-
-### 8.7 Shared utilities (`src/shared/utils/`)
-- **`countFilesInSubdirectories` / `getFilesInDirectory`** — filesystem helpers powering the recordings views.
-- **`cn`** — Tailwind class merger.
-- **`logger`** — Pino instance.
-
-### 8.8 Application chrome
-- **Sticky responsive NavBar** — Home / Recordings / Config links with active-route highlighting, mobile hamburger, refresh button, and theme toggle. `src/app/nav-bar.tsx`
+### 8.5 Application chrome
+- **Sticky responsive NavBar** — Home / Recordings / Config links with active-route highlighting, mobile hamburger, refresh button, and theme toggle. `src/components/nav-bar.tsx`
 - **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color. `src/app/layout.tsx`
 - **Global CSS** — Tailwind 4. `src/app/globals.css`
 
@@ -192,7 +191,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 - **Dark / Light / System theme** — persisted via `next-themes`, dark default.
 - **Web App Manifest** — installable PWA. App name, theme color `#020817`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
-- **Service worker registration** — offline-friendly shell. `src/shared/components/providers/ServiceWorker.tsx`, `public/sw.js`
+- **Service worker registration** — offline-friendly shell. `src/components/service-worker.tsx`, `public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Sub-path / reverse-proxy friendliness** — historical work to run cleanly behind nginx with a base path (`CHANGELOG` 1.4.1).
 
@@ -215,23 +214,30 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ---
 
-## 11. Server Actions (catalog)
+## 11. Server Actions & Queries (catalog)
+
+Reads (server-only, no `'use server'`):
+
+| Query | File | What it does |
+|-------|------|--------------|
+| `getAppConfig` | `src/features/client-config/client-config.queries.ts` | Reads the singleton `Config` row. |
+| `getGlobalConfig` | `src/features/mediamtx-config/mediamtx-config.queries.ts` | Fetches MediaMTX `GlobalConf` via API. |
+| `getStreamRecordings` | `src/features/recordings/recordings.queries.ts` | Paginated recording metadata + thumbnails for a stream. |
+| `getScreenshot` | `src/features/recordings/recordings.queries.ts` | Reads a PNG into base64 for inline rendering. |
+
+Writes (Server Actions, `'use server'`):
 
 | Action | File | What it does |
 |--------|------|--------------|
-| `getAppConfig` | `src/features/config/client/actions/getAppConfig.ts` | Reads the singleton `Config` row. |
-| `updateClientConfig` | `src/features/config/client/actions/updateClientConfig.ts` | Validates + persists app settings, revalidates cache. |
-| `getGlobalConfig` | `src/features/config/mediamtx/actions/getGlobalConfig.ts` | Fetches MediaMTX `GlobalConf` via API. |
-| `updateGlobalConfig` | `src/features/config/mediamtx/actions/updateGlobalConfig.ts` | Pushes `GlobalConf` changes to MediaMTX. |
-| `getStreamRecordings` | `src/features/recordings/browse/actions/getStreamRecordings.ts` | Paginated recording metadata + thumbnails for a stream. |
-| `getScreenshot` | `src/features/recordings/browse/actions/getScreenshot.ts` | Reads a PNG into base64 for inline rendering. |
+| `updateClientConfig` | `src/features/client-config/client-config.actions.ts` | Validates + persists app settings, revalidates cache. |
+| `updateGlobalConfig` | `src/features/mediamtx-config/mediamtx-config.actions.ts` | Pushes `GlobalConf` changes to MediaMTX. |
 
 ---
 
 ## 12. Validation Schemas
 
-- **`ClientConfigSchema`** (`src/features/config/client/schemas/client-config.schema.ts`) — coerced types, non-empty strings, positive port, optional nullable remote URL.
-- **`GlobalConfigSchema`** (`src/features/config/mediamtx/schemas/mediamtx-config.schema.ts`) — full MediaMTX `GlobalConf` mirror with optional fields and coercion across logging, transports (RTSP/RTMP/HLS/WebRTC/SRT), API/metrics/profiling, recording, and ICE servers.
+- **`ClientConfigSchema`** (`src/features/client-config/client-config.schemas.ts`) — coerced types, non-empty strings, positive port, optional nullable remote URL.
+- **`GlobalConfigSchema`** (`src/features/mediamtx-config/mediamtx-config.schemas.ts`) — full MediaMTX `GlobalConf` mirror with optional fields and coercion across logging, transports (RTSP/RTMP/HLS/WebRTC/SRT), API/metrics/profiling, recording, and ICE servers.
 
 ---
 
@@ -282,7 +288,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 15.2 Linting & types
 - **ESLint 9 + `@antfu/eslint-config`** — TypeScript, React 19, Next.js, with custom rules:
-  - `node/prefer-global/process` — forbids raw `process.env` (forces use of `src/env.ts`).
+  - `node/prefer-global/process` — forbids raw `process.env` (forces use of `src/lib/env.ts`).
   - `console.*` ban — forces use of the Pino logger.
 - **`tsc --noEmit`** type checking via `npm run typecheck`.
 

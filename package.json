@@ -23,7 +23,7 @@
     "test:e2e:dev": "playwright test --ui",
     "mediamtx": "./scripts/start-mediamtx.sh",
     "mediamtx:stop": "docker compose -f docker-compose.dev.yml --profile streams down",
-    "generate-mtx-types": "swagger-typescript-api -p ./lib/MediaMTX/swagger.json -o ./lib/MediaMTX -n generated.ts"
+    "generate-mtx-types": "swagger-typescript-api -p ./src/lib/mediamtx/swagger.json -o ./src/lib/mediamtx -n generated.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/lib/prisma/seed.ts",
