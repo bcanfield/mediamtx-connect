@@ -51,6 +51,11 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Install ffmpeg
+        # The instrumentation cron spawns ffmpeg to generate screenshots
+        # for orphan recordings. Without this, the server logs spawn errors
+        # on boot and the cron is a no-op.
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Setup database and test data
         # Run before docker compose so Docker doesn't auto-create
         # ./test-data/recordings as root and break later mkdir calls.
