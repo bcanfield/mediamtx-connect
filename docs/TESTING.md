@@ -11,6 +11,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Contract | Vitest + MSW | MediaMTX HTTP client behavior (`v3/pathsList`, `v3/configGlobal*`), error paths | `src/lib/mediamtx/*.test.ts` |
 | Integration | Vitest + real Prisma (temp SQLite) | Server actions, `instrumentation.ts` cron + ffmpeg spawn | `*.int.test.ts` colocated |
 | E2E | Playwright | Full browser flows, byte-range MP4 streaming, accessibility | `tests/e2e/*.spec.ts` |
+| Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
 ## Decision: which layer for a new feature?
 
@@ -19,6 +20,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 - Added/changed a call to MediaMTX → **contract** (assert request shape + 4xx/5xx handling).
 - Added/changed a server action, query that hits Prisma, or `instrumentation.ts` → **integration**.
 - Added a route, navigation, byte-range, or cross-page flow → **E2E**.
+- Changed `Dockerfile`, `start.sh`, Prisma binary targets, or boot order → ensure **image smoke** still passes.
 
 If a feature spans layers, write the lowest-cost test that proves it; only add an E2E when the value is end-to-end (routing, real HTTP, real video element).
 
@@ -64,6 +66,7 @@ PRs must pass, in order:
 2. `vitest run --coverage` — must pass; coverage uploaded to Codecov for the README badge (no threshold gate)
 3. `build`
 4. `test:e2e` (sharded across runners when wall-clock > 5 min)
+5. **Docker image smoke** — runs in parallel with `test`. Builds the production image via Buildx (with GHA cache), runs the container, polls `/api/health` for up to 2 min, asserts `status: healthy` + `database: connected`. Catches Alpine-glibc Prisma binary regressions and `start.sh` migrate-on-boot failures.
 
 Coverage is reported, not gated. The Codecov badge on the README reflects the current %. Scope is everything under `src/` except `app/` (Next pages), `components/ui/` (shadcn primitives), generated MediaMTX, and Prisma migrations — see `vitest.config.ts`.
 
