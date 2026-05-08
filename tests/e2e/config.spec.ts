@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { openMobileNavIfNeeded } from './open-mobile-nav'
 
 test.describe('Config Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -45,11 +46,13 @@ test.describe('Config Page', () => {
 test.describe('Config Navigation', () => {
   test('should have navigation when on config pages', async ({ page }) => {
     await page.goto('/config')
+    await openMobileNavIfNeeded(page)
     await expect(page.getByRole('link', { name: 'Recordings' })).toBeVisible()
   })
 
   test('should navigate back to home from config', async ({ page, baseURL }) => {
     await page.goto('/config')
+    await openMobileNavIfNeeded(page)
     await page.getByRole('link', { name: 'Connect' }).click({ force: true })
     await expect(page).toHaveURL(`${baseURL}/`)
   })

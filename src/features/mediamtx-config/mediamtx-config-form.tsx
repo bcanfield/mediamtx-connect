@@ -1302,6 +1302,7 @@ export function MediaMTXConfigForm({
               type="button"
               variant="outline"
               size="icon"
+              aria-label="Add WebRTC ICE server"
               onClick={() =>
                 append({
                   password: 'a',
@@ -1320,6 +1321,7 @@ export function MediaMTXConfigForm({
                   type="button"
                   variant="outline"
                   size="icon"
+                  aria-label={`Remove ICE server ${index + 1}`}
                   onClick={() => remove(index)}
                 >
                   <Trash className="h-4 w-4" />
