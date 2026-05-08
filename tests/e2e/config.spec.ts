@@ -47,13 +47,13 @@ test.describe('Config Navigation', () => {
   test('should have navigation when on config pages', async ({ page }) => {
     await page.goto('/config')
     await openMobileNavIfNeeded(page)
-    await expect(page.getByRole('link', { name: 'Recordings' })).toBeVisible()
+    await expect(page.locator('a[href="/recordings"]:visible').first()).toBeVisible()
   })
 
   test('should navigate back to home from config', async ({ page, baseURL }) => {
     await page.goto('/config')
     await openMobileNavIfNeeded(page)
-    await page.getByRole('link', { name: 'Connect' }).click({ force: true })
+    await page.locator('a[href="/"]:visible').first().click()
     await expect(page).toHaveURL(`${baseURL}/`)
   })
 })
