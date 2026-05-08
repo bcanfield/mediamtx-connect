@@ -17,13 +17,13 @@ test.describe('Streams Page', () => {
 
   test('should have working navigation to config page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await page.locator('a[href="/config"]:visible').first().click()
+    await page.getByRole('link', { name: 'Config', exact: true }).first().click({ force: true })
     await expect(page).toHaveURL(/\/config/)
   })
 
   test('should have working navigation to recordings page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await page.locator('a[href="/recordings"]:visible').first().click()
+    await page.getByRole('link', { name: 'Recordings', exact: true }).first().click({ force: true })
     await expect(page).toHaveURL(/\/recordings/)
   })
 })
