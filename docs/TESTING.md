@@ -61,12 +61,12 @@ Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/confi
 PRs must pass, in order:
 
 1. `lint` + `typecheck`
-2. `vitest run --coverage` — fails under threshold (see `vitest.config.ts`)
+2. `vitest run --coverage` — must pass; coverage uploaded to Codecov for the README badge (no threshold gate)
 3. `build`
 4. `test:e2e` (sharded across runners when wall-clock > 5 min)
 5. Docker image smoke (`/api/health` returns 200 against the built image)
 
-Coverage threshold: **80%** (lines, functions, branches, statements) — applied per-glob in `vitest.config.ts` so only files that already have tests are gated. New tests **must** add their target file's glob to `coverage.thresholds`. UI files are not gated.
+Coverage is reported, not gated. The Codecov badge on the README reflects the current %. Scope is everything under `src/` except `app/` (Next pages), `components/ui/` (shadcn primitives), generated MediaMTX, and Prisma migrations — see `vitest.config.ts`.
 
 Playwright traces, screenshots, and HTML report upload on failure only.
 
