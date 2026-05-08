@@ -66,7 +66,7 @@ PRs must pass, in order:
 4. `test:e2e` (sharded across runners when wall-clock > 5 min)
 5. Docker image smoke (`/api/health` returns 200 against the built image)
 
-Coverage threshold: **80% lines** on `src/lib/**` and `src/features/**/*.{schemas,queries,actions}.ts`. UI files are not gated — coverage there is incidental.
+Coverage threshold: **80%** (lines, functions, branches, statements) — applied per-glob in `vitest.config.ts` so only files that already have tests are gated. New tests **must** add their target file's glob to `coverage.thresholds`. UI files are not gated.
 
 Playwright traces, screenshots, and HTML report upload on failure only.
 
