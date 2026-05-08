@@ -19,6 +19,7 @@
     "db:reset": "prisma migrate reset --force",
     "setup": "./scripts/setup-dev.sh",
     "setup:test-data": "./scripts/setup-test-data.sh",
+    "dev:all": "./scripts/dev-all.sh",
     "test:e2e": "playwright test",
     "test:e2e:dev": "playwright test --ui",
     "mediamtx": "./scripts/start-mediamtx.sh",

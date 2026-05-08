@@ -1,12 +1,20 @@
 #!/bin/bash
 # Setup test data for local development and e2e testing
-# This script creates mock recordings and screenshots directories
+# This script creates mock recordings and screenshots directories.
+# Honors MEDIAMTX_{RECORDINGS,SCREENSHOTS}_DIR from .env so the fixtures
+# always land where the seeded Config tells the app to look.
 
 set -e
 
-TEST_DATA_DIR="./test-data"
-RECORDINGS_DIR="$TEST_DATA_DIR/recordings"
-SCREENSHOTS_DIR="$TEST_DATA_DIR/screenshots"
+if [ -f .env ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . ./.env
+  set +a
+fi
+
+RECORDINGS_DIR="${MEDIAMTX_RECORDINGS_DIR:-./test-data/recordings}"
+SCREENSHOTS_DIR="${MEDIAMTX_SCREENSHOTS_DIR:-./test-data/screenshots}"
 
 echo "Setting up test data directories..."
 
@@ -95,7 +103,7 @@ echo ""
 echo "Test data setup complete!"
 echo ""
 echo "Directory structure:"
-find "$TEST_DATA_DIR" -type f | head -20
+find "$RECORDINGS_DIR" "$SCREENSHOTS_DIR" -type f 2>/dev/null | head -20
 echo ""
 echo "Summary:"
 echo "  - Recordings: $(find "$RECORDINGS_DIR" -name "*.mp4" | wc -l) files"

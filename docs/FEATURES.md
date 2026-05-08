@@ -16,7 +16,7 @@ When you change the codebase:
 
 Keep entries factual and present-tense. No roadmap items, no "coming soon." Reserved-but-empty domains live only in §19.
 
-Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`, `CHANGELOG.md`, `docs/FEATURE-ORGANIZATION-STRATEGY.md`, `package.json`, Dockerfile, compose files, Prisma schema, MediaMTX OpenAPI integration, Playwright suites.
+Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`, `CHANGELOG.md`, `package.json`, Dockerfile, compose files, Prisma schema, MediaMTX OpenAPI integration, Playwright suites.
 
 ---
 
@@ -255,7 +255,7 @@ Writes (Server Actions, `'use server'`):
 - **Migration-on-boot entrypoint** — `./scripts/start.sh` runs `prisma migrate deploy` then `next start`.
 
 ### 13.2 Compose stacks
-- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.11.3) + `mediamtx-connect`, shared `mtx` bridge network, named volume for SQLite, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 9997 (API)`, app healthcheck, dependency ordering.
+- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.11.3) + `mediamtx-connect`, shared `mtx` bridge network, named volume for SQLite, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 9997 (API)`, app healthcheck, dependency ordering. The app container sets `BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots` so first-boot seeding produces correct values.
 - **`docker-compose.dev.yml`** — dev variant with optional `fake-streams` service behind `--profile streams` for offline testing.
 
 ### 13.3 Multi-arch
@@ -302,6 +302,7 @@ Writes (Server Actions, `'use server'`):
 | `npm run lint` / `lint:fix` | ESLint check / autofix. |
 | `npm run test:e2e` | Playwright suite. |
 | `npm run setup` | Run `./scripts/setup-dev.sh`. |
+| `npm run dev:all` | Start MediaMTX (with fake streams) and Next.js dev together; tears the stack down on exit. |
 | `npm run mediamtx` / `mediamtx:stop` | Start / stop MediaMTX with fake test streams. |
 | `npm run generate` | `prisma generate`. |
 | `npm run migrate` | `prisma migrate deploy`. |
@@ -310,8 +311,9 @@ Writes (Server Actions, `'use server'`):
 
 ### 15.4 Helper scripts (`scripts/`)
 - **`setup-dev.sh`** — bootstraps a dev environment.
-- **`setup-test-data.sh`** — generates sample recordings for tests.
+- **`setup-test-data.sh`** — generates sample recordings for tests. Sources `.env` and writes fixtures to `MEDIAMTX_RECORDINGS_DIR` / `MEDIAMTX_SCREENSHOTS_DIR` (or the env defaults), so fixtures and seeded Config never disagree.
 - **`start-mediamtx.sh`** — wraps the dev compose flow.
+- **`dev-all.sh`** — runs `start-mediamtx.sh` then `next dev`, with a trap that brings the dev compose stack down on exit.
 - **`start.sh`** — container entrypoint: migrate then `next start`.
 
 ---
@@ -325,7 +327,7 @@ Writes (Server Actions, `'use server'`):
 - **MIT licensed** — `LICENSE`.
 - **Contribution guide** — `CONTRIBUTING.md`.
 - **Architecture doc** — `ARCHITECTURE.md`.
-- **Feature-organization strategy doc** — `docs/FEATURE-ORGANIZATION-STRATEGY.md` (domain-based feature layout, naming conventions, import rules, AI-agent ruleset).
+- **Project conventions** — `docs/PROJECT-STRUCTURE.md` (layout, naming, imports).
 - **Demo GIF** — `.github/assets/demo.gif` referenced from README.
 
 ---
