@@ -74,8 +74,8 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Path safety + 404s** — file existence validated before stream open.
 
 ### 2.5 Thumbnails / screenshots
-- **`GET /api/[streamName]/first-screenshot`** — returns the most recent PNG for a stream, with a 1×1 transparent fallback so Next/Image never errors. `src/app/api/[streamName]/first-screenshot/route.ts`
-- **`Cache-Control: no-store`** — always serves the freshest snapshot.
+- **`GET /api/[streamName]/first-screenshot`** — returns the most recent PNG for a stream as `image/png` (HTTP 200). When the screenshot directory or files are missing, returns HTTP 404 with a 1×1 transparent PNG body so `next/image` never errors. `src/app/api/[streamName]/first-screenshot/route.ts`
+- **`Cache-Control: no-store`** — set on every response (200 success and 404 fallback) so the freshest snapshot is always served.
 - **Stream-scoped storage** — thumbnails live under `<screenshotsDirectory>/<streamName>/`.
 
 ---
@@ -84,7 +84,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 3.1 Client (app) config — `/config`
 - **Single-table app settings UI** backed by SQLite. `src/features/config/client/components/ClientConfigPage.tsx`, `src/app/config/page.tsx`
-- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and toast feedback. `src/features/config/client/components/ClientConfigForm.tsx`, `src/features/config/client/schemas/client-config.schema.ts`
+- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `src/features/config/client/components/ClientConfigForm.tsx`, `src/features/config/client/schemas/client-config.schema.ts`
 - **Editable fields**:
   - `mediaMtxUrl` — internal/container hostname for MediaMTX API.
   - `mediaMtxApiPort` — API port (default 9997).
@@ -108,7 +108,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **SRT** — enable, address.
 - **Recording** — enable, path, format, part/segment duration, delete-after.
 - **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/config/mediamtx/actions/`
-- **Toast feedback** on success/error; submit gated on dirty + valid.
+- **Toast feedback** on success/error (success: `Updated Global Config`; error: `There was an issue updating the Global Config`); submit gated on dirty + valid.
 
 ### 3.3 Config navigation
 - **Config layout shell** — shared layout for the config sub-tree. `src/app/config/layout.tsx`

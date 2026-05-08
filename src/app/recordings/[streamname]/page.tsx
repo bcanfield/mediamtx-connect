@@ -1,4 +1,4 @@
-import { StreamRecordingsPage } from '@/features/recordings/browse'
+import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
 
 export const dynamic = 'force-dynamic'
 

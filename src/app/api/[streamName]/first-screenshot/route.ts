@@ -2,7 +2,8 @@ import type { ReadStream } from 'node:fs'
 import fs, { createReadStream } from 'node:fs'
 import path from 'node:path'
 import { NextResponse } from 'next/server'
-import { getAppConfig } from '@/features/config/client'
+import { getAppConfig } from '@/features/client-config/client-config.queries'
+import { logger } from '@/lib/logger'
 
 // 1x1 transparent PNG to return when no screenshot exists
 // This prevents Next.js image optimizer errors
@@ -59,12 +60,13 @@ export async function GET(
       status: 200,
       headers: new Headers({
         'content-type': 'image/png',
+        'cache-control': 'no-store',
       }),
     })
     return res
   }
   catch (error) {
-    console.error(`Error Getting First Screenshot: `, error)
+    logger.error('Error Getting First Screenshot', error)
     return notFoundResponse()
   }
 }
