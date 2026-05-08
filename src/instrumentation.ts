@@ -1,5 +1,5 @@
 export async function register() {
-  const { env, isProduction } = await import('@/lib/env')
+  const { env } = await import('@/lib/env')
   if (env.NEXT_RUNTIME === 'nodejs') {
     const { default: cron } = await import('node-cron')
     const { default: cp } = await import('node:child_process')
@@ -14,11 +14,11 @@ export async function register() {
     if (!config) {
       config = await db.config.create({
         data: {
-          mediaMtxApiPort: 9997,
-          mediaMtxUrl: 'http://mediamtx',
-          recordingsDirectory: isProduction ? '/recordings' : './recordings',
-          screenshotsDirectory: isProduction ? '/screenshots' : './screenshots',
-          remoteMediaMtxUrl: 'http://localhost',
+          mediaMtxUrl: env.BACKEND_SERVER_MEDIAMTX_URL,
+          mediaMtxApiPort: Number.parseInt(env.MEDIAMTX_API_PORT),
+          remoteMediaMtxUrl: env.REMOTE_MEDIAMTX_URL,
+          recordingsDirectory: env.MEDIAMTX_RECORDINGS_DIR,
+          screenshotsDirectory: env.MEDIAMTX_SCREENSHOTS_DIR,
         },
       })
     }

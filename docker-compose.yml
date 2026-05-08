@@ -27,6 +27,11 @@ services:
     restart: unless-stopped
     networks:
       - mtx
+    environment:
+      BACKEND_SERVER_MEDIAMTX_URL: http://mediamtx
+      MEDIAMTX_API_PORT: '9997'
+      MEDIAMTX_RECORDINGS_DIR: /recordings
+      MEDIAMTX_SCREENSHOTS_DIR: /screenshots
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
       - mediamtx-connect-data:/app/prisma

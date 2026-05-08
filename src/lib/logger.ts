@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import pino from 'pino'
 
-import { env, isDevelopment } from '@/lib/env'
+import { env, isDevelopment } from './env'
 
 const isBrowser = typeof window !== 'undefined'
 
