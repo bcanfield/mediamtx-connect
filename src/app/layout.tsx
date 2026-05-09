@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next'
 
-import { NavBar } from '@/components/nav-bar'
+import { AppSidebar } from '@/components/app-sidebar'
 import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 
 import './globals.css'
@@ -26,35 +27,24 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const navItems = [
-    { name: 'Recordings', location: '/recordings' },
-    { name: 'Config', location: '/config' },
-  ]
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased flex flex-col gap-4 items-center',
-        )}
-      >
+      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <header className="flex sticky top-0 z-40 w-full bg-background/75 shadow border-b justify-center backdrop-blur">
-            <div className="px-4 w-full max-w-7xl">
-              <NavBar items={navItems}></NavBar>
-            </div>
-          </header>
-          <div className="max-w-7xl p-4 w-full">{children}</div>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>{children}</SidebarInset>
+          </SidebarProvider>
         </ThemeProvider>
-        <Toaster></Toaster>
-      </body>
+        <Toaster />
 
-      <ServiceWorker></ServiceWorker>
+        <ServiceWorker />
+      </body>
     </html>
   )
 }

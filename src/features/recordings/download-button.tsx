@@ -3,10 +3,10 @@
 import axios from 'axios'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { useToast } from '@/components/ui/use-toast'
 import { logger } from '@/lib/logger'
 
 export function DownloadButton({
@@ -18,7 +18,6 @@ export function DownloadButton({
 }) {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
-  const { toast } = useToast()
 
   const handleDownload = async () => {
     try {
@@ -48,18 +47,12 @@ export function DownloadButton({
         logger.error(
           `Failed to download video: ${response.status} ${response.statusText}`,
         )
-        toast({
-          variant: 'destructive',
-          title: 'Error downloading video',
-        })
+        toast.error('Error downloading video')
       }
     }
     catch (error) {
       logger.error('Error downloading video', error)
-      toast({
-        variant: 'destructive',
-        title: 'Error downloading video',
-      })
+      toast.error('Error downloading video')
     }
     setProgress(0)
     setLoading(false)
