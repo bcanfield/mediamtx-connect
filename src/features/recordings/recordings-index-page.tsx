@@ -1,6 +1,7 @@
 import { AlertTriangle, FolderOpen, Settings, Video } from 'lucide-react'
 import Link from 'next/link'
 
+import { EmptyState } from '@/components/empty-state'
 import { GridLayout } from '@/components/grid-layout'
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
@@ -88,24 +89,25 @@ export async function RecordingsIndexPage() {
         )}
 
         {!error && !hasRecordings && (
-          <Alert>
-            <FolderOpen className="h-4 w-4" />
-            <AlertTitle>No Recordings Found</AlertTitle>
-            <AlertDescription>
-              <p>
-                No recordings have been saved yet. Recordings will appear here
-                once MediaMTX starts recording streams.
-              </p>
-              <p className="text-sm mt-2">
-                Make sure
-                {' '}
-                <code className="bg-muted px-1 rounded">MTX_RECORD=yes</code>
-                {' '}
-                is
-                set in your MediaMTX configuration.
-              </p>
-            </AlertDescription>
-          </Alert>
+          <EmptyState
+            icon={FolderOpen}
+            title="No Recordings Found"
+            description={(
+              <>
+                <p>
+                  No recordings have been saved yet. Recordings will appear here
+                  once MediaMTX starts recording streams.
+                </p>
+                <p className="mt-2">
+                  Make sure
+                  {' '}
+                  <code className="rounded bg-muted px-1">MTX_RECORD=yes</code>
+                  {' '}
+                  is set in your MediaMTX configuration.
+                </p>
+              </>
+            )}
+          />
         )}
 
         {!error && hasRecordings && (
