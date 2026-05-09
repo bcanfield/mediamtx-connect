@@ -36,13 +36,6 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DATABASE_URL="file:/app/prisma/database.db"
 
-# Seed defaults for the first-run Config row (src/instrumentation.ts).
-# Override at `docker run` time to skip the in-app /config step.
-ENV BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx
-ENV MEDIAMTX_API_PORT=9997
-ENV MEDIAMTX_RECORDINGS_DIR=/recordings
-ENV MEDIAMTX_SCREENSHOTS_DIR=/screenshots
-
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 

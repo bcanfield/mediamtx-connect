@@ -2,7 +2,7 @@
 
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
-import { PanelLeftIcon } from 'lucide-react'
+import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react'
 import { Slot } from 'radix-ui'
 import * as React from 'react'
 
@@ -260,7 +260,8 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, state, isMobile, openMobile } = useSidebar()
+  const isOpen = isMobile ? openMobile : state === 'expanded'
 
   return (
     <Button
@@ -268,15 +269,27 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn('size-7', className)}
+      aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
+      aria-expanded={isOpen}
+      className={cn('relative size-7 overflow-hidden', className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
+      <PanelLeftCloseIcon
+        className={cn(
+          'size-4 transition-all duration-300',
+          isOpen ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0',
+        )}
+      />
+      <PanelLeftOpenIcon
+        className={cn(
+          'absolute size-4 transition-all duration-300',
+          isOpen ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100',
+        )}
+      />
     </Button>
   )
 }
