@@ -1,3 +1,13 @@
+## [2.0.0](https://github.com/bcanfield/mediamtx-connect/compare/1.5.0...2.0.0) (2026-05-09)
+
+### ⚠ BREAKING CHANGES
+
+* feature-folder restructure under `src/features/*`; `process.env` access centralized through `@/lib/env`; shadcn-based UI shell replaces v1 layout (Sidebar + SidebarInset, redesigned Live View / Recordings / Client Config / MediaMTX Config pages); v1 internal layout removed.
+
+### Features
+
+* v2 — rewrite, test pyramid, UI redesign, robots ([#96](https://github.com/bcanfield/mediamtx-connect/issues/96)) ([c8105fe](https://github.com/bcanfield/mediamtx-connect/commit/c8105fe102581d896ae4e11c550e1b1c09062c79))
+
 # [1.5.0](https://github.com/bcanfield/mediamtx-connect/compare/1.4.2...1.5.0) (2026-05-09)
 
 
