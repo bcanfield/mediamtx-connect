@@ -41,6 +41,13 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     needs: build
+    env:
+      # Pin both dirs so `db:seed` writes the same paths the fixture script
+      # creates and the webserver's instrumentation hook tries to mkdir.
+      # Without this, env.ts defaults to /recordings and /screenshots and the
+      # non-root runner fails with EACCES on first boot.
+      MEDIAMTX_RECORDINGS_DIR: ./test-data/recordings
+      MEDIAMTX_SCREENSHOTS_DIR: ./test-data/screenshots
 
     steps:
       - uses: actions/checkout@v4
