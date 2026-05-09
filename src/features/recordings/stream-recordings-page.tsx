@@ -3,12 +3,12 @@ import type { Url } from 'next/dist/shared/lib/router/router'
 import type { StreamRecording } from './recordings.types'
 import path from 'node:path'
 
-import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, FolderX } from 'lucide-react'
 import Link from 'next/link'
+import { EmptyState } from '@/components/empty-state'
 import { GridLayout } from '@/components/grid-layout'
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getAppConfig } from '@/features/client-config/client-config.queries'
 
 import { getFilesInDirectory } from '@/features/recordings/file-operations'
@@ -71,13 +71,11 @@ export async function StreamRecordingsPage({
       >
         {error
           ? (
-              <Alert>
-                <AlertTriangle className="h-4 w-4" />
-                <AlertTitle>Uh oh!</AlertTitle>
-                <AlertDescription>
-                  Could not read recordings directory. Please make sure the directory exists
-                </AlertDescription>
-              </Alert>
+              <EmptyState
+                icon={FolderX}
+                title="Could not read recordings"
+                description="Could not read recordings directory. Please make sure the directory exists."
+              />
             )
           : (
               <div className="flex justify-end text-xs">

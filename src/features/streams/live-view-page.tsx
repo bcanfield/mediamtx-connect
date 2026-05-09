@@ -5,9 +5,10 @@ import type {
   PathList,
 } from '@/lib/mediamtx/generated'
 
-import { AlertTriangle, Settings } from 'lucide-react'
+import { AlertTriangle, MonitorPlay, Settings, Wifi } from 'lucide-react'
 import Link from 'next/link'
 
+import { EmptyState } from '@/components/empty-state'
 import { GridLayout } from '@/components/grid-layout'
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
@@ -103,33 +104,26 @@ export async function LiveViewPage() {
         )}
 
         {!connectionError && !remoteMediaMtxUrl && (
-          <Alert>
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Configure Remote URL</AlertTitle>
-            <AlertDescription>
-              <p>
-                Set up your Remote MediaMTX URL to view streams in the browser.
-                This should be the URL your browser can use to reach MediaMTX.
-              </p>
-              <Link href="/config" className="mt-2 inline-block">
-                <Button variant="outline" size="sm">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Go to Config
-                </Button>
-              </Link>
-            </AlertDescription>
-          </Alert>
+          <EmptyState
+            icon={Wifi}
+            title="Configure Remote URL"
+            description="Set up your Remote MediaMTX URL to view streams in the browser. This should be the URL your browser can use to reach MediaMTX."
+          >
+            <Link href="/config">
+              <Button variant="outline" size="sm">
+                <Settings className="mr-2 h-4 w-4" />
+                Go to Config
+              </Button>
+            </Link>
+          </EmptyState>
         )}
 
         {isConnected && !hasStreams && (
-          <Alert>
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>No Active Streams</AlertTitle>
-            <AlertDescription>
-              MediaMTX is connected but no streams are currently active. Start
-              streaming to MediaMTX to see your streams here.
-            </AlertDescription>
-          </Alert>
+          <EmptyState
+            icon={MonitorPlay}
+            title="No Active Streams"
+            description="MediaMTX is connected but no streams are currently active. Start streaming to MediaMTX to see your streams here."
+          />
         )}
 
         {isConnected && hasStreams && remoteMediaMtxUrl && (
