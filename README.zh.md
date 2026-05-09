@@ -1,7 +1,7 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><strong>English</strong> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a></p>
-  <p>A web UI for <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Watch streams, browse recordings, and edit config from your browser.</p>
+  <p><a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <strong>中文</strong></p>
+  <p>用于 <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> 的网页界面。在浏览器中观看直播、浏览录像并编辑配置。</p>
 
   <p>
     <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -10,12 +10,12 @@
     <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
   </p>
 
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect demo" width="720">
+  <img src=".github/assets/demo.gif" alt="MediaMTX Connect 演示" width="720">
 </div>
 
-## Run it
+## 运行方法
 
-Already running MediaMTX? Add Connect alongside it:
+已经在运行 MediaMTX 了？把 Connect 部署在它旁边即可：
 
 ```bash
 docker run -d \
@@ -25,7 +25,7 @@ docker run -d \
   bcanfield/mediamtx-connect:latest
 ```
 
-No MediaMTX yet? The bundled compose starts both:
+还没有 MediaMTX？随附的 compose 会同时启动两者：
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -33,14 +33,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Open http://localhost:3000, head to **Config**, and point it at your MediaMTX.
+打开 http://localhost:3000，进入 **Config**，将其指向你的 MediaMTX。
 
-> Connect needs `api: yes` in your `mediamtx.yml`. See [the included one](mediamtx.yml) for a working reference.
+> Connect 需要在 `mediamtx.yml` 中设置 `api: yes`。可参考[随附文件](mediamtx.yml)作为可用示例。
 
-## Docs
+## 文档
 
-[Architecture](ARCHITECTURE.md) · [Features](docs/FEATURES.md) · [Contributing](CONTRIBUTING.md)
+[架构](ARCHITECTURE.md) · [功能](docs/FEATURES.md) · [贡献指南](CONTRIBUTING.md)
 
-## License
+> 注意：开发者文档仅以英文维护。应用界面在 `/zh` 下提供中文版本。
+
+## 许可
 
 MIT
