@@ -1,5 +1,7 @@
 # Ideas: HTTP API Surface
 
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
+
 This document brainstorms UI features for **MediaMTX Connect** that derive from the MediaMTX HTTP Control API v3 (defined in `api/openapi.yaml` upstream). The app today only consumes `v3/pathsList`, `v3/configGlobalGet`, and `v3/configGlobalSet` — leaving the full session, connection, recording, path-CRUD, path-defaults, info, and JWKS surfaces unused. Below, every endpoint group is mapped to concrete UI ideas. Schemas are rich (RTSP jitter, SRT RTT/loss/buffers, WebRTC ICE candidates, HLS muxer activity, codec props with width/height/profile/level), so most ideas just need a table or chart wired to a periodic poll.
 
 ## General / Info

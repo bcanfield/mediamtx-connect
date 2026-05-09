@@ -1,5 +1,7 @@
 # Ideas: Auth, Security & Hooks
 
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
+
 MediaMTX Connect today is a single-tenant editor over the global MediaMTX config — no app-level login, no opinionated UI for `authMethod`, IP allowlists, TLS material, or the dozen `runOn*` lifecycle hooks. The surface area is large: three auth backends (`internal`, `http`, `jwt`), six TLS-capable protocols (RTSP/RTMP/HLS/WebRTC/API/Metrics), per-path ACLs that combine user + IP + action + path-regex, and roughly fifteen lifecycle hooks per path plus two server-level ones. Everything below treats Connect as the operator console that turns those primitives into safe, discoverable, testable workflows — and as a first-class webhook receiver for the hooks themselves.
 
 ## Auth method picker & onboarding

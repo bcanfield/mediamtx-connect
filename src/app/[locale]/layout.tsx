@@ -38,6 +38,8 @@ export async function generateMetadata({
         'ru': '/ru',
         'fr': '/fr',
         'pt': '/pt',
+        'ja': '/ja',
+        'pl': '/pl',
         'x-default': '/',
       },
     },
