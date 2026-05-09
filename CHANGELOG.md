@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/bcanfield/mediamtx-connect/compare/1.4.2...1.5.0) (2026-05-09)
+
+
+### Bug Fixes
+
+* bump Node.js to 22 in release job to satisfy semantic-release requirement ([#93](https://github.com/bcanfield/mediamtx-connect/issues/93)) ([ebae5fe](https://github.com/bcanfield/mediamtx-connect/commit/ebae5fea7c15da0d14f54f11840bd87bc70393d7))
+
+
+### Features
+
+* Organize for automaker ([97ff358](https://github.com/bcanfield/mediamtx-connect/commit/97ff3582892bbd3be6b2b3bfe49e009e0a2d3a58))
+* Revive Repo ([524d8d4](https://github.com/bcanfield/mediamtx-connect/commit/524d8d4d67913308f537a3798f423509f110a0df)), closes [#71](https://github.com/bcanfield/mediamtx-connect/issues/71) [#66](https://github.com/bcanfield/mediamtx-connect/issues/66) [#66](https://github.com/bcanfield/mediamtx-connect/issues/66) [#62](https://github.com/bcanfield/mediamtx-connect/issues/62) [#66](https://github.com/bcanfield/mediamtx-connect/issues/66)
+
 ## [1.4.2](https://github.com/bcanfield/mediamtx-connect/compare/1.4.1...1.4.2) (2023-12-21)
 
 
