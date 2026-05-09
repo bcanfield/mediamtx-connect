@@ -27,6 +27,8 @@ jobs:
         run: npm run lint
       - name: Typecheck
         run: npm run typecheck
+      - name: i18n key parity
+        run: npm run i18n:check
       - name: Unit + integration tests
         run: npm run test:cov
       - name: Upload coverage to Codecov

@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,11 +14,12 @@ import {
 import { SwitchField, TextField } from '../form-fields'
 
 export function ApiSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.api')
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>HTTP API</CardTitle>
+          <CardTitle>{t('http')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField
@@ -32,7 +34,7 @@ export function ApiSection({ control }: { control: Control<GlobalConfigFormData>
 
       <Card>
         <CardHeader>
-          <CardTitle>Metrics</CardTitle>
+          <CardTitle>{t('metrics')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField control={control} name="metrics" label="Metrics" />
@@ -42,7 +44,7 @@ export function ApiSection({ control }: { control: Control<GlobalConfigFormData>
 
       <Card>
         <CardHeader>
-          <CardTitle>PPROF</CardTitle>
+          <CardTitle>{t('pprof')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField control={control} name="pprof" label="PPROF" />

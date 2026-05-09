@@ -4,6 +4,7 @@ import type { ChangeEvent } from 'react'
 import type { Control, FieldPath } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from './mediamtx-config.schemas'
+import { useTranslations } from 'next-intl'
 import {
   FormControl,
   FormDescription,
@@ -97,13 +98,15 @@ export function ListField({
   control,
   name,
   label,
-  description = 'One value per line.',
+  description,
 }: {
   control: Ctrl
   name: FieldPath<GlobalConfigFormData>
   label: string
   description?: string
 }) {
+  const t = useTranslations('Config.formFields')
+  const resolvedDescription = description ?? t('oneValuePerLine')
   return (
     <FormField
       control={control}
@@ -118,7 +121,7 @@ export function ListField({
               onChange={e => field.onChange(fromTextarea(e))}
             />
           </FormControl>
-          <FormDescription>{description}</FormDescription>
+          <FormDescription>{resolvedDescription}</FormDescription>
           <FormMessage />
         </FormItem>
       )}
