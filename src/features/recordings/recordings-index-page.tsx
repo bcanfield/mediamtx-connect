@@ -1,20 +1,15 @@
-import { AlertTriangle, FolderOpen, Settings, Video } from 'lucide-react'
+import { AlertTriangle, Settings } from 'lucide-react'
 import Link from 'next/link'
 
-import { EmptyState } from '@/components/empty-state'
-import { GridLayout } from '@/components/grid-layout'
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { getAppConfig } from '@/features/client-config/client-config.queries'
-import { countFilesInSubdirectories } from '@/features/recordings/file-operations'
+import { summarizeStreamRecordings } from '@/features/recordings/file-operations'
+
+import { RecordingsIndexEmpty } from './recordings-index-empty'
+import { RecordingsIndexView } from './recordings-index-view'
 
 export const dynamic = 'force-dynamic'
 
@@ -43,18 +38,22 @@ export async function RecordingsIndexPage() {
   }
 
   let error = false
-  let streamRecordingDirectories: Record<string, number> = {}
+  let summary: ReturnType<typeof summarizeStreamRecordings> = {}
 
   try {
-    streamRecordingDirectories = countFilesInSubdirectories(
-      config.recordingsDirectory,
-    )
+    summary = summarizeStreamRecordings(config.recordingsDirectory)
   }
   catch {
     error = true
   }
 
-  const hasRecordings = Object.keys(streamRecordingDirectories).length > 0
+  const streams = Object.entries(summary).map(([name, value]) => ({
+    name,
+    count: value.count,
+    latestMtime: value.latestMtime ? value.latestMtime.toISOString() : null,
+  }))
+
+  const hasRecordings = streams.length > 0
 
   return (
     <>
@@ -88,52 +87,9 @@ export async function RecordingsIndexPage() {
           </Alert>
         )}
 
-        {!error && !hasRecordings && (
-          <EmptyState
-            icon={FolderOpen}
-            title="No Recordings Found"
-            description={(
-              <>
-                <p>
-                  No recordings have been saved yet. Recordings will appear here
-                  once MediaMTX starts recording streams.
-                </p>
-                <p className="mt-2">
-                  Make sure
-                  {' '}
-                  <code className="rounded bg-muted px-1">MTX_RECORD=yes</code>
-                  {' '}
-                  is set in your MediaMTX configuration.
-                </p>
-              </>
-            )}
-          />
-        )}
+        {!error && !hasRecordings && <RecordingsIndexEmpty />}
 
-        {!error && hasRecordings && (
-          <GridLayout columnLayout="xs">
-            {Object.entries(streamRecordingDirectories).map(([key, value]) => (
-              <Card key={key} className="flex items-center">
-                <CardHeader className="flex-auto">
-                  <CardTitle className="flex items-center gap-2">
-                    <Video className="h-4 w-4" />
-                    {key}
-                  </CardTitle>
-                  <CardDescription>
-                    {value}
-                    {' '}
-                    {value === 1 ? 'Recording' : 'Recordings'}
-                  </CardDescription>
-                </CardHeader>
-                <div className="p-4">
-                  <Link href={`recordings/${key}`}>
-                    <Button variant="outline">View</Button>
-                  </Link>
-                </div>
-              </Card>
-            ))}
-          </GridLayout>
-        )}
+        {!error && hasRecordings && <RecordingsIndexView streams={streams} />}
       </PageLayout>
     </>
   )

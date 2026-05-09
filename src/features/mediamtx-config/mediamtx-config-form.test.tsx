@@ -6,10 +6,13 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const updateGlobalConfig = vi.fn()
-const toast = vi.fn()
+const toastSuccess = vi.fn()
+const toastError = vi.fn()
 
 vi.mock('./mediamtx-config.actions', () => ({ updateGlobalConfig }))
-vi.mock('@/components/ui/use-toast', () => ({ useToast: () => ({ toast }) }))
+vi.mock('sonner', () => ({
+  toast: { success: toastSuccess, error: toastError },
+}))
 
 const { MediaMTXConfigForm } = await import('./mediamtx-config-form')
 
@@ -21,7 +24,8 @@ const baseConfig: GlobalConf = {
 
 beforeEach(() => {
   updateGlobalConfig.mockReset()
-  toast.mockReset()
+  toastSuccess.mockReset()
+  toastError.mockReset()
 })
 
 afterEach(() => {
@@ -67,7 +71,7 @@ describe('mediaMTXConfigForm', () => {
     await user.click(screen.getByRole('button', { name: 'Submit' }))
 
     await waitFor(() =>
-      expect(toast).toHaveBeenCalledWith({ title: 'Updated Global Config' }),
+      expect(toastSuccess).toHaveBeenCalledWith('Updated Global Config'),
     )
   })
 
@@ -80,11 +84,9 @@ describe('mediaMTXConfigForm', () => {
     await user.click(screen.getByRole('button', { name: 'Submit' }))
 
     await waitFor(() =>
-      expect(toast).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variant: 'destructive',
-          title: 'There was an issue updating the Global Config',
-        }),
+      expect(toastError).toHaveBeenCalledWith(
+        'There was an issue updating the Global Config',
+        expect.objectContaining({ description: expect.any(String) }),
       ),
     )
   })
