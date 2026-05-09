@@ -1,5 +1,7 @@
 # Ideas: Recordings & Playback
 
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
+
 MediaMTX persists every published path to disk as a stream of fragmented MP4 (or MPEG-TS) segments under a templated `recordPath`, prunes them via `recordDeleteAfter`, and ships an entirely separate **playback HTTP server** (`playback: yes`, default `:9996`) with two endpoints — `GET /list?path=…&start=…&end=…` returning concatenable runs of segments, and `GET /get?path=…&start=…&duration=…&format=fmp4|mp4` that seeks into one or many segments and streams a stitched fMP4/MP4 back to the client. The control API also exposes `GET /v3/recordings/list`, `GET /v3/recordings/get/{name}`, and `DELETE /v3/recordings/deletesegment?path=…&start=…`. The current MediaMTX Connect UI only browses individual segment files and plays each in isolation; almost the entire playback-server feature surface, plus retention, segmentation, and hook-driven workflows, is unexposed. The ideas below assume we wire the playback server in alongside the existing API client and treat segments as time intervals rather than files.
 
 ## 1. Timeline & scrubber UI

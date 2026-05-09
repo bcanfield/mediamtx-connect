@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p>🌐 <a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <strong>中文</strong> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a></p>
+  <p>🌐 <a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <strong>中文</strong> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.pl.md">Polski</a></p>
   <p>用于 <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> 的网页界面。在浏览器中观看直播、浏览录像并编辑配置。</p>
 
   <p>

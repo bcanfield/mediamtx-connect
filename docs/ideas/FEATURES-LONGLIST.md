@@ -1,15 +1,27 @@
 # Feature Long-list — MediaMTX Connect
 
-> Flat, unordered list of every feature idea in `docs/ideas/`. To be triaged later. Each entry compiled from `01`–`05` plus the cross-cutting section of `00-index.md`.
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped, including the Top 10. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
 
-- **Per-path publish URL panel** — side sheet on each stream card showing ready-to-paste publish URLs for every enabled protocol so operators can hand a camera the right URL without opening config.
-- **One-click protocol switcher in publish panel** — tabs across RTSP, RTSPS, RTMP, RTMPS, SRT, WHIP, each with copy button and host override, removing the friction of swapping localhost for a public hostname.
-- **Publisher recipe generator** — copy-paste snippets for OBS, ffmpeg (shell or Docker), GStreamer, mobile RTMP apps so publishers go live without hunting through docs.
-- **Validity-aware publish URLs** — hide protocols whose enable flag is off so operators can't copy a URL that won't work.
+> Flat list of every feature idea triaged out of `docs/ideas/` (`01`–`05` plus the cross-cutting section of `00-index.md`). The Top 10 below are the *recommended* first implementations; the Backlog is everything else, unordered.
+
+## Top 10 — recommended first implementations
+
+These are the features that best meet the bar of "relevant to actual MediaMTX work, complementary to the service itself, not over-engineered, and real day-one user value." Each one consumes an API or hook MediaMTX already exposes and fills a focused UX gap — no new sidecars, no upstream changes, no new infrastructure.
+
+1. **Per-path management** — Paths catalog with inline edit, an add-path wizard, and a delete confirmation that warns when publishers or readers are connected. The current UI only edits global config, so per-path is the biggest day-to-day gap; `v3/config/paths/*` already exposes everything needed.
+2. **Live sessions dashboard with kick** — Unified RTSP / RTMP / WebRTC / SRT / HLS sessions table with bytes, jitter, source IP, and a kick button per row. All the `*sessions/list` and `*Kick` endpoints are already in the OpenAPI client; this is pure UX over data MediaMTX already returns.
+3. **Publish URL helper with publisher recipes** — Per-path side panel showing ready-to-paste publish URLs for every enabled protocol (RTSP / RTMP / SRT / WHIP) plus copy-paste OBS, ffmpeg, and GStreamer snippets. Removes the "what URL do I put in OBS?" friction that hits every new user on day one.
+4. **NVR-style recording timeline** — Continuous, zoomable scrubber per stream backed by MediaMTX's playback server (`/list`, `/get`), with segment-boundary markers and seamless cross-segment playback. Turns the recordings browser into an NVR using a feature MediaMTX already ships but the UI hasn't integrated.
+5. **Hooks UI with snippet library** — Per-path editor for every `runOn*` hook with env-var autocomplete and a curated catalog of paste-ready snippets (Discord notify, motion-trigger record, S3 archive, healthchecks.io ping). Hooks are MediaMTX's main extension point but most operators never discover them.
+6. **Per-path detail page** — Click a stream to land on a page with current codecs (`tracks2`), readers, online time, byte counters, frames-in-error, and recording status. The data is already in `v3/paths/get`; surfacing it answers most "is this stream healthy?" questions without an external dashboard.
+7. **Codec and reader-compatibility matrix** — Live H264 / AV1 / Opus / AAC chips on each stream card plus a green/yellow/red matrix showing which protocols (HLS, LL-HLS, WebRTC, RTSP, RTMP) accept the current codec mix. Solves the single most common confusion: "why won't my stream play in HLS?"
+8. **Storage usage with bulk delete** — Per-stream and per-day disk usage, a projected disk-full date from a rolling average, and bulk segment delete by date range via `recordings/deletesegment`. Surveillance users hit a full disk weekly — this turns it into one screen.
+9. **Config snapshot history and one-click rollback** — Snapshot the YAML before every `configGlobalSet`, list snapshots with diffs, and let admins revert in one click. Makes the existing config editor safe to use without `git`.
+10. **Doctor / preflight diagnostics page** — Green/red rows for API reach, recordings directory writable, screenshots directory writable, ffmpeg present, MediaMTX version supported, time-sync, port binds. Cuts the most common "why isn't this working?" support load and is just a stack of small checks.
+
+## Backlog
+
 - **MPEG-TS UDP and SDP source helpers** — one-shot generators for ffmpeg-to-UDP and SDP-file ingest that register matching path sources.
-- **Paths catalog page** — table of every MediaMTX path with source type, record/on-demand flags, inline edit and delete; the single biggest gap in the current UI.
-- **Add-path wizard** — multi-step dialog (name, source kind, source-specific fields, recording, hooks) that creates a path safely.
-- **Per-path edit form** — full-tabbed editor for one path, mirroring the global config form but scoped.
 - **Path defaults editor** — separate page for `pathDefaults` with a blast-radius warning since changes cascade to every path.
 - **Apply defaults to all paths wizard** — bulk-patch every path to match defaults with a per-path opt-out checklist.
 - **Defaults vs override badges** — each field marked "inherited from defaults" or "overridden" with one-click revert.
@@ -25,8 +37,6 @@
 - **Source fingerprint pinning helper** — one-click backend probe that reads the cert and writes the SHA-256 to `sourceFingerprint`.
 - **Per-path max readers slider** — concurrent viewer cap with "0 = unlimited" copy.
 - **Per-path useAbsoluteTimestamp toggle** — labeled switch with a tooltip on when archival paths benefit.
-- **Active codec badges on stream cards** — live "H264 · AAC" / "AV1 · Opus" chips with a per-track drawer for elementary-stream details.
-- **Reader-compatibility matrix per stream** — green/yellow/red status for HLS, LL-HLS, WebRTC, RTSP, RTMP given current codecs, including audio-codec and legacy-codec warnings.
 - **Protocol switcher on the player** — segmented control for HLS, LL-HLS, WHEP, RTSP-copy that rebuilds the player on demand.
 - **In-browser WHEP playback** — sub-second-latency WebRTC viewer alongside HLS.
 - **LL-HLS toggle and indicator** — show whether the muxer is producing LL-HLS and let viewers flip variants.
@@ -57,7 +67,6 @@
 - **Always-available fallback editor** — toggle, MP4 upload, and `alwaysAvailableTracks` composer so viewers see a placeholder when nothing is publishing.
 - **Failover chain visualizer** — render the redirect graph so cycles or dead ends are visible.
 - **Test-failover button** — simulate source failure by kicking the publisher and confirm the fallback engages.
-- **Path lifecycle hooks tab** — one panel grouping every `runOn*` hook with code editors and the env-var cheat sheet.
 - **runOnDemand ffmpeg recipe library** — pre-canned snippets for stream-loop, transcode, file-source.
 - **sourceOnDemand toggle with timing** — switch plus start-timeout and close-after with first-viewer-experience copy.
 - **runOnDemandRestart and CloseAfter controls** — switch plus duration to tune flapping behavior.
@@ -78,7 +87,6 @@
 - **Per-stream uptime sparkline** — 24-hour online/offline timeline derived from ready/notReady hooks.
 - **MTBF and last-outage tile** — mean time between failures on the stream card kebab.
 - **Reader / publisher count badges** — "1 publisher · 4 readers" pulled from path detail.
-- **Live sessions dashboard with kick** — unified RTSP/RTMP/HLS/WebRTC/SRT sessions table where operators disconnect a misbehaving viewer in one click.
 - **Stream state badge on cards** — Live / Idle / Always-available / Offline derived from ready and config.
 - **Webhook-based health alerts** — UI to register a URL pinged on `runOnNotReady` or derived down-for-N-seconds rules.
 - **Per-path HLS variant chooser** — override global mpegts/fmp4/lowLatency per path or surface the active variant.
@@ -105,9 +113,7 @@
 - **Diff preview before save** — JSON diff of current vs proposed config inside the save modal.
 - **Deprecated-field linter** — highlight deprecated keys still set and offer one-click migration.
 - **Path creation templates** — RTSP camera, RPi camera, WHEP redirect, always-available file presets.
-- **Hooks editor with snippet library** — focused editor for `runOn*` fields with curated examples.
 - **Always-available builder** — UI to assemble `alwaysAvailableTracks` plus an optional file uploader.
-- **Per-path detail page** — source ID, current readers, online time, codec details, byte counters, frames-in-error.
 - **Live track inspector** — `tracks2` rendered as a card grid, one card per codec.
 - **Path "is the camera up" indicator** — combine available, online, availableTime into a green/yellow/red dot with uptime.
 - **Reader fan-out diagram** — small graph for each path: source → MediaMTX → readers with counts and protocol icons.
@@ -132,7 +138,6 @@
 - **SRT encryption-failure detector** — non-zero `packetsReceivedUndecrypt` highlighted as passphrase-mismatch.
 - **All-recordings index with rollup** — per-path segment count and total span grouped by path.
 - **Per-segment delete with reason** — local-only audit reason field then call delete endpoint.
-- **Bulk segment delete by date range** — pick "before YYYY-MM-DD" and parallel-delete with progress bar.
 - **Storage usage estimate** — segment count × `recordSegmentDuration` to flag paths exceeding budget.
 - **Recording-on-but-no-segments warning** — paths with record=true but empty segments for more than X hours.
 - **Retention policy preview** — show which segments will disappear in the next 24 hours given recordDeleteAfter.
@@ -148,13 +153,10 @@
 - **Paginated list views** — real paginators using `pageCount`/`itemCount` instead of fetching everything.
 - **CSV export from any table** — current filtered set exportable for offline analysis.
 - **Webhook simulator** — send a fake hook payload to a configured URL to verify it without waiting for a real event.
-- **Continuous timeline per stream** — horizontal track per path with concatenated runs as blocks and gaps as voids; zoomable from week to minute.
 - **Multi-day timeline with day rails** — stack day rows so an operator scans a week at once.
 - **Now-line and live tail on the timeline** — moving cursor and auto-scroll while a path is recording, with the open segment styled.
 - **Segment-boundary and concatenability markers** — tick marks at each segment boundary plus block-color showing where adjacent segments stitch losslessly vs broke continuity.
 - **Hover thumbnail strip on the scrubber** — sprite-sheet preview frames every N seconds across the visible window.
-- **Seamless cross-segment player** — call `playback /get` and play the server-stitched fMP4 directly with zero JS-side concat.
-- **Seek anywhere on a path** — treat each path as one infinite virtual recording.
 - **Power-user playback controls** — variable-speed review (0.25×–16×), skip-ahead-by-N, frame-step (`requestVideoFrameCallback`), and MP4-vs-fMP4 auto-pick on the stitched player.
 - **Live-to-playback handoff** — when the live stream ends, fade into the most recent recording at the same wall-clock.
 - **Month calendar with recording density** — each day cell colored by total recorded seconds; click to land on the timeline.
@@ -191,10 +193,7 @@
 - **Per-path recording overrides vs defaults** — diff between this path and `pathDefaults`.
 - **recordDeleteAfter editor with size preview** — slider with "this would delete X GB right now" computed from segments.
 - **Per-path retention overrides** — different streams keep different histories.
-- **Storage usage dashboard** — disk used per stream, per day, per format; sortable.
-- **Projected disk-full date** — rolling 7-day average bytes/day to predict fill.
 - **Disk-pressure auto-prune toggle** — when free space drops below threshold, delete oldest segments first.
-- **Bulk recording delete** — by-date-range or "delete everything older than X days" across one or all paths with typed-confirmation gate.
 - **Archive-then-delete flow** — export a window to S3/NFS first, then call `deletesegment`.
 - **Per-path storage quota** — soft cap with prune-oldest-above-the-cap UI.
 - **Recording gap detector** — highlight intervals on the timeline where the stream was supposed to be on but no segment exists.
@@ -286,7 +285,6 @@
 - **Trusted-proxy reverse-proxy presets** — Cloudflare, Fastly, AWS ALB, Tailscale prefills.
 - **Allowlist-conflict detector** — flags when a user's ips excludes ranges that are also in trusted proxies.
 - **Anonymous-publish detector** — scan internal users for publish-without-IP entries and list affected paths.
-- **Per-path hooks accordion** — first-class fields for every `runOn*` with companion Restart/StartTimeout/CloseAfter.
 - **Server-level hooks panel** — sibling editor for `runOnConnect`/`runOnDisconnect` visually distinct from path-level.
 - **Hook env-var inserter** — autocomplete for `MTX_PATH`, `MTX_QUERY`, regex-group placeholders, etc.
 - **Inline hook command tester** — sandboxed run with mocked env vars and stdout/stderr/exit-code capture.
@@ -294,8 +292,6 @@
 - **Hook timeout sanity** — warn when start-timeout is shorter than typical warmup, or close-after shorter than reader gaps.
 - **Restart toggle visualizer** — show which hooks have `Restart: true` and explain the semantics.
 - **Hook execution graph** — animated state diagram (init → demand → ready → read → unread → notReady → unDemand) with bound commands.
-- **Hook command catalog** — gallery of paste-ready snippets for Discord, syslog, transcode, rclone.
-- **Curated hook recipes** — paste-ready snippets for pull-from-RTSP fallback, motion-triggered recording, archive-to-S3, ffmpeg thumbnail, healthchecks.io uptime ping, Prometheus pushgateway counter.
 - **Hook log viewer** — Connect captures recent stdout/stderr per path and renders a tail.
 - **Connect as webhook target** — `/api/webhooks/runon/:event/:path` so users skip shell scripts entirely.
 - **Webhook signing** — Connect issues a per-install secret with HMAC verification on inbound calls.
@@ -324,7 +320,6 @@
 - **Config dry-run with auth** — simulate auth checks for live sessions before writing and warn if any would be cut off.
 - **"Why was I denied?" debugger** — paste denied client's IP, user, action, path; UI walks through the decision.
 - **Read-only docs sidebar** — context-aware MediaMTX docs panel without leaving Connect.
-- **Config rollback** — every save snapshots the prior YAML; one-click revert.
 - **Lockout-safe save** — explicit confirmation required when a save would lock the current admin out.
 - **Hook performance budget** — track exec time of `runOn*` and flag those approaching read/write timeouts.
 - **In-app /metrics scraper** — periodically fetch and parse Prometheus exposition without external Prometheus.
@@ -373,9 +368,6 @@
 - **Sensitive-value redactor** — bundle generation auto-replaces passwords, JWKS, HTTP auth address with `***`.
 - **System info card** — MediaMTX version, build hash, Go version, platform, uptime.
 - **Disaster recovery runbook generator** — printable one-pager of the right curl commands for restart, reload, restore.
-- **Config snapshot table** — auto-snapshot before every configGlobalSet with createdAt, createdBy, message.
-- **One-click config rollback** — restore button with diff modal then configGlobalSet of the old YAML.
-- **Config snapshot diff viewer** — side-by-side YAML diff between any two snapshots.
 - **Config export** — download mediamtx.yml of the current state.
 - **Config import** — upload a YAML, validate, dry-run diff, then apply.
 - **Reload control + last-reload chip** — track lastReloadAt per server with a topbar chip.
@@ -398,7 +390,6 @@
 - **Embed-mode for charts** — `?embed=1` strips chrome and renders a single chart full-bleed for Notion / Confluence / TVs.
 - **TV-wall mode** — rotating full-screen view of N most important charts auto-cycling every 15 s for NOC monitors.
 - **Setup wizard** — multi-step replacement for the three-field config form: detect MediaMTX, test API, prompt for remote URL, walk through publishing the first stream.
-- **Doctor / preflight page** — green/red rows for API reach, recordings dir writable, screenshots dir writable, ffmpeg present, version supported, time-sync, port binds.
 - **Sample stream provisioner** — one click installs the fake-streams rig so a new user has something to look at immediately.
 - **Empty-state CTAs everywhere** — every empty list ships with a "do this next" CTA that deep-links into the right wizard.
 - **Public read-only gallery and embed builder** — opt-in per path; tokenless `/watch/<slug>` page or iframe/`<video>` embed with autoplay/mute/theme/branded-poster controls.

@@ -1,5 +1,7 @@
 # Ideas: Protocols & Sources
 
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
+
 MediaMTX is fundamentally a multi-protocol media router: every path can be sourced from a dozen URL schemes (`rtsp://`, `rtmp://`, `srt://`, `whep://`, `udp+mpegts://`, `rpiCamera`, etc.) and consumed via just as many reader protocols (RTSP, RTSPS, RTMP, RTMPS, HLS, LL-HLS, WebRTC/WHEP, SRT, MPEG-TS over UDP). Today MediaMTX Connect only edits the global server config and plays HLS — it has no UI surface for the per-path source/publisher/reader topology, codec health, on-demand lifecycle, or the dozens of `rpiCamera*` knobs. This document brainstorms UI features that close that gap, organized by the categories the user defined. Every idea cites the concrete MediaMTX building block (config key, API endpoint, or protocol) it relies on.
 
 ## Stream ingest & publishing helpers

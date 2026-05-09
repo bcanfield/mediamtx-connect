@@ -1,5 +1,7 @@
 # Ideas: Observability & Operations
 
+> **Status: ideas, not implemented.** Brainstorm only — nothing in this file is shipped. Shipped features live in [`docs/FEATURES.md`](../FEATURES.md). See [`00-index.md`](./00-index.md) for context.
+
 MediaMTX exposes a Prometheus-compatible `/metrics` endpoint (default `:9998`), Go `pprof` endpoints (default `:9999/debug/pprof/{heap,profile,goroutine}`), structured logs (`logDestinations: [stdout|file|syslog]` with `logFile`/`sysLogPrefix`/`logLevel`), and a Control API (default `:9997` — `configGlobalGet`/`configGlobalSet`, `paths/list`, `rtspsessions/list`, `hlsmuxers/list`, `webrtcsessions/list`, `srtconns/list`, `rtmpconns/list`, `recordings/list`). MediaMTX Connect today only knows about one server and surfaces almost none of this. The ideas below turn that raw signal into product surface area: a self-contained observability stack (no external Prometheus required), an operations console (config snapshots, hot reload, restart, diagnostics bundles), and a path to multi-server, alerting, SLA, and cost reporting — without forcing the user to stand up Grafana, Prometheus, or Loki on the side.
 
 ## Prometheus scraping & built-in metrics
