@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><a href="./README.md">English</a> · <strong>Español</strong> · <a href="./README.zh.md">中文</a></p>
+  <p><a href="./README.md">English</a> · <strong>Español</strong> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a></p>
   <p>Una interfaz web para <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</p>
 
   <p>
