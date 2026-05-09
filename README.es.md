@@ -1,7 +1,7 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><strong>English</strong> · <a href="./README.es.md">Español</a></p>
-  <p>A web UI for <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Watch streams, browse recordings, and edit config from your browser.</p>
+  <p><a href="./README.md">English</a> · <strong>Español</strong></p>
+  <p>Una interfaz web para <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</p>
 
   <p>
     <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -10,22 +10,22 @@
     <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
   </p>
 
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect demo" width="720">
+  <img src=".github/assets/demo.gif" alt="Demostración de MediaMTX Connect" width="720">
 </div>
 
-## Run it
+## Cómo ejecutarlo
 
-Already running MediaMTX? Add Connect alongside it:
+¿Ya tienes MediaMTX en marcha? Añade Connect junto a él:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /path/to/recordings:/recordings \
+  -v /ruta/a/grabaciones:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-No MediaMTX yet? The bundled compose starts both:
+¿Aún no tienes MediaMTX? El compose incluido inicia ambos:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -33,14 +33,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Open http://localhost:3000, head to **Config**, and point it at your MediaMTX.
+Abre http://localhost:3000, ve a **Configuración** y apúntalo a tu MediaMTX.
 
-> Connect needs `api: yes` in your `mediamtx.yml`. See [the included one](mediamtx.yml) for a working reference.
+> Connect necesita `api: yes` en tu `mediamtx.yml`. Consulta [el archivo incluido](mediamtx.yml) como referencia funcional.
 
-## Docs
+## Documentación
 
-[Architecture](ARCHITECTURE.md) · [Features](docs/FEATURES.md) · [Contributing](CONTRIBUTING.md)
+[Arquitectura](ARCHITECTURE.md) · [Funcionalidades](docs/FEATURES.md) · [Contribuir](CONTRIBUTING.md)
 
-## License
+> Nota: la documentación para desarrolladores se mantiene en inglés. La interfaz de la aplicación está disponible en español en `/es`.
+
+## Licencia
 
 MIT

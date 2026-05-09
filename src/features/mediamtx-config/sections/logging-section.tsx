@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,11 +14,12 @@ import {
 import { ListField, TextField } from '../form-fields'
 
 export function LoggingSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.logging')
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Logging</CardTitle>
+          <CardTitle>{t('logging')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField control={control} name="logLevel" label="Log Level" />
@@ -28,7 +30,7 @@ export function LoggingSection({ control }: { control: Control<GlobalConfigFormD
 
       <Card>
         <CardHeader>
-          <CardTitle>Limits</CardTitle>
+          <CardTitle>{t('limits')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField control={control} name="readTimeout" label="Read Timeout" />
