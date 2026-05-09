@@ -2,8 +2,9 @@ import type { Page } from '@playwright/test'
 
 export async function openMobileNavIfNeeded(page: Page) {
   if ((page.viewportSize()?.width ?? 0) < 640) {
-    // shadcn Sidebar exposes a trigger with aria-label "Toggle Sidebar".
-    await page.getByRole('button', { name: 'Toggle Sidebar' }).first().click()
+    // shadcn's SidebarTrigger marks itself with data-sidebar="trigger".
+    // Stable across aria-label changes (Open/Close vs. Toggle).
+    await page.locator('[data-sidebar="trigger"]').first().click()
   }
 }
 
