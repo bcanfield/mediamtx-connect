@@ -16,7 +16,7 @@ vi.mock('node:child_process', () => ({
   default: { spawn: (cmd: string, args: string[]) => cpSpawn(cmd, args) },
 }))
 vi.mock('@/lib/logger', () => ({
-  logger: { info: vi.fn(), debug: vi.fn(), error: vi.fn() },
+  logger: { info: vi.fn(), debug: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }))
 vi.mock('@/lib/db', () => ({
   db: { config: { findFirst: dbConfigFindFirst, create: dbConfigCreate } },
