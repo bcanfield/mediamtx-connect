@@ -35,6 +35,33 @@ Open **http://localhost:3000** → **Config** and set:
 Saving takes effect immediately. The `mediamtx-connect-data` volume persists settings — without it, config resets on restart.
 
 <details>
+<summary><strong>Skip the UI step — set values via env vars</strong></summary>
+
+On the very first boot (before the SQLite config row exists), these env vars seed the row directly. After that, the `/config` UI is the source of truth — re-setting env on later boots has no effect unless you reset the DB.
+
+```bash
+docker run -d \
+  --name mediamtx-connect \
+  -p 3000:3000 \
+  -v /path/to/recordings:/recordings \
+  -v mediamtx-connect-data:/app/prisma \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://host.docker.internal \
+  -e MEDIAMTX_API_PORT=9997 \
+  -e REMOTE_MEDIAMTX_URL=http://your-server.example.com \
+  bcanfield/mediamtx-connect:latest
+```
+
+| Env var | UI field | Default in image |
+|---|---|---|
+| `BACKEND_SERVER_MEDIAMTX_URL` | MediaMtx Url | `http://mediamtx` |
+| `MEDIAMTX_API_PORT` | MediaMtx Api Port | `9997` |
+| `REMOTE_MEDIAMTX_URL` | Remote MediaMtx URL | `http://localhost` |
+| `MEDIAMTX_RECORDINGS_DIR` | Recordings Directory | `/recordings` |
+| `MEDIAMTX_SCREENSHOTS_DIR` | Screenshots Directory | `/screenshots` |
+
+</details>
+
+<details>
 <summary><strong>Add to an existing <code>docker-compose.yml</code></strong></summary>
 
 Drop this service alongside your `mediamtx` service:
