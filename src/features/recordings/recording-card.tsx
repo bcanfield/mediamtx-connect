@@ -3,7 +3,6 @@
 import dayjs from 'dayjs'
 import {
   Image as ImageIcon,
-  Info,
   PauseCircle,
   PlayCircle,
 } from 'lucide-react'
@@ -11,181 +10,127 @@ import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
 
 import { DownloadButton } from './download-button'
 
+const PLAY_PARAM = 'play'
+
 export function RecordingCard({
-  props,
+  streamName,
+  fileName,
+  thumbnail,
+  createdAt,
+  fileSize,
 }: {
-  props: {
-    streamName?: string
-    fileName?: string
-    thumbnail?: string | null
-    createdAt: Date
-    fileSize: number
-  }
+  streamName: string
+  fileName: string
+  thumbnail?: string | null
+  createdAt: Date
+  fileSize: number
 }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [thumbnailError, setThumbnailError] = useState<boolean>(false)
+  const [thumbnailError, setThumbnailError] = useState(false)
 
-  if (!props.streamName || !props.fileName) {
-    return <>Error getting stream</>
-  }
-  const streamName = props.streamName
-  const fileName = props.fileName
-  const onCamSelect = (fileName: string) => {
-    const current = new URLSearchParams(
-      searchParams ? Array.from(searchParams.entries()) : [],
-    )
-    let currentSelectedCams = current.get('liveCams')?.split(',')
-    if (currentSelectedCams) {
-      if (currentSelectedCams.includes(fileName)) {
-        currentSelectedCams = currentSelectedCams.filter(c => c !== fileName)
-      }
-      else {
-        currentSelectedCams.push(fileName)
-      }
-    }
-    else {
-      currentSelectedCams = [fileName]
-    }
-
-    if (currentSelectedCams.length > 0) {
-      current.set('liveCams', currentSelectedCams.join(','))
-    }
-    else {
-      current.delete('liveCams')
-    }
-
-    const search = current.toString()
-    const query = search ? `?${search}` : ''
-
-    router.push(`${pathname}${query}`, { scroll: false })
-  }
-
-  const isLive = searchParams
-    ?.get('liveCams')
+  const isPlaying = searchParams
+    ?.get(PLAY_PARAM)
     ?.split(',')
     .filter(Boolean)
     .includes(fileName)
+    ?? false
+
+  const togglePlay = () => {
+    const next = new URLSearchParams(searchParams ? Array.from(searchParams.entries()) : [])
+    const current = next.get(PLAY_PARAM)?.split(',').filter(Boolean) ?? []
+    const updated = current.includes(fileName)
+      ? current.filter(s => s !== fileName)
+      : [...current, fileName]
+
+    if (updated.length > 0)
+      next.set(PLAY_PARAM, updated.join(','))
+    else
+      next.delete(PLAY_PARAM)
+
+    const search = next.toString()
+    router.push(`${pathname}${search ? `?${search}` : ''}`, { scroll: false })
+  }
+
+  const sizeMb = `${(fileSize / (1024 * 1024)).toFixed(1)} MB`
+  const showThumbnail = !isPlaying && thumbnail && !thumbnailError
 
   return (
-    <Card className="flex flex-col aspect-square">
-      <CardHeader className="text-xs">
-        <CardDescription className="flex justify-between">
-          <span>
-            {' '}
-            {dayjs(props.createdAt).format('MMMM D, YYYY h:mm A')}
-          </span>
-          <span>{`${(props.fileSize / (1024 * 1024)).toFixed(1)} MB`}</span>
-        </CardDescription>
+    <Card data-testid="recording-card" className="flex flex-col overflow-hidden">
+      <CardHeader className="flex-row items-center justify-between gap-2 space-y-0 pb-2">
+        <CardTitle className="truncate font-mono text-sm">
+          {dayjs(createdAt).format('HH:mm:ss')}
+        </CardTitle>
+        <span className="shrink-0 text-xs text-muted-foreground">{sizeMb}</span>
       </CardHeader>
-      <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
-        <div className="flex items-center flex-auto w-full ">
-          {isLive
+
+      <CardContent className="px-0 py-0">
+        <AspectRatio ratio={16 / 9} className="bg-muted">
+          {isPlaying
             ? (
                 <video
-                  className="w-full"
+                  className="h-full w-full"
                   autoPlay
                   controls
                   playsInline
-                  src={`/api/${props.streamName}/${props.fileName}/view-recording`}
-                >
-                </video>
+                  src={`/api/${streamName}/${fileName}/view-recording`}
+                />
               )
-            : thumbnailError
+            : showThumbnail
               ? (
-                  <div className="flex items-center justify-center  w-full h-full">
-                    <ImageIcon className="h-12 w-12"></ImageIcon>
-                  </div>
+                  <Image
+                    alt=""
+                    fill
+                    onError={() => setThumbnailError(true)}
+                    src={thumbnail}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
+                  />
                 )
               : (
-                  <div className="w-full h-full relative">
-                    <Image
-                      alt=""
-                      fill
-                      objectFit="contain"
-                      onError={() => setThumbnailError(true)}
-                      src={`/api/${streamName}/first-screenshot`}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
+                  <div className="flex h-full w-full items-center justify-center">
+                    <ImageIcon className="size-10 text-muted-foreground" />
                   </div>
                 )}
-        </div>
-
-        <div className="flex gap-2 items-center">
-          <Button
-            variant="outline"
-            aria-label={isLive ? `Pause recording playback for ${fileName}` : `Play recording ${fileName}`}
-            onClick={() => onCamSelect(fileName)}
-            className="basis-1/2"
-            size="sm"
-          >
-            {isLive
-              ? (
-                  <PauseCircle className="h-4 w-4  animate-pulse"></PauseCircle>
-                )
-              : (
-                  <PlayCircle className="h-4 w-4"></PlayCircle>
-                )}
-          </Button>
-
-          <div className="basis-1/4">
-            <DownloadButton
-              streamName={streamName}
-              filePath={fileName}
-            >
-            </DownloadButton>
-          </div>
-
-          <Popover>
-            <PopoverTrigger asChild className="basis-1/4">
-              <Button
-                variant="outline"
-                size="sm"
-                aria-label={`View details for ${fileName}`}
-              >
-                <Info className="h-4 w-4"></Info>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-2">
-              <div className="grid gap-4">
-                <div className="space-y-2">
-                  <p className="text-md text-muted-foreground">Recording</p>
-                </div>
-                <div className="grid gap-2 text-sm">
-                  <div className="flex items-center gap-4">
-                    <span>Name:</span>
-                    <span>{fileName}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm">Created:</span>
-                    {props.createdAt && (
-                      <span>
-                        {dayjs(props.createdAt).format('MMMM D, YYYY h:mm A')}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
+        </AspectRatio>
       </CardContent>
+
+      <CardFooter className="gap-2 pt-3">
+        <Button
+          variant={isPlaying ? 'secondary' : 'default'}
+          size="sm"
+          className="flex-1"
+          onClick={togglePlay}
+        >
+          {isPlaying
+            ? (
+                <>
+                  <PauseCircle className="mr-2 size-4" />
+                  Stop
+                </>
+              )
+            : (
+                <>
+                  <PlayCircle className="mr-2 size-4" />
+                  Play
+                </>
+              )}
+        </Button>
+        <DownloadButton streamName={streamName} filePath={fileName} />
+      </CardFooter>
     </Card>
   )
 }
