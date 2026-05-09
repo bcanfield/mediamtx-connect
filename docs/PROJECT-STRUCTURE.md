@@ -7,13 +7,20 @@ A simple, low-ceremony Next.js layout optimized for clarity and agent navigation
 ```
 src/
 ├── app/                          # Routing only — pages import from features
-│   ├── (marketing)/              # Route groups for layout boundaries
-│   ├── (app)/                    # Authenticated app
-│   │   ├── layout.tsx
-│   │   └── posts/[id]/page.tsx
-│   ├── api/                      # Route handlers (webhooks, public APIs only)
-│   ├── layout.tsx
-│   └── page.tsx
+│   ├── [locale]/                 # i18n: every UI route lives under this segment
+│   │   ├── layout.tsx            # owns <html lang>, NextIntlClientProvider
+│   │   ├── page.tsx
+│   │   └── (groups, sub-routes)
+│   ├── api/                      # Route handlers — top-level, NOT locale-prefixed
+│   ├── manifest.ts               # PWA — top-level, locale-neutral
+│   └── globals.css
+│
+├── i18n/                         # next-intl wiring (small, stable)
+│   ├── routing.ts                # locales, defaultLocale, localePrefix
+│   ├── request.ts                # getRequestConfig — loads messages/{locale}.json
+│   └── navigation.ts             # locale-aware Link, useRouter, etc.
+│
+├── proxy.ts                      # next-intl middleware (Next 16 'proxy' name)
 │
 ├── features/                     # Domain code — bulk of the app
 │   └── posts/
@@ -28,6 +35,10 @@ src/
 ├── components/                   # Shared UI, no business logic
 │   └── ui/                       # Primitives (button.tsx, input.tsx)
 │
+messages/
+├── en.json                       # Source of truth — every key lives here first
+└── es.json                       # Mirrors en.json. CI's i18n:check enforces parity.
+│
 ├── lib/                          # Infrastructure
 │   ├── db.ts                     # Prisma/Drizzle client
 │   ├── auth.ts
@@ -40,6 +51,8 @@ src/
 ```
 
 ## Rules
+
+> **i18n is not optional.** Every user-visible string goes through `messages/*.json` via `useTranslations` (client) or `getTranslations` (server). Use `Link` / `useRouter` / `usePathname` from `@/i18n/navigation`, not `next/link` or `next/navigation`. New feature folder → new namespace in `messages/en.json`. ESLint enforces "no raw JSX literals" in `src/features/**` and `src/components/**`. Full policy and "add a language" workflow: `docs/I18N.md`.
 
 1. **`app/` is routing only.** Pages import a feature component and render it. No business logic in `app/`.
 2. **Flat feature folders.** No `components/`, `actions/`, `schemas/` subdirs until a feature exceeds ~10 files.
