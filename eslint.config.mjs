@@ -64,6 +64,7 @@ export default antfu(
     // and the locale-switcher (language names are not translated).
     files: ['src/features/**/*.tsx', 'src/components/**/*.tsx'],
     ignores: [
+      '**/*.test.tsx',
       'src/components/ui/**',
       'src/features/mediamtx-config/sections/**',
       'src/features/mediamtx-config/form-fields.tsx',
