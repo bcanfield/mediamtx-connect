@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><a href="./README.md">English</a> · <strong>Español</strong> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a></p>
+  <p>🌐 <a href="./README.md">English</a> · <strong>Español</strong> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a></p>
   <p>Una interfaz web para <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</p>
 
   <p>
