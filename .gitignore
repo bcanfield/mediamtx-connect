@@ -18,6 +18,8 @@
 /coverage
 /playwright-report/
 /test-results/
+/.playwright-mcp/
+/home-*.png
 
 # next.js
 /.next/
