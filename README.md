@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><strong>Web UI for viewing and managing <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> streams</strong></p>
+  <p>A web UI for <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Watch streams, browse recordings, and edit config from your browser.</p>
 
   <p>
     <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -9,53 +9,37 @@
     <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
   </p>
 
-  <img src=".github/assets/demo.gif" alt="Cronicorn AI Adaptation" width="640">
-
+  <img src=".github/assets/demo.gif" alt="MediaMTX Connect demo" width="720">
 </div>
 
-## Quick Start
+## Run it
+
+Already running MediaMTX? Add Connect alongside it:
 
 ```bash
-git clone https://github.com/bcanfield/mediamtx-connect.git && cd mediamtx-connect
+docker run -d \
+  -p 3000:3000 \
+  -v /path/to/recordings:/recordings \
+  -v mediamtx-connect-data:/app/prisma \
+  bcanfield/mediamtx-connect:latest
+```
+
+No MediaMTX yet? The bundled compose starts both:
+
+```bash
+git clone https://github.com/bcanfield/mediamtx-connect.git
+cd mediamtx-connect
 docker compose up -d
 ```
 
-Open **http://localhost:3000** and configure your MediaMTX URL in the Config page.
+Open http://localhost:3000, head to **Config**, and point it at your MediaMTX.
 
-## Features
+> Connect needs `api: yes` in your `mediamtx.yml`. See [the included one](mediamtx.yml) for a working reference.
 
-- **Live Streams** — Watch HLS streams in real-time
-- **Recordings** — Browse and playback with auto-generated thumbnails
-- **Web Config** — Configure everything through the UI
-- **Multi-arch** — Docker images for amd64/arm64
+## Docs
 
-## Send a Stream
-
-```bash
-# RTSP
-ffmpeg -re -i input.mp4 -c copy -f rtsp rtsp://localhost:8554/mystream
-
-# RTMP
-ffmpeg -re -i input.mp4 -c copy -f flv rtmp://localhost:1935/mystream
-```
-
-<details>
-<summary><strong>OBS Studio</strong></summary>
-
-Settings → Stream → Custom
-- Server: `rtmp://localhost:1935`
-- Stream Key: `mystream`
-</details>
-
-## Development
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Examples
-
-- [Fake Streams](examples/fake-streams/) — Test without cameras
-- [Raspberry Pi Camera](examples/raspberry-pi-camera/) — Stream via GStreamer
+[Architecture](ARCHITECTURE.md) · [Features](docs/FEATURES.md) · [Contributing](CONTRIBUTING.md)
 
 ## License
 
-[MIT](LICENSE)
+MIT

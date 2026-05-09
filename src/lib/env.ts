@@ -6,11 +6,13 @@ const serverSchema = z.object({
   CI: z.string().optional(),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 
-  BACKEND_SERVER_MEDIAMTX_URL: z.string().default('http://localhost'),
+  // Defaults are production-shaped (matching the published Docker image / bundled compose).
+  // For local `npm run dev`, override via `.env` — see `.env.example`.
+  BACKEND_SERVER_MEDIAMTX_URL: z.string().default('http://mediamtx'),
   MEDIAMTX_API_PORT: z.string().default('9997'),
   REMOTE_MEDIAMTX_URL: z.string().default('http://localhost'),
-  MEDIAMTX_RECORDINGS_DIR: z.string().default('./test-data/recordings'),
-  MEDIAMTX_SCREENSHOTS_DIR: z.string().default('./test-data/screenshots'),
+  MEDIAMTX_RECORDINGS_DIR: z.string().default('/recordings'),
+  MEDIAMTX_SCREENSHOTS_DIR: z.string().default('/screenshots'),
 })
 
 const clientSchema = z.object({})
@@ -41,6 +43,16 @@ if (!clientEnvResult.success) {
 
 export const env = serverEnvResult.data
 export const clientEnv = clientEnvResult.data
+
+// Raw process.env values for the bootstrap-related vars — `undefined` means the
+// operator did NOT set them, so callers can distinguish "explicit" from "schema default".
+export const rawEnv = {
+  BACKEND_SERVER_MEDIAMTX_URL: processEnv.BACKEND_SERVER_MEDIAMTX_URL,
+  MEDIAMTX_API_PORT: processEnv.MEDIAMTX_API_PORT,
+  REMOTE_MEDIAMTX_URL: processEnv.REMOTE_MEDIAMTX_URL,
+  MEDIAMTX_RECORDINGS_DIR: processEnv.MEDIAMTX_RECORDINGS_DIR,
+  MEDIAMTX_SCREENSHOTS_DIR: processEnv.MEDIAMTX_SCREENSHOTS_DIR,
+}
 
 export const isProduction = env.NODE_ENV === 'production'
 export const isDevelopment = env.NODE_ENV === 'development'

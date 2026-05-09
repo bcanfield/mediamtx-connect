@@ -17,7 +17,7 @@ test.describe('Streams Page', () => {
 
   test('should have working navigation to config page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await getNavItem(page, 'Config').click({ force: true })
+    await getNavItem(page, 'Client Config').click({ force: true })
     await expect(page).toHaveURL(/\/config/)
   })
 
@@ -81,7 +81,7 @@ test.describe('Streams Page - With MediaMTX Running', () => {
   })
 
   test('should display stream names when streams exist', async ({ page }) => {
-    const cardCount = await page.locator('.aspect-square').count()
+    const cardCount = await page.locator('[data-testid="stream-card"]').count()
 
     if (cardCount > 0) {
       const bodyText = await page.locator('body').textContent()

@@ -166,10 +166,9 @@ test.describe('MediaMTX Global Config Page', () => {
     const formVisible = await page.locator('form').isVisible().catch(() => false)
 
     if (formVisible) {
-      // The form should have separators between sections
-      const separators = page.locator('[data-orientation="horizontal"]')
-      const separatorCount = await separators.count()
-      expect(separatorCount).toBeGreaterThan(0)
+      // The form is grouped into top-level Tabs (Logging, API, RTSP, ...).
+      const tabs = page.getByRole('tab')
+      expect(await tabs.count()).toBeGreaterThan(1)
     }
   })
 })
