@@ -10,17 +10,36 @@ export async function register() {
 
     logger.info('Starting background tasks', { NODE_ENV: env.NODE_ENV })
 
+    // Seed the singleton Config from env on first boot. After that, the /config UI
+    // owns these values — re-setting env vars won't override an existing row.
     let config = await db.config.findFirst()
     if (!config) {
       config = await db.config.create({
         data: {
           mediaMtxUrl: env.BACKEND_SERVER_MEDIAMTX_URL,
-          mediaMtxApiPort: Number.parseInt(env.MEDIAMTX_API_PORT),
+          mediaMtxApiPort: Number.parseInt(env.MEDIAMTX_API_PORT, 10),
           remoteMediaMtxUrl: env.REMOTE_MEDIAMTX_URL,
           recordingsDirectory: env.MEDIAMTX_RECORDINGS_DIR,
           screenshotsDirectory: env.MEDIAMTX_SCREENSHOTS_DIR,
         },
       })
+      logger.info('Seeded Config from env', { config: config as Record<string, unknown> })
+    }
+    else {
+      const drift: Array<{ var: string, env: string, db: string }> = [
+        { var: 'BACKEND_SERVER_MEDIAMTX_URL', env: env.BACKEND_SERVER_MEDIAMTX_URL, db: config.mediaMtxUrl },
+        { var: 'MEDIAMTX_API_PORT', env: env.MEDIAMTX_API_PORT, db: String(config.mediaMtxApiPort) },
+        { var: 'REMOTE_MEDIAMTX_URL', env: env.REMOTE_MEDIAMTX_URL, db: config.remoteMediaMtxUrl ?? '' },
+        { var: 'MEDIAMTX_RECORDINGS_DIR', env: env.MEDIAMTX_RECORDINGS_DIR, db: config.recordingsDirectory },
+        { var: 'MEDIAMTX_SCREENSHOTS_DIR', env: env.MEDIAMTX_SCREENSHOTS_DIR, db: config.screenshotsDirectory },
+      ].filter(({ env: e, db: d }) => e !== d)
+
+      if (drift.length > 0) {
+        logger.warn(
+          'Env values differ from stored Config. Env vars only seed the first boot — the /config UI is authoritative afterwards. To apply env values, reset the database or update Config in the UI.',
+          { drift },
+        )
+      }
     }
 
     logger.debug('Using config', { config: config as Record<string, unknown> })

@@ -25,16 +25,16 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 1.1 Live View page (`/`)
 - **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view-page.tsx`, `src/app/page.tsx`
 - **MediaMTX path discovery** — calls MediaMTX `v3/pathsList` to enumerate active streams. `src/features/streams/live-view-page.tsx`
-- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL with separate UI states, links into Config, and a readable endpoint badge when connectivity fails. `src/features/streams/live-view-page.tsx`
-- **"Stream online since" metadata** — exposes `readyTime` per path in a popover.
-- **Cross-feature deep links** — quick links from Live View into Recordings and Config.
+- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL; the destructive case shows a `Cannot connect to MediaMTX` `Alert`, the others render the shared `EmptyState` with a CTA into Config. `src/features/streams/live-view-page.tsx`
+- **"Stream online since" metadata** — exposes `readyTime` per path inline on the card subtitle.
+- **Density toggle** — `LiveStreamsView` exposes a 2/3/4-column ToggleGroup; the choice persists in `localStorage('liveDensity')`. `src/features/streams/live-streams-view.tsx`
 
 ### 1.2 Stream cards
-- **Auto-thumbnail tile** — shows latest screenshot via `/api/[streamName]/first-screenshot` with graceful fallback icon. `src/features/streams/stream-card.tsx`
-- **Click-to-play / pause toggle** — switches the card between thumbnail and live HLS player.
-- **URL-state-driven selection** — uses search params so the active live tile survives reload/share.
-- **Per-stream action buttons** — play/pause, recordings shortcut, and details popover use labeled icon controls. `src/features/streams/stream-card.tsx`
-- **Square aspect-ratio grid** — responsive across mobile / sm / md / lg / xl breakpoints.
+- **16:9 thumbnail tile** — shows latest screenshot via `/api/[streamName]/first-screenshot` inside a shadcn `AspectRatio`, with a fallback icon when missing. `src/features/streams/stream-card.tsx`
+- **Play / Stop toggle** — primary action button swaps between thumbnail and live HLS player.
+- **LIVE indicator** — when actively playing, a destructive `Badge` with a pulsing dot anchors the card header.
+- **URL-state-driven selection** — `?play=foo,bar` search param tracks which streams are live, so the active set survives reload/share.
+- **Stream actions menu** — kebab `DropdownMenu` exposes "View recordings" (and is the extension point for future per-stream actions). `src/features/streams/stream-card.tsx`
 
 ### 1.3 HLS video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `src/components/video-player.tsx`
@@ -49,24 +49,24 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 2. Recordings
 
 ### 2.1 Recordings index (`/recordings`)
-- **All-streams recording list** — shows every subdirectory of the recordings mount with a file count badge. `src/features/recordings/recordings-index-page.tsx`, `src/app/recordings/page.tsx`
-- **Drill-in "View" link per stream** — routes to `/recordings/[streamname]`.
-- **Misconfiguration alerts** — flags missing/inaccessible recordings directory with actionable copy.
-- **Empty state** — friendly UI when no recordings exist yet.
+- **All-streams recording grid** — every subdirectory of the recordings mount renders as a 16:9 card with the stream's most recent screenshot, name, recording count, and "Latest <relative time>" via dayjs. `src/features/recordings/recordings-index-page.tsx`, `src/features/recordings/recordings-index-view.tsx`
+- **Client-side stream search** — Input above the grid filters cards by stream name in place.
+- **Drill-in "View" button per stream** — routes to `/recordings/[streamname]`.
+- **Misconfiguration alert** — destructive `Alert` for inaccessible recordings directory; missing-recordings case uses `EmptyState` with `MTX_RECORD=yes` hint. `src/features/recordings/recordings-index-empty.tsx`
+- **`summarizeStreamRecordings`** — feature-local fs helper returns `{count, latestMtime}` per subdirectory in one walk. `src/features/recordings/file-operations.ts`
 
 ### 2.2 Per-stream recording browser (`/recordings/[streamname]`)
 - **Paginated recording list** — `?page` and `?take` query params, default 10/page. `src/features/recordings/stream-recordings-page.tsx`, `src/app/recordings/[streamname]/page.tsx`
-- **"Showing X–Y of Z" range display** with prev/next nav and disabled boundary states.
+- **Day-grouped sections** — recordings on the current page render under "Today" / "Yesterday" / formatted-day headings.
+- **shadcn `Pagination`** — prev/next + numbered window of ±2 pages at the bottom.
+- **Breadcrumb** — `Recordings → {streamName}` in the inset top bar.
 - **Reverse-chronological sort** — newest recordings first. `src/features/recordings/recordings.queries.ts`
-- **Back-to-index navigation**.
 
 ### 2.3 Recording cards
-- **Per-recording thumbnail** — auto-generated PNG, base64-inlined to skip extra round trips. `src/features/recordings/recording-card.tsx`, `src/features/recordings/recordings.queries.ts`
-- **Filename + creation timestamp + formatted file size**.
-- **Inline playback control** — opens the in-browser MP4 player via the view endpoint with a labeled icon button. `src/features/recordings/recording-card.tsx`
-- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts, and labeled icon-only affordance. `src/features/recordings/download-button.tsx`
-- **Metadata popover** — full file metadata for the recording, launched from a labeled icon button. `src/features/recordings/recording-card.tsx`
-- **Configurable grid density** — small/medium card layouts.
+- **16:9 thumbnail** — auto-generated PNG, base64-inlined; falls back to an icon when missing. `src/features/recordings/recording-card.tsx`, `src/features/recordings/recordings.queries.ts`
+- **Time-of-day title + size** — `HH:mm:ss` on the left, MB on the right (the day is in the section heading, not on every card).
+- **Inline playback** — primary Play/Stop button swaps the thumbnail for an MP4 `<video>` against the view endpoint. `?play=` URL param tracks which recordings are open.
+- **Download button with progress bar** — Axios blob streaming, 0–100 % progress, browser save dialog, success/error toasts. `src/features/recordings/download-button.tsx`
 
 ### 2.4 Recording streaming endpoints
 - **`GET /api/[streamName]/[filePath]/view-recording`** — serves MP4 with `Content-Type: video/mp4`, `Accept-Ranges: bytes`, `Content-Length` for in-browser playback + seeking. `src/app/api/[streamName]/[filePath]/view-recording/route.ts`
@@ -83,8 +83,8 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 3. Configuration
 
 ### 3.1 Client (app) config — `/config`
-- **Single-table app settings UI** backed by SQLite. `src/features/client-config/client-config-page.tsx`, `src/app/config/page.tsx`
-- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `src/features/client-config/client-config-form.tsx`, `src/features/client-config/client-config.schemas.ts`
+- **Card-wrapped settings form** — single Card with title "Application Settings", two grouped sections ("MediaMTX connection" and "Storage") separated by a `Separator`, footer with Reset + Submit. `src/features/client-config/client-config-page.tsx`, `src/features/client-config/client-config-form.tsx`
+- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and Sonner toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `src/features/client-config/client-config.schemas.ts`
 - **Editable fields**:
   - `mediaMtxUrl` — internal/container hostname for MediaMTX API.
   - `mediaMtxApiPort` — API port (default 9997).
@@ -93,31 +93,25 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
   - `screenshotsDirectory` — mount path for thumbnails.
 - **`getAppConfig` / `updateClientConfig` server actions** with `revalidatePath` cache busting. `src/features/client-config/`
 - **Field-level help text** — each input has a description explaining its impact.
+- **Reset** — outline button calls `form.reset(defaultValues)`; enabled only while the form is dirty.
 
 ### 3.2 MediaMTX global server config — `/config/mediamtx/global`
-- **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3. `src/features/mediamtx-config/mediamtx-config-form.tsx`, `src/features/mediamtx-config/mediamtx-config.schemas.ts`
-- **Sectioned form** — Logging, API/Metrics/Profiling, RTSP, RTMP, HLS, WebRTC, SRT, Recording, with visual separators.
-- **Logging** — log level, multi-destination log targets, log file path, write timeouts.
-- **Limits** — read/write timeouts, write queue size, UDP payload size.
-- **External authentication URL** — pluggable auth hook.
-- **API / metrics / profiling** — toggles + addresses for each.
-- **RTSP** — enable, address, transport protocols, encryption, auth methods.
-- **RTMP** — enable, address, encryption, certificates.
-- **HLS** — enable, address, segment count/duration/size, variant, always-remux.
-- **WebRTC** — enable, addresses, trusted proxies, dynamic ICE-server array (add/remove rows with labeled icon controls).
-- **SRT** — enable, address.
-- **Recording** — enable, path, format, part/segment duration, delete-after.
+- **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3 covered by the schema. `src/features/mediamtx-config/mediamtx-config-form.tsx`, `src/features/mediamtx-config/mediamtx-config.schemas.ts`
+- **Tabbed layout** — eight top-level Tabs (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), each tab containing one or more sub-Cards. `src/features/mediamtx-config/sections/*`
+- **Per-tab error badges** — destructive `Badge` next to each `TabsTrigger` shows the count of validation errors mapped via `tab-fields.ts`.
+- **Sticky save bar** — `StickySaveBar` appears at the bottom of the SidebarInset whenever the form is dirty, showing "n unsaved changes" + Discard / Save changes. `src/features/mediamtx-config/sticky-save-bar.tsx`
+- **Boolean fields use `Switch`** — every yes/no toggle uses a labeled-row Switch (replaces the previous select-True/False stand-ins). `src/features/mediamtx-config/form-fields.tsx`
+- **List fields use newline-split Textarea** — `logDestinations`, `protocols`, `authMethods`, `hlsTrustedProxies`, `webrtcTrustedProxies`, `webrtcIPsFromInterfacesList`, `webrtcAdditionalHosts`. One value per line.
+- **WebRTC ICE servers field array** — `useFieldArray` row group with add/remove + per-row URL/Username/Password inputs. New rows start blank (no placeholder values).
 - **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/mediamtx-config/`
 - **Toast feedback** on success/error (success: `Updated Global Config`; error: `There was an issue updating the Global Config`); submit gated on dirty + valid.
-
-### 3.3 Config navigation
-- **Config layout shell** — shared layout for the config sub-tree. `src/app/config/layout.tsx`
 
 ---
 
 ## 4. Background Jobs (`src/instrumentation.ts`)
 
-- **First-run bootstrap** — creates the singleton `Config` row and ensures `recordingsDirectory` / `screenshotsDirectory` exist on server boot.
+- **First-run bootstrap** — creates the singleton `Config` row from env vars (`BACKEND_SERVER_MEDIAMTX_URL`, `MEDIAMTX_API_PORT`, `REMOTE_MEDIAMTX_URL`, `MEDIAMTX_RECORDINGS_DIR`, `MEDIAMTX_SCREENSHOTS_DIR`) and ensures `recordingsDirectory` / `screenshotsDirectory` exist on server boot. After the row exists, the `/config` UI is the source of truth — re-setting env vars takes effect only after a DB reset.
+- **Env / Config drift warning** — on subsequent boots, if any of the bootstrap env vars differs from the corresponding stored `Config` value, a single structured `WARN` log lists each mismatch and reminds the operator that env only seeds the first boot.
 - **Thumbnail generation cron** — every 30 minutes (`*/30 * * * *`) scans the recordings tree for MP4s without a sibling PNG and spawns `ffmpeg -ss 00:00:00 -i <file>.mp4 -frames:v 1 <file>.png`. Non-blocking, parallel.
 - **Screenshot retention cron** — daily at midnight (`0 0 0 * * *`) deletes thumbnails older than 2 days, per stream subdirectory.
 - **Pino-structured logging** of every spawn / deletion.
@@ -156,20 +150,23 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 8. UI System / Shared Components
 
 ### 8.1 shadcn/ui primitives (`src/components/ui/`)
-- Button (CVA variants: default / outline / ghost / destructive / …), Input, Textarea, Form (RHF integration: FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel), Card, Alert, Select, Popover, DropdownMenu, Separator, Progress, Label, Skeleton, Toast / Toaster / `use-toast`.
+- Layout / nav: Sidebar (+ provider/menu/inset/trigger), Sheet, Breadcrumb, Tabs, ScrollArea, Separator.
+- Content: Card, Alert, Empty, AspectRatio, Pagination, Skeleton, Progress, Badge.
+- Inputs: Button, Input, Textarea, Switch, Select, Label, ToggleGroup, Toggle.
+- Surfaces: Popover, DropdownMenu, Dialog, Tooltip, Calendar, Command.
+- Form: RHF integration (FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel).
+- Toast: Sonner `Toaster` mounted in the root layout; callsites import `toast` directly from `sonner`.
 
 ### 8.2 Shared components (`src/components/`)
-- **PageLayout** — title + subheader (Suspense-wrapped) + separator + content. `src/components/page-layout.tsx`
-- **PageSkeleton** — loading state for `app/loading.tsx`. `src/components/page-skeleton.tsx`
-- **GridLayout** — responsive `xs / small / medium / large` density modes built on Tailwind grid columns. `src/components/grid-layout.tsx`
-- **GridFormItem** — consistent label / control / description grid wrapper used across both config forms. `src/components/grid-form-item.tsx`
+- **AppSidebar** — global Sidebar shell (sidebar-07 pattern): brand, "Application" group (Live, Recordings), "Settings" group (Client Config, MediaMTX), footer ModeToggle. `src/components/app-sidebar.tsx`
+- **PageHeader** — sticky inset top bar with `SidebarTrigger` + `Breadcrumb` + an optional actions slot. Each page passes its own crumbs. `src/components/page-header.tsx`
+- **PageLayout** — h2 title + subheader (Suspense-wrapped) + Separator + content, wrapped in a max-w-7xl padded container. `src/components/page-layout.tsx`
+- **EmptyState** — wrapper around shadcn `Empty` with `icon`, `title`, `description`, optional CTA `children`. Used for non-destructive empty/info states across the app. `src/components/empty-state.tsx`
 - **ModeToggle** — Light / Dark / System theme switcher using `useSyncExternalStore` + `matchMedia('prefers-color-scheme: dark')`. `src/components/mode-toggle.tsx`
-- **RefreshButton** — manual page reload control surfaced in the navbar and connection-error states. `src/components/refresh-button.tsx`
+- **RefreshButton** — manual page reload control surfaced in connection-error alerts. `src/components/refresh-button.tsx`
 - **VideoPlayer** — shared HLS.js component (see §1.3). `src/components/video-player.tsx`
 - **ThemeProvider** — `next-themes` wrapper, dark default. `src/components/theme-provider.tsx`
 - **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard. `src/components/service-worker.tsx`
-- **SidebarNav** — generic active-route-aware nav strip used by the config layout. `src/components/sidebar-nav.tsx`
-- **NavBar** — sticky responsive top nav (used by the root layout). `src/components/nav-bar.tsx`
 
 ### 8.3 Lib (`src/lib/`)
 - **`cn`** — Tailwind class merger. `src/lib/utils.ts`
@@ -178,12 +175,12 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **`env`** — Zod-validated env loader. `src/lib/env.ts`
 
 ### 8.4 Recordings filesystem helpers
-- **`countFilesInSubdirectories` / `getFilesInDirectory`** — feature-local fs helpers used by the recordings views. `src/features/recordings/file-operations.ts`
+- **`summarizeStreamRecordings` / `getFilesInDirectory`** — feature-local fs helpers used by the recordings views. `src/features/recordings/file-operations.ts`
 
 ### 8.5 Application chrome
-- **Sticky responsive NavBar** — Connect / Recordings / Config links with active-route highlighting, mobile menu access, refresh button, and theme toggle; icon controls carry screen-reader labels. `src/components/nav-bar.tsx`
-- **Root layout** — max-width container, Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, and default document title metadata (`MediaMTX Connect`). `src/app/layout.tsx`
-- **Global CSS** — Tailwind 4. `src/app/globals.css`
+- **Sidebar shell** — `SidebarProvider` + `AppSidebar` + `SidebarInset` wraps every page. The sidebar collapses to icons on desktop (cookie-persisted) and slides in as a Sheet on mobile via `SidebarTrigger`. Settings live as nested entries in the global sidebar; there is no per-section sub-layout. `src/app/layout.tsx`
+- **Root layout** — Sonner Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, and default document title metadata (`MediaMTX Connect`). `src/app/layout.tsx`
+- **Global CSS** — Tailwind 4 with shadcn sidebar tokens (`--sidebar-*`). `src/app/globals.css`
 
 ---
 
@@ -250,6 +247,7 @@ Writes (Server Actions, `'use server'`):
 - **Runtime tooling baked in** — `ffmpeg` (thumbnail generation), `openssl`, `curl` (healthchecks).
 - **Standalone Next output** — small, self-contained runtime.
 - **Pre-created mount points** — `/recordings`, `/screenshots`.
+- **Bootstrap env defaults** — image sets `BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots` so first-boot seeding produces sensible values. Override at `docker run` time to skip the in-app `/config` step.
 - **Non-root `nextjs` user**.
 - **Port 3000** + `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries).
 - **Migration-on-boot entrypoint** — `./scripts/start.sh` runs `prisma migrate deploy` then `next start`.
