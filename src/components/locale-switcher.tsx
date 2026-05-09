@@ -21,6 +21,7 @@ import { routing } from '@/i18n/routing'
 const LANGUAGE_NAMES: Record<(typeof routing.locales)[number], string> = {
   en: 'English',
   es: 'Español',
+  zh: '中文',
 }
 
 export function LocaleSwitcher() {
