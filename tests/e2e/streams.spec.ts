@@ -81,7 +81,7 @@ test.describe('Streams Page - With MediaMTX Running', () => {
   })
 
   test('should display stream names when streams exist', async ({ page }) => {
-    const cardCount = await page.locator('.aspect-square').count()
+    const cardCount = await page.locator('[data-testid="stream-card"]').count()
 
     if (cardCount > 0) {
       const bodyText = await page.locator('body').textContent()
