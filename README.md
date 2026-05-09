@@ -16,13 +16,83 @@
 
 ## Quick start
 
+Already running MediaMTX? Add the UI alongside it. Replace `/path/to/recordings` with the host directory your MediaMTX records into:
+
+```bash
+docker run -d \
+  --name mediamtx-connect \
+  -p 3000:3000 \
+  -v /path/to/recordings:/recordings \
+  -v mediamtx-connect-data:/app/prisma \
+  bcanfield/mediamtx-connect:latest
+```
+
+Open **http://localhost:3000** → **Config** and set:
+
+- **MediaMtx Url** — how the container reaches MediaMTX. `http://host.docker.internal` on Docker Desktop, the host IP on Linux, or the service name (e.g. `http://mediamtx`) when attached to a shared docker network.
+- **Remote MediaMtx URL** — how *browsers* reach MediaMTX (your server's public hostname / IP).
+
+Saving takes effect immediately. The `mediamtx-connect-data` volume persists settings — without it, config resets on restart.
+
+<details>
+<summary><strong>Add to an existing <code>docker-compose.yml</code></strong></summary>
+
+Drop this service alongside your `mediamtx` service:
+
+```yaml
+services:
+  mediamtx-connect:
+    image: bcanfield/mediamtx-connect:latest
+    restart: unless-stopped
+    depends_on:
+      - mediamtx
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./recordings:/recordings        # match your MediaMTX recordings mount
+      - mediamtx-connect-data:/app/prisma
+
+volumes:
+  mediamtx-connect-data:
+```
+
+Set **MediaMtx Url** to `http://mediamtx` (or whatever your service is named) in Config.
+
+</details>
+
+<details>
+<summary><strong>Don't have MediaMTX yet?</strong></summary>
+
+The repo ships an all-in-one stack — MediaMTX + Connect together, sane defaults:
+
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
 cd mediamtx-connect
 docker compose up -d
 ```
 
-Open **http://localhost:3000** — point it at your MediaMTX server on the Config page.
+</details>
+
+<details>
+<summary><strong>Preparing your MediaMTX</strong></summary>
+
+Your `mediamtx.yml` needs three things:
+
+```yaml
+api: yes
+apiAddress: :9997        # Connect calls this for paths and config
+
+hls: yes                 # browser playback
+hlsAddress: :8888
+
+pathDefaults:
+  record: yes
+  recordPath: /recordings/%path/%Y-%m-%d_%H-%M-%S    # %path = one folder per stream
+```
+
+If you've restricted `authInternalUsers`, allow the IP / network where Connect runs. A working reference is in [`mediamtx.yml`](mediamtx.yml).
+
+</details>
 
 ## What it does
 
