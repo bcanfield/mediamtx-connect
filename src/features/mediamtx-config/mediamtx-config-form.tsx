@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, Trash } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
+import { toast } from 'sonner'
 import { GridFormItem } from '@/components/grid-form-item'
 import { Button } from '@/components/ui/button'
 import {
@@ -27,7 +28,6 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/components/ui/use-toast'
 
 import { updateGlobalConfig } from './mediamtx-config.actions'
 import { GlobalConfigSchema } from './mediamtx-config.schemas'
@@ -37,7 +37,6 @@ export function MediaMTXConfigForm({
 }: {
   globalConf?: GlobalConf
 }) {
-  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(GlobalConfigSchema),
     mode: 'onBlur',
@@ -51,14 +50,10 @@ export function MediaMTXConfigForm({
   const onSubmit = async (values: z.output<typeof GlobalConfigSchema>) => {
     const updated = await updateGlobalConfig({ globalConfig: values })
     if (updated) {
-      toast({
-        title: 'Updated Global Config',
-      })
+      toast.success('Updated Global Config')
     }
     else {
-      toast({
-        variant: 'destructive',
-        title: 'There was an issue updating the Global Config',
+      toast.error('There was an issue updating the Global Config', {
         description: 'Please double check your form values.',
       })
     }

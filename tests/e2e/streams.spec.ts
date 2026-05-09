@@ -17,7 +17,7 @@ test.describe('Streams Page', () => {
 
   test('should have working navigation to config page', async ({ page }) => {
     await openMobileNavIfNeeded(page)
-    await getNavItem(page, 'Config').click({ force: true })
+    await getNavItem(page, 'Client Config').click({ force: true })
     await expect(page).toHaveURL(/\/config/)
   })
 

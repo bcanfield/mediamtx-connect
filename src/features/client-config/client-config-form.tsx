@@ -5,6 +5,7 @@ import type { Config } from '@prisma/client'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { GridFormItem } from '@/components/grid-form-item'
 import { Button } from '@/components/ui/button'
@@ -16,7 +17,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useToast } from '@/components/ui/use-toast'
 
 import { updateClientConfig } from './client-config.actions'
 import { ClientConfigSchema } from './client-config.schemas'
@@ -26,7 +26,6 @@ export function ClientConfigForm({
 }: {
   clientConfig: Config | null
 }) {
-  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(ClientConfigSchema),
     mode: 'onBlur',
@@ -36,14 +35,10 @@ export function ClientConfigForm({
     const updated = await updateClientConfig({ clientConfig: values })
 
     if (updated) {
-      toast({
-        title: 'Updated Client Config',
-      })
+      toast.success('Updated Client Config')
     }
     else {
-      toast({
-        variant: 'destructive',
-        title: 'There was an issue updating the Client Config',
+      toast.error('There was an issue updating the Client Config', {
         description: 'Please double check your form values.',
       })
     }
