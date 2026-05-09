@@ -2,9 +2,9 @@
 import type { GlobalConf } from '@/lib/mediamtx/generated'
 
 import { cleanup, screen, waitFor } from '@testing-library/react'
-import { renderWithIntl as render } from '@/test-utils/render-intl'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { renderWithIntl as render } from '@/test-utils/render-intl'
 
 const updateGlobalConfig = vi.fn()
 const toastSuccess = vi.fn()
