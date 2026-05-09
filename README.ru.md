@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p>🌐 <a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <strong>Русский</strong> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.pl.md">Polski</a></p>
+  <p>🌐 <a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <strong>Русский</strong> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.pl.md">Polski</a> · <a href="./README.ko.md">한국어</a></p>
   <p>Веб-интерфейс для <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Смотрите трансляции, просматривайте записи и редактируйте конфигурацию в браузере.</p>
 
   <p>
