@@ -4,7 +4,7 @@ import path from 'node:path'
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { countFilesInSubdirectories, getFilesInDirectory } from './file-operations'
+import { getFilesInDirectory, summarizeStreamRecordings } from './file-operations'
 
 let tmp: string
 
@@ -21,30 +21,33 @@ function makeFile(p: string) {
   fs.writeFileSync(p, '')
 }
 
-describe('countFilesInSubdirectories', () => {
+describe('summarizeStreamRecordings', () => {
   it('counts files per subdirectory and ignores top-level files', () => {
     makeFile(path.join(tmp, 'camera1', 'a.mp4'))
     makeFile(path.join(tmp, 'camera1', 'b.mp4'))
     makeFile(path.join(tmp, 'camera2', 'c.mp4'))
     makeFile(path.join(tmp, 'top-level.mp4'))
 
-    expect(countFilesInSubdirectories(tmp)).toEqual({
-      camera1: 2,
-      camera2: 1,
-    })
+    const summary = summarizeStreamRecordings(tmp)
+    expect(Object.keys(summary).sort()).toEqual(['camera1', 'camera2'])
+    expect(summary.camera1.count).toBe(2)
+    expect(summary.camera2.count).toBe(1)
+    expect(summary.camera1.latestMtime).toBeInstanceOf(Date)
   })
 
   it('returns an empty record when there are no subdirectories', () => {
-    expect(countFilesInSubdirectories(tmp)).toEqual({})
+    expect(summarizeStreamRecordings(tmp)).toEqual({})
   })
 
-  it('reports 0 for an empty subdirectory', () => {
+  it('reports 0 + null mtime for an empty subdirectory', () => {
     fs.mkdirSync(path.join(tmp, 'empty-stream'))
-    expect(countFilesInSubdirectories(tmp)).toEqual({ 'empty-stream': 0 })
+    expect(summarizeStreamRecordings(tmp)).toEqual({
+      'empty-stream': { count: 0, latestMtime: null },
+    })
   })
 
   it('throws when the directory does not exist', () => {
-    expect(() => countFilesInSubdirectories(path.join(tmp, 'missing'))).toThrow()
+    expect(() => summarizeStreamRecordings(path.join(tmp, 'missing'))).toThrow()
   })
 })
 

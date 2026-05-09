@@ -1,23 +1,34 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-export function countFilesInSubdirectories(
+export interface StreamSummary {
+  count: number
+  latestMtime: Date | null
+}
+
+export function summarizeStreamRecordings(
   directoryPath: string,
-): Record<string, number> {
+): Record<string, StreamSummary> {
   const directories: string[] = fs
     .readdirSync(directoryPath, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
 
-  const directoryFileCount: Record<string, number> = {}
+  const summary: Record<string, StreamSummary> = {}
 
   for (const dir of directories) {
     const dirPath = path.join(directoryPath, dir)
     const files = fs.readdirSync(dirPath)
-    directoryFileCount[dir] = files.length
+    let latestMtime: Date | null = null
+    for (const file of files) {
+      const stat = fs.statSync(path.join(dirPath, file))
+      if (!latestMtime || stat.mtime > latestMtime)
+        latestMtime = stat.mtime
+    }
+    summary[dir] = { count: files.length, latestMtime }
   }
 
-  return directoryFileCount
+  return summary
 }
 
 export function getFilesInDirectory(directoryPath: string): string[] {

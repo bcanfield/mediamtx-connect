@@ -3,18 +3,20 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-const toast = vi.fn()
+const toastError = vi.fn()
 const axiosFn = vi.fn()
 const loggerError = vi.fn()
 
 vi.mock('axios', () => ({ default: (...args: unknown[]) => axiosFn(...args) }))
-vi.mock('@/components/ui/use-toast', () => ({ useToast: () => ({ toast }) }))
+vi.mock('sonner', () => ({
+  toast: { success: vi.fn(), error: toastError },
+}))
 vi.mock('@/lib/logger', () => ({ logger: { error: loggerError, info: vi.fn(), debug: vi.fn() } }))
 
 const { DownloadButton } = await import('./download-button')
 
 beforeEach(() => {
-  toast.mockReset()
+  toastError.mockReset()
   axiosFn.mockReset()
   loggerError.mockReset()
   vi.stubGlobal('URL', { ...URL, createObjectURL: vi.fn(() => 'blob:fake'), revokeObjectURL: vi.fn() })
@@ -54,7 +56,7 @@ describe('downloadButton', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() => expect(URL.createObjectURL).toHaveBeenCalled())
-    expect(toast).not.toHaveBeenCalled()
+    expect(toastError).not.toHaveBeenCalled()
   })
 
   it('fires a destructive toast and logs when the response is not 200', async () => {
@@ -65,12 +67,7 @@ describe('downloadButton', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() =>
-      expect(toast).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variant: 'destructive',
-          title: 'Error downloading video',
-        }),
-      ),
+      expect(toastError).toHaveBeenCalledWith('Error downloading video'),
     )
     expect(loggerError).toHaveBeenCalled()
   })
@@ -83,9 +80,7 @@ describe('downloadButton', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() =>
-      expect(toast).toHaveBeenCalledWith(
-        expect.objectContaining({ variant: 'destructive' }),
-      ),
+      expect(toastError).toHaveBeenCalledWith('Error downloading video'),
     )
     expect(loggerError).toHaveBeenCalled()
   })
