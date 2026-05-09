@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import type { Config } from '@prisma/client'
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, screen, waitFor } from '@testing-library/react'
+import { renderWithIntl as render } from '@/test-utils/render-intl'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
