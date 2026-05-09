@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "MediaMTX のウェブインターフェース。ブラウザでストリームを視聴し、録画を閲覧し、設定を編集できます。"
+  },
+  "Forms": {
+    "errors": {
+      "required": "この項目は必須です",
+      "mustBePositive": "0 より大きい値を入力してください"
+    }
+  },
+  "Common": {
+    "retry": "再試行",
+    "loading": "読み込み中…",
+    "theme": {
+      "lightMode": "ライトモード",
+      "darkMode": "ダークモード",
+      "switchToLight": "ライトテーマに切り替え",
+      "switchToDark": "ダークテーマに切り替え"
+    },
+    "locale": {
+      "switchLanguage": "言語を切り替え"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "アプリケーション",
+      "settings": "設定"
+    },
+    "items": {
+      "live": "ライブ",
+      "recordings": "録画",
+      "clientConfig": "クライアント設定",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "ライブ",
+    "header": "ストリーム",
+    "subHeader": "アクティブなストリームのライブ表示",
+    "errors": {
+      "configTitle": "設定エラー",
+      "configDescription": "設定を読み込めませんでした。データベース接続を確認してください。",
+      "connectionTitle": "MediaMTX に接続できません",
+      "connectionLead": "MediaMTX に接続できません:",
+      "connectionHint": "MediaMTX が起動していること、設定の URL が正しいことを確認してください。",
+      "checkConfigBtn": "設定を確認"
+    },
+    "empty": {
+      "configureRemoteTitle": "リモート URL を設定",
+      "configureRemoteDescription": "ブラウザでストリームを表示するには、リモート MediaMTX URL を設定してください。ブラウザから MediaMTX に到達できる URL を指定します。",
+      "goToConfig": "設定へ移動",
+      "noStreamsTitle": "アクティブなストリームがありません",
+      "noStreamsDescription": "MediaMTX は接続されていますが、現在アクティブなストリームはありません。MediaMTX への配信を開始すると、ここに表示されます。"
+    },
+    "density": {
+      "aria": "グリッドの密度",
+      "two": "2 列",
+      "three": "3 列",
+      "four": "4 列"
+    },
+    "card": {
+      "onlineSince": "{date} からオンライン",
+      "idle": "アイドル",
+      "live": "ライブ",
+      "stop": "停止",
+      "play": "再生",
+      "actionsAria": "ストリームの操作",
+      "viewRecordings": "録画を表示"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "録画",
+    "header": "録画",
+    "subHeader": "各ストリームの録画を閲覧",
+    "subHeaderForStream": "録画: {streamName}",
+    "invalidConfig": "無効な設定",
+    "errors": {
+      "configTitle": "設定エラー",
+      "configDescription": "設定を読み込めませんでした。データベース接続を確認してください。",
+      "directoryTitle": "録画ディレクトリにアクセスできません",
+      "directoryLead": "録画ディレクトリを読み取れません:",
+      "directoryHint": "ディレクトリが存在し、適切な権限が設定されていることを確認してください。",
+      "checkConfigBtn": "設定を確認",
+      "readErrorTitle": "録画を読み取れませんでした",
+      "readErrorDescription": "録画ディレクトリを読み取れませんでした。ディレクトリが存在することを確認してください。"
+    },
+    "empty": {
+      "noRecordingsTitle": "録画が見つかりません",
+      "noRecordingsLead": "録画はまだ保存されていません。MediaMTX がストリームの録画を開始すると、ここに表示されます。",
+      "noRecordingsHint": "MediaMTX の設定で <code>MTX_RECORD=yes</code> が設定されていることを確認してください。",
+      "noMatchingTitle": "一致するストリームがありません",
+      "noMatchingDescription": "「{query}」に一致するストリームはありません。"
+    },
+    "search": {
+      "placeholder": "ストリームを検索"
+    },
+    "groups": {
+      "today": "今日",
+      "yesterday": "昨日"
+    },
+    "card": {
+      "recordingCount": "{count, plural, other {# 件の録画}}",
+      "latest": "最新 {time}",
+      "viewBtn": "表示"
+    },
+    "recordingCard": {
+      "stop": "停止",
+      "play": "再生",
+      "downloadAria": "録画 {filePath} をダウンロード",
+      "downloadError": "動画のダウンロードでエラーが発生しました"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "設定",
+      "clientConfig": "クライアント設定",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "設定",
+    "pageSubHeader": "アプリの設定を管理",
+    "invalidConfig": "無効な設定",
+    "formFields": {
+      "oneValuePerLine": "1 行に 1 つの値を入力してください。"
+    },
+    "clientForm": {
+      "title": "アプリケーション設定",
+      "description": "MediaMTX Connect が使用する接続およびストレージのパス。",
+      "sections": {
+        "mediamtxConnection": "MediaMTX 接続",
+        "storage": "ストレージ"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "MediaMTX インスタンスのアドレス。Docker ネットワーク内ではコンテナ名を使用できます。それ以外の場合は外部 IP / ホスト名を使用してください。"
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "MediaMTX API のポート"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "ブラウザからアクセス可能な、外向きの MediaMTX サーバーの IP / ホスト名です。"
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "MediaMTX の録画を含むディレクトリ(Docker を使用している場合は変更非推奨)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "生成されたスクリーンショットを保存するディレクトリ(Docker を使用している場合は変更非推奨)"
+        }
+      },
+      "actions": {
+        "reset": "リセット",
+        "submit": "送信"
+      },
+      "toasts": {
+        "success": "クライアント設定を更新しました",
+        "errorTitle": "クライアント設定の更新で問題が発生しました",
+        "errorDescription": "フォームの値を確認してください。"
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "ログ",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "ログ",
+          "limits": "制限"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "メトリクス",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "サーバー",
+          "tls": "TLS",
+          "auth": "認証"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "サーバー",
+          "segments": "セグメント",
+          "corsProxies": "CORS / プロキシ"
+        },
+        "webrtc": {
+          "server": "サーバー",
+          "network": "ネットワーク",
+          "iceServers": "ICE サーバー",
+          "addServer": "サーバーを追加",
+          "noIceServers": "ICE サーバーが設定されていません。",
+          "iceServerLabel": "ICE サーバー {index}",
+          "removeIceServer": "ICE サーバーを削除",
+          "iceFields": {
+            "url": "URL",
+            "username": "ユーザー名",
+            "password": "パスワード"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "リセット",
+        "submit": "送信"
+      },
+      "toasts": {
+        "success": "グローバル設定を更新しました",
+        "errorTitle": "グローバル設定の更新で問題が発生しました",
+        "errorDescription": "フォームの値を確認してください。"
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, other {未保存の変更が # 件}}",
+      "discard": "破棄",
+      "saveChanges": "変更を保存"
+    }
+  }
+}
