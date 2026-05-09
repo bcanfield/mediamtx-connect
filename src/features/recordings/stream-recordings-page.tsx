@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import dayjs from 'dayjs'
 import { FolderX } from 'lucide-react'
+import { getFormatter, getTranslations } from 'next-intl/server'
 
 import { EmptyState } from '@/components/empty-state'
 import { PageHeader } from '@/components/page-header'
@@ -34,13 +35,15 @@ export async function StreamRecordingsPage({
   page: pageParam,
   take: takeParam,
 }: StreamRecordingsPageProps) {
+  const t = await getTranslations('Recordings')
+  const format = await getFormatter()
   const config = await getAppConfig()
   if (!config) {
-    return <div>Invalid Config</div>
+    return <div>{t('invalidConfig')}</div>
   }
 
   const crumbs = [
-    { label: 'Recordings', href: '/recordings' },
+    { label: t('crumbRecordings'), href: '/recordings' },
     { label: streamName },
   ]
 
@@ -67,21 +70,25 @@ export async function StreamRecordingsPage({
   }
 
   const totalPages = Math.max(1, Math.ceil(filesInDirectory.length / take))
-  const groups = groupByDay(streamRecordings)
+  const groups = groupByDay(streamRecordings, {
+    today: t('groups.today'),
+    yesterday: t('groups.yesterday'),
+    formatDay: (d: Date) => format.dateTime(d, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
+  })
 
   return (
     <>
       <PageHeader crumbs={crumbs} />
       <PageLayout
-        header="Recordings"
-        subHeader={`Recordings for: ${streamName}`}
+        header={t('header')}
+        subHeader={t('subHeaderForStream', { streamName })}
       >
         {error
           ? (
               <EmptyState
                 icon={FolderX}
-                title="Could not read recordings"
-                description="Could not read recordings directory. Please make sure the directory exists."
+                title={t('errors.readErrorTitle')}
+                description={t('errors.readErrorDescription')}
               />
             )
           : (
@@ -120,7 +127,10 @@ export async function StreamRecordingsPage({
   )
 }
 
-function groupByDay(recordings: StreamRecording[]) {
+function groupByDay(
+  recordings: StreamRecording[],
+  labels: { today: string, yesterday: string, formatDay: (d: Date) => string },
+) {
   const today = dayjs().startOf('day')
   const yesterday = today.subtract(1, 'day')
   const buckets = new Map<string, { key: string, label: string, recordings: StreamRecording[] }>()
@@ -129,10 +139,10 @@ function groupByDay(recordings: StreamRecording[]) {
     const day = dayjs(rec.createdAt).startOf('day')
     const key = day.format('YYYY-MM-DD')
     const label = day.isSame(today)
-      ? 'Today'
+      ? labels.today
       : day.isSame(yesterday)
-        ? 'Yesterday'
-        : day.format('ddd, MMM D, YYYY')
+        ? labels.yesterday
+        : labels.formatDay(day.toDate())
 
     if (!buckets.has(key))
       buckets.set(key, { key, label, recordings: [] })

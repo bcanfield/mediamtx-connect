@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,10 +14,11 @@ import {
 import { SwitchField, TextField } from '../form-fields'
 
 export function SrtSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.srt')
   return (
     <Card>
       <CardHeader>
-        <CardTitle>SRT</CardTitle>
+        <CardTitle>{t('srt')}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <SwitchField

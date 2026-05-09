@@ -4,6 +4,7 @@ import type { z } from 'zod'
 
 import type { GlobalConf } from '@/lib/mediamtx/generated'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -25,22 +26,14 @@ import { WebrtcSection } from './sections/webrtc-section'
 import { StickySaveBar } from './sticky-save-bar'
 import { countErrorsForTab } from './tab-fields'
 
-const TABS = [
-  { value: 'logging', label: 'Logging' },
-  { value: 'api', label: 'API' },
-  { value: 'hooks', label: 'Hooks' },
-  { value: 'rtsp', label: 'RTSP' },
-  { value: 'rtmp', label: 'RTMP' },
-  { value: 'hls', label: 'HLS' },
-  { value: 'webrtc', label: 'WebRTC' },
-  { value: 'srt', label: 'SRT' },
-] as const
+const TAB_VALUES = ['logging', 'api', 'hooks', 'rtsp', 'rtmp', 'hls', 'webrtc', 'srt'] as const
 
 export function MediaMTXConfigForm({
   globalConf,
 }: {
   globalConf?: GlobalConf
 }) {
+  const t = useTranslations('Config.mediamtxForm')
   const form = useForm({
     resolver: zodResolver(GlobalConfigSchema),
     mode: 'onBlur',
@@ -50,11 +43,11 @@ export function MediaMTXConfigForm({
   const onSubmit = async (values: z.output<typeof GlobalConfigSchema>) => {
     const updated = await updateGlobalConfig({ globalConfig: values })
     if (updated) {
-      toast.success('Updated Global Config')
+      toast.success(t('toasts.success'))
     }
     else {
-      toast.error('There was an issue updating the Global Config', {
-        description: 'Please double check your form values.',
+      toast.error(t('toasts.errorTitle'), {
+        description: t('toasts.errorDescription'),
       })
     }
   }
@@ -71,11 +64,11 @@ export function MediaMTXConfigForm({
       >
         <Tabs defaultValue="logging" className="flex flex-col gap-4">
           <TabsList className="flex-wrap">
-            {TABS.map((tab) => {
-              const errCount = countErrorsForTab(errors, tab.value)
+            {TAB_VALUES.map((value) => {
+              const errCount = countErrorsForTab(errors, value)
               return (
-                <TabsTrigger key={tab.value} value={tab.value}>
-                  {tab.label}
+                <TabsTrigger key={value} value={value}>
+                  {t(`tabs.${value}`)}
                   {errCount > 0 && (
                     <Badge
                       variant="destructive"
@@ -122,13 +115,13 @@ export function MediaMTXConfigForm({
             onClick={onReset}
             disabled={!form.formState.isDirty}
           >
-            Reset
+            {t('actions.reset')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isValid || !form.formState.isDirty}
           >
-            Submit
+            {t('actions.submit')}
           </Button>
         </div>
 

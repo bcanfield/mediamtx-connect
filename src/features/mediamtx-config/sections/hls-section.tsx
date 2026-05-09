@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,11 +14,12 @@ import {
 import { ListField, SwitchField, TextField } from '../form-fields'
 
 export function HlsSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.hls')
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Server</CardTitle>
+          <CardTitle>{t('server')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField
@@ -35,7 +37,7 @@ export function HlsSection({ control }: { control: Control<GlobalConfigFormData>
 
       <Card>
         <CardHeader>
-          <CardTitle>Segments</CardTitle>
+          <CardTitle>{t('segments')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField control={control} name="hlsAlwaysRemux" label="HLS Always Remux" />
@@ -49,7 +51,7 @@ export function HlsSection({ control }: { control: Control<GlobalConfigFormData>
 
       <Card>
         <CardHeader>
-          <CardTitle>CORS / Proxies</CardTitle>
+          <CardTitle>{t('corsProxies')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField control={control} name="hlsAllowOrigin" label="HLS Allow Origin" />

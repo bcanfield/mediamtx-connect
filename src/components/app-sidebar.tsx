@@ -1,9 +1,9 @@
 'use client'
 
 import { Cctv, Film, MonitorPlay, Server, Settings2 } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
+import { LocaleSwitcher } from '@/components/locale-switcher'
 import { ModeToggle } from '@/components/mode-toggle'
 import {
   Sidebar,
@@ -18,16 +18,17 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import { Link, usePathname } from '@/i18n/navigation'
 
 const application = [
-  { title: 'Live', href: '/', icon: MonitorPlay },
-  { title: 'Recordings', href: '/recordings', icon: Film },
-]
+  { key: 'live', href: '/', icon: MonitorPlay },
+  { key: 'recordings', href: '/recordings', icon: Film },
+] as const
 
 const settings = [
-  { title: 'Client Config', href: '/config', icon: Settings2 },
-  { title: 'MediaMTX', href: '/config/mediamtx/global', icon: Server },
-]
+  { key: 'clientConfig', href: '/config', icon: Settings2 },
+  { key: 'mediamtx', href: '/config/mediamtx/global', icon: Server },
+] as const
 
 function isActiveRoute(pathname: string | null, href: string) {
   if (!pathname)
@@ -41,6 +42,7 @@ function isActiveRoute(pathname: string | null, href: string) {
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const t = useTranslations('Nav')
 
   return (
     <Sidebar collapsible="icon">
@@ -52,7 +54,7 @@ export function AppSidebar() {
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Cctv className="size-4" />
                 </div>
-                <span className="font-semibold">Connect</span>
+                <span className="font-semibold">{t('brand')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -61,51 +63,58 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('groups.application')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {application.map(item => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActiveRoute(pathname, item.href)}
-                    tooltip={item.title}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {application.map((item) => {
+                const label = t(`items.${item.key}`)
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActiveRoute(pathname, item.href)}
+                      tooltip={label}
+                    >
+                      <Link href={item.href}>
+                        <item.icon />
+                        <span>{label}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('groups.settings')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {settings.map(item => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActiveRoute(pathname, item.href)}
-                    tooltip={item.title}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {settings.map((item) => {
+                const label = t(`items.${item.key}`)
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActiveRoute(pathname, item.href)}
+                      tooltip={label}
+                    >
+                      <Link href={item.href}>
+                        <item.icon />
+                        <span>{label}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>
+        <LocaleSwitcher />
         <ModeToggle />
       </SidebarFooter>
 
