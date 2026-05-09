@@ -29,6 +29,7 @@ const LANGUAGE_NAMES: Record<(typeof routing.locales)[number], string> = {
   pt: 'Português',
   ja: '日本語',
   pl: 'Polski',
+  ko: '한국어',
 }
 
 export function LocaleSwitcher() {
