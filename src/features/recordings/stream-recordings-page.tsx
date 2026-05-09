@@ -6,6 +6,7 @@ import path from 'node:path'
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { GridLayout } from '@/components/grid-layout'
+import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getAppConfig } from '@/features/client-config/client-config.queries'
@@ -31,6 +32,10 @@ export async function StreamRecordingsPage({
   if (!config) {
     return <div>Invalid Config</div>
   }
+  const crumbs = [
+    { label: 'Recordings', href: '/recordings' },
+    { label: streamName },
+  ]
 
   const page = pageParam || 1
   const take = takeParam || 10
@@ -58,59 +63,62 @@ export async function StreamRecordingsPage({
   }
 
   return (
-    <PageLayout
-      header="Recordings"
-      subHeader={`Recordings for: ${streamName}`}
-    >
-      {error
-        ? (
-            <Alert>
-              <AlertTriangle className="h-4 w-4" />
-              <AlertTitle>Uh oh!</AlertTitle>
-              <AlertDescription>
-                Could not read recordings directory. Please make sure the directory exists
-              </AlertDescription>
-            </Alert>
-          )
-        : (
-            <div className="flex justify-end text-xs">
-              <div className="flex gap-2">
-                <LinkWrapper
-                  href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
-                  disabled={+page === 1}
-                >
-                  <ChevronLeft className="w-4 h-4"></ChevronLeft>
-                </LinkWrapper>
-                {`Showing ${startIndex} - ${Math.min(
-                  endIndex,
-                  filesInDirectory.length,
-                )} of ${filesInDirectory.length}`}
-                <LinkWrapper
-                  href={{ query: { page: +page + 1 } }}
-                  disabled={endIndex >= filesInDirectory.length}
-                >
-                  <ChevronRight className="w-4 h-4"></ChevronRight>
-                </LinkWrapper>
+    <>
+      <PageHeader crumbs={crumbs} />
+      <PageLayout
+        header="Recordings"
+        subHeader={`Recordings for: ${streamName}`}
+      >
+        {error
+          ? (
+              <Alert>
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Uh oh!</AlertTitle>
+                <AlertDescription>
+                  Could not read recordings directory. Please make sure the directory exists
+                </AlertDescription>
+              </Alert>
+            )
+          : (
+              <div className="flex justify-end text-xs">
+                <div className="flex gap-2">
+                  <LinkWrapper
+                    href={{ query: { page: +page > 0 ? +page - 1 : 0 } }}
+                    disabled={+page === 1}
+                  >
+                    <ChevronLeft className="w-4 h-4"></ChevronLeft>
+                  </LinkWrapper>
+                  {`Showing ${startIndex} - ${Math.min(
+                    endIndex,
+                    filesInDirectory.length,
+                  )} of ${filesInDirectory.length}`}
+                  <LinkWrapper
+                    href={{ query: { page: +page + 1 } }}
+                    disabled={endIndex >= filesInDirectory.length}
+                  >
+                    <ChevronRight className="w-4 h-4"></ChevronRight>
+                  </LinkWrapper>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-      <GridLayout columnLayout="small">
-        {streamRecordings.map(({ name, createdAt, base64, fileSize }) => (
-          <RecordingCard
-            key={name}
-            props={{
-              thumbnail: base64,
-              createdAt,
-              fileName: name,
-              streamName,
-              fileSize,
-            }}
-          >
-          </RecordingCard>
-        ))}
-      </GridLayout>
-    </PageLayout>
+        <GridLayout columnLayout="small">
+          {streamRecordings.map(({ name, createdAt, base64, fileSize }) => (
+            <RecordingCard
+              key={name}
+              props={{
+                thumbnail: base64,
+                createdAt,
+                fileName: name,
+                streamName,
+                fileSize,
+              }}
+            >
+            </RecordingCard>
+          ))}
+        </GridLayout>
+      </PageLayout>
+    </>
   )
 }
 
