@@ -111,7 +111,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 4. Background Jobs (`src/instrumentation.ts`)
 
 - **First-run bootstrap** — creates the singleton `Config` row from env vars (`BACKEND_SERVER_MEDIAMTX_URL`, `MEDIAMTX_API_PORT`, `REMOTE_MEDIAMTX_URL`, `MEDIAMTX_RECORDINGS_DIR`, `MEDIAMTX_SCREENSHOTS_DIR`) and ensures `recordingsDirectory` / `screenshotsDirectory` exist on server boot. After the row exists, the `/config` UI is the source of truth — re-setting env vars takes effect only after a DB reset.
-- **Env / Config drift warning** — on subsequent boots, if any of the bootstrap env vars differs from the corresponding stored `Config` value, a single structured `WARN` log lists each mismatch and reminds the operator that env only seeds the first boot.
+- **Env / Config drift warning** — on subsequent boots, for each bootstrap env var that the operator has *explicitly* set in the environment (raw `process.env`, distinct from schema defaults via `rawEnv` in `src/lib/env.ts`), if its value differs from the corresponding stored `Config` value a single structured `WARN` log lists each mismatch and reminds the operator that env only seeds the first boot.
 - **Thumbnail generation cron** — every 30 minutes (`*/30 * * * *`) scans the recordings tree for MP4s without a sibling PNG and spawns `ffmpeg -ss 00:00:00 -i <file>.mp4 -frames:v 1 <file>.png`. Non-blocking, parallel.
 - **Screenshot retention cron** — daily at midnight (`0 0 0 * * *`) deletes thumbnails older than 2 days, per stream subdirectory.
 - **Pino-structured logging** of every spawn / deletion.
@@ -160,9 +160,10 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 8.2 Shared components (`src/components/`)
 - **AppSidebar** — global Sidebar shell (sidebar-07 pattern): brand, "Application" group (Live, Recordings), "Settings" group (Client Config, MediaMTX), footer ModeToggle. `src/components/app-sidebar.tsx`
 - **PageHeader** — sticky inset top bar with `SidebarTrigger` + `Breadcrumb` + an optional actions slot. Each page passes its own crumbs. `src/components/page-header.tsx`
+- **SidebarTrigger** — single-click sidebar open/close button with state-aware morphing icon (`PanelLeftOpen` ↔ `PanelLeftClose`) on a scale + rotate transition. `src/components/ui/sidebar.tsx`
 - **PageLayout** — h2 title + subheader (Suspense-wrapped) + Separator + content, wrapped in a max-w-7xl padded container. `src/components/page-layout.tsx`
 - **EmptyState** — wrapper around shadcn `Empty` with `icon`, `title`, `description`, optional CTA `children`. Used for non-destructive empty/info states across the app. `src/components/empty-state.tsx`
-- **ModeToggle** — Light / Dark / System theme switcher using `useSyncExternalStore` + `matchMedia('prefers-color-scheme: dark')`. `src/components/mode-toggle.tsx`
+- **ModeToggle** — single-click Light ↔ Dark theme toggle backed by `next-themes`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `src/components/mode-toggle.tsx`
 - **RefreshButton** — manual page reload control surfaced in connection-error alerts. `src/components/refresh-button.tsx`
 - **VideoPlayer** — shared HLS.js component (see §1.3). `src/components/video-player.tsx`
 - **ThemeProvider** — `next-themes` wrapper, dark default. `src/components/theme-provider.tsx`
@@ -186,7 +187,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ## 9. Theming, Accessibility, PWA
 
-- **Dark / Light / System theme** — persisted via `next-themes`, dark default.
+- **Dark / Light theme** — persisted via `next-themes`, dark default. Toggled by `ModeToggle` (single-click, View Transitions API circle-reveal).
 - **Web App Manifest** — installable PWA. App name, theme color `#0c1016`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
 - **Service worker registration** — offline-friendly shell. `src/components/service-worker.tsx`, `public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
@@ -247,7 +248,7 @@ Writes (Server Actions, `'use server'`):
 - **Runtime tooling baked in** — `ffmpeg` (thumbnail generation), `openssl`, `curl` (healthchecks).
 - **Standalone Next output** — small, self-contained runtime.
 - **Pre-created mount points** — `/recordings`, `/screenshots`.
-- **Bootstrap env defaults** — image sets `BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots` so first-boot seeding produces sensible values. Override at `docker run` time to skip the in-app `/config` step.
+- **Production-shaped env defaults** — bootstrap env vars (`BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `REMOTE_MEDIAMTX_URL=http://localhost`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots`) come from the Zod schema in `src/lib/env.ts`, so `docker run` with no env produces a valid first-boot seed without any image-level `ENV` directives. Override at `docker run` time to skip the in-app `/config` step.
 - **Non-root `nextjs` user**.
 - **Port 3000** + `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries).
 - **Migration-on-boot entrypoint** — `./scripts/start.sh` runs `prisma migrate deploy` then `next start`.

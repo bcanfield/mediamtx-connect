@@ -1,5 +1,5 @@
 export async function register() {
-  const { env } = await import('@/lib/env')
+  const { env, rawEnv } = await import('@/lib/env')
   if (env.NEXT_RUNTIME === 'nodejs') {
     const { default: cron } = await import('node-cron')
     const { default: cp } = await import('node:child_process')
@@ -26,13 +26,18 @@ export async function register() {
       logger.info('Seeded Config from env', { config: config as Record<string, unknown> })
     }
     else {
-      const drift: Array<{ var: string, env: string, db: string }> = [
+      // Only flag vars the operator explicitly set in the environment — schema
+      // defaults aren't drift, they're just the absence of a runtime override.
+      const candidates: Array<{ var: keyof typeof rawEnv, env: string, db: string }> = [
         { var: 'BACKEND_SERVER_MEDIAMTX_URL', env: env.BACKEND_SERVER_MEDIAMTX_URL, db: config.mediaMtxUrl },
         { var: 'MEDIAMTX_API_PORT', env: env.MEDIAMTX_API_PORT, db: String(config.mediaMtxApiPort) },
         { var: 'REMOTE_MEDIAMTX_URL', env: env.REMOTE_MEDIAMTX_URL, db: config.remoteMediaMtxUrl ?? '' },
         { var: 'MEDIAMTX_RECORDINGS_DIR', env: env.MEDIAMTX_RECORDINGS_DIR, db: config.recordingsDirectory },
         { var: 'MEDIAMTX_SCREENSHOTS_DIR', env: env.MEDIAMTX_SCREENSHOTS_DIR, db: config.screenshotsDirectory },
-      ].filter(({ env: e, db: d }) => e !== d)
+      ]
+      const drift = candidates
+        .filter(c => rawEnv[c.var] !== undefined && c.env !== c.db)
+        .map(({ var: v, env: e, db: d }) => ({ var: v, env: e, db: d }))
 
       if (drift.length > 0) {
         logger.warn(

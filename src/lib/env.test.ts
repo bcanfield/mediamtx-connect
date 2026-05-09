@@ -25,10 +25,11 @@ describe('env', () => {
     const { env } = await loadEnv()
 
     expect(env.LOG_LEVEL).toBe('info')
-    expect(env.BACKEND_SERVER_MEDIAMTX_URL).toBe('http://localhost')
+    expect(env.BACKEND_SERVER_MEDIAMTX_URL).toBe('http://mediamtx')
     expect(env.MEDIAMTX_API_PORT).toBe('9997')
-    expect(env.MEDIAMTX_RECORDINGS_DIR).toBe('./test-data/recordings')
-    expect(env.MEDIAMTX_SCREENSHOTS_DIR).toBe('./test-data/screenshots')
+    expect(env.REMOTE_MEDIAMTX_URL).toBe('http://localhost')
+    expect(env.MEDIAMTX_RECORDINGS_DIR).toBe('/recordings')
+    expect(env.MEDIAMTX_SCREENSHOTS_DIR).toBe('/screenshots')
   })
 
   it('reads provided values', async () => {
