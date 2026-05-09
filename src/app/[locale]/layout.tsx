@@ -33,6 +33,7 @@ export async function generateMetadata({
         'en': '/',
         'es': '/es',
         'zh': '/zh',
+        'it': '/it',
         'x-default': '/',
       },
     },
