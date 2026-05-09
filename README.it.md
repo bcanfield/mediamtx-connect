@@ -1,6 +1,6 @@
 <div align="center">
   <h1>MediaMTX Connect</h1>
-  <p><a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a> · <strong>Italiano</strong></p>
+  <p><a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a> · <strong>Italiano</strong> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.fr.md">Français</a> · <a href="./README.pt.md">Português</a></p>
   <p>Un'interfaccia web per <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Guarda i flussi, sfoglia le registrazioni e modifica la configurazione dal browser.</p>
 
   <p>
