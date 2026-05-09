@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -21,6 +22,8 @@ import { RtmpSection } from './sections/rtmp-section'
 import { RtspSection } from './sections/rtsp-section'
 import { SrtSection } from './sections/srt-section'
 import { WebrtcSection } from './sections/webrtc-section'
+import { StickySaveBar } from './sticky-save-bar'
+import { countErrorsForTab } from './tab-fields'
 
 const TABS = [
   { value: 'logging', label: 'Logging' },
@@ -58,6 +61,8 @@ export function MediaMTXConfigForm({
 
   const onReset = () => form.reset(globalConf)
 
+  const errors = form.formState.errors
+
   return (
     <Form {...form}>
       <form
@@ -66,11 +71,22 @@ export function MediaMTXConfigForm({
       >
         <Tabs defaultValue="logging" className="flex flex-col gap-4">
           <TabsList className="flex-wrap">
-            {TABS.map(tab => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                {tab.label}
-              </TabsTrigger>
-            ))}
+            {TABS.map((tab) => {
+              const errCount = countErrorsForTab(errors, tab.value)
+              return (
+                <TabsTrigger key={tab.value} value={tab.value}>
+                  {tab.label}
+                  {errCount > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="ml-2 h-4 min-w-4 px-1 text-[10px]"
+                    >
+                      {errCount}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+              )
+            })}
           </TabsList>
 
           <TabsContent value="logging">
@@ -115,6 +131,8 @@ export function MediaMTXConfigForm({
             Submit
           </Button>
         </div>
+
+        <StickySaveBar onReset={onReset} />
       </form>
     </Form>
   )
