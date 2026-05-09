@@ -9,7 +9,6 @@ import { AlertTriangle, MonitorPlay, Settings, Wifi } from 'lucide-react'
 import Link from 'next/link'
 
 import { EmptyState } from '@/components/empty-state'
-import { GridLayout } from '@/components/grid-layout'
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
 import { RefreshButton } from '@/components/refresh-button'
@@ -19,7 +18,7 @@ import { getAppConfig } from '@/features/client-config/client-config.queries'
 import { logger } from '@/lib/logger'
 import { Api } from '@/lib/mediamtx/generated'
 
-import { StreamCard } from './stream-card'
+import { LiveStreamsView } from './live-streams-view'
 
 export const dynamic = 'force-dynamic'
 
@@ -127,19 +126,14 @@ export async function LiveViewPage() {
         )}
 
         {isConnected && hasStreams && remoteMediaMtxUrl && (
-          <GridLayout columnLayout="small">
-            {paths?.data.items?.map(({ name, readyTime }) => (
-              <StreamCard
-                key={name}
-                props={{
-                  streamName: name,
-                  readyTime,
-                  hlsAddress: mediaMtxConfig?.data.hlsAddress,
-                  remoteMediaMtxUrl,
-                }}
-              />
-            ))}
-          </GridLayout>
+          <LiveStreamsView
+            streams={paths?.data.items?.map(({ name, readyTime }) => ({
+              name: name ?? '',
+              readyTime,
+            })) ?? []}
+            hlsAddress={mediaMtxConfig?.data.hlsAddress ?? ''}
+            remoteMediaMtxUrl={remoteMediaMtxUrl}
+          />
         )}
       </PageLayout>
     </>
