@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import {
   Film,
   Image as ImageIcon,
-  Info,
+  MoreVertical,
   PauseCircle,
   PlayCircle,
 } from 'lucide-react'
@@ -13,177 +13,158 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { VideoPlayer } from '@/components/video-player'
-import { cn } from '@/lib/utils'
+
+const PLAY_PARAM = 'play'
 
 export function StreamCard({
-  props,
+  streamName,
+  readyTime,
+  hlsAddress,
+  remoteMediaMtxUrl,
+  priority = false,
 }: {
-  props: {
-    remoteMediaMtxUrl: string
-    streamName?: string
-    hlsAddress?: string
-    readyTime?: string | null
-    thumbnail?: string | null
-  }
+  streamName: string
+  readyTime?: string | null
+  hlsAddress?: string
+  remoteMediaMtxUrl: string
+  priority?: boolean
 }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [thumbnailError, setThumbnailError] = useState<boolean>(false)
-
-  if (!props.streamName) {
-    return <>Error getting stream</>
-  }
-  const streamName = props.streamName
-  const onCamSelect = (streamName: string) => {
-    const current = new URLSearchParams(
-      searchParams ? Array.from(searchParams.entries()) : [],
-    )
-    let currentSelectedCams = current.get('liveCams')?.split(',')
-    if (currentSelectedCams) {
-      if (currentSelectedCams.includes(streamName)) {
-        currentSelectedCams = currentSelectedCams.filter(
-          c => c !== streamName,
-        )
-      }
-      else {
-        currentSelectedCams.push(streamName)
-      }
-    }
-    else {
-      currentSelectedCams = [streamName]
-    }
-
-    if (currentSelectedCams.length > 0) {
-      current.set('liveCams', currentSelectedCams.join(','))
-    }
-    else {
-      current.delete('liveCams')
-    }
-
-    const search = current.toString()
-    const query = search ? `?${search}` : ''
-
-    router.push(`${pathname}${query}`, { scroll: false })
-  }
+  const [thumbnailError, setThumbnailError] = useState(false)
 
   const isLive = searchParams
-    ?.get('liveCams')
+    ?.get(PLAY_PARAM)
     ?.split(',')
     .filter(Boolean)
-    .includes(props.streamName)
+    .includes(streamName)
+    ?? false
+
+  const togglePlay = () => {
+    const next = new URLSearchParams(searchParams ? Array.from(searchParams.entries()) : [])
+    const current = next.get(PLAY_PARAM)?.split(',').filter(Boolean) ?? []
+    const updated = current.includes(streamName)
+      ? current.filter(s => s !== streamName)
+      : [...current, streamName]
+
+    if (updated.length > 0)
+      next.set(PLAY_PARAM, updated.join(','))
+    else
+      next.delete(PLAY_PARAM)
+
+    const search = next.toString()
+    router.push(`${pathname}${search ? `?${search}` : ''}`, { scroll: false })
+  }
 
   return (
-    <Card className="flex flex-col aspect-square">
-      <CardHeader className="text-xs">
-        <CardDescription>{streamName}</CardDescription>
+    <Card data-testid="stream-card" className="flex flex-col">
+      <CardHeader className="flex-row items-start justify-between gap-2 space-y-0 pb-2">
+        <div className="min-w-0 flex-1">
+          <CardTitle className="truncate text-base">{streamName}</CardTitle>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {readyTime
+              ? `Online since ${dayjs(readyTime).format('MMM D, h:mm A')}`
+              : 'Idle'}
+          </p>
+        </div>
+        {isLive && (
+          <Badge variant="destructive" className="shrink-0">
+            <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-destructive-foreground" />
+            LIVE
+          </Badge>
+        )}
       </CardHeader>
-      <CardContent className="flex flex-col flex-auto justify-between gap-2 ">
-        <div className="flex items-center flex-auto w-full ">
+
+      <CardContent className="px-0 py-0">
+        <AspectRatio ratio={16 / 9} className="bg-muted">
           {isLive
             ? (
                 <VideoPlayer
                   props={{
-                    address: `${props.remoteMediaMtxUrl}${props.hlsAddress}/${streamName}/index.m3u8`,
+                    address: `${remoteMediaMtxUrl}${hlsAddress}/${streamName}/index.m3u8`,
                   }}
-                >
-                </VideoPlayer>
+                />
               )
             : thumbnailError
               ? (
-                  <div className="flex items-center justify-center  w-full h-full">
-                    <ImageIcon className="h-12 w-12"></ImageIcon>
+                  <div className="flex h-full w-full items-center justify-center">
+                    <ImageIcon className="size-12 text-muted-foreground" />
                   </div>
                 )
               : (
-                  <div className="w-full h-full relative">
-                    <Image
-                      alt=""
-                      fill
-                      objectFit="contain"
-                      onError={() => setThumbnailError(true)}
-                      src={`/api/${streamName}/first-screenshot`}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
+                  <Image
+                    alt=""
+                    fill
+                    priority={priority}
+                    onError={() => setThumbnailError(true)}
+                    src={`/api/${streamName}/first-screenshot`}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
+                  />
                 )}
-        </div>
-
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            aria-label={isLive ? `Pause live view for ${streamName}` : `Play live view for ${streamName}`}
-            onClick={() => onCamSelect(streamName)}
-            className={cn('basis-1/2', { 'bg-accent animate-pulse': isLive })}
-            size="sm"
-          >
-            {isLive
-              ? (
-                  <PauseCircle className="h-4 w-4"></PauseCircle>
-                )
-              : (
-                  <PlayCircle className="h-4 w-4"></PlayCircle>
-                )}
-          </Button>
-
-          <Link href={`/recordings/${streamName}`} className="basis-1/4">
-            <Button
-              variant="outline"
-              className="w-full"
-              size="sm"
-              aria-label={`View recordings for ${streamName}`}
-            >
-              <Film className="h-4 w-4"></Film>
-            </Button>
-          </Link>
-
-          <Popover>
-            <PopoverTrigger asChild className="basis-1/4">
-              <Button
-                variant="outline"
-                size="sm"
-                aria-label={`View details for ${streamName}`}
-              >
-                <Info className="h-4 w-4"></Info>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-2">
-              <div className="grid gap-4">
-                <div className="space-y-2">
-                  <p className="text-md text-muted-foreground">Stream</p>
-                </div>
-                <div className="grid gap-2 text-sm">
-                  <div className="flex items-center gap-4">
-                    <span>Name:</span>
-                    <span>{streamName}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm">Online:</span>
-                    {props.readyTime && (
-                      <span>
-                        {dayjs(props.readyTime).format('MMMM D, YYYY h:mm A')}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
+        </AspectRatio>
       </CardContent>
+
+      <CardFooter className="gap-2 pt-3">
+        <Button
+          variant={isLive ? 'secondary' : 'default'}
+          size="sm"
+          className="flex-1"
+          onClick={togglePlay}
+        >
+          {isLive
+            ? (
+                <>
+                  <PauseCircle className="mr-2 size-4" />
+                  Stop
+                </>
+              )
+            : (
+                <>
+                  <PlayCircle className="mr-2 size-4" />
+                  Play
+                </>
+              )}
+        </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" aria-label="Stream actions">
+              <MoreVertical className="size-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel className="truncate">{streamName}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href={`/recordings/${streamName}`}>
+                <Film className="mr-2 size-4" />
+                View recordings
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </CardFooter>
     </Card>
   )
 }

@@ -42,4 +42,16 @@ export default antfu(
       'no-console': 'off',
     },
   },
+  {
+    // shadcn-generated primitives. They follow shadcn conventions which
+    // collide with @antfu/eslint-config (variant exports, nested component
+    // props for Calendar's `components` slot, etc.). We don't hand-edit
+    // these files except for re-export tweaks, so loosen the rules here.
+    files: ['src/components/ui/**', 'src/hooks/use-mobile.ts'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'react/no-nested-component-definitions': 'off',
+      'react-hooks-extra/no-direct-set-state-in-use-effect': 'off',
+    },
+  },
 )

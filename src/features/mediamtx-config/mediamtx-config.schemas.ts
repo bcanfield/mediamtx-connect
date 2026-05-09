@@ -84,4 +84,4 @@ export const GlobalConfigSchema = z.object({
   recordDeleteAfter: z.string().optional(),
 }) satisfies z.ZodType<GlobalConf>
 
-export type GlobalConfigFormData = z.infer<typeof GlobalConfigSchema>
+export type GlobalConfigFormData = z.input<typeof GlobalConfigSchema>
