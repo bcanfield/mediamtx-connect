@@ -23,6 +23,10 @@ const LANGUAGE_NAMES: Record<(typeof routing.locales)[number], string> = {
   es: 'Español',
   zh: '中文',
   it: 'Italiano',
+  de: 'Deutsch',
+  ru: 'Русский',
+  fr: 'Français',
+  pt: 'Português',
 }
 
 export function LocaleSwitcher() {
