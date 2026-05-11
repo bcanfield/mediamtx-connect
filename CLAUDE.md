@@ -1,3 +1,9 @@
+## Project goal
+
+MediaMTX Connect is positioned as the **most ideal companion to MediaMTX**. When evaluating, triaging, or proposing work, the default question is: does this surface or wrap something MediaMTX already exposes — a config key, an API endpoint, a `runOn*` hook, a protocol it natively serves? Features built on MediaMTX's own surface area come first.
+
+App-level "nice to have" work that doesn't directly align with MediaMTX (our own auth/analytics, plugin SDKs, integrations marketplaces, AI/ML sidecars, alternate databases) is welcome, but it's lower priority by default — it should compete against MediaMTX-native work for slate space rather than displace it. When proposing such work, lead with why it earns priority despite not consuming a MediaMTX primitive.
+
 ## Hard rule for every change
 
 If your change adds, removes, or modifies a user-visible feature, route, API endpoint, server action, schema, cron, or integration, you **must** update `docs/FEATURES.md` in the same change. See its "Maintenance contract."
