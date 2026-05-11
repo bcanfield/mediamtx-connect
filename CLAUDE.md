@@ -12,8 +12,9 @@ If your change adds, removes, or modifies a user-visible feature, route, API end
 
 | Topic | Path |
 |-------|------|
-| Feature catalog (source of truth — read first) | `docs/FEATURES.md` |
-| Idea backlog — unshipped, brainstorm only (do **not** treat as features) | `docs/ideas/00-index.md` |
+| Shipped feature inventory (source of truth — read first) | `docs/FEATURES.md` |
+| Ranked idea backlog — unshipped, Top 10 + flat backlog (do **not** treat as features) | `docs/ideas/FEATURES-LONGLIST.md` |
+| Idea catalog overview + cross-cutting brainstorm (links to domain files `01`–`05`) | `docs/ideas/00-index.md` |
 | Layout, naming, imports, conventions | `docs/PROJECT-STRUCTURE.md` |
 | System diagram | `ARCHITECTURE.md` |
 | Dev setup, scripts, PR process | `CONTRIBUTING.md` |

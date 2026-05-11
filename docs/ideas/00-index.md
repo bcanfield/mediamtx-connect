@@ -151,17 +151,6 @@ These reframe Connect against existing categories rather than additive features.
 
 ---
 
-## Suggested MVP shortlist (curated picks across all files)
+## Ranked picks
 
-If forced to pick a "next 90 days" slate, this is what shows up across all five domain files as **maximum leverage / minimum new infra**:
-
-1. **Per-path CRUD UI** — `02` §Configuration — paths CRUD. The single biggest gap; the API already exists; unlocks everything in `01`.
-2. **Live sessions dashboard with kick** — `02` §RTSP/RTMP/WebRTC/SRT. Tangible operator value; reuses existing patterns.
-3. **Timeline scrubber + playback-server stitched playback** — `03` §1, §2. Turns the recordings UI from a file browser into an NVR.
-4. **App-level auth (Auth.js / Clerk)** — `04` §App-level auth. Prerequisite for multi-tenant, public-share, and audit-log features.
-5. **Prometheus scraping with built-in charts** — `05` §Prometheus scraping. Cheap to build (existing metrics), high-density information.
-6. **Hooks UI + built-in webhook receiver** — `04` §Hooks UI, §Built-in receivers. Unlocks the entire alerting/automation surface without external tooling.
-7. **Setup wizard + Doctor page** — Cross-cutting §Onboarding. Cuts time-to-first-stream and reduces support load.
-8. **Multi-server registry** — `05` §Multi-server. Once auth ships, this is the cheapest way to grow ARR / install base.
-
-Everything else is a long-tail bet best chosen against real user feedback, not from this catalog alone.
+The triaged Top 10 + flat backlog lives in [`FEATURES-LONGLIST.md`](./FEATURES-LONGLIST.md) — that's the single source of ranking. This file (and the domain files `01`–`05`) stays a flat brainstorm catalog so the unfiltered surface area remains visible during triage.
