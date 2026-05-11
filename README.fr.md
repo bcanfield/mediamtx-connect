@@ -1,17 +1,38 @@
-<div align="center">
-  <h1>MediaMTX Connect</h1>
-  <p>🌐 <a href="./README.md">English</a> · <a href="./README.es.md">Español</a> · <a href="./README.zh.md">中文</a> · <a href="./README.it.md">Italiano</a> · <a href="./README.de.md">Deutsch</a> · <a href="./README.ru.md">Русский</a> · <strong>Français</strong> · <a href="./README.pt.md">Português</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.pl.md">Polski</a> · <a href="./README.ko.md">한국어</a></p>
-  <p>Une interface web pour <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>. Regardez vos flux, parcourez les enregistrements et modifiez la configuration depuis votre navigateur.</p>
+<h1 align="center">
+  <br>
+  MediaMTX Connect
+  <br>
+</h1>
 
-  <p>
-    <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-    <a href="https://codecov.io/gh/bcanfield/mediamtx-connect"><img src="https://codecov.io/gh/bcanfield/mediamtx-connect/branch/main/graph/badge.svg" alt="Coverage"></a>
-    <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-    <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-  </p>
+<p align="center">
+  🇺🇸 <a href="./README.md">English</a> •
+  🇪🇸 <a href="./README.es.md">Español</a> •
+  🇨🇳 <a href="./README.zh.md">中文</a> •
+  🇮🇹 <a href="./README.it.md">Italiano</a> •
+  🇩🇪 <a href="./README.de.md">Deutsch</a> •
+  🇷🇺 <a href="./README.ru.md">Русский</a> •
+  🇫🇷 <strong>Français</strong> •
+  🇵🇹 <a href="./README.pt.md">Português</a> •
+  🇯🇵 <a href="./README.ja.md">日本語</a> •
+  🇵🇱 <a href="./README.pl.md">Polski</a> •
+  🇰🇷 <a href="./README.ko.md">한국어</a> •
+  🇹🇷 <a href="./README.tr.md">Türkçe</a> •
+  🇳🇱 <a href="./README.nl.md">Nederlands</a> •
+  🇨🇿 <a href="./README.cs.md">Čeština</a>
+</p>
 
+<h4 align="center">Une interface web pour <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Regardez vos flux, parcourez les enregistrements et modifiez la configuration depuis votre navigateur.</h4>
+
+<p align="center">
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
+  <a href="https://codecov.io/gh/bcanfield/mediamtx-connect"><img src="https://codecov.io/gh/bcanfield/mediamtx-connect/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
+</p>
+
+<p align="center">
   <img src=".github/assets/demo.gif" alt="Démo de MediaMTX Connect" width="720">
-</div>
+</p>
 
 ## Comment l'exécuter
 

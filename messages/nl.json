@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webinterface voor MediaMTX. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Dit veld is verplicht",
+      "mustBePositive": "Moet groter zijn dan 0"
+    }
+  },
+  "Common": {
+    "retry": "Opnieuw proberen",
+    "loading": "Laden…",
+    "theme": {
+      "lightMode": "Lichte modus",
+      "darkMode": "Donkere modus",
+      "switchToLight": "Schakel naar licht thema",
+      "switchToDark": "Schakel naar donker thema"
+    },
+    "locale": {
+      "switchLanguage": "Taal wijzigen"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Applicatie",
+      "settings": "Instellingen"
+    },
+    "items": {
+      "live": "Live",
+      "recordings": "Opnames",
+      "clientConfig": "Clientconfiguratie",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Live",
+    "header": "Streams",
+    "subHeader": "Live weergave van je actieve streams",
+    "errors": {
+      "configTitle": "Configuratiefout",
+      "configDescription": "Kan de configuratie niet laden. Controleer je databaseverbinding.",
+      "connectionTitle": "Kan geen verbinding maken met MediaMTX",
+      "connectionLead": "Kan MediaMTX niet bereiken op",
+      "connectionHint": "Zorg dat MediaMTX draait en dat de URL in je configuratie klopt.",
+      "checkConfigBtn": "Configuratie controleren"
+    },
+    "empty": {
+      "configureRemoteTitle": "Externe URL configureren",
+      "configureRemoteDescription": "Stel je externe MediaMTX-URL in om streams in de browser te bekijken. Dit moet de URL zijn die je browser kan gebruiken om MediaMTX te bereiken.",
+      "goToConfig": "Naar configuratie",
+      "noStreamsTitle": "Geen actieve streams",
+      "noStreamsDescription": "MediaMTX is verbonden, maar er zijn momenteel geen actieve streams. Start een stream naar MediaMTX om hem hier te zien."
+    },
+    "density": {
+      "aria": "Rasterdichtheid",
+      "two": "Twee kolommen",
+      "three": "Drie kolommen",
+      "four": "Vier kolommen"
+    },
+    "card": {
+      "onlineSince": "Online sinds {date}",
+      "idle": "Inactief",
+      "live": "LIVE",
+      "stop": "Stoppen",
+      "play": "Afspelen",
+      "actionsAria": "Streamacties",
+      "viewRecordings": "Opnames bekijken"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Opnames",
+    "header": "Opnames",
+    "subHeader": "Blader door opnames van je verschillende streams",
+    "subHeaderForStream": "Opnames voor: {streamName}",
+    "invalidConfig": "Ongeldige configuratie",
+    "errors": {
+      "configTitle": "Configuratiefout",
+      "configDescription": "Kan de configuratie niet laden. Controleer je databaseverbinding.",
+      "directoryTitle": "Geen toegang tot opnamemap",
+      "directoryLead": "Kan de opnamemap niet lezen op",
+      "directoryHint": "Zorg dat de map bestaat en de juiste rechten heeft.",
+      "checkConfigBtn": "Configuratie controleren",
+      "readErrorTitle": "Kon opnames niet lezen",
+      "readErrorDescription": "Kon de opnamemap niet lezen. Zorg dat de map bestaat."
+    },
+    "empty": {
+      "noRecordingsTitle": "Geen opnames gevonden",
+      "noRecordingsLead": "Er zijn nog geen opnames opgeslagen. Opnames verschijnen hier zodra MediaMTX streams begint op te nemen.",
+      "noRecordingsHint": "Zorg dat <code>MTX_RECORD=yes</code> is ingesteld in je MediaMTX-configuratie.",
+      "noMatchingTitle": "Geen overeenkomende streams",
+      "noMatchingDescription": "Geen streams komen overeen met „{query}”."
+    },
+    "search": {
+      "placeholder": "Zoek streams"
+    },
+    "groups": {
+      "today": "Vandaag",
+      "yesterday": "Gisteren"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# opname} other {# opnames}}",
+      "latest": "Laatste {time}",
+      "viewBtn": "Bekijken"
+    },
+    "recordingCard": {
+      "stop": "Stoppen",
+      "play": "Afspelen",
+      "downloadAria": "Opname {filePath} downloaden",
+      "downloadError": "Fout bij het downloaden van de video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Instellingen",
+      "clientConfig": "Clientconfiguratie",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Configuratie",
+    "pageSubHeader": "Beheer je app-configuratie",
+    "invalidConfig": "Ongeldige configuratie",
+    "formFields": {
+      "oneValuePerLine": "Eén waarde per regel."
+    },
+    "clientForm": {
+      "title": "Applicatie-instellingen",
+      "description": "Verbindings- en opslagpaden die door MediaMTX Connect worden gebruikt.",
+      "sections": {
+        "mediamtxConnection": "MediaMTX-verbinding",
+        "storage": "Opslag"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Het adres van je MediaMTX-instantie. Binnen een Docker-netwerk kun je de containernaam gebruiken; anders het externe IP-adres of de hostnaam."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "De poort van de MediaMTX-API"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Dit is het via de browser bereikbare, naar buiten gerichte IP-adres of de hostnaam van je MediaMTX-server."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Map met MediaMTX-opnames (niet aanbevolen om te wijzigen bij gebruik van Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Map om gegenereerde schermafbeeldingen op te slaan (niet aanbevolen om te wijzigen bij gebruik van Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Resetten",
+        "submit": "Verzenden"
+      },
+      "toasts": {
+        "success": "Clientconfiguratie bijgewerkt",
+        "errorTitle": "Er is een probleem opgetreden bij het bijwerken van de clientconfiguratie",
+        "errorDescription": "Controleer de waarden in het formulier."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Logboek",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Logboek",
+          "limits": "Limieten"
+        },
+        "api": {
+          "http": "HTTP-API",
+          "metrics": "Metrieken",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Authenticatie"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Segmenten",
+          "corsProxies": "CORS / Proxies"
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Netwerk",
+          "iceServers": "ICE-servers",
+          "addServer": "Server toevoegen",
+          "noIceServers": "Geen ICE-servers geconfigureerd.",
+          "iceServerLabel": "ICE-server {index}",
+          "removeIceServer": "ICE-server verwijderen",
+          "iceFields": {
+            "url": "URL",
+            "username": "Gebruikersnaam",
+            "password": "Wachtwoord"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "Resetten",
+        "submit": "Verzenden"
+      },
+      "toasts": {
+        "success": "Globale configuratie bijgewerkt",
+        "errorTitle": "Er is een probleem opgetreden bij het bijwerken van de globale configuratie",
+        "errorDescription": "Controleer de waarden in het formulier."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",
+      "discard": "Weggooien",
+      "saveChanges": "Wijzigingen opslaan"
+    }
+  }
+}
