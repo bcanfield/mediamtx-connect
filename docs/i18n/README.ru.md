@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
+  🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
@@ -31,7 +31,7 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="Демонстрация MediaMTX Connect" width="720">
+  <img src="../../.github/assets/demo.gif" alt="Демонстрация MediaMTX Connect" width="720">
 </p>
 
 ## Как запустить
@@ -56,11 +56,11 @@ docker compose up -d
 
 Откройте http://localhost:3000, перейдите в **Config** и укажите свой MediaMTX.
 
-> Connect требует `api: yes` в `mediamtx.yml`. См. [прилагаемый файл](mediamtx.yml) как рабочий пример.
+> Connect требует `api: yes` в `mediamtx.yml`. См. [прилагаемый файл](../../mediamtx.yml) как рабочий пример.
 
 ## Документация
 
-[Архитектура](ARCHITECTURE.md) · [Возможности](docs/FEATURES.md) · [Участие](CONTRIBUTING.md)
+[Архитектура](../../ARCHITECTURE.md) · [Возможности](../../docs/FEATURES.md) · [Участие](../../CONTRIBUTING.md)
 
 > Примечание: документация для разработчиков ведётся только на английском. Интерфейс приложения доступен на русском по адресу `/ru`.
 

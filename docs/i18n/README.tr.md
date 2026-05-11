@@ -5,23 +5,23 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
+  🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
-  🇩🇪 <strong>Deutsch</strong> •
+  🇩🇪 <a href="./README.de.md">Deutsch</a> •
   🇷🇺 <a href="./README.ru.md">Русский</a> •
   🇫🇷 <a href="./README.fr.md">Français</a> •
   🇵🇹 <a href="./README.pt.md">Português</a> •
   🇯🇵 <a href="./README.ja.md">日本語</a> •
   🇵🇱 <a href="./README.pl.md">Polski</a> •
   🇰🇷 <a href="./README.ko.md">한국어</a> •
-  🇹🇷 <a href="./README.tr.md">Türkçe</a> •
+  🇹🇷 <strong>Türkçe</strong> •
   🇳🇱 <a href="./README.nl.md">Nederlands</a> •
   🇨🇿 <a href="./README.cs.md">Čeština</a>
 </p>
 
-<h4 align="center">Eine Web-Oberfläche für <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Streams ansehen, Aufzeichnungen durchsuchen und die Konfiguration im Browser bearbeiten.</h4>
+<h4 align="center"><a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a> için bir web arayüzü. Akışları izleyin, kayıtlara göz atın ve yapılandırmayı tarayıcıdan düzenleyin.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -31,22 +31,22 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect Demo" width="720">
+  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect demosu" width="720">
 </p>
 
-## So führst du es aus
+## Nasıl çalıştırılır
 
-Du hast bereits MediaMTX laufen? Stelle Connect daneben:
+MediaMTX zaten çalışıyor mu? Yanına Connect'i ekleyin:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /pfad/zu/aufzeichnungen:/recordings \
+  -v /kayit/yolu:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-Noch kein MediaMTX? Das mitgelieferte Compose startet beides:
+Henüz MediaMTX yok mu? Birlikte gelen compose ikisini de başlatır:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -54,16 +54,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Öffne http://localhost:3000, gehe zu **Config** und richte es auf dein MediaMTX aus.
+http://localhost:3000 adresini açın, **Config** bölümüne gidin ve MediaMTX'inize yönlendirin.
 
-> Connect benötigt `api: yes` in deiner `mediamtx.yml`. Siehe [die mitgelieferte Datei](mediamtx.yml) als funktionierende Referenz.
+> Connect, `mediamtx.yml` dosyanızda `api: yes` ayarına ihtiyaç duyar. Çalışan bir referans için [birlikte verilen dosyaya](../../mediamtx.yml) bakın.
 
-## Dokumentation
+## Belgeler
 
-[Architektur](ARCHITECTURE.md) · [Funktionen](docs/FEATURES.md) · [Mitwirken](CONTRIBUTING.md)
+[Mimari](../../ARCHITECTURE.md) · [Özellikler](../../docs/FEATURES.md) · [Katkıda bulunma](../../CONTRIBUTING.md)
 
-> Hinweis: Die Entwicklerdokumentation wird nur auf Englisch gepflegt. Die Anwendungsoberfläche ist auf Deutsch unter `/de` verfügbar.
+> Not: Geliştirici belgeleri yalnızca İngilizce olarak tutulur. Uygulama arayüzü `/tr` altında Türkçe olarak sunulur.
 
-## Lizenz
+## Lisans
 
 MIT
