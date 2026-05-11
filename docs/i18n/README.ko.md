@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
+  🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
@@ -15,13 +15,13 @@
   🇵🇹 <a href="./README.pt.md">Português</a> •
   🇯🇵 <a href="./README.ja.md">日本語</a> •
   🇵🇱 <a href="./README.pl.md">Polski</a> •
-  🇰🇷 <a href="./README.ko.md">한국어</a> •
+  🇰🇷 <strong>한국어</strong> •
   🇹🇷 <a href="./README.tr.md">Türkçe</a> •
-  🇳🇱 <strong>Nederlands</strong> •
+  🇳🇱 <a href="./README.nl.md">Nederlands</a> •
   🇨🇿 <a href="./README.cs.md">Čeština</a>
 </p>
 
-<h4 align="center">Een webinterface voor <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser.</h4>
+<h4 align="center"><a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>용 웹 인터페이스입니다. 브라우저에서 스트림을 보고, 녹화를 탐색하며, 설정을 편집할 수 있습니다.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -31,22 +31,22 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect demo" width="720">
+  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect 데모" width="720">
 </p>
 
-## Hoe uitvoeren
+## 실행 방법
 
-Heb je MediaMTX al draaien? Zet Connect ernaast:
+이미 MediaMTX를 실행 중인가요? 그 옆에 Connect를 추가하세요:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /pad/naar/opnames:/recordings \
+  -v /녹화/경로:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-Nog geen MediaMTX? De meegeleverde compose start beide:
+아직 MediaMTX가 없나요? 함께 제공되는 compose가 둘을 같이 시작합니다:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -54,16 +54,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Open http://localhost:3000, ga naar **Config** en richt het op je MediaMTX.
+http://localhost:3000을 열고 **Config**로 이동한 뒤, MediaMTX를 가리키도록 설정하세요.
 
-> Connect heeft `api: yes` nodig in je `mediamtx.yml`. Zie [het meegeleverde bestand](mediamtx.yml) als werkende referentie.
+> Connect는 `mediamtx.yml`에 `api: yes`가 필요합니다. 동작 예시는 [포함된 파일](../../mediamtx.yml)을 참고하세요.
 
-## Documentatie
+## 문서
 
-[Architectuur](ARCHITECTURE.md) · [Functies](docs/FEATURES.md) · [Bijdragen](CONTRIBUTING.md)
+[아키텍처](../../ARCHITECTURE.md) · [기능](../../docs/FEATURES.md) · [기여하기](../../CONTRIBUTING.md)
 
-> Opmerking: ontwikkelaarsdocumentatie wordt alleen in het Engels onderhouden. De applicatie-UI is in het Nederlands beschikbaar op `/nl`.
+> 참고: 개발자 문서는 영어로만 유지됩니다. 애플리케이션 UI는 `/ko`에서 한국어로 제공됩니다.
 
-## Licentie
+## 라이선스
 
 MIT

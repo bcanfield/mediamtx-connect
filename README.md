@@ -6,19 +6,19 @@
 
 <p align="center">
   🇺🇸 <strong>English</strong> •
-  🇪🇸 <a href="./README.es.md">Español</a> •
-  🇨🇳 <a href="./README.zh.md">中文</a> •
-  🇮🇹 <a href="./README.it.md">Italiano</a> •
-  🇩🇪 <a href="./README.de.md">Deutsch</a> •
-  🇷🇺 <a href="./README.ru.md">Русский</a> •
-  🇫🇷 <a href="./README.fr.md">Français</a> •
-  🇵🇹 <a href="./README.pt.md">Português</a> •
-  🇯🇵 <a href="./README.ja.md">日本語</a> •
-  🇵🇱 <a href="./README.pl.md">Polski</a> •
-  🇰🇷 <a href="./README.ko.md">한국어</a> •
-  🇹🇷 <a href="./README.tr.md">Türkçe</a> •
-  🇳🇱 <a href="./README.nl.md">Nederlands</a> •
-  🇨🇿 <a href="./README.cs.md">Čeština</a>
+  🇪🇸 <a href="./docs/i18n/README.es.md">Español</a> •
+  🇨🇳 <a href="./docs/i18n/README.zh.md">中文</a> •
+  🇮🇹 <a href="./docs/i18n/README.it.md">Italiano</a> •
+  🇩🇪 <a href="./docs/i18n/README.de.md">Deutsch</a> •
+  🇷🇺 <a href="./docs/i18n/README.ru.md">Русский</a> •
+  🇫🇷 <a href="./docs/i18n/README.fr.md">Français</a> •
+  🇵🇹 <a href="./docs/i18n/README.pt.md">Português</a> •
+  🇯🇵 <a href="./docs/i18n/README.ja.md">日本語</a> •
+  🇵🇱 <a href="./docs/i18n/README.pl.md">Polski</a> •
+  🇰🇷 <a href="./docs/i18n/README.ko.md">한국어</a> •
+  🇹🇷 <a href="./docs/i18n/README.tr.md">Türkçe</a> •
+  🇳🇱 <a href="./docs/i18n/README.nl.md">Nederlands</a> •
+  🇨🇿 <a href="./docs/i18n/README.cs.md">Čeština</a>
 </p>
 
 <h4 align="center">A web UI for <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Watch streams, browse recordings, and edit config from your browser.</h4>

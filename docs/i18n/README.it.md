@@ -5,10 +5,10 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
-  🇪🇸 <strong>Español</strong> •
+  🇺🇸 <a href="../../README.md">English</a> •
+  🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
-  🇮🇹 <a href="./README.it.md">Italiano</a> •
+  🇮🇹 <strong>Italiano</strong> •
   🇩🇪 <a href="./README.de.md">Deutsch</a> •
   🇷🇺 <a href="./README.ru.md">Русский</a> •
   🇫🇷 <a href="./README.fr.md">Français</a> •
@@ -21,7 +21,7 @@
   🇨🇿 <a href="./README.cs.md">Čeština</a>
 </p>
 
-<h4 align="center">Una interfaz web para <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</h4>
+<h4 align="center">Un'interfaccia web per <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Guarda i flussi, sfoglia le registrazioni e modifica la configurazione dal browser.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -31,22 +31,22 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="Demostración de MediaMTX Connect" width="720">
+  <img src="../../.github/assets/demo.gif" alt="Demo di MediaMTX Connect" width="720">
 </p>
 
-## Cómo ejecutarlo
+## Come eseguirlo
 
-¿Ya tienes MediaMTX en marcha? Añade Connect junto a él:
+Hai già MediaMTX in esecuzione? Aggiungi Connect al suo fianco:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /ruta/a/grabaciones:/recordings \
+  -v /percorso/delle/registrazioni:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-¿Aún no tienes MediaMTX? El compose incluido inicia ambos:
+Non hai ancora MediaMTX? Il compose incluso avvia entrambi:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -54,16 +54,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Abre http://localhost:3000, ve a **Configuración** y apúntalo a tu MediaMTX.
+Apri http://localhost:3000, vai su **Config** e puntalo al tuo MediaMTX.
 
-> Connect necesita `api: yes` en tu `mediamtx.yml`. Consulta [el archivo incluido](mediamtx.yml) como referencia funcional.
+> Connect richiede `api: yes` nel tuo `mediamtx.yml`. Vedi [il file incluso](../../mediamtx.yml) come riferimento funzionante.
 
-## Documentación
+## Documentazione
 
-[Arquitectura](ARCHITECTURE.md) · [Funcionalidades](docs/FEATURES.md) · [Contribuir](CONTRIBUTING.md)
+[Architettura](../../ARCHITECTURE.md) · [Funzionalità](../../docs/FEATURES.md) · [Contribuire](../../CONTRIBUTING.md)
 
-> Nota: la documentación para desarrolladores se mantiene en inglés. La interfaz de la aplicación está disponible en español en `/es`.
+> Nota: la documentazione per sviluppatori è mantenuta solo in inglese. L'interfaccia dell'applicazione è disponibile in italiano su `/it`.
 
-## Licencia
+## Licenza
 
 MIT

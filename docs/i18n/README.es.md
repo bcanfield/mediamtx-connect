@@ -5,9 +5,9 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
-  🇪🇸 <a href="./README.es.md">Español</a> •
-  🇨🇳 <strong>中文</strong> •
+  🇺🇸 <a href="../../README.md">English</a> •
+  🇪🇸 <strong>Español</strong> •
+  🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
   🇩🇪 <a href="./README.de.md">Deutsch</a> •
   🇷🇺 <a href="./README.ru.md">Русский</a> •
@@ -21,7 +21,7 @@
   🇨🇿 <a href="./README.cs.md">Čeština</a>
 </p>
 
-<h4 align="center">用于 <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a> 的网页界面。在浏览器中观看直播、浏览录像并编辑配置。</h4>
+<h4 align="center">Una interfaz web para <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -31,22 +31,22 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect 演示" width="720">
+  <img src="../../.github/assets/demo.gif" alt="Demostración de MediaMTX Connect" width="720">
 </p>
 
-## 运行方法
+## Cómo ejecutarlo
 
-已经在运行 MediaMTX 了？把 Connect 部署在它旁边即可：
+¿Ya tienes MediaMTX en marcha? Añade Connect junto a él:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /path/to/recordings:/recordings \
+  -v /ruta/a/grabaciones:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-还没有 MediaMTX？随附的 compose 会同时启动两者：
+¿Aún no tienes MediaMTX? El compose incluido inicia ambos:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -54,16 +54,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-打开 http://localhost:3000，进入 **Config**，将其指向你的 MediaMTX。
+Abre http://localhost:3000, ve a **Configuración** y apúntalo a tu MediaMTX.
 
-> Connect 需要在 `mediamtx.yml` 中设置 `api: yes`。可参考[随附文件](mediamtx.yml)作为可用示例。
+> Connect necesita `api: yes` en tu `mediamtx.yml`. Consulta [el archivo incluido](../../mediamtx.yml) como referencia funcional.
 
-## 文档
+## Documentación
 
-[架构](ARCHITECTURE.md) · [功能](docs/FEATURES.md) · [贡献指南](CONTRIBUTING.md)
+[Arquitectura](../../ARCHITECTURE.md) · [Funcionalidades](../../docs/FEATURES.md) · [Contribuir](../../CONTRIBUTING.md)
 
-> 注意：开发者文档仅以英文维护。应用界面在 `/zh` 下提供中文版本。
+> Nota: la documentación para desarrolladores se mantiene en inglés. La interfaz de la aplicación está disponible en español en `/es`.
 
-## 许可
+## Licencia
 
 MIT

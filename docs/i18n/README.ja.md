@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  🇺🇸 <a href="./README.md">English</a> •
+  🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
@@ -31,7 +31,7 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="MediaMTX Connect デモ" width="720">
+  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect デモ" width="720">
 </p>
 
 ## 実行方法
@@ -56,11 +56,11 @@ docker compose up -d
 
 http://localhost:3000 を開き、**Config** で MediaMTX を指定してください。
 
-> Connect には `mediamtx.yml` の `api: yes` が必要です。動作するリファレンスとして[同梱ファイル](mediamtx.yml)を参照してください。
+> Connect には `mediamtx.yml` の `api: yes` が必要です。動作するリファレンスとして[同梱ファイル](../../mediamtx.yml)を参照してください。
 
 ## ドキュメント
 
-[アーキテクチャ](ARCHITECTURE.md) · [機能](docs/FEATURES.md) · [コントリビュート](CONTRIBUTING.md)
+[アーキテクチャ](../../ARCHITECTURE.md) · [機能](../../docs/FEATURES.md) · [コントリビュート](../../CONTRIBUTING.md)
 
 > 注: 開発者向けドキュメントは英語のみで管理しています。アプリの UI は `/ja` で日本語をご利用いただけます。
 
