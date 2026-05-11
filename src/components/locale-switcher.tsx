@@ -33,6 +33,22 @@ const LANGUAGE_NAMES: Record<(typeof routing.locales)[number], string> = {
   tr: 'Türkçe',
   nl: 'Nederlands',
   cs: 'Čeština',
+  'zh-tw': '繁體中文',
+  'pt-br': 'Português (BR)',
+  id: 'Bahasa Indonesia',
+  ro: 'Română',
+  sv: 'Svenska',
+  da: 'Dansk',
+  no: 'Norsk',
+  fi: 'Suomi',
+  el: 'Ελληνικά',
+  hu: 'Magyar',
+  uk: 'Українська',
+  vi: 'Tiếng Việt',
+  tl: 'Tagalog',
+  th: 'ไทย',
+  hi: 'हिन्दी',
+  bn: 'বাংলা',
 }
 
 export function LocaleSwitcher() {

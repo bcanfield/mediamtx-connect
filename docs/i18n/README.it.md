@@ -18,7 +18,23 @@
   🇰🇷 <a href="./README.ko.md">한국어</a> •
   🇹🇷 <a href="./README.tr.md">Türkçe</a> •
   🇳🇱 <a href="./README.nl.md">Nederlands</a> •
-  🇨🇿 <a href="./README.cs.md">Čeština</a>
+  🇨🇿 <a href="./README.cs.md">Čeština</a> •
+  🇹🇼 <a href="./README.zh-tw.md">繁體中文</a> •
+  🇧🇷 <a href="./README.pt-br.md">Português (BR)</a> •
+  🇮🇩 <a href="./README.id.md">Bahasa Indonesia</a> •
+  🇷🇴 <a href="./README.ro.md">Română</a> •
+  🇸🇪 <a href="./README.sv.md">Svenska</a> •
+  🇩🇰 <a href="./README.da.md">Dansk</a> •
+  🇳🇴 <a href="./README.no.md">Norsk</a> •
+  🇫🇮 <a href="./README.fi.md">Suomi</a> •
+  🇬🇷 <a href="./README.el.md">Ελληνικά</a> •
+  🇭🇺 <a href="./README.hu.md">Magyar</a> •
+  🇺🇦 <a href="./README.uk.md">Українська</a> •
+  🇻🇳 <a href="./README.vi.md">Tiếng Việt</a> •
+  🇵🇭 <a href="./README.tl.md">Tagalog</a> •
+  🇹🇭 <a href="./README.th.md">ไทย</a> •
+  🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
+  🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
 <h4 align="center">Un'interfaccia web per <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Guarda i flussi, sfoglia le registrazioni e modifica la configurazione dal browser.</h4>

@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Web interface para sa MediaMTX. Manood ng mga stream, mag-browse ng mga recording, at i-edit ang configuration mula sa iyong browser."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Kinakailangan ang field na ito",
+      "mustBePositive": "Dapat na higit sa 0"
+    }
+  },
+  "Common": {
+    "retry": "Subukang muli",
+    "loading": "Naglo-load…",
+    "theme": {
+      "lightMode": "Light mode",
+      "darkMode": "Dark mode",
+      "switchToLight": "Lumipat sa light theme",
+      "switchToDark": "Lumipat sa dark theme"
+    },
+    "locale": {
+      "switchLanguage": "Magpalit ng wika"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Application",
+      "settings": "Mga setting"
+    },
+    "items": {
+      "live": "Live",
+      "recordings": "Mga recording",
+      "clientConfig": "Configuration ng client",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Live",
+    "header": "Mga stream",
+    "subHeader": "Live na view ng iyong mga aktibong stream",
+    "errors": {
+      "configTitle": "Error sa configuration",
+      "configDescription": "Hindi ma-load ang configuration. Pakisuri ang koneksyon sa database.",
+      "connectionTitle": "Hindi makakonekta sa MediaMTX",
+      "connectionLead": "Hindi maabot ang MediaMTX sa",
+      "connectionHint": "Tiyaking tumatakbo ang MediaMTX at tama ang URL sa configuration mo.",
+      "checkConfigBtn": "Suriin ang configuration"
+    },
+    "empty": {
+      "configureRemoteTitle": "I-configure ang remote URL",
+      "configureRemoteDescription": "I-set up ang iyong Remote MediaMTX URL para makapanood ng mga stream sa browser. Dapat itong URL na magagamit ng iyong browser para maabot ang MediaMTX.",
+      "goToConfig": "Pumunta sa configuration",
+      "noStreamsTitle": "Walang aktibong stream",
+      "noStreamsDescription": "Konektado ang MediaMTX ngunit walang aktibong stream sa kasalukuyan. Magsimula ng pag-stream sa MediaMTX para makita ito dito."
+    },
+    "density": {
+      "aria": "Densidad ng grid",
+      "two": "Dalawang column",
+      "three": "Tatlong column",
+      "four": "Apat na column"
+    },
+    "card": {
+      "onlineSince": "Online mula {date}",
+      "idle": "Walang ginagawa",
+      "live": "LIVE",
+      "stop": "Itigil",
+      "play": "I-play",
+      "actionsAria": "Mga aksyon sa stream",
+      "viewRecordings": "Tingnan ang mga recording"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Mga recording",
+    "header": "Mga recording",
+    "subHeader": "Mag-browse ng mga recording mula sa iba't ibang stream",
+    "subHeaderForStream": "Mga recording para sa: {streamName}",
+    "invalidConfig": "Hindi wastong configuration",
+    "errors": {
+      "configTitle": "Error sa configuration",
+      "configDescription": "Hindi ma-load ang configuration. Pakisuri ang koneksyon sa database.",
+      "directoryTitle": "Hindi ma-access ang recordings directory",
+      "directoryLead": "Hindi mabasa ang recordings directory sa",
+      "directoryHint": "Tiyaking umiiral ang directory at may tamang permissions ito.",
+      "checkConfigBtn": "Suriin ang configuration",
+      "readErrorTitle": "Hindi mabasa ang mga recording",
+      "readErrorDescription": "Hindi mabasa ang recordings directory. Tiyaking umiiral ang directory."
+    },
+    "empty": {
+      "noRecordingsTitle": "Walang nahanap na recording",
+      "noRecordingsLead": "Wala pang naka-save na recording. Lalabas dito ang mga recording kapag nagsimula nang mag-record ang MediaMTX ng mga stream.",
+      "noRecordingsHint": "Tiyaking nakatakda ang <code>MTX_RECORD=yes</code> sa iyong MediaMTX configuration.",
+      "noMatchingTitle": "Walang tumutugmang stream",
+      "noMatchingDescription": "Walang stream na tumutugma sa «{query}»."
+    },
+    "search": {
+      "placeholder": "Maghanap ng mga stream"
+    },
+    "groups": {
+      "today": "Ngayon",
+      "yesterday": "Kahapon"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# recording} other {# na recording}}",
+      "latest": "Pinakabago {time}",
+      "viewBtn": "Tingnan"
+    },
+    "recordingCard": {
+      "stop": "Itigil",
+      "play": "I-play",
+      "downloadAria": "I-download ang recording na {filePath}",
+      "downloadError": "Error sa pag-download ng video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Mga setting",
+      "clientConfig": "Configuration ng client",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Configuration",
+    "pageSubHeader": "Pamahalaan ang configuration ng iyong app",
+    "invalidConfig": "Hindi wastong configuration",
+    "formFields": {
+      "oneValuePerLine": "Isang value bawat linya."
+    },
+    "clientForm": {
+      "title": "Mga setting ng application",
+      "description": "Mga path ng koneksyon at imbakan na ginagamit ng MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Koneksyon sa MediaMTX",
+        "storage": "Imbakan"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Ang address ng iyong MediaMTX instance. Sa loob ng Docker Network, maaari mong gamitin ang container name. Kung hindi, gamitin ang external IP / hostname."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Ang port ng MediaMTX API"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Ito ang browser-accessible, externally-facing IP / hostname ng iyong MediaMTX server."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Directory na naglalaman ng mga MediaMTX recording (hindi inirerekomendang baguhin kung gumagamit ng Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Directory para sa pag-imbak ng mga ginawang screenshot (hindi inirerekomendang baguhin kung gumagamit ng Docker)"
+        }
+      },
+      "actions": {
+        "reset": "I-reset",
+        "submit": "Isumite"
+      },
+      "toasts": {
+        "success": "Na-update ang Client Config",
+        "errorTitle": "May problema sa pag-update ng Client Config",
+        "errorDescription": "Pakitingnang muli ang mga value ng form."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Logging",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Logging",
+          "limits": "Mga limitasyon"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Mga metric",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Authentication"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Mga segment",
+          "corsProxies": "CORS / Mga proxy"
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Network",
+          "iceServers": "Mga ICE server",
+          "addServer": "Magdagdag ng server",
+          "noIceServers": "Walang naka-configure na ICE server.",
+          "iceServerLabel": "ICE Server {index}",
+          "removeIceServer": "Alisin ang ICE server",
+          "iceFields": {
+            "url": "URL",
+            "username": "Username",
+            "password": "Password"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "I-reset",
+        "submit": "Isumite"
+      },
+      "toasts": {
+        "success": "Na-update ang Global Config",
+        "errorTitle": "May problema sa pag-update ng Global Config",
+        "errorDescription": "Pakitingnang muli ang mga value ng form."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",
+      "discard": "Itapon",
+      "saveChanges": "I-save ang mga pagbabago"
+    }
+  }
+}

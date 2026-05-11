@@ -18,7 +18,23 @@
   🇰🇷 <strong>한국어</strong> •
   🇹🇷 <a href="./README.tr.md">Türkçe</a> •
   🇳🇱 <a href="./README.nl.md">Nederlands</a> •
-  🇨🇿 <a href="./README.cs.md">Čeština</a>
+  🇨🇿 <a href="./README.cs.md">Čeština</a> •
+  🇹🇼 <a href="./README.zh-tw.md">繁體中文</a> •
+  🇧🇷 <a href="./README.pt-br.md">Português (BR)</a> •
+  🇮🇩 <a href="./README.id.md">Bahasa Indonesia</a> •
+  🇷🇴 <a href="./README.ro.md">Română</a> •
+  🇸🇪 <a href="./README.sv.md">Svenska</a> •
+  🇩🇰 <a href="./README.da.md">Dansk</a> •
+  🇳🇴 <a href="./README.no.md">Norsk</a> •
+  🇫🇮 <a href="./README.fi.md">Suomi</a> •
+  🇬🇷 <a href="./README.el.md">Ελληνικά</a> •
+  🇭🇺 <a href="./README.hu.md">Magyar</a> •
+  🇺🇦 <a href="./README.uk.md">Українська</a> •
+  🇻🇳 <a href="./README.vi.md">Tiếng Việt</a> •
+  🇵🇭 <a href="./README.tl.md">Tagalog</a> •
+  🇹🇭 <a href="./README.th.md">ไทย</a> •
+  🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
+  🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
 <h4 align="center"><a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>용 웹 인터페이스입니다. 브라우저에서 스트림을 보고, 녹화를 탐색하며, 설정을 편집할 수 있습니다.</h4>
