@@ -68,7 +68,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.2.0",
+    "@antfu/eslint-config": "^8.0.0",
     "@axe-core/playwright": "^4.11.3",
     "@eslint-react/eslint-plugin": "^2.7.2",
     "@next/eslint-plugin-next": "^16.1.4",
