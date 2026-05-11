@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { Download } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -16,6 +17,7 @@ export function DownloadButton({
   streamName: string
   filePath: string
 }) {
+  const t = useTranslations('Recordings.recordingCard')
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
 
@@ -47,12 +49,12 @@ export function DownloadButton({
         logger.error(
           `Failed to download video: ${response.status} ${response.statusText}`,
         )
-        toast.error('Error downloading video')
+        toast.error(t('downloadError'))
       }
     }
     catch (error) {
       logger.error('Error downloading video', error)
-      toast.error('Error downloading video')
+      toast.error(t('downloadError'))
     }
     setProgress(0)
     setLoading(false)
@@ -64,7 +66,7 @@ export function DownloadButton({
       className="w-full"
       variant="outline"
       size="sm"
-      aria-label={`Download recording ${filePath}`}
+      aria-label={t('downloadAria', { filePath })}
       onClick={handleDownload}
     >
       {loading

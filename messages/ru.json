@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Веб-интерфейс для MediaMTX. Смотрите трансляции, просматривайте записи и редактируйте конфигурацию в браузере."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Это поле обязательно",
+      "mustBePositive": "Должно быть больше 0"
+    }
+  },
+  "Common": {
+    "retry": "Повторить",
+    "loading": "Загрузка…",
+    "theme": {
+      "lightMode": "Светлая тема",
+      "darkMode": "Тёмная тема",
+      "switchToLight": "Переключить на светлую тему",
+      "switchToDark": "Переключить на тёмную тему"
+    },
+    "locale": {
+      "switchLanguage": "Сменить язык"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Приложение",
+      "settings": "Настройки"
+    },
+    "items": {
+      "live": "Эфир",
+      "recordings": "Записи",
+      "clientConfig": "Настройки клиента",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Эфир",
+    "header": "Трансляции",
+    "subHeader": "Активные трансляции в реальном времени",
+    "errors": {
+      "configTitle": "Ошибка конфигурации",
+      "configDescription": "Не удалось загрузить конфигурацию. Проверьте подключение к базе данных.",
+      "connectionTitle": "Не удаётся подключиться к MediaMTX",
+      "connectionLead": "Не удаётся обратиться к MediaMTX по адресу",
+      "connectionHint": "Убедитесь, что MediaMTX запущен и URL в настройках указан правильно.",
+      "checkConfigBtn": "Проверить настройки"
+    },
+    "empty": {
+      "configureRemoteTitle": "Настройте удалённый URL",
+      "configureRemoteDescription": "Укажите удалённый URL MediaMTX, чтобы смотреть трансляции в браузере. Это должен быть адрес, по которому ваш браузер может обращаться к MediaMTX.",
+      "goToConfig": "Перейти к настройкам",
+      "noStreamsTitle": "Активных трансляций нет",
+      "noStreamsDescription": "MediaMTX подключён, но сейчас нет активных трансляций. Запустите трансляцию в MediaMTX, чтобы увидеть её здесь."
+    },
+    "density": {
+      "aria": "Плотность сетки",
+      "two": "Два столбца",
+      "three": "Три столбца",
+      "four": "Четыре столбца"
+    },
+    "card": {
+      "onlineSince": "В сети с {date}",
+      "idle": "Простой",
+      "live": "В ЭФИРЕ",
+      "stop": "Остановить",
+      "play": "Воспроизвести",
+      "actionsAria": "Действия с трансляцией",
+      "viewRecordings": "Смотреть записи"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Записи",
+    "header": "Записи",
+    "subHeader": "Просматривайте записи разных трансляций",
+    "subHeaderForStream": "Записи для: {streamName}",
+    "invalidConfig": "Неверная конфигурация",
+    "errors": {
+      "configTitle": "Ошибка конфигурации",
+      "configDescription": "Не удалось загрузить конфигурацию. Проверьте подключение к базе данных.",
+      "directoryTitle": "Нет доступа к каталогу записей",
+      "directoryLead": "Не удалось прочитать каталог записей по пути",
+      "directoryHint": "Убедитесь, что каталог существует и имеет правильные права доступа.",
+      "checkConfigBtn": "Проверить настройки",
+      "readErrorTitle": "Не удалось прочитать записи",
+      "readErrorDescription": "Не удалось прочитать каталог записей. Убедитесь, что каталог существует."
+    },
+    "empty": {
+      "noRecordingsTitle": "Записи не найдены",
+      "noRecordingsLead": "Записи ещё не сохранены. Они появятся здесь, когда MediaMTX начнёт записывать трансляции.",
+      "noRecordingsHint": "Убедитесь, что в конфигурации MediaMTX задано <code>MTX_RECORD=yes</code>.",
+      "noMatchingTitle": "Подходящих трансляций нет",
+      "noMatchingDescription": "Ни одна трансляция не соответствует «{query}»."
+    },
+    "search": {
+      "placeholder": "Поиск трансляций"
+    },
+    "groups": {
+      "today": "Сегодня",
+      "yesterday": "Вчера"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# запись} few {# записи} many {# записей} other {# записи}}",
+      "latest": "Последняя {time}",
+      "viewBtn": "Просмотр"
+    },
+    "recordingCard": {
+      "stop": "Остановить",
+      "play": "Воспроизвести",
+      "downloadAria": "Скачать запись {filePath}",
+      "downloadError": "Ошибка при загрузке видео"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Настройки",
+      "clientConfig": "Настройки клиента",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Настройки",
+    "pageSubHeader": "Управление настройками приложения",
+    "invalidConfig": "Неверная конфигурация",
+    "formFields": {
+      "oneValuePerLine": "По одному значению в строке."
+    },
+    "clientForm": {
+      "title": "Параметры приложения",
+      "description": "Пути подключения и хранилища, используемые MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Подключение к MediaMTX",
+        "storage": "Хранилище"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Адрес вашего экземпляра MediaMTX. В Docker-сети можно использовать имя контейнера, иначе укажите внешний IP или имя хоста."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Порт API MediaMTX"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Доступный из браузера, внешний IP или имя хоста вашего сервера MediaMTX."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Каталог с записями MediaMTX (не рекомендуется менять при использовании Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Каталог для сохранения создаваемых скриншотов (не рекомендуется менять при использовании Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Сбросить",
+        "submit": "Отправить"
+      },
+      "toasts": {
+        "success": "Настройки клиента обновлены",
+        "errorTitle": "Произошла ошибка при обновлении настроек клиента",
+        "errorDescription": "Проверьте значения формы."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Логи",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Логи",
+          "limits": "Ограничения"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Метрики",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Сервер",
+          "tls": "TLS",
+          "auth": "Аутентификация"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Сервер",
+          "segments": "Сегменты",
+          "corsProxies": "CORS / Прокси"
+        },
+        "webrtc": {
+          "server": "Сервер",
+          "network": "Сеть",
+          "iceServers": "Серверы ICE",
+          "addServer": "Добавить сервер",
+          "noIceServers": "Серверы ICE не настроены.",
+          "iceServerLabel": "Сервер ICE {index}",
+          "removeIceServer": "Удалить сервер ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Имя пользователя",
+            "password": "Пароль"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "Сбросить",
+        "submit": "Отправить"
+      },
+      "toasts": {
+        "success": "Глобальная конфигурация обновлена",
+        "errorTitle": "Произошла ошибка при обновлении глобальной конфигурации",
+        "errorDescription": "Проверьте значения формы."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# несохранённое изменение} few {# несохранённых изменения} many {# несохранённых изменений} other {# несохранённых изменения}}",
+      "discard": "Отменить",
+      "saveChanges": "Сохранить изменения"
+    }
+  }
+}

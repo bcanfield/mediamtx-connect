@@ -1,11 +1,11 @@
 'use client'
 
-import dayjs from 'dayjs'
 import {
   Image as ImageIcon,
   PauseCircle,
   PlayCircle,
 } from 'lucide-react'
+import { useFormatter, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
@@ -37,6 +37,8 @@ export function RecordingCard({
   createdAt: Date
   fileSize: number
 }) {
+  const t = useTranslations('Recordings.recordingCard')
+  const format = useFormatter()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -72,7 +74,7 @@ export function RecordingCard({
     <Card data-testid="recording-card" className="flex flex-col overflow-hidden">
       <CardHeader className="flex-row items-center justify-between gap-2 space-y-0 pb-2">
         <CardTitle className="truncate font-mono text-sm">
-          {dayjs(createdAt).format('HH:mm:ss')}
+          {format.dateTime(createdAt, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
         </CardTitle>
         <span className="shrink-0 text-xs text-muted-foreground">{sizeMb}</span>
       </CardHeader>
@@ -119,13 +121,13 @@ export function RecordingCard({
             ? (
                 <>
                   <PauseCircle className="mr-2 size-4" />
-                  Stop
+                  {t('stop')}
                 </>
               )
             : (
                 <>
                   <PlayCircle className="mr-2 size-4" />
-                  Play
+                  {t('play')}
                 </>
               )}
         </Button>

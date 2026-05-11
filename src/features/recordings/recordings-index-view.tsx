@@ -1,10 +1,8 @@
 'use client'
 
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { FolderOpen, Image as ImageIcon, Search } from 'lucide-react'
+import { useFormatter, useTranslations } from 'next-intl'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import { EmptyState } from '@/components/empty-state'
@@ -18,8 +16,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-
-dayjs.extend(relativeTime)
+import { Link } from '@/i18n/navigation'
 
 interface StreamSummaryEntry {
   name: string
@@ -28,6 +25,7 @@ interface StreamSummaryEntry {
 }
 
 export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[] }) {
+  const t = useTranslations('Recordings')
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -43,7 +41,7 @@ export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[]
         <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search streams"
+          placeholder={t('search.placeholder')}
           value={query}
           onChange={e => setQuery(e.target.value)}
           className="pl-9"
@@ -54,8 +52,8 @@ export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[]
         ? (
             <EmptyState
               icon={FolderOpen}
-              title="No matching streams"
-              description={`No streams match "${query}".`}
+              title={t('empty.noMatchingTitle')}
+              description={t('empty.noMatchingDescription', { query })}
             />
           )
         : (
@@ -70,9 +68,10 @@ export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[]
 }
 
 function StreamSummaryCard({ stream }: { stream: StreamSummaryEntry }) {
+  const t = useTranslations('Recordings.card')
+  const format = useFormatter()
   const [thumbnailError, setThumbnailError] = useState(false)
-  const recordingsLabel = stream.count === 1 ? 'Recording' : 'Recordings'
-  const latest = stream.latestMtime ? dayjs(stream.latestMtime).fromNow() : null
+  const latest = stream.latestMtime ? format.relativeTime(new Date(stream.latestMtime)) : null
 
   return (
     <Card data-testid="stream-summary-card" className="flex flex-col overflow-hidden">
@@ -100,22 +99,18 @@ function StreamSummaryCard({ stream }: { stream: StreamSummaryEntry }) {
       </CardHeader>
 
       <CardContent className="flex-1 pb-3 text-sm text-muted-foreground">
-        {stream.count}
-        {' '}
-        {recordingsLabel}
+        {t('recordingCount', { count: stream.count })}
         {latest && (
           <>
             {' · '}
-            Latest
-            {' '}
-            {latest}
+            {t('latest', { time: latest })}
           </>
         )}
       </CardContent>
 
       <CardFooter>
         <Link href={`/recordings/${stream.name}`} className="w-full">
-          <Button variant="outline" className="w-full">View</Button>
+          <Button variant="outline" className="w-full">{t('viewBtn')}</Button>
         </Link>
       </CardFooter>
     </Card>

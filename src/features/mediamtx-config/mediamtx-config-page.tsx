@@ -1,3 +1,5 @@
+import { getTranslations } from 'next-intl/server'
+
 import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
 
@@ -6,21 +8,21 @@ import { getGlobalConfig } from './mediamtx-config.queries'
 
 export const dynamic = 'force-dynamic'
 
-const crumbs = [
-  { label: 'Settings' },
-  { label: 'MediaMTX' },
-]
-
 export async function MediaMTXConfigPage() {
+  const t = await getTranslations('Config')
+  const crumbs = [
+    { label: t('crumbs.settings') },
+    { label: t('crumbs.mediamtx') },
+  ]
   const globalConf = await getGlobalConfig()
 
   return (
     <>
       <PageHeader crumbs={crumbs} />
-      <PageLayout header="Config" subHeader="Manage your App Configuration">
+      <PageLayout header={t('pageHeader')} subHeader={t('pageSubHeader')}>
         {globalConf
           ? <MediaMTXConfigForm globalConf={globalConf} />
-          : <div>Invalid Config</div>}
+          : <div>{t('invalidConfig')}</div>}
       </PageLayout>
     </>
   )

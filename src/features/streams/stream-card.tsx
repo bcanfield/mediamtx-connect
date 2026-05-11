@@ -1,6 +1,5 @@
 'use client'
 
-import dayjs from 'dayjs'
 import {
   Film,
   Image as ImageIcon,
@@ -8,8 +7,8 @@ import {
   PauseCircle,
   PlayCircle,
 } from 'lucide-react'
+import { useFormatter, useTranslations } from 'next-intl'
 import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
@@ -32,6 +31,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { VideoPlayer } from '@/components/video-player'
+import { Link } from '@/i18n/navigation'
 
 const PLAY_PARAM = 'play'
 
@@ -48,6 +48,8 @@ export function StreamCard({
   remoteMediaMtxUrl: string
   priority?: boolean
 }) {
+  const t = useTranslations('Streams.card')
+  const format = useFormatter()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -83,14 +85,14 @@ export function StreamCard({
           <CardTitle className="truncate text-base">{streamName}</CardTitle>
           <p className="mt-1 text-xs text-muted-foreground">
             {readyTime
-              ? `Online since ${dayjs(readyTime).format('MMM D, h:mm A')}`
-              : 'Idle'}
+              ? t('onlineSince', { date: format.dateTime(new Date(readyTime), { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) })
+              : t('idle')}
           </p>
         </div>
         {isLive && (
           <Badge variant="destructive" className="shrink-0">
             <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-destructive-foreground" />
-            LIVE
+            {t('live')}
           </Badge>
         )}
       </CardHeader>
@@ -136,20 +138,20 @@ export function StreamCard({
             ? (
                 <>
                   <PauseCircle className="mr-2 size-4" />
-                  Stop
+                  {t('stop')}
                 </>
               )
             : (
                 <>
                   <PlayCircle className="mr-2 size-4" />
-                  Play
+                  {t('play')}
                 </>
               )}
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" aria-label="Stream actions">
+            <Button variant="outline" size="icon" aria-label={t('actionsAria')}>
               <MoreVertical className="size-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -159,7 +161,7 @@ export function StreamCard({
             <DropdownMenuItem asChild>
               <Link href={`/recordings/${streamName}`}>
                 <Film className="mr-2 size-4" />
-                View recordings
+                {t('viewRecordings')}
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
