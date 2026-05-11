@@ -1,6 +1,7 @@
 'use client'
 
 import { Moon, Sun } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
@@ -15,6 +16,7 @@ import { cn } from '@/lib/utils'
 const TRANSITION_DURATION_MS = 450
 
 export function ModeToggle() {
+  const t = useTranslations('Common.theme')
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -24,7 +26,8 @@ export function ModeToggle() {
   }, [])
 
   const isDark = mounted && resolvedTheme === 'dark'
-  const label = isDark ? 'Light mode' : 'Dark mode'
+  const label = isDark ? t('lightMode') : t('darkMode')
+  const ariaLabel = isDark ? t('switchToLight') : t('switchToDark')
 
   const toggle = useCallback(() => {
     const button = buttonRef.current
@@ -75,7 +78,7 @@ export function ModeToggle() {
           ref={buttonRef}
           onClick={toggle}
           tooltip={label}
-          aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+          aria-label={ariaLabel}
         >
           <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
             <Sun

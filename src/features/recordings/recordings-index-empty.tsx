@@ -1,24 +1,21 @@
 import { FolderOpen } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 import { EmptyState } from '@/components/empty-state'
 
-export function RecordingsIndexEmpty() {
+export async function RecordingsIndexEmpty() {
+  const t = await getTranslations('Recordings.empty')
   return (
     <EmptyState
       icon={FolderOpen}
-      title="No Recordings Found"
+      title={t('noRecordingsTitle')}
       description={(
         <>
-          <p>
-            No recordings have been saved yet. Recordings will appear here once
-            MediaMTX starts recording streams.
-          </p>
+          <p>{t('noRecordingsLead')}</p>
           <p className="mt-2">
-            Make sure
-            {' '}
-            <code className="rounded bg-muted px-1">MTX_RECORD=yes</code>
-            {' '}
-            is set in your MediaMTX configuration.
+            {t.rich('noRecordingsHint', {
+              code: chunks => <code className="rounded bg-muted px-1">{chunks}</code>,
+            })}
           </p>
         </>
       )}

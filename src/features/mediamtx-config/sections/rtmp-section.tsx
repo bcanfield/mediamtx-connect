@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,10 +14,11 @@ import {
 import { SwitchField, TextField } from '../form-fields'
 
 export function RtmpSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.rtmp')
   return (
     <Card>
       <CardHeader>
-        <CardTitle>RTMP</CardTitle>
+        <CardTitle>{t('rtmp')}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <SwitchField
