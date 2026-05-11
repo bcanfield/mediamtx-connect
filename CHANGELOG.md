@@ -1,3 +1,9 @@
+## [2.1.0](https://github.com/bcanfield/mediamtx-connect/compare/2.0.1...2.1.0) (2026-05-11)
+
+### Features
+
+* Expand i18n to 30 locales with translation-status guard ([3470ef5](https://github.com/bcanfield/mediamtx-connect/commit/3470ef5dd56431b5cb547ccf68fc9d794c13a603))
+
 ## [2.0.1](https://github.com/bcanfield/mediamtx-connect/compare/2.0.0...2.0.1) (2026-05-11)
 
 ### Bug Fixes
