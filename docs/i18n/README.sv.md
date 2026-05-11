@@ -10,7 +10,7 @@
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
   🇩🇪 <a href="./README.de.md">Deutsch</a> •
-  🇷🇺 <strong>Русский</strong> •
+  🇷🇺 <a href="./README.ru.md">Русский</a> •
   🇫🇷 <a href="./README.fr.md">Français</a> •
   🇵🇹 <a href="./README.pt.md">Português</a> •
   🇯🇵 <a href="./README.ja.md">日本語</a> •
@@ -23,7 +23,7 @@
   🇧🇷 <a href="./README.pt-br.md">Português (BR)</a> •
   🇮🇩 <a href="./README.id.md">Bahasa Indonesia</a> •
   🇷🇴 <a href="./README.ro.md">Română</a> •
-  🇸🇪 <a href="./README.sv.md">Svenska</a> •
+  🇸🇪 <strong>Svenska</strong> •
   🇩🇰 <a href="./README.da.md">Dansk</a> •
   🇳🇴 <a href="./README.no.md">Norsk</a> •
   🇫🇮 <a href="./README.fi.md">Suomi</a> •
@@ -37,7 +37,7 @@
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
-<h4 align="center">Веб-интерфейс для <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Смотрите трансляции, просматривайте записи и редактируйте конфигурацию в браузере.</h4>
+<h4 align="center">Ett webbgränssnitt för <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Titta på strömmar, bläddra bland inspelningar och redigera konfigurationen från webbläsaren.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -47,22 +47,22 @@
 </p>
 
 <p align="center">
-  <img src="../../.github/assets/demo.gif" alt="Демонстрация MediaMTX Connect" width="720">
+  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect-demo" width="720">
 </p>
 
-## Как запустить
+## Så här kör du det
 
-Уже используете MediaMTX? Поднимите Connect рядом с ним:
+Kör du redan MediaMTX? Lägg Connect bredvid den:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /путь/к/записям:/recordings \
+  -v /sokvag/till/inspelningar:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-Ещё нет MediaMTX? Прилагаемый compose запускает оба:
+Har du ingen MediaMTX än? Den medföljande compose-filen startar båda:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -70,16 +70,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Откройте http://localhost:3000, перейдите в **Config** и укажите свой MediaMTX.
+Öppna http://localhost:3000, gå till **Config** och peka det mot din MediaMTX.
 
-> Connect требует `api: yes` в `mediamtx.yml`. См. [прилагаемый файл](../../mediamtx.yml) как рабочий пример.
+> Connect behöver `api: yes` i din `mediamtx.yml`. Se [den inkluderade filen](../../mediamtx.yml) som en fungerande referens.
 
-## Документация
+## Dokumentation
 
-[Архитектура](../../ARCHITECTURE.md) · [Возможности](../../docs/FEATURES.md) · [Участие](../../CONTRIBUTING.md)
+[Arkitektur](../../ARCHITECTURE.md) · [Funktioner](../../docs/FEATURES.md) · [Bidra](../../CONTRIBUTING.md)
 
-> Примечание: документация для разработчиков ведётся только на английском. Интерфейс приложения доступен на русском по адресу `/ru`.
+> Obs: utvecklardokumentation underhålls endast på engelska. Applikationens gränssnitt finns på svenska på `/sv`.
 
-## Лицензия
+## Licens
 
 MIT

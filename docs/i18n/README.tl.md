@@ -10,7 +10,7 @@
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
   🇩🇪 <a href="./README.de.md">Deutsch</a> •
-  🇷🇺 <strong>Русский</strong> •
+  🇷🇺 <a href="./README.ru.md">Русский</a> •
   🇫🇷 <a href="./README.fr.md">Français</a> •
   🇵🇹 <a href="./README.pt.md">Português</a> •
   🇯🇵 <a href="./README.ja.md">日本語</a> •
@@ -31,13 +31,13 @@
   🇭🇺 <a href="./README.hu.md">Magyar</a> •
   🇺🇦 <a href="./README.uk.md">Українська</a> •
   🇻🇳 <a href="./README.vi.md">Tiếng Việt</a> •
-  🇵🇭 <a href="./README.tl.md">Tagalog</a> •
+  🇵🇭 <strong>Tagalog</strong> •
   🇹🇭 <a href="./README.th.md">ไทย</a> •
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
-<h4 align="center">Веб-интерфейс для <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Смотрите трансляции, просматривайте записи и редактируйте конфигурацию в браузере.</h4>
+<h4 align="center">Isang web interface para sa <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Manood ng mga stream, mag-browse ng mga recording, at i-edit ang configuration mula sa iyong browser.</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -47,22 +47,22 @@
 </p>
 
 <p align="center">
-  <img src="../../.github/assets/demo.gif" alt="Демонстрация MediaMTX Connect" width="720">
+  <img src="../../.github/assets/demo.gif" alt="Demo ng MediaMTX Connect" width="720">
 </p>
 
-## Как запустить
+## Paano patakbuhin
 
-Уже используете MediaMTX? Поднимите Connect рядом с ним:
+May tumatakbo ka nang MediaMTX? Ilagay ang Connect sa tabi nito:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /путь/к/записям:/recordings \
+  -v /landas/sa/mga-recording:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-Ещё нет MediaMTX? Прилагаемый compose запускает оба:
+Wala pang MediaMTX? Ang kasamang compose ay nagsisimula ng pareho:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -70,16 +70,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Откройте http://localhost:3000, перейдите в **Config** и укажите свой MediaMTX.
+Buksan ang http://localhost:3000, pumunta sa **Config**, at ituro ito sa iyong MediaMTX.
 
-> Connect требует `api: yes` в `mediamtx.yml`. См. [прилагаемый файл](../../mediamtx.yml) как рабочий пример.
+> Kailangan ng Connect ng `api: yes` sa iyong `mediamtx.yml`. Tingnan ang [kasamang file](../../mediamtx.yml) bilang gumaganang reference.
 
-## Документация
+## Dokumentasyon
 
-[Архитектура](../../ARCHITECTURE.md) · [Возможности](../../docs/FEATURES.md) · [Участие](../../CONTRIBUTING.md)
+[Arkitektura](../../ARCHITECTURE.md) · [Mga tampok](../../docs/FEATURES.md) · [Mag-ambag](../../CONTRIBUTING.md)
 
-> Примечание: документация для разработчиков ведётся только на английском. Интерфейс приложения доступен на русском по адресу `/ru`.
+> Tandaan: ang dokumentasyon para sa developer ay nasa English lamang. Available ang UI ng application sa Tagalog sa `/tl`.
 
-## Лицензия
+## Lisensya
 
 MIT
