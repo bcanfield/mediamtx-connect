@@ -18,7 +18,23 @@
   🇰🇷 <a href="./docs/i18n/README.ko.md">한국어</a> •
   🇹🇷 <a href="./docs/i18n/README.tr.md">Türkçe</a> •
   🇳🇱 <a href="./docs/i18n/README.nl.md">Nederlands</a> •
-  🇨🇿 <a href="./docs/i18n/README.cs.md">Čeština</a>
+  🇨🇿 <a href="./docs/i18n/README.cs.md">Čeština</a> •
+  🇹🇼 <a href="./docs/i18n/README.zh-tw.md">繁體中文</a> •
+  🇧🇷 <a href="./docs/i18n/README.pt-br.md">Português (BR)</a> •
+  🇮🇩 <a href="./docs/i18n/README.id.md">Bahasa Indonesia</a> •
+  🇷🇴 <a href="./docs/i18n/README.ro.md">Română</a> •
+  🇸🇪 <a href="./docs/i18n/README.sv.md">Svenska</a> •
+  🇩🇰 <a href="./docs/i18n/README.da.md">Dansk</a> •
+  🇳🇴 <a href="./docs/i18n/README.no.md">Norsk</a> •
+  🇫🇮 <a href="./docs/i18n/README.fi.md">Suomi</a> •
+  🇬🇷 <a href="./docs/i18n/README.el.md">Ελληνικά</a> •
+  🇭🇺 <a href="./docs/i18n/README.hu.md">Magyar</a> •
+  🇺🇦 <a href="./docs/i18n/README.uk.md">Українська</a> •
+  🇻🇳 <a href="./docs/i18n/README.vi.md">Tiếng Việt</a> •
+  🇵🇭 <a href="./docs/i18n/README.tl.md">Tagalog</a> •
+  🇹🇭 <a href="./docs/i18n/README.th.md">ไทย</a> •
+  🇮🇳 <a href="./docs/i18n/README.hi.md">हिन्दी</a> •
+  🇧🇩 <a href="./docs/i18n/README.bn.md">বাংলা</a>
 </p>
 
 <h4 align="center">A web UI for <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Watch streams, browse recordings, and edit config from your browser.</h4>

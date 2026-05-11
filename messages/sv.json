@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webbgränssnitt för MediaMTX. Titta på strömmar, bläddra bland inspelningar och redigera konfigurationen från webbläsaren."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Detta fält är obligatoriskt",
+      "mustBePositive": "Måste vara större än 0"
+    }
+  },
+  "Common": {
+    "retry": "Försök igen",
+    "loading": "Laddar…",
+    "theme": {
+      "lightMode": "Ljust läge",
+      "darkMode": "Mörkt läge",
+      "switchToLight": "Byt till ljust tema",
+      "switchToDark": "Byt till mörkt tema"
+    },
+    "locale": {
+      "switchLanguage": "Byt språk"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Applikation",
+      "settings": "Inställningar"
+    },
+    "items": {
+      "live": "Live",
+      "recordings": "Inspelningar",
+      "clientConfig": "Klientkonfiguration",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Live",
+    "header": "Strömmar",
+    "subHeader": "Livevisningar av dina aktiva strömmar",
+    "errors": {
+      "configTitle": "Konfigurationsfel",
+      "configDescription": "Det gick inte att läsa in konfigurationen. Kontrollera din databasanslutning.",
+      "connectionTitle": "Kan inte ansluta till MediaMTX",
+      "connectionLead": "Kan inte nå MediaMTX på",
+      "connectionHint": "Säkerställ att MediaMTX körs och att URL:en i din konfiguration är korrekt.",
+      "checkConfigBtn": "Kontrollera konfiguration"
+    },
+    "empty": {
+      "configureRemoteTitle": "Konfigurera fjärr-URL",
+      "configureRemoteDescription": "Ange din fjärr-URL för MediaMTX för att se strömmar i webbläsaren. Detta ska vara URL:en som din webbläsare kan använda för att nå MediaMTX.",
+      "goToConfig": "Gå till konfiguration",
+      "noStreamsTitle": "Inga aktiva strömmar",
+      "noStreamsDescription": "MediaMTX är ansluten men det finns inga aktiva strömmar just nu. Starta en sändning till MediaMTX för att se den här."
+    },
+    "density": {
+      "aria": "Rutnätsdensitet",
+      "two": "Två kolumner",
+      "three": "Tre kolumner",
+      "four": "Fyra kolumner"
+    },
+    "card": {
+      "onlineSince": "Online sedan {date}",
+      "idle": "Inaktiv",
+      "live": "LIVE",
+      "stop": "Stopp",
+      "play": "Spela upp",
+      "actionsAria": "Strömåtgärder",
+      "viewRecordings": "Visa inspelningar"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Inspelningar",
+    "header": "Inspelningar",
+    "subHeader": "Bläddra bland inspelningarna från dina olika strömmar",
+    "subHeaderForStream": "Inspelningar för: {streamName}",
+    "invalidConfig": "Ogiltig konfiguration",
+    "errors": {
+      "configTitle": "Konfigurationsfel",
+      "configDescription": "Det gick inte att läsa in konfigurationen. Kontrollera din databasanslutning.",
+      "directoryTitle": "Kan inte komma åt inspelningsmappen",
+      "directoryLead": "Det går inte att läsa inspelningsmappen i",
+      "directoryHint": "Säkerställ att mappen finns och har rätt behörigheter.",
+      "checkConfigBtn": "Kontrollera konfiguration",
+      "readErrorTitle": "Det gick inte att läsa inspelningarna",
+      "readErrorDescription": "Det gick inte att läsa inspelningsmappen. Säkerställ att mappen finns."
+    },
+    "empty": {
+      "noRecordingsTitle": "Inga inspelningar hittades",
+      "noRecordingsLead": "Inga inspelningar har sparats än. Inspelningar visas här när MediaMTX börjar spela in strömmar.",
+      "noRecordingsHint": "Säkerställ att <code>MTX_RECORD=yes</code> är inställt i din MediaMTX-konfiguration.",
+      "noMatchingTitle": "Inga matchande strömmar",
+      "noMatchingDescription": "Ingen ström matchar ”{query}”."
+    },
+    "search": {
+      "placeholder": "Sök strömmar"
+    },
+    "groups": {
+      "today": "Idag",
+      "yesterday": "Igår"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# inspelning} other {# inspelningar}}",
+      "latest": "Senaste {time}",
+      "viewBtn": "Visa"
+    },
+    "recordingCard": {
+      "stop": "Stopp",
+      "play": "Spela upp",
+      "downloadAria": "Ladda ner inspelning {filePath}",
+      "downloadError": "Fel vid nedladdning av video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Inställningar",
+      "clientConfig": "Klientkonfiguration",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Konfiguration",
+    "pageSubHeader": "Hantera din appkonfiguration",
+    "invalidConfig": "Ogiltig konfiguration",
+    "formFields": {
+      "oneValuePerLine": "Ett värde per rad."
+    },
+    "clientForm": {
+      "title": "Applikationsinställningar",
+      "description": "Anslutnings- och lagringsvägar som används av MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "MediaMTX-anslutning",
+        "storage": "Lagring"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Adressen till din MediaMTX-instans. I ett Docker-nätverk kan du använda containernamnet; annars använder du extern IP eller värdnamn."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Porten för MediaMTX-API:et"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Detta är den webbläsartillgängliga, utåtriktade IP-adressen eller värdnamnet för din MediaMTX-server."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Mapp som innehåller MediaMTX-inspelningar (rekommenderas inte att ändra om du använder Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Mapp att lagra genererade skärmdumpar i (rekommenderas inte att ändra om du använder Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Återställ",
+        "submit": "Skicka"
+      },
+      "toasts": {
+        "success": "Klientkonfigurationen har uppdaterats",
+        "errorTitle": "Det uppstod ett problem vid uppdatering av klientkonfigurationen",
+        "errorDescription": "Kontrollera formulärets värden."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Loggning",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Loggning",
+          "limits": "Begränsningar"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Mätvärden",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Autentisering"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Segment",
+          "corsProxies": "CORS / Proxy"
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Nätverk",
+          "iceServers": "ICE-servrar",
+          "addServer": "Lägg till server",
+          "noIceServers": "Inga ICE-servrar konfigurerade.",
+          "iceServerLabel": "ICE-server {index}",
+          "removeIceServer": "Ta bort ICE-server",
+          "iceFields": {
+            "url": "URL",
+            "username": "Användarnamn",
+            "password": "Lösenord"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "Återställ",
+        "submit": "Skicka"
+      },
+      "toasts": {
+        "success": "Den globala konfigurationen har uppdaterats",
+        "errorTitle": "Det uppstod ett problem vid uppdatering av den globala konfigurationen",
+        "errorDescription": "Kontrollera formulärets värden."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",
+      "discard": "Kassera",
+      "saveChanges": "Spara ändringar"
+    }
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Web-käyttöliittymä MediaMTX:lle. Katso striimejä, selaa tallenteita ja muokkaa asetuksia selaimessasi."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Tämä kenttä on pakollinen",
+      "mustBePositive": "Täytyy olla suurempi kuin 0"
+    }
+  },
+  "Common": {
+    "retry": "Yritä uudelleen",
+    "loading": "Ladataan…",
+    "theme": {
+      "lightMode": "Vaalea tila",
+      "darkMode": "Tumma tila",
+      "switchToLight": "Vaihda vaaleaan teemaan",
+      "switchToDark": "Vaihda tummaan teemaan"
+    },
+    "locale": {
+      "switchLanguage": "Vaihda kieli"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Sovellus",
+      "settings": "Asetukset"
+    },
+    "items": {
+      "live": "Suora",
+      "recordings": "Tallenteet",
+      "clientConfig": "Asiakassovelluksen asetukset",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Suora",
+    "header": "Striimit",
+    "subHeader": "Aktiivisten striimiesi suoria näkymiä",
+    "errors": {
+      "configTitle": "Määritysvirhe",
+      "configDescription": "Asetuksia ei voi ladata. Tarkista tietokantayhteytesi.",
+      "connectionTitle": "MediaMTX:ään ei voi yhdistää",
+      "connectionLead": "MediaMTX:ää ei tavoiteta osoitteesta",
+      "connectionHint": "Varmista, että MediaMTX on käynnissä ja että asetustesi URL on oikein.",
+      "checkConfigBtn": "Tarkista asetukset"
+    },
+    "empty": {
+      "configureRemoteTitle": "Määritä etä-URL",
+      "configureRemoteDescription": "Aseta etä-MediaMTX-URL nähdäksesi striimit selaimessa. Tämän tulee olla URL, jonka selaimesi voi käyttää MediaMTX:n tavoittamiseen.",
+      "goToConfig": "Mene asetuksiin",
+      "noStreamsTitle": "Ei aktiivisia striimejä",
+      "noStreamsDescription": "MediaMTX on yhdistetty, mutta tällä hetkellä ei ole aktiivisia striimejä. Käynnistä striimaus MediaMTX:ään nähdäksesi sen täällä."
+    },
+    "density": {
+      "aria": "Ruudukon tiheys",
+      "two": "Kaksi saraketta",
+      "three": "Kolme saraketta",
+      "four": "Neljä saraketta"
+    },
+    "card": {
+      "onlineSince": "Verkossa lähtien {date}",
+      "idle": "Käyttämättömänä",
+      "live": "SUORA",
+      "stop": "Pysäytä",
+      "play": "Toista",
+      "actionsAria": "Striimin toiminnot",
+      "viewRecordings": "Näytä tallenteet"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Tallenteet",
+    "header": "Tallenteet",
+    "subHeader": "Selaa eri striimiesi tallenteita",
+    "subHeaderForStream": "Tallenteet kohteelle: {streamName}",
+    "invalidConfig": "Virheellinen asetus",
+    "errors": {
+      "configTitle": "Määritysvirhe",
+      "configDescription": "Asetuksia ei voi ladata. Tarkista tietokantayhteytesi.",
+      "directoryTitle": "Tallennushakemistoon ei voi päästä",
+      "directoryLead": "Tallennushakemistoa ei voi lukea sijainnissa",
+      "directoryHint": "Varmista, että hakemisto on olemassa ja sillä on oikeat käyttöoikeudet.",
+      "checkConfigBtn": "Tarkista asetukset",
+      "readErrorTitle": "Tallenteita ei voi lukea",
+      "readErrorDescription": "Tallennushakemistoa ei voi lukea. Varmista, että hakemisto on olemassa."
+    },
+    "empty": {
+      "noRecordingsTitle": "Tallenteita ei löytynyt",
+      "noRecordingsLead": "Tallenteita ei ole vielä tallennettu. Tallenteet ilmestyvät tähän heti, kun MediaMTX alkaa tallentaa striimejä.",
+      "noRecordingsHint": "Varmista, että MediaMTX-asetuksissasi on määritetty <code>MTX_RECORD=yes</code>.",
+      "noMatchingTitle": "Ei vastaavia striimejä",
+      "noMatchingDescription": "Mikään striimi ei vastaa hakua ”{query}”."
+    },
+    "search": {
+      "placeholder": "Etsi striimejä"
+    },
+    "groups": {
+      "today": "Tänään",
+      "yesterday": "Eilen"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# tallenne} other {# tallennetta}}",
+      "latest": "Viimeisin {time}",
+      "viewBtn": "Näytä"
+    },
+    "recordingCard": {
+      "stop": "Pysäytä",
+      "play": "Toista",
+      "downloadAria": "Lataa tallenne {filePath}",
+      "downloadError": "Virhe videon latauksessa"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Asetukset",
+      "clientConfig": "Asiakassovelluksen asetukset",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Asetukset",
+    "pageSubHeader": "Hallitse sovellustesi asetuksia",
+    "invalidConfig": "Virheellinen asetus",
+    "formFields": {
+      "oneValuePerLine": "Yksi arvo per rivi."
+    },
+    "clientForm": {
+      "title": "Sovelluksen asetukset",
+      "description": "MediaMTX Connectin käyttämät yhteys- ja tallennuspolut.",
+      "sections": {
+        "mediamtxConnection": "MediaMTX-yhteys",
+        "storage": "Tallennus"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "MediaMTX-instanssisi osoite. Docker-verkossa voit käyttää säilön nimeä; muutoin käytä ulkoista IP-osoitetta tai isäntänimeä."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "MediaMTX-API:n portti"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Tämä on MediaMTX-palvelimesi selaimesta tavoitettavissa oleva, ulospäin näkyvä IP tai isäntänimi."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Hakemisto, joka sisältää MediaMTX-tallenteet (ei suositella muutettavaksi, jos käytät Dockeria)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Hakemisto luotuihin kuvakaappauksiin (ei suositella muutettavaksi, jos käytät Dockeria)"
+        }
+      },
+      "actions": {
+        "reset": "Palauta",
+        "submit": "Lähetä"
+      },
+      "toasts": {
+        "success": "Asiakkaan asetukset päivitetty",
+        "errorTitle": "Asiakkaan asetusten päivittämisessä tapahtui ongelma",
+        "errorDescription": "Tarkista lomakkeen arvot."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Lokit",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Lokit",
+          "limits": "Rajat"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Metriikat",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Palvelin",
+          "tls": "TLS",
+          "auth": "Todennus"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Palvelin",
+          "segments": "Segmentit",
+          "corsProxies": "CORS / Välityspalvelimet"
+        },
+        "webrtc": {
+          "server": "Palvelin",
+          "network": "Verkko",
+          "iceServers": "ICE-palvelimet",
+          "addServer": "Lisää palvelin",
+          "noIceServers": "ICE-palvelimia ei ole määritetty.",
+          "iceServerLabel": "ICE-palvelin {index}",
+          "removeIceServer": "Poista ICE-palvelin",
+          "iceFields": {
+            "url": "URL",
+            "username": "Käyttäjänimi",
+            "password": "Salasana"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "Palauta",
+        "submit": "Lähetä"
+      },
+      "toasts": {
+        "success": "Yleiset asetukset päivitetty",
+        "errorTitle": "Yleisten asetusten päivittämisessä tapahtui ongelma",
+        "errorDescription": "Tarkista lomakkeen arvot."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",
+      "discard": "Hylkää",
+      "saveChanges": "Tallenna muutokset"
+    }
+  }
+}

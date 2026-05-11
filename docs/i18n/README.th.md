@@ -10,7 +10,7 @@
   🇨🇳 <a href="./README.zh.md">中文</a> •
   🇮🇹 <a href="./README.it.md">Italiano</a> •
   🇩🇪 <a href="./README.de.md">Deutsch</a> •
-  🇷🇺 <strong>Русский</strong> •
+  🇷🇺 <a href="./README.ru.md">Русский</a> •
   🇫🇷 <a href="./README.fr.md">Français</a> •
   🇵🇹 <a href="./README.pt.md">Português</a> •
   🇯🇵 <a href="./README.ja.md">日本語</a> •
@@ -32,12 +32,12 @@
   🇺🇦 <a href="./README.uk.md">Українська</a> •
   🇻🇳 <a href="./README.vi.md">Tiếng Việt</a> •
   🇵🇭 <a href="./README.tl.md">Tagalog</a> •
-  🇹🇭 <a href="./README.th.md">ไทย</a> •
+  🇹🇭 <strong>ไทย</strong> •
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
-<h4 align="center">Веб-интерфейс для <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Смотрите трансляции, просматривайте записи и редактируйте конфигурацию в браузере.</h4>
+<h4 align="center">เว็บอินเทอร์เฟซสำหรับ <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a> ดูสตรีม เรียกดูการบันทึก และแก้ไขการตั้งค่าจากเบราว์เซอร์ของคุณ</h4>
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
@@ -47,22 +47,22 @@
 </p>
 
 <p align="center">
-  <img src="../../.github/assets/demo.gif" alt="Демонстрация MediaMTX Connect" width="720">
+  <img src="../../.github/assets/demo.gif" alt="เดโม MediaMTX Connect" width="720">
 </p>
 
-## Как запустить
+## วิธีรัน
 
-Уже используете MediaMTX? Поднимите Connect рядом с ним:
+กำลังรัน MediaMTX อยู่แล้วใช่ไหม วาง Connect ไว้ข้าง ๆ:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
-  -v /путь/к/записям:/recordings \
+  -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
 
-Ещё нет MediaMTX? Прилагаемый compose запускает оба:
+ยังไม่มี MediaMTX? compose ที่มาด้วยจะเริ่มทั้งสองพร้อมกัน:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -70,16 +70,16 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Откройте http://localhost:3000, перейдите в **Config** и укажите свой MediaMTX.
+เปิด http://localhost:3000 ไปที่ **Config** และชี้ไปยัง MediaMTX ของคุณ
 
-> Connect требует `api: yes` в `mediamtx.yml`. См. [прилагаемый файл](../../mediamtx.yml) как рабочий пример.
+> Connect ต้องการ `api: yes` ใน `mediamtx.yml` ของคุณ ดู [ไฟล์ที่มาด้วย](../../mediamtx.yml) เป็นข้อมูลอ้างอิงที่ใช้งานได้
 
-## Документация
+## เอกสาร
 
-[Архитектура](../../ARCHITECTURE.md) · [Возможности](../../docs/FEATURES.md) · [Участие](../../CONTRIBUTING.md)
+[สถาปัตยกรรม](../../ARCHITECTURE.md) · [ฟีเจอร์](../../docs/FEATURES.md) · [การมีส่วนร่วม](../../CONTRIBUTING.md)
 
-> Примечание: документация для разработчиков ведётся только на английском. Интерфейс приложения доступен на русском по адресу `/ru`.
+> หมายเหตุ: เอกสารสำหรับนักพัฒนาจะดูแลเป็นภาษาอังกฤษเท่านั้น UI ของแอปพลิเคชันมีให้บริการเป็นภาษาไทยที่ `/th`
 
-## Лицензия
+## ใบอนุญาต
 
 MIT

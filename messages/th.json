@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "เว็บอินเทอร์เฟซสำหรับ MediaMTX ดูสตรีม เรียกดูการบันทึก และแก้ไขการตั้งค่าจากเบราว์เซอร์ของคุณ"
+  },
+  "Forms": {
+    "errors": {
+      "required": "ต้องกรอกฟิลด์นี้",
+      "mustBePositive": "ต้องมากกว่า 0"
+    }
+  },
+  "Common": {
+    "retry": "ลองอีกครั้ง",
+    "loading": "กำลังโหลด…",
+    "theme": {
+      "lightMode": "โหมดสว่าง",
+      "darkMode": "โหมดมืด",
+      "switchToLight": "สลับเป็นธีมสว่าง",
+      "switchToDark": "สลับเป็นธีมมืด"
+    },
+    "locale": {
+      "switchLanguage": "เปลี่ยนภาษา"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "แอปพลิเคชัน",
+      "settings": "การตั้งค่า"
+    },
+    "items": {
+      "live": "สด",
+      "recordings": "การบันทึก",
+      "clientConfig": "การตั้งค่าไคลเอนต์",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "สด",
+    "header": "สตรีม",
+    "subHeader": "มุมมองสดของสตรีมที่ใช้งานอยู่ของคุณ",
+    "errors": {
+      "configTitle": "ข้อผิดพลาดในการตั้งค่า",
+      "configDescription": "ไม่สามารถโหลดการตั้งค่าได้ โปรดตรวจสอบการเชื่อมต่อฐานข้อมูล",
+      "connectionTitle": "ไม่สามารถเชื่อมต่อ MediaMTX",
+      "connectionLead": "ไม่สามารถเข้าถึง MediaMTX ได้ที่",
+      "connectionHint": "โปรดตรวจสอบว่า MediaMTX กำลังทำงาน และ URL ในการตั้งค่าของคุณถูกต้อง",
+      "checkConfigBtn": "ตรวจสอบการตั้งค่า"
+    },
+    "empty": {
+      "configureRemoteTitle": "ตั้งค่า URL ระยะไกล",
+      "configureRemoteDescription": "ตั้งค่า URL ของ MediaMTX ระยะไกลเพื่อดูสตรีมในเบราว์เซอร์ ควรเป็น URL ที่เบราว์เซอร์สามารถใช้เข้าถึง MediaMTX ได้",
+      "goToConfig": "ไปที่การตั้งค่า",
+      "noStreamsTitle": "ไม่มีสตรีมที่กำลังทำงาน",
+      "noStreamsDescription": "MediaMTX เชื่อมต่อแล้วแต่ขณะนี้ยังไม่มีสตรีมที่กำลังทำงาน เริ่มสตรีมไปยัง MediaMTX เพื่อให้สตรีมของคุณปรากฏที่นี่"
+    },
+    "density": {
+      "aria": "ความหนาแน่นของกริด",
+      "two": "สองคอลัมน์",
+      "three": "สามคอลัมน์",
+      "four": "สี่คอลัมน์"
+    },
+    "card": {
+      "onlineSince": "ออนไลน์ตั้งแต่ {date}",
+      "idle": "ว่าง",
+      "live": "สด",
+      "stop": "หยุด",
+      "play": "เล่น",
+      "actionsAria": "การดำเนินการของสตรีม",
+      "viewRecordings": "ดูการบันทึก"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "การบันทึก",
+    "header": "การบันทึก",
+    "subHeader": "เรียกดูการบันทึกจากสตรีมต่าง ๆ ของคุณ",
+    "subHeaderForStream": "การบันทึกสำหรับ: {streamName}",
+    "invalidConfig": "การตั้งค่าไม่ถูกต้อง",
+    "errors": {
+      "configTitle": "ข้อผิดพลาดในการตั้งค่า",
+      "configDescription": "ไม่สามารถโหลดการตั้งค่าได้ โปรดตรวจสอบการเชื่อมต่อฐานข้อมูล",
+      "directoryTitle": "เข้าถึงไดเรกทอรีการบันทึกไม่ได้",
+      "directoryLead": "ไม่สามารถอ่านไดเรกทอรีการบันทึกที่",
+      "directoryHint": "โปรดตรวจสอบว่ามีไดเรกทอรีอยู่และมีสิทธิ์ถูกต้อง",
+      "checkConfigBtn": "ตรวจสอบการตั้งค่า",
+      "readErrorTitle": "อ่านการบันทึกไม่ได้",
+      "readErrorDescription": "ไม่สามารถอ่านไดเรกทอรีการบันทึกได้ โปรดตรวจสอบว่าไดเรกทอรีมีอยู่"
+    },
+    "empty": {
+      "noRecordingsTitle": "ไม่พบการบันทึก",
+      "noRecordingsLead": "ยังไม่มีการบันทึกที่ถูกบันทึกไว้ การบันทึกจะปรากฏที่นี่เมื่อ MediaMTX เริ่มบันทึกสตรีม",
+      "noRecordingsHint": "โปรดตรวจสอบว่ามีการตั้งค่า <code>MTX_RECORD=yes</code> ในการตั้งค่า MediaMTX ของคุณ",
+      "noMatchingTitle": "ไม่มีสตรีมที่ตรงกัน",
+      "noMatchingDescription": "ไม่มีสตรีมตรงกับ «{query}»"
+    },
+    "search": {
+      "placeholder": "ค้นหาสตรีม"
+    },
+    "groups": {
+      "today": "วันนี้",
+      "yesterday": "เมื่อวาน"
+    },
+    "card": {
+      "recordingCount": "{count, plural, other {# การบันทึก}}",
+      "latest": "ล่าสุด {time}",
+      "viewBtn": "ดู"
+    },
+    "recordingCard": {
+      "stop": "หยุด",
+      "play": "เล่น",
+      "downloadAria": "ดาวน์โหลดการบันทึก {filePath}",
+      "downloadError": "เกิดข้อผิดพลาดในการดาวน์โหลดวิดีโอ"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "การตั้งค่า",
+      "clientConfig": "การตั้งค่าไคลเอนต์",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "การตั้งค่า",
+    "pageSubHeader": "จัดการการตั้งค่าแอปของคุณ",
+    "invalidConfig": "การตั้งค่าไม่ถูกต้อง",
+    "formFields": {
+      "oneValuePerLine": "หนึ่งค่าต่อหนึ่งบรรทัด"
+    },
+    "clientForm": {
+      "title": "การตั้งค่าแอปพลิเคชัน",
+      "description": "เส้นทางการเชื่อมต่อและที่จัดเก็บที่ใช้โดย MediaMTX Connect",
+      "sections": {
+        "mediamtxConnection": "การเชื่อมต่อ MediaMTX",
+        "storage": "ที่จัดเก็บ"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "ที่อยู่อินสแตนซ์ MediaMTX ของคุณ ภายในเครือข่าย Docker คุณสามารถใช้ชื่อคอนเทนเนอร์ได้ ไม่เช่นนั้นให้ใช้ IP หรือชื่อโฮสต์ภายนอก"
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "พอร์ตของ MediaMTX API"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "นี่คือ IP หรือชื่อโฮสต์ที่เข้าถึงได้จากเบราว์เซอร์และเปิดสู่ภายนอกของเซิร์ฟเวอร์ MediaMTX ของคุณ"
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "ไดเรกทอรีที่มีการบันทึก MediaMTX (ไม่แนะนำให้เปลี่ยนหากใช้ Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "ไดเรกทอรีสำหรับเก็บภาพหน้าจอที่สร้างขึ้น (ไม่แนะนำให้เปลี่ยนหากใช้ Docker)"
+        }
+      },
+      "actions": {
+        "reset": "รีเซ็ต",
+        "submit": "ส่ง"
+      },
+      "toasts": {
+        "success": "อัปเดตการตั้งค่าไคลเอนต์แล้ว",
+        "errorTitle": "เกิดปัญหาในการอัปเดตการตั้งค่าไคลเอนต์",
+        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้ง"
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "บันทึก",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "บันทึก",
+          "limits": "ขีดจำกัด"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "เมตริก",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "เซิร์ฟเวอร์",
+          "tls": "TLS",
+          "auth": "การยืนยันตัวตน"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "เซิร์ฟเวอร์",
+          "segments": "เซกเมนต์",
+          "corsProxies": "CORS / พร็อกซี"
+        },
+        "webrtc": {
+          "server": "เซิร์ฟเวอร์",
+          "network": "เครือข่าย",
+          "iceServers": "เซิร์ฟเวอร์ ICE",
+          "addServer": "เพิ่มเซิร์ฟเวอร์",
+          "noIceServers": "ไม่มีเซิร์ฟเวอร์ ICE ที่กำหนดค่าไว้",
+          "iceServerLabel": "เซิร์ฟเวอร์ ICE {index}",
+          "removeIceServer": "ลบเซิร์ฟเวอร์ ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "ชื่อผู้ใช้",
+            "password": "รหัสผ่าน"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "รีเซ็ต",
+        "submit": "ส่ง"
+      },
+      "toasts": {
+        "success": "อัปเดตการตั้งค่าทั่วโลกแล้ว",
+        "errorTitle": "เกิดปัญหาในการอัปเดตการตั้งค่าทั่วโลก",
+        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้ง"
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, other {# การเปลี่ยนแปลงที่ยังไม่ได้บันทึก}}",
+      "discard": "ทิ้ง",
+      "saveChanges": "บันทึกการเปลี่ยนแปลง"
+    }
+  }
+}
