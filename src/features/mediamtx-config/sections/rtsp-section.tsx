@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
+import { useTranslations } from 'next-intl'
 import {
   Card,
   CardContent,
@@ -13,11 +14,12 @@ import {
 import { ListField, SwitchField, TextField } from '../form-fields'
 
 export function RtspSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.rtsp')
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Server</CardTitle>
+          <CardTitle>{t('server')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField
@@ -38,7 +40,7 @@ export function RtspSection({ control }: { control: Control<GlobalConfigFormData
 
       <Card>
         <CardHeader>
-          <CardTitle>TLS</CardTitle>
+          <CardTitle>{t('tls')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField control={control} name="encryption" label="Encryption" />
@@ -49,7 +51,7 @@ export function RtspSection({ control }: { control: Control<GlobalConfigFormData
 
       <Card>
         <CardHeader>
-          <CardTitle>Auth</CardTitle>
+          <CardTitle>{t('auth')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <ListField control={control} name="authMethods" label="Auth Methods" />

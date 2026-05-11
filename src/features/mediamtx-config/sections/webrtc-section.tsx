@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form'
 import type { GlobalConfigFormData } from '../mediamtx-config.schemas'
 
 import { Plus, Trash } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useFieldArray } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +25,7 @@ import { Input } from '@/components/ui/input'
 import { ListField, SwitchField, TextField } from '../form-fields'
 
 export function WebrtcSection({ control }: { control: Control<GlobalConfigFormData> }) {
+  const t = useTranslations('Config.mediamtxForm.sections.webrtc')
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'webrtcICEServers2',
@@ -33,7 +35,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Server</CardTitle>
+          <CardTitle>{t('server')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <SwitchField
@@ -51,7 +53,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
 
       <Card>
         <CardHeader>
-          <CardTitle>Network</CardTitle>
+          <CardTitle>{t('network')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField control={control} name="webrtcAllowOrigin" label="WebRTC Allow Origin" />
@@ -66,7 +68,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
 
       <Card>
         <CardHeader className="flex-row items-center justify-between space-y-0">
-          <CardTitle>ICE Servers</CardTitle>
+          <CardTitle>{t('iceServers')}</CardTitle>
           <Button
             type="button"
             variant="outline"
@@ -74,22 +76,22 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
             onClick={() => append({ url: '', username: '', password: '' })}
           >
             <Plus className="mr-2 size-4" />
-            Add server
+            {t('addServer')}
           </Button>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {fields.length === 0 && (
-            <p className="text-sm text-muted-foreground">No ICE servers configured.</p>
+            <p className="text-sm text-muted-foreground">{t('noIceServers')}</p>
           )}
           {fields.map((field, index) => (
             <div key={field.id} className="flex flex-col gap-3 rounded-md border p-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">{`ICE Server ${index + 1}`}</span>
+                <span className="text-sm font-medium">{t('iceServerLabel', { index: index + 1 })}</span>
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
-                  aria-label="Remove ICE server"
+                  aria-label={t('removeIceServer')}
                   onClick={() => remove(index)}
                 >
                   <Trash className="size-4" />
@@ -100,7 +102,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
                 name={`webrtcICEServers2.${index}.url`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>URL</FormLabel>
+                    <FormLabel>{t('iceFields.url')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -113,7 +115,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
                 name={`webrtcICEServers2.${index}.username`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t('iceFields.username')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -126,7 +128,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
                 name={`webrtcICEServers2.${index}.password`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t('iceFields.password')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

@@ -1,0 +1,241 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Веб-інтерфейс для MediaMTX. Дивіться трансляції, переглядайте записи та редагуйте конфігурацію в браузері."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Це поле обов'язкове",
+      "mustBePositive": "Має бути більше 0"
+    }
+  },
+  "Common": {
+    "retry": "Повторити",
+    "loading": "Завантаження…",
+    "theme": {
+      "lightMode": "Світла тема",
+      "darkMode": "Темна тема",
+      "switchToLight": "Перемкнути на світлу тему",
+      "switchToDark": "Перемкнути на темну тему"
+    },
+    "locale": {
+      "switchLanguage": "Змінити мову"
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Застосунок",
+      "settings": "Налаштування"
+    },
+    "items": {
+      "live": "Наживо",
+      "recordings": "Записи",
+      "clientConfig": "Налаштування клієнта",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Наживо",
+    "header": "Трансляції",
+    "subHeader": "Перегляд активних трансляцій у реальному часі",
+    "errors": {
+      "configTitle": "Помилка конфігурації",
+      "configDescription": "Не вдалося завантажити конфігурацію. Перевірте підключення до бази даних.",
+      "connectionTitle": "Не вдається підключитися до MediaMTX",
+      "connectionLead": "Не вдається отримати доступ до MediaMTX за адресою",
+      "connectionHint": "Переконайтеся, що MediaMTX запущений і URL у вашій конфігурації коректний.",
+      "checkConfigBtn": "Перевірити конфігурацію"
+    },
+    "empty": {
+      "configureRemoteTitle": "Налаштуйте віддалений URL",
+      "configureRemoteDescription": "Вкажіть віддалений URL MediaMTX, щоб дивитися трансляції в браузері. Це має бути адреса, за якою ваш браузер може звертатися до MediaMTX.",
+      "goToConfig": "Перейти до налаштувань",
+      "noStreamsTitle": "Активних трансляцій немає",
+      "noStreamsDescription": "MediaMTX підключений, але зараз немає активних трансляцій. Запустіть трансляцію в MediaMTX, щоб побачити її тут."
+    },
+    "density": {
+      "aria": "Щільність сітки",
+      "two": "Два стовпці",
+      "three": "Три стовпці",
+      "four": "Чотири стовпці"
+    },
+    "card": {
+      "onlineSince": "У мережі з {date}",
+      "idle": "Простій",
+      "live": "ВЖИВО",
+      "stop": "Зупинити",
+      "play": "Відтворити",
+      "actionsAria": "Дії з трансляцією",
+      "viewRecordings": "Переглянути записи"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Записи",
+    "header": "Записи",
+    "subHeader": "Перегляд записів з різних ваших трансляцій",
+    "subHeaderForStream": "Записи для: {streamName}",
+    "invalidConfig": "Недійсна конфігурація",
+    "errors": {
+      "configTitle": "Помилка конфігурації",
+      "configDescription": "Не вдалося завантажити конфігурацію. Перевірте підключення до бази даних.",
+      "directoryTitle": "Немає доступу до каталогу записів",
+      "directoryLead": "Не вдається прочитати каталог записів за шляхом",
+      "directoryHint": "Переконайтеся, що каталог існує та має правильні права доступу.",
+      "checkConfigBtn": "Перевірити конфігурацію",
+      "readErrorTitle": "Не вдалося прочитати записи",
+      "readErrorDescription": "Не вдалося прочитати каталог записів. Переконайтеся, що каталог існує."
+    },
+    "empty": {
+      "noRecordingsTitle": "Записів не знайдено",
+      "noRecordingsLead": "Записи ще не збережені. Вони з'являться тут, коли MediaMTX почне записувати трансляції.",
+      "noRecordingsHint": "Переконайтеся, що в конфігурації MediaMTX встановлено <code>MTX_RECORD=yes</code>.",
+      "noMatchingTitle": "Збігів не знайдено",
+      "noMatchingDescription": "Жодна трансляція не відповідає «{query}»."
+    },
+    "search": {
+      "placeholder": "Пошук трансляцій"
+    },
+    "groups": {
+      "today": "Сьогодні",
+      "yesterday": "Вчора"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# запис} few {# записи} many {# записів} other {# запису}}",
+      "latest": "Останній {time}",
+      "viewBtn": "Перегляд"
+    },
+    "recordingCard": {
+      "stop": "Зупинити",
+      "play": "Відтворити",
+      "downloadAria": "Завантажити запис {filePath}",
+      "downloadError": "Помилка під час завантаження відео"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Налаштування",
+      "clientConfig": "Налаштування клієнта",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Налаштування",
+    "pageSubHeader": "Керування налаштуваннями застосунку",
+    "invalidConfig": "Недійсна конфігурація",
+    "formFields": {
+      "oneValuePerLine": "Одне значення на рядок."
+    },
+    "clientForm": {
+      "title": "Налаштування застосунку",
+      "description": "Шляхи підключення та сховища, які використовує MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Підключення до MediaMTX",
+        "storage": "Сховище"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Адреса вашого екземпляра MediaMTX. У мережі Docker можна використовувати ім'я контейнера; інакше використовуйте зовнішню IP-адресу чи hostname."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Порт API MediaMTX"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Це доступна з браузера, зовнішня IP-адреса або hostname вашого сервера MediaMTX."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Каталог з записами MediaMTX (не рекомендується змінювати при використанні Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Каталог для збереження згенерованих знімків екрана (не рекомендується змінювати при використанні Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Скинути",
+        "submit": "Надіслати"
+      },
+      "toasts": {
+        "success": "Налаштування клієнта оновлено",
+        "errorTitle": "Виникла проблема при оновленні налаштувань клієнта",
+        "errorDescription": "Перевірте значення форми."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Журнали",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Журнали",
+          "limits": "Обмеження"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Метрики",
+          "pprof": "PPROF"
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Сервер",
+          "tls": "TLS",
+          "auth": "Автентифікація"
+        },
+        "rtmp": {
+          "rtmp": "RTMP"
+        },
+        "hls": {
+          "server": "Сервер",
+          "segments": "Сегменти",
+          "corsProxies": "CORS / Проксі"
+        },
+        "webrtc": {
+          "server": "Сервер",
+          "network": "Мережа",
+          "iceServers": "Сервери ICE",
+          "addServer": "Додати сервер",
+          "noIceServers": "Сервери ICE не налаштовані.",
+          "iceServerLabel": "Сервер ICE {index}",
+          "removeIceServer": "Видалити сервер ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Ім'я користувача",
+            "password": "Пароль"
+          }
+        },
+        "srt": {
+          "srt": "SRT"
+        }
+      },
+      "actions": {
+        "reset": "Скинути",
+        "submit": "Надіслати"
+      },
+      "toasts": {
+        "success": "Глобальну конфігурацію оновлено",
+        "errorTitle": "Виникла проблема при оновленні глобальної конфігурації",
+        "errorDescription": "Перевірте значення форми."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# незбережена зміна} few {# незбережених зміни} many {# незбережених змін} other {# незбереженої зміни}}",
+      "discard": "Скасувати",
+      "saveChanges": "Зберегти зміни"
+    }
+  }
+}

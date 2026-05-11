@@ -16,6 +16,8 @@ When you change the codebase:
 
 Keep entries factual and present-tense. No roadmap items, no "coming soon." Reserved-but-empty domains live only in §19.
 
+Unshipped ideas — brainstorm only — live in [`docs/ideas/`](./ideas/00-index.md). Never copy from there into this file until the work is actually merged.
+
 Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`, `CHANGELOG.md`, `package.json`, Dockerfile, compose files, Prisma schema, MediaMTX OpenAPI integration, Playwright suites.
 
 ---
@@ -23,7 +25,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 1. Live Streaming
 
 ### 1.1 Live View page (`/`)
-- **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view-page.tsx`, `src/app/page.tsx`
+- **Live streams dashboard** — grid of all active MediaMTX paths with auto-refresh on navigation. `src/features/streams/live-view-page.tsx`, `src/app/[locale]/page.tsx`
 - **MediaMTX path discovery** — calls MediaMTX `v3/pathsList` to enumerate active streams. `src/features/streams/live-view-page.tsx`
 - **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL; the destructive case shows a `Cannot connect to MediaMTX` `Alert`, the others render the shared `EmptyState` with a CTA into Config. `src/features/streams/live-view-page.tsx`
 - **"Stream online since" metadata** — exposes `readyTime` per path inline on the card subtitle.
@@ -56,7 +58,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **`summarizeStreamRecordings`** — feature-local fs helper returns `{count, latestMtime}` per subdirectory in one walk. `src/features/recordings/file-operations.ts`
 
 ### 2.2 Per-stream recording browser (`/recordings/[streamname]`)
-- **Paginated recording list** — `?page` and `?take` query params, default 10/page. `src/features/recordings/stream-recordings-page.tsx`, `src/app/recordings/[streamname]/page.tsx`
+- **Paginated recording list** — `?page` and `?take` query params, default 10/page. `src/features/recordings/stream-recordings-page.tsx`, `src/app/[locale]/recordings/[streamname]/page.tsx`
 - **Day-grouped sections** — recordings on the current page render under "Today" / "Yesterday" / formatted-day headings.
 - **shadcn `Pagination`** — prev/next + numbered window of ±2 pages at the bottom.
 - **Breadcrumb** — `Recordings → {streamName}` in the inset top bar.
@@ -179,19 +181,24 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **`summarizeStreamRecordings` / `getFilesInDirectory`** — feature-local fs helpers used by the recordings views. `src/features/recordings/file-operations.ts`
 
 ### 8.5 Application chrome
-- **Sidebar shell** — `SidebarProvider` + `AppSidebar` + `SidebarInset` wraps every page. The sidebar collapses to icons on desktop (cookie-persisted) and slides in as a Sheet on mobile via `SidebarTrigger`. Settings live as nested entries in the global sidebar; there is no per-section sub-layout. `src/app/layout.tsx`
-- **Root layout** — Sonner Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, and default document title metadata (`MediaMTX Connect`). `src/app/layout.tsx`
+- **Sidebar shell** — `SidebarProvider` + `AppSidebar` + `SidebarInset` wraps every page. The sidebar collapses to icons on desktop (cookie-persisted) and slides in as a Sheet on mobile via `SidebarTrigger`. Settings live as nested entries in the global sidebar; there is no per-section sub-layout. `src/app/[locale]/layout.tsx`
+- **Root layout** — Sonner Toaster mount, ThemeProvider, ServiceWorker registration, dark-themed viewport color, default document title metadata (`MediaMTX Connect`), and `NextIntlClientProvider` for the active locale. `src/app/[locale]/layout.tsx`
 - **Global CSS** — Tailwind 4 with shadcn sidebar tokens (`--sidebar-*`). `src/app/globals.css`
 
 ---
 
-## 9. Theming, Accessibility, PWA
+## 9. Theming, Accessibility, PWA, Internationalization
 
 - **Dark / Light theme** — persisted via `next-themes`, dark default. Toggled by `ModeToggle` (single-click, View Transitions API circle-reveal).
 - **Web App Manifest** — installable PWA. App name, theme color `#0c1016`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
 - **Service worker registration** — offline-friendly shell. `src/components/service-worker.tsx`, `public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Sub-path / reverse-proxy friendliness** — historical work to run cleanly behind nginx with a base path (`CHANGELOG` 1.4.1).
+- **Internationalization (i18n)** — `next-intl` with App Router `[locale]` segment. Supported locales (30 total): `en` (default, served at `/`); plus `es`, `zh` (Simplified), `it`, `de`, `ru`, `fr`, `pt`, `ja`, `pl`, `ko`, `tr`, `nl`, `cs`, `zh-tw` (Traditional Chinese), `pt-br` (Brazilian Portuguese), `id`, `ro`, `sv`, `da`, `no`, `fi`, `el`, `hu`, `uk`, `vi`, `tl`, `th`, `hi`, `bn` (each served at `/{locale}/...`). `localePrefix: 'as-needed'` — English URLs are unchanged from pre-i18n. Locale routing handled by `src/proxy.ts`; per-request messages loaded via `src/i18n/request.ts` from `messages/{locale}.json`. Routing config in `src/i18n/routing.ts`, locale-aware navigation helpers in `src/i18n/navigation.ts`. `<html lang>` set per request from the URL segment. `metadata.alternates.languages` emits hreflang tags. Date / time / relative-time formatting uses `useFormatter` (client) / `getFormatter` (server) for locale-aware output.
+- **Locale switcher** — sidebar footer dropdown. Sits next to ModeToggle, persists choice via `NEXT_LOCALE` cookie (next-intl default), preserves the current path when switching. `src/components/locale-switcher.tsx`
+- **Localized README** — `README.md` (English source, at repo root) + `docs/i18n/README.{locale}.md` for every other supported locale. Each carries a centered language strip with flag emoji + native name (current locale bolded). Developer-facing docs (this file, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CLAUDE.md`, etc.) intentionally remain English-only.
+- **README translation staleness guard** — `docs/i18n/.translation-status.json` records the source `README.md` hash plus per-locale "last synced at hash" entries. `scripts/readme-i18n-check.ts` (run via `npm run i18n:check`) fails CI when the source hash drifts from any locale's recorded hash or when a locale README file is missing.
+- **Translation onboarding & guard** — `docs/I18N.md` documents the full "add a new language" workflow and translation policy. `scripts/i18n-check.ts` (run via `npm run i18n:check`) compares every non-English locale against `messages/en.json` and fails when keys are missing or extra. Wired into CI alongside `lint` / `typecheck`.
 
 ---
 
@@ -199,11 +206,11 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 | Route | Purpose | File |
 |-------|---------|------|
-| `/` | Live View — stream grid | `src/app/page.tsx` |
-| `/recordings` | All-streams recording index | `src/app/recordings/page.tsx` |
-| `/recordings/[streamname]` | Per-stream paginated browser | `src/app/recordings/[streamname]/page.tsx` |
-| `/config` | Client app config | `src/app/config/page.tsx` |
-| `/config/mediamtx/global` | MediaMTX server config | `src/app/config/mediamtx/global/page.tsx` |
+| `/` (and `/es`) | Live View — stream grid | `src/app/[locale]/page.tsx` |
+| `/recordings` (and `/es/recordings`) | All-streams recording index | `src/app/[locale]/recordings/page.tsx` |
+| `/recordings/[streamname]` | Per-stream paginated browser | `src/app/[locale]/recordings/[streamname]/page.tsx` |
+| `/config` (and `/es/config`) | Client app config | `src/app/[locale]/config/page.tsx` |
+| `/config/mediamtx/global` | MediaMTX server config | `src/app/[locale]/config/mediamtx/global/page.tsx` |
 | `/api/health` | Health endpoint | `src/app/api/health/route.ts` |
 | `/api/[streamName]/first-screenshot` | Latest stream thumbnail | `src/app/api/[streamName]/first-screenshot/route.ts` |
 | `/api/[streamName]/[filePath]/view-recording` | MP4 stream for playback | `src/app/api/[streamName]/[filePath]/view-recording/route.ts` |
@@ -299,6 +306,7 @@ Writes (Server Actions, `'use server'`):
 | `npm run start` | Run the prod server. |
 | `npm run typecheck` | TypeScript type check. |
 | `npm run lint` / `lint:fix` | ESLint check / autofix. |
+| `npm run i18n:check` | Verify message-key parity across `messages/*.json`. |
 | `npm run test:e2e` | Playwright suite. |
 | `npm run setup` | Run `./scripts/setup-dev.sh`. |
 | `npm run dev:all` | Start MediaMTX (with fake streams) and Next.js dev together; tears the stack down on exit. |
@@ -347,6 +355,7 @@ Writes (Server Actions, `'use server'`):
 | Scheduling | node-cron |
 | Image processing | Sharp |
 | Icons | Lucide React |
+| i18n | `next-intl` (App Router, locale-prefixed routing) |
 | Testing | Playwright |
 | Linting | ESLint 9 + `@antfu/eslint-config` |
 | Packaging | Docker (multi-stage, multi-arch) |

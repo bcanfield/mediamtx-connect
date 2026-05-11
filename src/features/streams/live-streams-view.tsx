@@ -1,6 +1,7 @@
 'use client'
 
 import { Columns2, Columns3, Columns4 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
@@ -32,6 +33,7 @@ export function LiveStreamsView({
   hlsAddress: string
   remoteMediaMtxUrl: string
 }) {
+  const t = useTranslations('Streams.density')
   const [density, setDensity] = useState<Density>(DEFAULT_DENSITY)
 
   useEffect(() => {
@@ -55,15 +57,15 @@ export function LiveStreamsView({
           type="single"
           value={density}
           onValueChange={updateDensity}
-          aria-label="Grid density"
+          aria-label={t('aria')}
         >
-          <ToggleGroupItem value="2" aria-label="Two columns">
+          <ToggleGroupItem value="2" aria-label={t('two')}>
             <Columns2 className="size-4" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="3" aria-label="Three columns">
+          <ToggleGroupItem value="3" aria-label={t('three')}>
             <Columns3 className="size-4" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="4" aria-label="Four columns">
+          <ToggleGroupItem value="4" aria-label={t('four')}>
             <Columns4 className="size-4" />
           </ToggleGroupItem>
         </ToggleGroup>
