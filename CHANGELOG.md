@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/bcanfield/mediamtx-connect/compare/2.1.0...2.1.1) (2026-06-07)
+
+### Bug Fixes
+
+* **deps:** update nextjs monorepo to v16.2.7 ([#127](https://github.com/bcanfield/mediamtx-connect/issues/127)) ([a92a80b](https://github.com/bcanfield/mediamtx-connect/commit/a92a80b1d8797a28d5afb04eeee4ef970b50c41c))
+
 ## [2.1.0](https://github.com/bcanfield/mediamtx-connect/compare/2.0.1...2.1.0) (2026-05-11)
 
 ### Features
