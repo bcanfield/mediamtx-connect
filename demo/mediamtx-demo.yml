@@ -1,0 +1,28 @@
+# Minimal MediaMTX config for the demo capture. Uses ALTERNATE ports so it never
+# collides with a MediaMTX you already run on the defaults (8554/9997/8888).
+#   API 9998 (Connect reads/writes config + lists paths)
+#   RTSP 8555 (ffmpeg publishes the demo clips here)
+#   HLS 8890 with permissive CORS (the browser plays streams from here)
+logLevel: error
+logDestinations: [stdout]
+
+api: yes
+apiAddress: 127.0.0.1:9998
+
+rtsp: yes
+rtspAddress: :8555
+
+rtmp: no
+srt: no
+
+hls: yes
+hlsAddress: :8890
+hlsVariant: mpegts
+hlsAllowOrigins: ['*']
+hlsAlwaysRemux: yes
+
+webrtc: yes
+webrtcAddress: :8891
+
+paths:
+  all_others:

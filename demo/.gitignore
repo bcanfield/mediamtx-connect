@@ -1,0 +1,6 @@
+# Everything here is regenerable by the scripts — keep the repo light.
+.bin/
+.work/
+clips/
+output/
+*.log
