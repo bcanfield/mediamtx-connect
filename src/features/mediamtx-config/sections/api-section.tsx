@@ -26,7 +26,7 @@ export function ApiSection({ control }: { control: Control<GlobalConfigFormData>
             control={control}
             name="api"
             label="API"
-            description="Enable the MediaMTX HTTP API."
+            description={t('enableDescription')}
           />
           <TextField control={control} name="apiAddress" label="API Address" />
         </CardContent>

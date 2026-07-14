@@ -23,7 +23,9 @@
       "switchToDark": "Switch to dark theme"
     },
     "locale": {
-      "switchLanguage": "Switch language"
+      "switchLanguage": "Switch language",
+      "searchPlaceholder": "Search language…",
+      "noResults": "No language found."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Metrics",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Enable the MediaMTX HTTP API."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Auth"
+          "auth": "Auth",
+          "enableDescription": "Enable the RTSP server."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Enable the RTMP server."
         },
         "hls": {
           "server": "Server",
           "segments": "Segments",
-          "corsProxies": "CORS / Proxies"
+          "corsProxies": "CORS / Proxies",
+          "enableDescription": "Enable the HLS server."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Username",
             "password": "Password"
-          }
+          },
+          "enableDescription": "Enable the WebRTC server."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Enable the SRT server."
         }
-      },
-      "actions": {
-        "reset": "Reset",
-        "submit": "Submit"
       },
       "toasts": {
         "success": "Updated Global Config",

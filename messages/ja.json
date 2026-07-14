@@ -23,7 +23,9 @@
       "switchToDark": "ダークテーマに切り替え"
     },
     "locale": {
-      "switchLanguage": "言語を切り替え"
+      "switchLanguage": "言語を切り替え",
+      "searchPlaceholder": "言語を検索…",
+      "noResults": "言語が見つかりません。"
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "メトリクス",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "MediaMTX HTTP API を有効にします。"
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "サーバー",
           "tls": "TLS",
-          "auth": "認証"
+          "auth": "認証",
+          "enableDescription": "RTSP サーバーを有効にします。"
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "RTMP サーバーを有効にします。"
         },
         "hls": {
           "server": "サーバー",
           "segments": "セグメント",
-          "corsProxies": "CORS / プロキシ"
+          "corsProxies": "CORS / プロキシ",
+          "enableDescription": "HLS サーバーを有効にします。"
         },
         "webrtc": {
           "server": "サーバー",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "ユーザー名",
             "password": "パスワード"
-          }
+          },
+          "enableDescription": "WebRTC サーバーを有効にします。"
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "SRT サーバーを有効にします。"
         }
-      },
-      "actions": {
-        "reset": "リセット",
-        "submit": "送信"
       },
       "toasts": {
         "success": "グローバル設定を更新しました",

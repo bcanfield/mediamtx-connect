@@ -23,7 +23,9 @@
       "switchToDark": "Byt till mörkt tema"
     },
     "locale": {
-      "switchLanguage": "Byt språk"
+      "switchLanguage": "Byt språk",
+      "searchPlaceholder": "Sök språk…",
+      "noResults": "Inget språk hittades."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Mätvärden",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Aktivera MediaMTX HTTP-API:et."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Autentisering"
+          "auth": "Autentisering",
+          "enableDescription": "Aktivera RTSP-servern."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Aktivera RTMP-servern."
         },
         "hls": {
           "server": "Server",
           "segments": "Segment",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Aktivera HLS-servern."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Användarnamn",
             "password": "Lösenord"
-          }
+          },
+          "enableDescription": "Aktivera WebRTC-servern."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Aktivera SRT-servern."
         }
-      },
-      "actions": {
-        "reset": "Återställ",
-        "submit": "Skicka"
       },
       "toasts": {
         "success": "Den globala konfigurationen har uppdaterats",

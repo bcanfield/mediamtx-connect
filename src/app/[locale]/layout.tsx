@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { AppSidebar } from '@/components/app-sidebar'
 import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeScript } from '@/components/theme-script'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 import { routing } from '@/i18n/routing'
@@ -90,19 +91,15 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>
+        <ThemeScript />
         <NextIntlClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider>
             <SidebarProvider>
               <AppSidebar />
               <SidebarInset>{children}</SidebarInset>
             </SidebarProvider>
+            <Toaster />
           </ThemeProvider>
-          <Toaster />
 
           <ServiceWorker />
         </NextIntlClientProvider>

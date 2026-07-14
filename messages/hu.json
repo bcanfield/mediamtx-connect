@@ -23,7 +23,9 @@
       "switchToDark": "Váltás sötét témára"
     },
     "locale": {
-      "switchLanguage": "Nyelv váltása"
+      "switchLanguage": "Nyelv váltása",
+      "searchPlaceholder": "Nyelv keresése…",
+      "noResults": "Nem található nyelv."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Metrikák",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "A MediaMTX HTTP API engedélyezése."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Szerver",
           "tls": "TLS",
-          "auth": "Hitelesítés"
+          "auth": "Hitelesítés",
+          "enableDescription": "A(z) RTSP kiszolgáló engedélyezése."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "A(z) RTMP kiszolgáló engedélyezése."
         },
         "hls": {
           "server": "Szerver",
           "segments": "Szegmensek",
-          "corsProxies": "CORS / Proxyk"
+          "corsProxies": "CORS / Proxyk",
+          "enableDescription": "A(z) HLS kiszolgáló engedélyezése."
         },
         "webrtc": {
           "server": "Szerver",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Felhasználónév",
             "password": "Jelszó"
-          }
+          },
+          "enableDescription": "A(z) WebRTC kiszolgáló engedélyezése."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "A(z) SRT kiszolgáló engedélyezése."
         }
-      },
-      "actions": {
-        "reset": "Visszaállítás",
-        "submit": "Küldés"
       },
       "toasts": {
         "success": "A globális konfiguráció frissült",

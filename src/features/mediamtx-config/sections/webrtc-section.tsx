@@ -42,7 +42,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
             control={control}
             name="webrtc"
             label="WebRTC"
-            description="Enable the WebRTC server."
+            description={t('enableDescription')}
           />
           <TextField control={control} name="webrtcAddress" label="WebRTC Address" />
           <SwitchField control={control} name="webrtcEncryption" label="WebRTC Encryption" />

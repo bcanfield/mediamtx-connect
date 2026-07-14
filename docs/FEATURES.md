@@ -102,7 +102,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Tabbed layout** — eight top-level Tabs (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), each tab containing one or more sub-Cards. `src/features/mediamtx-config/sections/*`
 - **Per-tab error badges** — destructive `Badge` next to each `TabsTrigger` shows the count of validation errors mapped via `tab-fields.ts`.
 - **Sticky save bar** — `StickySaveBar` appears at the bottom of the SidebarInset whenever the form is dirty, showing "n unsaved changes" + Discard / Save changes. `src/features/mediamtx-config/sticky-save-bar.tsx`
-- **Boolean fields use `Switch`** — every yes/no toggle uses a labeled-row Switch (replaces the previous select-True/False stand-ins). `src/features/mediamtx-config/form-fields.tsx`
+- **Boolean fields use `Switch`** — every yes/no toggle uses a labeled-row Switch (replaces the previous select-True/False stand-ins). `src/features/mediamtx-config/form-fields.tsx`. Field labels stay English (mirror MediaMTX YAML keys, per `docs/I18N.md`), but the per-protocol server-enable helper text is localized via `Config.mediamtxForm.sections.*.enableDescription`.
 - **List fields use newline-split Textarea** — `logDestinations`, `protocols`, `authMethods`, `hlsTrustedProxies`, `webrtcTrustedProxies`, `webrtcIPsFromInterfacesList`, `webrtcAdditionalHosts`. One value per line.
 - **WebRTC ICE servers field array** — `useFieldArray` row group with add/remove + per-row URL/Username/Password inputs. New rows start blank (no placeholder values).
 - **Live read/write through MediaMTX HTTP API** — `getGlobalConfig` (`v3/configGlobalGet`) + `updateGlobalConfig` (`v3/configGlobalSet`). `src/features/mediamtx-config/`
@@ -165,10 +165,10 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **SidebarTrigger** — single-click sidebar open/close button with state-aware morphing icon (`PanelLeftOpen` ↔ `PanelLeftClose`) on a scale + rotate transition. `src/components/ui/sidebar.tsx`
 - **PageLayout** — h2 title + subheader (Suspense-wrapped) + Separator + content, wrapped in a max-w-7xl padded container. `src/components/page-layout.tsx`
 - **EmptyState** — wrapper around shadcn `Empty` with `icon`, `title`, `description`, optional CTA `children`. Used for non-destructive empty/info states across the app. `src/components/empty-state.tsx`
-- **ModeToggle** — single-click Light ↔ Dark theme toggle backed by `next-themes`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `src/components/mode-toggle.tsx`
+- **ModeToggle** — single-click Light ↔ Dark theme toggle backed by the in-app `ThemeProvider`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `src/components/mode-toggle.tsx`
 - **RefreshButton** — manual page reload control surfaced in connection-error alerts. `src/components/refresh-button.tsx`
 - **VideoPlayer** — shared HLS.js component (see §1.3). `src/components/video-player.tsx`
-- **ThemeProvider** — `next-themes` wrapper, dark default. `src/components/theme-provider.tsx`
+- **ThemeProvider** — in-app theme context (light/dark/system), dark default, `class`-based, persisted to `localStorage`. Paired with `ThemeScript`, a server-rendered inline script that sets the `<html>` class before hydration to avoid a theme flash. `src/components/theme-provider.tsx`, `src/components/theme-script.tsx`
 - **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard. `src/components/service-worker.tsx`
 
 ### 8.3 Lib (`src/lib/`)
@@ -189,13 +189,13 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ## 9. Theming, Accessibility, PWA, Internationalization
 
-- **Dark / Light theme** — persisted via `next-themes`, dark default. Toggled by `ModeToggle` (single-click, View Transitions API circle-reveal).
+- **Dark / Light theme** — persisted to `localStorage` via the in-app `ThemeProvider`, dark default. Toggled by `ModeToggle` (single-click, View Transitions API circle-reveal).
 - **Web App Manifest** — installable PWA. App name, theme color `#0c1016`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `src/app/manifest.ts`
 - **Service worker registration** — offline-friendly shell. `src/components/service-worker.tsx`, `public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Sub-path / reverse-proxy friendliness** — historical work to run cleanly behind nginx with a base path (`CHANGELOG` 1.4.1).
 - **Internationalization (i18n)** — `next-intl` with App Router `[locale]` segment. Supported locales (30 total): `en` (default, served at `/`); plus `es`, `zh` (Simplified), `it`, `de`, `ru`, `fr`, `pt`, `ja`, `pl`, `ko`, `tr`, `nl`, `cs`, `zh-tw` (Traditional Chinese), `pt-br` (Brazilian Portuguese), `id`, `ro`, `sv`, `da`, `no`, `fi`, `el`, `hu`, `uk`, `vi`, `tl`, `th`, `hi`, `bn` (each served at `/{locale}/...`). `localePrefix: 'as-needed'` — English URLs are unchanged from pre-i18n. Locale routing handled by `src/proxy.ts`; per-request messages loaded via `src/i18n/request.ts` from `messages/{locale}.json`. Routing config in `src/i18n/routing.ts`, locale-aware navigation helpers in `src/i18n/navigation.ts`. `<html lang>` set per request from the URL segment. `metadata.alternates.languages` emits hreflang tags. Date / time / relative-time formatting uses `useFormatter` (client) / `getFormatter` (server) for locale-aware output.
-- **Locale switcher** — sidebar footer dropdown. Sits next to ModeToggle, persists choice via `NEXT_LOCALE` cookie (next-intl default), preserves the current path when switching. `src/components/locale-switcher.tsx`
+- **Locale switcher** — sidebar footer searchable combobox (Popover + Command). Type to filter the 30 languages; the list is height-capped and scrolls so it never runs off screen. Sits next to ModeToggle, persists choice via `NEXT_LOCALE` cookie (next-intl default), preserves the current path when switching. `src/components/locale-switcher.tsx`
 - **Localized README** — `README.md` (English source, at repo root) + `docs/i18n/README.{locale}.md` for every other supported locale. Each carries a centered language strip with flag emoji + native name (current locale bolded). Developer-facing docs (this file, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CLAUDE.md`, etc.) intentionally remain English-only.
 - **README translation staleness guard** — `docs/i18n/.translation-status.json` records the source `README.md` hash plus per-locale "last synced at hash" entries. `scripts/readme-i18n-check.ts` (run via `npm run i18n:check`) fails CI when the source hash drifts from any locale's recorded hash or when a locale README file is missing.
 - **Translation onboarding & guard** — `docs/I18N.md` documents the full "add a new language" workflow and translation policy. `scripts/i18n-check.ts` (run via `npm run i18n:check`) compares every non-English locale against `messages/en.json` and fails when keys are missing or extra. Wired into CI alongside `lint` / `typecheck`.

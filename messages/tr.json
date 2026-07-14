@@ -23,7 +23,9 @@
       "switchToDark": "Koyu temaya geç"
     },
     "locale": {
-      "switchLanguage": "Dili değiştir"
+      "switchLanguage": "Dili değiştir",
+      "searchPlaceholder": "Dil ara…",
+      "noResults": "Dil bulunamadı."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Metrikler",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "MediaMTX HTTP API'sini etkinleştirir."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Sunucu",
           "tls": "TLS",
-          "auth": "Kimlik doğrulama"
+          "auth": "Kimlik doğrulama",
+          "enableDescription": "RTSP sunucusunu etkinleştirir."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "RTMP sunucusunu etkinleştirir."
         },
         "hls": {
           "server": "Sunucu",
           "segments": "Segmentler",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "HLS sunucusunu etkinleştirir."
         },
         "webrtc": {
           "server": "Sunucu",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Kullanıcı adı",
             "password": "Parola"
-          }
+          },
+          "enableDescription": "WebRTC sunucusunu etkinleştirir."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "SRT sunucusunu etkinleştirir."
         }
-      },
-      "actions": {
-        "reset": "Sıfırla",
-        "submit": "Gönder"
       },
       "toasts": {
         "success": "Genel yapılandırma güncellendi",

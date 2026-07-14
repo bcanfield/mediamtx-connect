@@ -23,7 +23,9 @@
       "switchToDark": "Schakel naar donker thema"
     },
     "locale": {
-      "switchLanguage": "Taal wijzigen"
+      "switchLanguage": "Taal wijzigen",
+      "searchPlaceholder": "Taal zoeken…",
+      "noResults": "Geen taal gevonden."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP-API",
           "metrics": "Metrieken",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Schakelt de MediaMTX HTTP API in."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Authenticatie"
+          "auth": "Authenticatie",
+          "enableDescription": "Schakelt de RTSP-server in."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Schakelt de RTMP-server in."
         },
         "hls": {
           "server": "Server",
           "segments": "Segmenten",
-          "corsProxies": "CORS / Proxies"
+          "corsProxies": "CORS / Proxies",
+          "enableDescription": "Schakelt de HLS-server in."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Gebruikersnaam",
             "password": "Wachtwoord"
-          }
+          },
+          "enableDescription": "Schakelt de WebRTC-server in."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Schakelt de SRT-server in."
         }
-      },
-      "actions": {
-        "reset": "Resetten",
-        "submit": "Verzenden"
       },
       "toasts": {
         "success": "Globale configuratie bijgewerkt",

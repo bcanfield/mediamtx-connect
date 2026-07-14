@@ -23,7 +23,9 @@
       "switchToDark": "Comută la tema întunecată"
     },
     "locale": {
-      "switchLanguage": "Schimbă limba"
+      "switchLanguage": "Schimbă limba",
+      "searchPlaceholder": "Caută limba…",
+      "noResults": "Nicio limbă găsită."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "API HTTP",
           "metrics": "Metrici",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Activează API-ul HTTP MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Autentificare"
+          "auth": "Autentificare",
+          "enableDescription": "Activează serverul RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Activează serverul RTMP."
         },
         "hls": {
           "server": "Server",
           "segments": "Segmente",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Activează serverul HLS."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Nume utilizator",
             "password": "Parolă"
-          }
+          },
+          "enableDescription": "Activează serverul WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Activează serverul SRT."
         }
-      },
-      "actions": {
-        "reset": "Resetează",
-        "submit": "Trimite"
       },
       "toasts": {
         "success": "Configurarea globală a fost actualizată",

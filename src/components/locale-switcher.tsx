@@ -1,15 +1,22 @@
 'use client'
 
-import { Globe } from 'lucide-react'
+import { Check, Globe } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -17,6 +24,7 @@ import {
 } from '@/components/ui/sidebar'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { cn } from '@/lib/utils'
 
 const LANGUAGE_NAMES: Record<(typeof routing.locales)[number], string> = {
   'en': 'English',
@@ -57,8 +65,10 @@ export function LocaleSwitcher() {
   const router = useRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
+  const [open, setOpen] = useState(false)
 
   const switchTo = (next: (typeof routing.locales)[number]) => {
+    setOpen(false)
     if (next === locale)
       return
     startTransition(() => {
@@ -69,25 +79,34 @@ export function LocaleSwitcher() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
             <SidebarMenuButton tooltip={t('switchLanguage')} aria-label={t('switchLanguage')} disabled={isPending}>
               <Globe className="size-4" />
               <span>{LANGUAGE_NAMES[locale as keyof typeof LANGUAGE_NAMES] ?? locale}</span>
             </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="top" align="start">
-            {routing.locales.map(loc => (
-              <DropdownMenuItem
-                key={loc}
-                onClick={() => switchTo(loc)}
-                disabled={loc === locale}
-              >
-                {LANGUAGE_NAMES[loc]}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </PopoverTrigger>
+          <PopoverContent side="top" align="start" className="w-56 p-0">
+            <Command>
+              <CommandInput placeholder={t('searchPlaceholder')} />
+              <CommandList>
+                <CommandEmpty>{t('noResults')}</CommandEmpty>
+                <CommandGroup>
+                  {routing.locales.map(loc => (
+                    <CommandItem
+                      key={loc}
+                      value={LANGUAGE_NAMES[loc]}
+                      onSelect={() => switchTo(loc)}
+                    >
+                      <Check className={cn('size-4', loc === locale ? 'opacity-100' : 'opacity-0')} />
+                      {LANGUAGE_NAMES[loc]}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </SidebarMenuItem>
     </SidebarMenu>
   )

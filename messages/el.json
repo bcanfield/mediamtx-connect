@@ -23,7 +23,9 @@
       "switchToDark": "Αλλαγή σε σκοτεινό θέμα"
     },
     "locale": {
-      "switchLanguage": "Αλλαγή γλώσσας"
+      "switchLanguage": "Αλλαγή γλώσσας",
+      "searchPlaceholder": "Αναζήτηση γλώσσας…",
+      "noResults": "Δεν βρέθηκε γλώσσα."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Μετρικές",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Ενεργοποίηση του HTTP API του MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Διακομιστής",
           "tls": "TLS",
-          "auth": "Αυθεντικοποίηση"
+          "auth": "Αυθεντικοποίηση",
+          "enableDescription": "Ενεργοποίηση του διακομιστή RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Ενεργοποίηση του διακομιστή RTMP."
         },
         "hls": {
           "server": "Διακομιστής",
           "segments": "Τμήματα",
-          "corsProxies": "CORS / Διαμεσολαβητές"
+          "corsProxies": "CORS / Διαμεσολαβητές",
+          "enableDescription": "Ενεργοποίηση του διακομιστή HLS."
         },
         "webrtc": {
           "server": "Διακομιστής",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Όνομα χρήστη",
             "password": "Κωδικός πρόσβασης"
-          }
+          },
+          "enableDescription": "Ενεργοποίηση του διακομιστή WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Ενεργοποίηση του διακομιστή SRT."
         }
-      },
-      "actions": {
-        "reset": "Επαναφορά",
-        "submit": "Υποβολή"
       },
       "toasts": {
         "success": "Οι καθολικές ρυθμίσεις ενημερώθηκαν",
