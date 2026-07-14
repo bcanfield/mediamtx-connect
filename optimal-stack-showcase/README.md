@@ -43,12 +43,17 @@ Rename a JSON field in a Go struct, run `make gen`, and `tsc` fails in every
 component that used it. The contract is explicit, versionable, and reviewable —
 exactly what a CLI / Terraform / plugin roadmap needs anyway.
 
+The seam is self-verifying: `go test ./...` includes a freshness check
+(`internal/api/openapi_test.go`) that renders the spec from the Go structs and
+diffs it against the committed `openapi.yaml` — forget `make gen` and the
+build goes red instead of `tsc` silently validating a stale contract.
+
 ## Layout
 
 ```
 cmd/server/          entrypoint: humacli app + `openapi` and `healthcheck` subcommands
-internal/api/        models + in-memory store + Huma operations (+ humatest tests)
-internal/web/        //go:embed of the built SPA, index.html fallback for client routes
+internal/api/        models + stream store + Huma operations (humatest + spec-freshness tests)
+internal/web/        //go:embed of the built SPA; index.html fallback for client routes, JSON 404 for unknown /api paths
 web/                 Vite SPA (TanStack Router file-based routes under src/routes/)
 openapi.yaml         generated contract (committed — the reviewable API surface)
 ```
@@ -91,8 +96,11 @@ docker buildx build --platform linux/amd64,linux/arm64 -t optimal-stack-showcase
 
 Kept out to stay minimal; each slots in without restructuring:
 
-- **SQLite + sqlc** — the store is an in-memory map behind the same handlers;
-  swap in `modernc.org/sqlite` + sqlc for real persistence.
+- **SQLite + sqlc** — the store is an in-memory map, but its methods are
+  already adapter-shaped (`ctx` in, `error` out, `ErrExists`/`ErrNotFound`
+  sentinels) and handlers receive it via `Register(api, store)`. Swapping in
+  `modernc.org/sqlite` + sqlc means adding the adapter and promoting the
+  concrete `Store` to a Go interface — handlers untouched.
 - **React Hook Form + Zod** — the create form is two controlled inputs;
   server-side validation via Huma schema tags is showcased instead (422s are
   free).
