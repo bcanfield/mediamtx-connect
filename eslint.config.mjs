@@ -17,6 +17,8 @@ export default antfu(
       'next-env.d.ts',
       'src/lib/mediamtx/generated.ts',
       'src/lib/prisma/migrations/**',
+      // Self-contained Go+Vite showcase with its own toolchain (oxlint/golangci-lint)
+      'optimal-stack-showcase/**',
     ],
   },
   {

@@ -1,6 +1,8 @@
 # Optimal Tech Stack — a greenfield proposal
 
 > **Status: design exploration, not the shipped architecture.** This is a "if we started today, unbiased of what exists or what it would cost to transition" recommendation. The app currently runs on Next.js/React/Prisma — see [`ARCHITECTURE.md`](../ARCHITECTURE.md) for reality. Read this as an argument, not a migration plan.
+>
+> A minimal working implementation of this stack (Huma Go API → openapi.yaml → typed TanStack Query hooks, one static binary) lives in [`../optimal-stack-showcase/`](../optimal-stack-showcase/README.md).
 
 ## TL;DR
 
