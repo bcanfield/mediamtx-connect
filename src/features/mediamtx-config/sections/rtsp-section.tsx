@@ -16,12 +16,12 @@ import { ListField, SwitchField, TextField } from '../form-fields'
 export function RtspSection({ control }: { control: Control<GlobalConfigFormData> }) {
   const t = useTranslations('Config.mediamtxForm.sections.rtsp')
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <Card>
         <CardHeader>
           <CardTitle>{t('server')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <SwitchField
             control={control}
             name="rtsp"
@@ -42,7 +42,7 @@ export function RtspSection({ control }: { control: Control<GlobalConfigFormData
         <CardHeader>
           <CardTitle>{t('tls')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <TextField control={control} name="encryption" label="Encryption" />
           <TextField control={control} name="serverKey" label="Server Key" />
           <TextField control={control} name="serverCert" label="Server Cert" />
@@ -53,7 +53,7 @@ export function RtspSection({ control }: { control: Control<GlobalConfigFormData
         <CardHeader>
           <CardTitle>{t('auth')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <ListField control={control} name="authMethods" label="Auth Methods" />
         </CardContent>
       </Card>

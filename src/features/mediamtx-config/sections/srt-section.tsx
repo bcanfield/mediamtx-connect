@@ -20,7 +20,7 @@ export function SrtSection({ control }: { control: Control<GlobalConfigFormData>
       <CardHeader>
         <CardTitle>{t('srt')}</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-3">
         <SwitchField
           control={control}
           name="srt"

@@ -36,7 +36,7 @@ export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[]
   }, [query, streams])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <div className="relative max-w-sm">
         <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -57,7 +57,7 @@ export function RecordingsIndexView({ streams }: { streams: StreamSummaryEntry[]
             />
           )
         : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map(stream => (
                 <StreamSummaryCard key={stream.name} stream={stream} />
               ))}

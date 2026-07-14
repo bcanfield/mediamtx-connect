@@ -1,18 +1,15 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { AppSidebar } from '@/components/app-sidebar'
+import { HtmlLang } from '@/components/html-lang'
 import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
-import { ThemeScript } from '@/components/theme-script'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 import { routing } from '@/i18n/routing'
-import { cn } from '@/lib/utils'
-
-import '../globals.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -67,15 +64,11 @@ export async function generateMetadata({
   }
 }
 
-export const viewport: Viewport = {
-  themeColor: '#0c1016',
-}
-
 export function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }))
 }
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
@@ -89,21 +82,17 @@ export default async function RootLayout({
   setRequestLocale(locale)
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
-        <ThemeScript />
-        <NextIntlClientProvider>
-          <ThemeProvider>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>{children}</SidebarInset>
-            </SidebarProvider>
-            <Toaster />
-          </ThemeProvider>
+    <NextIntlClientProvider>
+      <HtmlLang />
+      <ThemeProvider>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>{children}</SidebarInset>
+        </SidebarProvider>
+        <Toaster />
+      </ThemeProvider>
 
-          <ServiceWorker />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+      <ServiceWorker />
+    </NextIntlClientProvider>
   )
 }

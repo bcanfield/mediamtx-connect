@@ -94,11 +94,11 @@ export async function StreamRecordingsPage({
           : (
               <>
                 {groups.map(group => (
-                  <section key={group.key} className="flex flex-col gap-3">
+                  <section key={group.key} className="flex flex-col gap-2">
                     <h3 className="text-sm font-medium text-muted-foreground">
                       {group.label}
                     </h3>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                       {group.recordings.map(rec => (
                         <RecordingCard
                           key={rec.name}
@@ -174,7 +174,7 @@ function PaginationBar({
   const pages = pageNumbers(currentPage, totalPages)
 
   return (
-    <Pagination className="pt-4">
+    <Pagination className="pt-2">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious

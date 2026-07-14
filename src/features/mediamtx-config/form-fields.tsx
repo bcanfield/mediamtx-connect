@@ -44,7 +44,7 @@ export function SwitchField({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-row items-center justify-between gap-4 rounded-md border p-3">
+        <FormItem className="flex flex-row items-center justify-between gap-4 rounded-md border px-3 py-2">
           <div className="space-y-0.5">
             <FormLabel>{label}</FormLabel>
             {description && <FormDescription>{description}</FormDescription>}

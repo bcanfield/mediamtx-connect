@@ -51,7 +51,7 @@ export function LiveStreamsView({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <div className="hidden items-center justify-end sm:flex">
         <ToggleGroup
           type="single"
@@ -71,7 +71,7 @@ export function LiveStreamsView({
         </ToggleGroup>
       </div>
 
-      <div className={cn('grid grid-cols-1 gap-4', densityClass[density])}>
+      <div className={cn('grid grid-cols-1 gap-2', densityClass[density])}>
         {streams.map((stream, i) => (
           <StreamCard
             key={stream.name}

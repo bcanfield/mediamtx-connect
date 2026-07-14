@@ -38,3 +38,17 @@ If your change adds, removes, or modifies a user-visible feature, route, API end
 - [ ] Layout/naming per `docs/PROJECT-STRUCTURE.md`.
 - [ ] `docs/FEATURES.md` updated.
 - [ ] `npm run typecheck`, `npm run lint`, and `npm run i18n:check` clean.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs are tracked as GitHub issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
