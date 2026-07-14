@@ -12,7 +12,10 @@ import (
 
 func TestStreams(t *testing.T) {
 	_, testAPI := humatest.New(t)
-	api.Register(testAPI)
+	api.Register(testAPI, api.NewStore(
+		api.Stream{Name: "garage-cam", Source: "rtsp://camera.local:554/stream1", Ready: true, Readers: 2},
+		api.Stream{Name: "driveway-cam", Source: "rtsp://camera.local:554/stream2"},
+	))
 
 	t.Run("list seeded streams", func(t *testing.T) {
 		resp := testAPI.Get("/api/streams")

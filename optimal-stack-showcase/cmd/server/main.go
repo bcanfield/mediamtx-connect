@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/danielgtaylor/huma/v2"
-	"github.com/danielgtaylor/huma/v2/adapters/humachi"
 	"github.com/danielgtaylor/huma/v2/humacli"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -35,8 +34,7 @@ func main() {
 		router := chi.NewMux()
 		router.Use(middleware.Recoverer)
 
-		apiInst = humachi.New(router, huma.DefaultConfig("Streams API", "1.0.0"))
-		api.Register(apiInst)
+		apiInst = api.New(router, api.NewStore(api.DemoStreams()...))
 
 		// Anything that isn't /api, /docs, or /openapi.* falls through to the SPA.
 		router.Handle("/*", web.SPAHandler())
