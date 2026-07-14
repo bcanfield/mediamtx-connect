@@ -23,7 +23,9 @@
       "switchToDark": "Chuyển sang giao diện tối"
     },
     "locale": {
-      "switchLanguage": "Đổi ngôn ngữ"
+      "switchLanguage": "Đổi ngôn ngữ",
+      "searchPlaceholder": "Tìm ngôn ngữ…",
+      "noResults": "Không tìm thấy ngôn ngữ."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Số liệu",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Bật API HTTP của MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Máy chủ",
           "tls": "TLS",
-          "auth": "Xác thực"
+          "auth": "Xác thực",
+          "enableDescription": "Bật máy chủ RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Bật máy chủ RTMP."
         },
         "hls": {
           "server": "Máy chủ",
           "segments": "Phân đoạn",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Bật máy chủ HLS."
         },
         "webrtc": {
           "server": "Máy chủ",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Tên người dùng",
             "password": "Mật khẩu"
-          }
+          },
+          "enableDescription": "Bật máy chủ WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Bật máy chủ SRT."
         }
-      },
-      "actions": {
-        "reset": "Đặt lại",
-        "submit": "Gửi"
       },
       "toasts": {
         "success": "Đã cập nhật cấu hình toàn cục",

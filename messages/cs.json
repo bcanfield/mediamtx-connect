@@ -23,7 +23,9 @@
       "switchToDark": "Přepnout na tmavý motiv"
     },
     "locale": {
-      "switchLanguage": "Změnit jazyk"
+      "switchLanguage": "Změnit jazyk",
+      "searchPlaceholder": "Hledat jazyk…",
+      "noResults": "Žádný jazyk nenalezen."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Metriky",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Povolit HTTP API MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Ověřování"
+          "auth": "Ověřování",
+          "enableDescription": "Povolit server RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Povolit server RTMP."
         },
         "hls": {
           "server": "Server",
           "segments": "Segmenty",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Povolit server HLS."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Uživatelské jméno",
             "password": "Heslo"
-          }
+          },
+          "enableDescription": "Povolit server WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Povolit server SRT."
         }
-      },
-      "actions": {
-        "reset": "Resetovat",
-        "submit": "Odeslat"
       },
       "toasts": {
         "success": "Globální konfigurace aktualizována",

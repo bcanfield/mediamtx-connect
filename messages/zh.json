@@ -23,7 +23,9 @@
       "switchToDark": "切换到深色主题"
     },
     "locale": {
-      "switchLanguage": "切换语言"
+      "switchLanguage": "切换语言",
+      "searchPlaceholder": "搜索语言…",
+      "noResults": "未找到语言。"
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "指标",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "启用 MediaMTX HTTP API。"
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "服务器",
           "tls": "TLS",
-          "auth": "认证"
+          "auth": "认证",
+          "enableDescription": "启用 RTSP 服务器。"
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "启用 RTMP 服务器。"
         },
         "hls": {
           "server": "服务器",
           "segments": "分片",
-          "corsProxies": "CORS / 代理"
+          "corsProxies": "CORS / 代理",
+          "enableDescription": "启用 HLS 服务器。"
         },
         "webrtc": {
           "server": "服务器",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "用户名",
             "password": "密码"
-          }
+          },
+          "enableDescription": "启用 WebRTC 服务器。"
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "启用 SRT 服务器。"
         }
-      },
-      "actions": {
-        "reset": "重置",
-        "submit": "提交"
       },
       "toasts": {
         "success": "已更新全局配置",

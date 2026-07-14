@@ -23,7 +23,9 @@
       "switchToDark": "สลับเป็นธีมมืด"
     },
     "locale": {
-      "switchLanguage": "เปลี่ยนภาษา"
+      "switchLanguage": "เปลี่ยนภาษา",
+      "searchPlaceholder": "ค้นหาภาษา…",
+      "noResults": "ไม่พบภาษา"
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "เมตริก",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "เปิดใช้งาน MediaMTX HTTP API"
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "เซิร์ฟเวอร์",
           "tls": "TLS",
-          "auth": "การยืนยันตัวตน"
+          "auth": "การยืนยันตัวตน",
+          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ RTSP"
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ RTMP"
         },
         "hls": {
           "server": "เซิร์ฟเวอร์",
           "segments": "เซกเมนต์",
-          "corsProxies": "CORS / พร็อกซี"
+          "corsProxies": "CORS / พร็อกซี",
+          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ HLS"
         },
         "webrtc": {
           "server": "เซิร์ฟเวอร์",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "ชื่อผู้ใช้",
             "password": "รหัสผ่าน"
-          }
+          },
+          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ WebRTC"
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ SRT"
         }
-      },
-      "actions": {
-        "reset": "รีเซ็ต",
-        "submit": "ส่ง"
       },
       "toasts": {
         "success": "อัปเดตการตั้งค่าทั่วโลกแล้ว",

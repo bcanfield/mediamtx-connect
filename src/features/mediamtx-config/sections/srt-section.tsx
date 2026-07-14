@@ -25,7 +25,7 @@ export function SrtSection({ control }: { control: Control<GlobalConfigFormData>
           control={control}
           name="srt"
           label="SRT"
-          description="Enable the SRT server."
+          description={t('enableDescription')}
         />
         <TextField control={control} name="srtAddress" label="SRT Address" />
       </CardContent>

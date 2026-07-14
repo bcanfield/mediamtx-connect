@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -107,23 +106,6 @@ export function MediaMTXConfigForm({
             <SrtSection control={form.control} />
           </TabsContent>
         </Tabs>
-
-        <div className="flex justify-end gap-2 pt-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onReset}
-            disabled={!form.formState.isDirty}
-          >
-            {t('actions.reset')}
-          </Button>
-          <Button
-            type="submit"
-            disabled={!form.formState.isValid || !form.formState.isDirty}
-          >
-            {t('actions.submit')}
-          </Button>
-        </div>
 
         <StickySaveBar onReset={onReset} />
       </form>

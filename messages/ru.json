@@ -23,7 +23,9 @@
       "switchToDark": "Переключить на тёмную тему"
     },
     "locale": {
-      "switchLanguage": "Сменить язык"
+      "switchLanguage": "Сменить язык",
+      "searchPlaceholder": "Поиск языка…",
+      "noResults": "Язык не найден."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Метрики",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Включить HTTP API MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Сервер",
           "tls": "TLS",
-          "auth": "Аутентификация"
+          "auth": "Аутентификация",
+          "enableDescription": "Включить сервер RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Включить сервер RTMP."
         },
         "hls": {
           "server": "Сервер",
           "segments": "Сегменты",
-          "corsProxies": "CORS / Прокси"
+          "corsProxies": "CORS / Прокси",
+          "enableDescription": "Включить сервер HLS."
         },
         "webrtc": {
           "server": "Сервер",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Имя пользователя",
             "password": "Пароль"
-          }
+          },
+          "enableDescription": "Включить сервер WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Включить сервер SRT."
         }
-      },
-      "actions": {
-        "reset": "Сбросить",
-        "submit": "Отправить"
       },
       "toasts": {
         "success": "Глобальная конфигурация обновлена",

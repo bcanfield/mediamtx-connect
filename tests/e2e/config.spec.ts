@@ -152,12 +152,17 @@ test.describe('MediaMTX Global Config Page', () => {
     }
   })
 
-  test('should have submit button when form is visible', async ({ page }) => {
+  test('should reveal the sticky save bar after editing when form is visible', async ({ page }) => {
     await page.goto('/config/mediamtx/global')
     const formVisible = await page.locator('form').isVisible().catch(() => false)
 
     if (formVisible) {
-      await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible()
+      // The sticky save bar (Discard / Save changes) only appears once the form is dirty.
+      const logLevel = page.locator('input[name="logLevel"]').first()
+      await expect(logLevel).toBeVisible()
+      await logLevel.fill('debug')
+
+      await expect(page.getByRole('button', { name: 'Save changes' })).toBeVisible({ timeout: 5000 })
     }
   })
 

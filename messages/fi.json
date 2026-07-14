@@ -23,7 +23,9 @@
       "switchToDark": "Vaihda tummaan teemaan"
     },
     "locale": {
-      "switchLanguage": "Vaihda kieli"
+      "switchLanguage": "Vaihda kieli",
+      "searchPlaceholder": "Hae kieltä…",
+      "noResults": "Kieltä ei löytynyt."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Metriikat",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Ota MediaMTX HTTP-API käyttöön."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Palvelin",
           "tls": "TLS",
-          "auth": "Todennus"
+          "auth": "Todennus",
+          "enableDescription": "Ota RTSP-palvelin käyttöön."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Ota RTMP-palvelin käyttöön."
         },
         "hls": {
           "server": "Palvelin",
           "segments": "Segmentit",
-          "corsProxies": "CORS / Välityspalvelimet"
+          "corsProxies": "CORS / Välityspalvelimet",
+          "enableDescription": "Ota HLS-palvelin käyttöön."
         },
         "webrtc": {
           "server": "Palvelin",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Käyttäjänimi",
             "password": "Salasana"
-          }
+          },
+          "enableDescription": "Ota WebRTC-palvelin käyttöön."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Ota SRT-palvelin käyttöön."
         }
-      },
-      "actions": {
-        "reset": "Palauta",
-        "submit": "Lähetä"
       },
       "toasts": {
         "success": "Yleiset asetukset päivitetty",

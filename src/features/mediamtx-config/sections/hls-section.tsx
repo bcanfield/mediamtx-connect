@@ -26,7 +26,7 @@ export function HlsSection({ control }: { control: Control<GlobalConfigFormData>
             control={control}
             name="hls"
             label="HLS"
-            description="Enable the HLS server."
+            description={t('enableDescription')}
           />
           <TextField control={control} name="hlsAddress" label="HLS Address" />
           <SwitchField control={control} name="hlsEncryption" label="HLS Encryption" />

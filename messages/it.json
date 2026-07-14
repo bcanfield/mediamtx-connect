@@ -23,7 +23,9 @@
       "switchToDark": "Passa al tema scuro"
     },
     "locale": {
-      "switchLanguage": "Cambia lingua"
+      "switchLanguage": "Cambia lingua",
+      "searchPlaceholder": "Cerca lingua…",
+      "noResults": "Nessuna lingua trovata."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "API HTTP",
           "metrics": "Metriche",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Abilita l'API HTTP di MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Server",
           "tls": "TLS",
-          "auth": "Autenticazione"
+          "auth": "Autenticazione",
+          "enableDescription": "Abilita il server RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Abilita il server RTMP."
         },
         "hls": {
           "server": "Server",
           "segments": "Segmenti",
-          "corsProxies": "CORS / Proxy"
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Abilita il server HLS."
         },
         "webrtc": {
           "server": "Server",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Nome utente",
             "password": "Password"
-          }
+          },
+          "enableDescription": "Abilita il server WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Abilita il server SRT."
         }
-      },
-      "actions": {
-        "reset": "Reimposta",
-        "submit": "Invia"
       },
       "toasts": {
         "success": "Configurazione globale aggiornata",

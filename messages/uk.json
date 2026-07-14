@@ -23,7 +23,9 @@
       "switchToDark": "Перемкнути на темну тему"
     },
     "locale": {
-      "switchLanguage": "Змінити мову"
+      "switchLanguage": "Змінити мову",
+      "searchPlaceholder": "Пошук мови…",
+      "noResults": "Мову не знайдено."
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "Метрики",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "Увімкнути HTTP API MediaMTX."
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "Сервер",
           "tls": "TLS",
-          "auth": "Автентифікація"
+          "auth": "Автентифікація",
+          "enableDescription": "Увімкнути сервер RTSP."
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "Увімкнути сервер RTMP."
         },
         "hls": {
           "server": "Сервер",
           "segments": "Сегменти",
-          "corsProxies": "CORS / Проксі"
+          "corsProxies": "CORS / Проксі",
+          "enableDescription": "Увімкнути сервер HLS."
         },
         "webrtc": {
           "server": "Сервер",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "Ім'я користувача",
             "password": "Пароль"
-          }
+          },
+          "enableDescription": "Увімкнути сервер WebRTC."
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "Увімкнути сервер SRT."
         }
-      },
-      "actions": {
-        "reset": "Скинути",
-        "submit": "Надіслати"
       },
       "toasts": {
         "success": "Глобальну конфігурацію оновлено",

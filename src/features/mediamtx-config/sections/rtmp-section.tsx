@@ -25,7 +25,7 @@ export function RtmpSection({ control }: { control: Control<GlobalConfigFormData
           control={control}
           name="rtmp"
           label="RTMP"
-          description="Enable the RTMP server."
+          description={t('enableDescription')}
         />
         <TextField control={control} name="rtmpAddress" label="RTMP Address" />
         <TextField control={control} name="rtmpEncryption" label="RTMP Encryption" />

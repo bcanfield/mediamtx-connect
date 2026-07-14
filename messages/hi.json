@@ -23,7 +23,9 @@
       "switchToDark": "डार्क थीम पर स्विच करें"
     },
     "locale": {
-      "switchLanguage": "भाषा बदलें"
+      "switchLanguage": "भाषा बदलें",
+      "searchPlaceholder": "भाषा खोजें…",
+      "noResults": "कोई भाषा नहीं मिली।"
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "मेट्रिक्स",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "MediaMTX HTTP API सक्षम करें।"
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "सर्वर",
           "tls": "TLS",
-          "auth": "प्रमाणीकरण"
+          "auth": "प्रमाणीकरण",
+          "enableDescription": "RTSP सर्वर सक्षम करें।"
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "RTMP सर्वर सक्षम करें।"
         },
         "hls": {
           "server": "सर्वर",
           "segments": "सेगमेंट",
-          "corsProxies": "CORS / प्रॉक्सी"
+          "corsProxies": "CORS / प्रॉक्सी",
+          "enableDescription": "HLS सर्वर सक्षम करें।"
         },
         "webrtc": {
           "server": "सर्वर",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "उपयोगकर्ता नाम",
             "password": "पासवर्ड"
-          }
+          },
+          "enableDescription": "WebRTC सर्वर सक्षम करें।"
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "SRT सर्वर सक्षम करें।"
         }
-      },
-      "actions": {
-        "reset": "रीसेट करें",
-        "submit": "सबमिट करें"
       },
       "toasts": {
         "success": "ग्लोबल कॉन्फ़िगरेशन अपडेट किया गया",

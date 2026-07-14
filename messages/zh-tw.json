@@ -23,7 +23,9 @@
       "switchToDark": "切換為深色佈景主題"
     },
     "locale": {
-      "switchLanguage": "切換語言"
+      "switchLanguage": "切換語言",
+      "searchPlaceholder": "搜尋語言…",
+      "noResults": "找不到語言。"
     }
   },
   "Nav": {
@@ -186,7 +188,8 @@
         "api": {
           "http": "HTTP API",
           "metrics": "指標",
-          "pprof": "PPROF"
+          "pprof": "PPROF",
+          "enableDescription": "啟用 MediaMTX HTTP API。"
         },
         "hooks": {
           "hooks": "Hooks"
@@ -194,15 +197,18 @@
         "rtsp": {
           "server": "伺服器",
           "tls": "TLS",
-          "auth": "驗證"
+          "auth": "驗證",
+          "enableDescription": "啟用 RTSP 伺服器。"
         },
         "rtmp": {
-          "rtmp": "RTMP"
+          "rtmp": "RTMP",
+          "enableDescription": "啟用 RTMP 伺服器。"
         },
         "hls": {
           "server": "伺服器",
           "segments": "分段",
-          "corsProxies": "CORS / 代理"
+          "corsProxies": "CORS / 代理",
+          "enableDescription": "啟用 HLS 伺服器。"
         },
         "webrtc": {
           "server": "伺服器",
@@ -216,15 +222,13 @@
             "url": "URL",
             "username": "使用者名稱",
             "password": "密碼"
-          }
+          },
+          "enableDescription": "啟用 WebRTC 伺服器。"
         },
         "srt": {
-          "srt": "SRT"
+          "srt": "SRT",
+          "enableDescription": "啟用 SRT 伺服器。"
         }
-      },
-      "actions": {
-        "reset": "重設",
-        "submit": "送出"
       },
       "toasts": {
         "success": "已更新全域設定",

@@ -2,10 +2,10 @@
 
 import { Moon, Sun } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 
+import { useTheme } from '@/components/theme-context'
 import {
   SidebarMenu,
   SidebarMenuButton,

@@ -26,7 +26,7 @@ export function RtspSection({ control }: { control: Control<GlobalConfigFormData
             control={control}
             name="rtsp"
             label="RTSP"
-            description="Enable the RTSP server."
+            description={t('enableDescription')}
           />
           <TextField control={control} name="rtspAddress" label="RTSP Address" />
           <TextField control={control} name="rtpAddress" label="RTP Address" />
