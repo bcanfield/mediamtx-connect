@@ -52,15 +52,20 @@
 
 ## Run it
 
+Images are published for both `linux/amd64` and `linux/arm64` (Raspberry Pi, Apple Silicon, etc.) — Docker pulls the right one automatically.
+
 Already running MediaMTX? Add Connect alongside it:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/app/prisma \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` is where Connect reaches MediaMTX's API from *inside* its container. It defaults to `http://mediamtx`, which only resolves on the bundled compose network — for a standalone `docker run` set it to your MediaMTX host (you can also change it later under **Config**).
 
 No MediaMTX yet? The bundled compose starts both:
 
@@ -73,6 +78,17 @@ docker compose up -d
 Open http://localhost:3000, head to **Config**, and point it at your MediaMTX.
 
 > Connect needs `api: yes` in your `mediamtx.yml`. See [the included one](mediamtx.yml) for a working reference.
+
+### Configuration
+
+Everything is configurable at runtime under **Config**. These env vars only seed the first boot:
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API host, reachable from Connect's container |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API port |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Host path mounted for recordings (compose only; optional — defaults if unset) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Where generated screenshots are stored |
 
 ## Docs
 

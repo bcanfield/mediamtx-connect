@@ -1,7 +1,7 @@
 export async function register() {
-  // Node built-ins (fs, path, child_process) and node-cron live in a separate
-  // module so they're never pulled into the Edge Runtime bundle. instrumentation.ts
-  // is compiled for every runtime; the Node-only work is imported lazily here.
+  // Node built-ins (fs, path, child_process) and node-cron live in a separate module,
+  // imported lazily only in the Node runtime. instrumentation.ts is compiled for every
+  // runtime, so the guard keeps the Node-only work out of any non-Node runtime.
   const { env } = await import('@/lib/env')
   if (env.NEXT_RUNTIME === 'nodejs') {
     const { register: registerNode } = await import('@/instrumentation-node')
