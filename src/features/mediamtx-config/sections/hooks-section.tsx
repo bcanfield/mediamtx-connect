@@ -20,7 +20,7 @@ export function HooksSection({ control }: { control: Control<GlobalConfigFormDat
       <CardHeader>
         <CardTitle>{t('hooks')}</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-3">
         <TextField control={control} name="runOnConnect" label="Run on Connect" />
         <SwitchField control={control} name="runOnConnectRestart" label="Run on Connect Restart" />
         <TextField control={control} name="runOnDisconnect" label="Run on Disconnect" />

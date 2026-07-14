@@ -58,10 +58,10 @@ export function MediaMTXConfigForm({
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-3"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <Tabs defaultValue="logging" className="flex flex-col gap-4">
+        <Tabs defaultValue="logging" className="flex flex-col gap-3">
           <TabsList className="flex-wrap">
             {TAB_VALUES.map((value) => {
               const errCount = countErrorsForTab(errors, value)

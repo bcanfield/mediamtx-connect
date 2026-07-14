@@ -14,7 +14,7 @@ export async function PageLayout({
 }) {
   const t = await getTranslations('Common')
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-3 p-4">
       <header className="space-y-0.5">
         <h2 className="text-2xl font-bold tracking-tight">{header}</h2>
         <Suspense fallback={<p>{t('loading')}</p>}>

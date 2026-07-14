@@ -35,7 +35,7 @@ function FormItem({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElem
 
   return (
     <FormItemContext value={{ id }}>
-      <div ref={ref} className={cn('space-y-2', className)} {...props} />
+      <div ref={ref} className={cn('space-y-1.5', className)} {...props} />
     </FormItemContext>
   )
 }

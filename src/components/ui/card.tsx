@@ -20,7 +20,7 @@ function CardHeader({ ref, className, ...props }: React.HTMLAttributes<HTMLDivEl
   return (
     <div
       ref={ref}
-      className={cn('flex flex-col space-y-1.5 p-6', className)}
+      className={cn('flex flex-col space-y-1 p-3', className)}
       {...props}
     />
   )
@@ -32,7 +32,7 @@ function CardTitle({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadin
     <h3
       ref={ref}
       className={cn(
-        'text-2xl font-semibold leading-none tracking-tight',
+        'text-lg font-semibold leading-none tracking-tight',
         className,
       )}
       {...props}
@@ -53,7 +53,7 @@ function CardDescription({ ref, className, ...props }: React.HTMLAttributes<HTML
 CardDescription.displayName = 'CardDescription'
 
 function CardContent({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement | null> }) {
-  return <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+  return <div ref={ref} className={cn('p-3 pt-0', className)} {...props} />
 }
 CardContent.displayName = 'CardContent'
 
@@ -61,7 +61,7 @@ function CardFooter({ ref, className, ...props }: React.HTMLAttributes<HTMLDivEl
   return (
     <div
       ref={ref}
-      className={cn('flex items-center p-6 pt-0', className)}
+      className={cn('flex items-center p-3 pt-0', className)}
       {...props}
     />
   )

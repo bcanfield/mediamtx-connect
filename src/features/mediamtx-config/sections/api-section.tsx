@@ -16,12 +16,12 @@ import { SwitchField, TextField } from '../form-fields'
 export function ApiSection({ control }: { control: Control<GlobalConfigFormData> }) {
   const t = useTranslations('Config.mediamtxForm.sections.api')
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <Card>
         <CardHeader>
           <CardTitle>{t('http')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <SwitchField
             control={control}
             name="api"
@@ -36,7 +36,7 @@ export function ApiSection({ control }: { control: Control<GlobalConfigFormData>
         <CardHeader>
           <CardTitle>{t('metrics')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <SwitchField control={control} name="metrics" label="Metrics" />
           <TextField control={control} name="metricsAddress" label="Metrics Address" />
         </CardContent>
@@ -46,7 +46,7 @@ export function ApiSection({ control }: { control: Control<GlobalConfigFormData>
         <CardHeader>
           <CardTitle>{t('pprof')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <SwitchField control={control} name="pprof" label="PPROF" />
           <TextField control={control} name="pprofAddress" label="PPROF Address" />
         </CardContent>

@@ -32,12 +32,12 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
   })
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <Card>
         <CardHeader>
           <CardTitle>{t('server')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <SwitchField
             control={control}
             name="webrtc"
@@ -55,7 +55,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
         <CardHeader>
           <CardTitle>{t('network')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           <TextField control={control} name="webrtcAllowOrigin" label="WebRTC Allow Origin" />
           <ListField control={control} name="webrtcTrustedProxies" label="WebRTC Trusted Proxies" />
           <TextField control={control} name="webrtcLocalUDPAddress" label="WebRTC Local UDP Address" />
@@ -79,7 +79,7 @@ export function WebrtcSection({ control }: { control: Control<GlobalConfigFormDa
             {t('addServer')}
           </Button>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3">
           {fields.length === 0 && (
             <p className="text-sm text-muted-foreground">{t('noIceServers')}</p>
           )}
