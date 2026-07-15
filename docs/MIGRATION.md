@@ -1,12 +1,14 @@
 # Migrating MediaMTX Connect into this stack
 
-> **Status (2026-07-14): phases 1–5 complete.** The app is fully ported and
-> verified end-to-end against a live MediaMTX (streams, HLS playback,
-> recordings with Range streaming, both config forms, i18n, theming, crons,
-> Docker image). The Docker runtime decision landed on `node:22-slim` +
-> ffmpeg (§5 option 1). Remaining: phase 6 cutover — moving repo-level docs/
-> examples and retiring the old `src/` tree — which is deliberately left for
-> a separate change.
+> **Status (2026-07-14): complete.** All six phases are done. The monorepo
+> now lives at the repo root (the old Next.js `src/` tree is retired), the
+> Playwright suite, CI, and docs are ported, and the app was verified
+> end-to-end against a live MediaMTX (streams, HLS playback, recordings with
+> Range streaming, both config forms, i18n, theming, crons, Docker image).
+> The Docker runtime decision landed on `node:22-slim` + ffmpeg (§5
+> option 1). This document is now a historical record of the mapping. The
+> old app's Vitest layers were not carried over — see `docs/debt/`
+> (`vitest-layers-not-ported`).
 
 How to transfer everything in `docs/FEATURES.md` (repo root) from the Next.js 16
 app into this monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`),

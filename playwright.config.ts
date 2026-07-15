@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { defineConfig, devices } from '@playwright/test'
 
 // Tests that exercise pure HTTP behavior (no UI rendering) only need to run

@@ -37,16 +37,15 @@ echo $! > "$WORK/mediamtx.pid"; sleep 2
 bash publish-streams.sh; sleep 4
 bash seed-recordings.sh
 
-# 5. app (isolated DB, alt ports)
-export DATABASE_URL="file:$WORK/demo.db"
+# 5. app (isolated config store, alt ports)
+export DATA_DIR="$WORK/data"
 export BACKEND_SERVER_MEDIAMTX_URL="http://127.0.0.1" MEDIAMTX_API_PORT=9998
 export REMOTE_MEDIAMTX_URL="http://localhost"
 export MEDIAMTX_RECORDINGS_DIR="$WORK/recordings" MEDIAMTX_SCREENSHOTS_DIR="$WORK/screenshots"
-export NODE_ENV=production
-rm -f "$WORK/demo.db"
-echo "→ migrate + start app on :3100"
-( cd "$ROOT" && npx prisma migrate deploy --schema=src/lib/prisma/schema.prisma >/dev/null )
-( cd "$ROOT" && nohup npx next start -p 3100 > "$WORK/app.log" 2>&1 & echo $! > "$WORK/app.pid" )
+export NODE_ENV=production PORT=3100
+rm -rf "$WORK/data"
+echo "→ start app on :3100"
+( cd "$ROOT" && nohup node apps/api/dist/server.mjs > "$WORK/app.log" 2>&1 & echo $! > "$WORK/app.pid" )
 for i in $(seq 1 30); do
   [ "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3100/api/health 2>/dev/null)" = "200" ] && break
   sleep 1

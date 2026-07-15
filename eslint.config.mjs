@@ -4,7 +4,13 @@ export default antfu(
   {
     typescript: true,
     react: true,
-    ignores: ['**/dist', 'apps/api/public'],
+    markdown: false,
+    ignores: [
+      '**/dist',
+      'apps/api/public',
+      // standalone demo-capture rig with throwaway scripts
+      'demo/**',
+    ],
   },
   {
     // console.* is banned outside the loggers (Pino in the api, a console

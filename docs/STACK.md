@@ -7,17 +7,17 @@ Router** SPA and a **Hono (Node 22)** backend, connected by a shared
 **one Docker image** where Hono serves the static frontend build and shells
 out to ffmpeg for recording thumbnails.
 
-Feature-for-feature port of the Next.js app at the repo root — live stream
+Feature-for-feature port of the previous Next.js implementation — live stream
 viewing (HLS), recordings browsing/playback/download, app config, and the
-full MediaMTX global config editor, in 30 languages. `MIGRATION.md` documents
-the mapping; `docs/FEATURES.md` at the repo root remains the feature
+full MediaMTX global config editor, in 30 languages. `docs/MIGRATION.md` documents
+the mapping; `docs/FEATURES.md` remains the feature
 inventory.
 
 ## Layout
 
 ```
 ├── AGENTS.md / CLAUDE.md      agent context (CLAUDE.md imports AGENTS.md)
-├── MIGRATION.md               how the Next.js app maps onto this stack
+├── docs/MIGRATION.md          how the old Next.js app mapped onto this stack
 ├── turbo.json                 task graph: build / typecheck / dev
 ├── eslint.config.mjs          @antfu/eslint-config (lint + format, one tool)
 ├── Dockerfile                 turbo prune → slim build → node:22-slim + ffmpeg
@@ -43,7 +43,7 @@ pnpm i18n:check   # message-key parity across the 30 locales
 ```
 
 For local dev against a real MediaMTX with fake streams, use the dev compose
-stack at the repo root (`npm run mediamtx`) and point the api at it:
+stack (`pnpm mediamtx`) and point the api at it:
 
 ```sh
 BACKEND_SERVER_MEDIAMTX_URL=http://127.0.0.1 \
@@ -70,7 +70,7 @@ The Dockerfile follows the reference pattern: `turbo prune --docker` for
 cache-friendly layering, `pnpm install` with a BuildKit store cache mount,
 `pnpm deploy --legacy --prod` for a self-contained output. The runtime is
 `node:22-bookworm-slim` + ffmpeg (the thumbnail generator) rather than
-distroless — see `MIGRATION.md` §5.
+distroless — see `docs/MIGRATION.md` §5.
 
 ## How the type safety works
 
@@ -99,7 +99,7 @@ deliberately bypass oRPC: they are plain Hono routes under `/media/*`.
   `^7` once typescript-eslint supports it.
 - **ESLint over Biome**: `@antfu/eslint-config` covers linting and formatting
   in one tool (no Prettier), including JSON/YAML/Markdown.
-- **No database.** The old app's Prisma + SQLite held one row of five
+- **No database.** The previous app's Prisma + SQLite held one row of five
   settings; a Zod-validated `config.json` with atomic writes replaced it.
   `packages/db` (Drizzle) is the slot if a real database ever earns its way in.
 - **use-intl over next-intl**: same author, same message format, same
