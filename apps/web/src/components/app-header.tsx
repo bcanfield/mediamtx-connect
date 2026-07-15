@@ -31,7 +31,7 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border-subtle bg-background">
-      <div className="flex h-14 items-center justify-between gap-4 px-4 sm:px-7">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-7">
         <Link href="/" className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden
@@ -55,12 +55,12 @@ export function AppHeader() {
 
       <nav
         aria-label={t('primaryAria')}
-        className="flex items-stretch gap-4 overflow-x-auto px-4 sm:px-7"
+        className="mx-auto flex max-w-7xl items-stretch gap-2 overflow-x-auto px-4 sm:gap-4 sm:px-7"
       >
         {tabs.map((tab, i) => {
           const active = isActiveRoute(pathname, tab.href)
           return (
-            <div key={tab.href} className="flex items-stretch gap-4">
+            <div key={tab.href} className="flex items-stretch gap-2 sm:gap-4">
               {i === 2 && (
                 <span aria-hidden className="my-3 w-px self-stretch bg-border-subtle" />
               )}

@@ -1,5 +1,5 @@
 import { Moon, Sun } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { flushSync } from 'react-dom'
 import { useTranslations } from 'use-intl'
 
@@ -12,14 +12,9 @@ const TRANSITION_DURATION_MS = 450
 export function ModeToggle() {
   const t = useTranslations('Common.theme')
   const { resolvedTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const isDark = mounted && resolvedTheme === 'dark'
+  const isDark = resolvedTheme === 'dark'
   const ariaLabel = isDark ? t('switchToLight') : t('switchToDark')
 
   const toggle = useCallback(() => {
@@ -28,7 +23,11 @@ export function ModeToggle() {
 
     const apply = () => setTheme(next)
 
-    if (!button || typeof document.startViewTransition !== 'function') {
+    if (
+      !button
+      || typeof document.startViewTransition !== 'function'
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       apply()
       return
     }
@@ -76,13 +75,13 @@ export function ModeToggle() {
       <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
         <Sun
           className={cn(
-            'absolute size-4 transition-all duration-500',
+            'absolute size-4 transition-all duration-500 motion-reduce:transition-none',
             isDark ? '-rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100',
           )}
         />
         <Moon
           className={cn(
-            'absolute size-4 transition-all duration-500',
+            'absolute size-4 transition-all duration-500 motion-reduce:transition-none',
             isDark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-0 opacity-0',
           )}
         />

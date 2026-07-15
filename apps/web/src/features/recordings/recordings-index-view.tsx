@@ -3,9 +3,11 @@ import { ArrowRight, CircleDashed, Search } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFormatter, useTranslations } from 'use-intl'
 
+import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Input } from '@/components/ui/input'
 import { Link } from '@/i18n/navigation'
+import { cn } from '@/lib/utils'
 
 export function RecordingsIndexView({ streams }: { streams: RecordingStreamSummary[] }) {
   const t = useTranslations('Recordings')
@@ -64,7 +66,7 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
 
       {filtered.length === 0
         ? (
-            <div className="mx-auto my-14 w-full max-w-md rounded-[10px] border border-dashed border-[#d9d9d9] px-8 py-12 text-center dark:border-[#2a2a2a]">
+            <div className="mx-auto my-14 w-full max-w-md rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
               <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
                 {t('empty.noMatchingTitle')}
               </h2>
@@ -95,7 +97,7 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
       href={`/recordings/${stream.name}`}
       aria-label={t('openAria', { name: stream.name })}
       data-testid="stream-summary-card"
-      className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-colors hover:border-border-hover focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20"
+      className={cn(mediaCardShell, 'group focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20')}
     >
       <AspectRatio ratio={16 / 9} className="relative overflow-hidden bg-black">
         {showThumbnail
@@ -104,11 +106,11 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
                 alt=""
                 onError={() => setThumbnailError(true)}
                 src={stream.screenshotUrl!}
-                className="h-full w-full object-cover"
+                className="size-full object-cover"
               />
             )
           : (
-              <div className="flex h-full w-full items-center justify-center bg-[repeating-linear-gradient(45deg,#efefef_0_10px,#f5f5f5_10px_20px)] dark:bg-[repeating-linear-gradient(45deg,#101010_0_10px,#131313_10px_20px)]">
+              <div className="flex size-full items-center justify-center bg-hatch">
                 <CircleDashed className="size-6 text-faint" />
               </div>
             )}

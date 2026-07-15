@@ -2,69 +2,68 @@ import Hls from 'hls.js'
 import { useEffect, useRef } from 'react'
 
 import { logger } from '@/lib/logger'
+import { cn } from '@/lib/utils'
 
-export function VideoPlayer({ props }: { props: { address: string } }) {
+export function VideoPlayer({ address, className }: { address: string, className?: string }) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const hlsRef = useRef<Hls | null>(null)
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  useEffect(() => {
-    logger.debug('useeffect')
-    const create = (video: HTMLVideoElement) => {
-      logger.debug('create')
 
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !address)
+      return
+
+    if (!Hls.isSupported()) {
+      video.src = address
+      return
+    }
+
+    const create = () => {
       const hls = new Hls({
         maxLiveSyncPlaybackRate: 1.5,
       })
+      hlsRef.current = hls
 
-      hls.on(Hls.Events.ERROR, (evt, data) => {
+      hls.on(Hls.Events.ERROR, (_evt, data) => {
         if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-          logger.debug('recovering hls error')
-
           hls.recoverMediaError()
         }
         else if (data.fatal) {
-          logger.debug('fatal hls error')
-
+          logger.error('fatal hls error, retrying in 2s', { address, details: data.details })
           hls.destroy()
-          retryTimeoutRef.current = setTimeout(create, 2000, video)
+          retryTimeoutRef.current = setTimeout(create, 2000)
         }
       })
 
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-        logger.debug('media attached')
-        hls.loadSource(props.address)
+        hls.loadSource(address)
       })
 
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        logger.debug('manifest parsed')
         video.play()
       })
 
       hls.attachMedia(video)
-      return hls
     }
 
-    if (!videoRef.current || !props.address) {
-      return
-    }
+    create()
 
-    if (!Hls.isSupported()) {
-      videoRef.current.src = props.address
-      return
-    }
-    const hls = create(videoRef.current)
     return () => {
-      logger.debug('hls destroy')
       if (retryTimeoutRef.current) {
         clearTimeout(retryTimeoutRef.current)
+        retryTimeoutRef.current = null
       }
-      hls?.destroy()
+      hlsRef.current?.destroy()
+      hlsRef.current = null
     }
-  }, [props.address])
+  }, [address])
+
   return (
     <video
-      className="h-full w-full bg-black object-contain"
+      className={cn('size-full bg-black object-contain', className)}
       ref={videoRef}
-      muted={true}
+      muted
       autoPlay
       playsInline
     />

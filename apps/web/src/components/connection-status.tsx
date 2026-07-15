@@ -19,7 +19,7 @@ export function ConnectionStatus() {
         aria-hidden
         className={cn(
           'size-1.5 rounded-full',
-          connected ? 'bg-link' : 'bg-live',
+          connected ? 'bg-link' : 'bg-destructive',
         )}
       />
       {connected ? t('connected') : t('offline')}

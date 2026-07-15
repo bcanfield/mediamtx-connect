@@ -132,7 +132,7 @@ function SectionRail({
             type="button"
             onClick={() => scrollTo(`mtx-${section.id}`)}
             className={cn(
-              'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-[12px] transition-colors',
+              'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-[12px] transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
               activeId === `mtx-${section.id}`
                 ? 'border-transparent bg-accent font-medium text-foreground'
                 : 'text-mute hover:text-foreground',
@@ -178,7 +178,7 @@ function SectionRail({
 
 function RailErrorBadge({ count }: { count: number }) {
   return (
-    <span className="rounded-full bg-destructive px-1.5 py-px font-mono text-[10px] font-medium text-white">
+    <span className="rounded-full bg-destructive px-1.5 py-px font-mono text-[10px] font-medium text-destructive-foreground">
       {count}
     </span>
   )

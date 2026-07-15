@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { useFormatter, useTranslations } from 'use-intl'
 
+import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Button } from '@/components/ui/button'
 import {
@@ -34,6 +35,10 @@ export interface StreamCardProps {
   recording?: boolean
   viewers?: number
 }
+
+const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em]'
+const overlayPillLive = cn(overlayPill, 'gap-1.5 border-live/35 text-live-foreground')
+const overlayPillNeutral = cn(overlayPill, 'border-white/15 text-white/90')
 
 function formatUptime(readyTime: string): string {
   const totalMinutes = Math.max(0, Math.floor((Date.now() - new Date(readyTime).getTime()) / 60000))
@@ -95,23 +100,18 @@ export function StreamCard({
   return (
     <div
       data-testid="stream-card"
-      className={cn(
-        'flex flex-col overflow-hidden rounded-xl border bg-card transition-colors hover:border-border-hover',
-        playDisabled && 'opacity-75',
-      )}
+      className={cn(mediaCardShell, playDisabled && 'opacity-75')}
     >
       <AspectRatio ratio={16 / 9} className="group relative overflow-hidden bg-black">
         {isLive
           ? (
               <VideoPlayer
-                props={{
-                  address: `${remoteMediaMtxUrl}${hlsAddress}/${streamName}/index.m3u8`,
-                }}
+                address={`${remoteMediaMtxUrl}${hlsAddress}/${streamName}/index.m3u8`}
               />
             )
           : thumbnailError
             ? (
-                <div className="h-full w-full bg-[repeating-linear-gradient(45deg,#efefef_0_10px,#f5f5f5_10px_20px)] dark:bg-[repeating-linear-gradient(45deg,#101010_0_10px,#131313_10px_20px)]">
+                <div className="size-full bg-hatch">
                   <span className="absolute inset-x-0 bottom-3 px-4 text-center font-mono text-[10.5px] text-faint">
                     {t('noSnapshot')}
                   </span>
@@ -122,7 +122,7 @@ export function StreamCard({
                   alt=""
                   onError={() => setThumbnailError(true)}
                   src={`/media/screenshots/${encodeURIComponent(streamName)}/latest`}
-                  className="h-full w-full object-cover"
+                  className="size-full object-cover"
                 />
               )}
 
@@ -131,17 +131,17 @@ export function StreamCard({
           {isLive
             ? (
                 <>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-live/35 bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em] text-live-foreground">
-                    <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-live" />
+                  <span className={overlayPillLive}>
+                    <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-live motion-reduce:animate-none" />
                     {t('live')}
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-white/15 bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em] text-white/90">
+                  <span className={overlayPillNeutral}>
                     {t('protocolHls')}
                   </span>
                 </>
               )
             : !thumbnailError && (
-                <span className="inline-flex items-center rounded-full border border-white/15 bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em] text-white/90">
+                <span className={overlayPillNeutral}>
                   {t('snapshot')}
                 </span>
               )}
@@ -149,7 +149,7 @@ export function StreamCard({
 
         {/* bottom scrim behind chips */}
         {(codecs.length > 0 || telemetry) && (
-          <div aria-hidden className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/70 to-transparent" />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-black/70 to-transparent" />
         )}
 
         {/* bottom-left: codec chips */}
@@ -180,7 +180,7 @@ export function StreamCard({
             onClick={togglePlay}
             disabled={playDisabled}
             aria-label={t('playAria', { streamName })}
-            className="absolute left-1/2 top-1/2 flex size-11.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_2px_12px_rgba(0,0,0,.4)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40 disabled:pointer-events-none"
+            className="absolute left-1/2 top-1/2 flex size-11.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_2px_12px_rgba(0,0,0,.4)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40 disabled:pointer-events-none motion-reduce:transition-none motion-reduce:hover:scale-100"
           >
             <Play aria-hidden className="ml-0.5 size-4 fill-current" />
           </button>

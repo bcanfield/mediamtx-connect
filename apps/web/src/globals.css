@@ -77,7 +77,10 @@
   --color-border-row: var(--border-row);
   --color-border-hover: var(--border-hover);
   --color-surface-raised: var(--surface-raised);
+  --shadow-overlay: 0 8px 30px var(--shadow-overlay-color);
   --radius-sm: calc(var(--radius) - 4px);
+  /* 10px — status panels, callouts, save bar */
+  --radius-panel: calc(var(--radius) + 2px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
@@ -136,6 +139,9 @@
   --border-row: #f2f2f2;
   --border-hover: #c9c9c9;
   --surface-raised: #ffffff;
+  --shadow-overlay-color: rgb(0 0 0 / 0.15);
+  --hatch-a: #efefef;
+  --hatch-b: #f5f5f5;
 }
 
 .dark {
@@ -186,6 +192,18 @@
   --border-row: #161616;
   --border-hover: #3a3a3a;
   --surface-raised: #161616;
+  --shadow-overlay-color: rgb(0 0 0 / 0.55);
+  --hatch-a: #101010;
+  --hatch-b: #131313;
+}
+
+/* diagonal-stripe placeholder for missing thumbnails */
+@utility bg-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--hatch-a) 0 10px,
+    var(--hatch-b) 10px 20px
+  );
 }
 
 @layer base {

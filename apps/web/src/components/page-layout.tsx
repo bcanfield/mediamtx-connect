@@ -6,12 +6,14 @@ export function PageLayout({
   subHeader,
   actions,
   width = 'default',
+  className,
 }: {
   children: React.ReactNode
   header?: React.ReactNode
   subHeader?: React.ReactNode
   actions?: React.ReactNode
   width?: 'default' | 'narrow' | 'reading' | 'wide'
+  className?: string
 }) {
   return (
     <div
@@ -21,6 +23,7 @@ export function PageLayout({
         width === 'wide' && 'max-w-265',
         width === 'reading' && 'max-w-230',
         width === 'narrow' && 'max-w-160',
+        className,
       )}
     >
       {(header || subHeader || actions) && (
