@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run MediaMTX (with fake streams) and Next.js dev together.
+# Run MediaMTX (with fake streams) and the web+api dev servers together.
 # Brings the docker stack down on exit.
 set -e
 
@@ -17,5 +17,5 @@ trap cleanup EXIT INT TERM
 ./scripts/start-mediamtx.sh
 
 echo ""
-echo "Starting Next.js dev server..."
-npm run dev
+echo "Starting web + api dev servers..."
+pnpm dev

@@ -19,8 +19,7 @@ services:
       - '9997:9997' # API
 
   mediamtx-connect:
-    # image: ghcr.io/bcanfield/mediamtx-connect:latest
-    build: . # Uncomment to build from source
+    build: .
     depends_on:
       - mediamtx
     container_name: mediamtx-connect
@@ -34,14 +33,9 @@ services:
       MEDIAMTX_SCREENSHOTS_DIR: /screenshots
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
-      - mediamtx-connect-data:/app/prisma
+      - mediamtx-connect-data:/data
     ports:
       - '3000:3000'
-    healthcheck:
-      test: [CMD, curl, -f, 'http://localhost:3000/api/health']
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 networks:
   mtx:

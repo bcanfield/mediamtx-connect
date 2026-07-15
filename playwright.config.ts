@@ -24,9 +24,19 @@ export default defineConfig({
     { name: 'mobile-safari', use: { ...devices['iPhone 14'] }, testMatch: uiSpecs },
   ],
   webServer: {
-    command: 'npm run start',
+    // Requires a prior `pnpm build` (which also copies the SPA into
+    // apps/api/public). Test-shaped defaults below; CI overrides via env.
+    command: 'node apps/api/dist/server.mjs',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    env: {
+      DATA_DIR: './test-data/data',
+      MEDIAMTX_RECORDINGS_DIR: './test-data/recordings',
+      MEDIAMTX_SCREENSHOTS_DIR: './test-data/screenshots',
+      BACKEND_SERVER_MEDIAMTX_URL: 'http://127.0.0.1',
+      REMOTE_MEDIAMTX_URL: 'http://localhost',
+      ...Object.fromEntries(Object.entries(process.env).filter(([, v]) => v !== undefined)) as Record<string, string>,
+    },
   },
 })

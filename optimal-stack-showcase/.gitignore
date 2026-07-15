@@ -1,7 +1,0 @@
-node_modules/
-dist/
-.turbo/
-apps/api/public/
-.env
-.env.local
-*.log

@@ -15,27 +15,12 @@ echo "=================================="
 echo ""
 
 # Step 1: Install dependencies
-echo "Step 1: Installing npm dependencies..."
-npm install
+echo "Step 1: Installing dependencies (pnpm)..."
+pnpm install
 
-# Step 2: Generate Prisma client
+# Step 2: Setup test data
 echo ""
-echo "Step 2: Generating Prisma client..."
-npx prisma generate
-
-# Step 3: Run database migrations
-echo ""
-echo "Step 3: Running database migrations..."
-npx prisma migrate deploy
-
-# Step 4: Seed the database
-echo ""
-echo "Step 4: Seeding database with development config..."
-npx ts-node --compiler-options '{"module":"CommonJS"}' src/lib/prisma/seed.ts
-
-# Step 5: Setup test data
-echo ""
-echo "Step 5: Setting up test data (mock recordings)..."
+echo "Step 2: Setting up test data (mock recordings)..."
 ./scripts/setup-test-data.sh
 
 echo ""
@@ -43,15 +28,15 @@ echo "=================================="
 echo "Setup Complete!"
 echo "=================================="
 echo ""
-echo "Start MediaMTX (with fake streams) and Next.js together:"
-echo "  npm run dev:all"
+echo "Start MediaMTX (with fake streams) and the dev servers together:"
+echo "  pnpm dev:all"
 echo ""
-echo "The app will be available at: http://localhost:3000"
+echo "Web dev server: http://localhost:5173 (api on :3000)"
 echo ""
 echo "Or run them separately:"
-echo "  npm run mediamtx   # MediaMTX with fake streams"
-echo "  npm run dev        # Next.js dev server"
+echo "  pnpm mediamtx   # MediaMTX with fake streams"
+echo "  pnpm dev        # web + api dev servers"
 echo ""
-echo "To run e2e tests:"
-echo "  npm run test:e2e"
+echo "To run e2e tests (needs a prior pnpm build):"
+echo "  pnpm test:e2e"
 echo ""
