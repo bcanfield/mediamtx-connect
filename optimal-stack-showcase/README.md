@@ -62,7 +62,8 @@ openapi.yaml         generated contract (committed — the reviewable API surfac
 
 - Go 1.25+
 - Node 20.19+ / 22.12+ (Vite 8 requirement)
-- `go install github.com/air-verse/air@latest` (dev hot-reload, optional)
+
+air (dev hot-reload) is pinned as a `tool` directive in `go.mod` — `make dev-api` runs it via `go tool air`, no separate install.
 
 ## Quickstart
 
