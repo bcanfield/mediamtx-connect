@@ -28,7 +28,7 @@ export function SaveBar({
   return (
     <div
       data-testid="save-bar"
-      className="sticky bottom-4 z-30 flex flex-wrap items-center justify-between gap-3 rounded-[10px] border bg-surface-raised px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,.15)] dark:shadow-[0_8px_30px_rgba(0,0,0,.55)]"
+      className="sticky bottom-4 z-30 flex flex-wrap items-center justify-between gap-3 rounded-panel border bg-surface-raised px-4 py-3 shadow-overlay"
     >
       <div className="flex min-w-0 flex-wrap items-center gap-2">
         <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-warning" />

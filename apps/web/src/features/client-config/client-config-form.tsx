@@ -16,9 +16,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
 import { buildLocalizedClientConfigSchema } from './client-config.schemas'
+
+const monoInput = 'h-9.5 font-mono'
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -83,11 +86,11 @@ export function ClientConfigForm({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[13px]">{t('fields.mediaMtxUrl.label')}</FormLabel>
+                <FormLabel>{t('fields.mediaMtxUrl.label')}</FormLabel>
                 <FormControl {...field}>
-                  <Input className="h-9.5 font-mono" placeholder="http://mediamtx" />
+                  <Input className={monoInput} placeholder="http://mediamtx" />
                 </FormControl>
-                <FormDescription className="text-[11.5px]">
+                <FormDescription>
                   {t('fields.mediaMtxUrl.description')}
                 </FormDescription>
                 <FormMessage />
@@ -100,11 +103,11 @@ export function ClientConfigForm({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[13px]">{t('fields.mediaMtxApiPort.label')}</FormLabel>
+                <FormLabel>{t('fields.mediaMtxApiPort.label')}</FormLabel>
                 <FormControl {...field}>
-                  <Input type="number" className="h-9.5 w-45 font-mono" placeholder="9997" />
+                  <Input type="number" className={cn(monoInput, 'w-45')} placeholder="9997" />
                 </FormControl>
-                <FormDescription className="text-[11.5px]">
+                <FormDescription>
                   {t('fields.mediaMtxApiPort.description')}
                 </FormDescription>
                 <FormMessage />
@@ -113,7 +116,7 @@ export function ClientConfigForm({
           />
 
           {/* Hero field (board 2d): required for live playback, amber callout. */}
-          <div className="flex flex-col gap-3.5 rounded-[10px] border border-[#e8d5b0] bg-gradient-to-b from-warning/[0.05] to-transparent p-4 dark:border-[#3a2c10]">
+          <div className="flex flex-col gap-3.5 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.05] to-transparent p-4">
             <span className="self-start rounded-full border border-warning/40 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.07em] text-warning">
               {t('playbackBadge')}
             </span>
@@ -122,10 +125,10 @@ export function ClientConfigForm({
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[13px]">{t('fields.remoteMediaMtxUrl.label')}</FormLabel>
+                  <FormLabel>{t('fields.remoteMediaMtxUrl.label')}</FormLabel>
                   <FormControl>
                     <Input
-                      className="h-9.5 font-mono"
+                      className={monoInput}
                       placeholder="http://localhost"
                       name={field.name}
                       ref={field.ref}
@@ -134,7 +137,7 @@ export function ClientConfigForm({
                       onChange={e => field.onChange(e.target.value || null)}
                     />
                   </FormControl>
-                  <FormDescription className="text-[11.5px]">
+                  <FormDescription>
                     {t('fields.remoteMediaMtxUrl.description')}
                   </FormDescription>
                   <FormMessage />
@@ -152,11 +155,11 @@ export function ClientConfigForm({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[13px]">{t('fields.recordingsDirectory.label')}</FormLabel>
+                <FormLabel>{t('fields.recordingsDirectory.label')}</FormLabel>
                 <FormControl {...field}>
-                  <Input className="h-9.5 font-mono" placeholder="/recordings" />
+                  <Input className={monoInput} placeholder="/recordings" />
                 </FormControl>
-                <FormDescription className="text-[11.5px]">
+                <FormDescription>
                   {t('fields.recordingsDirectory.description')}
                 </FormDescription>
                 <FormMessage />
@@ -169,11 +172,11 @@ export function ClientConfigForm({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[13px]">{t('fields.screenshotsDirectory.label')}</FormLabel>
+                <FormLabel>{t('fields.screenshotsDirectory.label')}</FormLabel>
                 <FormControl {...field}>
-                  <Input className="h-9.5 font-mono" placeholder="/screenshots" />
+                  <Input className={monoInput} placeholder="/screenshots" />
                 </FormControl>
-                <FormDescription className="text-[11.5px]">
+                <FormDescription>
                   {t('fields.screenshotsDirectory.description')}
                 </FormDescription>
                 <FormMessage />

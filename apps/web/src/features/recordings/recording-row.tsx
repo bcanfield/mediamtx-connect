@@ -87,7 +87,7 @@ export function RecordingRow({
             type="button"
             onClick={togglePlay}
             aria-label={t('playAria', { time })}
-            className="relative w-29.5 shrink-0 overflow-hidden rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20"
+            className="relative w-24 shrink-0 overflow-hidden rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 sm:w-29.5"
           >
             <div className="aspect-video bg-black">
               {showThumbnail
@@ -96,11 +96,11 @@ export function RecordingRow({
                       alt=""
                       onError={() => setThumbnailError(true)}
                       src={screenshotUrl}
-                      className="h-full w-full object-cover"
+                      className="size-full object-cover"
                     />
                   )
                 : (
-                    <div className="flex h-full w-full items-center justify-center bg-[repeating-linear-gradient(45deg,#efefef_0_10px,#f5f5f5_10px_20px)] dark:bg-[repeating-linear-gradient(45deg,#101010_0_10px,#131313_10px_20px)]">
+                    <div className="flex size-full items-center justify-center bg-hatch">
                       <CircleDashed className="size-4 text-faint" />
                     </div>
                   )}
@@ -109,7 +109,7 @@ export function RecordingRow({
         )}
 
         <div className="min-w-0 flex-1">
-          <p className="text-[13.5px] font-medium tabular-nums">{time}</p>
+          <p className="truncate text-[13.5px] font-medium tabular-nums">{time}</p>
           {download.progress
             ? (
                 <div className="mt-1.5 flex max-w-md flex-col gap-1.5">
@@ -117,7 +117,8 @@ export function RecordingRow({
                     value={download.progress.totalBytes > 0
                       ? (download.progress.receivedBytes / download.progress.totalBytes) * 100
                       : 0}
-                    className="h-0.75 [&>div]:bg-link"
+                    className="h-0.75"
+                    indicatorClassName="bg-link"
                   />
                   <span aria-live="polite" className="font-mono text-[10.5px] text-mute">
                     {t('downloading', {

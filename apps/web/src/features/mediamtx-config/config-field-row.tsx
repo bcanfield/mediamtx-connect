@@ -29,7 +29,7 @@ function toTextarea(value: string[] | undefined): string {
 // ConfigFieldRow (handoff §3): fixed key column with the MediaMTX config key
 // verbatim in mono (never localized — docs/I18N.md), localized help below,
 // control on the right, hairline row separator.
-function RowShell({
+export function RowShell({
   name,
   help,
   dirty,
@@ -82,7 +82,7 @@ export function TextFieldRow({
             <FormControl {...field}>
               <Input type={kind} className="font-mono" aria-label={name} />
             </FormControl>
-            <FormMessage className="text-[11.5px]" />
+            <FormMessage />
           </FormItem>
         </RowShell>
       )}
@@ -113,7 +113,7 @@ export function SwitchFieldRow({
                 aria-label={name}
               />
             </FormControl>
-            <FormMessage className="text-[11.5px]" />
+            <FormMessage />
           </FormItem>
         </RowShell>
       )}
@@ -151,7 +151,7 @@ export function ListFieldRow({
                 onChange={e => field.onChange(fromTextarea(e))}
               />
             </FormControl>
-            <FormMessage className="text-[11.5px]" />
+            <FormMessage />
           </FormItem>
         </RowShell>
       )}
