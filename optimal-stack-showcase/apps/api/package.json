@@ -1,0 +1,32 @@
+{
+  "name": "@showcase/api",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "dist",
+    "public"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsdown",
+    "start": "node dist/server.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.9",
+    "@orpc/contract": "^1.14.8",
+    "@orpc/server": "^1.14.8",
+    "@showcase/contract": "workspace:*",
+    "@t3-oss/env-core": "^0.13.11",
+    "hono": "^4.12.30",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@showcase/typescript-config": "workspace:*",
+    "@types/node": "^26.1.1",
+    "tsdown": "^0.22.7",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3"
+  }
+}

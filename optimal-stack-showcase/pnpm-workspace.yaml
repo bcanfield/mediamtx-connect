@@ -1,0 +1,10 @@
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
+packages:
+  - apps/*
+  - packages/*
+
+onlyBuiltDependencies:
+  - esbuild

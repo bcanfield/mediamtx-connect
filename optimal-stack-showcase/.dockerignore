@@ -1,0 +1,9 @@
+node_modules
+**/node_modules
+**/dist
+**/.turbo
+apps/api/public
+.git
+Dockerfile
+.dockerignore
+*.md
