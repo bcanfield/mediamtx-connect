@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webgrænseflade til MediaMTX. Se streams, gennemse optagelser, og rediger konfigurationen fra din browser."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Dette felt er påkrævet",
+      "mustBePositive": "Skal være større end 0"
+    }
+  },
+  "Common": {
+    "retry": "Prøv igen",
+    "loading": "Indlæser…",
+    "theme": {
+      "lightMode": "Lys tilstand",
+      "darkMode": "Mørk tilstand",
+      "switchToLight": "Skift til lyst tema",
+      "switchToDark": "Skift til mørkt tema"
+    },
+    "locale": {
+      "switchLanguage": "Skift sprog",
+      "searchPlaceholder": "Søg sprog…",
+      "noResults": "Intet sprog fundet."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Applikation",
+      "settings": "Indstillinger"
+    },
+    "items": {
+      "live": "Live",
+      "recordings": "Optagelser",
+      "clientConfig": "Klientkonfiguration",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Live",
+    "header": "Streams",
+    "subHeader": "Livevisninger af dine aktive streams",
+    "errors": {
+      "configTitle": "Konfigurationsfejl",
+      "configDescription": "Konfigurationen kunne ikke indlæses. Tjek din databaseforbindelse.",
+      "connectionTitle": "Kan ikke oprette forbindelse til MediaMTX",
+      "connectionLead": "Kan ikke nå MediaMTX på",
+      "connectionHint": "Sørg for at MediaMTX kører, og at URL'en i din konfiguration er korrekt.",
+      "checkConfigBtn": "Tjek konfiguration"
+    },
+    "empty": {
+      "configureRemoteTitle": "Konfigurer fjern-URL",
+      "configureRemoteDescription": "Indstil din fjern-URL til MediaMTX for at se streams i browseren. Det skal være den URL, som din browser kan bruge til at nå MediaMTX.",
+      "goToConfig": "Gå til konfiguration",
+      "noStreamsTitle": "Ingen aktive streams",
+      "noStreamsDescription": "MediaMTX er forbundet, men der er ingen aktive streams lige nu. Start en stream til MediaMTX for at se den her."
+    },
+    "density": {
+      "aria": "Gittertæthed",
+      "two": "To kolonner",
+      "three": "Tre kolonner",
+      "four": "Fire kolonner"
+    },
+    "card": {
+      "onlineSince": "Online siden {date}",
+      "idle": "Inaktiv",
+      "live": "LIVE",
+      "stop": "Stop",
+      "play": "Afspil",
+      "actionsAria": "Streamhandlinger",
+      "viewRecordings": "Vis optagelser"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Optagelser",
+    "header": "Optagelser",
+    "subHeader": "Gennemse optagelser fra dine forskellige streams",
+    "subHeaderForStream": "Optagelser for: {streamName}",
+    "invalidConfig": "Ugyldig konfiguration",
+    "errors": {
+      "configTitle": "Konfigurationsfejl",
+      "configDescription": "Konfigurationen kunne ikke indlæses. Tjek din databaseforbindelse.",
+      "directoryTitle": "Kan ikke tilgå optagelsesmappen",
+      "directoryLead": "Kan ikke læse optagelsesmappen på",
+      "directoryHint": "Sørg for at mappen findes og har de korrekte rettigheder.",
+      "checkConfigBtn": "Tjek konfiguration",
+      "readErrorTitle": "Kunne ikke læse optagelser",
+      "readErrorDescription": "Kunne ikke læse optagelsesmappen. Sørg for at mappen findes."
+    },
+    "empty": {
+      "noRecordingsTitle": "Ingen optagelser fundet",
+      "noRecordingsLead": "Der er endnu ikke gemt nogen optagelser. Optagelser vises her, så snart MediaMTX begynder at optage streams.",
+      "noRecordingsHint": "Sørg for at <code>MTX_RECORD=yes</code> er sat i din MediaMTX-konfiguration.",
+      "noMatchingTitle": "Ingen matchende streams",
+      "noMatchingDescription": "Ingen stream matcher »{query}«."
+    },
+    "search": {
+      "placeholder": "Søg streams"
+    },
+    "groups": {
+      "today": "I dag",
+      "yesterday": "I går"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# optagelse} other {# optagelser}}",
+      "latest": "Seneste {time}",
+      "viewBtn": "Vis"
+    },
+    "recordingCard": {
+      "stop": "Stop",
+      "play": "Afspil",
+      "downloadAria": "Download optagelse {filePath}",
+      "downloadError": "Fejl under download af video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Indstillinger",
+      "clientConfig": "Klientkonfiguration",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Konfiguration",
+    "pageSubHeader": "Administrer din appkonfiguration",
+    "invalidConfig": "Ugyldig konfiguration",
+    "formFields": {
+      "oneValuePerLine": "Én værdi pr. linje."
+    },
+    "clientForm": {
+      "title": "Applikationsindstillinger",
+      "description": "Forbindelses- og lagerstier som bruges af MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "MediaMTX-forbindelse",
+        "storage": "Lager"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Adressen til din MediaMTX-instans. Inden for et Docker-netværk kan du bruge containernavnet; ellers brug ekstern IP eller værtsnavn."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Porten til MediaMTX-API'et"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Dette er den browser-tilgængelige, udadvendte IP eller værtsnavn for din MediaMTX-server."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Mappe der indeholder MediaMTX-optagelser (anbefales ikke at ændre hvis du bruger Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Mappe til lagring af genererede skærmbilleder (anbefales ikke at ændre hvis du bruger Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Nulstil",
+        "submit": "Send"
+      },
+      "toasts": {
+        "success": "Klientkonfigurationen er opdateret",
+        "errorTitle": "Der opstod et problem ved opdatering af klientkonfigurationen",
+        "errorDescription": "Tjek dine formularværdier."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Logning",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Logning",
+          "limits": "Grænser"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Metrikker",
+          "pprof": "PPROF",
+          "enableDescription": "Aktivér MediaMTX HTTP-API'et."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Autentificering",
+          "enableDescription": "Aktivér RTSP-serveren."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "Aktivér RTMP-serveren."
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Segmenter",
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Aktivér HLS-serveren."
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Netværk",
+          "iceServers": "ICE-servere",
+          "addServer": "Tilføj server",
+          "noIceServers": "Ingen ICE-servere er konfigureret.",
+          "iceServerLabel": "ICE-server {index}",
+          "removeIceServer": "Fjern ICE-server",
+          "iceFields": {
+            "url": "URL",
+            "username": "Brugernavn",
+            "password": "Adgangskode"
+          },
+          "enableDescription": "Aktivér WebRTC-serveren."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "Aktivér SRT-serveren."
+        }
+      },
+      "toasts": {
+        "success": "Den globale konfiguration er opdateret",
+        "errorTitle": "Der opstod et problem ved opdatering af den globale konfiguration",
+        "errorDescription": "Tjek dine formularværdier."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",
+      "discard": "Kassér",
+      "saveChanges": "Gem ændringer"
+    }
+  }
+}

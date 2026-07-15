@@ -1,5 +1,5 @@
 {
-  "name": "@showcase/typescript-config",
+  "name": "@connect/typescript-config",
   "version": "0.0.0",
   "private": true,
   "exports": {

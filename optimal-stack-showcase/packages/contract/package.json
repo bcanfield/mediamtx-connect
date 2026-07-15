@@ -1,5 +1,5 @@
 {
-  "name": "@showcase/contract",
+  "name": "@connect/contract",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -14,7 +14,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@showcase/typescript-config": "workspace:*",
+    "@connect/typescript-config": "workspace:*",
     "typescript": "catalog:"
   }
 }

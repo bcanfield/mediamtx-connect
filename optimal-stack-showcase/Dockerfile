@@ -10,7 +10,7 @@ RUN corepack enable
 FROM base AS pruner
 WORKDIR /repo
 COPY . .
-RUN pnpm dlx turbo@2 prune @showcase/api @showcase/web --docker
+RUN pnpm dlx turbo@2 prune @connect/api @connect/web --docker
 
 FROM base AS builder
 WORKDIR /repo
@@ -23,12 +23,23 @@ RUN pnpm turbo build
 RUN cp -r apps/web/dist apps/api/public
 # --legacy: without it, deploy may symlink deps into the store, which the
 # runtime image doesn't have (pnpm #9883). Alternative: inject-workspace-packages.
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter @showcase/api deploy --legacy --prod /prod/api
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter @connect/api deploy --legacy --prod /prod/api
 
-# Distroless: glibc (matches the -slim build stage), no shell, entrypoint is node.
-FROM gcr.io/distroless/nodejs22-debian12 AS runner
+# node:22-slim instead of distroless: the app shells out to ffmpeg for
+# recording thumbnails, and slim gives us a real distro package for it
+# (see MIGRATION.md §5 / docs/debt docker-runtime-choice).
+FROM node:22-bookworm-slim AS runner
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ffmpeg \
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /prod/api /app
+# mount points for the MediaMTX recordings/screenshots shares and app data
+RUN mkdir -p /recordings /screenshots /data \
+  && chown node:node /recordings /screenshots /data
+USER node
 EXPOSE 3000
-CMD ["dist/server.mjs"]
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD ["node", "-e", "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+CMD ["node", "dist/server.mjs"]

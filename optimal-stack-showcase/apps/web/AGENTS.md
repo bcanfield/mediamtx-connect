@@ -7,7 +7,7 @@ and TanStack Query.
   `orpc.<procedure>.queryOptions()` / `.mutationOptions()` with
   `useQuery`/`useMutation`. Invalidate with `orpc.<procedure>.key()`.
 - No raw `fetch` to the API, no hand-written response types — types flow from
-  `@showcase/contract`.
+  `@connect/contract`.
 - Dev server proxies `/rpc` to the api app (see `vite.config.ts`); in
   production the api serves this app's `dist/` itself, so all URLs are
   same-origin relative.

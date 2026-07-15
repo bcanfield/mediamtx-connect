@@ -7,7 +7,7 @@ export default defineConfig({
   deps: {
     // workspace packages export raw .ts, so they must be bundled in;
     // everything else stays external and comes from node_modules
-    alwaysBundle: [/^@showcase\//],
-    onlyBundle: [/^@showcase\//],
+    alwaysBundle: [/^@connect\//],
+    onlyBundle: [/^@connect\//],
   },
 })

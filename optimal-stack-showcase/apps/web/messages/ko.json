@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "MediaMTX용 웹 인터페이스. 브라우저에서 스트림을 보고, 녹화를 탐색하며, 설정을 편집할 수 있습니다."
+  },
+  "Forms": {
+    "errors": {
+      "required": "이 필드는 필수입니다",
+      "mustBePositive": "0보다 커야 합니다"
+    }
+  },
+  "Common": {
+    "retry": "다시 시도",
+    "loading": "로드 중…",
+    "theme": {
+      "lightMode": "라이트 모드",
+      "darkMode": "다크 모드",
+      "switchToLight": "라이트 테마로 전환",
+      "switchToDark": "다크 테마로 전환"
+    },
+    "locale": {
+      "switchLanguage": "언어 전환",
+      "searchPlaceholder": "언어 검색…",
+      "noResults": "언어를 찾을 수 없습니다."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "애플리케이션",
+      "settings": "설정"
+    },
+    "items": {
+      "live": "실시간",
+      "recordings": "녹화",
+      "clientConfig": "클라이언트 설정",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "실시간",
+    "header": "스트림",
+    "subHeader": "활성 스트림의 실시간 보기",
+    "errors": {
+      "configTitle": "설정 오류",
+      "configDescription": "설정을 불러올 수 없습니다. 데이터베이스 연결을 확인하세요.",
+      "connectionTitle": "MediaMTX에 연결할 수 없습니다",
+      "connectionLead": "다음 주소의 MediaMTX에 접근할 수 없습니다:",
+      "connectionHint": "MediaMTX가 실행 중이고 설정의 URL이 올바른지 확인하세요.",
+      "checkConfigBtn": "설정 확인"
+    },
+    "empty": {
+      "configureRemoteTitle": "원격 URL 설정",
+      "configureRemoteDescription": "브라우저에서 스트림을 보려면 원격 MediaMTX URL을 설정하세요. 브라우저가 MediaMTX에 도달할 수 있는 URL이어야 합니다.",
+      "goToConfig": "설정으로 이동",
+      "noStreamsTitle": "활성 스트림 없음",
+      "noStreamsDescription": "MediaMTX가 연결되어 있지만 현재 활성 스트림이 없습니다. MediaMTX로 스트리밍을 시작하면 여기에 표시됩니다."
+    },
+    "density": {
+      "aria": "그리드 밀도",
+      "two": "2열",
+      "three": "3열",
+      "four": "4열"
+    },
+    "card": {
+      "onlineSince": "{date}부터 온라인",
+      "idle": "유휴",
+      "live": "실시간",
+      "stop": "중지",
+      "play": "재생",
+      "actionsAria": "스트림 작업",
+      "viewRecordings": "녹화 보기"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "녹화",
+    "header": "녹화",
+    "subHeader": "여러 스트림의 녹화를 탐색하세요",
+    "subHeaderForStream": "녹화: {streamName}",
+    "invalidConfig": "잘못된 설정",
+    "errors": {
+      "configTitle": "설정 오류",
+      "configDescription": "설정을 불러올 수 없습니다. 데이터베이스 연결을 확인하세요.",
+      "directoryTitle": "녹화 디렉터리에 접근할 수 없습니다",
+      "directoryLead": "다음 위치의 녹화 디렉터리를 읽을 수 없습니다:",
+      "directoryHint": "디렉터리가 존재하고 올바른 권한이 설정되어 있는지 확인하세요.",
+      "checkConfigBtn": "설정 확인",
+      "readErrorTitle": "녹화를 읽을 수 없습니다",
+      "readErrorDescription": "녹화 디렉터리를 읽을 수 없습니다. 디렉터리가 존재하는지 확인하세요."
+    },
+    "empty": {
+      "noRecordingsTitle": "녹화를 찾을 수 없습니다",
+      "noRecordingsLead": "아직 저장된 녹화가 없습니다. MediaMTX가 스트림 녹화를 시작하면 여기에 표시됩니다.",
+      "noRecordingsHint": "MediaMTX 설정에 <code>MTX_RECORD=yes</code>가 설정되어 있는지 확인하세요.",
+      "noMatchingTitle": "일치하는 스트림 없음",
+      "noMatchingDescription": "“{query}”와 일치하는 스트림이 없습니다."
+    },
+    "search": {
+      "placeholder": "스트림 검색"
+    },
+    "groups": {
+      "today": "오늘",
+      "yesterday": "어제"
+    },
+    "card": {
+      "recordingCount": "{count, plural, other {녹화 #개}}",
+      "latest": "최근 {time}",
+      "viewBtn": "보기"
+    },
+    "recordingCard": {
+      "stop": "중지",
+      "play": "재생",
+      "downloadAria": "녹화 {filePath} 다운로드",
+      "downloadError": "동영상을 다운로드하는 중 오류가 발생했습니다"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "설정",
+      "clientConfig": "클라이언트 설정",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "설정",
+    "pageSubHeader": "앱 설정 관리",
+    "invalidConfig": "잘못된 설정",
+    "formFields": {
+      "oneValuePerLine": "한 줄에 한 값."
+    },
+    "clientForm": {
+      "title": "애플리케이션 설정",
+      "description": "MediaMTX Connect에서 사용하는 연결 및 저장소 경로입니다.",
+      "sections": {
+        "mediamtxConnection": "MediaMTX 연결",
+        "storage": "저장소"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "MediaMTX 인스턴스의 주소입니다. Docker 네트워크 내에서는 컨테이너 이름을 사용할 수 있습니다. 그렇지 않으면 외부 IP/호스트명을 사용하세요."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "MediaMTX API의 포트"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "브라우저에서 접근 가능한, 외부에 노출되는 MediaMTX 서버의 IP/호스트명입니다."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "MediaMTX 녹화가 저장된 디렉터리(Docker 사용 시 변경하지 않는 것을 권장)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "생성된 스크린샷을 저장할 디렉터리(Docker 사용 시 변경하지 않는 것을 권장)"
+        }
+      },
+      "actions": {
+        "reset": "초기화",
+        "submit": "전송"
+      },
+      "toasts": {
+        "success": "클라이언트 설정이 업데이트되었습니다",
+        "errorTitle": "클라이언트 설정 업데이트 중 문제가 발생했습니다",
+        "errorDescription": "양식 값을 다시 확인하세요."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "로그",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "로그",
+          "limits": "제한"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "지표",
+          "pprof": "PPROF",
+          "enableDescription": "MediaMTX HTTP API를 활성화합니다."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "서버",
+          "tls": "TLS",
+          "auth": "인증",
+          "enableDescription": "RTSP 서버를 활성화합니다."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "RTMP 서버를 활성화합니다."
+        },
+        "hls": {
+          "server": "서버",
+          "segments": "세그먼트",
+          "corsProxies": "CORS / 프록시",
+          "enableDescription": "HLS 서버를 활성화합니다."
+        },
+        "webrtc": {
+          "server": "서버",
+          "network": "네트워크",
+          "iceServers": "ICE 서버",
+          "addServer": "서버 추가",
+          "noIceServers": "구성된 ICE 서버가 없습니다.",
+          "iceServerLabel": "ICE 서버 {index}",
+          "removeIceServer": "ICE 서버 제거",
+          "iceFields": {
+            "url": "URL",
+            "username": "사용자 이름",
+            "password": "비밀번호"
+          },
+          "enableDescription": "WebRTC 서버를 활성화합니다."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "SRT 서버를 활성화합니다."
+        }
+      },
+      "toasts": {
+        "success": "전역 설정이 업데이트되었습니다",
+        "errorTitle": "전역 설정 업데이트 중 문제가 발생했습니다",
+        "errorDescription": "양식 값을 다시 확인하세요."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",
+      "discard": "버리기",
+      "saveChanges": "변경 사항 저장"
+    }
+  }
+}
