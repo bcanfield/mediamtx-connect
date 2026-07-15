@@ -26,220 +26,295 @@
       "switchLanguage": "切換語言",
       "searchPlaceholder": "搜尋語言…",
       "noResults": "找不到語言。"
+    },
+    "connection": {
+      "connected": "已連線",
+      "offline": "離線"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "應用程式",
-      "settings": "設定"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "主導覽",
     "items": {
       "live": "直播",
       "recordings": "錄影",
-      "clientConfig": "用戶端設定",
-      "mediamtx": "MediaMTX"
+      "appConfig": "應用程式設定",
+      "mediamtxConfig": "MediaMTX 設定"
     }
   },
   "Streams": {
-    "crumbLive": "直播",
-    "header": "串流",
-    "subHeader": "您目前在播的串流即時檢視",
+    "toolbar": {
+      "summary": "{count, plural, other {# 個串流}} · {live} 個播放中",
+      "playbackAria": "播放模式",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "格線密度"
+    },
     "errors": {
-      "configTitle": "設定錯誤",
-      "configDescription": "無法載入設定。請檢查資料庫連線。",
-      "connectionTitle": "無法連線到 MediaMTX",
-      "connectionLead": "無法存取 MediaMTX:",
-      "connectionHint": "請確認 MediaMTX 正在執行，且設定中的網址正確。",
-      "checkConfigBtn": "檢查設定"
+      "unreachableTitle": "無法連線 MediaMTX",
+      "unreachableLead": "MediaMTX API 無回應，位址：",
+      "openAppConfig": "開啟應用程式設定",
+      "retry": "重試",
+      "retryCountdown": "{seconds} 秒後自動重試"
     },
     "empty": {
-      "configureRemoteTitle": "設定遠端網址",
-      "configureRemoteDescription": "設定遠端 MediaMTX 網址以便在瀏覽器中檢視串流。這應該是瀏覽器可以存取 MediaMTX 的網址。",
-      "goToConfig": "前往設定",
-      "noStreamsTitle": "沒有作用中的串流",
-      "noStreamsDescription": "MediaMTX 已連線，但目前沒有作用中的串流。請將串流推送至 MediaMTX，即可在此處檢視。"
+      "noStreamsTitle": "沒有正在發布的串流",
+      "noStreamsLead": "將任何發布端指向 MediaMTX，它就會顯示在這裡：",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "格線密度",
-      "two": "兩欄",
-      "three": "三欄",
-      "four": "四欄"
+    "banner": {
+      "playbackUrlTitle": "尚未設定播放 URL",
+      "playbackUrlLead": "請在應用程式設定中設定面向瀏覽器的 MediaMTX URL 以啟用直播播放。",
+      "openAppConfig": "開啟應用程式設定"
     },
     "card": {
-      "onlineSince": "自 {date} 起在線",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "尚無快照 — 首次擷取約需 30 秒",
+      "onlineSince": "{time} 起在線 · {uptime}",
       "idle": "閒置",
-      "live": "直播中",
-      "stop": "停止",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {# 位觀眾}}",
       "play": "播放",
+      "stop": "停止",
+      "playAria": "播放 {streamName}",
       "actionsAria": "串流操作",
-      "viewRecordings": "檢視錄影"
+      "stub": {
+        "title": "尚未實作",
+        "description": "此操作已列入藍圖 — 已記錄。"
+      },
+      "menu": {
+        "openDetail": "開啟串流詳細資訊",
+        "viewRecordings": "檢視錄影",
+        "takeSnapshot": "拍攝快照",
+        "record": "錄影",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "複製發布 URL",
+        "shareEmbed": "分享與嵌入…",
+        "editPathConfig": "編輯路徑設定",
+        "editHooks": "編輯掛鉤"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "錄影",
-    "header": "錄影",
-    "subHeader": "瀏覽您各個串流的錄影",
-    "subHeaderForStream": "錄影所屬串流:{streamName}",
-    "invalidConfig": "設定無效",
-    "errors": {
-      "configTitle": "設定錯誤",
-      "configDescription": "無法載入設定。請檢查資料庫連線。",
-      "directoryTitle": "無法存取錄影目錄",
-      "directoryLead": "無法讀取錄影目錄:",
-      "directoryHint": "請確認目錄存在且具有正確的權限。",
-      "checkConfigBtn": "檢查設定",
-      "readErrorTitle": "無法讀取錄影",
-      "readErrorDescription": "無法讀取錄影目錄。請確認目錄存在。"
+    "toolbar": {
+      "summary": "{streams, plural, other {# 個串流}} · {recordings, plural, other {# 個錄影}}",
+      "filterPlaceholder": "篩選串流…",
+      "filterAria": "篩選串流"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, other {# 個錄影}}",
+      "latest": "最新 {time}",
+      "openAria": "檢視 {name} 的錄影"
     },
     "empty": {
-      "noRecordingsTitle": "找不到錄影",
-      "noRecordingsLead": "尚未儲存任何錄影。當 MediaMTX 開始錄製串流時，錄影會顯示於此。",
-      "noRecordingsHint": "請確認您的 MediaMTX 設定中已設置 <code>MTX_RECORD=yes</code>。",
+      "noRecordingsTitle": "尚無錄影",
+      "noRecordingsLead": "當 MediaMTX 開始錄製串流後，錄影會顯示於此。",
+      "enableRecording": "啟用錄影",
       "noMatchingTitle": "沒有符合的串流",
       "noMatchingDescription": "沒有串流符合「{query}」。"
     },
-    "search": {
-      "placeholder": "搜尋串流"
+    "errors": {
+      "directoryTitle": "無法讀取錄影目錄",
+      "directoryLead": "無法讀取錄影，位置：",
+      "openAppConfig": "開啟應用程式設定",
+      "readErrorTitle": "無法讀取錄影",
+      "readErrorDescription": "請確認錄影目錄存在且具有正確的權限。"
+    },
+    "detail": {
+      "totals": "{count, plural, other {# 個錄影}}"
     },
     "groups": {
-      "today": "今天",
-      "yesterday": "昨天"
+      "todayEyebrow": "今天 — {date}",
+      "yesterdayEyebrow": "昨天 — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, other {# 個錄影}}",
-      "latest": "最新 {time}",
-      "viewBtn": "檢視"
-    },
-    "recordingCard": {
-      "stop": "停止",
+    "row": {
       "play": "播放",
-      "downloadAria": "下載錄影 {filePath}",
-      "downloadError": "下載影片時發生錯誤"
+      "close": "關閉",
+      "cancel": "取消",
+      "playAria": "播放 {time} 的錄影",
+      "downloadAria": "下載錄影 {file}",
+      "downloading": "下載中… {received} / {total} · {rate}",
+      "downloadComplete": "下載完成",
+      "downloadFailed": "下載失敗"
+    },
+    "player": {
+      "play": "播放",
+      "pause": "暫停",
+      "seek": "跳轉"
+    },
+    "pagination": {
+      "aria": "分頁",
+      "showing": "顯示第 {from}–{to} 項，共 {total} 項",
+      "previous": "上一頁",
+      "next": "下一頁"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "設定",
-      "clientConfig": "用戶端設定",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "設定",
-    "pageSubHeader": "管理您的應用程式設定",
     "invalidConfig": "設定無效",
+    "appConfig": {
+      "pageHeader": "應用程式設定",
+      "pageSubHeader": "MediaMTX Connect 使用的連線與儲存。"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX 設定",
+      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {# 個未儲存的變更}}",
+      "needsAttention": "{count, plural, other {# 個欄位需要注意}}",
+      "discard": "捨棄",
+      "reset": "重設",
+      "save": "儲存",
+      "saveToServer": "儲存至伺服器"
+    },
     "formFields": {
       "oneValuePerLine": "每行一個值。"
     },
     "clientForm": {
-      "title": "應用程式設定",
-      "description": "MediaMTX Connect 所使用的連線與儲存路徑。",
       "sections": {
         "mediamtxConnection": "MediaMTX 連線",
         "storage": "儲存"
       },
+      "playbackBadge": "直播播放所需",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "您 MediaMTX 執行個體的位址。在 Docker 網路內可使用容器名稱；否則請使用外部 IP / 主機名稱。"
+          "label": "MediaMTX URL",
+          "description": "您 MediaMTX 執行個體的位址。在 Docker 網路內可使用容器名稱；否則請使用外部 IP 或主機名稱。"
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX API 的連接埠"
+          "label": "API 連接埠",
+          "description": "MediaMTX API 的連接埠。"
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "這是您 MediaMTX 伺服器可從瀏覽器存取、對外的 IP 或主機名稱。"
+          "label": "播放 URL",
+          "description": "可從瀏覽器存取、對外的 MediaMTX 伺服器 URL。直播播放會從這裡載入串流。"
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "存放 MediaMTX 錄影的目錄(使用 Docker 時不建議變更)"
+          "label": "錄影目錄",
+          "description": "存放 MediaMTX 錄影的目錄（使用 Docker 時不建議變更）。"
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "存放產生之螢幕擷取畫面的目錄(使用 Docker 時不建議變更)"
+          "label": "螢幕擷取目錄",
+          "description": "存放產生之快照的目錄（使用 Docker 時不建議變更）。"
         }
       },
-      "actions": {
-        "reset": "重設",
-        "submit": "送出"
-      },
       "toasts": {
-        "success": "已更新用戶端設定",
-        "errorTitle": "更新用戶端設定時發生問題",
-        "errorDescription": "請檢查表單的填寫內容。"
+        "success": "已儲存應用程式設定",
+        "errorTitle": "無法儲存應用程式設定",
+        "errorDescription": "請檢查表單的填寫內容後再試一次。"
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "記錄",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "掛鉤",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "記錄",
-          "limits": "限制"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "指標",
-          "pprof": "PPROF",
-          "enableDescription": "啟用 MediaMTX HTTP API。"
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "伺服器",
-          "tls": "TLS",
-          "auth": "驗證",
-          "enableDescription": "啟用 RTSP 伺服器。"
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "啟用 RTMP 伺服器。"
-        },
-        "hls": {
-          "server": "伺服器",
-          "segments": "分段",
-          "corsProxies": "CORS / 代理",
-          "enableDescription": "啟用 HLS 伺服器。"
-        },
-        "webrtc": {
-          "server": "伺服器",
-          "network": "網路",
-          "iceServers": "ICE 伺服器",
-          "addServer": "新增伺服器",
-          "noIceServers": "尚未設定 ICE 伺服器。",
-          "iceServerLabel": "ICE 伺服器 {index}",
-          "removeIceServer": "移除 ICE 伺服器",
-          "iceFields": {
-            "url": "URL",
-            "username": "使用者名稱",
-            "password": "密碼"
-          },
-          "enableDescription": "啟用 WebRTC 伺服器。"
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "啟用 SRT 伺服器。"
-        }
+      "sectionDescriptions": {
+        "logging": "記錄輸出、逾時與全域限制。",
+        "api": "MediaMTX Connect 本身使用的 HTTP API。",
+        "hooks": "MediaMTX 在連線事件時執行的命令。",
+        "rtsp": "透過 RTSP 發布與觀看串流。",
+        "rtmp": "透過 RTMP 發布與觀看串流。",
+        "hls": "以 HLS 形式提供串流，供瀏覽器播放。",
+        "webrtc": "低延遲的瀏覽器播放與發布。",
+        "srt": "透過 SRT 發布與觀看串流。"
+      },
+      "enabled": "已啟用",
+      "off": "關閉",
+      "hiddenWhileOff": "{count, plural, other {關閉時隱藏 # 個選項}}",
+      "rail": {
+        "onThisPage": "本頁內容",
+        "aria": "設定區段"
+      },
+      "iceServers": {
+        "add": "新增 ICE 伺服器",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE 伺服器 {index} 的 URL",
+        "usernameAria": "ICE 伺服器 {index} 的使用者名稱",
+        "passwordAria": "ICE 伺服器 {index} 的密碼",
+        "removeAria": "移除 ICE 伺服器 {index}"
+      },
+      "help": {
+        "logLevel": "記錄輸出的詳細程度（error、warn、info 或 debug）。",
+        "logDestinations": "記錄寫入位置（stdout、file 或 syslog）。",
+        "logFile": "當 logDestinations 包含 file 時記錄檔的路徑。",
+        "readTimeout": "讀取作業的逾時時間。",
+        "writeTimeout": "寫入作業的逾時時間。",
+        "writeQueueSize": "每個連線的傳出佇列大小。必須是 2 的次方。",
+        "udpMaxPayloadSize": "傳出 UDP 封包的最大大小。",
+        "externalAuthenticationURL": "外部驗證伺服器的 URL，每次連線時呼叫。",
+        "apiAddress": "HTTP API 的監聽位址。",
+        "metrics": "公開相容 Prometheus 的指標。",
+        "metricsAddress": "指標端點的監聽位址。",
+        "pprof": "公開 Go pprof 效能分析端點。",
+        "pprofAddress": "pprof 端點的監聽位址。",
+        "runOnConnect": "用戶端連線時執行的命令。",
+        "runOnConnectRestart": "命令結束時重新啟動。",
+        "runOnDisconnect": "用戶端中斷連線時執行的命令。",
+        "rtspAddress": "RTSP 伺服器（TCP）的監聽位址。",
+        "rtspsAddress": "RTSPS（TLS）伺服器的監聽位址。",
+        "rtpAddress": "透過 UDP 接收 RTP 封包的監聽位址。",
+        "rtcpAddress": "透過 UDP 接收 RTCP 封包的監聽位址。",
+        "multicastIPRange": "用於多播傳送的 IP 範圍。",
+        "multicastRTPPort": "多播 RTP 封包的連接埠。",
+        "multicastRTCPPort": "多播 RTCP 封包的連接埠。",
+        "protocols": "RTSP 伺服器接受的傳輸協定（udp、multicast 或 tcp）。",
+        "encryption": "TLS 加密原則（no、strict 或 optional）。",
+        "serverKey": "TLS 伺服器金鑰的路徑。",
+        "serverCert": "TLS 伺服器憑證的路徑。",
+        "authMethods": "RTSP 伺服器接受的驗證方式（basic 或 digest）。",
+        "rtmpAddress": "RTMP 伺服器的監聽位址。",
+        "rtmpEncryption": "RTMP 的 TLS 加密原則（no、strict 或 optional）。",
+        "rtmpsAddress": "RTMPS（TLS）伺服器的監聽位址。",
+        "rtmpServerKey": "RTMPS 伺服器金鑰的路徑。",
+        "rtmpServerCert": "RTMPS 伺服器憑證的路徑。",
+        "hlsAddress": "HLS 伺服器的監聽位址。",
+        "hlsEncryption": "透過 TLS（HTTPS）提供 HLS。",
+        "hlsServerKey": "HLS 伺服器金鑰的路徑。",
+        "hlsServerCert": "HLS 伺服器憑證的路徑。",
+        "hlsAlwaysRemux": "即使無人觀看也重新封裝串流。",
+        "hlsVariant": "HLS 變體（mpegts、fmp4 或 lowLatency）。",
+        "hlsSegmentCount": "播放清單中保留的分段數量。",
+        "hlsSegmentDuration": "每個分段的最短時長。",
+        "hlsPartDuration": "低延遲模式下每個部分的時長。",
+        "hlsSegmentMaxSize": "每個分段的最大大小。",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin 標頭的值。",
+        "hlsTrustedProxies": "位於 HLS 伺服器之前的代理的 IP 或網路。",
+        "hlsDirectory": "將分段寫入此目錄的磁碟，而非 RAM。",
+        "webrtcAddress": "WebRTC HTTP 伺服器的監聽位址。",
+        "webrtcEncryption": "透過 TLS（HTTPS）提供 WebRTC。",
+        "webrtcServerKey": "WebRTC 伺服器金鑰的路徑。",
+        "webrtcServerCert": "WebRTC 伺服器憑證的路徑。",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin 標頭的值。",
+        "webrtcTrustedProxies": "位於 WebRTC 伺服器之前的代理的 IP 或網路。",
+        "webrtcLocalUDPAddress": "用於 WebRTC 流量的本機 UDP 位址。",
+        "webrtcLocalTCPAddress": "用於 WebRTC 流量的本機 TCP 位址。",
+        "webrtcIPsFromInterfaces": "從主機的網路介面收集候選 IP。",
+        "webrtcIPsFromInterfacesList": "收集候選 IP 的介面。留空表示全部。",
+        "webrtcAdditionalHosts": "作為 WebRTC 候選通告的額外主機或 IP。",
+        "webrtcICEServers2": "用於建立 WebRTC 連線的 STUN 或 TURN 伺服器。",
+        "srtAddress": "SRT 伺服器的監聽位址。"
       },
       "toasts": {
-        "success": "已更新全域設定",
-        "errorTitle": "更新全域設定時發生問題",
-        "errorDescription": "請檢查表單的填寫內容。"
+        "success": "已儲存 MediaMTX 設定",
+        "errorTitle": "無法儲存 MediaMTX 設定",
+        "errorDescription": "請檢查表單的填寫內容後再試一次。"
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, other {# 個未儲存的變更}}",
-      "discard": "捨棄",
-      "saveChanges": "儲存變更"
     }
   }
 }

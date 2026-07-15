@@ -7,7 +7,7 @@ function Card({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement>
     <div
       ref={ref}
       className={cn(
-        'rounded-lg border bg-card text-card-foreground shadow-sm',
+        'rounded-xl border bg-card text-card-foreground',
         className,
       )}
       {...props}
@@ -32,7 +32,7 @@ function CardTitle({ ref, className, ...props }: React.HTMLAttributes<HTMLHeadin
     <h3
       ref={ref}
       className={cn(
-        'text-lg font-semibold leading-none tracking-tight',
+        'text-sm font-semibold leading-none tracking-[-0.02em]',
         className,
       )}
       {...props}

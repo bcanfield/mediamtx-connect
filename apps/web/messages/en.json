@@ -26,151 +26,193 @@
       "switchLanguage": "Switch language",
       "searchPlaceholder": "Search language…",
       "noResults": "No language found."
+    },
+    "connection": {
+      "connected": "connected",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Application",
-      "settings": "Settings"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primary",
     "items": {
       "live": "Live",
       "recordings": "Recordings",
-      "clientConfig": "Client Config",
-      "mediamtx": "MediaMTX"
+      "appConfig": "App Config",
+      "mediamtxConfig": "MediaMTX Config"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Streams",
-    "subHeader": "Live views of your active streams",
+    "toolbar": {
+      "summary": "{count, plural, one {# stream} other {# streams}} · {live} playing",
+      "playbackAria": "Playback mode",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Grid density"
+    },
     "errors": {
-      "configTitle": "Configuration Error",
-      "configDescription": "Unable to load configuration. Please check your database connection.",
-      "connectionTitle": "Cannot connect to MediaMTX",
-      "connectionLead": "Unable to reach MediaMTX at",
-      "connectionHint": "Make sure MediaMTX is running and the URL is correct in your configuration.",
-      "checkConfigBtn": "Check Config"
+      "unreachableTitle": "Can't reach MediaMTX",
+      "unreachableLead": "No response from the MediaMTX API at",
+      "openAppConfig": "Open App Config",
+      "retry": "Retry",
+      "retryCountdown": "auto-retry in {seconds}s"
     },
     "empty": {
-      "configureRemoteTitle": "Configure Remote URL",
-      "configureRemoteDescription": "Set up your Remote MediaMTX URL to view streams in the browser. This should be the URL your browser can use to reach MediaMTX.",
-      "goToConfig": "Go to Config",
-      "noStreamsTitle": "No Active Streams",
-      "noStreamsDescription": "MediaMTX is connected but no streams are currently active. Start streaming to MediaMTX to see your streams here."
+      "noStreamsTitle": "No streams are publishing",
+      "noStreamsLead": "Point any publisher at MediaMTX and it will show up here:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Grid density",
-      "two": "Two columns",
-      "three": "Three columns",
-      "four": "Four columns"
+    "banner": {
+      "playbackUrlTitle": "Playback URL not set",
+      "playbackUrlLead": "Set the browser-facing MediaMTX URL in App Config to enable live playback.",
+      "openAppConfig": "Open App Config"
     },
     "card": {
-      "onlineSince": "Online since {date}",
-      "idle": "Idle",
       "live": "LIVE",
-      "stop": "Stop",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "no snapshot yet — first capture in ~30s",
+      "onlineSince": "online since {time} · {uptime}",
+      "idle": "idle",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# viewer} other {# viewers}}",
       "play": "Play",
+      "stop": "Stop",
+      "playAria": "Play {streamName}",
       "actionsAria": "Stream actions",
-      "viewRecordings": "View recordings"
+      "stub": {
+        "title": "Not implemented yet",
+        "description": "This action is on the roadmap — it was logged."
+      },
+      "menu": {
+        "openDetail": "Open stream detail",
+        "viewRecordings": "View recordings",
+        "takeSnapshot": "Take snapshot",
+        "record": "Record",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Copy publish URLs",
+        "shareEmbed": "Share & embed…",
+        "editPathConfig": "Edit path config",
+        "editHooks": "Edit hooks"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Recordings",
-    "header": "Recordings",
-    "subHeader": "Browse your recordings across your various streams",
-    "subHeaderForStream": "Recordings for: {streamName}",
-    "invalidConfig": "Invalid Config",
-    "errors": {
-      "configTitle": "Configuration Error",
-      "configDescription": "Unable to load configuration. Please check your database connection.",
-      "directoryTitle": "Cannot Access Recordings Directory",
-      "directoryLead": "Unable to read the recordings directory at",
-      "directoryHint": "Make sure the directory exists and has the correct permissions.",
-      "checkConfigBtn": "Check Config",
-      "readErrorTitle": "Could not read recordings",
-      "readErrorDescription": "Could not read recordings directory. Please make sure the directory exists."
-    },
-    "empty": {
-      "noRecordingsTitle": "No Recordings Found",
-      "noRecordingsLead": "No recordings have been saved yet. Recordings will appear here once MediaMTX starts recording streams.",
-      "noRecordingsHint": "Make sure <code>MTX_RECORD=yes</code> is set in your MediaMTX configuration.",
-      "noMatchingTitle": "No matching streams",
-      "noMatchingDescription": "No streams match \"{query}\"."
-    },
-    "search": {
-      "placeholder": "Search streams"
-    },
-    "groups": {
-      "today": "Today",
-      "yesterday": "Yesterday"
+    "toolbar": {
+      "summary": "{streams, plural, one {# stream} other {# streams}} · {recordings, plural, one {# recording} other {# recordings}}",
+      "filterPlaceholder": "Filter streams…",
+      "filterAria": "Filter streams"
     },
     "card": {
-      "recordingCount": "{count, plural, one {# Recording} other {# Recordings}}",
-      "latest": "Latest {time}",
-      "viewBtn": "View"
+      "recordingsChip": "{count, plural, one {# recording} other {# recordings}}",
+      "latest": "latest {time}",
+      "openAria": "View recordings for {name}"
     },
-    "recordingCard": {
-      "stop": "Stop",
+    "empty": {
+      "noRecordingsTitle": "No recordings yet",
+      "noRecordingsLead": "Recordings appear here once MediaMTX starts recording streams.",
+      "enableRecording": "Enable recording",
+      "noMatchingTitle": "No matching streams",
+      "noMatchingDescription": "No streams match “{query}”."
+    },
+    "errors": {
+      "directoryTitle": "Can't read the recordings directory",
+      "directoryLead": "Unable to read recordings at",
+      "openAppConfig": "Open App Config",
+      "readErrorTitle": "Could not read recordings",
+      "readErrorDescription": "Make sure the recordings directory exists and has the correct permissions."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# recording} other {# recordings}}"
+    },
+    "groups": {
+      "todayEyebrow": "Today — {date}",
+      "yesterdayEyebrow": "Yesterday — {date}"
+    },
+    "row": {
       "play": "Play",
-      "downloadAria": "Download recording {filePath}",
-      "downloadError": "Error downloading video"
+      "close": "Close",
+      "cancel": "Cancel",
+      "playAria": "Play the recording from {time}",
+      "downloadAria": "Download recording {file}",
+      "downloading": "downloading… {received} of {total} · {rate}",
+      "downloadComplete": "Download complete",
+      "downloadFailed": "Download failed"
+    },
+    "player": {
+      "play": "Play",
+      "pause": "Pause",
+      "seek": "Seek"
+    },
+    "pagination": {
+      "aria": "Pagination",
+      "showing": "Showing {from}–{to} of {total}",
+      "previous": "Previous page",
+      "next": "Next page"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Settings",
-      "clientConfig": "Client Config",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Config",
-    "pageSubHeader": "Manage your App Configuration",
     "invalidConfig": "Invalid Config",
+    "appConfig": {
+      "pageHeader": "App Config",
+      "pageSubHeader": "Connection and storage used by MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX Config",
+      "pageSubHeader": "Global MediaMTX server settings, saved to the server."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",
+      "needsAttention": "{count, plural, one {# field needs attention} other {# fields need attention}}",
+      "discard": "Discard",
+      "reset": "Reset",
+      "save": "Save",
+      "saveToServer": "Save to server"
+    },
     "formFields": {
       "oneValuePerLine": "One value per line."
     },
     "clientForm": {
-      "title": "Application Settings",
-      "description": "Connection and storage paths used by MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "MediaMTX connection",
         "storage": "Storage"
       },
+      "playbackBadge": "Required for live playback",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "The address to your MediaMTX Instance. Within a Docker Network, you can use the container name. Otherwise, use the external IP / hostname."
+          "label": "MediaMTX URL",
+          "description": "The address of your MediaMTX instance. Within a Docker network you can use the container name; otherwise use the external IP or hostname."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "The port to the MediaMTX API"
+          "label": "API port",
+          "description": "The port of the MediaMTX API."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "This is the browser-accessible, externally-facing IP / hostname of your MediaMTX Server."
+          "label": "Playback URL",
+          "description": "The browser-accessible, externally-facing URL of your MediaMTX server. Live playback loads streams from here."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Directory containing MediaMTX recordings (Not recommended to change if using Docker)"
+          "label": "Recordings directory",
+          "description": "Directory containing MediaMTX recordings (not recommended to change when using Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Directory to store generated screenshots (Not recommended to change if using Docker)"
+          "label": "Screenshots directory",
+          "description": "Directory for generated snapshots (not recommended to change when using Docker)."
         }
       },
-      "actions": {
-        "reset": "Reset",
-        "submit": "Submit"
-      },
       "toasts": {
-        "success": "Updated Client Config",
-        "errorTitle": "There was an issue updating the Client Config",
-        "errorDescription": "Please double check your form values."
+        "success": "App Config saved",
+        "errorTitle": "Couldn't save App Config",
+        "errorDescription": "Double-check your form values and try again."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Logging",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Logging",
-          "limits": "Limits"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Metrics",
-          "pprof": "PPROF",
-          "enableDescription": "Enable the MediaMTX HTTP API."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Auth",
-          "enableDescription": "Enable the RTSP server."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Enable the RTMP server."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Segments",
-          "corsProxies": "CORS / Proxies",
-          "enableDescription": "Enable the HLS server."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Network",
-          "iceServers": "ICE Servers",
-          "addServer": "Add server",
-          "noIceServers": "No ICE servers configured.",
-          "iceServerLabel": "ICE Server {index}",
-          "removeIceServer": "Remove ICE server",
-          "iceFields": {
-            "url": "URL",
-            "username": "Username",
-            "password": "Password"
-          },
-          "enableDescription": "Enable the WebRTC server."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Enable the SRT server."
-        }
+      "sectionDescriptions": {
+        "logging": "Log output, timeouts and global limits.",
+        "api": "The HTTP API that MediaMTX Connect itself uses.",
+        "hooks": "Commands MediaMTX runs on connection events.",
+        "rtsp": "Publish and read streams over RTSP.",
+        "rtmp": "Publish and read streams over RTMP.",
+        "hls": "Serve streams as HLS for browser playback.",
+        "webrtc": "Low-latency browser playback and publishing.",
+        "srt": "Publish and read streams over SRT."
+      },
+      "enabled": "Enabled",
+      "off": "Off",
+      "hiddenWhileOff": "{count, plural, one {# option hidden while off} other {# options hidden while off}}",
+      "rail": {
+        "onThisPage": "On this page",
+        "aria": "Config sections"
+      },
+      "iceServers": {
+        "add": "Add ICE server",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE server {index} URL",
+        "usernameAria": "ICE server {index} username",
+        "passwordAria": "ICE server {index} password",
+        "removeAria": "Remove ICE server {index}"
+      },
+      "help": {
+        "logLevel": "Verbosity of the log output (error, warn, info or debug).",
+        "logDestinations": "Where to write logs (stdout, file or syslog).",
+        "logFile": "Path of the log file when logDestinations includes file.",
+        "readTimeout": "Timeout for read operations.",
+        "writeTimeout": "Timeout for write operations.",
+        "writeQueueSize": "Size of the outgoing queue per connection. Must be a power of two.",
+        "udpMaxPayloadSize": "Maximum size of outgoing UDP packets.",
+        "externalAuthenticationURL": "URL of an external authentication server, called on every connection.",
+        "apiAddress": "Listen address of the HTTP API.",
+        "metrics": "Expose Prometheus-compatible metrics.",
+        "metricsAddress": "Listen address of the metrics endpoint.",
+        "pprof": "Expose the Go pprof profiling endpoint.",
+        "pprofAddress": "Listen address of the pprof endpoint.",
+        "runOnConnect": "Command to run when a client connects.",
+        "runOnConnectRestart": "Restart the command if it exits.",
+        "runOnDisconnect": "Command to run when a client disconnects.",
+        "rtspAddress": "Listen address of the RTSP server (TCP).",
+        "rtspsAddress": "Listen address of the RTSPS (TLS) server.",
+        "rtpAddress": "Listen address for RTP packets over UDP.",
+        "rtcpAddress": "Listen address for RTCP packets over UDP.",
+        "multicastIPRange": "IP range used for multicast delivery.",
+        "multicastRTPPort": "Port for multicast RTP packets.",
+        "multicastRTCPPort": "Port for multicast RTCP packets.",
+        "protocols": "Transport protocols accepted by the RTSP server (udp, multicast or tcp).",
+        "encryption": "TLS encryption policy (no, strict or optional).",
+        "serverKey": "Path of the TLS server key.",
+        "serverCert": "Path of the TLS server certificate.",
+        "authMethods": "Authentication methods accepted by the RTSP server (basic or digest).",
+        "rtmpAddress": "Listen address of the RTMP server.",
+        "rtmpEncryption": "TLS encryption policy for RTMP (no, strict or optional).",
+        "rtmpsAddress": "Listen address of the RTMPS (TLS) server.",
+        "rtmpServerKey": "Path of the RTMPS server key.",
+        "rtmpServerCert": "Path of the RTMPS server certificate.",
+        "hlsAddress": "Listen address of the HLS server.",
+        "hlsEncryption": "Serve HLS over TLS (HTTPS).",
+        "hlsServerKey": "Path of the HLS server key.",
+        "hlsServerCert": "Path of the HLS server certificate.",
+        "hlsAlwaysRemux": "Remux streams even when no one is watching.",
+        "hlsVariant": "HLS variant (mpegts, fmp4 or lowLatency).",
+        "hlsSegmentCount": "Number of segments kept in the playlist.",
+        "hlsSegmentDuration": "Minimum duration of each segment.",
+        "hlsPartDuration": "Duration of each part in low-latency mode.",
+        "hlsSegmentMaxSize": "Maximum size of each segment.",
+        "hlsAllowOrigin": "Value of the Access-Control-Allow-Origin header.",
+        "hlsTrustedProxies": "IPs or networks of proxies placed before the HLS server.",
+        "hlsDirectory": "Write segments to disk in this directory instead of RAM.",
+        "webrtcAddress": "Listen address of the WebRTC HTTP server.",
+        "webrtcEncryption": "Serve WebRTC over TLS (HTTPS).",
+        "webrtcServerKey": "Path of the WebRTC server key.",
+        "webrtcServerCert": "Path of the WebRTC server certificate.",
+        "webrtcAllowOrigin": "Value of the Access-Control-Allow-Origin header.",
+        "webrtcTrustedProxies": "IPs or networks of proxies placed before the WebRTC server.",
+        "webrtcLocalUDPAddress": "Local UDP address used for WebRTC traffic.",
+        "webrtcLocalTCPAddress": "Local TCP address used for WebRTC traffic.",
+        "webrtcIPsFromInterfaces": "Gather candidate IPs from the host's network interfaces.",
+        "webrtcIPsFromInterfacesList": "Interfaces to gather candidate IPs from. Empty means all.",
+        "webrtcAdditionalHosts": "Additional hosts or IPs advertised as WebRTC candidates.",
+        "webrtcICEServers2": "STUN or TURN servers used to establish WebRTC connections.",
+        "srtAddress": "Listen address of the SRT server."
       },
       "toasts": {
-        "success": "Updated Global Config",
-        "errorTitle": "There was an issue updating the Global Config",
-        "errorDescription": "Please double check your form values."
+        "success": "MediaMTX config saved",
+        "errorTitle": "Couldn't save the MediaMTX config",
+        "errorDescription": "Double-check your form values and try again."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",
-      "discard": "Discard",
-      "saveChanges": "Save changes"
     }
   }
 }

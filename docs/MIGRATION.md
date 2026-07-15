@@ -13,7 +13,7 @@
 How to transfer everything in `docs/FEATURES.md` (repo root) from the Next.js 16
 app into this monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`),
 Hono API (`apps/api`), shared oRPC contract (`packages/contract`), one
-distroless-style Docker image.
+Docker image (`node:22-slim` + ffmpeg — see §5).
 
 The guiding move: **everything that is a Server Component, Server Action, or
 Next API route today becomes either an oRPC procedure (JSON) or a plain Hono

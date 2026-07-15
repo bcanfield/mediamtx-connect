@@ -7,7 +7,7 @@ only exists in the Docker image — in dev, Vite serves the frontend).
 - Handlers live in `src/router.ts` and implement `@connect/contract` via
   `implement(contract)` — adding an endpoint starts in the contract package.
 - `serveStatic` root is resolved with `import.meta.url`, not CWD. Don't change
-  this: distroless has no fixed working-directory guarantees.
-- Build is tsdown → single ESM file `dist/server.js`; workspace packages are
+  this: the Docker image makes no working-directory guarantee.
+- Build is tsdown → single ESM file `dist/server.mjs`; workspace packages are
   bundled in (`noExternal`), npm deps stay external and come from `pnpm deploy`.
 - Env access only through `src/env.ts`.

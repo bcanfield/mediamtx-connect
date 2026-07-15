@@ -3,7 +3,7 @@ id: 20260714134954
 title: hardcoded-aggressive-density
 principal: 1d
 interest: unknown
-hotspot: src/components/ui/card.tsx
+hotspot: apps/web/src/components/ui/card.tsx
 business_capability: ui-shell
 payoff_trigger: unknown
 quadrant: prudent-deliberate

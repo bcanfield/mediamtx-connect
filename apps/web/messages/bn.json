@@ -26,151 +26,193 @@
       "switchLanguage": "ভাষা পরিবর্তন করুন",
       "searchPlaceholder": "ভাষা খুঁজুন…",
       "noResults": "কোনো ভাষা পাওয়া যায়নি।"
+    },
+    "connection": {
+      "connected": "সংযুক্ত",
+      "offline": "অফলাইন"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "অ্যাপ্লিকেশন",
-      "settings": "সেটিংস"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "প্রাথমিক",
     "items": {
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
-      "clientConfig": "ক্লায়েন্ট কনফিগ",
-      "mediamtx": "MediaMTX"
+      "appConfig": "অ্যাপ কনফিগ",
+      "mediamtxConfig": "MediaMTX কনফিগ"
     }
   },
   "Streams": {
-    "crumbLive": "লাইভ",
-    "header": "স্ট্রিম",
-    "subHeader": "আপনার সক্রিয় স্ট্রিমের লাইভ ভিউ",
+    "toolbar": {
+      "summary": "{count, plural, one {# স্ট্রিম} other {# স্ট্রিম}} · {live}টি চলছে",
+      "playbackAria": "প্লেব্যাক মোড",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "গ্রিডের ঘনত্ব"
+    },
     "errors": {
-      "configTitle": "কনফিগারেশন ত্রুটি",
-      "configDescription": "কনফিগারেশন লোড করা যাচ্ছে না। আপনার ডাটাবেস কানেকশন পরীক্ষা করুন।",
-      "connectionTitle": "MediaMTX-এ সংযোগ করা যাচ্ছে না",
-      "connectionLead": "এই ঠিকানায় MediaMTX-এ পৌঁছানো যাচ্ছে না:",
-      "connectionHint": "নিশ্চিত করুন যে MediaMTX চলছে এবং আপনার কনফিগারেশনে URL সঠিক।",
-      "checkConfigBtn": "কনফিগারেশন পরীক্ষা করুন"
+      "unreachableTitle": "MediaMTX-এ পৌঁছানো যাচ্ছে না",
+      "unreachableLead": "এই ঠিকানায় MediaMTX API থেকে কোনো সাড়া নেই:",
+      "openAppConfig": "অ্যাপ কনফিগ খুলুন",
+      "retry": "আবার চেষ্টা করুন",
+      "retryCountdown": "{seconds} সেকেন্ডে স্বয়ংক্রিয়ভাবে আবার চেষ্টা"
     },
     "empty": {
-      "configureRemoteTitle": "রিমোট URL কনফিগার করুন",
-      "configureRemoteDescription": "ব্রাউজারে স্ট্রিম দেখার জন্য আপনার রিমোট MediaMTX URL সেট করুন। এটি এমন URL হওয়া উচিত যা আপনার ব্রাউজার MediaMTX-এ পৌঁছাতে ব্যবহার করতে পারে।",
-      "goToConfig": "কনফিগে যান",
-      "noStreamsTitle": "কোনো সক্রিয় স্ট্রিম নেই",
-      "noStreamsDescription": "MediaMTX সংযুক্ত আছে কিন্তু বর্তমানে কোনো স্ট্রিম সক্রিয় নেই। এখানে স্ট্রিম দেখার জন্য MediaMTX-এ স্ট্রিমিং শুরু করুন।"
+      "noStreamsTitle": "কোনো স্ট্রিম প্রকাশিত হচ্ছে না",
+      "noStreamsLead": "যেকোনো পাবলিশারকে MediaMTX-এর দিকে নির্দেশ করুন, সেটি এখানে দেখা যাবে:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "গ্রিডের ঘনত্ব",
-      "two": "দুই কলাম",
-      "three": "তিন কলাম",
-      "four": "চার কলাম"
+    "banner": {
+      "playbackUrlTitle": "প্লেব্যাক URL সেট করা নেই",
+      "playbackUrlLead": "লাইভ প্লেব্যাক চালু করতে অ্যাপ কনফিগে ব্রাউজার-মুখী MediaMTX URL সেট করুন।",
+      "openAppConfig": "অ্যাপ কনফিগ খুলুন"
     },
     "card": {
-      "onlineSince": "{date} থেকে অনলাইন",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "এখনও কোনো স্ন্যাপশট নেই — প্রথম ক্যাপচার ~30 সেকেন্ডে",
+      "onlineSince": "{time} থেকে অনলাইন · {uptime}",
       "idle": "নিষ্ক্রিয়",
-      "live": "লাইভ",
-      "stop": "বন্ধ করুন",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# জন দর্শক} other {# জন দর্শক}}",
       "play": "চালু করুন",
+      "stop": "বন্ধ করুন",
+      "playAria": "{streamName} চালান",
       "actionsAria": "স্ট্রিম অ্যাকশন",
-      "viewRecordings": "রেকর্ডিং দেখুন"
+      "stub": {
+        "title": "এখনও বাস্তবায়িত হয়নি",
+        "description": "এই অ্যাকশনটি রোডম্যাপে আছে — এটি লগ করা হয়েছে।"
+      },
+      "menu": {
+        "openDetail": "স্ট্রিমের বিস্তারিত খুলুন",
+        "viewRecordings": "রেকর্ডিং দেখুন",
+        "takeSnapshot": "স্ন্যাপশট নিন",
+        "record": "রেকর্ড",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "পাবলিশ URL কপি করুন",
+        "shareEmbed": "শেয়ার ও এম্বেড…",
+        "editPathConfig": "পাথ কনফিগ সম্পাদনা করুন",
+        "editHooks": "Hooks সম্পাদনা করুন"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "রেকর্ডিং",
-    "header": "রেকর্ডিং",
-    "subHeader": "আপনার বিভিন্ন স্ট্রিমের রেকর্ডিং ব্রাউজ করুন",
-    "subHeaderForStream": "{streamName}-এর রেকর্ডিং",
-    "invalidConfig": "অবৈধ কনফিগারেশন",
-    "errors": {
-      "configTitle": "কনফিগারেশন ত্রুটি",
-      "configDescription": "কনফিগারেশন লোড করা যাচ্ছে না। আপনার ডাটাবেস কানেকশন পরীক্ষা করুন।",
-      "directoryTitle": "রেকর্ডিং ডিরেক্টরিতে অ্যাক্সেস নেই",
-      "directoryLead": "এই অবস্থানে রেকর্ডিং ডিরেক্টরি পড়া যাচ্ছে না:",
-      "directoryHint": "নিশ্চিত করুন যে ডিরেক্টরিটি বিদ্যমান এবং সঠিক অনুমতি রয়েছে।",
-      "checkConfigBtn": "কনফিগারেশন পরীক্ষা করুন",
-      "readErrorTitle": "রেকর্ডিং পড়া যায়নি",
-      "readErrorDescription": "রেকর্ডিং ডিরেক্টরি পড়া যায়নি। দয়া করে নিশ্চিত করুন যে ডিরেক্টরিটি বিদ্যমান।"
-    },
-    "empty": {
-      "noRecordingsTitle": "কোনো রেকর্ডিং পাওয়া যায়নি",
-      "noRecordingsLead": "এখনও কোনো রেকর্ডিং সংরক্ষিত হয়নি। MediaMTX যখন স্ট্রিম রেকর্ড করা শুরু করবে তখন রেকর্ডিং এখানে প্রদর্শিত হবে।",
-      "noRecordingsHint": "নিশ্চিত করুন যে আপনার MediaMTX কনফিগারেশনে <code>MTX_RECORD=yes</code> সেট করা আছে।",
-      "noMatchingTitle": "কোনো মিলে যাওয়া স্ট্রিম নেই",
-      "noMatchingDescription": "কোনো স্ট্রিম «{query}» এর সাথে মেলে না।"
-    },
-    "search": {
-      "placeholder": "স্ট্রিম খুঁজুন"
-    },
-    "groups": {
-      "today": "আজ",
-      "yesterday": "গতকাল"
+    "toolbar": {
+      "summary": "{streams, plural, one {# স্ট্রিম} other {# স্ট্রিম}} · {recordings, plural, one {# রেকর্ডিং} other {# রেকর্ডিং}}",
+      "filterPlaceholder": "স্ট্রিম ফিল্টার করুন…",
+      "filterAria": "স্ট্রিম ফিল্টার করুন"
     },
     "card": {
-      "recordingCount": "{count, plural, one {# রেকর্ডিং} other {# রেকর্ডিং}}",
+      "recordingsChip": "{count, plural, one {# রেকর্ডিং} other {# রেকর্ডিং}}",
       "latest": "সাম্প্রতিক {time}",
-      "viewBtn": "দেখুন"
+      "openAria": "{name}-এর রেকর্ডিং দেখুন"
     },
-    "recordingCard": {
-      "stop": "বন্ধ করুন",
+    "empty": {
+      "noRecordingsTitle": "এখনও কোনো রেকর্ডিং নেই",
+      "noRecordingsLead": "MediaMTX স্ট্রিম রেকর্ড করা শুরু করলে রেকর্ডিং এখানে দেখা যাবে।",
+      "enableRecording": "রেকর্ডিং চালু করুন",
+      "noMatchingTitle": "কোনো মিলে যাওয়া স্ট্রিম নেই",
+      "noMatchingDescription": "কোনো স্ট্রিম “{query}”-এর সাথে মেলে না।"
+    },
+    "errors": {
+      "directoryTitle": "রেকর্ডিং ডিরেক্টরি পড়া যাচ্ছে না",
+      "directoryLead": "এই অবস্থানে রেকর্ডিং পড়া যাচ্ছে না:",
+      "openAppConfig": "অ্যাপ কনফিগ খুলুন",
+      "readErrorTitle": "রেকর্ডিং পড়া যায়নি",
+      "readErrorDescription": "নিশ্চিত করুন যে রেকর্ডিং ডিরেক্টরিটি বিদ্যমান এবং সঠিক অনুমতি রয়েছে।"
+    },
+    "detail": {
+      "totals": "{count, plural, one {# রেকর্ডিং} other {# রেকর্ডিং}}"
+    },
+    "groups": {
+      "todayEyebrow": "আজ — {date}",
+      "yesterdayEyebrow": "গতকাল — {date}"
+    },
+    "row": {
       "play": "চালু করুন",
-      "downloadAria": "রেকর্ডিং {filePath} ডাউনলোড করুন",
-      "downloadError": "ভিডিও ডাউনলোডে ত্রুটি"
+      "close": "বন্ধ করুন",
+      "cancel": "বাতিল করুন",
+      "playAria": "{time}-এর রেকর্ডিং চালান",
+      "downloadAria": "রেকর্ডিং {file} ডাউনলোড করুন",
+      "downloading": "ডাউনলোড হচ্ছে… {total}-এর মধ্যে {received} · {rate}",
+      "downloadComplete": "ডাউনলোড সম্পূর্ণ",
+      "downloadFailed": "ডাউনলোড ব্যর্থ"
+    },
+    "player": {
+      "play": "চালু করুন",
+      "pause": "বিরতি দিন",
+      "seek": "সিক করুন"
+    },
+    "pagination": {
+      "aria": "পেজিনেশন",
+      "showing": "{total}-এর মধ্যে {from}–{to} দেখানো হচ্ছে",
+      "previous": "আগের পৃষ্ঠা",
+      "next": "পরের পৃষ্ঠা"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "সেটিংস",
-      "clientConfig": "ক্লায়েন্ট কনফিগ",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "কনফিগারেশন",
-    "pageSubHeader": "আপনার অ্যাপ কনফিগারেশন পরিচালনা করুন",
     "invalidConfig": "অবৈধ কনফিগারেশন",
+    "appConfig": {
+      "pageHeader": "অ্যাপ কনফিগ",
+      "pageSubHeader": "MediaMTX Connect দ্বারা ব্যবহৃত সংযোগ ও স্টোরেজ।"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX কনফিগ",
+      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# অসংরক্ষিত পরিবর্তন} other {# অসংরক্ষিত পরিবর্তন}}",
+      "needsAttention": "{count, plural, one {#টি ফিল্ডে মনোযোগ প্রয়োজন} other {#টি ফিল্ডে মনোযোগ প্রয়োজন}}",
+      "discard": "বাতিল করুন",
+      "reset": "রিসেট",
+      "save": "সংরক্ষণ করুন",
+      "saveToServer": "সার্ভারে সংরক্ষণ করুন"
+    },
     "formFields": {
       "oneValuePerLine": "প্রতি লাইনে একটি মান।"
     },
     "clientForm": {
-      "title": "অ্যাপ্লিকেশন সেটিংস",
-      "description": "MediaMTX Connect দ্বারা ব্যবহৃত সংযোগ এবং স্টোরেজ পথ।",
       "sections": {
         "mediamtxConnection": "MediaMTX সংযোগ",
         "storage": "স্টোরেজ"
       },
+      "playbackBadge": "লাইভ প্লেব্যাকের জন্য আবশ্যক",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "আপনার MediaMTX ইনস্ট্যান্সের ঠিকানা। Docker নেটওয়ার্কের মধ্যে আপনি কন্টেইনার নাম ব্যবহার করতে পারেন; অন্যথায় বাহ্যিক IP / হোস্টনেম ব্যবহার করুন।"
+          "label": "MediaMTX URL",
+          "description": "আপনার MediaMTX ইনস্ট্যান্সের ঠিকানা। Docker নেটওয়ার্কের মধ্যে আপনি কন্টেইনার নাম ব্যবহার করতে পারেন; অন্যথায় বাহ্যিক IP বা হোস্টনেম ব্যবহার করুন।"
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX API-এর পোর্ট"
+          "label": "API পোর্ট",
+          "description": "MediaMTX API-এর পোর্ট।"
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "এটি আপনার MediaMTX সার্ভারের ব্রাউজার-অ্যাক্সেসযোগ্য, বাহিরমুখী IP / হোস্টনেম।"
+          "label": "প্লেব্যাক URL",
+          "description": "আপনার MediaMTX সার্ভারের ব্রাউজার-অ্যাক্সেসযোগ্য, বাহিরমুখী URL। লাইভ প্লেব্যাক এখান থেকে স্ট্রিম লোড করে।"
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "MediaMTX রেকর্ডিং ধারণকারী ডিরেক্টরি (Docker ব্যবহার করলে পরিবর্তন না করার পরামর্শ দেওয়া হয়)"
+          "label": "রেকর্ডিং ডিরেক্টরি",
+          "description": "MediaMTX রেকর্ডিং ধারণকারী ডিরেক্টরি (Docker ব্যবহার করলে পরিবর্তন না করার পরামর্শ দেওয়া হয়)।"
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "তৈরি স্ক্রিনশট সংরক্ষণের ডিরেক্টরি (Docker ব্যবহার করলে পরিবর্তন না করার পরামর্শ দেওয়া হয়)"
+          "label": "স্ক্রিনশট ডিরেক্টরি",
+          "description": "তৈরি স্ন্যাপশটের জন্য ডিরেক্টরি (Docker ব্যবহার করলে পরিবর্তন না করার পরামর্শ দেওয়া হয়)।"
         }
       },
-      "actions": {
-        "reset": "রিসেট",
-        "submit": "জমা দিন"
-      },
       "toasts": {
-        "success": "ক্লায়েন্ট কনফিগ আপডেট হয়েছে",
-        "errorTitle": "ক্লায়েন্ট কনফিগ আপডেট করার সময় সমস্যা হয়েছিল",
-        "errorDescription": "দয়া করে আপনার ফর্ম মানগুলি দুবার পরীক্ষা করুন।"
+        "success": "অ্যাপ কনফিগ সংরক্ষিত হয়েছে",
+        "errorTitle": "অ্যাপ কনফিগ সংরক্ষণ করা যায়নি",
+        "errorDescription": "আপনার ফর্মের মানগুলি আবার পরীক্ষা করে পুনরায় চেষ্টা করুন।"
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "লগিং",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "লগিং",
-          "limits": "সীমা"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "মেট্রিক",
-          "pprof": "PPROF",
-          "enableDescription": "MediaMTX HTTP API সক্ষম করুন।"
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "সার্ভার",
-          "tls": "TLS",
-          "auth": "প্রমাণীকরণ",
-          "enableDescription": "RTSP সার্ভার সক্ষম করুন।"
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "RTMP সার্ভার সক্ষম করুন।"
-        },
-        "hls": {
-          "server": "সার্ভার",
-          "segments": "সেগমেন্ট",
-          "corsProxies": "CORS / প্রক্সি",
-          "enableDescription": "HLS সার্ভার সক্ষম করুন।"
-        },
-        "webrtc": {
-          "server": "সার্ভার",
-          "network": "নেটওয়ার্ক",
-          "iceServers": "ICE সার্ভার",
-          "addServer": "সার্ভার যোগ করুন",
-          "noIceServers": "কোনো ICE সার্ভার কনফিগার করা নেই।",
-          "iceServerLabel": "ICE সার্ভার {index}",
-          "removeIceServer": "ICE সার্ভার সরান",
-          "iceFields": {
-            "url": "URL",
-            "username": "ব্যবহারকারীর নাম",
-            "password": "পাসওয়ার্ড"
-          },
-          "enableDescription": "WebRTC সার্ভার সক্ষম করুন।"
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "SRT সার্ভার সক্ষম করুন।"
-        }
+      "sectionDescriptions": {
+        "logging": "লগ আউটপুট, টাইমআউট এবং গ্লোবাল সীমা।",
+        "api": "যে HTTP API MediaMTX Connect নিজে ব্যবহার করে।",
+        "hooks": "সংযোগ ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।",
+        "rtsp": "RTSP-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
+        "rtmp": "RTMP-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
+        "hls": "ব্রাউজার প্লেব্যাকের জন্য স্ট্রিমকে HLS হিসেবে পরিবেশন করুন।",
+        "webrtc": "কম লেটেন্সির ব্রাউজার প্লেব্যাক ও প্রকাশনা।",
+        "srt": "SRT-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।"
+      },
+      "enabled": "সক্রিয়",
+      "off": "বন্ধ",
+      "hiddenWhileOff": "{count, plural, one {বন্ধ থাকাকালীন #টি অপশন লুকানো} other {বন্ধ থাকাকালীন #টি অপশন লুকানো}}",
+      "rail": {
+        "onThisPage": "এই পৃষ্ঠায়",
+        "aria": "কনফিগ বিভাগ"
+      },
+      "iceServers": {
+        "add": "ICE সার্ভার যোগ করুন",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE সার্ভার {index} URL",
+        "usernameAria": "ICE সার্ভার {index} ব্যবহারকারীর নাম",
+        "passwordAria": "ICE সার্ভার {index} পাসওয়ার্ড",
+        "removeAria": "ICE সার্ভার {index} সরান"
+      },
+      "help": {
+        "logLevel": "লগ আউটপুটের বিস্তারিত মাত্রা (error, warn, info বা debug)।",
+        "logDestinations": "লগ কোথায় লেখা হবে (stdout, file বা syslog)।",
+        "logFile": "logDestinations-এ file থাকলে লগ ফাইলের পাথ।",
+        "readTimeout": "পড়ার কাজের জন্য টাইমআউট।",
+        "writeTimeout": "লেখার কাজের জন্য টাইমআউট।",
+        "writeQueueSize": "প্রতি সংযোগে বহির্গামী কিউয়ের আকার। দুইয়ের ঘাত হতে হবে।",
+        "udpMaxPayloadSize": "বহির্গামী UDP প্যাকেটের সর্বোচ্চ আকার।",
+        "externalAuthenticationURL": "বাহ্যিক প্রমাণীকরণ সার্ভারের URL, প্রতিটি সংযোগে কল করা হয়।",
+        "apiAddress": "HTTP API-এর লিসেন ঠিকানা।",
+        "metrics": "Prometheus-সামঞ্জস্যপূর্ণ মেট্রিক প্রকাশ করুন।",
+        "metricsAddress": "মেট্রিক এন্ডপয়েন্টের লিসেন ঠিকানা।",
+        "pprof": "Go pprof প্রোফাইলিং এন্ডপয়েন্ট প্রকাশ করুন।",
+        "pprofAddress": "pprof এন্ডপয়েন্টের লিসেন ঠিকানা।",
+        "runOnConnect": "ক্লায়েন্ট সংযুক্ত হলে চালানোর কমান্ড।",
+        "runOnConnectRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
+        "runOnDisconnect": "ক্লায়েন্টের সংযোগ বিচ্ছিন্ন হলে চালানোর কমান্ড।",
+        "rtspAddress": "RTSP সার্ভারের (TCP) লিসেন ঠিকানা।",
+        "rtspsAddress": "RTSPS (TLS) সার্ভারের লিসেন ঠিকানা।",
+        "rtpAddress": "UDP-এর মাধ্যমে RTP প্যাকেটের জন্য লিসেন ঠিকানা।",
+        "rtcpAddress": "UDP-এর মাধ্যমে RTCP প্যাকেটের জন্য লিসেন ঠিকানা।",
+        "multicastIPRange": "মাল্টিকাস্ট ডেলিভারির জন্য ব্যবহৃত IP রেঞ্জ।",
+        "multicastRTPPort": "মাল্টিকাস্ট RTP প্যাকেটের পোর্ট।",
+        "multicastRTCPPort": "মাল্টিকাস্ট RTCP প্যাকেটের পোর্ট।",
+        "protocols": "RTSP সার্ভার যে ট্রান্সপোর্ট প্রোটোকল গ্রহণ করে (udp, multicast বা tcp)।",
+        "encryption": "TLS এনক্রিপশন নীতি (no, strict বা optional)।",
+        "serverKey": "TLS সার্ভার কী-এর পাথ।",
+        "serverCert": "TLS সার্ভার সার্টিফিকেটের পাথ।",
+        "authMethods": "RTSP সার্ভার যে প্রমাণীকরণ পদ্ধতি গ্রহণ করে (basic বা digest)।",
+        "rtmpAddress": "RTMP সার্ভারের লিসেন ঠিকানা।",
+        "rtmpEncryption": "RTMP-এর জন্য TLS এনক্রিপশন নীতি (no, strict বা optional)।",
+        "rtmpsAddress": "RTMPS (TLS) সার্ভারের লিসেন ঠিকানা।",
+        "rtmpServerKey": "RTMPS সার্ভার কী-এর পাথ।",
+        "rtmpServerCert": "RTMPS সার্ভার সার্টিফিকেটের পাথ।",
+        "hlsAddress": "HLS সার্ভারের লিসেন ঠিকানা।",
+        "hlsEncryption": "TLS (HTTPS)-এর মাধ্যমে HLS পরিবেশন করুন।",
+        "hlsServerKey": "HLS সার্ভার কী-এর পাথ।",
+        "hlsServerCert": "HLS সার্ভার সার্টিফিকেটের পাথ।",
+        "hlsAlwaysRemux": "কেউ না দেখলেও স্ট্রিম রিমাক্স করুন।",
+        "hlsVariant": "HLS ভ্যারিয়েন্ট (mpegts, fmp4 বা lowLatency)।",
+        "hlsSegmentCount": "প্লেলিস্টে রাখা সেগমেন্টের সংখ্যা।",
+        "hlsSegmentDuration": "প্রতিটি সেগমেন্টের ন্যূনতম সময়কাল।",
+        "hlsPartDuration": "কম-লেটেন্সি মোডে প্রতিটি অংশের সময়কাল।",
+        "hlsSegmentMaxSize": "প্রতিটি সেগমেন্টের সর্বোচ্চ আকার।",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin হেডারের মান।",
+        "hlsTrustedProxies": "HLS সার্ভারের সামনে থাকা প্রক্সিগুলির IP বা নেটওয়ার্ক।",
+        "hlsDirectory": "RAM-এর পরিবর্তে এই ডিরেক্টরিতে ডিস্কে সেগমেন্ট লিখুন।",
+        "webrtcAddress": "WebRTC HTTP সার্ভারের লিসেন ঠিকানা।",
+        "webrtcEncryption": "TLS (HTTPS)-এর মাধ্যমে WebRTC পরিবেশন করুন।",
+        "webrtcServerKey": "WebRTC সার্ভার কী-এর পাথ।",
+        "webrtcServerCert": "WebRTC সার্ভার সার্টিফিকেটের পাথ।",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin হেডারের মান।",
+        "webrtcTrustedProxies": "WebRTC সার্ভারের সামনে থাকা প্রক্সিগুলির IP বা নেটওয়ার্ক।",
+        "webrtcLocalUDPAddress": "WebRTC ট্র্যাফিকের জন্য ব্যবহৃত স্থানীয় UDP ঠিকানা।",
+        "webrtcLocalTCPAddress": "WebRTC ট্র্যাফিকের জন্য ব্যবহৃত স্থানীয় TCP ঠিকানা।",
+        "webrtcIPsFromInterfaces": "হোস্টের নেটওয়ার্ক ইন্টারফেস থেকে ক্যান্ডিডেট IP সংগ্রহ করুন।",
+        "webrtcIPsFromInterfacesList": "যে ইন্টারফেসগুলি থেকে ক্যান্ডিডেট IP সংগ্রহ করা হবে। খালি মানে সব।",
+        "webrtcAdditionalHosts": "WebRTC ক্যান্ডিডেট হিসেবে ঘোষিত অতিরিক্ত হোস্ট বা IP।",
+        "webrtcICEServers2": "WebRTC সংযোগ স্থাপনে ব্যবহৃত STUN বা TURN সার্ভার।",
+        "srtAddress": "SRT সার্ভারের লিসেন ঠিকানা।"
       },
       "toasts": {
-        "success": "গ্লোবাল কনফিগ আপডেট হয়েছে",
-        "errorTitle": "গ্লোবাল কনফিগ আপডেট করার সময় সমস্যা হয়েছিল",
-        "errorDescription": "দয়া করে আপনার ফর্ম মানগুলি দুবার পরীক্ষা করুন।"
+        "success": "MediaMTX কনফিগ সংরক্ষিত হয়েছে",
+        "errorTitle": "MediaMTX কনফিগ সংরক্ষণ করা যায়নি",
+        "errorDescription": "আপনার ফর্মের মানগুলি আবার পরীক্ষা করে পুনরায় চেষ্টা করুন।"
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# অসংরক্ষিত পরিবর্তন} other {# অসংরক্ষিত পরিবর্তন}}",
-      "discard": "বাতিল করুন",
-      "saveChanges": "পরিবর্তনগুলি সংরক্ষণ করুন"
     }
   }
 }

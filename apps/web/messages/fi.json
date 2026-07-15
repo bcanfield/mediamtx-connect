@@ -26,151 +26,193 @@
       "switchLanguage": "Vaihda kieli",
       "searchPlaceholder": "Hae kieltä…",
       "noResults": "Kieltä ei löytynyt."
+    },
+    "connection": {
+      "connected": "yhdistetty",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Sovellus",
-      "settings": "Asetukset"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Ensisijainen",
     "items": {
       "live": "Suora",
       "recordings": "Tallenteet",
-      "clientConfig": "Asiakassovelluksen asetukset",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Sovelluksen asetukset",
+      "mediamtxConfig": "MediaMTX-asetukset"
     }
   },
   "Streams": {
-    "crumbLive": "Suora",
-    "header": "Striimit",
-    "subHeader": "Aktiivisten striimiesi suoria näkymiä",
+    "toolbar": {
+      "summary": "{count, plural, one {# striimi} other {# striimiä}} · {live} toistossa",
+      "playbackAria": "Toistotila",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Ruudukon tiheys"
+    },
     "errors": {
-      "configTitle": "Määritysvirhe",
-      "configDescription": "Asetuksia ei voi ladata. Tarkista tietokantayhteytesi.",
-      "connectionTitle": "MediaMTX:ään ei voi yhdistää",
-      "connectionLead": "MediaMTX:ää ei tavoiteta osoitteesta",
-      "connectionHint": "Varmista, että MediaMTX on käynnissä ja että asetustesi URL on oikein.",
-      "checkConfigBtn": "Tarkista asetukset"
+      "unreachableTitle": "MediaMTX:ää ei tavoiteta",
+      "unreachableLead": "Ei vastausta MediaMTX-API:lta osoitteessa",
+      "openAppConfig": "Avaa sovelluksen asetukset",
+      "retry": "Yritä uudelleen",
+      "retryCountdown": "automaattinen uudelleenyritys {seconds} s kuluttua"
     },
     "empty": {
-      "configureRemoteTitle": "Määritä etä-URL",
-      "configureRemoteDescription": "Aseta etä-MediaMTX-URL nähdäksesi striimit selaimessa. Tämän tulee olla URL, jonka selaimesi voi käyttää MediaMTX:n tavoittamiseen.",
-      "goToConfig": "Mene asetuksiin",
-      "noStreamsTitle": "Ei aktiivisia striimejä",
-      "noStreamsDescription": "MediaMTX on yhdistetty, mutta tällä hetkellä ei ole aktiivisia striimejä. Käynnistä striimaus MediaMTX:ään nähdäksesi sen täällä."
+      "noStreamsTitle": "Mikään striimi ei lähetä",
+      "noStreamsLead": "Osoita mikä tahansa lähetin MediaMTX:ään, niin se näkyy täällä:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Ruudukon tiheys",
-      "two": "Kaksi saraketta",
-      "three": "Kolme saraketta",
-      "four": "Neljä saraketta"
+    "banner": {
+      "playbackUrlTitle": "Toisto-URL:ää ei ole asetettu",
+      "playbackUrlLead": "Aseta selaimelle näkyvä MediaMTX-URL sovelluksen asetuksissa ottaaksesi suoratoiston käyttöön.",
+      "openAppConfig": "Avaa sovelluksen asetukset"
     },
     "card": {
-      "onlineSince": "Verkossa lähtien {date}",
-      "idle": "Käyttämättömänä",
-      "live": "SUORA",
-      "stop": "Pysäytä",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "ei vielä tilannekuvaa — ensimmäinen kaappaus ~30 s kuluttua",
+      "onlineSince": "verkossa {time} alkaen · {uptime}",
+      "idle": "käyttämättä",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# katsoja} other {# katsojaa}}",
       "play": "Toista",
+      "stop": "Pysäytä",
+      "playAria": "Toista {streamName}",
       "actionsAria": "Striimin toiminnot",
-      "viewRecordings": "Näytä tallenteet"
+      "stub": {
+        "title": "Ei vielä toteutettu",
+        "description": "Tämä toiminto on suunnitelmissa — se kirjattiin."
+      },
+      "menu": {
+        "openDetail": "Avaa striimin tiedot",
+        "viewRecordings": "Näytä tallenteet",
+        "takeSnapshot": "Ota tilannekuva",
+        "record": "Tallenna",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopioi julkaisu-URL:t",
+        "shareEmbed": "Jaa ja upota…",
+        "editPathConfig": "Muokkaa polun asetuksia",
+        "editHooks": "Muokkaa hookeja"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Tallenteet",
-    "header": "Tallenteet",
-    "subHeader": "Selaa eri striimiesi tallenteita",
-    "subHeaderForStream": "Tallenteet kohteelle: {streamName}",
-    "invalidConfig": "Virheellinen asetus",
-    "errors": {
-      "configTitle": "Määritysvirhe",
-      "configDescription": "Asetuksia ei voi ladata. Tarkista tietokantayhteytesi.",
-      "directoryTitle": "Tallennushakemistoon ei voi päästä",
-      "directoryLead": "Tallennushakemistoa ei voi lukea sijainnissa",
-      "directoryHint": "Varmista, että hakemisto on olemassa ja sillä on oikeat käyttöoikeudet.",
-      "checkConfigBtn": "Tarkista asetukset",
-      "readErrorTitle": "Tallenteita ei voi lukea",
-      "readErrorDescription": "Tallennushakemistoa ei voi lukea. Varmista, että hakemisto on olemassa."
+    "toolbar": {
+      "summary": "{streams, plural, one {# striimi} other {# striimiä}} · {recordings, plural, one {# tallenne} other {# tallennetta}}",
+      "filterPlaceholder": "Suodata striimejä…",
+      "filterAria": "Suodata striimejä"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# tallenne} other {# tallennetta}}",
+      "latest": "viimeisin {time}",
+      "openAria": "Näytä tallenteet kohteelle {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Tallenteita ei löytynyt",
-      "noRecordingsLead": "Tallenteita ei ole vielä tallennettu. Tallenteet ilmestyvät tähän heti, kun MediaMTX alkaa tallentaa striimejä.",
-      "noRecordingsHint": "Varmista, että MediaMTX-asetuksissasi on määritetty <code>MTX_RECORD=yes</code>.",
+      "noRecordingsTitle": "Ei vielä tallenteita",
+      "noRecordingsLead": "Tallenteet näkyvät täällä, kun MediaMTX alkaa tallentaa striimejä.",
+      "enableRecording": "Ota tallennus käyttöön",
       "noMatchingTitle": "Ei vastaavia striimejä",
       "noMatchingDescription": "Mikään striimi ei vastaa hakua ”{query}”."
     },
-    "search": {
-      "placeholder": "Etsi striimejä"
+    "errors": {
+      "directoryTitle": "Tallennehakemistoa ei voi lukea",
+      "directoryLead": "Tallenteita ei voi lukea sijainnissa",
+      "openAppConfig": "Avaa sovelluksen asetukset",
+      "readErrorTitle": "Tallenteita ei voitu lukea",
+      "readErrorDescription": "Varmista, että tallennehakemisto on olemassa ja sillä on oikeat käyttöoikeudet."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# tallenne} other {# tallennetta}}"
     },
     "groups": {
-      "today": "Tänään",
-      "yesterday": "Eilen"
+      "todayEyebrow": "Tänään — {date}",
+      "yesterdayEyebrow": "Eilen — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# tallenne} other {# tallennetta}}",
-      "latest": "Viimeisin {time}",
-      "viewBtn": "Näytä"
-    },
-    "recordingCard": {
-      "stop": "Pysäytä",
+    "row": {
       "play": "Toista",
-      "downloadAria": "Lataa tallenne {filePath}",
-      "downloadError": "Virhe videon latauksessa"
+      "close": "Sulje",
+      "cancel": "Peruuta",
+      "playAria": "Toista tallenne ajalta {time}",
+      "downloadAria": "Lataa tallenne {file}",
+      "downloading": "ladataan… {received} / {total} · {rate}",
+      "downloadComplete": "Lataus valmis",
+      "downloadFailed": "Lataus epäonnistui"
+    },
+    "player": {
+      "play": "Toista",
+      "pause": "Keskeytä",
+      "seek": "Siirry"
+    },
+    "pagination": {
+      "aria": "Sivutus",
+      "showing": "Näytetään {from}–{to} / {total}",
+      "previous": "Edellinen sivu",
+      "next": "Seuraava sivu"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Asetukset",
-      "clientConfig": "Asiakassovelluksen asetukset",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Asetukset",
-    "pageSubHeader": "Hallitse sovellustesi asetuksia",
     "invalidConfig": "Virheellinen asetus",
+    "appConfig": {
+      "pageHeader": "Sovelluksen asetukset",
+      "pageSubHeader": "MediaMTX Connectin käyttämä yhteys ja tallennus."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-asetukset",
+      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",
+      "needsAttention": "{count, plural, one {# kenttä vaatii huomiota} other {# kenttää vaatii huomiota}}",
+      "discard": "Hylkää",
+      "reset": "Palauta",
+      "save": "Tallenna",
+      "saveToServer": "Tallenna palvelimelle"
+    },
     "formFields": {
       "oneValuePerLine": "Yksi arvo per rivi."
     },
     "clientForm": {
-      "title": "Sovelluksen asetukset",
-      "description": "MediaMTX Connectin käyttämät yhteys- ja tallennuspolut.",
       "sections": {
         "mediamtxConnection": "MediaMTX-yhteys",
         "storage": "Tallennus"
       },
+      "playbackBadge": "Vaaditaan suoratoistoa varten",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX-URL",
           "description": "MediaMTX-instanssisi osoite. Docker-verkossa voit käyttää säilön nimeä; muutoin käytä ulkoista IP-osoitetta tai isäntänimeä."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX-API:n portti"
+          "label": "API-portti",
+          "description": "MediaMTX-API:n portti."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Tämä on MediaMTX-palvelimesi selaimesta tavoitettavissa oleva, ulospäin näkyvä IP tai isäntänimi."
+          "label": "Toisto-URL",
+          "description": "MediaMTX-palvelimesi selaimesta tavoitettavissa oleva, ulospäin näkyvä URL. Suoratoisto lataa striimit täältä."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Hakemisto, joka sisältää MediaMTX-tallenteet (ei suositella muutettavaksi, jos käytät Dockeria)"
+          "label": "Tallennehakemisto",
+          "description": "Hakemisto, joka sisältää MediaMTX-tallenteet (ei suositella muutettavaksi, jos käytät Dockeria)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Hakemisto luotuihin kuvakaappauksiin (ei suositella muutettavaksi, jos käytät Dockeria)"
+          "label": "Kuvakaappaushakemisto",
+          "description": "Hakemisto luoduille tilannekuville (ei suositella muutettavaksi, jos käytät Dockeria)."
         }
       },
-      "actions": {
-        "reset": "Palauta",
-        "submit": "Lähetä"
-      },
       "toasts": {
-        "success": "Asiakkaan asetukset päivitetty",
-        "errorTitle": "Asiakkaan asetusten päivittämisessä tapahtui ongelma",
-        "errorDescription": "Tarkista lomakkeen arvot."
+        "success": "Sovelluksen asetukset tallennettu",
+        "errorTitle": "Sovelluksen asetusten tallennus epäonnistui",
+        "errorDescription": "Tarkista lomakkeen arvot ja yritä uudelleen."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Lokit",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Lokit",
-          "limits": "Rajat"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Metriikat",
-          "pprof": "PPROF",
-          "enableDescription": "Ota MediaMTX HTTP-API käyttöön."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Palvelin",
-          "tls": "TLS",
-          "auth": "Todennus",
-          "enableDescription": "Ota RTSP-palvelin käyttöön."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Ota RTMP-palvelin käyttöön."
-        },
-        "hls": {
-          "server": "Palvelin",
-          "segments": "Segmentit",
-          "corsProxies": "CORS / Välityspalvelimet",
-          "enableDescription": "Ota HLS-palvelin käyttöön."
-        },
-        "webrtc": {
-          "server": "Palvelin",
-          "network": "Verkko",
-          "iceServers": "ICE-palvelimet",
-          "addServer": "Lisää palvelin",
-          "noIceServers": "ICE-palvelimia ei ole määritetty.",
-          "iceServerLabel": "ICE-palvelin {index}",
-          "removeIceServer": "Poista ICE-palvelin",
-          "iceFields": {
-            "url": "URL",
-            "username": "Käyttäjänimi",
-            "password": "Salasana"
-          },
-          "enableDescription": "Ota WebRTC-palvelin käyttöön."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Ota SRT-palvelin käyttöön."
-        }
+      "sectionDescriptions": {
+        "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
+        "api": "HTTP-API, jota MediaMTX Connect itse käyttää.",
+        "hooks": "Komennot, jotka MediaMTX suorittaa yhteystapahtumissa.",
+        "rtsp": "Julkaise ja vastaanota striimejä RTSP:llä.",
+        "rtmp": "Julkaise ja vastaanota striimejä RTMP:llä.",
+        "hls": "Tarjoa striimit HLS-muodossa selaintoistoa varten.",
+        "webrtc": "Matalan viiveen selaintoisto ja julkaisu.",
+        "srt": "Julkaise ja vastaanota striimejä SRT:llä."
+      },
+      "enabled": "Käytössä",
+      "off": "Pois",
+      "hiddenWhileOff": "{count, plural, one {# valinta piilotettu, kun pois päältä} other {# valintaa piilotettu, kun pois päältä}}",
+      "rail": {
+        "onThisPage": "Tällä sivulla",
+        "aria": "Asetusosiot"
+      },
+      "iceServers": {
+        "add": "Lisää ICE-palvelin",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE-palvelimen {index} URL",
+        "usernameAria": "ICE-palvelimen {index} käyttäjänimi",
+        "passwordAria": "ICE-palvelimen {index} salasana",
+        "removeAria": "Poista ICE-palvelin {index}"
+      },
+      "help": {
+        "logLevel": "Lokitulosteen yksityiskohtaisuus (error, warn, info tai debug).",
+        "logDestinations": "Minne lokit kirjoitetaan (stdout, file tai syslog).",
+        "logFile": "Lokitiedoston polku, kun logDestinations sisältää arvon file.",
+        "readTimeout": "Lukutoimintojen aikakatkaisu.",
+        "writeTimeout": "Kirjoitustoimintojen aikakatkaisu.",
+        "writeQueueSize": "Lähtevän jonon koko yhteyttä kohden. Täytyy olla kahden potenssi.",
+        "udpMaxPayloadSize": "Lähtevien UDP-pakettien enimmäiskoko.",
+        "externalAuthenticationURL": "Ulkoisen todennuspalvelimen URL, jota kutsutaan jokaisella yhteydellä.",
+        "apiAddress": "HTTP-API:n kuunteluosoite.",
+        "metrics": "Julkaise Prometheus-yhteensopivat metriikat.",
+        "metricsAddress": "Metriikkapäätepisteen kuunteluosoite.",
+        "pprof": "Julkaise Go:n pprof-profilointipäätepiste.",
+        "pprofAddress": "pprof-päätepisteen kuunteluosoite.",
+        "runOnConnect": "Komento, joka suoritetaan asiakkaan yhdistäessä.",
+        "runOnConnectRestart": "Käynnistä komento uudelleen, jos se päättyy.",
+        "runOnDisconnect": "Komento, joka suoritetaan asiakkaan katkaistessa yhteyden.",
+        "rtspAddress": "RTSP-palvelimen kuunteluosoite (TCP).",
+        "rtspsAddress": "RTSPS (TLS) -palvelimen kuunteluosoite.",
+        "rtpAddress": "Kuunteluosoite RTP-paketeille UDP:n yli.",
+        "rtcpAddress": "Kuunteluosoite RTCP-paketeille UDP:n yli.",
+        "multicastIPRange": "Multicast-jakelussa käytettävä IP-alue.",
+        "multicastRTPPort": "Portti multicast-RTP-paketeille.",
+        "multicastRTCPPort": "Portti multicast-RTCP-paketeille.",
+        "protocols": "RTSP-palvelimen hyväksymät siirtoprotokollat (udp, multicast tai tcp).",
+        "encryption": "TLS-salauskäytäntö (no, strict tai optional).",
+        "serverKey": "TLS-palvelinavaimen polku.",
+        "serverCert": "TLS-palvelinvarmenteen polku.",
+        "authMethods": "RTSP-palvelimen hyväksymät todennusmenetelmät (basic tai digest).",
+        "rtmpAddress": "RTMP-palvelimen kuunteluosoite.",
+        "rtmpEncryption": "TLS-salauskäytäntö RTMP:lle (no, strict tai optional).",
+        "rtmpsAddress": "RTMPS (TLS) -palvelimen kuunteluosoite.",
+        "rtmpServerKey": "RTMPS-palvelinavaimen polku.",
+        "rtmpServerCert": "RTMPS-palvelinvarmenteen polku.",
+        "hlsAddress": "HLS-palvelimen kuunteluosoite.",
+        "hlsEncryption": "Tarjoa HLS TLS:n yli (HTTPS).",
+        "hlsServerKey": "HLS-palvelinavaimen polku.",
+        "hlsServerCert": "HLS-palvelinvarmenteen polku.",
+        "hlsAlwaysRemux": "Remuxaa striimit myös silloin, kun kukaan ei katso.",
+        "hlsVariant": "HLS-variantti (mpegts, fmp4 tai lowLatency).",
+        "hlsSegmentCount": "Soittolistassa säilytettävien segmenttien määrä.",
+        "hlsSegmentDuration": "Kunkin segmentin vähimmäiskesto.",
+        "hlsPartDuration": "Kunkin osan kesto matalan viiveen tilassa.",
+        "hlsSegmentMaxSize": "Kunkin segmentin enimmäiskoko.",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin-otsakkeen arvo.",
+        "hlsTrustedProxies": "HLS-palvelimen edessä olevien välityspalvelinten IP:t tai verkot.",
+        "hlsDirectory": "Kirjoita segmentit levylle tähän hakemistoon RAM-muistin sijaan.",
+        "webrtcAddress": "WebRTC HTTP -palvelimen kuunteluosoite.",
+        "webrtcEncryption": "Tarjoa WebRTC TLS:n yli (HTTPS).",
+        "webrtcServerKey": "WebRTC-palvelinavaimen polku.",
+        "webrtcServerCert": "WebRTC-palvelinvarmenteen polku.",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin-otsakkeen arvo.",
+        "webrtcTrustedProxies": "WebRTC-palvelimen edessä olevien välityspalvelinten IP:t tai verkot.",
+        "webrtcLocalUDPAddress": "WebRTC-liikenteessä käytettävä paikallinen UDP-osoite.",
+        "webrtcLocalTCPAddress": "WebRTC-liikenteessä käytettävä paikallinen TCP-osoite.",
+        "webrtcIPsFromInterfaces": "Kerää ehdokas-IP:t isännän verkkoliitännöistä.",
+        "webrtcIPsFromInterfacesList": "Liitännät, joista ehdokas-IP:t kerätään. Tyhjä tarkoittaa kaikkia.",
+        "webrtcAdditionalHosts": "Lisäisännät tai IP:t, joita mainostetaan WebRTC-ehdokkaina.",
+        "webrtcICEServers2": "STUN- tai TURN-palvelimet WebRTC-yhteyksien muodostamiseen.",
+        "srtAddress": "SRT-palvelimen kuunteluosoite."
       },
       "toasts": {
-        "success": "Yleiset asetukset päivitetty",
-        "errorTitle": "Yleisten asetusten päivittämisessä tapahtui ongelma",
-        "errorDescription": "Tarkista lomakkeen arvot."
+        "success": "MediaMTX-asetukset tallennettu",
+        "errorTitle": "MediaMTX-asetusten tallennus epäonnistui",
+        "errorDescription": "Tarkista lomakkeen arvot ja yritä uudelleen."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",
-      "discard": "Hylkää",
-      "saveChanges": "Tallenna muutokset"
     }
   }
 }

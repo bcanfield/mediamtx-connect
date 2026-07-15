@@ -9,9 +9,6 @@
 
 # dependencies
 node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
 /.pnpm-store/
 
 # build output
@@ -32,8 +29,6 @@ apps/api/public
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # local env files
 .env*.local

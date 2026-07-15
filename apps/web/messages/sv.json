@@ -26,151 +26,193 @@
       "switchLanguage": "Byt språk",
       "searchPlaceholder": "Sök språk…",
       "noResults": "Inget språk hittades."
+    },
+    "connection": {
+      "connected": "ansluten",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Applikation",
-      "settings": "Inställningar"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primär",
     "items": {
       "live": "Live",
       "recordings": "Inspelningar",
-      "clientConfig": "Klientkonfiguration",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Appkonfiguration",
+      "mediamtxConfig": "MediaMTX-konfiguration"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Strömmar",
-    "subHeader": "Livevisningar av dina aktiva strömmar",
+    "toolbar": {
+      "summary": "{count, plural, one {# ström} other {# strömmar}} · {live} spelas upp",
+      "playbackAria": "Uppspelningsläge",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Rutnätsdensitet"
+    },
     "errors": {
-      "configTitle": "Konfigurationsfel",
-      "configDescription": "Det gick inte att läsa in konfigurationen. Kontrollera din databasanslutning.",
-      "connectionTitle": "Kan inte ansluta till MediaMTX",
-      "connectionLead": "Kan inte nå MediaMTX på",
-      "connectionHint": "Säkerställ att MediaMTX körs och att URL:en i din konfiguration är korrekt.",
-      "checkConfigBtn": "Kontrollera konfiguration"
+      "unreachableTitle": "Kan inte nå MediaMTX",
+      "unreachableLead": "Inget svar från MediaMTX-API:et på",
+      "openAppConfig": "Öppna appkonfiguration",
+      "retry": "Försök igen",
+      "retryCountdown": "automatiskt nytt försök om {seconds}s"
     },
     "empty": {
-      "configureRemoteTitle": "Konfigurera fjärr-URL",
-      "configureRemoteDescription": "Ange din fjärr-URL för MediaMTX för att se strömmar i webbläsaren. Detta ska vara URL:en som din webbläsare kan använda för att nå MediaMTX.",
-      "goToConfig": "Gå till konfiguration",
-      "noStreamsTitle": "Inga aktiva strömmar",
-      "noStreamsDescription": "MediaMTX är ansluten men det finns inga aktiva strömmar just nu. Starta en sändning till MediaMTX för att se den här."
+      "noStreamsTitle": "Inga strömmar publiceras",
+      "noStreamsLead": "Rikta valfri publicerare mot MediaMTX så dyker den upp här:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Rutnätsdensitet",
-      "two": "Två kolumner",
-      "three": "Tre kolumner",
-      "four": "Fyra kolumner"
+    "banner": {
+      "playbackUrlTitle": "Uppspelnings-URL är inte angiven",
+      "playbackUrlLead": "Ange den webbläsarvända MediaMTX-URL:en i appkonfigurationen för att aktivera liveuppspelning.",
+      "openAppConfig": "Öppna appkonfiguration"
     },
     "card": {
-      "onlineSince": "Online sedan {date}",
-      "idle": "Inaktiv",
       "live": "LIVE",
-      "stop": "Stopp",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "ingen ögonblicksbild än — första tagningen om ~30s",
+      "onlineSince": "online sedan {time} · {uptime}",
+      "idle": "inaktiv",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# tittare} other {# tittare}}",
       "play": "Spela upp",
+      "stop": "Stopp",
+      "playAria": "Spela upp {streamName}",
       "actionsAria": "Strömåtgärder",
-      "viewRecordings": "Visa inspelningar"
+      "stub": {
+        "title": "Inte implementerat än",
+        "description": "Denna åtgärd finns på färdplanen — den har loggats."
+      },
+      "menu": {
+        "openDetail": "Öppna strömdetaljer",
+        "viewRecordings": "Visa inspelningar",
+        "takeSnapshot": "Ta ögonblicksbild",
+        "record": "Spela in",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopiera publicerings-URL:er",
+        "shareEmbed": "Dela & bädda in…",
+        "editPathConfig": "Redigera sökvägskonfiguration",
+        "editHooks": "Redigera hooks"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Inspelningar",
-    "header": "Inspelningar",
-    "subHeader": "Bläddra bland inspelningarna från dina olika strömmar",
-    "subHeaderForStream": "Inspelningar för: {streamName}",
-    "invalidConfig": "Ogiltig konfiguration",
-    "errors": {
-      "configTitle": "Konfigurationsfel",
-      "configDescription": "Det gick inte att läsa in konfigurationen. Kontrollera din databasanslutning.",
-      "directoryTitle": "Kan inte komma åt inspelningsmappen",
-      "directoryLead": "Det går inte att läsa inspelningsmappen i",
-      "directoryHint": "Säkerställ att mappen finns och har rätt behörigheter.",
-      "checkConfigBtn": "Kontrollera konfiguration",
-      "readErrorTitle": "Det gick inte att läsa inspelningarna",
-      "readErrorDescription": "Det gick inte att läsa inspelningsmappen. Säkerställ att mappen finns."
+    "toolbar": {
+      "summary": "{streams, plural, one {# ström} other {# strömmar}} · {recordings, plural, one {# inspelning} other {# inspelningar}}",
+      "filterPlaceholder": "Filtrera strömmar…",
+      "filterAria": "Filtrera strömmar"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# inspelning} other {# inspelningar}}",
+      "latest": "senaste {time}",
+      "openAria": "Visa inspelningar för {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Inga inspelningar hittades",
-      "noRecordingsLead": "Inga inspelningar har sparats än. Inspelningar visas här när MediaMTX börjar spela in strömmar.",
-      "noRecordingsHint": "Säkerställ att <code>MTX_RECORD=yes</code> är inställt i din MediaMTX-konfiguration.",
+      "noRecordingsTitle": "Inga inspelningar än",
+      "noRecordingsLead": "Inspelningar visas här när MediaMTX börjar spela in strömmar.",
+      "enableRecording": "Aktivera inspelning",
       "noMatchingTitle": "Inga matchande strömmar",
       "noMatchingDescription": "Ingen ström matchar ”{query}”."
     },
-    "search": {
-      "placeholder": "Sök strömmar"
+    "errors": {
+      "directoryTitle": "Kan inte läsa inspelningsmappen",
+      "directoryLead": "Det går inte att läsa inspelningarna i",
+      "openAppConfig": "Öppna appkonfiguration",
+      "readErrorTitle": "Det gick inte att läsa inspelningarna",
+      "readErrorDescription": "Säkerställ att inspelningsmappen finns och har rätt behörigheter."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# inspelning} other {# inspelningar}}"
     },
     "groups": {
-      "today": "Idag",
-      "yesterday": "Igår"
+      "todayEyebrow": "Idag — {date}",
+      "yesterdayEyebrow": "Igår — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# inspelning} other {# inspelningar}}",
-      "latest": "Senaste {time}",
-      "viewBtn": "Visa"
-    },
-    "recordingCard": {
-      "stop": "Stopp",
+    "row": {
       "play": "Spela upp",
-      "downloadAria": "Ladda ner inspelning {filePath}",
-      "downloadError": "Fel vid nedladdning av video"
+      "close": "Stäng",
+      "cancel": "Avbryt",
+      "playAria": "Spela upp inspelningen från {time}",
+      "downloadAria": "Ladda ner inspelning {file}",
+      "downloading": "laddar ner… {received} av {total} · {rate}",
+      "downloadComplete": "Nedladdning klar",
+      "downloadFailed": "Nedladdning misslyckades"
+    },
+    "player": {
+      "play": "Spela upp",
+      "pause": "Pausa",
+      "seek": "Sök"
+    },
+    "pagination": {
+      "aria": "Sidnumrering",
+      "showing": "Visar {from}–{to} av {total}",
+      "previous": "Föregående sida",
+      "next": "Nästa sida"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Inställningar",
-      "clientConfig": "Klientkonfiguration",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Konfiguration",
-    "pageSubHeader": "Hantera din appkonfiguration",
     "invalidConfig": "Ogiltig konfiguration",
+    "appConfig": {
+      "pageHeader": "Appkonfiguration",
+      "pageSubHeader": "Anslutning och lagring som används av MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-konfiguration",
+      "pageSubHeader": "Globala MediaMTX-serverinställningar, sparade på servern."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",
+      "needsAttention": "{count, plural, one {# fält behöver åtgärdas} other {# fält behöver åtgärdas}}",
+      "discard": "Kassera",
+      "reset": "Återställ",
+      "save": "Spara",
+      "saveToServer": "Spara till servern"
+    },
     "formFields": {
       "oneValuePerLine": "Ett värde per rad."
     },
     "clientForm": {
-      "title": "Applikationsinställningar",
-      "description": "Anslutnings- och lagringsvägar som används av MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "MediaMTX-anslutning",
         "storage": "Lagring"
       },
+      "playbackBadge": "Krävs för liveuppspelning",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX-URL",
           "description": "Adressen till din MediaMTX-instans. I ett Docker-nätverk kan du använda containernamnet; annars använder du extern IP eller värdnamn."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Porten för MediaMTX-API:et"
+          "label": "API-port",
+          "description": "Porten för MediaMTX-API:et."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Detta är den webbläsartillgängliga, utåtriktade IP-adressen eller värdnamnet för din MediaMTX-server."
+          "label": "Uppspelnings-URL",
+          "description": "Den webbläsartillgängliga, utåtriktade URL:en till din MediaMTX-server. Liveuppspelningen läser in strömmar härifrån."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Mapp som innehåller MediaMTX-inspelningar (rekommenderas inte att ändra om du använder Docker)"
+          "label": "Inspelningsmapp",
+          "description": "Mapp som innehåller MediaMTX-inspelningar (rekommenderas inte att ändra om du använder Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Mapp att lagra genererade skärmdumpar i (rekommenderas inte att ändra om du använder Docker)"
+          "label": "Skärmdumpsmapp",
+          "description": "Mapp för genererade ögonblicksbilder (rekommenderas inte att ändra om du använder Docker)."
         }
       },
-      "actions": {
-        "reset": "Återställ",
-        "submit": "Skicka"
-      },
       "toasts": {
-        "success": "Klientkonfigurationen har uppdaterats",
-        "errorTitle": "Det uppstod ett problem vid uppdatering av klientkonfigurationen",
-        "errorDescription": "Kontrollera formulärets värden."
+        "success": "Appkonfigurationen har sparats",
+        "errorTitle": "Det gick inte att spara appkonfigurationen",
+        "errorDescription": "Kontrollera formulärets värden och försök igen."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Loggning",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Loggning",
-          "limits": "Begränsningar"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Mätvärden",
-          "pprof": "PPROF",
-          "enableDescription": "Aktivera MediaMTX HTTP-API:et."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Autentisering",
-          "enableDescription": "Aktivera RTSP-servern."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Aktivera RTMP-servern."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Segment",
-          "corsProxies": "CORS / Proxy",
-          "enableDescription": "Aktivera HLS-servern."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Nätverk",
-          "iceServers": "ICE-servrar",
-          "addServer": "Lägg till server",
-          "noIceServers": "Inga ICE-servrar konfigurerade.",
-          "iceServerLabel": "ICE-server {index}",
-          "removeIceServer": "Ta bort ICE-server",
-          "iceFields": {
-            "url": "URL",
-            "username": "Användarnamn",
-            "password": "Lösenord"
-          },
-          "enableDescription": "Aktivera WebRTC-servern."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Aktivera SRT-servern."
-        }
+      "sectionDescriptions": {
+        "logging": "Loggutdata, tidsgränser och globala begränsningar.",
+        "api": "HTTP-API:et som MediaMTX Connect själv använder.",
+        "hooks": "Kommandon som MediaMTX kör vid anslutningshändelser.",
+        "rtsp": "Publicera och läs strömmar via RTSP.",
+        "rtmp": "Publicera och läs strömmar via RTMP.",
+        "hls": "Servera strömmar som HLS för uppspelning i webbläsaren.",
+        "webrtc": "Uppspelning och publicering i webbläsaren med låg latens.",
+        "srt": "Publicera och läs strömmar via SRT."
+      },
+      "enabled": "Aktiverad",
+      "off": "Av",
+      "hiddenWhileOff": "{count, plural, one {# alternativ dolt när avstängt} other {# alternativ dolda när avstängt}}",
+      "rail": {
+        "onThisPage": "På den här sidan",
+        "aria": "Konfigurationsavsnitt"
+      },
+      "iceServers": {
+        "add": "Lägg till ICE-server",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL för ICE-server {index}",
+        "usernameAria": "Användarnamn för ICE-server {index}",
+        "passwordAria": "Lösenord för ICE-server {index}",
+        "removeAria": "Ta bort ICE-server {index}"
+      },
+      "help": {
+        "logLevel": "Detaljnivå för loggutdata (error, warn, info eller debug).",
+        "logDestinations": "Var loggar skrivs (stdout, file eller syslog).",
+        "logFile": "Sökväg till loggfilen när logDestinations innehåller file.",
+        "readTimeout": "Tidsgräns för läsoperationer.",
+        "writeTimeout": "Tidsgräns för skrivoperationer.",
+        "writeQueueSize": "Storlek på den utgående kön per anslutning. Måste vara en tvåpotens.",
+        "udpMaxPayloadSize": "Maximal storlek på utgående UDP-paket.",
+        "externalAuthenticationURL": "URL till en extern autentiseringsserver som anropas vid varje anslutning.",
+        "apiAddress": "Lyssningsadress för HTTP-API:et.",
+        "metrics": "Exponera Prometheus-kompatibla mätvärden.",
+        "metricsAddress": "Lyssningsadress för mätvärdesändpunkten.",
+        "pprof": "Exponera Go:s pprof-profileringsändpunkt.",
+        "pprofAddress": "Lyssningsadress för pprof-ändpunkten.",
+        "runOnConnect": "Kommando som körs när en klient ansluter.",
+        "runOnConnectRestart": "Starta om kommandot om det avslutas.",
+        "runOnDisconnect": "Kommando som körs när en klient kopplar från.",
+        "rtspAddress": "Lyssningsadress för RTSP-servern (TCP).",
+        "rtspsAddress": "Lyssningsadress för RTSPS-servern (TLS).",
+        "rtpAddress": "Lyssningsadress för RTP-paket via UDP.",
+        "rtcpAddress": "Lyssningsadress för RTCP-paket via UDP.",
+        "multicastIPRange": "IP-intervall som används för multicast-leverans.",
+        "multicastRTPPort": "Port för multicast-RTP-paket.",
+        "multicastRTCPPort": "Port för multicast-RTCP-paket.",
+        "protocols": "Transportprotokoll som RTSP-servern accepterar (udp, multicast eller tcp).",
+        "encryption": "TLS-krypteringspolicy (no, strict eller optional).",
+        "serverKey": "Sökväg till TLS-serverns nyckel.",
+        "serverCert": "Sökväg till TLS-serverns certifikat.",
+        "authMethods": "Autentiseringsmetoder som RTSP-servern accepterar (basic eller digest).",
+        "rtmpAddress": "Lyssningsadress för RTMP-servern.",
+        "rtmpEncryption": "TLS-krypteringspolicy för RTMP (no, strict eller optional).",
+        "rtmpsAddress": "Lyssningsadress för RTMPS-servern (TLS).",
+        "rtmpServerKey": "Sökväg till RTMPS-serverns nyckel.",
+        "rtmpServerCert": "Sökväg till RTMPS-serverns certifikat.",
+        "hlsAddress": "Lyssningsadress för HLS-servern.",
+        "hlsEncryption": "Servera HLS över TLS (HTTPS).",
+        "hlsServerKey": "Sökväg till HLS-serverns nyckel.",
+        "hlsServerCert": "Sökväg till HLS-serverns certifikat.",
+        "hlsAlwaysRemux": "Remuxa strömmar även när ingen tittar.",
+        "hlsVariant": "HLS-variant (mpegts, fmp4 eller lowLatency).",
+        "hlsSegmentCount": "Antal segment som behålls i spellistan.",
+        "hlsSegmentDuration": "Minsta längd för varje segment.",
+        "hlsPartDuration": "Längd på varje del i lågfördröjningsläge.",
+        "hlsSegmentMaxSize": "Maximal storlek för varje segment.",
+        "hlsAllowOrigin": "Värde för Access-Control-Allow-Origin-headern.",
+        "hlsTrustedProxies": "IP-adresser eller nätverk för proxyservrar framför HLS-servern.",
+        "hlsDirectory": "Skriv segment till disk i den här mappen i stället för till RAM.",
+        "webrtcAddress": "Lyssningsadress för WebRTC-HTTP-servern.",
+        "webrtcEncryption": "Servera WebRTC över TLS (HTTPS).",
+        "webrtcServerKey": "Sökväg till WebRTC-serverns nyckel.",
+        "webrtcServerCert": "Sökväg till WebRTC-serverns certifikat.",
+        "webrtcAllowOrigin": "Värde för Access-Control-Allow-Origin-headern.",
+        "webrtcTrustedProxies": "IP-adresser eller nätverk för proxyservrar framför WebRTC-servern.",
+        "webrtcLocalUDPAddress": "Lokal UDP-adress som används för WebRTC-trafik.",
+        "webrtcLocalTCPAddress": "Lokal TCP-adress som används för WebRTC-trafik.",
+        "webrtcIPsFromInterfaces": "Samla kandidat-IP-adresser från värdens nätverksgränssnitt.",
+        "webrtcIPsFromInterfacesList": "Gränssnitt att samla kandidat-IP-adresser från. Tomt betyder alla.",
+        "webrtcAdditionalHosts": "Ytterligare värdar eller IP-adresser som annonseras som WebRTC-kandidater.",
+        "webrtcICEServers2": "STUN- eller TURN-servrar som används för att upprätta WebRTC-anslutningar.",
+        "srtAddress": "Lyssningsadress för SRT-servern."
       },
       "toasts": {
-        "success": "Den globala konfigurationen har uppdaterats",
-        "errorTitle": "Det uppstod ett problem vid uppdatering av den globala konfigurationen",
-        "errorDescription": "Kontrollera formulärets värden."
+        "success": "MediaMTX-konfigurationen har sparats",
+        "errorTitle": "Det gick inte att spara MediaMTX-konfigurationen",
+        "errorDescription": "Kontrollera formulärets värden och försök igen."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",
-      "discard": "Kassera",
-      "saveChanges": "Spara ändringar"
     }
   }
 }

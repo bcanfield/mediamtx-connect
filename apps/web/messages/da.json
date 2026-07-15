@@ -26,151 +26,193 @@
       "switchLanguage": "Skift sprog",
       "searchPlaceholder": "Søg sprog…",
       "noResults": "Intet sprog fundet."
+    },
+    "connection": {
+      "connected": "forbundet",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Applikation",
-      "settings": "Indstillinger"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primær",
     "items": {
       "live": "Live",
       "recordings": "Optagelser",
-      "clientConfig": "Klientkonfiguration",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Appkonfiguration",
+      "mediamtxConfig": "MediaMTX-konfiguration"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Streams",
-    "subHeader": "Livevisninger af dine aktive streams",
+    "toolbar": {
+      "summary": "{count, plural, one {# stream} other {# streams}} · {live} afspilles",
+      "playbackAria": "Afspilningstilstand",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Gittertæthed"
+    },
     "errors": {
-      "configTitle": "Konfigurationsfejl",
-      "configDescription": "Konfigurationen kunne ikke indlæses. Tjek din databaseforbindelse.",
-      "connectionTitle": "Kan ikke oprette forbindelse til MediaMTX",
-      "connectionLead": "Kan ikke nå MediaMTX på",
-      "connectionHint": "Sørg for at MediaMTX kører, og at URL'en i din konfiguration er korrekt.",
-      "checkConfigBtn": "Tjek konfiguration"
+      "unreachableTitle": "Kan ikke nå MediaMTX",
+      "unreachableLead": "Intet svar fra MediaMTX-API'et på",
+      "openAppConfig": "Åbn appkonfiguration",
+      "retry": "Prøv igen",
+      "retryCountdown": "automatisk nyt forsøg om {seconds}s"
     },
     "empty": {
-      "configureRemoteTitle": "Konfigurer fjern-URL",
-      "configureRemoteDescription": "Indstil din fjern-URL til MediaMTX for at se streams i browseren. Det skal være den URL, som din browser kan bruge til at nå MediaMTX.",
-      "goToConfig": "Gå til konfiguration",
-      "noStreamsTitle": "Ingen aktive streams",
-      "noStreamsDescription": "MediaMTX er forbundet, men der er ingen aktive streams lige nu. Start en stream til MediaMTX for at se den her."
+      "noStreamsTitle": "Ingen streams publicerer",
+      "noStreamsLead": "Peg en vilkårlig publisher mod MediaMTX, så dukker den op her:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Gittertæthed",
-      "two": "To kolonner",
-      "three": "Tre kolonner",
-      "four": "Fire kolonner"
+    "banner": {
+      "playbackUrlTitle": "Afspilnings-URL er ikke angivet",
+      "playbackUrlLead": "Angiv den browservendte MediaMTX-URL i appkonfigurationen for at aktivere liveafspilning.",
+      "openAppConfig": "Åbn appkonfiguration"
     },
     "card": {
-      "onlineSince": "Online siden {date}",
-      "idle": "Inaktiv",
       "live": "LIVE",
-      "stop": "Stop",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "intet øjebliksbillede endnu — første optagelse om ~30s",
+      "onlineSince": "online siden {time} · {uptime}",
+      "idle": "inaktiv",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# seer} other {# seere}}",
       "play": "Afspil",
+      "stop": "Stop",
+      "playAria": "Afspil {streamName}",
       "actionsAria": "Streamhandlinger",
-      "viewRecordings": "Vis optagelser"
+      "stub": {
+        "title": "Ikke implementeret endnu",
+        "description": "Denne handling er på køreplanen — den er blevet logget."
+      },
+      "menu": {
+        "openDetail": "Åbn streamdetaljer",
+        "viewRecordings": "Vis optagelser",
+        "takeSnapshot": "Tag øjebliksbillede",
+        "record": "Optag",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopiér publicerings-URL'er",
+        "shareEmbed": "Del & indlejr…",
+        "editPathConfig": "Rediger stikonfiguration",
+        "editHooks": "Rediger hooks"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Optagelser",
-    "header": "Optagelser",
-    "subHeader": "Gennemse optagelser fra dine forskellige streams",
-    "subHeaderForStream": "Optagelser for: {streamName}",
-    "invalidConfig": "Ugyldig konfiguration",
-    "errors": {
-      "configTitle": "Konfigurationsfejl",
-      "configDescription": "Konfigurationen kunne ikke indlæses. Tjek din databaseforbindelse.",
-      "directoryTitle": "Kan ikke tilgå optagelsesmappen",
-      "directoryLead": "Kan ikke læse optagelsesmappen på",
-      "directoryHint": "Sørg for at mappen findes og har de korrekte rettigheder.",
-      "checkConfigBtn": "Tjek konfiguration",
-      "readErrorTitle": "Kunne ikke læse optagelser",
-      "readErrorDescription": "Kunne ikke læse optagelsesmappen. Sørg for at mappen findes."
-    },
-    "empty": {
-      "noRecordingsTitle": "Ingen optagelser fundet",
-      "noRecordingsLead": "Der er endnu ikke gemt nogen optagelser. Optagelser vises her, så snart MediaMTX begynder at optage streams.",
-      "noRecordingsHint": "Sørg for at <code>MTX_RECORD=yes</code> er sat i din MediaMTX-konfiguration.",
-      "noMatchingTitle": "Ingen matchende streams",
-      "noMatchingDescription": "Ingen stream matcher »{query}«."
-    },
-    "search": {
-      "placeholder": "Søg streams"
-    },
-    "groups": {
-      "today": "I dag",
-      "yesterday": "I går"
+    "toolbar": {
+      "summary": "{streams, plural, one {# stream} other {# streams}} · {recordings, plural, one {# optagelse} other {# optagelser}}",
+      "filterPlaceholder": "Filtrer streams…",
+      "filterAria": "Filtrer streams"
     },
     "card": {
-      "recordingCount": "{count, plural, one {# optagelse} other {# optagelser}}",
-      "latest": "Seneste {time}",
-      "viewBtn": "Vis"
+      "recordingsChip": "{count, plural, one {# optagelse} other {# optagelser}}",
+      "latest": "seneste {time}",
+      "openAria": "Vis optagelser for {name}"
     },
-    "recordingCard": {
-      "stop": "Stop",
+    "empty": {
+      "noRecordingsTitle": "Ingen optagelser endnu",
+      "noRecordingsLead": "Optagelser vises her, så snart MediaMTX begynder at optage streams.",
+      "enableRecording": "Aktivér optagelse",
+      "noMatchingTitle": "Ingen matchende streams",
+      "noMatchingDescription": "Ingen streams matcher »{query}«."
+    },
+    "errors": {
+      "directoryTitle": "Kan ikke læse optagelsesmappen",
+      "directoryLead": "Kan ikke læse optagelserne på",
+      "openAppConfig": "Åbn appkonfiguration",
+      "readErrorTitle": "Kunne ikke læse optagelser",
+      "readErrorDescription": "Sørg for at optagelsesmappen findes og har de korrekte rettigheder."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# optagelse} other {# optagelser}}"
+    },
+    "groups": {
+      "todayEyebrow": "I dag — {date}",
+      "yesterdayEyebrow": "I går — {date}"
+    },
+    "row": {
       "play": "Afspil",
-      "downloadAria": "Download optagelse {filePath}",
-      "downloadError": "Fejl under download af video"
+      "close": "Luk",
+      "cancel": "Annuller",
+      "playAria": "Afspil optagelsen fra {time}",
+      "downloadAria": "Download optagelse {file}",
+      "downloading": "downloader… {received} af {total} · {rate}",
+      "downloadComplete": "Download fuldført",
+      "downloadFailed": "Download mislykkedes"
+    },
+    "player": {
+      "play": "Afspil",
+      "pause": "Pause",
+      "seek": "Spol"
+    },
+    "pagination": {
+      "aria": "Sidenummerering",
+      "showing": "Viser {from}–{to} af {total}",
+      "previous": "Forrige side",
+      "next": "Næste side"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Indstillinger",
-      "clientConfig": "Klientkonfiguration",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Konfiguration",
-    "pageSubHeader": "Administrer din appkonfiguration",
     "invalidConfig": "Ugyldig konfiguration",
+    "appConfig": {
+      "pageHeader": "Appkonfiguration",
+      "pageSubHeader": "Forbindelse og lager som bruges af MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-konfiguration",
+      "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",
+      "needsAttention": "{count, plural, one {# felt kræver opmærksomhed} other {# felter kræver opmærksomhed}}",
+      "discard": "Kassér",
+      "reset": "Nulstil",
+      "save": "Gem",
+      "saveToServer": "Gem på serveren"
+    },
     "formFields": {
       "oneValuePerLine": "Én værdi pr. linje."
     },
     "clientForm": {
-      "title": "Applikationsindstillinger",
-      "description": "Forbindelses- og lagerstier som bruges af MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "MediaMTX-forbindelse",
         "storage": "Lager"
       },
+      "playbackBadge": "Påkrævet til liveafspilning",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX-URL",
           "description": "Adressen til din MediaMTX-instans. Inden for et Docker-netværk kan du bruge containernavnet; ellers brug ekstern IP eller værtsnavn."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Porten til MediaMTX-API'et"
+          "label": "API-port",
+          "description": "Porten til MediaMTX-API'et."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Dette er den browser-tilgængelige, udadvendte IP eller værtsnavn for din MediaMTX-server."
+          "label": "Afspilnings-URL",
+          "description": "Den browser-tilgængelige, udadvendte URL til din MediaMTX-server. Liveafspilning indlæser streams herfra."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Mappe der indeholder MediaMTX-optagelser (anbefales ikke at ændre hvis du bruger Docker)"
+          "label": "Optagelsesmappe",
+          "description": "Mappe der indeholder MediaMTX-optagelser (anbefales ikke at ændre hvis du bruger Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Mappe til lagring af genererede skærmbilleder (anbefales ikke at ændre hvis du bruger Docker)"
+          "label": "Skærmbilledmappe",
+          "description": "Mappe til genererede øjebliksbilleder (anbefales ikke at ændre hvis du bruger Docker)."
         }
       },
-      "actions": {
-        "reset": "Nulstil",
-        "submit": "Send"
-      },
       "toasts": {
-        "success": "Klientkonfigurationen er opdateret",
-        "errorTitle": "Der opstod et problem ved opdatering af klientkonfigurationen",
-        "errorDescription": "Tjek dine formularværdier."
+        "success": "Appkonfigurationen er gemt",
+        "errorTitle": "Kunne ikke gemme appkonfigurationen",
+        "errorDescription": "Tjek dine formularværdier og prøv igen."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Logning",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Logning",
-          "limits": "Grænser"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Metrikker",
-          "pprof": "PPROF",
-          "enableDescription": "Aktivér MediaMTX HTTP-API'et."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Autentificering",
-          "enableDescription": "Aktivér RTSP-serveren."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Aktivér RTMP-serveren."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Segmenter",
-          "corsProxies": "CORS / Proxy",
-          "enableDescription": "Aktivér HLS-serveren."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Netværk",
-          "iceServers": "ICE-servere",
-          "addServer": "Tilføj server",
-          "noIceServers": "Ingen ICE-servere er konfigureret.",
-          "iceServerLabel": "ICE-server {index}",
-          "removeIceServer": "Fjern ICE-server",
-          "iceFields": {
-            "url": "URL",
-            "username": "Brugernavn",
-            "password": "Adgangskode"
-          },
-          "enableDescription": "Aktivér WebRTC-serveren."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Aktivér SRT-serveren."
-        }
+      "sectionDescriptions": {
+        "logging": "Logoutput, timeouts og globale grænser.",
+        "api": "HTTP-API'et som MediaMTX Connect selv bruger.",
+        "hooks": "Kommandoer som MediaMTX kører ved forbindelseshændelser.",
+        "rtsp": "Publicér og læs streams over RTSP.",
+        "rtmp": "Publicér og læs streams over RTMP.",
+        "hls": "Servér streams som HLS til afspilning i browseren.",
+        "webrtc": "Afspilning og publicering i browseren med lav latenstid.",
+        "srt": "Publicér og læs streams over SRT."
+      },
+      "enabled": "Aktiveret",
+      "off": "Fra",
+      "hiddenWhileOff": "{count, plural, one {# indstilling skjult mens slået fra} other {# indstillinger skjult mens slået fra}}",
+      "rail": {
+        "onThisPage": "På denne side",
+        "aria": "Konfigurationssektioner"
+      },
+      "iceServers": {
+        "add": "Tilføj ICE-server",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL for ICE-server {index}",
+        "usernameAria": "Brugernavn for ICE-server {index}",
+        "passwordAria": "Adgangskode for ICE-server {index}",
+        "removeAria": "Fjern ICE-server {index}"
+      },
+      "help": {
+        "logLevel": "Detaljeringsgrad for logoutput (error, warn, info eller debug).",
+        "logDestinations": "Hvor logs skrives (stdout, file eller syslog).",
+        "logFile": "Sti til logfilen når logDestinations indeholder file.",
+        "readTimeout": "Timeout for læseoperationer.",
+        "writeTimeout": "Timeout for skriveoperationer.",
+        "writeQueueSize": "Størrelse på den udgående kø pr. forbindelse. Skal være en potens af to.",
+        "udpMaxPayloadSize": "Maksimal størrelse på udgående UDP-pakker.",
+        "externalAuthenticationURL": "URL til en ekstern autentificeringsserver, som kaldes ved hver forbindelse.",
+        "apiAddress": "Lytteadresse for HTTP-API'et.",
+        "metrics": "Eksponér Prometheus-kompatible metrikker.",
+        "metricsAddress": "Lytteadresse for metrik-endepunktet.",
+        "pprof": "Eksponér Go's pprof-profileringsendepunkt.",
+        "pprofAddress": "Lytteadresse for pprof-endepunktet.",
+        "runOnConnect": "Kommando der køres, når en klient forbinder.",
+        "runOnConnectRestart": "Genstart kommandoen, hvis den afsluttes.",
+        "runOnDisconnect": "Kommando der køres, når en klient afbryder forbindelsen.",
+        "rtspAddress": "Lytteadresse for RTSP-serveren (TCP).",
+        "rtspsAddress": "Lytteadresse for RTSPS-serveren (TLS).",
+        "rtpAddress": "Lytteadresse for RTP-pakker over UDP.",
+        "rtcpAddress": "Lytteadresse for RTCP-pakker over UDP.",
+        "multicastIPRange": "IP-område brugt til multicast-levering.",
+        "multicastRTPPort": "Port til multicast-RTP-pakker.",
+        "multicastRTCPPort": "Port til multicast-RTCP-pakker.",
+        "protocols": "Transportprotokoller som RTSP-serveren accepterer (udp, multicast eller tcp).",
+        "encryption": "TLS-krypteringspolitik (no, strict eller optional).",
+        "serverKey": "Sti til TLS-serverens nøgle.",
+        "serverCert": "Sti til TLS-serverens certifikat.",
+        "authMethods": "Autentificeringsmetoder som RTSP-serveren accepterer (basic eller digest).",
+        "rtmpAddress": "Lytteadresse for RTMP-serveren.",
+        "rtmpEncryption": "TLS-krypteringspolitik for RTMP (no, strict eller optional).",
+        "rtmpsAddress": "Lytteadresse for RTMPS-serveren (TLS).",
+        "rtmpServerKey": "Sti til RTMPS-serverens nøgle.",
+        "rtmpServerCert": "Sti til RTMPS-serverens certifikat.",
+        "hlsAddress": "Lytteadresse for HLS-serveren.",
+        "hlsEncryption": "Servér HLS over TLS (HTTPS).",
+        "hlsServerKey": "Sti til HLS-serverens nøgle.",
+        "hlsServerCert": "Sti til HLS-serverens certifikat.",
+        "hlsAlwaysRemux": "Remux streams, selv når ingen ser med.",
+        "hlsVariant": "HLS-variant (mpegts, fmp4 eller lowLatency).",
+        "hlsSegmentCount": "Antal segmenter der beholdes i playlisten.",
+        "hlsSegmentDuration": "Minimumsvarighed for hvert segment.",
+        "hlsPartDuration": "Varighed af hver del i tilstanden med lav latenstid.",
+        "hlsSegmentMaxSize": "Maksimal størrelse for hvert segment.",
+        "hlsAllowOrigin": "Værdi af Access-Control-Allow-Origin-headeren.",
+        "hlsTrustedProxies": "IP'er eller netværk for proxyer placeret foran HLS-serveren.",
+        "hlsDirectory": "Skriv segmenter til disk i denne mappe i stedet for RAM.",
+        "webrtcAddress": "Lytteadresse for WebRTC-HTTP-serveren.",
+        "webrtcEncryption": "Servér WebRTC over TLS (HTTPS).",
+        "webrtcServerKey": "Sti til WebRTC-serverens nøgle.",
+        "webrtcServerCert": "Sti til WebRTC-serverens certifikat.",
+        "webrtcAllowOrigin": "Værdi af Access-Control-Allow-Origin-headeren.",
+        "webrtcTrustedProxies": "IP'er eller netværk for proxyer placeret foran WebRTC-serveren.",
+        "webrtcLocalUDPAddress": "Lokal UDP-adresse brugt til WebRTC-trafik.",
+        "webrtcLocalTCPAddress": "Lokal TCP-adresse brugt til WebRTC-trafik.",
+        "webrtcIPsFromInterfaces": "Indsaml kandidat-IP'er fra værtens netværksgrænseflader.",
+        "webrtcIPsFromInterfacesList": "Grænseflader der indsamles kandidat-IP'er fra. Tom betyder alle.",
+        "webrtcAdditionalHosts": "Yderligere værter eller IP'er der annonceres som WebRTC-kandidater.",
+        "webrtcICEServers2": "STUN- eller TURN-servere brugt til at etablere WebRTC-forbindelser.",
+        "srtAddress": "Lytteadresse for SRT-serveren."
       },
       "toasts": {
-        "success": "Den globale konfiguration er opdateret",
-        "errorTitle": "Der opstod et problem ved opdatering af den globale konfiguration",
-        "errorDescription": "Tjek dine formularværdier."
+        "success": "MediaMTX-konfigurationen er gemt",
+        "errorTitle": "Kunne ikke gemme MediaMTX-konfigurationen",
+        "errorDescription": "Tjek dine formularværdier og prøv igen."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",
-      "discard": "Kassér",
-      "saveChanges": "Gem ændringer"
     }
   }
 }

@@ -26,220 +26,295 @@
       "switchLanguage": "言語を切り替え",
       "searchPlaceholder": "言語を検索…",
       "noResults": "言語が見つかりません。"
+    },
+    "connection": {
+      "connected": "接続済み",
+      "offline": "オフライン"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "アプリケーション",
-      "settings": "設定"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "メイン",
     "items": {
       "live": "ライブ",
       "recordings": "録画",
-      "clientConfig": "クライアント設定",
-      "mediamtx": "MediaMTX"
+      "appConfig": "アプリ設定",
+      "mediamtxConfig": "MediaMTX 設定"
     }
   },
   "Streams": {
-    "crumbLive": "ライブ",
-    "header": "ストリーム",
-    "subHeader": "アクティブなストリームのライブ表示",
+    "toolbar": {
+      "summary": "{count, plural, other {# 件のストリーム}} · {live} 件再生中",
+      "playbackAria": "再生モード",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "グリッドの密度"
+    },
     "errors": {
-      "configTitle": "設定エラー",
-      "configDescription": "設定を読み込めませんでした。データベース接続を確認してください。",
-      "connectionTitle": "MediaMTX に接続できません",
-      "connectionLead": "MediaMTX に接続できません:",
-      "connectionHint": "MediaMTX が起動していること、設定の URL が正しいことを確認してください。",
-      "checkConfigBtn": "設定を確認"
+      "unreachableTitle": "MediaMTX に接続できません",
+      "unreachableLead": "次のアドレスの MediaMTX API から応答がありません:",
+      "openAppConfig": "アプリ設定を開く",
+      "retry": "再試行",
+      "retryCountdown": "{seconds} 秒後に自動再試行"
     },
     "empty": {
-      "configureRemoteTitle": "リモート URL を設定",
-      "configureRemoteDescription": "ブラウザでストリームを表示するには、リモート MediaMTX URL を設定してください。ブラウザから MediaMTX に到達できる URL を指定します。",
-      "goToConfig": "設定へ移動",
-      "noStreamsTitle": "アクティブなストリームがありません",
-      "noStreamsDescription": "MediaMTX は接続されていますが、現在アクティブなストリームはありません。MediaMTX への配信を開始すると、ここに表示されます。"
+      "noStreamsTitle": "配信中のストリームはありません",
+      "noStreamsLead": "任意のパブリッシャーを MediaMTX に向けると、ここに表示されます:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "グリッドの密度",
-      "two": "2 列",
-      "three": "3 列",
-      "four": "4 列"
+    "banner": {
+      "playbackUrlTitle": "再生 URL が未設定です",
+      "playbackUrlLead": "ライブ再生を有効にするには、アプリ設定でブラウザ向けの MediaMTX URL を設定してください。",
+      "openAppConfig": "アプリ設定を開く"
     },
     "card": {
-      "onlineSince": "{date} からオンライン",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "スナップショットはまだありません — 最初のキャプチャまで約 30 秒",
+      "onlineSince": "{time} からオンライン · {uptime}",
       "idle": "アイドル",
-      "live": "ライブ",
-      "stop": "停止",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {視聴者 # 人}}",
       "play": "再生",
+      "stop": "停止",
+      "playAria": "{streamName} を再生",
       "actionsAria": "ストリームの操作",
-      "viewRecordings": "録画を表示"
+      "stub": {
+        "title": "未実装です",
+        "description": "この操作はロードマップにあります — 記録されました。"
+      },
+      "menu": {
+        "openDetail": "ストリーム詳細を開く",
+        "viewRecordings": "録画を表示",
+        "takeSnapshot": "スナップショットを撮る",
+        "record": "録画",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "配信用 URL をコピー",
+        "shareEmbed": "共有と埋め込み…",
+        "editPathConfig": "パス設定を編集",
+        "editHooks": "フックを編集"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "録画",
-    "header": "録画",
-    "subHeader": "各ストリームの録画を閲覧",
-    "subHeaderForStream": "録画: {streamName}",
-    "invalidConfig": "無効な設定",
-    "errors": {
-      "configTitle": "設定エラー",
-      "configDescription": "設定を読み込めませんでした。データベース接続を確認してください。",
-      "directoryTitle": "録画ディレクトリにアクセスできません",
-      "directoryLead": "録画ディレクトリを読み取れません:",
-      "directoryHint": "ディレクトリが存在し、適切な権限が設定されていることを確認してください。",
-      "checkConfigBtn": "設定を確認",
-      "readErrorTitle": "録画を読み取れませんでした",
-      "readErrorDescription": "録画ディレクトリを読み取れませんでした。ディレクトリが存在することを確認してください。"
+    "toolbar": {
+      "summary": "{streams, plural, other {# 件のストリーム}} · {recordings, plural, other {# 件の録画}}",
+      "filterPlaceholder": "ストリームを絞り込む…",
+      "filterAria": "ストリームを絞り込み"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, other {# 件の録画}}",
+      "latest": "最新 {time}",
+      "openAria": "{name} の録画を表示"
     },
     "empty": {
-      "noRecordingsTitle": "録画が見つかりません",
-      "noRecordingsLead": "録画はまだ保存されていません。MediaMTX がストリームの録画を開始すると、ここに表示されます。",
-      "noRecordingsHint": "MediaMTX の設定で <code>MTX_RECORD=yes</code> が設定されていることを確認してください。",
+      "noRecordingsTitle": "録画はまだありません",
+      "noRecordingsLead": "MediaMTX がストリームの録画を開始すると、ここに表示されます。",
+      "enableRecording": "録画を有効にする",
       "noMatchingTitle": "一致するストリームがありません",
       "noMatchingDescription": "「{query}」に一致するストリームはありません。"
     },
-    "search": {
-      "placeholder": "ストリームを検索"
+    "errors": {
+      "directoryTitle": "録画ディレクトリを読み取れません",
+      "directoryLead": "次の場所の録画を読み取れません:",
+      "openAppConfig": "アプリ設定を開く",
+      "readErrorTitle": "録画を読み取れませんでした",
+      "readErrorDescription": "録画ディレクトリが存在し、適切な権限が設定されていることを確認してください。"
+    },
+    "detail": {
+      "totals": "{count, plural, other {# 件の録画}}"
     },
     "groups": {
-      "today": "今日",
-      "yesterday": "昨日"
+      "todayEyebrow": "今日 — {date}",
+      "yesterdayEyebrow": "昨日 — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, other {# 件の録画}}",
-      "latest": "最新 {time}",
-      "viewBtn": "表示"
-    },
-    "recordingCard": {
-      "stop": "停止",
+    "row": {
       "play": "再生",
-      "downloadAria": "録画 {filePath} をダウンロード",
-      "downloadError": "動画のダウンロードでエラーが発生しました"
+      "close": "閉じる",
+      "cancel": "キャンセル",
+      "playAria": "{time} の録画を再生",
+      "downloadAria": "録画 {file} をダウンロード",
+      "downloading": "ダウンロード中… {total} 中 {received} · {rate}",
+      "downloadComplete": "ダウンロード完了",
+      "downloadFailed": "ダウンロードに失敗しました"
+    },
+    "player": {
+      "play": "再生",
+      "pause": "一時停止",
+      "seek": "シーク"
+    },
+    "pagination": {
+      "aria": "ページネーション",
+      "showing": "{total} 件中 {from}–{to} 件を表示",
+      "previous": "前のページ",
+      "next": "次のページ"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "設定",
-      "clientConfig": "クライアント設定",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "設定",
-    "pageSubHeader": "アプリの設定を管理",
     "invalidConfig": "無効な設定",
+    "appConfig": {
+      "pageHeader": "アプリ設定",
+      "pageSubHeader": "MediaMTX Connect が使用する接続とストレージ。"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX 設定",
+      "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {未保存の変更が # 件}}",
+      "needsAttention": "{count, plural, other {# 個の項目に確認が必要です}}",
+      "discard": "破棄",
+      "reset": "リセット",
+      "save": "保存",
+      "saveToServer": "サーバーに保存"
+    },
     "formFields": {
       "oneValuePerLine": "1 行に 1 つの値を入力してください。"
     },
     "clientForm": {
-      "title": "アプリケーション設定",
-      "description": "MediaMTX Connect が使用する接続およびストレージのパス。",
       "sections": {
         "mediamtxConnection": "MediaMTX 接続",
         "storage": "ストレージ"
       },
+      "playbackBadge": "ライブ再生に必要",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "MediaMTX インスタンスのアドレス。Docker ネットワーク内ではコンテナ名を使用できます。それ以外の場合は外部 IP / ホスト名を使用してください。"
+          "label": "MediaMTX URL",
+          "description": "MediaMTX インスタンスのアドレス。Docker ネットワーク内ではコンテナ名を使用できます。それ以外の場合は外部 IP またはホスト名を使用してください。"
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX API のポート"
+          "label": "API ポート",
+          "description": "MediaMTX API のポート。"
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "ブラウザからアクセス可能な、外向きの MediaMTX サーバーの IP / ホスト名です。"
+          "label": "再生 URL",
+          "description": "ブラウザからアクセス可能な、外向きの MediaMTX サーバーの URL です。ライブ再生はここからストリームを読み込みます。"
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "MediaMTX の録画を含むディレクトリ(Docker を使用している場合は変更非推奨)"
+          "label": "録画ディレクトリ",
+          "description": "MediaMTX の録画を含むディレクトリ(Docker を使用している場合は変更非推奨)。"
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "生成されたスクリーンショットを保存するディレクトリ(Docker を使用している場合は変更非推奨)"
+          "label": "スクリーンショットディレクトリ",
+          "description": "生成されたスナップショットを保存するディレクトリ(Docker を使用している場合は変更非推奨)。"
         }
       },
-      "actions": {
-        "reset": "リセット",
-        "submit": "送信"
-      },
       "toasts": {
-        "success": "クライアント設定を更新しました",
-        "errorTitle": "クライアント設定の更新で問題が発生しました",
-        "errorDescription": "フォームの値を確認してください。"
+        "success": "アプリ設定を保存しました",
+        "errorTitle": "アプリ設定を保存できませんでした",
+        "errorDescription": "フォームの値を確認して、もう一度お試しください。"
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "ログ",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "フック",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "ログ",
-          "limits": "制限"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "メトリクス",
-          "pprof": "PPROF",
-          "enableDescription": "MediaMTX HTTP API を有効にします。"
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "サーバー",
-          "tls": "TLS",
-          "auth": "認証",
-          "enableDescription": "RTSP サーバーを有効にします。"
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "RTMP サーバーを有効にします。"
-        },
-        "hls": {
-          "server": "サーバー",
-          "segments": "セグメント",
-          "corsProxies": "CORS / プロキシ",
-          "enableDescription": "HLS サーバーを有効にします。"
-        },
-        "webrtc": {
-          "server": "サーバー",
-          "network": "ネットワーク",
-          "iceServers": "ICE サーバー",
-          "addServer": "サーバーを追加",
-          "noIceServers": "ICE サーバーが設定されていません。",
-          "iceServerLabel": "ICE サーバー {index}",
-          "removeIceServer": "ICE サーバーを削除",
-          "iceFields": {
-            "url": "URL",
-            "username": "ユーザー名",
-            "password": "パスワード"
-          },
-          "enableDescription": "WebRTC サーバーを有効にします。"
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "SRT サーバーを有効にします。"
-        }
+      "sectionDescriptions": {
+        "logging": "ログ出力、タイムアウト、グローバル制限。",
+        "api": "MediaMTX Connect 自体が使用する HTTP API。",
+        "hooks": "接続イベント時に MediaMTX が実行するコマンド。",
+        "rtsp": "RTSP でストリームを配信・視聴します。",
+        "rtmp": "RTMP でストリームを配信・視聴します。",
+        "hls": "ブラウザ再生用に HLS としてストリームを配信します。",
+        "webrtc": "低遅延のブラウザ再生と配信。",
+        "srt": "SRT でストリームを配信・視聴します。"
+      },
+      "enabled": "有効",
+      "off": "オフ",
+      "hiddenWhileOff": "{count, plural, other {オフの間 # 個のオプションが非表示}}",
+      "rail": {
+        "onThisPage": "このページ内",
+        "aria": "設定セクション"
+      },
+      "iceServers": {
+        "add": "ICE サーバーを追加",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE サーバー {index} の URL",
+        "usernameAria": "ICE サーバー {index} のユーザー名",
+        "passwordAria": "ICE サーバー {index} のパスワード",
+        "removeAria": "ICE サーバー {index} を削除"
+      },
+      "help": {
+        "logLevel": "ログ出力の詳細度(error、warn、info、debug)。",
+        "logDestinations": "ログの出力先(stdout、file、syslog)。",
+        "logFile": "logDestinations に file が含まれる場合のログファイルのパス。",
+        "readTimeout": "読み取り操作のタイムアウト。",
+        "writeTimeout": "書き込み操作のタイムアウト。",
+        "writeQueueSize": "接続ごとの送信キューのサイズ。2 の累乗である必要があります。",
+        "udpMaxPayloadSize": "送信 UDP パケットの最大サイズ。",
+        "externalAuthenticationURL": "外部認証サーバーの URL。接続のたびに呼び出されます。",
+        "apiAddress": "HTTP API のリッスンアドレス。",
+        "metrics": "Prometheus 互換のメトリクスを公開します。",
+        "metricsAddress": "メトリクスエンドポイントのリッスンアドレス。",
+        "pprof": "Go の pprof プロファイリングエンドポイントを公開します。",
+        "pprofAddress": "pprof エンドポイントのリッスンアドレス。",
+        "runOnConnect": "クライアント接続時に実行するコマンド。",
+        "runOnConnectRestart": "コマンドが終了した場合に再起動します。",
+        "runOnDisconnect": "クライアント切断時に実行するコマンド。",
+        "rtspAddress": "RTSP サーバー(TCP)のリッスンアドレス。",
+        "rtspsAddress": "RTSPS(TLS)サーバーのリッスンアドレス。",
+        "rtpAddress": "UDP 経由の RTP パケットのリッスンアドレス。",
+        "rtcpAddress": "UDP 経由の RTCP パケットのリッスンアドレス。",
+        "multicastIPRange": "マルチキャスト配信に使用する IP 範囲。",
+        "multicastRTPPort": "マルチキャスト RTP パケットのポート。",
+        "multicastRTCPPort": "マルチキャスト RTCP パケットのポート。",
+        "protocols": "RTSP サーバーが受け付けるトランスポートプロトコル(udp、multicast、tcp)。",
+        "encryption": "TLS 暗号化ポリシー(no、strict、optional)。",
+        "serverKey": "TLS サーバーキーのパス。",
+        "serverCert": "TLS サーバー証明書のパス。",
+        "authMethods": "RTSP サーバーが受け付ける認証方式(basic または digest)。",
+        "rtmpAddress": "RTMP サーバーのリッスンアドレス。",
+        "rtmpEncryption": "RTMP の TLS 暗号化ポリシー(no、strict、optional)。",
+        "rtmpsAddress": "RTMPS(TLS)サーバーのリッスンアドレス。",
+        "rtmpServerKey": "RTMPS サーバーキーのパス。",
+        "rtmpServerCert": "RTMPS サーバー証明書のパス。",
+        "hlsAddress": "HLS サーバーのリッスンアドレス。",
+        "hlsEncryption": "HLS を TLS(HTTPS)で配信します。",
+        "hlsServerKey": "HLS サーバーキーのパス。",
+        "hlsServerCert": "HLS サーバー証明書のパス。",
+        "hlsAlwaysRemux": "視聴者がいない場合でもストリームをリマックスします。",
+        "hlsVariant": "HLS バリアント(mpegts、fmp4、lowLatency)。",
+        "hlsSegmentCount": "プレイリストに保持するセグメント数。",
+        "hlsSegmentDuration": "各セグメントの最小長。",
+        "hlsPartDuration": "低遅延モードでの各パートの長さ。",
+        "hlsSegmentMaxSize": "各セグメントの最大サイズ。",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin ヘッダーの値。",
+        "hlsTrustedProxies": "HLS サーバーの前段に置かれたプロキシの IP またはネットワーク。",
+        "hlsDirectory": "セグメントを RAM ではなくこのディレクトリのディスクに書き込みます。",
+        "webrtcAddress": "WebRTC HTTP サーバーのリッスンアドレス。",
+        "webrtcEncryption": "WebRTC を TLS(HTTPS)で配信します。",
+        "webrtcServerKey": "WebRTC サーバーキーのパス。",
+        "webrtcServerCert": "WebRTC サーバー証明書のパス。",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin ヘッダーの値。",
+        "webrtcTrustedProxies": "WebRTC サーバーの前段に置かれたプロキシの IP またはネットワーク。",
+        "webrtcLocalUDPAddress": "WebRTC トラフィックに使用するローカル UDP アドレス。",
+        "webrtcLocalTCPAddress": "WebRTC トラフィックに使用するローカル TCP アドレス。",
+        "webrtcIPsFromInterfaces": "ホストのネットワークインターフェースから候補 IP を収集します。",
+        "webrtcIPsFromInterfacesList": "候補 IP を収集するインターフェース。空の場合はすべて。",
+        "webrtcAdditionalHosts": "WebRTC 候補として通知する追加のホストまたは IP。",
+        "webrtcICEServers2": "WebRTC 接続の確立に使用する STUN または TURN サーバー。",
+        "srtAddress": "SRT サーバーのリッスンアドレス。"
       },
       "toasts": {
-        "success": "グローバル設定を更新しました",
-        "errorTitle": "グローバル設定の更新で問題が発生しました",
-        "errorDescription": "フォームの値を確認してください。"
+        "success": "MediaMTX 設定を保存しました",
+        "errorTitle": "MediaMTX 設定を保存できませんでした",
+        "errorDescription": "フォームの値を確認して、もう一度お試しください。"
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, other {未保存の変更が # 件}}",
-      "discard": "破棄",
-      "saveChanges": "変更を保存"
     }
   }
 }

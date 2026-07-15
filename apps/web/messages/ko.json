@@ -26,220 +26,295 @@
       "switchLanguage": "언어 전환",
       "searchPlaceholder": "언어 검색…",
       "noResults": "언어를 찾을 수 없습니다."
+    },
+    "connection": {
+      "connected": "연결됨",
+      "offline": "오프라인"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "애플리케이션",
-      "settings": "설정"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "기본",
     "items": {
       "live": "실시간",
       "recordings": "녹화",
-      "clientConfig": "클라이언트 설정",
-      "mediamtx": "MediaMTX"
+      "appConfig": "앱 설정",
+      "mediamtxConfig": "MediaMTX 설정"
     }
   },
   "Streams": {
-    "crumbLive": "실시간",
-    "header": "스트림",
-    "subHeader": "활성 스트림의 실시간 보기",
+    "toolbar": {
+      "summary": "{count, plural, other {스트림 #개}} · {live}개 재생 중",
+      "playbackAria": "재생 모드",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "그리드 밀도"
+    },
     "errors": {
-      "configTitle": "설정 오류",
-      "configDescription": "설정을 불러올 수 없습니다. 데이터베이스 연결을 확인하세요.",
-      "connectionTitle": "MediaMTX에 연결할 수 없습니다",
-      "connectionLead": "다음 주소의 MediaMTX에 접근할 수 없습니다:",
-      "connectionHint": "MediaMTX가 실행 중이고 설정의 URL이 올바른지 확인하세요.",
-      "checkConfigBtn": "설정 확인"
+      "unreachableTitle": "MediaMTX에 연결할 수 없습니다",
+      "unreachableLead": "다음 주소의 MediaMTX API에서 응답이 없습니다:",
+      "openAppConfig": "앱 설정 열기",
+      "retry": "다시 시도",
+      "retryCountdown": "{seconds}초 후 자동 재시도"
     },
     "empty": {
-      "configureRemoteTitle": "원격 URL 설정",
-      "configureRemoteDescription": "브라우저에서 스트림을 보려면 원격 MediaMTX URL을 설정하세요. 브라우저가 MediaMTX에 도달할 수 있는 URL이어야 합니다.",
-      "goToConfig": "설정으로 이동",
-      "noStreamsTitle": "활성 스트림 없음",
-      "noStreamsDescription": "MediaMTX가 연결되어 있지만 현재 활성 스트림이 없습니다. MediaMTX로 스트리밍을 시작하면 여기에 표시됩니다."
+      "noStreamsTitle": "게시 중인 스트림이 없습니다",
+      "noStreamsLead": "아무 퍼블리셔나 MediaMTX로 연결하면 여기에 표시됩니다:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "그리드 밀도",
-      "two": "2열",
-      "three": "3열",
-      "four": "4열"
+    "banner": {
+      "playbackUrlTitle": "재생 URL이 설정되지 않았습니다",
+      "playbackUrlLead": "실시간 재생을 사용하려면 앱 설정에서 브라우저용 MediaMTX URL을 설정하세요.",
+      "openAppConfig": "앱 설정 열기"
     },
     "card": {
-      "onlineSince": "{date}부터 온라인",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "아직 스냅샷이 없습니다 — 첫 캡처까지 약 30초",
+      "onlineSince": "{time}부터 온라인 · {uptime}",
       "idle": "유휴",
-      "live": "실시간",
-      "stop": "중지",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {시청자 #명}}",
       "play": "재생",
+      "stop": "중지",
+      "playAria": "{streamName} 재생",
       "actionsAria": "스트림 작업",
-      "viewRecordings": "녹화 보기"
+      "stub": {
+        "title": "아직 구현되지 않았습니다",
+        "description": "이 작업은 로드맵에 있습니다 — 기록되었습니다."
+      },
+      "menu": {
+        "openDetail": "스트림 상세 열기",
+        "viewRecordings": "녹화 보기",
+        "takeSnapshot": "스냅샷 찍기",
+        "record": "녹화",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "게시 URL 복사",
+        "shareEmbed": "공유 및 임베드…",
+        "editPathConfig": "경로 설정 편집",
+        "editHooks": "훅 편집"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "녹화",
-    "header": "녹화",
-    "subHeader": "여러 스트림의 녹화를 탐색하세요",
-    "subHeaderForStream": "녹화: {streamName}",
-    "invalidConfig": "잘못된 설정",
-    "errors": {
-      "configTitle": "설정 오류",
-      "configDescription": "설정을 불러올 수 없습니다. 데이터베이스 연결을 확인하세요.",
-      "directoryTitle": "녹화 디렉터리에 접근할 수 없습니다",
-      "directoryLead": "다음 위치의 녹화 디렉터리를 읽을 수 없습니다:",
-      "directoryHint": "디렉터리가 존재하고 올바른 권한이 설정되어 있는지 확인하세요.",
-      "checkConfigBtn": "설정 확인",
-      "readErrorTitle": "녹화를 읽을 수 없습니다",
-      "readErrorDescription": "녹화 디렉터리를 읽을 수 없습니다. 디렉터리가 존재하는지 확인하세요."
+    "toolbar": {
+      "summary": "{streams, plural, other {스트림 #개}} · {recordings, plural, other {녹화 #개}}",
+      "filterPlaceholder": "스트림 필터…",
+      "filterAria": "스트림 필터"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, other {녹화 #개}}",
+      "latest": "최근 {time}",
+      "openAria": "{name}의 녹화 보기"
     },
     "empty": {
-      "noRecordingsTitle": "녹화를 찾을 수 없습니다",
-      "noRecordingsLead": "아직 저장된 녹화가 없습니다. MediaMTX가 스트림 녹화를 시작하면 여기에 표시됩니다.",
-      "noRecordingsHint": "MediaMTX 설정에 <code>MTX_RECORD=yes</code>가 설정되어 있는지 확인하세요.",
+      "noRecordingsTitle": "아직 녹화가 없습니다",
+      "noRecordingsLead": "MediaMTX가 스트림 녹화를 시작하면 여기에 표시됩니다.",
+      "enableRecording": "녹화 활성화",
       "noMatchingTitle": "일치하는 스트림 없음",
       "noMatchingDescription": "“{query}”와 일치하는 스트림이 없습니다."
     },
-    "search": {
-      "placeholder": "스트림 검색"
+    "errors": {
+      "directoryTitle": "녹화 디렉터리를 읽을 수 없습니다",
+      "directoryLead": "다음 위치의 녹화를 읽을 수 없습니다:",
+      "openAppConfig": "앱 설정 열기",
+      "readErrorTitle": "녹화를 읽을 수 없습니다",
+      "readErrorDescription": "녹화 디렉터리가 존재하고 올바른 권한이 설정되어 있는지 확인하세요."
+    },
+    "detail": {
+      "totals": "{count, plural, other {녹화 #개}}"
     },
     "groups": {
-      "today": "오늘",
-      "yesterday": "어제"
+      "todayEyebrow": "오늘 — {date}",
+      "yesterdayEyebrow": "어제 — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, other {녹화 #개}}",
-      "latest": "최근 {time}",
-      "viewBtn": "보기"
-    },
-    "recordingCard": {
-      "stop": "중지",
+    "row": {
       "play": "재생",
-      "downloadAria": "녹화 {filePath} 다운로드",
-      "downloadError": "동영상을 다운로드하는 중 오류가 발생했습니다"
+      "close": "닫기",
+      "cancel": "취소",
+      "playAria": "{time}의 녹화 재생",
+      "downloadAria": "녹화 {file} 다운로드",
+      "downloading": "다운로드 중… {total} 중 {received} · {rate}",
+      "downloadComplete": "다운로드 완료",
+      "downloadFailed": "다운로드 실패"
+    },
+    "player": {
+      "play": "재생",
+      "pause": "일시정지",
+      "seek": "탐색"
+    },
+    "pagination": {
+      "aria": "페이지 탐색",
+      "showing": "총 {total}개 중 {from}–{to} 표시",
+      "previous": "이전 페이지",
+      "next": "다음 페이지"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "설정",
-      "clientConfig": "클라이언트 설정",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "설정",
-    "pageSubHeader": "앱 설정 관리",
     "invalidConfig": "잘못된 설정",
+    "appConfig": {
+      "pageHeader": "앱 설정",
+      "pageSubHeader": "MediaMTX Connect에서 사용하는 연결 및 저장소."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX 설정",
+      "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",
+      "needsAttention": "{count, plural, other {확인이 필요한 필드 #개}}",
+      "discard": "버리기",
+      "reset": "초기화",
+      "save": "저장",
+      "saveToServer": "서버에 저장"
+    },
     "formFields": {
       "oneValuePerLine": "한 줄에 한 값."
     },
     "clientForm": {
-      "title": "애플리케이션 설정",
-      "description": "MediaMTX Connect에서 사용하는 연결 및 저장소 경로입니다.",
       "sections": {
         "mediamtxConnection": "MediaMTX 연결",
         "storage": "저장소"
       },
+      "playbackBadge": "실시간 재생에 필요",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "MediaMTX 인스턴스의 주소입니다. Docker 네트워크 내에서는 컨테이너 이름을 사용할 수 있습니다. 그렇지 않으면 외부 IP/호스트명을 사용하세요."
+          "label": "MediaMTX URL",
+          "description": "MediaMTX 인스턴스의 주소입니다. Docker 네트워크 내에서는 컨테이너 이름을 사용할 수 있습니다. 그렇지 않으면 외부 IP 또는 호스트명을 사용하세요."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX API의 포트"
+          "label": "API 포트",
+          "description": "MediaMTX API의 포트입니다."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "브라우저에서 접근 가능한, 외부에 노출되는 MediaMTX 서버의 IP/호스트명입니다."
+          "label": "재생 URL",
+          "description": "브라우저에서 접근 가능한, 외부에 노출되는 MediaMTX 서버의 URL입니다. 실시간 재생은 여기에서 스트림을 불러옵니다."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "MediaMTX 녹화가 저장된 디렉터리(Docker 사용 시 변경하지 않는 것을 권장)"
+          "label": "녹화 디렉터리",
+          "description": "MediaMTX 녹화가 저장된 디렉터리입니다(Docker 사용 시 변경하지 않는 것을 권장)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "생성된 스크린샷을 저장할 디렉터리(Docker 사용 시 변경하지 않는 것을 권장)"
+          "label": "스크린샷 디렉터리",
+          "description": "생성된 스냅샷을 저장할 디렉터리입니다(Docker 사용 시 변경하지 않는 것을 권장)."
         }
       },
-      "actions": {
-        "reset": "초기화",
-        "submit": "전송"
-      },
       "toasts": {
-        "success": "클라이언트 설정이 업데이트되었습니다",
-        "errorTitle": "클라이언트 설정 업데이트 중 문제가 발생했습니다",
-        "errorDescription": "양식 값을 다시 확인하세요."
+        "success": "앱 설정이 저장되었습니다",
+        "errorTitle": "앱 설정을 저장할 수 없습니다",
+        "errorDescription": "양식 값을 다시 확인한 후 다시 시도하세요."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "로그",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "훅",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "로그",
-          "limits": "제한"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "지표",
-          "pprof": "PPROF",
-          "enableDescription": "MediaMTX HTTP API를 활성화합니다."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "서버",
-          "tls": "TLS",
-          "auth": "인증",
-          "enableDescription": "RTSP 서버를 활성화합니다."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "RTMP 서버를 활성화합니다."
-        },
-        "hls": {
-          "server": "서버",
-          "segments": "세그먼트",
-          "corsProxies": "CORS / 프록시",
-          "enableDescription": "HLS 서버를 활성화합니다."
-        },
-        "webrtc": {
-          "server": "서버",
-          "network": "네트워크",
-          "iceServers": "ICE 서버",
-          "addServer": "서버 추가",
-          "noIceServers": "구성된 ICE 서버가 없습니다.",
-          "iceServerLabel": "ICE 서버 {index}",
-          "removeIceServer": "ICE 서버 제거",
-          "iceFields": {
-            "url": "URL",
-            "username": "사용자 이름",
-            "password": "비밀번호"
-          },
-          "enableDescription": "WebRTC 서버를 활성화합니다."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "SRT 서버를 활성화합니다."
-        }
+      "sectionDescriptions": {
+        "logging": "로그 출력, 타임아웃 및 전역 제한.",
+        "api": "MediaMTX Connect 자체가 사용하는 HTTP API.",
+        "hooks": "연결 이벤트 시 MediaMTX가 실행하는 명령.",
+        "rtsp": "RTSP로 스트림을 게시하고 시청합니다.",
+        "rtmp": "RTMP로 스트림을 게시하고 시청합니다.",
+        "hls": "브라우저 재생을 위해 스트림을 HLS로 제공합니다.",
+        "webrtc": "저지연 브라우저 재생 및 게시.",
+        "srt": "SRT로 스트림을 게시하고 시청합니다."
+      },
+      "enabled": "활성화됨",
+      "off": "꺼짐",
+      "hiddenWhileOff": "{count, plural, other {꺼져 있는 동안 숨겨진 옵션 #개}}",
+      "rail": {
+        "onThisPage": "이 페이지에서",
+        "aria": "설정 섹션"
+      },
+      "iceServers": {
+        "add": "ICE 서버 추가",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE 서버 {index} URL",
+        "usernameAria": "ICE 서버 {index} 사용자 이름",
+        "passwordAria": "ICE 서버 {index} 비밀번호",
+        "removeAria": "ICE 서버 {index} 제거"
+      },
+      "help": {
+        "logLevel": "로그 출력의 상세 수준(error, warn, info 또는 debug).",
+        "logDestinations": "로그를 기록할 위치(stdout, file 또는 syslog).",
+        "logFile": "logDestinations에 file이 포함된 경우 로그 파일의 경로.",
+        "readTimeout": "읽기 작업의 타임아웃.",
+        "writeTimeout": "쓰기 작업의 타임아웃.",
+        "writeQueueSize": "연결당 발신 큐의 크기. 2의 거듭제곱이어야 합니다.",
+        "udpMaxPayloadSize": "발신 UDP 패킷의 최대 크기.",
+        "externalAuthenticationURL": "모든 연결 시 호출되는 외부 인증 서버의 URL.",
+        "apiAddress": "HTTP API의 수신 주소.",
+        "metrics": "Prometheus 호환 지표를 노출합니다.",
+        "metricsAddress": "지표 엔드포인트의 수신 주소.",
+        "pprof": "Go pprof 프로파일링 엔드포인트를 노출합니다.",
+        "pprofAddress": "pprof 엔드포인트의 수신 주소.",
+        "runOnConnect": "클라이언트가 연결될 때 실행할 명령.",
+        "runOnConnectRestart": "명령이 종료되면 다시 시작합니다.",
+        "runOnDisconnect": "클라이언트 연결이 끊길 때 실행할 명령.",
+        "rtspAddress": "RTSP 서버(TCP)의 수신 주소.",
+        "rtspsAddress": "RTSPS(TLS) 서버의 수신 주소.",
+        "rtpAddress": "UDP를 통한 RTP 패킷의 수신 주소.",
+        "rtcpAddress": "UDP를 통한 RTCP 패킷의 수신 주소.",
+        "multicastIPRange": "멀티캐스트 전송에 사용되는 IP 범위.",
+        "multicastRTPPort": "멀티캐스트 RTP 패킷의 포트.",
+        "multicastRTCPPort": "멀티캐스트 RTCP 패킷의 포트.",
+        "protocols": "RTSP 서버가 허용하는 전송 프로토콜(udp, multicast 또는 tcp).",
+        "encryption": "TLS 암호화 정책(no, strict 또는 optional).",
+        "serverKey": "TLS 서버 키의 경로.",
+        "serverCert": "TLS 서버 인증서의 경로.",
+        "authMethods": "RTSP 서버가 허용하는 인증 방식(basic 또는 digest).",
+        "rtmpAddress": "RTMP 서버의 수신 주소.",
+        "rtmpEncryption": "RTMP의 TLS 암호화 정책(no, strict 또는 optional).",
+        "rtmpsAddress": "RTMPS(TLS) 서버의 수신 주소.",
+        "rtmpServerKey": "RTMPS 서버 키의 경로.",
+        "rtmpServerCert": "RTMPS 서버 인증서의 경로.",
+        "hlsAddress": "HLS 서버의 수신 주소.",
+        "hlsEncryption": "HLS를 TLS(HTTPS)로 제공합니다.",
+        "hlsServerKey": "HLS 서버 키의 경로.",
+        "hlsServerCert": "HLS 서버 인증서의 경로.",
+        "hlsAlwaysRemux": "시청자가 없어도 스트림을 리먹스합니다.",
+        "hlsVariant": "HLS 변형(mpegts, fmp4 또는 lowLatency).",
+        "hlsSegmentCount": "재생 목록에 유지되는 세그먼트 수.",
+        "hlsSegmentDuration": "각 세그먼트의 최소 길이.",
+        "hlsPartDuration": "저지연 모드에서 각 파트의 길이.",
+        "hlsSegmentMaxSize": "각 세그먼트의 최대 크기.",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin 헤더의 값.",
+        "hlsTrustedProxies": "HLS 서버 앞에 배치된 프록시의 IP 또는 네트워크.",
+        "hlsDirectory": "세그먼트를 RAM 대신 이 디렉터리의 디스크에 기록합니다.",
+        "webrtcAddress": "WebRTC HTTP 서버의 수신 주소.",
+        "webrtcEncryption": "WebRTC를 TLS(HTTPS)로 제공합니다.",
+        "webrtcServerKey": "WebRTC 서버 키의 경로.",
+        "webrtcServerCert": "WebRTC 서버 인증서의 경로.",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin 헤더의 값.",
+        "webrtcTrustedProxies": "WebRTC 서버 앞에 배치된 프록시의 IP 또는 네트워크.",
+        "webrtcLocalUDPAddress": "WebRTC 트래픽에 사용되는 로컬 UDP 주소.",
+        "webrtcLocalTCPAddress": "WebRTC 트래픽에 사용되는 로컬 TCP 주소.",
+        "webrtcIPsFromInterfaces": "호스트의 네트워크 인터페이스에서 후보 IP를 수집합니다.",
+        "webrtcIPsFromInterfacesList": "후보 IP를 수집할 인터페이스. 비어 있으면 전체.",
+        "webrtcAdditionalHosts": "WebRTC 후보로 알리는 추가 호스트 또는 IP.",
+        "webrtcICEServers2": "WebRTC 연결 수립에 사용되는 STUN 또는 TURN 서버.",
+        "srtAddress": "SRT 서버의 수신 주소."
       },
       "toasts": {
-        "success": "전역 설정이 업데이트되었습니다",
-        "errorTitle": "전역 설정 업데이트 중 문제가 발생했습니다",
-        "errorDescription": "양식 값을 다시 확인하세요."
+        "success": "MediaMTX 설정이 저장되었습니다",
+        "errorTitle": "MediaMTX 설정을 저장할 수 없습니다",
+        "errorDescription": "양식 값을 다시 확인한 후 다시 시도하세요."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",
-      "discard": "버리기",
-      "saveChanges": "변경 사항 저장"
     }
   }
 }

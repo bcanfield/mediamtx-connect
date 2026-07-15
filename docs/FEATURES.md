@@ -25,18 +25,17 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 1. Live Streaming
 
 ### 1.1 Live View page (`/`)
-- **Live streams dashboard** — grid of all active MediaMTX paths, fetched via TanStack Query. `apps/web/src/features/streams/live-view-page.tsx`
+- **Live streams dashboard** — grid of all active MediaMTX paths (14px gap, density-driven columns), fetched via TanStack Query. `apps/web/src/features/streams/live-view-page.tsx`
 - **MediaMTX path discovery** — the api calls MediaMTX `v3/paths/list` and resolves the connection state server-side into a discriminated union (`connection-error` vs `connected`). `apps/api/src/router.ts` (`streams.list`)
-- **Connection diagnostics** — distinguishes API connection error vs. no streams vs. streams-but-no-remote-URL; the destructive case shows a `Cannot connect to MediaMTX` `Alert`, the others render the shared `EmptyState` with a CTA into Config. `apps/web/src/features/streams/live-view-page.tsx`
-- **"Stream online since" metadata** — exposes `readyTime` per path inline on the card subtitle.
-- **Density toggle** — `LiveStreamsView` exposes a 2/3/4-column ToggleGroup; the choice persists in `localStorage('liveDensity')`. `apps/web/src/features/streams/live-streams-view.tsx`
+- **Designed connection states** (per the design handoff, board 1c) — server-unreachable renders a centered red-tinted panel with the MediaMTX URL in mono, "Open App Config" + "Retry" buttons, and a visible auto-retry countdown (15 s); zero streams renders a dashed panel with publish-URL hints (RTSP/RTMP/SRT) in a mono code well; missing playback URL renders an amber banner above the grid with cards at 75 % opacity and Play disabled. `apps/web/src/features/streams/live-view-states.tsx`
+- **Toolbar** — stream-count summary on the left ("N streams · M playing"); playback-mode segmented control (AUTO / LOW-LAT / COMPAT, persisted in `localStorage('playbackMode')` — currently a logged stub, the player is HLS-only) and 2/3/4 density segmented control (persisted in `localStorage('liveDensity')`) on the right. `apps/web/src/features/streams/live-streams-view.tsx`
+- **"Stream online since" metadata** — `readyTime` renders as "online since {time} · {uptime}" on the card footer meta line.
 
 ### 1.2 Stream cards
-- **16:9 thumbnail tile** — shows latest screenshot via `/media/screenshots/{streamName}/latest` inside a shadcn `AspectRatio`, with an icon fallback on load error. `apps/web/src/features/streams/stream-card.tsx`
-- **Play / Stop toggle** — primary action button swaps between thumbnail and live HLS player.
-- **LIVE indicator** — when actively playing, a destructive `Badge` with a pulsing dot anchors the card header.
+- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (render only when the data exists; backed by optional props so future fields don't reflow), bottom scrim. Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
+- **Play / Stop** — footer buttons (outline Play / primary Stop) plus a centered 46 px circular play affordance on idle cards.
 - **URL-state-driven selection** — `?play=foo,bar` typed search param (TanStack Router `validateSearch`) tracks which streams are live, so the active set survives reload/share.
-- **Stream actions menu** — kebab `DropdownMenu` exposes "View recordings" (and is the extension point for future per-stream actions). `apps/web/src/features/streams/stream-card.tsx`
+- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record with ON/OFF state, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. Only "View recordings" is functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast. `apps/web/src/features/streams/stream-card.tsx`
 
 ### 1.3 HLS video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `apps/web/src/components/video-player.tsx`
@@ -44,31 +43,29 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Live-edge sync** — caps `liveSyncPlaybackRate` at 1.5× to stay near the live edge.
 - **Automatic media-error recovery** — retries via `recoverMediaError` with a 2 s debounce.
 - **Fatal-error escalation** — destroys and rebuilds the HLS instance on unrecoverable errors.
-- **Autoplay-muted on manifest parse** — works around browser autoplay policies.
+- **Autoplay-muted on manifest parse** — works around browser autoplay policies. Live tiles render chrome-free (no native controls); stop/start happens through the card.
 
 ---
 
 ## 2. Recordings
 
 ### 2.1 Recordings index (`/recordings`)
-- **All-streams recording grid** — every subdirectory of the recordings mount renders as a 16:9 card with the stream's most recent screenshot, name, recording count, and "Latest <relative time>" via `useFormatter`. `apps/web/src/features/recordings/recordings-index-page.tsx`, `apps/web/src/features/recordings/recordings-index-view.tsx`
-- **Client-side stream search** — Input above the grid filters cards by stream name in place.
-- **Drill-in "View" button per stream** — routes to `/recordings/{streamname}`.
-- **Misconfiguration alert** — destructive `Alert` when the `recordings.listStreams` query errors (unreadable directory); missing-recordings case uses `EmptyState` with `MTX_RECORD=yes` hint. `apps/web/src/features/recordings/recordings-index-empty.tsx`
+- **All-streams recording grid** — every subdirectory of the recordings mount renders as a whole-card-clickable tile: 16:9 thumbnail with a mono timestamp pill (top-right) and an "N RECORDINGS" chip (bottom-left), footer with name, "latest <relative time>" via `useFormatter`, and an arrow affordance. `apps/web/src/features/recordings/recordings-index-page.tsx`, `apps/web/src/features/recordings/recordings-index-view.tsx`
+- **Toolbar** — totals summary ("N streams · M recordings") on the left; a 280 px filter input with search-icon prefix and a `/` keyboard-hint badge on the right. Pressing `/` anywhere focuses the filter; filtering is client-side and instant.
+- **Empty / error states** — dashed panel with an "Enable recording" CTA into the MediaMTX config when no recordings exist; red-tinted panel with the mono directory path and "Open App Config" CTA when the mount is unreadable. `apps/web/src/features/recordings/recordings-index-empty.tsx`
 - **`summarizeStreamRecordings`** — api-side fs helper returns `{count, latestMtime}` per subdirectory in one walk. `apps/api/src/recordings-fs.ts`
 
 ### 2.2 Per-stream recording browser (`/recordings/{streamname}`)
-- **Paginated recording list** — `?page` and `?take` typed search params, default 10/page. `apps/web/src/features/recordings/stream-recordings-page.tsx`
-- **Day-grouped sections** — recordings on the current page render under "Today" / "Yesterday" / formatted-day headings.
-- **shadcn `Pagination`** — prev/next + numbered window of ±2 pages, navigating via TanStack Router search params.
-- **Breadcrumb** — `Recordings → {streamName}` in the inset top bar.
+- **Reading-width layout** — content centered at max 920 px with a `Breadcrumb` (Recordings / {stream}, mono stream name) and a header showing the stream name + total recording count. `apps/web/src/features/recordings/stream-recordings-page.tsx`
+- **Paginated recording list** — `?page` and `?take` typed search params, default 10/page.
+- **Day-grouped sections** — mono uppercase eyebrow headers ("TODAY — JULY 15" / "YESTERDAY — …" / formatted day) with a hairline underline.
+- **Pagination bar** — "Showing 1–10 of N" (mono) on the left; chevron prev/next + numbered pages with ellipses on the right, active page filled. Navigates via TanStack Router search params.
 - **Reverse-chronological sort** — newest recordings first. `apps/api/src/recordings-fs.ts`
 
-### 2.3 Recording cards
-- **16:9 thumbnail** — auto-generated PNG served by URL (`screenshotUrl` from the api; no base64 inlining); falls back to an icon when missing. `apps/web/src/features/recordings/recording-card.tsx`
-- **Time-of-day title + size** — `HH:mm:ss` on the left, MB on the right (the day is in the section heading, not on every card).
-- **Inline playback** — primary Play/Stop button swaps the thumbnail for an MP4 `<video>` against the media endpoint. `?play=` URL param tracks which recordings are open.
-- **Download button with progress bar** — `fetch` + `ReadableStream` chunk counting, 0–100 % progress, browser save dialog, error toast. `apps/web/src/features/recordings/download-button.tsx`
+### 2.3 Recording rows
+- **Row layout** — 118 px 16:9 thumbnail (click-to-play), time-of-day title, file-size meta, and Play + download icon buttons on the right; hover raises the border. `apps/web/src/features/recordings/recording-row.tsx`
+- **Expanding inline player** — Play swells the row into a full-width video card with a custom seekbar (3 px track, blue fill, white knob via Radix Slider), play/pause and mono time readouts; Close (primary) collapses it. `?play=` URL param tracks open recordings. `apps/web/src/features/recordings/recording-player.tsx`
+- **Download with live progress row** — `fetch` + `ReadableStream` streaming into a 3 px blue progress bar with a mono status line ("downloading… X MB of Y MB · Z MB/s") and a Cancel button (AbortController); success/failure surfaces as a toast. `apps/web/src/features/recordings/use-recording-download.ts`
 
 ### 2.4 Recording streaming endpoint
 - **`GET /media/recordings/{streamName}/{file}`** — serves MP4 with `Content-Type: video/mp4` and real HTTP Range support (206 partial content, `Content-Range`), for in-browser playback + seeking. With `?download`, adds `Content-Disposition: attachment` for the download button. `apps/api/src/media.ts`
@@ -84,29 +81,30 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ## 3. Configuration
 
-### 3.1 Client (app) config — `/config`
-- **Card-wrapped settings form** — single Card with title "Application Settings", two grouped sections ("MediaMTX connection" and "Storage") separated by a `Separator`, footer with Reset + Submit. `apps/web/src/features/client-config/client-config-page.tsx`, `apps/web/src/features/client-config/client-config-form.tsx`
-- **React Hook Form + Zod validation** with on-blur validation, dirty/valid gating on submit, and Sonner toast feedback (success: `Updated Client Config`; error: `There was an issue updating the Client Config`). `apps/web/src/features/client-config/client-config.schemas.ts`
+### 3.1 App config — `/config`
+- **Narrow single-column form** — max 640 px, centered, with mono uppercase eyebrow section headers ("MEDIAMTX CONNECTION", "STORAGE"); labels above 38 px inputs with mono value text and help text below. `apps/web/src/features/client-config/client-config-page.tsx`, `apps/web/src/features/client-config/client-config-form.tsx`
+- **Playback URL hero field** — `remoteMediaMtxUrl` sits in an amber-bordered callout with a "REQUIRED FOR LIVE PLAYBACK" pill badge (board 2d) since it's the field that unlocks live playback.
+- **React Hook Form + Zod validation** with on-blur validation and Sonner toast feedback (success: `App Config saved`). `apps/web/src/features/client-config/client-config.schemas.ts`
 - **Editable fields**:
   - `mediaMtxUrl` — internal/container hostname for MediaMTX API.
-  - `mediaMtxApiPort` — API port (default 9997).
-  - `remoteMediaMtxUrl` — browser-reachable HLS endpoint (the field that unlocks live playback for remote viewers).
+  - `mediaMtxApiPort` — API port (default 9997), fixed-width input.
+  - `remoteMediaMtxUrl` — browser-reachable HLS endpoint (the hero "Playback URL").
   - `recordingsDirectory` — mount path for MP4s.
   - `screenshotsDirectory` — mount path for thumbnails.
 - **`config.app.get` / `config.app.update` oRPC procedures** with TanStack Query invalidation after save. `apps/api/src/router.ts`, `apps/api/src/config-store.ts`
-- **Field-level help text** — each input has a description explaining its impact.
-- **Reset** — outline button calls `form.reset(defaultValues)`; enabled only while the form is dirty.
+- **Floating save bar** — the shared `SaveBar` mounts only while the form is dirty: amber dot + "n unsaved changes (· m fields need attention)", Reset (ghost) + Save (disabled while invalid). `apps/web/src/components/save-bar.tsx`
 
 ### 3.2 MediaMTX global server config — `/config/mediamtx/global`
 - **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3 covered by the schema. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`, `packages/contract/src/index.ts` (`GlobalConfigSchema`)
-- **Tabbed layout** — eight top-level Tabs (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), each tab containing one or more sub-Cards. `apps/web/src/features/mediamtx-config/sections/*`
-- **Per-tab error badges** — destructive `Badge` next to each `TabsTrigger` shows the count of validation errors mapped via `tab-fields.ts`.
-- **Sticky save bar** — `StickySaveBar` appears at the bottom of the SidebarInset whenever the form is dirty, showing "n unsaved changes" + Discard / Save changes. `apps/web/src/features/mediamtx-config/sticky-save-bar.tsx`
-- **Boolean fields use `Switch`** — every yes/no toggle uses a labeled-row Switch. `apps/web/src/features/mediamtx-config/form-fields.tsx`. Field labels stay English (mirror MediaMTX YAML keys, per `docs/I18N.md`), but the per-protocol server-enable helper text is localized via `Config.mediamtxForm.sections.*.enableDescription`.
+- **Scroll-with-rail layout (not tabs)** — a sticky 200 px "ON THIS PAGE" anchor rail beside one continuously scrolling form of eight sections (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), driven by a data descriptor. Rail rows scroll-spy the active section (IntersectionObserver) and show a red error-count pill or a mono "OFF" label for disabled protocols. On mobile the rail collapses to a sticky horizontal chip row. `apps/web/src/features/mediamtx-config/sections.ts`, `apps/web/src/hooks/use-scroll-spy.ts`
+- **`ConfigFieldRow`** — 280 px fixed key column (MediaMTX config key verbatim in Geist Mono, never localized per `docs/I18N.md`, with an amber dirty dot) + localized help text below + control column (mono inputs full-width, switches right-aligned), hairline row separators. `apps/web/src/features/mediamtx-config/config-field-row.tsx`
+- **Per-field localized help text** — `Config.mediamtxForm.help.*` messages describe every exposed key.
+- **Protocol section header switches** — API/RTSP/RTMP/HLS/WebRTC/SRT sections carry an ENABLED/OFF mono label + `Switch` in the header; while off, the header dims to 55 % and the fields collapse to "n options hidden while off".
 - **List fields use newline-split Textarea** — `logDestinations`, `protocols`, `authMethods`, `hlsTrustedProxies`, `webrtcTrustedProxies`, `webrtcIPsFromInterfacesList`, `webrtcAdditionalHosts`. One value per line.
-- **WebRTC ICE servers field array** — `useFieldArray` row group with add/remove + per-row URL/Username/Password inputs. New rows start blank (no placeholder values).
+- **WebRTC ICE servers field array** — repeatable [url | username | password] input rows with a remove ✕ per row and a dashed "+ Add ICE server" button. `apps/web/src/features/mediamtx-config/ice-servers-rows.tsx`
+- **Pending-changes bar** — the shared `SaveBar` with dirty-key chips (mono pills named by config key; erroring keys turn red with a ✕), Discard (ghost) + "Save to server" (primary). `apps/web/src/components/save-bar.tsx`
 - **Live read/write through MediaMTX HTTP API** — `config.mediamtx.getGlobal` (`v3/config/global/get`) + `config.mediamtx.updateGlobal` (`v3/config/global/patch`). `apps/api/src/router.ts`, `apps/api/src/mediamtx.ts`
-- **Toast feedback** on success/error (success: `Updated Global Config`; error: `There was an issue updating the Global Config`); submit gated on dirty + valid.
+- **Toast feedback** on success/error (success: `MediaMTX config saved`); submit gated on dirty + valid.
 
 ---
 
@@ -146,21 +144,20 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 8. UI System / Shared Components
 
 ### 8.1 shadcn/ui primitives (`apps/web/src/components/ui/`)
-- Layout / nav: Sidebar (+ provider/menu/inset/trigger), Sheet, Breadcrumb, Tabs, ScrollArea, Separator.
-- Content: Card, Alert, Empty, AspectRatio, Pagination, Skeleton, Progress, Badge.
-- Inputs: Button, Input, Textarea, Switch, Select, Label, ToggleGroup, Toggle.
-- Surfaces: Popover, DropdownMenu, Dialog, Tooltip, Command.
+- Layout / nav: Breadcrumb.
+- Content: Card, AspectRatio, Skeleton, Progress, Badge.
+- Inputs: Button, Input, Textarea, Switch, Label, ToggleGroup, Toggle.
+- Surfaces: Popover, DropdownMenu, Dialog, Command.
 - Form: RHF integration (FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel).
 - Toast: Sonner `Toaster` mounted in the root route; callsites import `toast` directly from `sonner`.
+- Primitives are tuned to the Geist spec: 6 px buttons/inputs, 8 px menus, 12 px cards (hairline border, no shadow), blue focus ring (`border + 3 px soft ring`).
 
 ### 8.2 Shared components (`apps/web/src/components/`)
-- **AppSidebar** — global Sidebar shell (sidebar-07 pattern): brand, "Application" group (Live, Recordings), "Settings" group (Client Config, MediaMTX), footer LocaleSwitcher + ModeToggle. `apps/web/src/components/app-sidebar.tsx`
-- **PageHeader** — sticky inset top bar with `SidebarTrigger` + `Breadcrumb` + an optional actions slot. Each page passes its own crumbs. `apps/web/src/components/page-header.tsx`
-- **SidebarTrigger** — single-click sidebar open/close button with state-aware morphing icon (`PanelLeftOpen` ↔ `PanelLeftClose`) on a scale + rotate transition. `apps/web/src/components/ui/sidebar.tsx`
-- **PageLayout** — h2 title + subheader + Separator + content, wrapped in a max-w-7xl padded container. `apps/web/src/components/page-layout.tsx`
-- **EmptyState** — wrapper around shadcn `Empty` with `icon`, `title`, `description`, optional CTA `children`. Used for non-destructive empty/info states across the app. `apps/web/src/components/empty-state.tsx`
+- **AppHeader** — global two-row top-nav shell (design handoff §2): row 1 with the logo mark (mono "M" square) + "MediaMTX Connect" wordmark, connection status, LocaleSwitcher, ModeToggle; row 2 with route tabs (Live — with a red dot while streams are live —, Recordings | App Config, MediaMTX Config) styled as underline tabs, horizontally scrollable on mobile. `apps/web/src/components/app-header.tsx`
+- **ConnectionStatus** — polling dot + mono "connected"/"offline" label (`aria-live`), backed by the shared `useConnectionState` hook (15 s `streams.list` poll). `apps/web/src/components/connection-status.tsx`, `apps/web/src/hooks/use-connection-state.ts`
+- **SaveBar** — shared floating pending-changes bar for both config pages: amber dot + summary, optional mono dirty-key chips, Discard/Reset + Save. Renders only while dirty. `apps/web/src/components/save-bar.tsx`
+- **PageLayout** — page title (20 px, negative tracking) + subheader + content in a width-variant container (7xl default, 1060 px wide, 920 px reading, 640 px narrow), 28 px gutters. `apps/web/src/components/page-layout.tsx`
 - **ModeToggle** — single-click Light ↔ Dark theme toggle backed by the in-app `ThemeProvider`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `apps/web/src/components/mode-toggle.tsx`
-- **RefreshButton** — manual page reload control surfaced in connection-error alerts. `apps/web/src/components/refresh-button.tsx`
 - **VideoPlayer** — shared HLS.js component (see §1.3). `apps/web/src/components/video-player.tsx`
 - **ThemeProvider** — in-app theme context (light/dark/system), dark default, `class`-based, persisted to `localStorage`. Paired with an inline pre-bundle script in `index.html` that sets the `<html>` class before first paint to avoid a theme flash. `apps/web/src/components/theme-provider.tsx`, `apps/web/index.html`
 - **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard. `apps/web/src/components/service-worker.tsx`
@@ -176,20 +173,20 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **`summarizeStreamRecordings` / `listStreamRecordingFiles` / screenshot-URL helpers** — api-side fs helpers used by the recordings procedures. `apps/api/src/recordings-fs.ts`
 
 ### 8.5 Application chrome
-- **Sidebar shell** — `SidebarProvider` + `AppSidebar` + `SidebarInset` wraps every route via the TanStack Router root route. The sidebar collapses to icons on desktop (cookie-persisted) and slides in as a Sheet on mobile via `SidebarTrigger`. `apps/web/src/main.tsx`
+- **Top-nav shell** — `AppHeader` (sticky, hairline bottom border) above a full-width `<main>` wraps every route via the TanStack Router root route. `apps/web/src/main.tsx`
 - **Root route** — Sonner Toaster mount, ThemeProvider, ServiceWorker registration, `I18nProvider`, and the router itself (code-based route tree). `apps/web/src/main.tsx`
-- **Global CSS** — Tailwind 4 with shadcn sidebar tokens (`--sidebar-*`). `apps/web/src/globals.css`
+- **Global CSS** — Tailwind 4 with the Geist (Vercel) design tokens from the design handoff mapped onto shadcn CSS variables: dark default (`#0a0a0a` canvas, `#111` cards, `#262626` hairlines, inverted-ink primary button) + first-class light palette, plus semantic extensions (`--link`, `--warning`, `--live`, `--mute`, `--faint`, border/surface tiers). Geist Sans + Geist Mono self-hosted via `@font-face` from `apps/web/public/fonts/`. Two dark values are lightened from the handoff hexes to pass WCAG AA contrast (`--faint`, `--link` — noted inline). `apps/web/src/globals.css`
 
 ---
 
 ## 9. Theming, Accessibility, PWA, Internationalization
 
 - **Dark / Light theme** — persisted to `localStorage` via the in-app `ThemeProvider`, dark default. Toggled by `ModeToggle` (single-click, View Transitions API circle-reveal).
-- **Web App Manifest** — installable PWA. App name, theme color `#0c1016`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `apps/web/public/manifest.webmanifest`
+- **Web App Manifest** — installable PWA. App name, theme color `#0a0a0a`, `display: standalone`, 512×512 maskable + rounded icons, `start_url: /`. `apps/web/public/manifest.webmanifest`
 - **Service worker registration** — offline-friendly shell. `apps/web/src/components/service-worker.tsx`, `apps/web/public/sw.js`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Internationalization (i18n)** — `use-intl` (next-intl's framework-agnostic core). Supported locales (30 total): `en` (default); plus `es`, `zh` (Simplified), `it`, `de`, `ru`, `fr`, `pt`, `ja`, `pl`, `ko`, `tr`, `nl`, `cs`, `zh-tw` (Traditional Chinese), `pt-br` (Brazilian Portuguese), `id`, `ro`, `sv`, `da`, `no`, `fi`, `el`, `hu`, `uk`, `vi`, `tl`, `th`, `hi`, `bn`. The locale is a client-side setting (persisted in `localStorage('locale')`, initialized from `navigator.languages`) — URLs carry no locale prefix. English messages are bundled eagerly; other locales lazy-load as their own chunks. `<html lang>` is set on switch. Date / time / relative-time formatting uses `useFormatter` for locale-aware output. `apps/web/src/i18n/provider.tsx`, `apps/web/src/i18n/locales.ts`, `apps/web/messages/{locale}.json`
-- **Locale switcher** — sidebar footer searchable combobox (Popover + Command). Type to filter the 30 languages; the list is height-capped and scrolls so it never runs off screen. Sits next to ModeToggle, preserves the current route when switching. `apps/web/src/components/locale-switcher.tsx`
+- **Locale switcher** — header icon button opening a searchable combobox (Popover + Command). Type to filter the 30 languages; the list is height-capped and scrolls so it never runs off screen. Sits next to ModeToggle, preserves the current route when switching. `apps/web/src/components/locale-switcher.tsx`
 - **Localized README** — `README.md` (English source, at repo root) + `docs/i18n/README.{locale}.md` for every other supported locale. Each carries a centered language strip with flag emoji + native name (current locale bolded). Developer-facing docs (this file, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CLAUDE.md`, etc.) intentionally remain English-only.
 - **README translation staleness guard** — `docs/i18n/.translation-status.json` records the source `README.md` hash plus per-locale "last synced at hash" entries. `scripts/readme-i18n-check.mjs` (run via `pnpm i18n:check`) fails CI when the source hash drifts from any locale's recorded hash or when a locale README file is missing.
 - **Translation onboarding & guard** — `docs/I18N.md` documents the full "add a new language" workflow and translation policy. `scripts/i18n-check.mjs` (run via `pnpm i18n:check`) compares every non-English locale against `apps/web/messages/en.json` and fails when keys are missing or extra. Wired into CI alongside `lint` / `typecheck`.
@@ -283,9 +280,9 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ## 15. Testing & Quality
 
 ### 15.1 Playwright E2E (`tests/e2e/`)
-- **`streams.spec.ts`** — header rendering, nav links, the connection states (error / no streams / configured / streams visible), stream card display, remote-URL prompt.
-- **`recordings.spec.ts`** — index load, per-stream cards, View navigation, detail-page pagination, empty + error states.
-- **`config.spec.ts`** — form load, all five inputs render, submit gating, edit + save round-trip with reload-and-verify, description copy.
+- **`streams.spec.ts`** — top-nav tabs + active state, the designed Live View states (unreachable / no streams / playback banner / grid), toolbar summary, stream-card playback buttons + actions menu.
+- **`recordings.spec.ts`** — index states, totals summary + `/`-shortcut filter, client-side filtering, card navigation, day-grouped rows, inline player open/close with URL tracking, breadcrumb navigation.
+- **`config.spec.ts`** — App Config form fields + hero badge, save-bar mount/dirty gating, edit + save round-trip with reload-and-verify, MediaMTX page verbatim keys, pending-changes chips, section rail.
 - **`api.spec.ts`** — `/api/health`, `/media/*` streaming/download/screenshot behavior including Range requests and traversal rejection, SPA fallback.
 - **`i18n.spec.ts`** — default English, locale switcher round-trip, persistence across reloads, translated nav.
 - **`a11y.spec.ts`** — axe-core accessibility smoke.

@@ -26,220 +26,295 @@
       "switchLanguage": "Сменить язык",
       "searchPlaceholder": "Поиск языка…",
       "noResults": "Язык не найден."
+    },
+    "connection": {
+      "connected": "подключено",
+      "offline": "офлайн"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Приложение",
-      "settings": "Настройки"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Основная навигация",
     "items": {
       "live": "Эфир",
       "recordings": "Записи",
-      "clientConfig": "Настройки клиента",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Настройки приложения",
+      "mediamtxConfig": "Конфигурация MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "Эфир",
-    "header": "Трансляции",
-    "subHeader": "Активные трансляции в реальном времени",
+    "toolbar": {
+      "summary": "{count, plural, one {# трансляция} few {# трансляции} many {# трансляций} other {# трансляции}} · {live} воспроизводится",
+      "playbackAria": "Режим воспроизведения",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Плотность сетки"
+    },
     "errors": {
-      "configTitle": "Ошибка конфигурации",
-      "configDescription": "Не удалось загрузить конфигурацию. Проверьте подключение к базе данных.",
-      "connectionTitle": "Не удаётся подключиться к MediaMTX",
-      "connectionLead": "Не удаётся обратиться к MediaMTX по адресу",
-      "connectionHint": "Убедитесь, что MediaMTX запущен и URL в настройках указан правильно.",
-      "checkConfigBtn": "Проверить настройки"
+      "unreachableTitle": "Не удаётся подключиться к MediaMTX",
+      "unreachableLead": "Нет ответа от API MediaMTX по адресу",
+      "openAppConfig": "Открыть настройки приложения",
+      "retry": "Повторить",
+      "retryCountdown": "автоповтор через {seconds} с"
     },
     "empty": {
-      "configureRemoteTitle": "Настройте удалённый URL",
-      "configureRemoteDescription": "Укажите удалённый URL MediaMTX, чтобы смотреть трансляции в браузере. Это должен быть адрес, по которому ваш браузер может обращаться к MediaMTX.",
-      "goToConfig": "Перейти к настройкам",
-      "noStreamsTitle": "Активных трансляций нет",
-      "noStreamsDescription": "MediaMTX подключён, но сейчас нет активных трансляций. Запустите трансляцию в MediaMTX, чтобы увидеть её здесь."
+      "noStreamsTitle": "Нет публикуемых трансляций",
+      "noStreamsLead": "Направьте любой источник публикации на MediaMTX, и он появится здесь:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Плотность сетки",
-      "two": "Два столбца",
-      "three": "Три столбца",
-      "four": "Четыре столбца"
+    "banner": {
+      "playbackUrlTitle": "URL воспроизведения не задан",
+      "playbackUrlLead": "Укажите доступный из браузера URL MediaMTX в настройках приложения, чтобы включить живое воспроизведение.",
+      "openAppConfig": "Открыть настройки приложения"
     },
     "card": {
-      "onlineSince": "В сети с {date}",
-      "idle": "Простой",
-      "live": "В ЭФИРЕ",
-      "stop": "Остановить",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "снимка пока нет — первый захват через ~30 с",
+      "onlineSince": "в сети с {time} · {uptime}",
+      "idle": "простой",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# зритель} few {# зрителя} many {# зрителей} other {# зрителя}}",
       "play": "Воспроизвести",
+      "stop": "Остановить",
+      "playAria": "Воспроизвести {streamName}",
       "actionsAria": "Действия с трансляцией",
-      "viewRecordings": "Смотреть записи"
+      "stub": {
+        "title": "Ещё не реализовано",
+        "description": "Это действие в дорожной карте — оно зафиксировано."
+      },
+      "menu": {
+        "openDetail": "Открыть страницу трансляции",
+        "viewRecordings": "Смотреть записи",
+        "takeSnapshot": "Сделать снимок",
+        "record": "Запись",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Скопировать URL публикации",
+        "shareEmbed": "Поделиться и встроить…",
+        "editPathConfig": "Изменить конфигурацию пути",
+        "editHooks": "Изменить хуки"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Записи",
-    "header": "Записи",
-    "subHeader": "Просматривайте записи разных трансляций",
-    "subHeaderForStream": "Записи для: {streamName}",
-    "invalidConfig": "Неверная конфигурация",
-    "errors": {
-      "configTitle": "Ошибка конфигурации",
-      "configDescription": "Не удалось загрузить конфигурацию. Проверьте подключение к базе данных.",
-      "directoryTitle": "Нет доступа к каталогу записей",
-      "directoryLead": "Не удалось прочитать каталог записей по пути",
-      "directoryHint": "Убедитесь, что каталог существует и имеет правильные права доступа.",
-      "checkConfigBtn": "Проверить настройки",
-      "readErrorTitle": "Не удалось прочитать записи",
-      "readErrorDescription": "Не удалось прочитать каталог записей. Убедитесь, что каталог существует."
+    "toolbar": {
+      "summary": "{streams, plural, one {# трансляция} few {# трансляции} many {# трансляций} other {# трансляции}} · {recordings, plural, one {# запись} few {# записи} many {# записей} other {# записи}}",
+      "filterPlaceholder": "Фильтр трансляций…",
+      "filterAria": "Фильтр трансляций"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# запись} few {# записи} many {# записей} other {# записи}}",
+      "latest": "последняя {time}",
+      "openAria": "Просмотреть записи для {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Записи не найдены",
-      "noRecordingsLead": "Записи ещё не сохранены. Они появятся здесь, когда MediaMTX начнёт записывать трансляции.",
-      "noRecordingsHint": "Убедитесь, что в конфигурации MediaMTX задано <code>MTX_RECORD=yes</code>.",
+      "noRecordingsTitle": "Записей пока нет",
+      "noRecordingsLead": "Записи появятся здесь, когда MediaMTX начнёт записывать трансляции.",
+      "enableRecording": "Включить запись",
       "noMatchingTitle": "Подходящих трансляций нет",
       "noMatchingDescription": "Ни одна трансляция не соответствует «{query}»."
     },
-    "search": {
-      "placeholder": "Поиск трансляций"
+    "errors": {
+      "directoryTitle": "Не удаётся прочитать каталог записей",
+      "directoryLead": "Не удалось прочитать записи по пути",
+      "openAppConfig": "Открыть настройки приложения",
+      "readErrorTitle": "Не удалось прочитать записи",
+      "readErrorDescription": "Убедитесь, что каталог записей существует и имеет правильные права доступа."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# запись} few {# записи} many {# записей} other {# записи}}"
     },
     "groups": {
-      "today": "Сегодня",
-      "yesterday": "Вчера"
+      "todayEyebrow": "Сегодня — {date}",
+      "yesterdayEyebrow": "Вчера — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# запись} few {# записи} many {# записей} other {# записи}}",
-      "latest": "Последняя {time}",
-      "viewBtn": "Просмотр"
-    },
-    "recordingCard": {
-      "stop": "Остановить",
+    "row": {
       "play": "Воспроизвести",
-      "downloadAria": "Скачать запись {filePath}",
-      "downloadError": "Ошибка при загрузке видео"
+      "close": "Закрыть",
+      "cancel": "Отмена",
+      "playAria": "Воспроизвести запись от {time}",
+      "downloadAria": "Скачать запись {file}",
+      "downloading": "загрузка… {received} из {total} · {rate}",
+      "downloadComplete": "Загрузка завершена",
+      "downloadFailed": "Не удалось загрузить"
+    },
+    "player": {
+      "play": "Воспроизвести",
+      "pause": "Пауза",
+      "seek": "Перемотка"
+    },
+    "pagination": {
+      "aria": "Пагинация",
+      "showing": "Показано {from}–{to} из {total}",
+      "previous": "Предыдущая страница",
+      "next": "Следующая страница"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Настройки",
-      "clientConfig": "Настройки клиента",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Настройки",
-    "pageSubHeader": "Управление настройками приложения",
     "invalidConfig": "Неверная конфигурация",
+    "appConfig": {
+      "pageHeader": "Настройки приложения",
+      "pageSubHeader": "Подключение и хранилище, используемые MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Конфигурация MediaMTX",
+      "pageSubHeader": "Глобальные настройки сервера MediaMTX, сохраняются на сервере."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# несохранённое изменение} few {# несохранённых изменения} many {# несохранённых изменений} other {# несохранённого изменения}}",
+      "needsAttention": "{count, plural, one {# поле требует внимания} few {# поля требуют внимания} many {# полей требуют внимания} other {# поля требует внимания}}",
+      "discard": "Отменить",
+      "reset": "Сбросить",
+      "save": "Сохранить",
+      "saveToServer": "Сохранить на сервер"
+    },
     "formFields": {
       "oneValuePerLine": "По одному значению в строке."
     },
     "clientForm": {
-      "title": "Параметры приложения",
-      "description": "Пути подключения и хранилища, используемые MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "Подключение к MediaMTX",
         "storage": "Хранилище"
       },
+      "playbackBadge": "Требуется для живого воспроизведения",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX URL",
           "description": "Адрес вашего экземпляра MediaMTX. В Docker-сети можно использовать имя контейнера, иначе укажите внешний IP или имя хоста."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Порт API MediaMTX"
+          "label": "Порт API",
+          "description": "Порт API MediaMTX."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Доступный из браузера, внешний IP или имя хоста вашего сервера MediaMTX."
+          "label": "URL воспроизведения",
+          "description": "Доступный из браузера внешний URL вашего сервера MediaMTX. Отсюда загружаются трансляции для живого воспроизведения."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Каталог с записями MediaMTX (не рекомендуется менять при использовании Docker)"
+          "label": "Каталог записей",
+          "description": "Каталог с записями MediaMTX (не рекомендуется менять при использовании Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Каталог для сохранения создаваемых скриншотов (не рекомендуется менять при использовании Docker)"
+          "label": "Каталог скриншотов",
+          "description": "Каталог для создаваемых снимков (не рекомендуется менять при использовании Docker)."
         }
       },
-      "actions": {
-        "reset": "Сбросить",
-        "submit": "Отправить"
-      },
       "toasts": {
-        "success": "Настройки клиента обновлены",
-        "errorTitle": "Произошла ошибка при обновлении настроек клиента",
-        "errorDescription": "Проверьте значения формы."
+        "success": "Настройки приложения сохранены",
+        "errorTitle": "Не удалось сохранить настройки приложения",
+        "errorDescription": "Проверьте значения формы и попробуйте снова."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Логи",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "Хуки",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Логи",
-          "limits": "Ограничения"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Метрики",
-          "pprof": "PPROF",
-          "enableDescription": "Включить HTTP API MediaMTX."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Сервер",
-          "tls": "TLS",
-          "auth": "Аутентификация",
-          "enableDescription": "Включить сервер RTSP."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Включить сервер RTMP."
-        },
-        "hls": {
-          "server": "Сервер",
-          "segments": "Сегменты",
-          "corsProxies": "CORS / Прокси",
-          "enableDescription": "Включить сервер HLS."
-        },
-        "webrtc": {
-          "server": "Сервер",
-          "network": "Сеть",
-          "iceServers": "Серверы ICE",
-          "addServer": "Добавить сервер",
-          "noIceServers": "Серверы ICE не настроены.",
-          "iceServerLabel": "Сервер ICE {index}",
-          "removeIceServer": "Удалить сервер ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "Имя пользователя",
-            "password": "Пароль"
-          },
-          "enableDescription": "Включить сервер WebRTC."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Включить сервер SRT."
-        }
+      "sectionDescriptions": {
+        "logging": "Вывод логов, тайм-ауты и глобальные ограничения.",
+        "api": "HTTP API, который использует сам MediaMTX Connect.",
+        "hooks": "Команды, которые MediaMTX выполняет при событиях подключения.",
+        "rtsp": "Публикация и чтение трансляций по RTSP.",
+        "rtmp": "Публикация и чтение трансляций по RTMP.",
+        "hls": "Раздача трансляций в формате HLS для воспроизведения в браузере.",
+        "webrtc": "Воспроизведение и публикация в браузере с низкой задержкой.",
+        "srt": "Публикация и чтение трансляций по SRT."
+      },
+      "enabled": "Включено",
+      "off": "Выключено",
+      "hiddenWhileOff": "{count, plural, one {# параметр скрыт, пока выключено} few {# параметра скрыто, пока выключено} many {# параметров скрыто, пока выключено} other {# параметра скрыто, пока выключено}}",
+      "rail": {
+        "onThisPage": "На этой странице",
+        "aria": "Разделы конфигурации"
+      },
+      "iceServers": {
+        "add": "Добавить сервер ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL сервера ICE {index}",
+        "usernameAria": "Имя пользователя сервера ICE {index}",
+        "passwordAria": "Пароль сервера ICE {index}",
+        "removeAria": "Удалить сервер ICE {index}"
+      },
+      "help": {
+        "logLevel": "Детализация вывода логов (error, warn, info или debug).",
+        "logDestinations": "Куда писать логи (stdout, file или syslog).",
+        "logFile": "Путь к файлу логов, когда logDestinations включает file.",
+        "readTimeout": "Тайм-аут операций чтения.",
+        "writeTimeout": "Тайм-аут операций записи.",
+        "writeQueueSize": "Размер исходящей очереди на соединение. Должен быть степенью двойки.",
+        "udpMaxPayloadSize": "Максимальный размер исходящих UDP-пакетов.",
+        "externalAuthenticationURL": "URL внешнего сервера аутентификации, вызывается при каждом подключении.",
+        "apiAddress": "Адрес прослушивания HTTP API.",
+        "metrics": "Экспортировать метрики, совместимые с Prometheus.",
+        "metricsAddress": "Адрес прослушивания эндпоинта метрик.",
+        "pprof": "Открыть эндпоинт профилирования Go pprof.",
+        "pprofAddress": "Адрес прослушивания эндпоинта pprof.",
+        "runOnConnect": "Команда, выполняемая при подключении клиента.",
+        "runOnConnectRestart": "Перезапускать команду, если она завершилась.",
+        "runOnDisconnect": "Команда, выполняемая при отключении клиента.",
+        "rtspAddress": "Адрес прослушивания сервера RTSP (TCP).",
+        "rtspsAddress": "Адрес прослушивания сервера RTSPS (TLS).",
+        "rtpAddress": "Адрес прослушивания RTP-пакетов по UDP.",
+        "rtcpAddress": "Адрес прослушивания RTCP-пакетов по UDP.",
+        "multicastIPRange": "Диапазон IP-адресов для multicast-доставки.",
+        "multicastRTPPort": "Порт для multicast RTP-пакетов.",
+        "multicastRTCPPort": "Порт для multicast RTCP-пакетов.",
+        "protocols": "Транспортные протоколы, принимаемые сервером RTSP (udp, multicast или tcp).",
+        "encryption": "Политика TLS-шифрования (no, strict или optional).",
+        "serverKey": "Путь к ключу TLS-сервера.",
+        "serverCert": "Путь к сертификату TLS-сервера.",
+        "authMethods": "Методы аутентификации, принимаемые сервером RTSP (basic или digest).",
+        "rtmpAddress": "Адрес прослушивания сервера RTMP.",
+        "rtmpEncryption": "Политика TLS-шифрования для RTMP (no, strict или optional).",
+        "rtmpsAddress": "Адрес прослушивания сервера RTMPS (TLS).",
+        "rtmpServerKey": "Путь к ключу сервера RTMPS.",
+        "rtmpServerCert": "Путь к сертификату сервера RTMPS.",
+        "hlsAddress": "Адрес прослушивания сервера HLS.",
+        "hlsEncryption": "Раздавать HLS по TLS (HTTPS).",
+        "hlsServerKey": "Путь к ключу сервера HLS.",
+        "hlsServerCert": "Путь к сертификату сервера HLS.",
+        "hlsAlwaysRemux": "Ремуксировать трансляции, даже когда никто не смотрит.",
+        "hlsVariant": "Вариант HLS (mpegts, fmp4 или lowLatency).",
+        "hlsSegmentCount": "Количество сегментов в плейлисте.",
+        "hlsSegmentDuration": "Минимальная длительность каждого сегмента.",
+        "hlsPartDuration": "Длительность каждой части в режиме низкой задержки.",
+        "hlsSegmentMaxSize": "Максимальный размер каждого сегмента.",
+        "hlsAllowOrigin": "Значение заголовка Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP-адреса или сети прокси, стоящих перед сервером HLS.",
+        "hlsDirectory": "Записывать сегменты на диск в этот каталог вместо RAM.",
+        "webrtcAddress": "Адрес прослушивания HTTP-сервера WebRTC.",
+        "webrtcEncryption": "Раздавать WebRTC по TLS (HTTPS).",
+        "webrtcServerKey": "Путь к ключу сервера WebRTC.",
+        "webrtcServerCert": "Путь к сертификату сервера WebRTC.",
+        "webrtcAllowOrigin": "Значение заголовка Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP-адреса или сети прокси, стоящих перед сервером WebRTC.",
+        "webrtcLocalUDPAddress": "Локальный UDP-адрес для трафика WebRTC.",
+        "webrtcLocalTCPAddress": "Локальный TCP-адрес для трафика WebRTC.",
+        "webrtcIPsFromInterfaces": "Собирать IP-адреса кандидатов с сетевых интерфейсов хоста.",
+        "webrtcIPsFromInterfacesList": "Интерфейсы, с которых собирать IP-адреса кандидатов. Пусто — все.",
+        "webrtcAdditionalHosts": "Дополнительные хосты или IP-адреса, объявляемые как кандидаты WebRTC.",
+        "webrtcICEServers2": "Серверы STUN или TURN для установки WebRTC-соединений.",
+        "srtAddress": "Адрес прослушивания сервера SRT."
       },
       "toasts": {
-        "success": "Глобальная конфигурация обновлена",
-        "errorTitle": "Произошла ошибка при обновлении глобальной конфигурации",
-        "errorDescription": "Проверьте значения формы."
+        "success": "Конфигурация MediaMTX сохранена",
+        "errorTitle": "Не удалось сохранить конфигурацию MediaMTX",
+        "errorDescription": "Проверьте значения формы и попробуйте снова."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# несохранённое изменение} few {# несохранённых изменения} many {# несохранённых изменений} other {# несохранённых изменения}}",
-      "discard": "Отменить",
-      "saveChanges": "Сохранить изменения"
     }
   }
 }

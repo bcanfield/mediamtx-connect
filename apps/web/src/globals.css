@@ -3,19 +3,48 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Geist + Geist Mono (v1.7.2, OFL) — binaries in /public/fonts */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -37,6 +66,17 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* Geist extensions */
+  --color-link: var(--link);
+  --color-warning: var(--warning);
+  --color-live: var(--live);
+  --color-live-foreground: var(--live-foreground);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-row: var(--border-row);
+  --color-border-hover: var(--border-hover);
+  --color-surface-raised: var(--surface-raised);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -46,94 +86,106 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+/* Geist (Vercel) design language. Dark is the default theme; light derives
+   from the Geist source tokens. base radius 8px → md 6px (buttons/inputs),
+   lg 8px (menus), xl 12px (cards). */
 :root {
   --radius: 0.5rem;
 
-  --background: oklch(0.995 0.002 250);
-  --foreground: oklch(0.18 0.02 260);
+  --background: #fafafa;
+  --foreground: #171717;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 260);
+  --card: #ffffff;
+  --card-foreground: #171717;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 260);
+  --popover: #ffffff;
+  --popover-foreground: #171717;
 
-  --primary: oklch(0.52 0.17 255);
-  --primary-foreground: oklch(0.99 0.005 250);
+  --primary: #171717;
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.96 0.008 255);
-  --secondary-foreground: oklch(0.25 0.03 260);
+  --secondary: #f2f2f2;
+  --secondary-foreground: #171717;
 
-  --muted: oklch(0.965 0.005 255);
-  --muted-foreground: oklch(0.5 0.015 258);
+  --muted: #f2f2f2;
+  --muted-foreground: #4d4d4d;
 
-  --accent: oklch(0.94 0.02 255);
-  --accent-foreground: oklch(0.25 0.05 260);
+  --accent: #f2f2f2;
+  --accent-foreground: #171717;
 
-  --destructive: oklch(0.58 0.22 27);
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
 
-  --border: oklch(0.91 0.008 255);
-  --input: oklch(0.91 0.008 255);
-  --ring: oklch(0.52 0.17 255);
+  --border: #ebebeb;
+  --input: #ebebeb;
+  --ring: #0070f3;
 
-  --chart-1: oklch(0.62 0.17 255);
-  --chart-2: oklch(0.72 0.13 195);
-  --chart-3: oklch(0.78 0.15 75);
-  --chart-4: oklch(0.62 0.2 300);
-  --chart-5: oklch(0.66 0.2 15);
+  --chart-1: #0070f3;
+  --chart-2: #50e3c2;
+  --chart-3: #f5a623;
+  --chart-4: #7928ca;
+  --chart-5: #e5484d;
 
-  --sidebar: oklch(0.975 0.005 255);
-  --sidebar-foreground: oklch(0.22 0.02 260);
-  --sidebar-primary: oklch(0.52 0.17 255);
-  --sidebar-primary-foreground: oklch(0.99 0.005 250);
-  --sidebar-accent: oklch(0.93 0.02 255);
-  --sidebar-accent-foreground: oklch(0.25 0.05 260);
-  --sidebar-border: oklch(0.91 0.008 255);
-  --sidebar-ring: oklch(0.52 0.17 255);
+  --link: #0070f3;
+  --warning: #a35200;
+  --live: #e5484d;
+  --live-foreground: #ca2b30;
+  --mute: #8f8f8f;
+  --faint: #a1a1a1;
+  --border-subtle: #f0f0f0;
+  --border-row: #f2f2f2;
+  --border-hover: #c9c9c9;
+  --surface-raised: #ffffff;
 }
 
 .dark {
-  --background: oklch(0.17 0.015 260);
-  --foreground: oklch(0.97 0.005 250);
+  --background: #0a0a0a;
+  --foreground: #ededed;
 
-  --card: oklch(0.21 0.018 260);
-  --card-foreground: oklch(0.97 0.005 250);
+  --card: #111111;
+  --card-foreground: #ededed;
 
-  --popover: oklch(0.215 0.02 260);
-  --popover-foreground: oklch(0.97 0.005 250);
+  --popover: #161616;
+  --popover-foreground: #ededed;
 
-  --primary: oklch(0.72 0.15 255);
-  --primary-foreground: oklch(0.16 0.02 260);
+  --primary: #ededed;
+  --primary-foreground: #0a0a0a;
 
-  --secondary: oklch(0.27 0.02 260);
-  --secondary-foreground: oklch(0.97 0.005 250);
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ededed;
 
-  --muted: oklch(0.255 0.015 260);
-  --muted-foreground: oklch(0.7 0.015 258);
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1a1;
 
-  --accent: oklch(0.31 0.04 258);
-  --accent-foreground: oklch(0.97 0.005 250);
+  --accent: #1a1a1a;
+  --accent-foreground: #ededed;
 
-  --destructive: oklch(0.7 0.19 25);
+  --destructive: #ff4d4d;
+  --destructive-foreground: #ffffff;
 
-  --border: oklch(0.75 0.04 255 / 14%);
-  --input: oklch(0.78 0.04 255 / 18%);
-  --ring: oklch(0.72 0.15 255);
+  --border: #262626;
+  --input: #262626;
+  --ring: #0070f3;
 
-  --chart-1: oklch(0.7 0.16 255);
-  --chart-2: oklch(0.74 0.13 195);
-  --chart-3: oklch(0.78 0.16 75);
-  --chart-4: oklch(0.68 0.2 300);
-  --chart-5: oklch(0.72 0.18 15);
+  --chart-1: #0070f3;
+  --chart-2: #50e3c2;
+  --chart-3: #f5a623;
+  --chart-4: #7928ca;
+  --chart-5: #ff4d4d;
 
-  --sidebar: oklch(0.195 0.018 260);
-  --sidebar-foreground: oklch(0.97 0.005 250);
-  --sidebar-primary: oklch(0.72 0.15 255);
-  --sidebar-primary-foreground: oklch(0.16 0.02 260);
-  --sidebar-accent: oklch(0.29 0.04 258);
-  --sidebar-accent-foreground: oklch(0.97 0.005 250);
-  --sidebar-border: oklch(0.75 0.04 255 / 14%);
-  --sidebar-ring: oklch(0.72 0.15 255);
+  /* #0070f3 misses WCAG AA for small text on #0a0a0a (4.34:1) — text/fill
+     blue is lightened; the focus ring and status dot keep the vivid blue. */
+  --link: #4da2ff;
+  --warning: #f5a623;
+  --live: #ff4d4d;
+  --live-foreground: #ff6b6b;
+  --mute: #8f8f8f;
+  /* handoff says #666666, lightened to pass 4.5:1 on #0a0a0a */
+  --faint: #7d7d7d;
+  --border-subtle: #1f1f1f;
+  --border-row: #161616;
+  --border-hover: #3a3a3a;
+  --surface-raised: #161616;
 }
 
 @layer base {
@@ -143,9 +195,10 @@
   body {
     @apply bg-background text-foreground;
     font-variant-numeric: tabular-nums;
+    font-size: 13.5px;
   }
   ::selection {
-    background-color: color-mix(in oklch, var(--primary) 25%, transparent);
+    background-color: color-mix(in oklch, var(--link) 25%, transparent);
   }
 }
 

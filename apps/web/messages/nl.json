@@ -26,151 +26,193 @@
       "switchLanguage": "Taal wijzigen",
       "searchPlaceholder": "Taal zoeken…",
       "noResults": "Geen taal gevonden."
+    },
+    "connection": {
+      "connected": "verbonden",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Applicatie",
-      "settings": "Instellingen"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primair",
     "items": {
       "live": "Live",
       "recordings": "Opnames",
-      "clientConfig": "Clientconfiguratie",
-      "mediamtx": "MediaMTX"
+      "appConfig": "App-configuratie",
+      "mediamtxConfig": "MediaMTX-configuratie"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Streams",
-    "subHeader": "Live weergave van je actieve streams",
+    "toolbar": {
+      "summary": "{count, plural, one {# stream} other {# streams}} · {live} spelen af",
+      "playbackAria": "Afspeelmodus",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Rasterdichtheid"
+    },
     "errors": {
-      "configTitle": "Configuratiefout",
-      "configDescription": "Kan de configuratie niet laden. Controleer je databaseverbinding.",
-      "connectionTitle": "Kan geen verbinding maken met MediaMTX",
-      "connectionLead": "Kan MediaMTX niet bereiken op",
-      "connectionHint": "Zorg dat MediaMTX draait en dat de URL in je configuratie klopt.",
-      "checkConfigBtn": "Configuratie controleren"
+      "unreachableTitle": "Kan MediaMTX niet bereiken",
+      "unreachableLead": "Geen reactie van de MediaMTX API op",
+      "openAppConfig": "App-configuratie openen",
+      "retry": "Opnieuw proberen",
+      "retryCountdown": "automatisch opnieuw proberen over {seconds}s"
     },
     "empty": {
-      "configureRemoteTitle": "Externe URL configureren",
-      "configureRemoteDescription": "Stel je externe MediaMTX-URL in om streams in de browser te bekijken. Dit moet de URL zijn die je browser kan gebruiken om MediaMTX te bereiken.",
-      "goToConfig": "Naar configuratie",
-      "noStreamsTitle": "Geen actieve streams",
-      "noStreamsDescription": "MediaMTX is verbonden, maar er zijn momenteel geen actieve streams. Start een stream naar MediaMTX om hem hier te zien."
+      "noStreamsTitle": "Er publiceren geen streams",
+      "noStreamsLead": "Richt een willekeurige publisher op MediaMTX en hij verschijnt hier:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Rasterdichtheid",
-      "two": "Twee kolommen",
-      "three": "Drie kolommen",
-      "four": "Vier kolommen"
+    "banner": {
+      "playbackUrlTitle": "Afspeel-URL niet ingesteld",
+      "playbackUrlLead": "Stel de browsergerichte MediaMTX-URL in bij App-configuratie om live afspelen mogelijk te maken.",
+      "openAppConfig": "App-configuratie openen"
     },
     "card": {
-      "onlineSince": "Online sinds {date}",
-      "idle": "Inactief",
       "live": "LIVE",
-      "stop": "Stoppen",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "nog geen snapshot — eerste opname over ~30s",
+      "onlineSince": "online sinds {time} · {uptime}",
+      "idle": "inactief",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# kijker} other {# kijkers}}",
       "play": "Afspelen",
+      "stop": "Stoppen",
+      "playAria": "{streamName} afspelen",
       "actionsAria": "Streamacties",
-      "viewRecordings": "Opnames bekijken"
+      "stub": {
+        "title": "Nog niet geïmplementeerd",
+        "description": "Deze actie staat op de roadmap — ze is geregistreerd."
+      },
+      "menu": {
+        "openDetail": "Streamdetail openen",
+        "viewRecordings": "Opnames bekijken",
+        "takeSnapshot": "Snapshot maken",
+        "record": "Opnemen",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Publicatie-URL's kopiëren",
+        "shareEmbed": "Delen & insluiten…",
+        "editPathConfig": "Padconfiguratie bewerken",
+        "editHooks": "Hooks bewerken"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Opnames",
-    "header": "Opnames",
-    "subHeader": "Blader door opnames van je verschillende streams",
-    "subHeaderForStream": "Opnames voor: {streamName}",
-    "invalidConfig": "Ongeldige configuratie",
-    "errors": {
-      "configTitle": "Configuratiefout",
-      "configDescription": "Kan de configuratie niet laden. Controleer je databaseverbinding.",
-      "directoryTitle": "Geen toegang tot opnamemap",
-      "directoryLead": "Kan de opnamemap niet lezen op",
-      "directoryHint": "Zorg dat de map bestaat en de juiste rechten heeft.",
-      "checkConfigBtn": "Configuratie controleren",
-      "readErrorTitle": "Kon opnames niet lezen",
-      "readErrorDescription": "Kon de opnamemap niet lezen. Zorg dat de map bestaat."
+    "toolbar": {
+      "summary": "{streams, plural, one {# stream} other {# streams}} · {recordings, plural, one {# opname} other {# opnames}}",
+      "filterPlaceholder": "Streams filteren…",
+      "filterAria": "Streams filteren"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# opname} other {# opnames}}",
+      "latest": "laatste {time}",
+      "openAria": "Opnames voor {name} bekijken"
     },
     "empty": {
-      "noRecordingsTitle": "Geen opnames gevonden",
-      "noRecordingsLead": "Er zijn nog geen opnames opgeslagen. Opnames verschijnen hier zodra MediaMTX streams begint op te nemen.",
-      "noRecordingsHint": "Zorg dat <code>MTX_RECORD=yes</code> is ingesteld in je MediaMTX-configuratie.",
+      "noRecordingsTitle": "Nog geen opnames",
+      "noRecordingsLead": "Opnames verschijnen hier zodra MediaMTX streams begint op te nemen.",
+      "enableRecording": "Opnemen inschakelen",
       "noMatchingTitle": "Geen overeenkomende streams",
       "noMatchingDescription": "Geen streams komen overeen met „{query}”."
     },
-    "search": {
-      "placeholder": "Zoek streams"
+    "errors": {
+      "directoryTitle": "Kan de opnamemap niet lezen",
+      "directoryLead": "Kan de opnames niet lezen op",
+      "openAppConfig": "App-configuratie openen",
+      "readErrorTitle": "Kon opnames niet lezen",
+      "readErrorDescription": "Zorg dat de opnamemap bestaat en de juiste rechten heeft."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# opname} other {# opnames}}"
     },
     "groups": {
-      "today": "Vandaag",
-      "yesterday": "Gisteren"
+      "todayEyebrow": "Vandaag — {date}",
+      "yesterdayEyebrow": "Gisteren — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# opname} other {# opnames}}",
-      "latest": "Laatste {time}",
-      "viewBtn": "Bekijken"
-    },
-    "recordingCard": {
-      "stop": "Stoppen",
+    "row": {
       "play": "Afspelen",
-      "downloadAria": "Opname {filePath} downloaden",
-      "downloadError": "Fout bij het downloaden van de video"
+      "close": "Sluiten",
+      "cancel": "Annuleren",
+      "playAria": "De opname van {time} afspelen",
+      "downloadAria": "Opname {file} downloaden",
+      "downloading": "downloaden… {received} van {total} · {rate}",
+      "downloadComplete": "Download voltooid",
+      "downloadFailed": "Download mislukt"
+    },
+    "player": {
+      "play": "Afspelen",
+      "pause": "Pauzeren",
+      "seek": "Zoeken"
+    },
+    "pagination": {
+      "aria": "Paginering",
+      "showing": "{from}–{to} van {total} weergegeven",
+      "previous": "Vorige pagina",
+      "next": "Volgende pagina"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Instellingen",
-      "clientConfig": "Clientconfiguratie",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Configuratie",
-    "pageSubHeader": "Beheer je app-configuratie",
     "invalidConfig": "Ongeldige configuratie",
+    "appConfig": {
+      "pageHeader": "App-configuratie",
+      "pageSubHeader": "Verbinding en opslag die door MediaMTX Connect worden gebruikt."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-configuratie",
+      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",
+      "needsAttention": "{count, plural, one {# veld heeft aandacht nodig} other {# velden hebben aandacht nodig}}",
+      "discard": "Weggooien",
+      "reset": "Resetten",
+      "save": "Opslaan",
+      "saveToServer": "Opslaan op server"
+    },
     "formFields": {
       "oneValuePerLine": "Eén waarde per regel."
     },
     "clientForm": {
-      "title": "Applicatie-instellingen",
-      "description": "Verbindings- en opslagpaden die door MediaMTX Connect worden gebruikt.",
       "sections": {
         "mediamtxConnection": "MediaMTX-verbinding",
         "storage": "Opslag"
       },
+      "playbackBadge": "Vereist voor live afspelen",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX-URL",
           "description": "Het adres van je MediaMTX-instantie. Binnen een Docker-netwerk kun je de containernaam gebruiken; anders het externe IP-adres of de hostnaam."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "De poort van de MediaMTX-API"
+          "label": "API-poort",
+          "description": "De poort van de MediaMTX API."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Dit is het via de browser bereikbare, naar buiten gerichte IP-adres of de hostnaam van je MediaMTX-server."
+          "label": "Afspeel-URL",
+          "description": "De via de browser bereikbare, naar buiten gerichte URL van je MediaMTX-server. Live afspelen laadt streams vanaf hier."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Map met MediaMTX-opnames (niet aanbevolen om te wijzigen bij gebruik van Docker)"
+          "label": "Opnamemap",
+          "description": "Map met MediaMTX-opnames (niet aanbevolen om te wijzigen bij gebruik van Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Map om gegenereerde schermafbeeldingen op te slaan (niet aanbevolen om te wijzigen bij gebruik van Docker)"
+          "label": "Schermafbeeldingenmap",
+          "description": "Map voor gegenereerde snapshots (niet aanbevolen om te wijzigen bij gebruik van Docker)."
         }
       },
-      "actions": {
-        "reset": "Resetten",
-        "submit": "Verzenden"
-      },
       "toasts": {
-        "success": "Clientconfiguratie bijgewerkt",
-        "errorTitle": "Er is een probleem opgetreden bij het bijwerken van de clientconfiguratie",
-        "errorDescription": "Controleer de waarden in het formulier."
+        "success": "App-configuratie opgeslagen",
+        "errorTitle": "Kon de app-configuratie niet opslaan",
+        "errorDescription": "Controleer de waarden in het formulier en probeer het opnieuw."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Logboek",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Logboek",
-          "limits": "Limieten"
-        },
-        "api": {
-          "http": "HTTP-API",
-          "metrics": "Metrieken",
-          "pprof": "PPROF",
-          "enableDescription": "Schakelt de MediaMTX HTTP API in."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Authenticatie",
-          "enableDescription": "Schakelt de RTSP-server in."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Schakelt de RTMP-server in."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Segmenten",
-          "corsProxies": "CORS / Proxies",
-          "enableDescription": "Schakelt de HLS-server in."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Netwerk",
-          "iceServers": "ICE-servers",
-          "addServer": "Server toevoegen",
-          "noIceServers": "Geen ICE-servers geconfigureerd.",
-          "iceServerLabel": "ICE-server {index}",
-          "removeIceServer": "ICE-server verwijderen",
-          "iceFields": {
-            "url": "URL",
-            "username": "Gebruikersnaam",
-            "password": "Wachtwoord"
-          },
-          "enableDescription": "Schakelt de WebRTC-server in."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Schakelt de SRT-server in."
-        }
+      "sectionDescriptions": {
+        "logging": "Loguitvoer, time-outs en globale limieten.",
+        "api": "De HTTP API die MediaMTX Connect zelf gebruikt.",
+        "hooks": "Opdrachten die MediaMTX uitvoert bij verbindingsgebeurtenissen.",
+        "rtsp": "Streams publiceren en lezen via RTSP.",
+        "rtmp": "Streams publiceren en lezen via RTMP.",
+        "hls": "Streams aanbieden als HLS voor afspelen in de browser.",
+        "webrtc": "Afspelen en publiceren in de browser met lage latentie.",
+        "srt": "Streams publiceren en lezen via SRT."
+      },
+      "enabled": "Ingeschakeld",
+      "off": "Uit",
+      "hiddenWhileOff": "{count, plural, one {# optie verborgen zolang uitgeschakeld} other {# opties verborgen zolang uitgeschakeld}}",
+      "rail": {
+        "onThisPage": "Op deze pagina",
+        "aria": "Configuratiesecties"
+      },
+      "iceServers": {
+        "add": "ICE-server toevoegen",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL van ICE-server {index}",
+        "usernameAria": "Gebruikersnaam van ICE-server {index}",
+        "passwordAria": "Wachtwoord van ICE-server {index}",
+        "removeAria": "ICE-server {index} verwijderen"
+      },
+      "help": {
+        "logLevel": "Uitgebreidheid van de loguitvoer (error, warn, info of debug).",
+        "logDestinations": "Waar logs naartoe worden geschreven (stdout, file of syslog).",
+        "logFile": "Pad van het logbestand wanneer logDestinations file bevat.",
+        "readTimeout": "Time-out voor leesbewerkingen.",
+        "writeTimeout": "Time-out voor schrijfbewerkingen.",
+        "writeQueueSize": "Grootte van de uitgaande wachtrij per verbinding. Moet een macht van twee zijn.",
+        "udpMaxPayloadSize": "Maximale grootte van uitgaande UDP-pakketten.",
+        "externalAuthenticationURL": "URL van een externe authenticatieserver, aangeroepen bij elke verbinding.",
+        "apiAddress": "Luisteradres van de HTTP API.",
+        "metrics": "Prometheus-compatibele metrieken beschikbaar stellen.",
+        "metricsAddress": "Luisteradres van het metriek-eindpunt.",
+        "pprof": "Het Go pprof-profileringseindpunt beschikbaar stellen.",
+        "pprofAddress": "Luisteradres van het pprof-eindpunt.",
+        "runOnConnect": "Opdracht die wordt uitgevoerd wanneer een client verbinding maakt.",
+        "runOnConnectRestart": "De opdracht opnieuw starten als deze wordt beëindigd.",
+        "runOnDisconnect": "Opdracht die wordt uitgevoerd wanneer een client de verbinding verbreekt.",
+        "rtspAddress": "Luisteradres van de RTSP-server (TCP).",
+        "rtspsAddress": "Luisteradres van de RTSPS-server (TLS).",
+        "rtpAddress": "Luisteradres voor RTP-pakketten via UDP.",
+        "rtcpAddress": "Luisteradres voor RTCP-pakketten via UDP.",
+        "multicastIPRange": "IP-bereik gebruikt voor multicast-levering.",
+        "multicastRTPPort": "Poort voor multicast-RTP-pakketten.",
+        "multicastRTCPPort": "Poort voor multicast-RTCP-pakketten.",
+        "protocols": "Transportprotocollen die de RTSP-server accepteert (udp, multicast of tcp).",
+        "encryption": "TLS-versleutelingsbeleid (no, strict of optional).",
+        "serverKey": "Pad van de TLS-serversleutel.",
+        "serverCert": "Pad van het TLS-servercertificaat.",
+        "authMethods": "Authenticatiemethoden die de RTSP-server accepteert (basic of digest).",
+        "rtmpAddress": "Luisteradres van de RTMP-server.",
+        "rtmpEncryption": "TLS-versleutelingsbeleid voor RTMP (no, strict of optional).",
+        "rtmpsAddress": "Luisteradres van de RTMPS-server (TLS).",
+        "rtmpServerKey": "Pad van de RTMPS-serversleutel.",
+        "rtmpServerCert": "Pad van het RTMPS-servercertificaat.",
+        "hlsAddress": "Luisteradres van de HLS-server.",
+        "hlsEncryption": "HLS aanbieden via TLS (HTTPS).",
+        "hlsServerKey": "Pad van de HLS-serversleutel.",
+        "hlsServerCert": "Pad van het HLS-servercertificaat.",
+        "hlsAlwaysRemux": "Streams ook remuxen wanneer niemand kijkt.",
+        "hlsVariant": "HLS-variant (mpegts, fmp4 of lowLatency).",
+        "hlsSegmentCount": "Aantal segmenten dat in de afspeellijst wordt bewaard.",
+        "hlsSegmentDuration": "Minimale duur van elk segment.",
+        "hlsPartDuration": "Duur van elk deel in de modus met lage latentie.",
+        "hlsSegmentMaxSize": "Maximale grootte van elk segment.",
+        "hlsAllowOrigin": "Waarde van de Access-Control-Allow-Origin-header.",
+        "hlsTrustedProxies": "IP's of netwerken van proxy's vóór de HLS-server.",
+        "hlsDirectory": "Segmenten naar schijf schrijven in deze map in plaats van in RAM.",
+        "webrtcAddress": "Luisteradres van de WebRTC HTTP-server.",
+        "webrtcEncryption": "WebRTC aanbieden via TLS (HTTPS).",
+        "webrtcServerKey": "Pad van de WebRTC-serversleutel.",
+        "webrtcServerCert": "Pad van het WebRTC-servercertificaat.",
+        "webrtcAllowOrigin": "Waarde van de Access-Control-Allow-Origin-header.",
+        "webrtcTrustedProxies": "IP's of netwerken van proxy's vóór de WebRTC-server.",
+        "webrtcLocalUDPAddress": "Lokaal UDP-adres gebruikt voor WebRTC-verkeer.",
+        "webrtcLocalTCPAddress": "Lokaal TCP-adres gebruikt voor WebRTC-verkeer.",
+        "webrtcIPsFromInterfaces": "Kandidaat-IP's verzamelen van de netwerkinterfaces van de host.",
+        "webrtcIPsFromInterfacesList": "Interfaces om kandidaat-IP's van te verzamelen. Leeg betekent alle.",
+        "webrtcAdditionalHosts": "Extra hosts of IP's die als WebRTC-kandidaten worden aangekondigd.",
+        "webrtcICEServers2": "STUN- of TURN-servers gebruikt om WebRTC-verbindingen op te zetten.",
+        "srtAddress": "Luisteradres van de SRT-server."
       },
       "toasts": {
-        "success": "Globale configuratie bijgewerkt",
-        "errorTitle": "Er is een probleem opgetreden bij het bijwerken van de globale configuratie",
-        "errorDescription": "Controleer de waarden in het formulier."
+        "success": "MediaMTX-configuratie opgeslagen",
+        "errorTitle": "Kon de MediaMTX-configuratie niet opslaan",
+        "errorDescription": "Controleer de waarden in het formulier en probeer het opnieuw."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",
-      "discard": "Weggooien",
-      "saveChanges": "Wijzigingen opslaan"
     }
   }
 }

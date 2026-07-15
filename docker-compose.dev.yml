@@ -1,4 +1,4 @@
-# Development only - runs MediaMTX for local development with `npm run dev`
+# Development only - runs MediaMTX for local development with `pnpm dev`
 # Usage: docker compose -f docker-compose.dev.yml up -d
 # With fake streams: docker compose -f docker-compose.dev.yml --profile streams up -d
 services:

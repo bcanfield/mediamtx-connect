@@ -26,151 +26,193 @@
       "switchLanguage": "Magpalit ng wika",
       "searchPlaceholder": "Maghanap ng wika…",
       "noResults": "Walang nahanap na wika."
+    },
+    "connection": {
+      "connected": "nakakonekta",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Application",
-      "settings": "Mga setting"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Pangunahin",
     "items": {
       "live": "Live",
       "recordings": "Mga recording",
-      "clientConfig": "Configuration ng client",
-      "mediamtx": "MediaMTX"
+      "appConfig": "App Config",
+      "mediamtxConfig": "MediaMTX Config"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Mga stream",
-    "subHeader": "Live na view ng iyong mga aktibong stream",
+    "toolbar": {
+      "summary": "{count, plural, one {# stream} other {# na stream}} · {live} ang nagpe-play",
+      "playbackAria": "Playback mode",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Densidad ng grid"
+    },
     "errors": {
-      "configTitle": "Error sa configuration",
-      "configDescription": "Hindi ma-load ang configuration. Pakisuri ang koneksyon sa database.",
-      "connectionTitle": "Hindi makakonekta sa MediaMTX",
-      "connectionLead": "Hindi maabot ang MediaMTX sa",
-      "connectionHint": "Tiyaking tumatakbo ang MediaMTX at tama ang URL sa configuration mo.",
-      "checkConfigBtn": "Suriin ang configuration"
+      "unreachableTitle": "Hindi maabot ang MediaMTX",
+      "unreachableLead": "Walang tugon mula sa MediaMTX API sa",
+      "openAppConfig": "Buksan ang App Config",
+      "retry": "Subukang muli",
+      "retryCountdown": "awtomatikong susubukan muli sa {seconds}s"
     },
     "empty": {
-      "configureRemoteTitle": "I-configure ang remote URL",
-      "configureRemoteDescription": "I-set up ang iyong Remote MediaMTX URL para makapanood ng mga stream sa browser. Dapat itong URL na magagamit ng iyong browser para maabot ang MediaMTX.",
-      "goToConfig": "Pumunta sa configuration",
-      "noStreamsTitle": "Walang aktibong stream",
-      "noStreamsDescription": "Konektado ang MediaMTX ngunit walang aktibong stream sa kasalukuyan. Magsimula ng pag-stream sa MediaMTX para makita ito dito."
+      "noStreamsTitle": "Walang stream na nagpa-publish",
+      "noStreamsLead": "Ituro ang anumang publisher sa MediaMTX at lalabas ito rito:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Densidad ng grid",
-      "two": "Dalawang column",
-      "three": "Tatlong column",
-      "four": "Apat na column"
+    "banner": {
+      "playbackUrlTitle": "Hindi pa nakatakda ang playback URL",
+      "playbackUrlLead": "Itakda ang browser-facing na MediaMTX URL sa App Config para paganahin ang live playback.",
+      "openAppConfig": "Buksan ang App Config"
     },
     "card": {
-      "onlineSince": "Online mula {date}",
-      "idle": "Walang ginagawa",
       "live": "LIVE",
-      "stop": "Itigil",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "wala pang snapshot — unang capture sa ~30s",
+      "onlineSince": "online mula {time} · {uptime}",
+      "idle": "walang ginagawa",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# manonood} other {# na manonood}}",
       "play": "I-play",
+      "stop": "Itigil",
+      "playAria": "I-play ang {streamName}",
       "actionsAria": "Mga aksyon sa stream",
-      "viewRecordings": "Tingnan ang mga recording"
+      "stub": {
+        "title": "Hindi pa naipapatupad",
+        "description": "Nasa roadmap ang aksyong ito — nai-log na ito."
+      },
+      "menu": {
+        "openDetail": "Buksan ang detalye ng stream",
+        "viewRecordings": "Tingnan ang mga recording",
+        "takeSnapshot": "Kumuha ng snapshot",
+        "record": "I-record",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopyahin ang mga publish URL",
+        "shareEmbed": "Ibahagi at i-embed…",
+        "editPathConfig": "I-edit ang path config",
+        "editHooks": "I-edit ang mga hook"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Mga recording",
-    "header": "Mga recording",
-    "subHeader": "Mag-browse ng mga recording mula sa iba't ibang stream",
-    "subHeaderForStream": "Mga recording para sa: {streamName}",
-    "invalidConfig": "Hindi wastong configuration",
-    "errors": {
-      "configTitle": "Error sa configuration",
-      "configDescription": "Hindi ma-load ang configuration. Pakisuri ang koneksyon sa database.",
-      "directoryTitle": "Hindi ma-access ang recordings directory",
-      "directoryLead": "Hindi mabasa ang recordings directory sa",
-      "directoryHint": "Tiyaking umiiral ang directory at may tamang permissions ito.",
-      "checkConfigBtn": "Suriin ang configuration",
-      "readErrorTitle": "Hindi mabasa ang mga recording",
-      "readErrorDescription": "Hindi mabasa ang recordings directory. Tiyaking umiiral ang directory."
-    },
-    "empty": {
-      "noRecordingsTitle": "Walang nahanap na recording",
-      "noRecordingsLead": "Wala pang naka-save na recording. Lalabas dito ang mga recording kapag nagsimula nang mag-record ang MediaMTX ng mga stream.",
-      "noRecordingsHint": "Tiyaking nakatakda ang <code>MTX_RECORD=yes</code> sa iyong MediaMTX configuration.",
-      "noMatchingTitle": "Walang tumutugmang stream",
-      "noMatchingDescription": "Walang stream na tumutugma sa «{query}»."
-    },
-    "search": {
-      "placeholder": "Maghanap ng mga stream"
-    },
-    "groups": {
-      "today": "Ngayon",
-      "yesterday": "Kahapon"
+    "toolbar": {
+      "summary": "{streams, plural, one {# stream} other {# na stream}} · {recordings, plural, one {# recording} other {# na recording}}",
+      "filterPlaceholder": "I-filter ang mga stream…",
+      "filterAria": "I-filter ang mga stream"
     },
     "card": {
-      "recordingCount": "{count, plural, one {# recording} other {# na recording}}",
-      "latest": "Pinakabago {time}",
-      "viewBtn": "Tingnan"
+      "recordingsChip": "{count, plural, one {# recording} other {# na recording}}",
+      "latest": "pinakabago {time}",
+      "openAria": "Tingnan ang mga recording para sa {name}"
     },
-    "recordingCard": {
-      "stop": "Itigil",
+    "empty": {
+      "noRecordingsTitle": "Wala pang recording",
+      "noRecordingsLead": "Lalabas dito ang mga recording kapag nagsimula nang mag-record ng mga stream ang MediaMTX.",
+      "enableRecording": "Paganahin ang pag-record",
+      "noMatchingTitle": "Walang tumutugmang stream",
+      "noMatchingDescription": "Walang stream na tumutugma sa “{query}”."
+    },
+    "errors": {
+      "directoryTitle": "Hindi mabasa ang recordings directory",
+      "directoryLead": "Hindi mabasa ang mga recording sa",
+      "openAppConfig": "Buksan ang App Config",
+      "readErrorTitle": "Hindi mabasa ang mga recording",
+      "readErrorDescription": "Tiyaking umiiral ang recordings directory at may tamang permissions ito."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# recording} other {# na recording}}"
+    },
+    "groups": {
+      "todayEyebrow": "Ngayon — {date}",
+      "yesterdayEyebrow": "Kahapon — {date}"
+    },
+    "row": {
       "play": "I-play",
-      "downloadAria": "I-download ang recording na {filePath}",
-      "downloadError": "Error sa pag-download ng video"
+      "close": "Isara",
+      "cancel": "Kanselahin",
+      "playAria": "I-play ang recording mula {time}",
+      "downloadAria": "I-download ang recording na {file}",
+      "downloading": "dina-download… {received} ng {total} · {rate}",
+      "downloadComplete": "Kumpleto na ang download",
+      "downloadFailed": "Nabigo ang download"
+    },
+    "player": {
+      "play": "I-play",
+      "pause": "I-pause",
+      "seek": "Mag-seek"
+    },
+    "pagination": {
+      "aria": "Pagination",
+      "showing": "Ipinapakita ang {from}–{to} ng {total}",
+      "previous": "Nakaraang pahina",
+      "next": "Susunod na pahina"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Mga setting",
-      "clientConfig": "Configuration ng client",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Configuration",
-    "pageSubHeader": "Pamahalaan ang configuration ng iyong app",
     "invalidConfig": "Hindi wastong configuration",
+    "appConfig": {
+      "pageHeader": "App Config",
+      "pageSubHeader": "Koneksyon at imbakan na ginagamit ng MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX Config",
+      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",
+      "needsAttention": "{count, plural, one {# field ang nangangailangan ng atensyon} other {# na field ang nangangailangan ng atensyon}}",
+      "discard": "Itapon",
+      "reset": "I-reset",
+      "save": "I-save",
+      "saveToServer": "I-save sa server"
+    },
     "formFields": {
       "oneValuePerLine": "Isang value bawat linya."
     },
     "clientForm": {
-      "title": "Mga setting ng application",
-      "description": "Mga path ng koneksyon at imbakan na ginagamit ng MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "Koneksyon sa MediaMTX",
         "storage": "Imbakan"
       },
+      "playbackBadge": "Kinakailangan para sa live playback",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "Ang address ng iyong MediaMTX instance. Sa loob ng Docker Network, maaari mong gamitin ang container name. Kung hindi, gamitin ang external IP / hostname."
+          "label": "MediaMTX URL",
+          "description": "Ang address ng iyong MediaMTX instance. Sa loob ng Docker network, maaari mong gamitin ang container name; kung hindi, gamitin ang external na IP o hostname."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Ang port ng MediaMTX API"
+          "label": "API port",
+          "description": "Ang port ng MediaMTX API."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Ito ang browser-accessible, externally-facing IP / hostname ng iyong MediaMTX server."
+          "label": "Playback URL",
+          "description": "Ang browser-accessible, externally-facing na URL ng iyong MediaMTX server. Dito naglo-load ng mga stream ang live playback."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Directory na naglalaman ng mga MediaMTX recording (hindi inirerekomendang baguhin kung gumagamit ng Docker)"
+          "label": "Recordings directory",
+          "description": "Directory na naglalaman ng mga MediaMTX recording (hindi inirerekomendang baguhin kapag gumagamit ng Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Directory para sa pag-imbak ng mga ginawang screenshot (hindi inirerekomendang baguhin kung gumagamit ng Docker)"
+          "label": "Screenshots directory",
+          "description": "Directory para sa mga nabuong snapshot (hindi inirerekomendang baguhin kapag gumagamit ng Docker)."
         }
       },
-      "actions": {
-        "reset": "I-reset",
-        "submit": "Isumite"
-      },
       "toasts": {
-        "success": "Na-update ang Client Config",
-        "errorTitle": "May problema sa pag-update ng Client Config",
-        "errorDescription": "Pakitingnang muli ang mga value ng form."
+        "success": "Na-save ang App Config",
+        "errorTitle": "Hindi ma-save ang App Config",
+        "errorDescription": "Pakitingnang muli ang mga value ng form at subukang muli."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Logging",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Logging",
-          "limits": "Mga limitasyon"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Mga metric",
-          "pprof": "PPROF",
-          "enableDescription": "Paganahin ang MediaMTX HTTP API."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Authentication",
-          "enableDescription": "Paganahin ang RTSP server."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Paganahin ang RTMP server."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Mga segment",
-          "corsProxies": "CORS / Mga proxy",
-          "enableDescription": "Paganahin ang HLS server."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Network",
-          "iceServers": "Mga ICE server",
-          "addServer": "Magdagdag ng server",
-          "noIceServers": "Walang naka-configure na ICE server.",
-          "iceServerLabel": "ICE Server {index}",
-          "removeIceServer": "Alisin ang ICE server",
-          "iceFields": {
-            "url": "URL",
-            "username": "Username",
-            "password": "Password"
-          },
-          "enableDescription": "Paganahin ang WebRTC server."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Paganahin ang SRT server."
-        }
+      "sectionDescriptions": {
+        "logging": "Log output, mga timeout, at mga global na limitasyon.",
+        "api": "Ang HTTP API na ginagamit mismo ng MediaMTX Connect.",
+        "hooks": "Mga command na pinapatakbo ng MediaMTX sa mga connection event.",
+        "rtsp": "Mag-publish at magbasa ng mga stream sa pamamagitan ng RTSP.",
+        "rtmp": "Mag-publish at magbasa ng mga stream sa pamamagitan ng RTMP.",
+        "hls": "Ihain ang mga stream bilang HLS para sa playback sa browser.",
+        "webrtc": "Low-latency na playback at pag-publish sa browser.",
+        "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT."
+      },
+      "enabled": "Naka-enable",
+      "off": "Naka-off",
+      "hiddenWhileOff": "{count, plural, one {# opsyon ang nakatago habang naka-off} other {# na opsyon ang nakatago habang naka-off}}",
+      "rail": {
+        "onThisPage": "Sa pahinang ito",
+        "aria": "Mga seksyon ng config"
+      },
+      "iceServers": {
+        "add": "Magdagdag ng ICE server",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL ng ICE server {index}",
+        "usernameAria": "Username ng ICE server {index}",
+        "passwordAria": "Password ng ICE server {index}",
+        "removeAria": "Alisin ang ICE server {index}"
+      },
+      "help": {
+        "logLevel": "Antas ng detalye ng log output (error, warn, info, o debug).",
+        "logDestinations": "Kung saan isusulat ang mga log (stdout, file, o syslog).",
+        "logFile": "Path ng log file kapag kasama ang file sa logDestinations.",
+        "readTimeout": "Timeout para sa mga read operation.",
+        "writeTimeout": "Timeout para sa mga write operation.",
+        "writeQueueSize": "Laki ng outgoing queue bawat koneksyon. Dapat na power of two.",
+        "udpMaxPayloadSize": "Maximum na laki ng mga outgoing UDP packet.",
+        "externalAuthenticationURL": "URL ng external authentication server, tinatawag sa bawat koneksyon.",
+        "apiAddress": "Listen address ng HTTP API.",
+        "metrics": "I-expose ang mga Prometheus-compatible na metric.",
+        "metricsAddress": "Listen address ng metrics endpoint.",
+        "pprof": "I-expose ang Go pprof profiling endpoint.",
+        "pprofAddress": "Listen address ng pprof endpoint.",
+        "runOnConnect": "Command na patatakbuhin kapag kumonekta ang isang client.",
+        "runOnConnectRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnDisconnect": "Command na patatakbuhin kapag nag-disconnect ang isang client.",
+        "rtspAddress": "Listen address ng RTSP server (TCP).",
+        "rtspsAddress": "Listen address ng RTSPS (TLS) server.",
+        "rtpAddress": "Listen address para sa mga RTP packet sa UDP.",
+        "rtcpAddress": "Listen address para sa mga RTCP packet sa UDP.",
+        "multicastIPRange": "IP range na ginagamit para sa multicast delivery.",
+        "multicastRTPPort": "Port para sa mga multicast RTP packet.",
+        "multicastRTCPPort": "Port para sa mga multicast RTCP packet.",
+        "protocols": "Mga transport protocol na tinatanggap ng RTSP server (udp, multicast, o tcp).",
+        "encryption": "Patakaran sa TLS encryption (no, strict, o optional).",
+        "serverKey": "Path ng TLS server key.",
+        "serverCert": "Path ng TLS server certificate.",
+        "authMethods": "Mga paraan ng authentication na tinatanggap ng RTSP server (basic o digest).",
+        "rtmpAddress": "Listen address ng RTMP server.",
+        "rtmpEncryption": "Patakaran sa TLS encryption para sa RTMP (no, strict, o optional).",
+        "rtmpsAddress": "Listen address ng RTMPS (TLS) server.",
+        "rtmpServerKey": "Path ng RTMPS server key.",
+        "rtmpServerCert": "Path ng RTMPS server certificate.",
+        "hlsAddress": "Listen address ng HLS server.",
+        "hlsEncryption": "Ihain ang HLS sa TLS (HTTPS).",
+        "hlsServerKey": "Path ng HLS server key.",
+        "hlsServerCert": "Path ng HLS server certificate.",
+        "hlsAlwaysRemux": "I-remux ang mga stream kahit walang nanonood.",
+        "hlsVariant": "HLS variant (mpegts, fmp4, o lowLatency).",
+        "hlsSegmentCount": "Bilang ng mga segment na itinatabi sa playlist.",
+        "hlsSegmentDuration": "Minimum na tagal ng bawat segment.",
+        "hlsPartDuration": "Tagal ng bawat part sa low-latency mode.",
+        "hlsSegmentMaxSize": "Maximum na laki ng bawat segment.",
+        "hlsAllowOrigin": "Value ng Access-Control-Allow-Origin header.",
+        "hlsTrustedProxies": "Mga IP o network ng mga proxy na nasa harap ng HLS server.",
+        "hlsDirectory": "Isulat ang mga segment sa disk sa directory na ito sa halip na sa RAM.",
+        "webrtcAddress": "Listen address ng WebRTC HTTP server.",
+        "webrtcEncryption": "Ihain ang WebRTC sa TLS (HTTPS).",
+        "webrtcServerKey": "Path ng WebRTC server key.",
+        "webrtcServerCert": "Path ng WebRTC server certificate.",
+        "webrtcAllowOrigin": "Value ng Access-Control-Allow-Origin header.",
+        "webrtcTrustedProxies": "Mga IP o network ng mga proxy na nasa harap ng WebRTC server.",
+        "webrtcLocalUDPAddress": "Lokal na UDP address na ginagamit para sa WebRTC traffic.",
+        "webrtcLocalTCPAddress": "Lokal na TCP address na ginagamit para sa WebRTC traffic.",
+        "webrtcIPsFromInterfaces": "Mangolekta ng mga candidate IP mula sa mga network interface ng host.",
+        "webrtcIPsFromInterfacesList": "Mga interface na pagkukunan ng mga candidate IP. Ang walang laman ay nangangahulugang lahat.",
+        "webrtcAdditionalHosts": "Mga karagdagang host o IP na ina-advertise bilang mga WebRTC candidate.",
+        "webrtcICEServers2": "Mga STUN o TURN server na ginagamit para magtatag ng mga koneksyong WebRTC.",
+        "srtAddress": "Listen address ng SRT server."
       },
       "toasts": {
-        "success": "Na-update ang Global Config",
-        "errorTitle": "May problema sa pag-update ng Global Config",
-        "errorDescription": "Pakitingnang muli ang mga value ng form."
+        "success": "Na-save ang MediaMTX config",
+        "errorTitle": "Hindi ma-save ang MediaMTX config",
+        "errorDescription": "Pakitingnang muli ang mga value ng form at subukang muli."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",
-      "discard": "Itapon",
-      "saveChanges": "I-save ang mga pagbabago"
     }
   }
 }
