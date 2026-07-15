@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Accent & Semantic" subtitle="Vercel blue, chromatic family, and semantic states" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--color-canvas); padding: 20px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .sw { width: 100px; height: 92px; border-radius: 10px; display: flex; flex-direction: column; justify-content: flex-end; padding: 9px; box-sizing: border-box; }
+  .name { font: 500 12px/1.3 var(--font-sans); color: #fff; }
+  .hex { font: 400 10px/1.4 var(--font-mono); color: rgba(255,255,255,.85); }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:#0070f3"><span class="name">Link</span><span class="hex">#0070f3</span></div>
+  <div class="sw" style="background:#7928ca"><span class="name">Violet</span><span class="hex">#7928ca</span></div>
+  <div class="sw" style="background:#50e3c2"><span class="name" style="color:#171717">Cyan</span><span class="hex" style="color:rgba(23,23,23,.7)">#50e3c2</span></div>
+  <div class="sw" style="background:#ff0080"><span class="name">Pink</span><span class="hex">#ff0080</span></div>
+  <div class="sw" style="background:#ee0000"><span class="name">Error</span><span class="hex">#ee0000</span></div>
+  <div class="sw" style="background:#f5a623"><span class="name" style="color:#171717">Warning</span><span class="hex" style="color:rgba(23,23,23,.7)">#f5a623</span></div>
+</div>
+</body>
+</html>

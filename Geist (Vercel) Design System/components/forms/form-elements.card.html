@@ -1,0 +1,47 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Form Elements" subtitle="text-input + code-block, spec-sheet framing" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; background: var(--color-canvas); padding: 28px; font-family: var(--font-sans); }
+  .eyebrow { font: 500 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--color-mute); }
+  .title { margin: 6px 0 24px; font: 600 20px/28px var(--font-sans); letter-spacing: -0.4px; color: var(--color-ink); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .spec { display: flex; flex-direction: column; gap: 8px; }
+  .lab { font: 500 12px/1 var(--font-mono); color: var(--color-ink); }
+  .lab .dim { color: var(--color-mute); }
+  .note { font: 400 12px/16px var(--font-sans); color: var(--color-mute); }
+</style>
+</head>
+<body>
+<div class="eyebrow">05 — Components</div>
+<div class="title">Form Elements</div>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel">
+  const { Input, CodeBlock } = window.GeistVercelDesignSystem_670231;
+  function Demo() {
+    return (
+      <div className="grid">
+        <div className="spec">
+          <div className="lab">text-input <span className="dim">· 6px</span></div>
+          <Input placeholder="you@example.com" />
+          <div className="note">White field, 1px hairline, tight 6px corners.</div>
+        </div>
+        <div className="spec">
+          <div className="lab">code-block <span className="dim">· Geist Mono</span></div>
+          <CodeBlock label="Terminal" showChrome code={"$ vercel deploy --prod\n\u2713 https://acme.vercel.app"} />
+          <div className="note">Monospace surface, 12px radius, ink-and-accent syntax.</div>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>
