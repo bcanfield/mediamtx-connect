@@ -22,7 +22,7 @@ build: web
 	CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o bin/server ./cmd/server
 
 dev-api:
-	air
+	go tool air
 
 dev-web:
 	cd web && npm run dev
