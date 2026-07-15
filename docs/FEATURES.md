@@ -130,7 +130,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 6. Data Layer
 
 - **JSON config store (no database)** — the app's five settings persist in `$DATA_DIR/config.json`, Zod-validated on read and write, written atomically (temp file + rename). `apps/api/src/config-store.ts`
-- **Env-seeded first boot** — see §4; sensible production-shaped defaults (`http://mediamtx`, port `9997`, `/recordings`, `/screenshots`) come from the env schema. `apps/api/src/env.ts`
+- **Env-seeded first boot** — see §4; sensible production-shaped defaults (`http://mediamtx`, port `9997`) come from the env schema. The three dir vars — `DATA_DIR`, `MEDIAMTX_RECORDINGS_DIR`, `MEDIAMTX_SCREENSHOTS_DIR` — default to their container paths (`/data`, `/recordings`, `/screenshots`) only when `NODE_ENV=production`; elsewhere they are required, so a missing value fails env validation up front instead of an ENOENT on the first config write or a silently empty recordings list. Relative values resolve against the api's cwd (`apps/api`), not the repo root. `apps/api/src/env.ts`
 
 ---
 
