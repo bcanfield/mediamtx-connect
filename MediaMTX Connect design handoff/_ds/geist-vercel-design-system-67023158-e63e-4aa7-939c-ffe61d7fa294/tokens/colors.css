@@ -1,0 +1,68 @@
+:root {
+  /* ---- Brand / ink ---- */
+  --color-primary: #171717;        /* ink — the defining near-black */
+  --color-on-primary: #ffffff;
+  --color-ink: #171717;
+
+  /* ---- Text ladder ---- */
+  --color-body: #4d4d4d;           /* standard paragraph / secondary */
+  --color-mute: #8f8f8f;           /* captions, logo-strip labels */
+  --color-faint: #a1a1a1;          /* placeholders, disabled */
+
+  /* ---- Surface ---- */
+  --color-canvas: #fafafa;         /* default page background */
+  --color-canvas-elevated: #ffffff;/* cards, buttons, inputs, code */
+
+  /* ---- Borders ---- */
+  --color-hairline: #ebebeb;       /* the 1px structural workhorse */
+  --color-hairline-soft: #f2f2f2;  /* faintest inset well fill */
+
+  /* ---- Accent / link ---- */
+  --color-link: #0070f3;           /* Vercel blue — links, focus, highlight */
+  --color-link-deep: #0761d1;      /* pressed */
+  --color-link-soft: #d3e5ff;      /* pale wash */
+
+  /* ---- Chromatic family (illustration + gradient stops only) ---- */
+  --color-violet: #7928ca;
+  --color-violet-soft: #d8ccf1;
+  --color-cyan: #50e3c2;
+  --color-cyan-soft: #aaffec;
+  --color-pink: #ff0080;
+  --color-magenta: #eb367f;
+
+  /* ---- Semantic ---- */
+  --color-error: #ee0000;
+  --color-error-deep: #c50000;
+  --color-warning: #f5a623;
+  --color-warning-soft: #ffefcf;
+  --color-warning-deep: #ab570a;
+  --color-success: #0070f3;        /* blue doubles as positive/active */
+
+  /* ---- Named brand gradients (legacy Vercel trio) ---- */
+  --gradient-develop-start: #007cf0; --gradient-develop-end: #00dfd8;
+  --gradient-preview-start: #7928ca; --gradient-preview-end: #ff0080;
+  --gradient-ship-start: #ff4d4d;    --gradient-ship-end: #f9cb28;
+
+  --gradient-develop: linear-gradient(90deg, var(--gradient-develop-start), var(--gradient-develop-end));
+  --gradient-preview: linear-gradient(90deg, var(--gradient-preview-start), var(--gradient-preview-end));
+  --gradient-ship:    linear-gradient(90deg, var(--gradient-ship-start), var(--gradient-ship-end));
+
+  /* The hero mesh — the only decorative flourish in the system */
+  --gradient-mesh:
+    radial-gradient(60% 80% at 12% 20%, rgba(0,124,240,0.55), transparent 60%),
+    radial-gradient(50% 70% at 40% 10%, rgba(0,223,216,0.45), transparent 60%),
+    radial-gradient(60% 80% at 68% 24%, rgba(121,40,202,0.42), transparent 62%),
+    radial-gradient(55% 75% at 88% 12%, rgba(255,0,128,0.40), transparent 60%),
+    radial-gradient(50% 70% at 98% 40%, rgba(249,203,40,0.42), transparent 62%); /* @kind color */
+
+  /* ---- Semantic aliases ---- */
+  --text-heading: var(--color-ink);
+  --text-body: var(--color-body);
+  --text-mute: var(--color-mute);
+  --text-faint: var(--color-faint);
+  --text-link: var(--color-link);
+  --surface-page: var(--color-canvas);
+  --surface-card: var(--color-canvas-elevated);
+  --surface-well: var(--color-hairline-soft);
+  --border-default: var(--color-hairline);
+}

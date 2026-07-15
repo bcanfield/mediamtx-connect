@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/geist-vercel-design-system-67023158-e63e-4aa7-939c-ffe61d7fa294/styles.css">
+<script src="_ds/geist-vercel-design-system-67023158-e63e-4aa7-939c-ffe61d7fa294/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#0e0e0e;font-family:'Geist',Arial,sans-serif}
+a{color:#0070f3;text-decoration:none}a:hover{color:#3291ff}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(255,255,255,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.dv-tid{font:600 10px 'Geist Mono',Menlo,monospace;padding:3px 7px;background:#ededed;color:#0a0a0a;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 'Geist',sans-serif;color:#ededed}
+.dv-note{font:400 12px/1.6 'Geist',sans-serif;color:#8f8f8f;max-width:760px;margin:0 0 26px}
+.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px 'Geist Mono',Menlo,monospace;padding:3px 7px;background:rgba(255,255,255,.12);color:#ededed;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.3 'Geist',sans-serif;color:#8f8f8f}
+.dv-card{max-width:100%;background:#0a0a0a;border:1px solid #262626;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);overflow:hidden}
+.dv-opt:target .dv-oid{background:#0070f3;color:#fff}
+.dv-next{margin:26px 0 0;font:12px/1.5 'Geist',sans-serif;color:#8f8f8f}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Final set — top-nav shell (<a class="dv-oid" href="#1b">1b</a>) applied everywhere</span></div>
+<p class="dv-note">Decisions locked: top-nav shell, red LIVE/REC, footer controls as-is, playback-URL treatment as-is, placeholder thumbnails. Config page stays scroll-with-rail — the rail is a sticky anchor list with per-section error counts (Vercel project-settings pattern); on narrow screens it collapses to a horizontal chip row. States from <a class="dv-oid" href="#1c">1c</a> and the card anatomy from <a class="dv-oid" href="#1h">1h</a> carry over unchanged.</p>
+<div class="dv-opts">
+
+<!-- ============ 2a LIVE VIEW FINAL ============ -->
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Live View — final</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Live View final">
+<div style="min-height:840px;background:#0a0a0a">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed;display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="padding:24px 28px 40px">
+    <div style="display:flex;align-items:center;margin-bottom:20px">
+      <div style="font:400 13px 'Geist',sans-serif;color:#8f8f8f">4 streams active · 2 playing</div>
+      <div style="margin-left:auto;display:flex;gap:10px">
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden"><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">AUTO</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a;border-left:1px solid #262626;border-right:1px solid #262626">LOW-LAT</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">COMPAT</div></div>
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden"><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">2</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a;border-left:1px solid #262626;border-right:1px solid #262626">3</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">4</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+
+      <!-- playing -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:radial-gradient(120% 90% at 50% 0%,#1d1d1f 0%,#0c0c0d 70%)">
+          <div style="position:absolute;inset:0;display:grid;place-items:center;font:400 11px 'Geist Mono',monospace;color:#3a3a3a">live video — WebRTC</div>
+          <div style="position:absolute;top:10px;left:10px;display:flex;gap:6px">
+            <div style="display:flex;align-items:center;gap:5px;padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35)"><span style="width:5px;height:5px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+            <div style="padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10px 'Geist Mono',monospace;color:#a1a1a1">WEBRTC · ~0.4s</div>
+          </div>
+          <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.5)">09:41:07</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;align-items:flex-end;justify-content:space-between;padding:0 10px 8px">
+            <div style="display:flex;gap:5px"><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.09);font:500 9.5px 'Geist Mono',monospace;color:#a1a1a1">H265</div><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.09);font:500 9.5px 'Geist Mono',monospace;color:#a1a1a1">OPUS</div></div>
+            <div style="font:400 10px 'Geist Mono',monospace;color:#8f8f8f">1080p · 4.2 Mb/s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px">
+          <div style="min-width:0"><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">driveway</div>
+          <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">online since 06:12 · 3h 29m</div></div>
+          <div style="margin-left:auto;display:flex;gap:7px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif" style-hover="background:#fff">Stop</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 12px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- playing, menu open -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;position:relative">
+        <div style="position:relative;aspect-ratio:16/9;background:radial-gradient(120% 90% at 50% 0%,#1b1c1e 0%,#0c0c0d 70%);border-radius:12px 12px 0 0;overflow:hidden">
+          <div style="position:absolute;inset:0;display:grid;place-items:center;font:400 11px 'Geist Mono',monospace;color:#3a3a3a">live video — WebRTC</div>
+          <div style="position:absolute;top:10px;left:10px;display:flex;gap:6px">
+            <div style="display:flex;align-items:center;gap:5px;padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35)"><span style="width:5px;height:5px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+            <div style="padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10px 'Geist Mono',monospace;color:#a1a1a1">WEBRTC · ~0.6s</div>
+          </div>
+          <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.5)">09:41:07</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;align-items:flex-end;justify-content:space-between;padding:0 10px 8px">
+            <div style="display:flex;gap:5px"><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.09);font:500 9.5px 'Geist Mono',monospace;color:#a1a1a1">H264</div><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.09);font:500 9.5px 'Geist Mono',monospace;color:#a1a1a1">AAC</div></div>
+            <div style="font:400 10px 'Geist Mono',monospace;color:#8f8f8f">720p · 1.8 Mb/s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px">
+          <div style="min-width:0"><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">front-door</div>
+          <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">online since 06:12 · 3h 29m</div></div>
+          <div style="margin-left:auto;display:flex;gap:7px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Stop</div>
+            <div style="width:30px;height:30px;border:1px solid #3a3a3a;border-radius:6px;display:grid;place-items:center;color:#ededed;background:#1a1a1a;font:600 12px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+        <div style="position:absolute;right:12px;top:calc(100% - 6px);z-index:5;width:216px;background:#161616;border:1px solid #2e2e2e;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.6);padding:5px;font:400 12.5px 'Geist',sans-serif;color:#d4d4d4">
+          <div style="padding:7px 10px;border-radius:5px;background:#222;color:#ededed">View recordings</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Open stream detail</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Take snapshot</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Copy publish URLs</div>
+          <div style="height:1px;background:#262626;margin:5px 4px"></div>
+          <div style="padding:7px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center" style-hover="background:#222">Record <span style="font:500 10px 'Geist Mono',monospace;color:#0070f3">ON</span></div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Edit path config</div>
+        </div>
+      </div>
+
+      <!-- idle -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,#19191b 0%,#0d0d0e 80%)">
+          <div style="position:absolute;top:10px;left:10px;padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.6);border:1px solid #2e2e2e;font:500 10px 'Geist Mono',monospace;color:#8f8f8f">SNAPSHOT · 14s ago</div>
+          <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.4)">09:40:53</div>
+          <div style="position:absolute;inset:0;display:grid;place-items:center"><div style="width:46px;height:46px;border-radius:50%;background:rgba(237,237,237,.95);display:grid;place-items:center;color:#0a0a0a;font-size:14px;padding-left:4px">▶</div></div>
+          <div style="position:absolute;bottom:8px;left:10px;display:flex;gap:5px"><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.07);font:500 9.5px 'Geist Mono',monospace;color:#8f8f8f">H264</div><div style="padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.07);font:500 9.5px 'Geist Mono',monospace;color:#8f8f8f">720p</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px">
+          <div style="min-width:0"><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">rpi-birdcam</div>
+          <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">online since yesterday · 22h 05m</div></div>
+          <div style="margin-left:auto;display:flex;gap:7px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif" style-hover="border-color:#3a3a3a">Play</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 12px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- no snapshot -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(45deg,#101010 0 10px,#131313 10px 20px)">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px">
+            <div style="width:36px;height:36px;border:1px dashed #333;border-radius:50%;display:grid;place-items:center;color:#4a4a4a;font-size:13px">▣</div>
+            <div style="font:400 10.5px 'Geist Mono',monospace;color:#666">no snapshot yet — first capture in ~30s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px">
+          <div style="min-width:0"><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">obs-studio</div>
+          <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">online since 09:39 · 2m</div></div>
+          <div style="margin-left:auto;display:flex;gap:7px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Play</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 12px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;font:400 11px 'Geist Mono',monospace;color:#4a4a4a">?play=driveway,front-door — layout encoded in URL, reload-safe</div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 2b RECORDINGS INDEX FINAL ============ -->
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Recordings index — final</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Recordings index final">
+<div style="min-height:560px;background:#0a0a0a">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f;display:flex;align-items:center;gap:8px" style-hover="color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="padding:24px 28px 36px">
+    <div style="display:flex;align-items:center;margin-bottom:20px;gap:16px">
+      <div style="font:400 13px 'Geist',sans-serif;color:#8f8f8f">5 streams · 1,284 recordings · 412 GB on disk</div>
+      <div style="margin-left:auto;width:280px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid #262626;border-radius:6px;background:#111;font:400 13px 'Geist',sans-serif;color:#666">⌕ <span>Filter streams…</span><span style="margin-left:auto;font:500 10px 'Geist Mono',monospace;border:1px solid #2e2e2e;border-radius:4px;padding:1px 5px">/</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <sc-for list="{{ recStreams }}" as="r" hint-placeholder-count="3">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden" style-hover="border-color:#3a3a3a">
+          <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,#18181a,#0d0d0e)">
+            <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.4)">{{ r.stamp }}</div>
+            <div style="position:absolute;bottom:10px;left:10px;padding:3px 8px;border-radius:4px;background:rgba(10,10,10,.7);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">{{ r.count }} RECORDINGS</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:11px 13px">
+            <div><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">{{ r.name }}</div>
+            <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">latest {{ r.latest }} · {{ r.size }}</div></div>
+            <div style="margin-left:auto;color:#666;font-size:14px">→</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 2c PER-STREAM RECORDINGS FINAL ============ -->
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Per-stream recordings — final</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Per-stream recordings final">
+<div style="min-height:760px;background:#0a0a0a">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f;display:flex;align-items:center;gap:8px" style-hover="color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="padding:24px 28px 36px;max-width:920px;margin:0 auto">
+    <div style="font:400 12.5px 'Geist',sans-serif;color:#8f8f8f;margin-bottom:8px"><a href="#2b" style="color:#8f8f8f">Recordings</a> <span style="color:#4a4a4a;margin:0 4px">/</span> <span style="color:#ededed;font-weight:500">driveway</span></div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:24px">
+      <div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">driveway</div>
+      <div style="font:400 13px 'Geist',sans-serif;color:#8f8f8f">486 recordings · 148 GB</div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font:500 11px 'Geist Mono',monospace;color:#ff6b6b"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>RECORDING NOW</div>
+    </div>
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:14px">Today — July 14</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:26px">
+      <div style="background:#111;border:1px solid #2e2e2e;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;max-height:340px;background:radial-gradient(120% 90% at 50% 0%,#1c1c1e,#0c0c0d 75%);display:grid;place-items:center">
+          <div style="font:400 12px 'Geist Mono',monospace;color:#3a3a3a">mp4 playback — seekable</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75))">
+            <div style="height:3px;border-radius:2px;background:rgba(255,255,255,.15);position:relative;margin-bottom:8px"><div style="position:absolute;left:0;top:0;bottom:0;width:38%;background:#0070f3;border-radius:2px"></div><div style="position:absolute;left:38%;top:50%;width:11px;height:11px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)"></div></div>
+            <div style="display:flex;align-items:center;gap:12px;font:400 11px 'Geist Mono',monospace;color:#a1a1a1"><span style="color:#ededed;font-size:12px">❚❚</span><span>03:12 / 08:24</span><span style="margin-left:auto">1× · ⛶</span></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;padding:11px 14px;gap:12px">
+          <div><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">09:12 — 09:20</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">312 MB · 8m 24s · H264</div></div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Close</div>
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Download</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px">
+        <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#444;font-size:11px">▶</div></div>
+        <div style="min-width:0;flex:1">
+          <div style="display:flex;align-items:baseline;gap:10px"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">07:46 — 08:01</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">561 MB · 15m 02s</div></div>
+          <div style="margin-top:8px;height:3px;border-radius:2px;background:#222;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:#0070f3;border-radius:2px"></div></div>
+          <div style="margin-top:6px;font:400 11px 'Geist Mono',monospace;color:#8f8f8f">downloading… 348 MB of 561 MB · 11.2 MB/s</div>
+        </div>
+        <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif;flex:none">Cancel</div>
+      </div>
+      <sc-for list="{{ recToday }}" as="rec" hint-placeholder-count="2">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px" style-hover="border-color:#3a3a3a">
+          <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#555;font-size:11px">▶</div><div style="position:absolute;bottom:4px;right:5px;font:400 9px 'Geist Mono',monospace;color:#666">{{ rec.dur }}</div></div>
+          <div style="min-width:0;flex:1"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">{{ rec.time }}</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">{{ rec.meta }}</div></div>
+          <div style="display:flex;gap:8px;flex:none">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Play</div>
+            <div style="height:30px;width:30px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:grid;place-items:center;font-size:12px">↓</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:14px">Yesterday — July 13</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ recYesterday }}" as="rec" hint-placeholder-count="2">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px" style-hover="border-color:#3a3a3a">
+          <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#555;font-size:11px">▶</div><div style="position:absolute;bottom:4px;right:5px;font:400 9px 'Geist Mono',monospace;color:#666">{{ rec.dur }}</div></div>
+          <div style="min-width:0;flex:1"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">{{ rec.time }}</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">{{ rec.meta }}</div></div>
+          <div style="display:flex;gap:8px;flex:none">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Play</div>
+            <div style="height:30px;width:30px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:grid;place-items:center;font-size:12px">↓</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-top:24px">
+      <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f;margin-right:auto">Showing 1–10 of 486</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#4a4a4a;font-size:12px">←</div>
+      <div style="width:30px;height:30px;border-radius:6px;display:grid;place-items:center;background:#1a1a1a;color:#ededed;font:500 12.5px 'Geist',sans-serif">1</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">2</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">3</div>
+      <div style="font:400 12px 'Geist',sans-serif;color:#4a4a4a;padding:0 2px">…</div>
+      <div style="width:36px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">49</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:12px">→</div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 2d APP CONFIG FINAL ============ -->
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>App Config — final</div>
+<div class="dv-card" style="width:1360px" data-screen-label="App Config final">
+<div style="min-height:720px;background:#0a0a0a;position:relative">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f;display:flex;align-items:center;gap:8px" style-hover="color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="padding:24px 28px 110px;max-width:640px;margin:0 auto">
+    <div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">App Config</div>
+    <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;margin-bottom:28px">How Connect reaches your MediaMTX server, and where files live.</div>
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:18px">MediaMTX connection</div>
+    <div style="margin-bottom:18px">
+      <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Server URL</div>
+      <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">http://192.168.1.40</div>
+      <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Where the MediaMTX server runs, as seen from this app's backend.</div>
+    </div>
+    <div style="margin-bottom:18px;width:180px">
+      <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">API port</div>
+      <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">9997</div>
+      <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">MediaMTX API port.</div>
+    </div>
+    <div style="margin-bottom:26px;border:1px solid #3a2c10;border-radius:10px;padding:16px;background:linear-gradient(180deg,rgba(245,166,35,.05),transparent 70%)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed">Playback URL</div><div style="padding:2px 7px;border-radius:100px;border:1px solid #3a2c10;font:500 9.5px 'Geist Mono',monospace;color:#f5a623;letter-spacing:.06em">REQUIRED FOR LIVE PLAYBACK</div></div>
+      <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #7a2020;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed;box-shadow:0 0 0 3px rgba(255,77,77,.08)">192.168.1.40:8888</div>
+      <div style="display:flex;align-items:center;gap:6px;font:400 12px/16px 'Geist',sans-serif;color:#ff6b6b;margin-top:6px"><span>✕</span>Must include a scheme — try <span style="font-family:'Geist Mono',monospace">http://192.168.1.40:8888</span></div>
+      <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">The address <em>your browser</em> can reach for HLS/WebRTC playback. If you watch remotely, this must be the public or VPN address — not localhost.</div>
+    </div>
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin:26px 0 18px">Storage</div>
+    <div style="margin-bottom:18px">
+      <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Recordings directory</div>
+      <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">/media/recordings</div>
+      <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Must match MediaMTX's <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">recordPath</span> root.</div>
+    </div>
+    <div>
+      <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Screenshots directory</div>
+      <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #0070f3;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed;box-shadow:0 0 0 3px rgba(0,112,243,.15)">/media/screenshots<span style="width:1px;height:16px;background:#ededed;margin-left:1px"></span></div>
+      <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Where auto-captured stream thumbnails are stored. Cleared after 2 days.</div>
+    </div>
+  </div>
+  <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:24px;width:640px;max-width:calc(100% - 56px);display:flex;align-items:center;gap:12px;background:#161616;border:1px solid #2e2e2e;border-radius:10px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5)">
+    <span style="width:7px;height:7px;border-radius:50%;background:#f5a623"></span>
+    <div style="font:400 13px 'Geist',sans-serif;color:#d4d4d4">2 unsaved changes · 1 field needs attention</div>
+    <div style="margin-left:auto;display:flex;gap:10px">
+      <div style="height:32px;padding:0 14px;border-radius:6px;color:#a1a1a1;display:flex;align-items:center;font:500 13px 'Geist',sans-serif" style-hover="color:#ededed">Reset</div>
+      <div style="height:32px;padding:0 16px;border-radius:6px;background:#2a2a2a;color:#666;display:flex;align-items:center;font:500 13px 'Geist',sans-serif;cursor:not-allowed">Save</div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 2e MEDIAMTX CONFIG FINAL ============ -->
+<div class="dv-opt" id="2e"><div class="dv-olabel"><a class="dv-oid" href="#2e">2e</a>MediaMTX Config — final · sticky anchor rail, scrolls as one page; rail collapses to a chip row on mobile</div>
+<div class="dv-card" style="width:1360px" data-screen-label="MediaMTX Config final">
+<div style="min-height:860px;background:#0a0a0a;position:relative">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f;display:flex;align-items:center;gap:8px" style-hover="color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="display:flex;max-width:1060px;margin:0 auto">
+    <div style="width:200px;flex:none;padding:28px 10px;position:sticky;top:0;align-self:flex-start">
+      <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:0 10px 10px;text-transform:uppercase">On this page</div>
+      <sc-for list="{{ cfgSections }}" as="s" hint-placeholder-count="8">
+        <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;font-family:'Geist',sans-serif;font-size:13px;background:{{ s.bg }};color:{{ s.fg }};font-weight:{{ s.w }}">
+          {{ s.name }}
+          <sc-if value="{{ s.err }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;min-width:16px;height:16px;border-radius:100px;background:rgba(255,77,77,.15);border:1px solid rgba(255,77,77,.4);color:#ff6b6b;font:600 10px/15px 'Geist Mono',monospace;text-align:center;padding:0 4px">{{ s.err }}</span></sc-if>
+          <sc-if value="{{ s.off }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:500 9px 'Geist Mono',monospace;color:#555;letter-spacing:.06em">OFF</span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:1;min-width:0;padding:28px 0 110px 32px">
+      <div style="display:flex;align-items:baseline;gap:12px"><div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">MediaMTX Config</div><div style="font:400 12px 'Geist Mono',monospace;color:#666">live · api v3 · 75 keys</div></div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;margin:4px 0 28px">Edits apply to the running server on save. Keys match the MediaMTX docs verbatim.</div>
+      <div style="display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid #1f1f1f;margin-bottom:6px">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">HLS</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Serve streams as HTTP Live Streaming</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#0070f3;letter-spacing:.06em">ENABLED</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#0070f3;position:relative"><div style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff"></div></div>
+        </div>
+      </div>
+      <sc-for list="{{ hlsFields }}" as="f" hint-placeholder-count="5">
+        <div style="display:flex;align-items:flex-start;gap:20px;padding:13px 0;border-bottom:1px solid #161616">
+          <div style="width:280px;flex:none">
+            <div style="display:flex;align-items:center;gap:7px"><span style="font:500 13px 'Geist Mono',monospace;color:#ededed">{{ f.key }}</span>
+            <sc-if value="{{ f.dirty }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;border-radius:50%;background:#f5a623"></span></sc-if></div>
+            <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:3px">{{ f.help }}</div>
+          </div>
+          <div style="flex:1;min-width:0">
+            <sc-if value="{{ f.isToggle }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;justify-content:flex-end"><div style="width:36px;height:20px;border-radius:100px;position:relative;background:{{ f.togBg }};border:1px solid {{ f.togBorder }}"><div style="position:absolute;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;left:{{ f.knobLeft }}"></div></div></div>
+            </sc-if>
+            <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+              <div style="height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid {{ f.border }};border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">{{ f.val }}</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;align-items:center;gap:12px;padding:30px 0 12px;border-bottom:1px solid #1f1f1f;margin-bottom:6px">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">WebRTC</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Low-latency browser streaming</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#0070f3;letter-spacing:.06em">ENABLED</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#0070f3;position:relative"><div style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;padding:13px 0">
+        <div style="width:280px;flex:none">
+          <div style="font:500 13px 'Geist Mono',monospace;color:#ededed">webrtcICEServers2</div>
+          <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:3px">STUN/TURN servers for NAT traversal.</div>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1.6;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">stun:stun.l.google.com:19302</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#666">username</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#666">password</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#666;flex:none">✕</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1.6;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">turn:turn.myhome.dev:3478</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">homelab</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">••••••••</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#666;flex:none">✕</div>
+          </div>
+          <div style="align-self:flex-start;height:30px;padding:0 12px;border:1px dashed #2e2e2e;border-radius:6px;display:flex;align-items:center;gap:6px;font:500 12px 'Geist',sans-serif;color:#a1a1a1">+ Add ICE server</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:30px 0 12px;border-bottom:1px solid #1f1f1f;opacity:.55">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">SRT</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Secure Reliable Transport ingest · 6 options hidden while off</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#666;letter-spacing:.06em">OFF</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#222;border:1px solid #2e2e2e;position:relative"><div style="position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#666"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:24px;width:820px;max-width:calc(100% - 56px);display:flex;align-items:center;gap:12px;background:#161616;border:1px solid #2e2e2e;border-radius:10px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5)">
+    <span style="width:7px;height:7px;border-radius:50%;background:#f5a623"></span>
+    <div style="font:400 13px 'Geist',sans-serif;color:#d4d4d4">3 unsaved changes</div>
+    <div style="display:flex;gap:5px;font:500 10.5px 'Geist Mono',monospace">
+      <span style="padding:2px 7px;border-radius:100px;background:#222;color:#a1a1a1">hlsSegmentCount</span>
+      <span style="padding:2px 7px;border-radius:100px;background:#222;color:#a1a1a1">hlsPartDuration</span>
+      <span style="padding:2px 7px;border-radius:100px;background:#222;color:#ff6b6b">rtspAuthMethods ✕</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px">
+      <div style="height:32px;padding:0 14px;border-radius:6px;color:#a1a1a1;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Discard</div>
+      <div style="height:32px;padding:0 16px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Save to server</div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "mobile pass on <a class="dv-oid" href="#2a">2a</a> and <a class="dv-oid" href="#2c">2c</a>" · "light-mode variant of <a class="dv-oid" href="#2e">2e</a>" · "per-stream detail page concept"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">MediaMTX Connect — Geist dark, one direction, all surfaces</span></div>
+<p class="dv-note">Geist ships light-only tokens, so the dark theme is a disciplined inversion of the ink ladder: canvas <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">#0a0a0a</span>, card <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">#111</span>, hairline <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">#262626</span>, text ladder #ededed → #a1a1a1 → #8f8f8f → #666. Blue #0070f3 stays the only chrome accent (links, focus, active); red is reserved for LIVE/REC and errors. Hairlines do all the structure — no heavy shadows, 12px content cards, 6px chrome. Config-key labels stay in Geist Mono so they read as technical identifiers. Two shells to compare: <a class="dv-oid" href="#1a">1a</a> sidebar vs <a class="dv-oid" href="#1b">1b</a> top-nav; the rest of the pages (<a class="dv-oid" href="#1d">1d</a>–<a class="dv-oid" href="#1g">1g</a>) are shown in the sidebar shell.</p>
+<div class="dv-opts">
+
+<!-- ============ 1a LIVE VIEW · SIDEBAR SHELL ============ -->
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Live View — sidebar shell · normal state, 2 playing, actions menu open, future badges on</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Live View (sidebar)">
+<div style="display:flex;min-height:860px;background:#0a0a0a">
+  <!-- sidebar -->
+  <div style="width:232px;flex:none;border-right:1px solid #1f1f1f;display:flex;flex-direction:column;padding:20px 12px 16px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 10px 22px">
+      <div style="width:26px;height:26px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 12px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px/1.1 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+    </div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:6px 10px 6px;text-transform:uppercase">Application</div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#1a1a1a;color:#ededed;font:500 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 8px rgba(255,77,77,.6)"></span>Live<span style="margin-left:auto;font:500 11px 'Geist Mono',monospace;color:#8f8f8f">4</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif" style-hover="background:#161616;color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>Recordings</div>
+    </div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:20px 10px 6px;text-transform:uppercase">Settings</div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif" style-hover="background:#161616;color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>App Config</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif" style-hover="background:#161616;color:#ededed"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>MediaMTX Config</div>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1;justify-content:space-between">English <span style="color:#666;font-family:'Geist Mono',monospace;font-size:10px">30 ▾</span></div>
+      <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden">
+        <div style="flex:1;text-align:center;padding:6px 0;font:500 11px 'Geist Mono',monospace;color:#666">LIGHT</div>
+        <div style="flex:1;text-align:center;padding:6px 0;font:500 11px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a">DARK</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;padding:0 2px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>server connected · v1.9</div>
+    </div>
+  </div>
+  <!-- content -->
+  <div style="flex:1;padding:28px 32px 40px;min-width:0">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
+      <div>
+        <div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">Live</div>
+        <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f">4 streams active · 2 playing</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden">
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">AUTO</div>
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a;border-left:1px solid #262626;border-right:1px solid #262626">LOW-LAT</div>
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">COMPAT</div>
+        </div>
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden">
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">2</div>
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666;border-left:1px solid #262626">3</div>
+          <div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a;border-left:1px solid #262626">4</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+
+      <!-- card: playing -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:radial-gradient(120% 90% at 50% 0%,#1d1d1f 0%,#0c0c0d 70%)">
+          <div style="position:absolute;inset:0;display:grid;place-items:center;font:400 12px 'Geist Mono',monospace;color:#3a3a3a">live video — WebRTC</div>
+          <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px">
+            <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35);backdrop-filter:blur(4px)"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10.5px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+            <div style="padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10.5px 'Geist Mono',monospace;color:#a1a1a1">WEBRTC · ~0.4s</div>
+          </div>
+          <div style="position:absolute;top:12px;right:12px;font:400 11px 'Geist Mono',monospace;color:rgba(225,225,225,.55)">2026-07-14 09:41:07</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;align-items:flex-end;justify-content:space-between;padding:0 12px 10px">
+            <div style="display:flex;gap:6px"><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">H265</div><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">OPUS</div></div>
+            <div style="font:400 11px 'Geist Mono',monospace;color:#8f8f8f">1920×1080 · 4.2 Mb/s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+          <div style="min-width:0">
+            <div style="font:500 14px/20px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">driveway</div>
+            <div style="font:400 12px/16px 'Geist',sans-serif;color:#8f8f8f">online since 06:12 · 3h 29m</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px" style-hover="border-color:#3a3a3a;color:#ededed">⌖</div>
+            <div style="height:32px;padding:0 14px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif" style-hover="background:#fff">Stop</div>
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 13px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- card: playing #2 with actions menu open -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:visible;position:relative">
+        <div style="position:relative;aspect-ratio:16/9;background:radial-gradient(120% 90% at 50% 0%,#1b1c1e 0%,#0c0c0d 70%);border-radius:12px 12px 0 0;overflow:hidden">
+          <div style="position:absolute;inset:0;display:grid;place-items:center;font:400 12px 'Geist Mono',monospace;color:#3a3a3a">live video — WebRTC</div>
+          <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px">
+            <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35)"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10.5px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+            <div style="padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10.5px 'Geist Mono',monospace;color:#a1a1a1">WEBRTC · ~0.6s</div>
+          </div>
+          <div style="position:absolute;top:12px;right:12px;font:400 11px 'Geist Mono',monospace;color:rgba(225,225,225,.55)">2026-07-14 09:41:07</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;align-items:flex-end;justify-content:space-between;padding:0 12px 10px">
+            <div style="display:flex;gap:6px"><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">H264</div><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">AAC</div></div>
+            <div style="font:400 11px 'Geist Mono',monospace;color:#8f8f8f">1280×720 · 1.8 Mb/s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+          <div style="min-width:0">
+            <div style="font:500 14px/20px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">front-door</div>
+            <div style="font:400 12px/16px 'Geist',sans-serif;color:#8f8f8f">online since 06:12 · 3h 29m</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">⌖</div>
+            <div style="height:32px;padding:0 14px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Stop</div>
+            <div style="width:32px;height:32px;border:1px solid #3a3a3a;border-radius:6px;display:grid;place-items:center;color:#ededed;background:#1a1a1a;font:600 13px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+        <!-- open menu -->
+        <div style="position:absolute;right:14px;top:calc(100% - 6px);z-index:5;width:224px;background:#161616;border:1px solid #2e2e2e;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.6);padding:5px;font:400 13px 'Geist',sans-serif;color:#d4d4d4">
+          <div style="padding:7px 10px;border-radius:5px;background:#222;color:#ededed">View recordings</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Open stream detail</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Take snapshot</div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Copy publish URLs</div>
+          <div style="height:1px;background:#262626;margin:5px 4px"></div>
+          <div style="padding:7px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center" style-hover="background:#222">Record <span style="font:500 10px 'Geist Mono',monospace;color:#0070f3">ON</span></div>
+          <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Edit path config</div>
+        </div>
+      </div>
+
+      <!-- card: thumbnail idle -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,#19191b 0%,#0d0d0e 80%)">
+          <div style="position:absolute;top:12px;left:12px;padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.6);border:1px solid #2e2e2e;font:500 10.5px 'Geist Mono',monospace;color:#8f8f8f">SNAPSHOT · 14s ago</div>
+          <div style="position:absolute;top:12px;right:12px;font:400 11px 'Geist Mono',monospace;color:rgba(225,225,225,.4)">2026-07-14 09:40:53</div>
+          <div style="position:absolute;inset:0;display:grid;place-items:center">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(237,237,237,.95);display:grid;place-items:center;color:#0a0a0a;font-size:16px;padding-left:4px">▶</div>
+          </div>
+          <div style="position:absolute;bottom:10px;left:12px;display:flex;gap:6px"><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.07);font:500 10px 'Geist Mono',monospace;color:#8f8f8f">H264</div><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.07);font:500 10px 'Geist Mono',monospace;color:#8f8f8f">720p</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+          <div><div style="font:500 14px/20px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">rpi-birdcam</div>
+          <div style="font:400 12px/16px 'Geist',sans-serif;color:#8f8f8f">online since yesterday · 22h 05m</div></div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">⌖</div>
+            <div style="height:32px;padding:0 14px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 13px 'Geist',sans-serif" style-hover="border-color:#3a3a3a">Play</div>
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 13px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- card: no thumbnail fallback -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(45deg,#101010 0 10px,#131313 10px 20px)">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+            <div style="width:40px;height:40px;border:1px dashed #333;border-radius:50%;display:grid;place-items:center;color:#4a4a4a;font-size:15px">▣</div>
+            <div style="font:400 11px 'Geist Mono',monospace;color:#666">no snapshot yet — first capture in ~30s</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+          <div><div style="font:500 14px/20px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">obs-studio</div>
+          <div style="font:400 12px/16px 'Geist',sans-serif;color:#8f8f8f">online since 09:39 · 2m</div></div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">⌖</div>
+            <div style="height:32px;padding:0 14px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Play</div>
+            <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 13px 'Geist',sans-serif">⋯</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:18px;font:400 11.5px 'Geist Mono',monospace;color:#4a4a4a">?play=driveway,front-door — layout encoded in URL, reload-safe</div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1b LIVE VIEW · TOP NAV ============ -->
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Live View — top-nav shell (Vercel-style tabs) · same content, more width for the camera wall</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Live View (top nav)">
+<div style="min-height:560px;background:#0a0a0a">
+  <div style="border-bottom:1px solid #1f1f1f;padding:0 28px">
+    <div style="display:flex;align-items:center;gap:12px;height:56px">
+      <div style="width:24px;height:24px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 11px 'Geist Mono',monospace">M</div>
+      <div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;font:400 11px 'Geist Mono',monospace;color:#666"><span style="width:6px;height:6px;border-radius:50%;background:#0070f3"></span>connected · v1.9</div>
+        <div style="padding:5px 12px;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist',sans-serif;color:#a1a1a1">English ▾</div>
+        <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">◐</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px">
+      <div style="padding:0 12px 10px;font:500 13.5px 'Geist',sans-serif;color:#ededed;border-bottom:2px solid #ededed;display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">Recordings</div>
+      <div style="width:1px;background:#262626;margin:2px 10px 12px"></div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">App Config</div>
+      <div style="padding:0 12px 10px;font:400 13.5px 'Geist',sans-serif;color:#8f8f8f" style-hover="color:#ededed">MediaMTX Config</div>
+    </div>
+  </div>
+  <div style="padding:24px 28px 36px">
+    <div style="display:flex;align-items:center;margin-bottom:20px">
+      <div style="font:400 13px 'Geist',sans-serif;color:#8f8f8f">4 streams active · 2 playing</div>
+      <div style="margin-left:auto;display:flex;gap:10px">
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden"><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a">LOW-LAT</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666;border-left:1px solid #262626">COMPAT</div></div>
+        <div style="display:flex;border:1px solid #262626;border-radius:6px;overflow:hidden"><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">2</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#ededed;background:#1a1a1a;border-left:1px solid #262626;border-right:1px solid #262626">3</div><div style="padding:6px 12px;font:500 12px 'Geist Mono',monospace;color:#666">4</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <sc-for list="{{ topnavCards }}" as="c" hint-placeholder-count="3">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+          <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,#18181a 0%,#0d0d0e 80%)">
+            <sc-if value="{{ c.live }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:6px;padding:3px 8px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35)"><span style="width:5px;height:5px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+            </sc-if>
+            <div style="position:absolute;inset:0;display:grid;place-items:center;font:400 11px 'Geist Mono',monospace;color:#3a3a3a">{{ c.fill }}</div>
+            <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.4)">09:41:07</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:10px 12px;gap:10px">
+            <div><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">{{ c.name }}</div>
+            <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">{{ c.meta }}</div></div>
+            <div style="margin-left:auto;display:flex;gap:7px">
+              <div style="height:30px;padding:0 12px;border-radius:6px;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif;background:{{ c.btnBg }};color:{{ c.btnFg }};border:1px solid {{ c.btnBorder }}">{{ c.btn }}</div>
+              <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 12px 'Geist',sans-serif">⋯</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1c LIVE VIEW STATES ============ -->
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Live View — the three non-happy states: server unreachable · zero streams · playback URL not configured</div>
+<div class="dv-card" style="width:1360px;background:transparent;border:none;box-shadow:none;overflow:visible">
+<div style="display:flex;gap:20px" data-screen-label="Live View states">
+  <!-- unreachable -->
+  <div style="flex:1;background:#0a0a0a;border:1px solid #262626;border-radius:10px;padding:22px;min-height:340px;display:flex;flex-direction:column">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px">Cannot connect</div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:0;border:1px solid #2e1414;background:linear-gradient(180deg,rgba(255,77,77,.05),transparent 60%);border-radius:12px;padding:32px 28px">
+      <div style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,77,77,.4);display:grid;place-items:center;color:#ff6b6b;font-size:16px;margin-bottom:14px">✕</div>
+      <div style="font:600 16px/24px 'Geist',sans-serif;color:#ededed;letter-spacing:-.32px">Can't reach the MediaMTX server</div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;max-width:340px;margin:6px 0 16px">No response from <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">http://192.168.1.40:9997</span>. Check that MediaMTX is running and the API is enabled.</div>
+      <div style="display:flex;gap:10px">
+        <div style="height:34px;padding:0 16px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Open App Config</div>
+        <div style="height:34px;padding:0 16px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Retry</div>
+      </div>
+      <div style="font:400 11px 'Geist Mono',monospace;color:#4a4a4a;margin-top:14px">last attempt 09:41:32 · retrying in 8s</div>
+    </div>
+  </div>
+  <!-- empty -->
+  <div style="flex:1;background:#0a0a0a;border:1px solid #262626;border-radius:10px;padding:22px;min-height:340px;display:flex;flex-direction:column">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px">Connected, no streams</div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px dashed #2a2a2a;border-radius:12px;padding:32px 28px">
+      <div style="width:44px;height:44px;border-radius:50%;border:1px solid #2e2e2e;display:grid;place-items:center;color:#666;font-size:15px;margin-bottom:14px">▣</div>
+      <div style="font:600 16px/24px 'Geist',sans-serif;color:#ededed;letter-spacing:-.32px">No active streams</div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;max-width:340px;margin:6px 0 16px">The server is up, but nothing is publishing. Point a camera or OBS at it to see it here.</div>
+      <div style="text-align:left;background:#111;border:1px solid #262626;border-radius:8px;padding:12px 14px;font:400 12px/20px 'Geist Mono',monospace;color:#a1a1a1">rtsp://192.168.1.40:8554/<span style="color:#0070f3">mystream</span><br>srt://192.168.1.40:8890?streamid=publish:<span style="color:#0070f3">mystream</span></div>
+    </div>
+  </div>
+  <!-- not configured -->
+  <div style="flex:1;background:#0a0a0a;border:1px solid #262626;border-radius:10px;padding:22px;min-height:340px;display:flex;flex-direction:column">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px">Playback URL missing — inline banner over the grid</div>
+    <div style="display:flex;align-items:center;gap:12px;border:1px solid #3a2c10;background:linear-gradient(90deg,rgba(245,166,35,.08),transparent 70%);border-radius:8px;padding:12px 14px;margin-bottom:14px">
+      <span style="color:#f5a623;font-size:14px">⚠</span>
+      <div style="font:400 12.5px/18px 'Geist',sans-serif;color:#d4d4d4;min-width:0">Streams are visible but can't play yet — set the <strong style="color:#ededed;font-weight:500">browser-reachable playback URL</strong> in App Config.</div>
+      <div style="margin-left:auto;flex:none;height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Fix it</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;opacity:.75">
+      <div style="background:#111;border:1px solid #202020;border-radius:10px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(165deg,#161617,#0d0d0e)"></div><div style="padding:9px 11px"><div style="font:500 12.5px 'Geist',sans-serif;color:#ededed">driveway</div><div style="font:400 11px 'Geist',sans-serif;color:#666">Play disabled</div></div></div>
+      <div style="background:#111;border:1px solid #202020;border-radius:10px;overflow:hidden"><div style="aspect-ratio:16/9;background:linear-gradient(165deg,#161617,#0d0d0e)"></div><div style="padding:9px 11px"><div style="font:500 12.5px 'Geist',sans-serif;color:#ededed">front-door</div><div style="font:400 11px 'Geist',sans-serif;color:#666">Play disabled</div></div></div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1d RECORDINGS INDEX ============ -->
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Recordings index — search, per-stream cards · empty + error states inset right</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Recordings index">
+<div style="display:flex;min-height:620px;background:#0a0a0a">
+  <div style="width:232px;flex:none;border-right:1px solid #1f1f1f;padding:20px 12px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 10px 22px"><div style="width:26px;height:26px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 12px 'Geist Mono',monospace">M</div><div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div></div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:6px 10px;text-transform:uppercase">Application</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#1a1a1a;color:#ededed;font:500 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#555"></span>Recordings</div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:20px 10px 6px;text-transform:uppercase">Settings</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>App Config</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>MediaMTX Config</div>
+  </div>
+  <div style="flex:1;padding:28px 32px;min-width:0">
+    <div style="display:flex;align-items:center;margin-bottom:22px;gap:16px">
+      <div><div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">Recordings</div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f">5 streams · 1,284 recordings · 412 GB on disk</div></div>
+      <div style="margin-left:auto;width:280px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid #262626;border-radius:6px;background:#111;font:400 13px 'Geist',sans-serif;color:#666">⌕ <span>Filter streams…</span><span style="margin-left:auto;font:500 10px 'Geist Mono',monospace;border:1px solid #2e2e2e;border-radius:4px;padding:1px 5px">/</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <sc-for list="{{ recStreams }}" as="r" hint-placeholder-count="3">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden" style-hover="border-color:#3a3a3a">
+          <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,#18181a,#0d0d0e)">
+            <div style="position:absolute;top:10px;right:10px;font:400 10px 'Geist Mono',monospace;color:rgba(225,225,225,.4)">{{ r.stamp }}</div>
+            <div style="position:absolute;bottom:10px;left:10px;padding:3px 8px;border-radius:4px;background:rgba(10,10,10,.7);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">{{ r.count }} RECORDINGS</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:11px 13px">
+            <div><div style="font:500 13.5px/18px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">{{ r.name }}</div>
+            <div style="font:400 11.5px/15px 'Geist',sans-serif;color:#8f8f8f">latest {{ r.latest }} · {{ r.size }}</div></div>
+            <div style="margin-left:auto;color:#666;font-size:14px">→</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:22px">
+      <div style="flex:1;border:1px dashed #2a2a2a;border-radius:10px;padding:20px;display:flex;gap:14px;align-items:center">
+        <div style="width:36px;height:36px;border-radius:50%;border:1px solid #2e2e2e;display:grid;place-items:center;color:#666;font-size:13px;flex:none">▣</div>
+        <div style="min-width:0"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">Empty state — no recordings yet</div>
+        <div style="font:400 12px/18px 'Geist',sans-serif;color:#8f8f8f">Recording is off for all paths. Enable <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">record</span> per path in MediaMTX Config.</div></div>
+        <div style="margin-left:auto;flex:none;height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Enable recording</div>
+      </div>
+      <div style="flex:1;border:1px solid #2e1414;border-radius:10px;padding:20px;display:flex;gap:14px;align-items:center;background:linear-gradient(90deg,rgba(255,77,77,.05),transparent 70%)">
+        <div style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,77,77,.4);display:grid;place-items:center;color:#ff6b6b;font-size:13px;flex:none">✕</div>
+        <div style="min-width:0"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">Error state — recordings directory unreadable</div>
+        <div style="font:400 12px/18px 'Geist',sans-serif;color:#8f8f8f"><span style="font-family:'Geist Mono',monospace;color:#a1a1a1">/media/recordings</span> doesn't exist or lacks permissions.</div></div>
+        <div style="margin-left:auto;flex:none;height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Open App Config</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1e PER-STREAM RECORDINGS ============ -->
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Per-stream recordings — day groups, inline playback, download progress, pagination</div>
+<div class="dv-card" style="width:1360px" data-screen-label="Per-stream recordings">
+<div style="display:flex;min-height:760px;background:#0a0a0a">
+  <div style="width:232px;flex:none;border-right:1px solid #1f1f1f;padding:20px 12px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 10px 22px"><div style="width:26px;height:26px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 12px 'Geist Mono',monospace">M</div><div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div></div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:6px 10px;text-transform:uppercase">Application</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#1a1a1a;color:#ededed;font:500 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#555"></span>Recordings</div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:20px 10px 6px;text-transform:uppercase">Settings</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>App Config</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>MediaMTX Config</div>
+  </div>
+  <div style="flex:1;padding:28px 32px;min-width:0;max-width:920px">
+    <div style="font:400 12.5px 'Geist',sans-serif;color:#8f8f8f;margin-bottom:8px"><a href="#1d" style="color:#8f8f8f">Recordings</a> <span style="color:#4a4a4a;margin:0 4px">/</span> <span style="color:#ededed;font-weight:500">driveway</span></div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:24px">
+      <div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">driveway</div>
+      <div style="font:400 13px 'Geist',sans-serif;color:#8f8f8f">486 recordings · 148 GB</div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font:500 11px 'Geist Mono',monospace;color:#ff6b6b"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>RECORDING NOW</div>
+    </div>
+
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:14px">Today — July 14</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:26px">
+      <!-- open / playing recording -->
+      <div style="background:#111;border:1px solid #2e2e2e;border-radius:12px;overflow:hidden">
+        <div style="position:relative;aspect-ratio:16/9;max-height:340px;background:radial-gradient(120% 90% at 50% 0%,#1c1c1e,#0c0c0d 75%);display:grid;place-items:center">
+          <div style="font:400 12px 'Geist Mono',monospace;color:#3a3a3a">mp4 playback — seekable</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75))">
+            <div style="height:3px;border-radius:2px;background:rgba(255,255,255,.15);position:relative;margin-bottom:8px"><div style="position:absolute;left:0;top:0;bottom:0;width:38%;background:#0070f3;border-radius:2px"></div><div style="position:absolute;left:38%;top:50%;width:11px;height:11px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)"></div></div>
+            <div style="display:flex;align-items:center;gap:12px;font:400 11px 'Geist Mono',monospace;color:#a1a1a1"><span style="color:#ededed;font-size:12px">❚❚</span><span>03:12 / 08:24</span><span style="margin-left:auto">1× · ⛶</span></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;padding:11px 14px;gap:12px">
+          <div><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">09:12 — 09:20</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">312 MB · 8m 24s · H264</div></div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div style="height:30px;padding:0 12px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Close</div>
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Download</div>
+          </div>
+        </div>
+      </div>
+      <!-- downloading row -->
+      <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px">
+        <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#444;font-size:11px">▶</div></div>
+        <div style="min-width:0;flex:1">
+          <div style="display:flex;align-items:baseline;gap:10px"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">07:46 — 08:01</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">561 MB · 15m 02s</div></div>
+          <div style="margin-top:8px;height:3px;border-radius:2px;background:#222;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:#0070f3;border-radius:2px"></div></div>
+          <div style="margin-top:6px;font:400 11px 'Geist Mono',monospace;color:#8f8f8f">downloading… 348 MB of 561 MB · 11.2 MB/s</div>
+        </div>
+        <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif;flex:none">Cancel</div>
+      </div>
+      <!-- normal rows -->
+      <sc-for list="{{ recToday }}" as="rec" hint-placeholder-count="2">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px" style-hover="border-color:#3a3a3a">
+          <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#555;font-size:11px">▶</div><div style="position:absolute;bottom:4px;right:5px;font:400 9px 'Geist Mono',monospace;color:#666">{{ rec.dur }}</div></div>
+          <div style="min-width:0;flex:1"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">{{ rec.time }}</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">{{ rec.meta }}</div></div>
+          <div style="display:flex;gap:8px;flex:none">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Play</div>
+            <div style="height:30px;width:30px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:grid;place-items:center;font-size:12px">↓</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:14px">Yesterday — July 13</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ recYesterday }}" as="rec" hint-placeholder-count="2">
+        <div style="background:#111;border:1px solid #262626;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:14px" style-hover="border-color:#3a3a3a">
+          <div style="width:118px;flex:none;aspect-ratio:16/9;border-radius:6px;background:linear-gradient(165deg,#1a1a1c,#0e0e0f);position:relative"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#555;font-size:11px">▶</div><div style="position:absolute;bottom:4px;right:5px;font:400 9px 'Geist Mono',monospace;color:#666">{{ rec.dur }}</div></div>
+          <div style="min-width:0;flex:1"><div style="font:500 13.5px 'Geist',sans-serif;color:#ededed">{{ rec.time }}</div><div style="font:400 11.5px 'Geist',sans-serif;color:#8f8f8f">{{ rec.meta }}</div></div>
+          <div style="display:flex;gap:8px;flex:none">
+            <div style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #262626;color:#ededed;display:flex;align-items:center;font:500 12.5px 'Geist',sans-serif">Play</div>
+            <div style="height:30px;width:30px;border-radius:6px;border:1px solid #262626;color:#a1a1a1;display:grid;place-items:center;font-size:12px">↓</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:6px;margin-top:24px">
+      <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f;margin-right:auto">Showing 1–10 of 486</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#4a4a4a;font-size:12px">←</div>
+      <div style="width:30px;height:30px;border-radius:6px;display:grid;place-items:center;background:#1a1a1a;color:#ededed;font:500 12.5px 'Geist',sans-serif">1</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">2</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">3</div>
+      <div style="font:400 12px 'Geist',sans-serif;color:#4a4a4a;padding:0 2px">…</div>
+      <div style="width:36px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:400 12.5px 'Geist',sans-serif">49</div>
+      <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:12px">→</div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1f APP SETTINGS ============ -->
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>App settings — two groups, inline validation, dirty-state save bar, the playback-URL field given hero weight</div>
+<div class="dv-card" style="width:1360px" data-screen-label="App settings">
+<div style="display:flex;min-height:720px;background:#0a0a0a">
+  <div style="width:232px;flex:none;border-right:1px solid #1f1f1f;padding:20px 12px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 10px 22px"><div style="width:26px;height:26px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 12px 'Geist Mono',monospace">M</div><div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div></div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:6px 10px;text-transform:uppercase">Application</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>Recordings</div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:20px 10px 6px;text-transform:uppercase">Settings</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#1a1a1a;color:#ededed;font:500 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#555"></span>App Config</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>MediaMTX Config</div>
+  </div>
+  <div style="flex:1;padding:28px 32px 100px;min-width:0;position:relative">
+    <div style="max-width:640px">
+      <div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">App Config</div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;margin-bottom:28px">How Connect reaches your MediaMTX server, and where files live.</div>
+
+      <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin-bottom:18px">MediaMTX connection</div>
+
+      <div style="margin-bottom:18px">
+        <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Server URL</div>
+        <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">http://192.168.1.40</div>
+        <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Where the MediaMTX server runs, as seen from this app's backend.</div>
+      </div>
+
+      <div style="margin-bottom:18px;display:flex;gap:14px">
+        <div style="width:180px">
+          <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">API port</div>
+          <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">9997</div>
+          <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">MediaMTX API port.</div>
+        </div>
+      </div>
+
+      <!-- hero field with error -->
+      <div style="margin-bottom:26px;border:1px solid #3a2c10;border-radius:10px;padding:16px;background:linear-gradient(180deg,rgba(245,166,35,.05),transparent 70%)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed">Playback URL</div><div style="padding:2px 7px;border-radius:100px;border:1px solid #3a2c10;font:500 9.5px 'Geist Mono',monospace;color:#f5a623;letter-spacing:.06em">REQUIRED FOR LIVE PLAYBACK</div></div>
+        <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #7a2020;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed;box-shadow:0 0 0 3px rgba(255,77,77,.08)">192.168.1.40:8888</div>
+        <div style="display:flex;align-items:center;gap:6px;font:400 12px/16px 'Geist',sans-serif;color:#ff6b6b;margin-top:6px"><span>✕</span>Must include a scheme — try <span style="font-family:'Geist Mono',monospace">http://192.168.1.40:8888</span></div>
+        <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">The address <em>your browser</em> can reach for HLS/WebRTC playback. If you watch remotely, this must be the public or VPN address — not localhost.</div>
+      </div>
+
+      <div style="font:500 11px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #1f1f1f;margin:26px 0 18px">Storage</div>
+
+      <div style="margin-bottom:18px">
+        <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Recordings directory</div>
+        <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #262626;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed">/media/recordings</div>
+        <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Must match MediaMTX's <span style="font-family:'Geist Mono',monospace;color:#a1a1a1">recordPath</span> root.</div>
+      </div>
+      <div>
+        <div style="font:500 13px/18px 'Geist',sans-serif;color:#ededed;margin-bottom:5px">Screenshots directory</div>
+        <div style="height:38px;display:flex;align-items:center;padding:0 12px;background:#111;border:1px solid #0070f3;border-radius:6px;font:400 13px 'Geist Mono',monospace;color:#ededed;box-shadow:0 0 0 3px rgba(0,112,243,.15)">/media/screenshots<span style="width:1px;height:16px;background:#ededed;margin-left:1px"></span></div>
+        <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:5px">Where auto-captured stream thumbnails are stored. Cleared after 2 days.</div>
+      </div>
+    </div>
+    <!-- save bar -->
+    <div style="position:absolute;left:32px;right:32px;bottom:24px;max-width:640px;display:flex;align-items:center;gap:12px;background:#161616;border:1px solid #2e2e2e;border-radius:10px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5)">
+      <span style="width:7px;height:7px;border-radius:50%;background:#f5a623"></span>
+      <div style="font:400 13px 'Geist',sans-serif;color:#d4d4d4">2 unsaved changes · 1 field needs attention</div>
+      <div style="margin-left:auto;display:flex;gap:10px">
+        <div style="height:32px;padding:0 14px;border-radius:6px;color:#a1a1a1;display:flex;align-items:center;font:500 13px 'Geist',sans-serif" style-hover="color:#ededed">Reset</div>
+        <div style="height:32px;padding:0 16px;border-radius:6px;background:#2a2a2a;color:#666;display:flex;align-items:center;font:500 13px 'Geist',sans-serif;cursor:not-allowed">Save</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1g MEDIAMTX GLOBAL CONFIG ============ -->
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>MediaMTX server config — 75 fields: section rail with error counts, mono config keys, protocol master switches, pending-changes bar</div>
+<div class="dv-card" style="width:1360px" data-screen-label="MediaMTX server config">
+<div style="display:flex;min-height:860px;background:#0a0a0a">
+  <div style="width:232px;flex:none;border-right:1px solid #1f1f1f;padding:20px 12px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 10px 22px"><div style="width:26px;height:26px;border-radius:6px;background:#ededed;color:#0a0a0a;display:grid;place-items:center;font:600 12px 'Geist Mono',monospace">M</div><div style="font:600 14px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">MediaMTX <span style="color:#8f8f8f;font-weight:400">Connect</span></div></div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:6px 10px;text-transform:uppercase">Application</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span>Live</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>Recordings</div>
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:20px 10px 6px;text-transform:uppercase">Settings</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;color:#a1a1a1;font:400 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#333"></span>App Config</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#1a1a1a;color:#ededed;font:500 13.5px 'Geist',sans-serif"><span style="width:6px;height:6px;border-radius:50%;background:#555"></span>MediaMTX Config</div>
+  </div>
+
+  <!-- section rail -->
+  <div style="width:200px;flex:none;border-right:1px solid #1f1f1f;padding:28px 10px">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;padding:0 10px 10px;text-transform:uppercase">Sections</div>
+    <sc-for list="{{ cfgSections }}" as="s" hint-placeholder-count="8">
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;font-family:'Geist',sans-serif;font-size:13px;background:{{ s.bg }};color:{{ s.fg }};font-weight:{{ s.w }}">
+        {{ s.name }}
+        <sc-if value="{{ s.err }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;min-width:16px;height:16px;border-radius:100px;background:rgba(255,77,77,.15);border:1px solid rgba(255,77,77,.4);color:#ff6b6b;font:600 10px/15px 'Geist Mono',monospace;text-align:center;padding:0 4px">{{ s.err }}</span></sc-if>
+        <sc-if value="{{ s.off }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:500 9px 'Geist Mono',monospace;color:#555;letter-spacing:.06em">OFF</span></sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- fields -->
+  <div style="flex:1;min-width:0;padding:28px 32px 110px;position:relative">
+    <div style="max-width:660px">
+      <div style="display:flex;align-items:baseline;gap:12px"><div style="font:600 20px/28px 'Geist',sans-serif;letter-spacing:-.4px;color:#ededed">MediaMTX Config</div><div style="font:400 12px 'Geist Mono',monospace;color:#666">live · api v3 · 75 keys</div></div>
+      <div style="font:400 13px/20px 'Geist',sans-serif;color:#8f8f8f;margin:4px 0 28px">Edits apply to the running server on save. Keys match the MediaMTX docs verbatim.</div>
+
+      <!-- HLS section (active) -->
+      <div style="display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid #1f1f1f;margin-bottom:6px">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">HLS</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Serve streams as HTTP Live Streaming</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#0070f3;letter-spacing:.06em">ENABLED</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#0070f3;position:relative"><div style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff"></div></div>
+        </div>
+      </div>
+
+      <sc-for list="{{ hlsFields }}" as="f" hint-placeholder-count="5">
+        <div style="display:flex;align-items:flex-start;gap:20px;padding:13px 0;border-bottom:1px solid #161616">
+          <div style="width:280px;flex:none">
+            <div style="display:flex;align-items:center;gap:7px"><span style="font:500 13px 'Geist Mono',monospace;color:#ededed">{{ f.key }}</span>
+            <sc-if value="{{ f.dirty }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;border-radius:50%;background:#f5a623"></span></sc-if></div>
+            <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:3px">{{ f.help }}</div>
+          </div>
+          <div style="flex:1;min-width:0">
+            <sc-if value="{{ f.isToggle }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;justify-content:flex-end"><div style="width:36px;height:20px;border-radius:100px;position:relative;background:{{ f.togBg }};border:1px solid {{ f.togBorder }}"><div style="position:absolute;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;left:{{ f.knobLeft }}"></div></div></div>
+            </sc-if>
+            <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+              <div style="height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid {{ f.border }};border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">{{ f.val }}</div>
+              <sc-if value="{{ f.error }}" hint-placeholder-val="{{ false }}"><div style="font:400 11.5px 'Geist',sans-serif;color:#ff6b6b;margin-top:5px">✕ {{ f.error }}</div></sc-if>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+
+      <!-- WebRTC section with ICE group -->
+      <div style="display:flex;align-items:center;gap:12px;padding:30px 0 12px;border-bottom:1px solid #1f1f1f;margin-bottom:6px">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">WebRTC</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Low-latency browser streaming</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#0070f3;letter-spacing:.06em">ENABLED</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#0070f3;position:relative"><div style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;padding:13px 0">
+        <div style="width:280px;flex:none">
+          <div style="font:500 13px 'Geist Mono',monospace;color:#ededed">webrtcICEServers2</div>
+          <div style="font:400 11.5px/16px 'Geist',sans-serif;color:#8f8f8f;margin-top:3px">STUN/TURN servers for NAT traversal.</div>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1.6;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">stun:stun.l.google.com:19302</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#666">username</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#666">password</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#666;flex:none">✕</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1.6;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">turn:turn.myhome.dev:3478</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">homelab</div>
+            <div style="flex:1;height:34px;display:flex;align-items:center;padding:0 11px;background:#111;border:1px solid #262626;border-radius:6px;font:400 12.5px 'Geist Mono',monospace;color:#ededed">••••••••</div>
+            <div style="width:30px;height:30px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#666;flex:none">✕</div>
+          </div>
+          <div style="align-self:flex-start;height:30px;padding:0 12px;border:1px dashed #2e2e2e;border-radius:6px;display:flex;align-items:center;gap:6px;font:500 12px 'Geist',sans-serif;color:#a1a1a1">+ Add ICE server</div>
+        </div>
+      </div>
+
+      <!-- SRT off preview -->
+      <div style="display:flex;align-items:center;gap:12px;padding:30px 0 12px;border-bottom:1px solid #1f1f1f;opacity:.55">
+        <div style="font:600 15px 'Geist',sans-serif;letter-spacing:-.3px;color:#ededed">SRT</div>
+        <div style="font:400 12px 'Geist',sans-serif;color:#8f8f8f">Secure Reliable Transport ingest · 6 options hidden while off</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><span style="font:500 10px 'Geist Mono',monospace;color:#666;letter-spacing:.06em">OFF</span>
+          <div style="width:36px;height:20px;border-radius:100px;background:#222;border:1px solid #2e2e2e;position:relative"><div style="position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#666"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pending changes bar -->
+    <div style="position:absolute;left:32px;right:32px;bottom:24px;max-width:660px;display:flex;align-items:center;gap:12px;background:#161616;border:1px solid #2e2e2e;border-radius:10px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5)">
+      <span style="width:7px;height:7px;border-radius:50%;background:#f5a623"></span>
+      <div style="font:400 13px 'Geist',sans-serif;color:#d4d4d4">3 unsaved changes</div>
+      <div style="display:flex;gap:5px;font:500 10.5px 'Geist Mono',monospace">
+        <span style="padding:2px 7px;border-radius:100px;background:#222;color:#a1a1a1">hlsSegmentCount</span>
+        <span style="padding:2px 7px;border-radius:100px;background:#222;color:#a1a1a1">hlsPartDuration</span>
+        <span style="padding:2px 7px;border-radius:100px;background:#222;color:#ff6b6b">rtspAuthMethods ✕</span>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px">
+        <div style="height:32px;padding:0 14px;border-radius:6px;color:#a1a1a1;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Discard</div>
+        <div style="height:32px;padding:0 16px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Save to server</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<!-- ============ 1h CARD ANATOMY ============ -->
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Stream card anatomy — how today's card absorbs the roadmap (latency, codecs, snapshot, 8-item menu) without redesign</div>
+<div class="dv-card" style="width:900px;background:#0a0a0a" data-screen-label="Stream card anatomy">
+<div style="display:flex;gap:28px;padding:28px">
+  <div style="flex:1.2">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px">Full-density card (future)</div>
+    <div style="background:#111;border:1px solid #262626;border-radius:12px;overflow:hidden">
+      <div style="position:relative;aspect-ratio:16/9;background:radial-gradient(120% 90% at 50% 0%,#1d1d1f,#0c0c0d 75%)">
+        <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap;max-width:75%">
+          <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid rgba(255,77,77,.35)"><span style="width:6px;height:6px;border-radius:50%;background:#ff4d4d"></span><span style="font:600 10.5px 'Geist Mono',monospace;color:#ff6b6b;letter-spacing:.06em">LIVE</span></div>
+          <div style="padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10.5px 'Geist Mono',monospace;color:#a1a1a1">WEBRTC · ~0.4s</div>
+          <div style="padding:4px 9px;border-radius:100px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;font:500 10.5px 'Geist Mono',monospace;color:#0070f3">SHARED</div>
+        </div>
+        <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+          <div style="width:28px;height:28px;border-radius:6px;background:rgba(10,10,10,.75);border:1px solid #2e2e2e;display:grid;place-items:center;color:#a1a1a1;font-size:12px">⌖</div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;align-items:flex-end;justify-content:space-between;padding:0 12px 10px">
+          <div style="display:flex;gap:6px"><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">H265</div><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">OPUS</div><div style="padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.09);font:500 10px 'Geist Mono',monospace;color:#a1a1a1">4K</div></div>
+          <div style="font:400 11px 'Geist Mono',monospace;color:#8f8f8f">3 viewers · 12.1 Mb/s</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+        <div><div style="font:500 14px/20px 'Geist',sans-serif;color:#ededed;letter-spacing:-.28px">driveway</div>
+        <div style="font:400 12px/16px 'Geist',sans-serif;color:#8f8f8f">online since 06:12 · <span style="color:#ff6b6b;white-space:nowrap">● REC</span></div></div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font-size:13px">⌖</div>
+          <div style="height:32px;padding:0 14px;border-radius:6px;background:#ededed;color:#0a0a0a;display:flex;align-items:center;font:500 13px 'Geist',sans-serif">Stop</div>
+          <div style="width:32px;height:32px;border:1px solid #262626;border-radius:6px;display:grid;place-items:center;color:#a1a1a1;font:600 13px 'Geist',sans-serif">⋯</div>
+        </div>
+      </div>
+    </div>
+    <div style="font:400 11.5px/17px 'Geist',sans-serif;color:#8f8f8f;margin-top:12px;max-width:420px">Overlay chrome scales down gracefully: at today's feature set only LIVE + name + Play render; every other affordance is an additive pill or chip in a reserved zone (status top-left, actions top-right, codecs bottom-left, telemetry bottom-right).</div>
+  </div>
+  <div style="flex:.8">
+    <div style="font:500 10.5px 'Geist Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px">Actions menu at full scale — grouped, scrollless</div>
+    <div style="width:248px;background:#161616;border:1px solid #2e2e2e;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.6);padding:5px;font:400 13px 'Geist',sans-serif;color:#d4d4d4">
+      <div style="padding:7px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center" style-hover="background:#222">Open stream detail <span style="font:400 10px 'Geist Mono',monospace;color:#555">↵</span></div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">View recordings</div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Take snapshot</div>
+      <div style="height:1px;background:#262626;margin:5px 4px"></div>
+      <div style="padding:7px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center" style-hover="background:#222">Record <span style="font:500 10px 'Geist Mono',monospace;color:#0070f3">ON</span></div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Copy publish URLs <span style="font:400 11px 'Geist Mono',monospace;color:#666">rtsp · srt · rtmp</span></div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Share &amp; embed…</div>
+      <div style="height:1px;background:#262626;margin:5px 4px"></div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Edit path config</div>
+      <div style="padding:7px 10px;border-radius:5px" style-hover="background:#222">Edit hooks</div>
+    </div>
+    <div style="font:400 11.5px/17px 'Geist',sans-serif;color:#8f8f8f;margin-top:12px">Verbs first, grouped by intent: navigate / act on stream / configure. Hairline dividers, no icons needed at this width.</div>
+  </div>
+</div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "adopt the sidebar from <a class="dv-oid" href="#1a">1a</a> everywhere and drop <a class="dv-oid" href="#1b">1b</a>" · "show <a class="dv-oid" href="#1a">1a</a> on mobile" · "light-mode pass on <a class="dv-oid" href="#1g">1g</a>"</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1480, &quot;height&quot;: 5400}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      topnavCards: [
+        { name: 'driveway', meta: 'online 3h 29m', live: true, fill: 'live video — WebRTC', btn: 'Stop', btnBg: '#ededed', btnFg: '#0a0a0a', btnBorder: '#ededed' },
+        { name: 'front-door', meta: 'online 3h 29m', live: true, fill: 'live video — WebRTC', btn: 'Stop', btnBg: '#ededed', btnFg: '#0a0a0a', btnBorder: '#ededed' },
+        { name: 'rpi-birdcam', meta: 'online 22h 05m', live: false, fill: 'snapshot · 14s ago', btn: 'Play', btnBg: 'transparent', btnFg: '#ededed', btnBorder: '#262626' },
+      ],
+      recStreams: [
+        { name: 'driveway', count: 486, latest: '9 minutes ago', size: '148 GB', stamp: '09:32:11' },
+        { name: 'front-door', count: 402, latest: '22 minutes ago', size: '121 GB', stamp: '09:19:47' },
+        { name: 'garage', count: 218, latest: '1 hour ago', size: '77 GB', stamp: '08:40:02' },
+        { name: 'backyard', count: 141, latest: '3 hours ago', size: '52 GB', stamp: '06:41:55' },
+        { name: 'rpi-birdcam', count: 37, latest: 'yesterday', size: '14 GB', stamp: 'Jul 13 18:20' },
+      ],
+      recToday: [
+        { time: '06:12 — 06:27', meta: '540 MB · 15m 00s · H264', dur: '15:00' },
+        { time: '05:58 — 06:12', meta: '498 MB · 14m 12s · H264', dur: '14:12' },
+      ],
+      recYesterday: [
+        { time: '23:41 — 23:56', meta: '531 MB · 15m 00s · H264', dur: '15:00' },
+        { time: '23:26 — 23:41', meta: '540 MB · 15m 00s · H264', dur: '15:00' },
+        { time: '23:11 — 23:26', meta: '529 MB · 15m 00s · H264', dur: '15:00' },
+      ],
+      cfgSections: [
+        { name: 'Logging', bg: 'transparent', fg: '#a1a1a1', w: 400 },
+        { name: 'API', bg: 'transparent', fg: '#a1a1a1', w: 400 },
+        { name: 'Hooks', bg: 'transparent', fg: '#a1a1a1', w: 400 },
+        { name: 'RTSP', bg: 'transparent', fg: '#a1a1a1', w: 400, err: 1 },
+        { name: 'RTMP', bg: 'transparent', fg: '#a1a1a1', w: 400 },
+        { name: 'HLS', bg: '#1a1a1a', fg: '#ededed', w: 500 },
+        { name: 'WebRTC', bg: 'transparent', fg: '#a1a1a1', w: 400 },
+        { name: 'SRT', bg: 'transparent', fg: '#a1a1a1', w: 400, off: true },
+      ],
+      hlsFields: [
+        { key: 'hlsAddress', help: 'Listen address for the HLS server.', isText: true, val: ':8888', border: '#262626' },
+        { key: 'hlsAlwaysRemux', help: 'Remux even when no one is watching. Lowers startup delay, costs CPU.', isToggle: true, togBg: '#222', togBorder: '#2e2e2e', knobLeft: '2px' },
+        { key: 'hlsVariant', help: 'lowLatency, mpegts or fmp4.', isText: true, val: 'lowLatency', border: '#262626' },
+        { key: 'hlsSegmentCount', help: 'Segments kept in the playlist.', isText: true, val: '7', border: '#262626', dirty: true },
+        { key: 'hlsPartDuration', help: 'Duration of each LL-HLS part.', isText: true, val: '200ms', border: '#262626', dirty: true },
+        { key: 'hlsSegmentMaxSize', help: 'Max size per segment.', isText: true, val: '50 MB', border: '#262626' },
+        { key: 'hlsAllowOrigin', help: 'CORS Allow-Origin header value.', isText: true, val: '*', border: '#262626' },
+        { key: 'hlsEncryption', help: 'Serve HLS over TLS.', isToggle: true, togBg: '#0070f3', togBorder: '#0070f3', knobLeft: '18px' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
