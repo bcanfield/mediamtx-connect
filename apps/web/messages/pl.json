@@ -26,220 +26,295 @@
       "switchLanguage": "Zmień język",
       "searchPlaceholder": "Szukaj języka…",
       "noResults": "Nie znaleziono języka."
+    },
+    "connection": {
+      "connected": "połączono",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Aplikacja",
-      "settings": "Ustawienia"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Główna",
     "items": {
       "live": "Na żywo",
       "recordings": "Nagrania",
-      "clientConfig": "Konfiguracja klienta",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Konfiguracja aplikacji",
+      "mediamtxConfig": "Konfiguracja MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "Na żywo",
-    "header": "Transmisje",
-    "subHeader": "Podgląd na żywo aktywnych transmisji",
+    "toolbar": {
+      "summary": "{count, plural, one {# transmisja} few {# transmisje} many {# transmisji} other {# transmisji}} · {live} w odtwarzaniu",
+      "playbackAria": "Tryb odtwarzania",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Gęstość siatki"
+    },
     "errors": {
-      "configTitle": "Błąd konfiguracji",
-      "configDescription": "Nie można wczytać konfiguracji. Sprawdź połączenie z bazą danych.",
-      "connectionTitle": "Nie można połączyć się z MediaMTX",
-      "connectionLead": "Nie można uzyskać dostępu do MediaMTX pod adresem",
-      "connectionHint": "Upewnij się, że MediaMTX działa, a adres URL w konfiguracji jest poprawny.",
-      "checkConfigBtn": "Sprawdź konfigurację"
+      "unreachableTitle": "Brak połączenia z MediaMTX",
+      "unreachableLead": "Brak odpowiedzi od API MediaMTX pod adresem",
+      "openAppConfig": "Otwórz konfigurację aplikacji",
+      "retry": "Spróbuj ponownie",
+      "retryCountdown": "automatyczna ponowna próba za {seconds} s"
     },
     "empty": {
-      "configureRemoteTitle": "Skonfiguruj zdalny URL",
-      "configureRemoteDescription": "Ustaw zdalny adres MediaMTX, aby oglądać transmisje w przeglądarce. Powinien to być adres, pod którym przeglądarka może dotrzeć do MediaMTX.",
-      "goToConfig": "Przejdź do konfiguracji",
-      "noStreamsTitle": "Brak aktywnych transmisji",
-      "noStreamsDescription": "MediaMTX jest połączony, ale obecnie nie ma żadnych aktywnych transmisji. Rozpocznij nadawanie do MediaMTX, aby zobaczyć je tutaj."
+      "noStreamsTitle": "Żadna transmisja nie jest nadawana",
+      "noStreamsLead": "Skieruj dowolne źródło nadawania na MediaMTX, a pojawi się tutaj:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Gęstość siatki",
-      "two": "Dwie kolumny",
-      "three": "Trzy kolumny",
-      "four": "Cztery kolumny"
+    "banner": {
+      "playbackUrlTitle": "Nie ustawiono adresu URL odtwarzania",
+      "playbackUrlLead": "Ustaw widoczny dla przeglądarki adres URL MediaMTX w konfiguracji aplikacji, aby włączyć odtwarzanie na żywo.",
+      "openAppConfig": "Otwórz konfigurację aplikacji"
     },
     "card": {
-      "onlineSince": "Online od {date}",
-      "idle": "Bezczynna",
-      "live": "NA ŻYWO",
-      "stop": "Zatrzymaj",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "brak migawki — pierwsze ujęcie za ~30 s",
+      "onlineSince": "online od {time} · {uptime}",
+      "idle": "bezczynna",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# widz} few {# widzów} many {# widzów} other {# widza}}",
       "play": "Odtwórz",
+      "stop": "Zatrzymaj",
+      "playAria": "Odtwórz {streamName}",
       "actionsAria": "Akcje transmisji",
-      "viewRecordings": "Zobacz nagrania"
+      "stub": {
+        "title": "Jeszcze niezaimplementowane",
+        "description": "Ta akcja jest w planach — została odnotowana."
+      },
+      "menu": {
+        "openDetail": "Otwórz szczegóły transmisji",
+        "viewRecordings": "Zobacz nagrania",
+        "takeSnapshot": "Zrób migawkę",
+        "record": "Nagrywanie",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopiuj adresy URL publikowania",
+        "shareEmbed": "Udostępnij i osadź…",
+        "editPathConfig": "Edytuj konfigurację ścieżki",
+        "editHooks": "Edytuj hooki"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Nagrania",
-    "header": "Nagrania",
-    "subHeader": "Przeglądaj nagrania ze swoich różnych transmisji",
-    "subHeaderForStream": "Nagrania dla: {streamName}",
-    "invalidConfig": "Nieprawidłowa konfiguracja",
-    "errors": {
-      "configTitle": "Błąd konfiguracji",
-      "configDescription": "Nie można wczytać konfiguracji. Sprawdź połączenie z bazą danych.",
-      "directoryTitle": "Brak dostępu do katalogu nagrań",
-      "directoryLead": "Nie można odczytać katalogu nagrań pod ścieżką",
-      "directoryHint": "Upewnij się, że katalog istnieje i ma odpowiednie uprawnienia.",
-      "checkConfigBtn": "Sprawdź konfigurację",
-      "readErrorTitle": "Nie udało się odczytać nagrań",
-      "readErrorDescription": "Nie udało się odczytać katalogu nagrań. Upewnij się, że katalog istnieje."
+    "toolbar": {
+      "summary": "{streams, plural, one {# transmisja} few {# transmisje} many {# transmisji} other {# transmisji}} · {recordings, plural, one {# nagranie} few {# nagrania} many {# nagrań} other {# nagrania}}",
+      "filterPlaceholder": "Filtruj transmisje…",
+      "filterAria": "Filtruj transmisje"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# nagranie} few {# nagrania} many {# nagrań} other {# nagrania}}",
+      "latest": "ostatnie {time}",
+      "openAria": "Zobacz nagrania dla {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Nie znaleziono nagrań",
-      "noRecordingsLead": "Nie zapisano jeszcze żadnych nagrań. Pojawią się tutaj, gdy MediaMTX zacznie nagrywać transmisje.",
-      "noRecordingsHint": "Upewnij się, że w konfiguracji MediaMTX ustawiono <code>MTX_RECORD=yes</code>.",
+      "noRecordingsTitle": "Brak nagrań",
+      "noRecordingsLead": "Nagrania pojawią się tutaj, gdy MediaMTX zacznie nagrywać transmisje.",
+      "enableRecording": "Włącz nagrywanie",
       "noMatchingTitle": "Brak pasujących transmisji",
       "noMatchingDescription": "Żadna transmisja nie pasuje do „{query}”."
     },
-    "search": {
-      "placeholder": "Szukaj transmisji"
+    "errors": {
+      "directoryTitle": "Nie można odczytać katalogu nagrań",
+      "directoryLead": "Nie można odczytać nagrań pod ścieżką",
+      "openAppConfig": "Otwórz konfigurację aplikacji",
+      "readErrorTitle": "Nie udało się odczytać nagrań",
+      "readErrorDescription": "Upewnij się, że katalog nagrań istnieje i ma odpowiednie uprawnienia."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# nagranie} few {# nagrania} many {# nagrań} other {# nagrania}}"
     },
     "groups": {
-      "today": "Dziś",
-      "yesterday": "Wczoraj"
+      "todayEyebrow": "Dziś — {date}",
+      "yesterdayEyebrow": "Wczoraj — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# nagranie} few {# nagrania} many {# nagrań} other {# nagrania}}",
-      "latest": "Ostatnie {time}",
-      "viewBtn": "Zobacz"
-    },
-    "recordingCard": {
-      "stop": "Zatrzymaj",
+    "row": {
       "play": "Odtwórz",
-      "downloadAria": "Pobierz nagranie {filePath}",
-      "downloadError": "Błąd podczas pobierania filmu"
+      "close": "Zamknij",
+      "cancel": "Anuluj",
+      "playAria": "Odtwórz nagranie z {time}",
+      "downloadAria": "Pobierz nagranie {file}",
+      "downloading": "pobieranie… {received} z {total} · {rate}",
+      "downloadComplete": "Pobieranie zakończone",
+      "downloadFailed": "Pobieranie nie powiodło się"
+    },
+    "player": {
+      "play": "Odtwórz",
+      "pause": "Wstrzymaj",
+      "seek": "Przewiń"
+    },
+    "pagination": {
+      "aria": "Paginacja",
+      "showing": "Wyświetlanie {from}–{to} z {total}",
+      "previous": "Poprzednia strona",
+      "next": "Następna strona"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Ustawienia",
-      "clientConfig": "Konfiguracja klienta",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Konfiguracja",
-    "pageSubHeader": "Zarządzaj konfiguracją swojej aplikacji",
     "invalidConfig": "Nieprawidłowa konfiguracja",
+    "appConfig": {
+      "pageHeader": "Konfiguracja aplikacji",
+      "pageSubHeader": "Połączenie i przechowywanie używane przez MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Konfiguracja MediaMTX",
+      "pageSubHeader": "Globalne ustawienia serwera MediaMTX, zapisywane na serwerze."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanej zmiany}}",
+      "needsAttention": "{count, plural, one {# pole wymaga uwagi} few {# pola wymagają uwagi} many {# pól wymaga uwagi} other {# pola wymaga uwagi}}",
+      "discard": "Odrzuć",
+      "reset": "Resetuj",
+      "save": "Zapisz",
+      "saveToServer": "Zapisz na serwerze"
+    },
     "formFields": {
       "oneValuePerLine": "Jedna wartość na wiersz."
     },
     "clientForm": {
-      "title": "Ustawienia aplikacji",
-      "description": "Ścieżki połączenia i przechowywania używane przez MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "Połączenie z MediaMTX",
         "storage": "Przechowywanie"
       },
+      "playbackBadge": "Wymagane do odtwarzania na żywo",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "Adres Twojej instancji MediaMTX. W sieci Docker możesz użyć nazwy kontenera; w przeciwnym razie podaj zewnętrzny adres IP lub nazwę hosta."
+          "label": "Adres URL MediaMTX",
+          "description": "Adres Twojej instancji MediaMTX. W sieci Docker możesz użyć nazwy kontenera; w przeciwnym razie użyj zewnętrznego adresu IP lub nazwy hosta."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Port API MediaMTX"
+          "label": "Port API",
+          "description": "Port API MediaMTX."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "To jest dostępny z przeglądarki, zewnętrzny adres IP lub nazwa hosta Twojego serwera MediaMTX."
+          "label": "Adres URL odtwarzania",
+          "description": "Dostępny z przeglądarki, zewnętrzny adres URL Twojego serwera MediaMTX. Odtwarzanie na żywo ładuje stąd transmisje."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Katalog zawierający nagrania MediaMTX (nie zaleca się zmiany przy korzystaniu z Dockera)"
+          "label": "Katalog nagrań",
+          "description": "Katalog zawierający nagrania MediaMTX (nie zaleca się zmiany przy korzystaniu z Dockera)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Katalog do przechowywania wygenerowanych zrzutów ekranu (nie zaleca się zmiany przy korzystaniu z Dockera)"
+          "label": "Katalog zrzutów ekranu",
+          "description": "Katalog na wygenerowane migawki (nie zaleca się zmiany przy korzystaniu z Dockera)."
         }
       },
-      "actions": {
-        "reset": "Resetuj",
-        "submit": "Wyślij"
-      },
       "toasts": {
-        "success": "Konfiguracja klienta zaktualizowana",
-        "errorTitle": "Wystąpił problem podczas aktualizacji konfiguracji klienta",
-        "errorDescription": "Sprawdź wartości w formularzu."
+        "success": "Zapisano konfigurację aplikacji",
+        "errorTitle": "Nie udało się zapisać konfiguracji aplikacji",
+        "errorDescription": "Sprawdź wartości w formularzu i spróbuj ponownie."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Logi",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "Hooki",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Logi",
-          "limits": "Limity"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Metryki",
-          "pprof": "PPROF",
-          "enableDescription": "Włącz API HTTP MediaMTX."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Serwer",
-          "tls": "TLS",
-          "auth": "Uwierzytelnianie",
-          "enableDescription": "Włącz serwer RTSP."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Włącz serwer RTMP."
-        },
-        "hls": {
-          "server": "Serwer",
-          "segments": "Segmenty",
-          "corsProxies": "CORS / Proxy",
-          "enableDescription": "Włącz serwer HLS."
-        },
-        "webrtc": {
-          "server": "Serwer",
-          "network": "Sieć",
-          "iceServers": "Serwery ICE",
-          "addServer": "Dodaj serwer",
-          "noIceServers": "Brak skonfigurowanych serwerów ICE.",
-          "iceServerLabel": "Serwer ICE {index}",
-          "removeIceServer": "Usuń serwer ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "Nazwa użytkownika",
-            "password": "Hasło"
-          },
-          "enableDescription": "Włącz serwer WebRTC."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Włącz serwer SRT."
-        }
+      "sectionDescriptions": {
+        "logging": "Wyjście logów, limity czasu i globalne limity.",
+        "api": "API HTTP, którego używa sam MediaMTX Connect.",
+        "hooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach połączeń.",
+        "rtsp": "Publikuj i odbieraj transmisje przez RTSP.",
+        "rtmp": "Publikuj i odbieraj transmisje przez RTMP.",
+        "hls": "Udostępniaj transmisje jako HLS do odtwarzania w przeglądarce.",
+        "webrtc": "Odtwarzanie i publikowanie w przeglądarce z niskim opóźnieniem.",
+        "srt": "Publikuj i odbieraj transmisje przez SRT."
+      },
+      "enabled": "Włączone",
+      "off": "Wyłączone",
+      "hiddenWhileOff": "{count, plural, one {# opcja ukryta, gdy wyłączone} few {# opcje ukryte, gdy wyłączone} many {# opcji ukrytych, gdy wyłączone} other {# opcji ukrytej, gdy wyłączone}}",
+      "rail": {
+        "onThisPage": "Na tej stronie",
+        "aria": "Sekcje konfiguracji"
+      },
+      "iceServers": {
+        "add": "Dodaj serwer ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL serwera ICE {index}",
+        "usernameAria": "Nazwa użytkownika serwera ICE {index}",
+        "passwordAria": "Hasło serwera ICE {index}",
+        "removeAria": "Usuń serwer ICE {index}"
+      },
+      "help": {
+        "logLevel": "Szczegółowość wyjścia logów (error, warn, info lub debug).",
+        "logDestinations": "Gdzie zapisywać logi (stdout, file lub syslog).",
+        "logFile": "Ścieżka pliku logu, gdy logDestinations zawiera file.",
+        "readTimeout": "Limit czasu operacji odczytu.",
+        "writeTimeout": "Limit czasu operacji zapisu.",
+        "writeQueueSize": "Rozmiar kolejki wychodzącej na połączenie. Musi być potęgą dwójki.",
+        "udpMaxPayloadSize": "Maksymalny rozmiar wychodzących pakietów UDP.",
+        "externalAuthenticationURL": "Adres URL zewnętrznego serwera uwierzytelniania, wywoływanego przy każdym połączeniu.",
+        "apiAddress": "Adres nasłuchiwania API HTTP.",
+        "metrics": "Udostępnij metryki zgodne z Prometheus.",
+        "metricsAddress": "Adres nasłuchiwania punktu końcowego metryk.",
+        "pprof": "Udostępnij punkt końcowy profilowania pprof Go.",
+        "pprofAddress": "Adres nasłuchiwania punktu końcowego pprof.",
+        "runOnConnect": "Polecenie uruchamiane, gdy klient się łączy.",
+        "runOnConnectRestart": "Uruchom polecenie ponownie, jeśli się zakończy.",
+        "runOnDisconnect": "Polecenie uruchamiane, gdy klient się rozłącza.",
+        "rtspAddress": "Adres nasłuchiwania serwera RTSP (TCP).",
+        "rtspsAddress": "Adres nasłuchiwania serwera RTSPS (TLS).",
+        "rtpAddress": "Adres nasłuchiwania pakietów RTP przez UDP.",
+        "rtcpAddress": "Adres nasłuchiwania pakietów RTCP przez UDP.",
+        "multicastIPRange": "Zakres IP używany do dostarczania multicast.",
+        "multicastRTPPort": "Port pakietów RTP multicast.",
+        "multicastRTCPPort": "Port pakietów RTCP multicast.",
+        "protocols": "Protokoły transportowe akceptowane przez serwer RTSP (udp, multicast lub tcp).",
+        "encryption": "Polityka szyfrowania TLS (no, strict lub optional).",
+        "serverKey": "Ścieżka klucza serwera TLS.",
+        "serverCert": "Ścieżka certyfikatu serwera TLS.",
+        "authMethods": "Metody uwierzytelniania akceptowane przez serwer RTSP (basic lub digest).",
+        "rtmpAddress": "Adres nasłuchiwania serwera RTMP.",
+        "rtmpEncryption": "Polityka szyfrowania TLS dla RTMP (no, strict lub optional).",
+        "rtmpsAddress": "Adres nasłuchiwania serwera RTMPS (TLS).",
+        "rtmpServerKey": "Ścieżka klucza serwera RTMPS.",
+        "rtmpServerCert": "Ścieżka certyfikatu serwera RTMPS.",
+        "hlsAddress": "Adres nasłuchiwania serwera HLS.",
+        "hlsEncryption": "Udostępniaj HLS przez TLS (HTTPS).",
+        "hlsServerKey": "Ścieżka klucza serwera HLS.",
+        "hlsServerCert": "Ścieżka certyfikatu serwera HLS.",
+        "hlsAlwaysRemux": "Remuksuj transmisje nawet wtedy, gdy nikt nie ogląda.",
+        "hlsVariant": "Wariant HLS (mpegts, fmp4 lub lowLatency).",
+        "hlsSegmentCount": "Liczba segmentów przechowywanych na playliście.",
+        "hlsSegmentDuration": "Minimalny czas trwania każdego segmentu.",
+        "hlsPartDuration": "Czas trwania każdej części w trybie niskich opóźnień.",
+        "hlsSegmentMaxSize": "Maksymalny rozmiar każdego segmentu.",
+        "hlsAllowOrigin": "Wartość nagłówka Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "Adresy IP lub sieci proxy umieszczonych przed serwerem HLS.",
+        "hlsDirectory": "Zapisuj segmenty na dysku w tym katalogu zamiast w RAM.",
+        "webrtcAddress": "Adres nasłuchiwania serwera HTTP WebRTC.",
+        "webrtcEncryption": "Udostępniaj WebRTC przez TLS (HTTPS).",
+        "webrtcServerKey": "Ścieżka klucza serwera WebRTC.",
+        "webrtcServerCert": "Ścieżka certyfikatu serwera WebRTC.",
+        "webrtcAllowOrigin": "Wartość nagłówka Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "Adresy IP lub sieci proxy umieszczonych przed serwerem WebRTC.",
+        "webrtcLocalUDPAddress": "Lokalny adres UDP używany dla ruchu WebRTC.",
+        "webrtcLocalTCPAddress": "Lokalny adres TCP używany dla ruchu WebRTC.",
+        "webrtcIPsFromInterfaces": "Zbieraj kandydujące adresy IP z interfejsów sieciowych hosta.",
+        "webrtcIPsFromInterfacesList": "Interfejsy, z których zbierane są kandydujące adresy IP. Puste oznacza wszystkie.",
+        "webrtcAdditionalHosts": "Dodatkowe hosty lub adresy IP ogłaszane jako kandydaci WebRTC.",
+        "webrtcICEServers2": "Serwery STUN lub TURN używane do nawiązywania połączeń WebRTC.",
+        "srtAddress": "Adres nasłuchiwania serwera SRT."
       },
       "toasts": {
-        "success": "Konfiguracja globalna zaktualizowana",
-        "errorTitle": "Wystąpił problem podczas aktualizacji konfiguracji globalnej",
-        "errorDescription": "Sprawdź wartości w formularzu."
+        "success": "Zapisano konfigurację MediaMTX",
+        "errorTitle": "Nie udało się zapisać konfiguracji MediaMTX",
+        "errorDescription": "Sprawdź wartości w formularzu i spróbuj ponownie."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanych zmian}}",
-      "discard": "Odrzuć",
-      "saveChanges": "Zapisz zmiany"
     }
   }
 }

@@ -26,152 +26,194 @@
       "switchLanguage": "เปลี่ยนภาษา",
       "searchPlaceholder": "ค้นหาภาษา…",
       "noResults": "ไม่พบภาษา"
+    },
+    "connection": {
+      "connected": "เชื่อมต่อแล้ว",
+      "offline": "ออฟไลน์"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "แอปพลิเคชัน",
-      "settings": "การตั้งค่า"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "หลัก",
     "items": {
       "live": "สด",
       "recordings": "การบันทึก",
-      "clientConfig": "การตั้งค่าไคลเอนต์",
-      "mediamtx": "MediaMTX"
+      "appConfig": "การตั้งค่าแอป",
+      "mediamtxConfig": "การตั้งค่า MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "สด",
-    "header": "สตรีม",
-    "subHeader": "มุมมองสดของสตรีมที่ใช้งานอยู่ของคุณ",
+    "toolbar": {
+      "summary": "{count, plural, other {# สตรีม}} · เล่นอยู่ {live}",
+      "playbackAria": "โหมดการเล่น",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "ความหนาแน่นของกริด"
+    },
     "errors": {
-      "configTitle": "ข้อผิดพลาดในการตั้งค่า",
-      "configDescription": "ไม่สามารถโหลดการตั้งค่าได้ โปรดตรวจสอบการเชื่อมต่อฐานข้อมูล",
-      "connectionTitle": "ไม่สามารถเชื่อมต่อ MediaMTX",
-      "connectionLead": "ไม่สามารถเข้าถึง MediaMTX ได้ที่",
-      "connectionHint": "โปรดตรวจสอบว่า MediaMTX กำลังทำงาน และ URL ในการตั้งค่าของคุณถูกต้อง",
-      "checkConfigBtn": "ตรวจสอบการตั้งค่า"
+      "unreachableTitle": "ไม่สามารถเข้าถึง MediaMTX",
+      "unreachableLead": "ไม่มีการตอบสนองจาก MediaMTX API ที่",
+      "openAppConfig": "เปิดการตั้งค่าแอป",
+      "retry": "ลองอีกครั้ง",
+      "retryCountdown": "ลองใหม่อัตโนมัติใน {seconds} วิ"
     },
     "empty": {
-      "configureRemoteTitle": "ตั้งค่า URL ระยะไกล",
-      "configureRemoteDescription": "ตั้งค่า URL ของ MediaMTX ระยะไกลเพื่อดูสตรีมในเบราว์เซอร์ ควรเป็น URL ที่เบราว์เซอร์สามารถใช้เข้าถึง MediaMTX ได้",
-      "goToConfig": "ไปที่การตั้งค่า",
-      "noStreamsTitle": "ไม่มีสตรีมที่กำลังทำงาน",
-      "noStreamsDescription": "MediaMTX เชื่อมต่อแล้วแต่ขณะนี้ยังไม่มีสตรีมที่กำลังทำงาน เริ่มสตรีมไปยัง MediaMTX เพื่อให้สตรีมของคุณปรากฏที่นี่"
+      "noStreamsTitle": "ไม่มีสตรีมที่กำลังเผยแพร่",
+      "noStreamsLead": "ชี้ตัวเผยแพร่ใดก็ได้มาที่ MediaMTX แล้วสตรีมจะปรากฏที่นี่:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "ความหนาแน่นของกริด",
-      "two": "สองคอลัมน์",
-      "three": "สามคอลัมน์",
-      "four": "สี่คอลัมน์"
+    "banner": {
+      "playbackUrlTitle": "ยังไม่ได้ตั้งค่า URL สำหรับการเล่น",
+      "playbackUrlLead": "ตั้งค่า URL ของ MediaMTX ที่เบราว์เซอร์เข้าถึงได้ในการตั้งค่าแอป เพื่อเปิดใช้การเล่นสด",
+      "openAppConfig": "เปิดการตั้งค่าแอป"
     },
     "card": {
-      "onlineSince": "ออนไลน์ตั้งแต่ {date}",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "ยังไม่มีสแนปช็อต — จับภาพครั้งแรกใน ~30 วิ",
+      "onlineSince": "ออนไลน์ตั้งแต่ {time} · {uptime}",
       "idle": "ว่าง",
-      "live": "สด",
-      "stop": "หยุด",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {ผู้ชม # คน}}",
       "play": "เล่น",
+      "stop": "หยุด",
+      "playAria": "เล่น {streamName}",
       "actionsAria": "การดำเนินการของสตรีม",
-      "viewRecordings": "ดูการบันทึก"
+      "stub": {
+        "title": "ยังไม่พร้อมใช้งาน",
+        "description": "การดำเนินการนี้อยู่ในแผนงาน — มีการบันทึกไว้แล้ว"
+      },
+      "menu": {
+        "openDetail": "เปิดรายละเอียดสตรีม",
+        "viewRecordings": "ดูการบันทึก",
+        "takeSnapshot": "ถ่ายสแนปช็อต",
+        "record": "บันทึก",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "คัดลอก URL สำหรับเผยแพร่",
+        "shareEmbed": "แชร์และฝัง…",
+        "editPathConfig": "แก้ไขการตั้งค่าพาธ",
+        "editHooks": "แก้ไข hooks"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "การบันทึก",
-    "header": "การบันทึก",
-    "subHeader": "เรียกดูการบันทึกจากสตรีมต่าง ๆ ของคุณ",
-    "subHeaderForStream": "การบันทึกสำหรับ: {streamName}",
-    "invalidConfig": "การตั้งค่าไม่ถูกต้อง",
-    "errors": {
-      "configTitle": "ข้อผิดพลาดในการตั้งค่า",
-      "configDescription": "ไม่สามารถโหลดการตั้งค่าได้ โปรดตรวจสอบการเชื่อมต่อฐานข้อมูล",
-      "directoryTitle": "เข้าถึงไดเรกทอรีการบันทึกไม่ได้",
-      "directoryLead": "ไม่สามารถอ่านไดเรกทอรีการบันทึกที่",
-      "directoryHint": "โปรดตรวจสอบว่ามีไดเรกทอรีอยู่และมีสิทธิ์ถูกต้อง",
-      "checkConfigBtn": "ตรวจสอบการตั้งค่า",
-      "readErrorTitle": "อ่านการบันทึกไม่ได้",
-      "readErrorDescription": "ไม่สามารถอ่านไดเรกทอรีการบันทึกได้ โปรดตรวจสอบว่าไดเรกทอรีมีอยู่"
-    },
-    "empty": {
-      "noRecordingsTitle": "ไม่พบการบันทึก",
-      "noRecordingsLead": "ยังไม่มีการบันทึกที่ถูกบันทึกไว้ การบันทึกจะปรากฏที่นี่เมื่อ MediaMTX เริ่มบันทึกสตรีม",
-      "noRecordingsHint": "โปรดตรวจสอบว่ามีการตั้งค่า <code>MTX_RECORD=yes</code> ในการตั้งค่า MediaMTX ของคุณ",
-      "noMatchingTitle": "ไม่มีสตรีมที่ตรงกัน",
-      "noMatchingDescription": "ไม่มีสตรีมตรงกับ «{query}»"
-    },
-    "search": {
-      "placeholder": "ค้นหาสตรีม"
-    },
-    "groups": {
-      "today": "วันนี้",
-      "yesterday": "เมื่อวาน"
+    "toolbar": {
+      "summary": "{streams, plural, other {# สตรีม}} · {recordings, plural, other {# การบันทึก}}",
+      "filterPlaceholder": "กรองสตรีม…",
+      "filterAria": "กรองสตรีม"
     },
     "card": {
-      "recordingCount": "{count, plural, other {# การบันทึก}}",
+      "recordingsChip": "{count, plural, other {# การบันทึก}}",
       "latest": "ล่าสุด {time}",
-      "viewBtn": "ดู"
+      "openAria": "ดูการบันทึกของ {name}"
     },
-    "recordingCard": {
-      "stop": "หยุด",
+    "empty": {
+      "noRecordingsTitle": "ยังไม่มีการบันทึก",
+      "noRecordingsLead": "การบันทึกจะปรากฏที่นี่เมื่อ MediaMTX เริ่มบันทึกสตรีม",
+      "enableRecording": "เปิดใช้การบันทึก",
+      "noMatchingTitle": "ไม่มีสตรีมที่ตรงกัน",
+      "noMatchingDescription": "ไม่มีสตรีมตรงกับ “{query}”"
+    },
+    "errors": {
+      "directoryTitle": "อ่านไดเรกทอรีการบันทึกไม่ได้",
+      "directoryLead": "ไม่สามารถอ่านการบันทึกที่",
+      "openAppConfig": "เปิดการตั้งค่าแอป",
+      "readErrorTitle": "อ่านการบันทึกไม่ได้",
+      "readErrorDescription": "โปรดตรวจสอบว่าไดเรกทอรีการบันทึกมีอยู่และมีสิทธิ์ถูกต้อง"
+    },
+    "detail": {
+      "totals": "{count, plural, other {# การบันทึก}}"
+    },
+    "groups": {
+      "todayEyebrow": "วันนี้ — {date}",
+      "yesterdayEyebrow": "เมื่อวาน — {date}"
+    },
+    "row": {
       "play": "เล่น",
-      "downloadAria": "ดาวน์โหลดการบันทึก {filePath}",
-      "downloadError": "เกิดข้อผิดพลาดในการดาวน์โหลดวิดีโอ"
+      "close": "ปิด",
+      "cancel": "ยกเลิก",
+      "playAria": "เล่นการบันทึกจาก {time}",
+      "downloadAria": "ดาวน์โหลดการบันทึก {file}",
+      "downloading": "กำลังดาวน์โหลด… {received} จาก {total} · {rate}",
+      "downloadComplete": "ดาวน์โหลดเสร็จแล้ว",
+      "downloadFailed": "ดาวน์โหลดล้มเหลว"
+    },
+    "player": {
+      "play": "เล่น",
+      "pause": "หยุดชั่วคราว",
+      "seek": "เลื่อนตำแหน่ง"
+    },
+    "pagination": {
+      "aria": "การแบ่งหน้า",
+      "showing": "แสดง {from}–{to} จาก {total}",
+      "previous": "หน้าก่อนหน้า",
+      "next": "หน้าถัดไป"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "การตั้งค่า",
-      "clientConfig": "การตั้งค่าไคลเอนต์",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "การตั้งค่า",
-    "pageSubHeader": "จัดการการตั้งค่าแอปของคุณ",
     "invalidConfig": "การตั้งค่าไม่ถูกต้อง",
+    "appConfig": {
+      "pageHeader": "การตั้งค่าแอป",
+      "pageSubHeader": "การเชื่อมต่อและที่จัดเก็บที่ใช้โดย MediaMTX Connect"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "การตั้งค่า MediaMTX",
+      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {# การเปลี่ยนแปลงที่ยังไม่ได้บันทึก}}",
+      "needsAttention": "{count, plural, other {# ฟิลด์ต้องได้รับการตรวจสอบ}}",
+      "discard": "ทิ้ง",
+      "reset": "รีเซ็ต",
+      "save": "บันทึก",
+      "saveToServer": "บันทึกไปยังเซิร์ฟเวอร์"
+    },
     "formFields": {
       "oneValuePerLine": "หนึ่งค่าต่อหนึ่งบรรทัด"
     },
     "clientForm": {
-      "title": "การตั้งค่าแอปพลิเคชัน",
-      "description": "เส้นทางการเชื่อมต่อและที่จัดเก็บที่ใช้โดย MediaMTX Connect",
       "sections": {
         "mediamtxConnection": "การเชื่อมต่อ MediaMTX",
         "storage": "ที่จัดเก็บ"
       },
+      "playbackBadge": "จำเป็นสำหรับการเล่นสด",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX URL",
           "description": "ที่อยู่อินสแตนซ์ MediaMTX ของคุณ ภายในเครือข่าย Docker คุณสามารถใช้ชื่อคอนเทนเนอร์ได้ ไม่เช่นนั้นให้ใช้ IP หรือชื่อโฮสต์ภายนอก"
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
+          "label": "พอร์ต API",
           "description": "พอร์ตของ MediaMTX API"
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "นี่คือ IP หรือชื่อโฮสต์ที่เข้าถึงได้จากเบราว์เซอร์และเปิดสู่ภายนอกของเซิร์ฟเวอร์ MediaMTX ของคุณ"
+          "label": "URL สำหรับการเล่น",
+          "description": "URL ของเซิร์ฟเวอร์ MediaMTX ที่เบราว์เซอร์เข้าถึงได้และเปิดสู่ภายนอก การเล่นสดจะโหลดสตรีมจากที่นี่"
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
+          "label": "ไดเรกทอรีการบันทึก",
           "description": "ไดเรกทอรีที่มีการบันทึก MediaMTX (ไม่แนะนำให้เปลี่ยนหากใช้ Docker)"
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "ไดเรกทอรีสำหรับเก็บภาพหน้าจอที่สร้างขึ้น (ไม่แนะนำให้เปลี่ยนหากใช้ Docker)"
+          "label": "ไดเรกทอรีภาพหน้าจอ",
+          "description": "ไดเรกทอรีสำหรับสแนปช็อตที่สร้างขึ้น (ไม่แนะนำให้เปลี่ยนหากใช้ Docker)"
         }
       },
-      "actions": {
-        "reset": "รีเซ็ต",
-        "submit": "ส่ง"
-      },
       "toasts": {
-        "success": "อัปเดตการตั้งค่าไคลเอนต์แล้ว",
-        "errorTitle": "เกิดปัญหาในการอัปเดตการตั้งค่าไคลเอนต์",
-        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้ง"
+        "success": "บันทึกการตั้งค่าแอปแล้ว",
+        "errorTitle": "บันทึกการตั้งค่าแอปไม่สำเร็จ",
+        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้งแล้วลองใหม่"
       }
     },
     "mediamtxForm": {
-      "tabs": {
-        "logging": "บันทึก",
+      "sectionTitles": {
+        "logging": "การบันทึกล็อก",
         "api": "API",
         "hooks": "Hooks",
         "rtsp": "RTSP",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "บันทึก",
-          "limits": "ขีดจำกัด"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "เมตริก",
-          "pprof": "PPROF",
-          "enableDescription": "เปิดใช้งาน MediaMTX HTTP API"
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "เซิร์ฟเวอร์",
-          "tls": "TLS",
-          "auth": "การยืนยันตัวตน",
-          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ RTSP"
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ RTMP"
-        },
-        "hls": {
-          "server": "เซิร์ฟเวอร์",
-          "segments": "เซกเมนต์",
-          "corsProxies": "CORS / พร็อกซี",
-          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ HLS"
-        },
-        "webrtc": {
-          "server": "เซิร์ฟเวอร์",
-          "network": "เครือข่าย",
-          "iceServers": "เซิร์ฟเวอร์ ICE",
-          "addServer": "เพิ่มเซิร์ฟเวอร์",
-          "noIceServers": "ไม่มีเซิร์ฟเวอร์ ICE ที่กำหนดค่าไว้",
-          "iceServerLabel": "เซิร์ฟเวอร์ ICE {index}",
-          "removeIceServer": "ลบเซิร์ฟเวอร์ ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "ชื่อผู้ใช้",
-            "password": "รหัสผ่าน"
-          },
-          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ WebRTC"
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "เปิดใช้งานเซิร์ฟเวอร์ SRT"
-        }
+      "sectionDescriptions": {
+        "logging": "เอาต์พุตล็อก ไทม์เอาต์ และขีดจำกัดส่วนกลาง",
+        "api": "HTTP API ที่ MediaMTX Connect ใช้งานเอง",
+        "hooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์การเชื่อมต่อ",
+        "rtsp": "เผยแพร่และรับชมสตรีมผ่าน RTSP",
+        "rtmp": "เผยแพร่และรับชมสตรีมผ่าน RTMP",
+        "hls": "ให้บริการสตรีมเป็น HLS สำหรับการเล่นในเบราว์เซอร์",
+        "webrtc": "การเล่นและการเผยแพร่ผ่านเบราว์เซอร์แบบหน่วงต่ำ",
+        "srt": "เผยแพร่และรับชมสตรีมผ่าน SRT"
+      },
+      "enabled": "เปิดใช้งาน",
+      "off": "ปิด",
+      "hiddenWhileOff": "{count, plural, other {ซ่อน # ตัวเลือกขณะปิดอยู่}}",
+      "rail": {
+        "onThisPage": "ในหน้านี้",
+        "aria": "ส่วนการตั้งค่า"
+      },
+      "iceServers": {
+        "add": "เพิ่มเซิร์ฟเวอร์ ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL ของเซิร์ฟเวอร์ ICE {index}",
+        "usernameAria": "ชื่อผู้ใช้ของเซิร์ฟเวอร์ ICE {index}",
+        "passwordAria": "รหัสผ่านของเซิร์ฟเวอร์ ICE {index}",
+        "removeAria": "ลบเซิร์ฟเวอร์ ICE {index}"
+      },
+      "help": {
+        "logLevel": "ระดับความละเอียดของเอาต์พุตล็อก (error, warn, info หรือ debug)",
+        "logDestinations": "ที่สำหรับเขียนล็อก (stdout, file หรือ syslog)",
+        "logFile": "พาธของไฟล์ล็อกเมื่อ logDestinations มี file",
+        "readTimeout": "ไทม์เอาต์สำหรับการดำเนินการอ่าน",
+        "writeTimeout": "ไทม์เอาต์สำหรับการดำเนินการเขียน",
+        "writeQueueSize": "ขนาดคิวขาออกต่อการเชื่อมต่อ ต้องเป็นกำลังของสอง",
+        "udpMaxPayloadSize": "ขนาดสูงสุดของแพ็กเก็ต UDP ขาออก",
+        "externalAuthenticationURL": "URL ของเซิร์ฟเวอร์ยืนยันตัวตนภายนอก ถูกเรียกทุกครั้งที่มีการเชื่อมต่อ",
+        "apiAddress": "ที่อยู่รับฟังของ HTTP API",
+        "metrics": "เปิดเผยเมตริกที่เข้ากันได้กับ Prometheus",
+        "metricsAddress": "ที่อยู่รับฟังของเอนด์พอยต์เมตริก",
+        "pprof": "เปิดเผยเอนด์พอยต์การทำโปรไฟล์ pprof ของ Go",
+        "pprofAddress": "ที่อยู่รับฟังของเอนด์พอยต์ pprof",
+        "runOnConnect": "คำสั่งที่รันเมื่อไคลเอนต์เชื่อมต่อ",
+        "runOnConnectRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
+        "runOnDisconnect": "คำสั่งที่รันเมื่อไคลเอนต์ตัดการเชื่อมต่อ",
+        "rtspAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTSP (TCP)",
+        "rtspsAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTSPS (TLS)",
+        "rtpAddress": "ที่อยู่รับฟังสำหรับแพ็กเก็ต RTP ผ่าน UDP",
+        "rtcpAddress": "ที่อยู่รับฟังสำหรับแพ็กเก็ต RTCP ผ่าน UDP",
+        "multicastIPRange": "ช่วง IP ที่ใช้สำหรับการส่งแบบมัลติแคสต์",
+        "multicastRTPPort": "พอร์ตสำหรับแพ็กเก็ต RTP แบบมัลติแคสต์",
+        "multicastRTCPPort": "พอร์ตสำหรับแพ็กเก็ต RTCP แบบมัลติแคสต์",
+        "protocols": "โปรโตคอลขนส่งที่เซิร์ฟเวอร์ RTSP ยอมรับ (udp, multicast หรือ tcp)",
+        "encryption": "นโยบายการเข้ารหัส TLS (no, strict หรือ optional)",
+        "serverKey": "พาธของคีย์เซิร์ฟเวอร์ TLS",
+        "serverCert": "พาธของใบรับรองเซิร์ฟเวอร์ TLS",
+        "authMethods": "วิธียืนยันตัวตนที่เซิร์ฟเวอร์ RTSP ยอมรับ (basic หรือ digest)",
+        "rtmpAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMP",
+        "rtmpEncryption": "นโยบายการเข้ารหัส TLS สำหรับ RTMP (no, strict หรือ optional)",
+        "rtmpsAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMPS (TLS)",
+        "rtmpServerKey": "พาธของคีย์เซิร์ฟเวอร์ RTMPS",
+        "rtmpServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ RTMPS",
+        "hlsAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ HLS",
+        "hlsEncryption": "ให้บริการ HLS ผ่าน TLS (HTTPS)",
+        "hlsServerKey": "พาธของคีย์เซิร์ฟเวอร์ HLS",
+        "hlsServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ HLS",
+        "hlsAlwaysRemux": "รีมักซ์สตรีมแม้ไม่มีผู้รับชม",
+        "hlsVariant": "รูปแบบ HLS (mpegts, fmp4 หรือ lowLatency)",
+        "hlsSegmentCount": "จำนวนเซกเมนต์ที่เก็บไว้ในเพลย์ลิสต์",
+        "hlsSegmentDuration": "ระยะเวลาขั้นต่ำของแต่ละเซกเมนต์",
+        "hlsPartDuration": "ระยะเวลาของแต่ละส่วนในโหมดหน่วงต่ำ",
+        "hlsSegmentMaxSize": "ขนาดสูงสุดของแต่ละเซกเมนต์",
+        "hlsAllowOrigin": "ค่าของเฮดเดอร์ Access-Control-Allow-Origin",
+        "hlsTrustedProxies": "IP หรือเครือข่ายของพร็อกซีที่อยู่หน้าเซิร์ฟเวอร์ HLS",
+        "hlsDirectory": "เขียนเซกเมนต์ลงดิสก์ในไดเรกทอรีนี้แทนการใช้ RAM",
+        "webrtcAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ HTTP สำหรับ WebRTC",
+        "webrtcEncryption": "ให้บริการ WebRTC ผ่าน TLS (HTTPS)",
+        "webrtcServerKey": "พาธของคีย์เซิร์ฟเวอร์ WebRTC",
+        "webrtcServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ WebRTC",
+        "webrtcAllowOrigin": "ค่าของเฮดเดอร์ Access-Control-Allow-Origin",
+        "webrtcTrustedProxies": "IP หรือเครือข่ายของพร็อกซีที่อยู่หน้าเซิร์ฟเวอร์ WebRTC",
+        "webrtcLocalUDPAddress": "ที่อยู่ UDP ภายในเครื่องที่ใช้สำหรับทราฟฟิก WebRTC",
+        "webrtcLocalTCPAddress": "ที่อยู่ TCP ภายในเครื่องที่ใช้สำหรับทราฟฟิก WebRTC",
+        "webrtcIPsFromInterfaces": "รวบรวม IP แคนดิเดตจากอินเทอร์เฟซเครือข่ายของโฮสต์",
+        "webrtcIPsFromInterfacesList": "อินเทอร์เฟซที่จะรวบรวม IP แคนดิเดต ค่าว่างหมายถึงทั้งหมด",
+        "webrtcAdditionalHosts": "โฮสต์หรือ IP เพิ่มเติมที่ประกาศเป็นแคนดิเดตของ WebRTC",
+        "webrtcICEServers2": "เซิร์ฟเวอร์ STUN หรือ TURN ที่ใช้สร้างการเชื่อมต่อ WebRTC",
+        "srtAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ SRT"
       },
       "toasts": {
-        "success": "อัปเดตการตั้งค่าทั่วโลกแล้ว",
-        "errorTitle": "เกิดปัญหาในการอัปเดตการตั้งค่าทั่วโลก",
-        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้ง"
+        "success": "บันทึกการตั้งค่า MediaMTX แล้ว",
+        "errorTitle": "บันทึกการตั้งค่า MediaMTX ไม่สำเร็จ",
+        "errorDescription": "โปรดตรวจสอบค่าในแบบฟอร์มอีกครั้งแล้วลองใหม่"
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, other {# การเปลี่ยนแปลงที่ยังไม่ได้บันทึก}}",
-      "discard": "ทิ้ง",
-      "saveChanges": "บันทึกการเปลี่ยนแปลง"
     }
   }
 }

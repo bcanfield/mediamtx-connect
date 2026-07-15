@@ -2,24 +2,23 @@ import type { Recording } from '@connect/contract'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import dayjs from 'dayjs'
-import { FolderX } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 import { useFormatter, useTranslations } from 'use-intl'
-import { EmptyState } from '@/components/empty-state'
-import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination'
-
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
-import { RecordingCard } from './recording-card'
+import { RecordingRow } from './recording-row'
 
 interface StreamRecordingsPageProps {
   streamName: string
@@ -35,11 +34,6 @@ export function StreamRecordingsPage({
   const t = useTranslations('Recordings')
   const format = useFormatter()
 
-  const crumbs = [
-    { label: t('crumbRecordings'), href: '/recordings' },
-    { label: streamName },
-  ]
-
   const page = Number(pageParam) || 1
   const take = Number(takeParam) || 10
 
@@ -53,65 +47,101 @@ export function StreamRecordingsPage({
 
   const totalPages = Math.max(1, Math.ceil(totalCount / take))
   const groups = groupByDay(streamRecordings, {
-    today: t('groups.today'),
-    yesterday: t('groups.yesterday'),
-    formatDay: (d: Date) => format.dateTime(d, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
+    today: (d: Date) => t('groups.todayEyebrow', { date: formatEyebrowDate(d) }),
+    yesterday: (d: Date) => t('groups.yesterdayEyebrow', { date: formatEyebrowDate(d) }),
+    other: (d: Date) => formatEyebrowDate(d, true),
   })
 
-  return (
-    <>
-      <PageHeader crumbs={crumbs} />
-      <PageLayout
-        header={t('header')}
-        subHeader={t('subHeaderForStream', { streamName })}
-      >
-        {error
-          ? (
-              <EmptyState
-                icon={FolderX}
-                title={t('errors.readErrorTitle')}
-                description={t('errors.readErrorDescription')}
-              />
-            )
-          : (
-              <>
-                {groups.map(group => (
-                  <section key={group.key} className="flex flex-col gap-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">
-                      {group.label}
-                    </h3>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                      {group.recordings.map(rec => (
-                        <RecordingCard
-                          key={rec.name}
-                          streamName={streamName}
-                          fileName={rec.name}
-                          screenshotUrl={rec.screenshotUrl}
-                          createdAt={rec.createdAt}
-                          fileSize={rec.fileSize}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                ))}
+  function formatEyebrowDate(d: Date, withWeekday = false): string {
+    return format.dateTime(d, {
+      month: 'long',
+      day: 'numeric',
+      ...(withWeekday ? { weekday: 'short', year: 'numeric' } : {}),
+    })
+  }
 
-                {totalPages > 1 && (
-                  <PaginationBar
-                    currentPage={page}
-                    totalPages={totalPages}
-                    take={take}
-                  />
-                )}
-              </>
-            )}
-      </PageLayout>
-    </>
+  return (
+    <PageLayout width="reading">
+      <Breadcrumb>
+        <BreadcrumbList className="text-[12px]">
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/recordings">{t('crumbRecordings')}</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="font-mono">{streamName}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <header className="space-y-1">
+        <h1 className="text-xl font-semibold tracking-[-0.02em]">{streamName}</h1>
+        {recordingsQuery.isSuccess && (
+          <p className="text-[13px] text-muted-foreground">
+            {t('detail.totals', { count: totalCount })}
+          </p>
+        )}
+      </header>
+
+      {error
+        ? (
+            <div className="mx-auto my-10 flex w-full max-w-md flex-col items-center gap-4 rounded-[10px] border border-[#f3d1d1] bg-gradient-to-b from-live/[0.04] to-transparent px-8 py-12 text-center dark:border-[#2e1414]">
+              <span className="flex size-10 items-center justify-center rounded-full border border-live/35 text-live-foreground">
+                <X aria-hidden className="size-4" />
+              </span>
+              <div className="space-y-1.5">
+                <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+                  {t('errors.readErrorTitle')}
+                </h2>
+                <p className="text-[12px] text-muted-foreground">
+                  {t('errors.readErrorDescription')}
+                </p>
+              </div>
+            </div>
+          )
+        : (
+            <>
+              {groups.map(group => (
+                <section key={group.key} className="flex flex-col gap-2.5">
+                  <h2 className="border-b border-border-subtle pb-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.07em] text-faint">
+                    {group.label}
+                  </h2>
+                  <div className="flex flex-col gap-2.5">
+                    {group.recordings.map(rec => (
+                      <RecordingRow
+                        key={rec.name}
+                        streamName={streamName}
+                        fileName={rec.name}
+                        screenshotUrl={rec.screenshotUrl}
+                        createdAt={rec.createdAt}
+                        fileSize={rec.fileSize}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ))}
+
+              {totalPages > 1 && (
+                <PaginationBar
+                  currentPage={page}
+                  totalPages={totalPages}
+                  totalCount={totalCount}
+                  take={take}
+                />
+              )}
+            </>
+          )}
+    </PageLayout>
   )
 }
 
 function groupByDay(
   recordings: Recording[],
-  labels: { today: string, yesterday: string, formatDay: (d: Date) => string },
+  labels: {
+    today: (d: Date) => string
+    yesterday: (d: Date) => string
+    other: (d: Date) => string
+  },
 ) {
   const today = dayjs().startOf('day')
   const yesterday = today.subtract(1, 'day')
@@ -121,10 +151,10 @@ function groupByDay(
     const day = dayjs(rec.createdAt).startOf('day')
     const key = day.format('YYYY-MM-DD')
     const label = day.isSame(today)
-      ? labels.today
+      ? labels.today(day.toDate())
       : day.isSame(yesterday)
-        ? labels.yesterday
-        : labels.formatDay(day.toDate())
+        ? labels.yesterday(day.toDate())
+        : labels.other(day.toDate())
 
     if (!buckets.has(key))
       buckets.set(key, { key, label, recordings: [] })
@@ -137,27 +167,19 @@ function groupByDay(
 function PaginationBar({
   currentPage,
   totalPages,
+  totalCount,
   take,
 }: {
   currentPage: number
   totalPages: number
+  totalCount: number
   take: number
 }) {
+  const t = useTranslations('Recordings.pagination')
   const navigate = useNavigate()
 
-  const buildHref = (p: number) => {
-    const params = new URLSearchParams()
-    if (p !== 1)
-      params.set('page', String(p))
-    if (take !== 10)
-      params.set('take', String(take))
-    const qs = params.toString()
-    return qs ? `?${qs}` : '?'
-  }
-
-  const goTo = (p: number) => (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (p < 1 || p > totalPages)
+  const goTo = (p: number) => {
+    if (p < 1 || p > totalPages || p === currentPage)
       return
     navigate({
       to: '.',
@@ -169,49 +191,89 @@ function PaginationBar({
     })
   }
 
-  const pages = pageNumbers(currentPage, totalPages)
+  const from = (currentPage - 1) * take + 1
+  const to = Math.min(currentPage * take, totalCount)
 
   return (
-    <Pagination className="pt-2">
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            href={currentPage > 1 ? buildHref(currentPage - 1) : '#'}
-            onClick={goTo(currentPage - 1)}
-            aria-disabled={currentPage <= 1}
-            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
-          />
-        </PaginationItem>
-        {pages.map(p => (
-          <PaginationItem key={p}>
-            <PaginationLink
-              href={buildHref(p)}
-              onClick={goTo(p)}
-              isActive={p === currentPage}
-            >
-              {p}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-        <PaginationItem>
-          <PaginationNext
-            href={currentPage < totalPages ? buildHref(currentPage + 1) : '#'}
-            onClick={goTo(currentPage + 1)}
-            aria-disabled={currentPage >= totalPages}
-            className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <nav
+      aria-label={t('aria')}
+      className="flex flex-wrap items-center justify-between gap-3 pt-1"
+    >
+      <p className="font-mono text-[11px] text-mute">
+        {t('showing', { from, to, total: totalCount })}
+      </p>
+
+      <div className="flex items-center gap-1">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="size-7"
+          disabled={currentPage <= 1}
+          aria-label={t('previous')}
+          onClick={() => goTo(currentPage - 1)}
+        >
+          <ChevronLeft className="size-3.5" />
+        </Button>
+
+        {pageItems(currentPage, totalPages).map((item, i) =>
+          item === 'ellipsis'
+            ? (
+                // eslint-disable-next-line react/no-array-index-key
+                <span key={`e${i}`} aria-hidden className="px-1 text-[12px] text-faint">
+                  …
+                </span>
+              )
+            : (
+                <button
+                  key={item}
+                  type="button"
+                  aria-current={item === currentPage ? 'page' : undefined}
+                  onClick={() => goTo(item)}
+                  className={cn(
+                    'h-7 min-w-7 rounded-md px-1.5 text-[12.5px] tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+                    item === currentPage
+                      ? 'bg-accent font-medium text-foreground'
+                      : 'text-mute hover:text-foreground',
+                  )}
+                >
+                  {item}
+                </button>
+              ),
+        )}
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="size-7"
+          disabled={currentPage >= totalPages}
+          aria-label={t('next')}
+          onClick={() => goTo(currentPage + 1)}
+        >
+          <ChevronRight className="size-3.5" />
+        </Button>
+      </div>
+    </nav>
   )
 }
 
-function pageNumbers(current: number, total: number): number[] {
-  const window = 2
-  const start = Math.max(1, current - window)
-  const end = Math.min(total, current + window)
-  const pages: number[] = []
-  for (let p = start; p <= end; p++)
-    pages.push(p)
-  return pages
+function pageItems(current: number, total: number): Array<number | 'ellipsis'> {
+  if (total <= 7)
+    return Array.from({ length: total }, (_, i) => i + 1)
+
+  const pages = new Set<number>([1, total, current - 1, current, current + 1])
+  const sorted = Array.from(pages)
+    .filter(p => p >= 1 && p <= total)
+    .sort((a, b) => a - b)
+
+  const items: Array<number | 'ellipsis'> = []
+  let prev = 0
+  for (const p of sorted) {
+    if (prev && p - prev > 1)
+      items.push('ellipsis')
+    items.push(p)
+    prev = p
+  }
+  return items
 }

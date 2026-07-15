@@ -1,10 +1,8 @@
 import { useQueries } from '@tanstack/react-query'
-import { AlertTriangle, Settings } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useTranslations } from 'use-intl'
 
-import { PageHeader } from '@/components/page-header'
 import { PageLayout } from '@/components/page-layout'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
@@ -14,7 +12,6 @@ import { RecordingsIndexView } from './recordings-index-view'
 
 export function RecordingsIndexPage() {
   const t = useTranslations('Recordings')
-  const crumbs = [{ label: t('crumbRecordings') }]
   const [streamsQuery, configQuery] = useQueries({
     queries: [
       orpc.recordings.listStreams.queryOptions(),
@@ -27,41 +24,33 @@ export function RecordingsIndexPage() {
   const hasRecordings = streams.length > 0
 
   return (
-    <>
-      <PageHeader crumbs={crumbs} />
-      <PageLayout
-        header={t('header')}
-        subHeader={t('subHeader')}
-      >
-        {error && (
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>{t('errors.directoryTitle')}</AlertTitle>
-            <AlertDescription className="space-y-2">
-              <p>
-                {t('errors.directoryLead')}
-                {' '}
-                <code className="bg-muted px-1 rounded">
-                  {configQuery.data?.recordingsDirectory}
-                </code>
-              </p>
-              <p className="text-sm">
-                {t('errors.directoryHint')}
-              </p>
-              <Link href="/config" className="mt-2 inline-block">
-                <Button variant="outline" size="sm">
-                  <Settings className="h-4 w-4 mr-2" />
-                  {t('errors.checkConfigBtn')}
-                </Button>
-              </Link>
-            </AlertDescription>
-          </Alert>
-        )}
+    <PageLayout>
+      {error && (
+        <div className="mx-auto my-14 flex w-full max-w-md flex-col items-center gap-4 rounded-[10px] border border-[#f3d1d1] bg-gradient-to-b from-live/[0.04] to-transparent px-8 py-12 text-center dark:border-[#2e1414]">
+          <span className="flex size-10 items-center justify-center rounded-full border border-live/35 text-live-foreground">
+            <X aria-hidden className="size-4" />
+          </span>
+          <div className="space-y-1.5">
+            <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+              {t('errors.directoryTitle')}
+            </h2>
+            <p className="text-[12px] text-muted-foreground">
+              {t('errors.directoryLead')}
+              {' '}
+              <code className="font-mono text-foreground">
+                {configQuery.data?.recordingsDirectory}
+              </code>
+            </p>
+          </div>
+          <Link href="/config">
+            <Button size="sm">{t('errors.openAppConfig')}</Button>
+          </Link>
+        </div>
+      )}
 
-        {streamsQuery.isSuccess && !hasRecordings && <RecordingsIndexEmpty />}
+      {streamsQuery.isSuccess && !hasRecordings && <RecordingsIndexEmpty />}
 
-        {streamsQuery.isSuccess && hasRecordings && <RecordingsIndexView streams={streams} />}
-      </PageLayout>
-    </>
+      {streamsQuery.isSuccess && hasRecordings && <RecordingsIndexView streams={streams} />}
+    </PageLayout>
   )
 }

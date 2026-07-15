@@ -26,220 +26,295 @@
       "switchLanguage": "Змінити мову",
       "searchPlaceholder": "Пошук мови…",
       "noResults": "Мову не знайдено."
+    },
+    "connection": {
+      "connected": "підключено",
+      "offline": "офлайн"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Застосунок",
-      "settings": "Налаштування"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Основна навігація",
     "items": {
       "live": "Наживо",
       "recordings": "Записи",
-      "clientConfig": "Налаштування клієнта",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Налаштування застосунку",
+      "mediamtxConfig": "Конфігурація MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "Наживо",
-    "header": "Трансляції",
-    "subHeader": "Перегляд активних трансляцій у реальному часі",
+    "toolbar": {
+      "summary": "{count, plural, one {# трансляція} few {# трансляції} many {# трансляцій} other {# трансляції}} · {live} відтворюється",
+      "playbackAria": "Режим відтворення",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Щільність сітки"
+    },
     "errors": {
-      "configTitle": "Помилка конфігурації",
-      "configDescription": "Не вдалося завантажити конфігурацію. Перевірте підключення до бази даних.",
-      "connectionTitle": "Не вдається підключитися до MediaMTX",
-      "connectionLead": "Не вдається отримати доступ до MediaMTX за адресою",
-      "connectionHint": "Переконайтеся, що MediaMTX запущений і URL у вашій конфігурації коректний.",
-      "checkConfigBtn": "Перевірити конфігурацію"
+      "unreachableTitle": "Не вдається зв'язатися з MediaMTX",
+      "unreachableLead": "Немає відповіді від API MediaMTX за адресою",
+      "openAppConfig": "Відкрити налаштування застосунку",
+      "retry": "Повторити",
+      "retryCountdown": "автоповтор через {seconds} с"
     },
     "empty": {
-      "configureRemoteTitle": "Налаштуйте віддалений URL",
-      "configureRemoteDescription": "Вкажіть віддалений URL MediaMTX, щоб дивитися трансляції в браузері. Це має бути адреса, за якою ваш браузер може звертатися до MediaMTX.",
-      "goToConfig": "Перейти до налаштувань",
-      "noStreamsTitle": "Активних трансляцій немає",
-      "noStreamsDescription": "MediaMTX підключений, але зараз немає активних трансляцій. Запустіть трансляцію в MediaMTX, щоб побачити її тут."
+      "noStreamsTitle": "Жодна трансляція не публікується",
+      "noStreamsLead": "Спрямуйте будь-яке джерело публікації на MediaMTX, і воно з'явиться тут:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Щільність сітки",
-      "two": "Два стовпці",
-      "three": "Три стовпці",
-      "four": "Чотири стовпці"
+    "banner": {
+      "playbackUrlTitle": "URL відтворення не задано",
+      "playbackUrlLead": "Вкажіть доступний із браузера URL MediaMTX у налаштуваннях застосунку, щоб увімкнути живе відтворення.",
+      "openAppConfig": "Відкрити налаштування застосунку"
     },
     "card": {
-      "onlineSince": "У мережі з {date}",
-      "idle": "Простій",
-      "live": "ВЖИВО",
-      "stop": "Зупинити",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "знімка ще немає — перше захоплення через ~30 с",
+      "onlineSince": "у мережі з {time} · {uptime}",
+      "idle": "простій",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# глядач} few {# глядачі} many {# глядачів} other {# глядача}}",
       "play": "Відтворити",
+      "stop": "Зупинити",
+      "playAria": "Відтворити {streamName}",
       "actionsAria": "Дії з трансляцією",
-      "viewRecordings": "Переглянути записи"
+      "stub": {
+        "title": "Ще не реалізовано",
+        "description": "Ця дія в дорожній карті — її зафіксовано."
+      },
+      "menu": {
+        "openDetail": "Відкрити сторінку трансляції",
+        "viewRecordings": "Переглянути записи",
+        "takeSnapshot": "Зробити знімок",
+        "record": "Запис",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Скопіювати URL публікації",
+        "shareEmbed": "Поділитися та вбудувати…",
+        "editPathConfig": "Змінити конфігурацію шляху",
+        "editHooks": "Змінити хуки"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Записи",
-    "header": "Записи",
-    "subHeader": "Перегляд записів з різних ваших трансляцій",
-    "subHeaderForStream": "Записи для: {streamName}",
-    "invalidConfig": "Недійсна конфігурація",
-    "errors": {
-      "configTitle": "Помилка конфігурації",
-      "configDescription": "Не вдалося завантажити конфігурацію. Перевірте підключення до бази даних.",
-      "directoryTitle": "Немає доступу до каталогу записів",
-      "directoryLead": "Не вдається прочитати каталог записів за шляхом",
-      "directoryHint": "Переконайтеся, що каталог існує та має правильні права доступу.",
-      "checkConfigBtn": "Перевірити конфігурацію",
-      "readErrorTitle": "Не вдалося прочитати записи",
-      "readErrorDescription": "Не вдалося прочитати каталог записів. Переконайтеся, що каталог існує."
+    "toolbar": {
+      "summary": "{streams, plural, one {# трансляція} few {# трансляції} many {# трансляцій} other {# трансляції}} · {recordings, plural, one {# запис} few {# записи} many {# записів} other {# запису}}",
+      "filterPlaceholder": "Фільтр трансляцій…",
+      "filterAria": "Фільтр трансляцій"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# запис} few {# записи} many {# записів} other {# запису}}",
+      "latest": "останній {time}",
+      "openAria": "Переглянути записи для {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Записів не знайдено",
-      "noRecordingsLead": "Записи ще не збережені. Вони з'являться тут, коли MediaMTX почне записувати трансляції.",
-      "noRecordingsHint": "Переконайтеся, що в конфігурації MediaMTX встановлено <code>MTX_RECORD=yes</code>.",
+      "noRecordingsTitle": "Записів ще немає",
+      "noRecordingsLead": "Записи з'являться тут, коли MediaMTX почне записувати трансляції.",
+      "enableRecording": "Увімкнути запис",
       "noMatchingTitle": "Збігів не знайдено",
       "noMatchingDescription": "Жодна трансляція не відповідає «{query}»."
     },
-    "search": {
-      "placeholder": "Пошук трансляцій"
+    "errors": {
+      "directoryTitle": "Не вдається прочитати каталог записів",
+      "directoryLead": "Не вдалося прочитати записи за шляхом",
+      "openAppConfig": "Відкрити налаштування застосунку",
+      "readErrorTitle": "Не вдалося прочитати записи",
+      "readErrorDescription": "Переконайтеся, що каталог записів існує та має правильні права доступу."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# запис} few {# записи} many {# записів} other {# запису}}"
     },
     "groups": {
-      "today": "Сьогодні",
-      "yesterday": "Вчора"
+      "todayEyebrow": "Сьогодні — {date}",
+      "yesterdayEyebrow": "Вчора — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# запис} few {# записи} many {# записів} other {# запису}}",
-      "latest": "Останній {time}",
-      "viewBtn": "Перегляд"
-    },
-    "recordingCard": {
-      "stop": "Зупинити",
+    "row": {
       "play": "Відтворити",
-      "downloadAria": "Завантажити запис {filePath}",
-      "downloadError": "Помилка під час завантаження відео"
+      "close": "Закрити",
+      "cancel": "Скасувати",
+      "playAria": "Відтворити запис від {time}",
+      "downloadAria": "Завантажити запис {file}",
+      "downloading": "завантаження… {received} з {total} · {rate}",
+      "downloadComplete": "Завантаження завершено",
+      "downloadFailed": "Не вдалося завантажити"
+    },
+    "player": {
+      "play": "Відтворити",
+      "pause": "Пауза",
+      "seek": "Перемотування"
+    },
+    "pagination": {
+      "aria": "Пагінація",
+      "showing": "Показано {from}–{to} з {total}",
+      "previous": "Попередня сторінка",
+      "next": "Наступна сторінка"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Налаштування",
-      "clientConfig": "Налаштування клієнта",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Налаштування",
-    "pageSubHeader": "Керування налаштуваннями застосунку",
     "invalidConfig": "Недійсна конфігурація",
+    "appConfig": {
+      "pageHeader": "Налаштування застосунку",
+      "pageSubHeader": "Підключення та сховище, які використовує MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Конфігурація MediaMTX",
+      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# незбережена зміна} few {# незбережені зміни} many {# незбережених змін} other {# незбереженої зміни}}",
+      "needsAttention": "{count, plural, one {# поле потребує уваги} few {# поля потребують уваги} many {# полів потребують уваги} other {# поля потребує уваги}}",
+      "discard": "Скасувати",
+      "reset": "Скинути",
+      "save": "Зберегти",
+      "saveToServer": "Зберегти на сервер"
+    },
     "formFields": {
       "oneValuePerLine": "Одне значення на рядок."
     },
     "clientForm": {
-      "title": "Налаштування застосунку",
-      "description": "Шляхи підключення та сховища, які використовує MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "Підключення до MediaMTX",
         "storage": "Сховище"
       },
+      "playbackBadge": "Потрібно для живого відтворення",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
-          "description": "Адреса вашого екземпляра MediaMTX. У мережі Docker можна використовувати ім'я контейнера; інакше використовуйте зовнішню IP-адресу чи hostname."
+          "label": "MediaMTX URL",
+          "description": "Адреса вашого екземпляра MediaMTX. У мережі Docker можна використовувати ім'я контейнера; інакше використовуйте зовнішню IP-адресу чи ім'я хоста."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Порт API MediaMTX"
+          "label": "Порт API",
+          "description": "Порт API MediaMTX."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Це доступна з браузера, зовнішня IP-адреса або hostname вашого сервера MediaMTX."
+          "label": "URL відтворення",
+          "description": "Доступний із браузера зовнішній URL вашого сервера MediaMTX. Звідси завантажуються трансляції для живого відтворення."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Каталог з записами MediaMTX (не рекомендується змінювати при використанні Docker)"
+          "label": "Каталог записів",
+          "description": "Каталог із записами MediaMTX (не рекомендується змінювати при використанні Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Каталог для збереження згенерованих знімків екрана (не рекомендується змінювати при використанні Docker)"
+          "label": "Каталог знімків екрана",
+          "description": "Каталог для згенерованих знімків (не рекомендується змінювати при використанні Docker)."
         }
       },
-      "actions": {
-        "reset": "Скинути",
-        "submit": "Надіслати"
-      },
       "toasts": {
-        "success": "Налаштування клієнта оновлено",
-        "errorTitle": "Виникла проблема при оновленні налаштувань клієнта",
-        "errorDescription": "Перевірте значення форми."
+        "success": "Налаштування застосунку збережено",
+        "errorTitle": "Не вдалося зберегти налаштування застосунку",
+        "errorDescription": "Перевірте значення форми та спробуйте ще раз."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Журнали",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "Хуки",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Журнали",
-          "limits": "Обмеження"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Метрики",
-          "pprof": "PPROF",
-          "enableDescription": "Увімкнути HTTP API MediaMTX."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Сервер",
-          "tls": "TLS",
-          "auth": "Автентифікація",
-          "enableDescription": "Увімкнути сервер RTSP."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Увімкнути сервер RTMP."
-        },
-        "hls": {
-          "server": "Сервер",
-          "segments": "Сегменти",
-          "corsProxies": "CORS / Проксі",
-          "enableDescription": "Увімкнути сервер HLS."
-        },
-        "webrtc": {
-          "server": "Сервер",
-          "network": "Мережа",
-          "iceServers": "Сервери ICE",
-          "addServer": "Додати сервер",
-          "noIceServers": "Сервери ICE не налаштовані.",
-          "iceServerLabel": "Сервер ICE {index}",
-          "removeIceServer": "Видалити сервер ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "Ім'я користувача",
-            "password": "Пароль"
-          },
-          "enableDescription": "Увімкнути сервер WebRTC."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Увімкнути сервер SRT."
-        }
+      "sectionDescriptions": {
+        "logging": "Вивід журналів, тайм-аути та глобальні обмеження.",
+        "api": "HTTP API, який використовує сам MediaMTX Connect.",
+        "hooks": "Команди, які MediaMTX виконує під час подій підключення.",
+        "rtsp": "Публікація та читання трансляцій через RTSP.",
+        "rtmp": "Публікація та читання трансляцій через RTMP.",
+        "hls": "Роздача трансляцій у форматі HLS для відтворення в браузері.",
+        "webrtc": "Відтворення та публікація в браузері з низькою затримкою.",
+        "srt": "Публікація та читання трансляцій через SRT."
+      },
+      "enabled": "Увімкнено",
+      "off": "Вимкнено",
+      "hiddenWhileOff": "{count, plural, one {# параметр приховано, поки вимкнено} few {# параметри приховано, поки вимкнено} many {# параметрів приховано, поки вимкнено} other {# параметра приховано, поки вимкнено}}",
+      "rail": {
+        "onThisPage": "На цій сторінці",
+        "aria": "Розділи конфігурації"
+      },
+      "iceServers": {
+        "add": "Додати сервер ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL сервера ICE {index}",
+        "usernameAria": "Ім'я користувача сервера ICE {index}",
+        "passwordAria": "Пароль сервера ICE {index}",
+        "removeAria": "Видалити сервер ICE {index}"
+      },
+      "help": {
+        "logLevel": "Деталізація виводу журналів (error, warn, info або debug).",
+        "logDestinations": "Куди писати журнали (stdout, file або syslog).",
+        "logFile": "Шлях до файлу журналу, коли logDestinations містить file.",
+        "readTimeout": "Тайм-аут операцій читання.",
+        "writeTimeout": "Тайм-аут операцій запису.",
+        "writeQueueSize": "Розмір вихідної черги на з'єднання. Має бути степенем двійки.",
+        "udpMaxPayloadSize": "Максимальний розмір вихідних UDP-пакетів.",
+        "externalAuthenticationURL": "URL зовнішнього сервера автентифікації, викликається при кожному підключенні.",
+        "apiAddress": "Адреса прослуховування HTTP API.",
+        "metrics": "Експортувати метрики, сумісні з Prometheus.",
+        "metricsAddress": "Адреса прослуховування ендпоінта метрик.",
+        "pprof": "Відкрити ендпоінт профілювання Go pprof.",
+        "pprofAddress": "Адреса прослуховування ендпоінта pprof.",
+        "runOnConnect": "Команда, що виконується при підключенні клієнта.",
+        "runOnConnectRestart": "Перезапускати команду, якщо вона завершилася.",
+        "runOnDisconnect": "Команда, що виконується при відключенні клієнта.",
+        "rtspAddress": "Адреса прослуховування сервера RTSP (TCP).",
+        "rtspsAddress": "Адреса прослуховування сервера RTSPS (TLS).",
+        "rtpAddress": "Адреса прослуховування RTP-пакетів через UDP.",
+        "rtcpAddress": "Адреса прослуховування RTCP-пакетів через UDP.",
+        "multicastIPRange": "Діапазон IP-адрес для multicast-доставки.",
+        "multicastRTPPort": "Порт для multicast RTP-пакетів.",
+        "multicastRTCPPort": "Порт для multicast RTCP-пакетів.",
+        "protocols": "Транспортні протоколи, які приймає сервер RTSP (udp, multicast або tcp).",
+        "encryption": "Політика TLS-шифрування (no, strict або optional).",
+        "serverKey": "Шлях до ключа TLS-сервера.",
+        "serverCert": "Шлях до сертифіката TLS-сервера.",
+        "authMethods": "Методи автентифікації, які приймає сервер RTSP (basic або digest).",
+        "rtmpAddress": "Адреса прослуховування сервера RTMP.",
+        "rtmpEncryption": "Політика TLS-шифрування для RTMP (no, strict або optional).",
+        "rtmpsAddress": "Адреса прослуховування сервера RTMPS (TLS).",
+        "rtmpServerKey": "Шлях до ключа сервера RTMPS.",
+        "rtmpServerCert": "Шлях до сертифіката сервера RTMPS.",
+        "hlsAddress": "Адреса прослуховування сервера HLS.",
+        "hlsEncryption": "Роздавати HLS через TLS (HTTPS).",
+        "hlsServerKey": "Шлях до ключа сервера HLS.",
+        "hlsServerCert": "Шлях до сертифіката сервера HLS.",
+        "hlsAlwaysRemux": "Ремуксувати трансляції, навіть коли ніхто не дивиться.",
+        "hlsVariant": "Варіант HLS (mpegts, fmp4 або lowLatency).",
+        "hlsSegmentCount": "Кількість сегментів у плейлисті.",
+        "hlsSegmentDuration": "Мінімальна тривалість кожного сегмента.",
+        "hlsPartDuration": "Тривалість кожної частини в режимі низької затримки.",
+        "hlsSegmentMaxSize": "Максимальний розмір кожного сегмента.",
+        "hlsAllowOrigin": "Значення заголовка Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP-адреси або мережі проксі, розташованих перед сервером HLS.",
+        "hlsDirectory": "Записувати сегменти на диск у цей каталог замість RAM.",
+        "webrtcAddress": "Адреса прослуховування HTTP-сервера WebRTC.",
+        "webrtcEncryption": "Роздавати WebRTC через TLS (HTTPS).",
+        "webrtcServerKey": "Шлях до ключа сервера WebRTC.",
+        "webrtcServerCert": "Шлях до сертифіката сервера WebRTC.",
+        "webrtcAllowOrigin": "Значення заголовка Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP-адреси або мережі проксі, розташованих перед сервером WebRTC.",
+        "webrtcLocalUDPAddress": "Локальна UDP-адреса для трафіку WebRTC.",
+        "webrtcLocalTCPAddress": "Локальна TCP-адреса для трафіку WebRTC.",
+        "webrtcIPsFromInterfaces": "Збирати IP-адреси кандидатів із мережевих інтерфейсів хоста.",
+        "webrtcIPsFromInterfacesList": "Інтерфейси, з яких збирати IP-адреси кандидатів. Порожньо — усі.",
+        "webrtcAdditionalHosts": "Додаткові хости або IP-адреси, що оголошуються як кандидати WebRTC.",
+        "webrtcICEServers2": "Сервери STUN або TURN для встановлення WebRTC-з'єднань.",
+        "srtAddress": "Адреса прослуховування сервера SRT."
       },
       "toasts": {
-        "success": "Глобальну конфігурацію оновлено",
-        "errorTitle": "Виникла проблема при оновленні глобальної конфігурації",
-        "errorDescription": "Перевірте значення форми."
+        "success": "Конфігурацію MediaMTX збережено",
+        "errorTitle": "Не вдалося зберегти конфігурацію MediaMTX",
+        "errorDescription": "Перевірте значення форми та спробуйте ще раз."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# незбережена зміна} few {# незбережених зміни} many {# незбережених змін} other {# незбереженої зміни}}",
-      "discard": "Скасувати",
-      "saveChanges": "Зберегти зміни"
     }
   }
 }

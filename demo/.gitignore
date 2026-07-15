@@ -4,3 +4,6 @@
 clips/
 output/
 *.log
+# MediaMTX drops a self-signed cert/key in its working dir — never commit these
+auto.crt
+auto.key

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-command demo capture. Non-destructive: alternate ports + isolated DB/dirs.
+# One-command demo capture. Non-destructive: alternate ports + isolated data dirs.
 # Tears down MediaMTX / ffmpeg / the app on exit. Regenerates demo/output/*.
 set -euo pipefail
 cd "$(dirname "$0")"

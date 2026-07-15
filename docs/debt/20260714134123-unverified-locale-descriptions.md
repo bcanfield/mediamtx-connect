@@ -3,7 +3,7 @@ id: 20260714134123
 title: unverified-locale-descriptions
 principal: 2h
 interest: unknown
-hotspot: messages/*.json
+hotspot: apps/web/messages/*.json
 business_capability: mediamtx-config
 payoff_trigger: A native speaker reviews an affected locale file, or a translation-quality issue is reported for these keys.
 quadrant: prudent-deliberate

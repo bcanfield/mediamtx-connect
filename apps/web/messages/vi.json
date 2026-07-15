@@ -26,151 +26,193 @@
       "switchLanguage": "Đổi ngôn ngữ",
       "searchPlaceholder": "Tìm ngôn ngữ…",
       "noResults": "Không tìm thấy ngôn ngữ."
+    },
+    "connection": {
+      "connected": "đã kết nối",
+      "offline": "ngoại tuyến"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Ứng dụng",
-      "settings": "Cài đặt"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Chính",
     "items": {
       "live": "Trực tiếp",
       "recordings": "Bản ghi",
-      "clientConfig": "Cấu hình máy khách",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Cấu hình ứng dụng",
+      "mediamtxConfig": "Cấu hình MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "Trực tiếp",
-    "header": "Luồng",
-    "subHeader": "Chế độ xem trực tiếp các luồng đang hoạt động của bạn",
+    "toolbar": {
+      "summary": "{count, plural, other {# luồng}} · {live} đang phát",
+      "playbackAria": "Chế độ phát",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Mật độ lưới"
+    },
     "errors": {
-      "configTitle": "Lỗi cấu hình",
-      "configDescription": "Không thể tải cấu hình. Vui lòng kiểm tra kết nối cơ sở dữ liệu.",
-      "connectionTitle": "Không thể kết nối đến MediaMTX",
-      "connectionLead": "Không thể truy cập MediaMTX tại",
-      "connectionHint": "Hãy đảm bảo MediaMTX đang chạy và URL trong cấu hình là chính xác.",
-      "checkConfigBtn": "Kiểm tra cấu hình"
+      "unreachableTitle": "Không thể kết nối MediaMTX",
+      "unreachableLead": "Không có phản hồi từ API MediaMTX tại",
+      "openAppConfig": "Mở Cấu hình ứng dụng",
+      "retry": "Thử lại",
+      "retryCountdown": "tự động thử lại sau {seconds} giây"
     },
     "empty": {
-      "configureRemoteTitle": "Cấu hình URL từ xa",
-      "configureRemoteDescription": "Thiết lập URL MediaMTX từ xa để xem các luồng trong trình duyệt. Đây phải là URL mà trình duyệt của bạn có thể sử dụng để truy cập MediaMTX.",
-      "goToConfig": "Đến cấu hình",
-      "noStreamsTitle": "Không có luồng nào đang hoạt động",
-      "noStreamsDescription": "MediaMTX đã kết nối nhưng hiện không có luồng nào đang hoạt động. Hãy bắt đầu phát luồng tới MediaMTX để xem ở đây."
+      "noStreamsTitle": "Không có luồng nào đang phát",
+      "noStreamsLead": "Trỏ bất kỳ trình đẩy luồng nào tới MediaMTX và nó sẽ xuất hiện ở đây:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Mật độ lưới",
-      "two": "Hai cột",
-      "three": "Ba cột",
-      "four": "Bốn cột"
+    "banner": {
+      "playbackUrlTitle": "Chưa đặt URL phát",
+      "playbackUrlLead": "Đặt URL MediaMTX dành cho trình duyệt trong Cấu hình ứng dụng để bật phát trực tiếp.",
+      "openAppConfig": "Mở Cấu hình ứng dụng"
     },
     "card": {
-      "onlineSince": "Trực tuyến từ {date}",
-      "idle": "Không hoạt động",
-      "live": "TRỰC TIẾP",
-      "stop": "Dừng",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "chưa có ảnh chụp — lần chụp đầu tiên sau khoảng 30 giây",
+      "onlineSince": "trực tuyến từ {time} · {uptime}",
+      "idle": "không hoạt động",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {# người xem}}",
       "play": "Phát",
+      "stop": "Dừng",
+      "playAria": "Phát {streamName}",
       "actionsAria": "Hành động trên luồng",
-      "viewRecordings": "Xem bản ghi"
+      "stub": {
+        "title": "Chưa được triển khai",
+        "description": "Hành động này nằm trong lộ trình — đã được ghi nhận."
+      },
+      "menu": {
+        "openDetail": "Mở chi tiết luồng",
+        "viewRecordings": "Xem bản ghi",
+        "takeSnapshot": "Chụp ảnh nhanh",
+        "record": "Ghi hình",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Sao chép URL đẩy luồng",
+        "shareEmbed": "Chia sẻ & nhúng…",
+        "editPathConfig": "Chỉnh sửa cấu hình đường dẫn",
+        "editHooks": "Chỉnh sửa hook"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Bản ghi",
-    "header": "Bản ghi",
-    "subHeader": "Duyệt các bản ghi từ các luồng khác nhau của bạn",
-    "subHeaderForStream": "Bản ghi cho: {streamName}",
-    "invalidConfig": "Cấu hình không hợp lệ",
-    "errors": {
-      "configTitle": "Lỗi cấu hình",
-      "configDescription": "Không thể tải cấu hình. Vui lòng kiểm tra kết nối cơ sở dữ liệu.",
-      "directoryTitle": "Không thể truy cập thư mục bản ghi",
-      "directoryLead": "Không thể đọc thư mục bản ghi tại",
-      "directoryHint": "Hãy đảm bảo thư mục tồn tại và có quyền truy cập đúng.",
-      "checkConfigBtn": "Kiểm tra cấu hình",
-      "readErrorTitle": "Không thể đọc bản ghi",
-      "readErrorDescription": "Không thể đọc thư mục bản ghi. Hãy đảm bảo thư mục tồn tại."
-    },
-    "empty": {
-      "noRecordingsTitle": "Không tìm thấy bản ghi nào",
-      "noRecordingsLead": "Chưa có bản ghi nào được lưu. Các bản ghi sẽ xuất hiện ở đây ngay khi MediaMTX bắt đầu ghi lại các luồng.",
-      "noRecordingsHint": "Hãy đảm bảo <code>MTX_RECORD=yes</code> được thiết lập trong cấu hình MediaMTX của bạn.",
-      "noMatchingTitle": "Không có luồng nào khớp",
-      "noMatchingDescription": "Không có luồng nào khớp với «{query}»."
-    },
-    "search": {
-      "placeholder": "Tìm luồng"
-    },
-    "groups": {
-      "today": "Hôm nay",
-      "yesterday": "Hôm qua"
+    "toolbar": {
+      "summary": "{streams, plural, other {# luồng}} · {recordings, plural, other {# bản ghi}}",
+      "filterPlaceholder": "Lọc luồng…",
+      "filterAria": "Lọc luồng"
     },
     "card": {
-      "recordingCount": "{count, plural, other {# bản ghi}}",
-      "latest": "Mới nhất {time}",
-      "viewBtn": "Xem"
+      "recordingsChip": "{count, plural, other {# bản ghi}}",
+      "latest": "mới nhất {time}",
+      "openAria": "Xem bản ghi của {name}"
     },
-    "recordingCard": {
-      "stop": "Dừng",
+    "empty": {
+      "noRecordingsTitle": "Chưa có bản ghi nào",
+      "noRecordingsLead": "Các bản ghi sẽ xuất hiện ở đây khi MediaMTX bắt đầu ghi lại các luồng.",
+      "enableRecording": "Bật ghi hình",
+      "noMatchingTitle": "Không có luồng nào khớp",
+      "noMatchingDescription": "Không có luồng nào khớp với “{query}”."
+    },
+    "errors": {
+      "directoryTitle": "Không thể đọc thư mục bản ghi",
+      "directoryLead": "Không thể đọc bản ghi tại",
+      "openAppConfig": "Mở Cấu hình ứng dụng",
+      "readErrorTitle": "Không thể đọc bản ghi",
+      "readErrorDescription": "Hãy đảm bảo thư mục bản ghi tồn tại và có quyền truy cập đúng."
+    },
+    "detail": {
+      "totals": "{count, plural, other {# bản ghi}}"
+    },
+    "groups": {
+      "todayEyebrow": "Hôm nay — {date}",
+      "yesterdayEyebrow": "Hôm qua — {date}"
+    },
+    "row": {
       "play": "Phát",
-      "downloadAria": "Tải bản ghi {filePath}",
-      "downloadError": "Lỗi khi tải video"
+      "close": "Đóng",
+      "cancel": "Hủy",
+      "playAria": "Phát bản ghi từ {time}",
+      "downloadAria": "Tải bản ghi {file}",
+      "downloading": "đang tải… {received} trong {total} · {rate}",
+      "downloadComplete": "Tải xuống hoàn tất",
+      "downloadFailed": "Tải xuống thất bại"
+    },
+    "player": {
+      "play": "Phát",
+      "pause": "Tạm dừng",
+      "seek": "Tua"
+    },
+    "pagination": {
+      "aria": "Phân trang",
+      "showing": "Hiển thị {from}–{to} trong {total}",
+      "previous": "Trang trước",
+      "next": "Trang sau"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Cài đặt",
-      "clientConfig": "Cấu hình máy khách",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Cấu hình",
-    "pageSubHeader": "Quản lý cấu hình ứng dụng của bạn",
     "invalidConfig": "Cấu hình không hợp lệ",
+    "appConfig": {
+      "pageHeader": "Cấu hình ứng dụng",
+      "pageSubHeader": "Kết nối và lưu trữ được MediaMTX Connect sử dụng."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Cấu hình MediaMTX",
+      "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",
+      "needsAttention": "{count, plural, other {# trường cần chú ý}}",
+      "discard": "Bỏ",
+      "reset": "Đặt lại",
+      "save": "Lưu",
+      "saveToServer": "Lưu vào máy chủ"
+    },
     "formFields": {
       "oneValuePerLine": "Mỗi dòng một giá trị."
     },
     "clientForm": {
-      "title": "Cài đặt ứng dụng",
-      "description": "Đường dẫn kết nối và lưu trữ được MediaMTX Connect sử dụng.",
       "sections": {
         "mediamtxConnection": "Kết nối MediaMTX",
         "storage": "Lưu trữ"
       },
+      "playbackBadge": "Bắt buộc để phát trực tiếp",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "URL MediaMTX",
           "description": "Địa chỉ của phiên bản MediaMTX của bạn. Trong mạng Docker, bạn có thể dùng tên container; nếu không, hãy dùng IP hoặc hostname bên ngoài."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Cổng của API MediaMTX"
+          "label": "Cổng API",
+          "description": "Cổng của API MediaMTX."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Đây là IP hoặc hostname đối ngoại, có thể truy cập từ trình duyệt, của máy chủ MediaMTX của bạn."
+          "label": "URL phát",
+          "description": "URL đối ngoại, có thể truy cập từ trình duyệt, của máy chủ MediaMTX của bạn. Phát trực tiếp sẽ tải luồng từ đây."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Thư mục chứa các bản ghi MediaMTX (không khuyến nghị thay đổi nếu dùng Docker)"
+          "label": "Thư mục bản ghi",
+          "description": "Thư mục chứa các bản ghi MediaMTX (không khuyến nghị thay đổi nếu dùng Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Thư mục để lưu ảnh chụp màn hình được tạo (không khuyến nghị thay đổi nếu dùng Docker)"
+          "label": "Thư mục ảnh chụp",
+          "description": "Thư mục lưu các ảnh chụp được tạo (không khuyến nghị thay đổi nếu dùng Docker)."
         }
       },
-      "actions": {
-        "reset": "Đặt lại",
-        "submit": "Gửi"
-      },
       "toasts": {
-        "success": "Đã cập nhật cấu hình máy khách",
-        "errorTitle": "Đã xảy ra sự cố khi cập nhật cấu hình máy khách",
-        "errorDescription": "Vui lòng kiểm tra lại các giá trị trên biểu mẫu."
+        "success": "Đã lưu Cấu hình ứng dụng",
+        "errorTitle": "Không thể lưu Cấu hình ứng dụng",
+        "errorDescription": "Vui lòng kiểm tra lại các giá trị trên biểu mẫu và thử lại."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Nhật ký",
         "api": "API",
         "hooks": "Hooks",
@@ -180,66 +222,99 @@
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Nhật ký",
-          "limits": "Giới hạn"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "Số liệu",
-          "pprof": "PPROF",
-          "enableDescription": "Bật API HTTP của MediaMTX."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Máy chủ",
-          "tls": "TLS",
-          "auth": "Xác thực",
-          "enableDescription": "Bật máy chủ RTSP."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Bật máy chủ RTMP."
-        },
-        "hls": {
-          "server": "Máy chủ",
-          "segments": "Phân đoạn",
-          "corsProxies": "CORS / Proxy",
-          "enableDescription": "Bật máy chủ HLS."
-        },
-        "webrtc": {
-          "server": "Máy chủ",
-          "network": "Mạng",
-          "iceServers": "Máy chủ ICE",
-          "addServer": "Thêm máy chủ",
-          "noIceServers": "Chưa có máy chủ ICE nào được cấu hình.",
-          "iceServerLabel": "Máy chủ ICE {index}",
-          "removeIceServer": "Xóa máy chủ ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "Tên người dùng",
-            "password": "Mật khẩu"
-          },
-          "enableDescription": "Bật máy chủ WebRTC."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Bật máy chủ SRT."
-        }
+      "sectionDescriptions": {
+        "logging": "Đầu ra nhật ký, thời gian chờ và giới hạn toàn cục.",
+        "api": "API HTTP mà chính MediaMTX Connect sử dụng.",
+        "hooks": "Các lệnh MediaMTX chạy khi có sự kiện kết nối.",
+        "rtsp": "Đẩy và xem luồng qua RTSP.",
+        "rtmp": "Đẩy và xem luồng qua RTMP.",
+        "hls": "Cung cấp luồng dưới dạng HLS để phát trên trình duyệt.",
+        "webrtc": "Phát và đẩy luồng độ trễ thấp trên trình duyệt.",
+        "srt": "Đẩy và xem luồng qua SRT."
+      },
+      "enabled": "Đã bật",
+      "off": "Tắt",
+      "hiddenWhileOff": "{count, plural, other {# tùy chọn bị ẩn khi tắt}}",
+      "rail": {
+        "onThisPage": "Trên trang này",
+        "aria": "Các mục cấu hình"
+      },
+      "iceServers": {
+        "add": "Thêm máy chủ ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL của máy chủ ICE {index}",
+        "usernameAria": "Tên người dùng của máy chủ ICE {index}",
+        "passwordAria": "Mật khẩu của máy chủ ICE {index}",
+        "removeAria": "Xóa máy chủ ICE {index}"
+      },
+      "help": {
+        "logLevel": "Mức độ chi tiết của nhật ký (error, warn, info hoặc debug).",
+        "logDestinations": "Nơi ghi nhật ký (stdout, file hoặc syslog).",
+        "logFile": "Đường dẫn tệp nhật ký khi logDestinations bao gồm file.",
+        "readTimeout": "Thời gian chờ cho các thao tác đọc.",
+        "writeTimeout": "Thời gian chờ cho các thao tác ghi.",
+        "writeQueueSize": "Kích thước hàng đợi gửi đi cho mỗi kết nối. Phải là lũy thừa của 2.",
+        "udpMaxPayloadSize": "Kích thước tối đa của gói UDP gửi đi.",
+        "externalAuthenticationURL": "URL của máy chủ xác thực bên ngoài, được gọi ở mỗi kết nối.",
+        "apiAddress": "Địa chỉ lắng nghe của API HTTP.",
+        "metrics": "Cung cấp số liệu tương thích Prometheus.",
+        "metricsAddress": "Địa chỉ lắng nghe của điểm cuối số liệu.",
+        "pprof": "Cung cấp điểm cuối phân tích hiệu năng pprof của Go.",
+        "pprofAddress": "Địa chỉ lắng nghe của điểm cuối pprof.",
+        "runOnConnect": "Lệnh chạy khi một máy khách kết nối.",
+        "runOnConnectRestart": "Khởi động lại lệnh nếu nó kết thúc.",
+        "runOnDisconnect": "Lệnh chạy khi một máy khách ngắt kết nối.",
+        "rtspAddress": "Địa chỉ lắng nghe của máy chủ RTSP (TCP).",
+        "rtspsAddress": "Địa chỉ lắng nghe của máy chủ RTSPS (TLS).",
+        "rtpAddress": "Địa chỉ lắng nghe gói RTP qua UDP.",
+        "rtcpAddress": "Địa chỉ lắng nghe gói RTCP qua UDP.",
+        "multicastIPRange": "Dải IP dùng cho truyền multicast.",
+        "multicastRTPPort": "Cổng cho gói RTP multicast.",
+        "multicastRTCPPort": "Cổng cho gói RTCP multicast.",
+        "protocols": "Giao thức truyền tải được máy chủ RTSP chấp nhận (udp, multicast hoặc tcp).",
+        "encryption": "Chính sách mã hóa TLS (no, strict hoặc optional).",
+        "serverKey": "Đường dẫn khóa máy chủ TLS.",
+        "serverCert": "Đường dẫn chứng chỉ máy chủ TLS.",
+        "authMethods": "Phương thức xác thực được máy chủ RTSP chấp nhận (basic hoặc digest).",
+        "rtmpAddress": "Địa chỉ lắng nghe của máy chủ RTMP.",
+        "rtmpEncryption": "Chính sách mã hóa TLS cho RTMP (no, strict hoặc optional).",
+        "rtmpsAddress": "Địa chỉ lắng nghe của máy chủ RTMPS (TLS).",
+        "rtmpServerKey": "Đường dẫn khóa máy chủ RTMPS.",
+        "rtmpServerCert": "Đường dẫn chứng chỉ máy chủ RTMPS.",
+        "hlsAddress": "Địa chỉ lắng nghe của máy chủ HLS.",
+        "hlsEncryption": "Cung cấp HLS qua TLS (HTTPS).",
+        "hlsServerKey": "Đường dẫn khóa máy chủ HLS.",
+        "hlsServerCert": "Đường dẫn chứng chỉ máy chủ HLS.",
+        "hlsAlwaysRemux": "Remux luồng ngay cả khi không có ai xem.",
+        "hlsVariant": "Biến thể HLS (mpegts, fmp4 hoặc lowLatency).",
+        "hlsSegmentCount": "Số phân đoạn được giữ trong danh sách phát.",
+        "hlsSegmentDuration": "Thời lượng tối thiểu của mỗi phân đoạn.",
+        "hlsPartDuration": "Thời lượng của mỗi phần trong chế độ độ trễ thấp.",
+        "hlsSegmentMaxSize": "Kích thước tối đa của mỗi phân đoạn.",
+        "hlsAllowOrigin": "Giá trị của tiêu đề Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP hoặc mạng của các proxy đặt trước máy chủ HLS.",
+        "hlsDirectory": "Ghi phân đoạn vào đĩa trong thư mục này thay vì RAM.",
+        "webrtcAddress": "Địa chỉ lắng nghe của máy chủ HTTP WebRTC.",
+        "webrtcEncryption": "Cung cấp WebRTC qua TLS (HTTPS).",
+        "webrtcServerKey": "Đường dẫn khóa máy chủ WebRTC.",
+        "webrtcServerCert": "Đường dẫn chứng chỉ máy chủ WebRTC.",
+        "webrtcAllowOrigin": "Giá trị của tiêu đề Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP hoặc mạng của các proxy đặt trước máy chủ WebRTC.",
+        "webrtcLocalUDPAddress": "Địa chỉ UDP cục bộ dùng cho lưu lượng WebRTC.",
+        "webrtcLocalTCPAddress": "Địa chỉ TCP cục bộ dùng cho lưu lượng WebRTC.",
+        "webrtcIPsFromInterfaces": "Thu thập IP ứng viên từ các giao diện mạng của máy chủ.",
+        "webrtcIPsFromInterfacesList": "Các giao diện để thu thập IP ứng viên. Để trống nghĩa là tất cả.",
+        "webrtcAdditionalHosts": "Các máy chủ hoặc IP bổ sung được quảng bá làm ứng viên WebRTC.",
+        "webrtcICEServers2": "Máy chủ STUN hoặc TURN dùng để thiết lập kết nối WebRTC.",
+        "srtAddress": "Địa chỉ lắng nghe của máy chủ SRT."
       },
       "toasts": {
-        "success": "Đã cập nhật cấu hình toàn cục",
-        "errorTitle": "Đã xảy ra sự cố khi cập nhật cấu hình toàn cục",
-        "errorDescription": "Vui lòng kiểm tra lại các giá trị trên biểu mẫu."
+        "success": "Đã lưu cấu hình MediaMTX",
+        "errorTitle": "Không thể lưu cấu hình MediaMTX",
+        "errorDescription": "Vui lòng kiểm tra lại các giá trị trên biểu mẫu và thử lại."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",
-      "discard": "Bỏ",
-      "saveChanges": "Lưu thay đổi"
     }
   }
 }

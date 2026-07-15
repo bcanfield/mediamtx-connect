@@ -26,220 +26,295 @@
       "switchLanguage": "切换语言",
       "searchPlaceholder": "搜索语言…",
       "noResults": "未找到语言。"
+    },
+    "connection": {
+      "connected": "已连接",
+      "offline": "离线"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "应用",
-      "settings": "设置"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "主导航",
     "items": {
       "live": "直播",
       "recordings": "录像",
-      "clientConfig": "客户端配置",
-      "mediamtx": "MediaMTX"
+      "appConfig": "应用配置",
+      "mediamtxConfig": "MediaMTX 配置"
     }
   },
   "Streams": {
-    "crumbLive": "直播",
-    "header": "直播流",
-    "subHeader": "查看你正在播放的直播流",
+    "toolbar": {
+      "summary": "{count, plural, other {# 个流}} · {live} 个播放中",
+      "playbackAria": "播放模式",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "网格密度"
+    },
     "errors": {
-      "configTitle": "配置错误",
-      "configDescription": "无法加载配置。请检查数据库连接。",
-      "connectionTitle": "无法连接到 MediaMTX",
-      "connectionLead": "无法访问 MediaMTX，地址：",
-      "connectionHint": "请确认 MediaMTX 正在运行，并且配置中的地址正确。",
-      "checkConfigBtn": "检查配置"
+      "unreachableTitle": "无法连接 MediaMTX",
+      "unreachableLead": "MediaMTX API 无响应，地址：",
+      "openAppConfig": "打开应用配置",
+      "retry": "重试",
+      "retryCountdown": "{seconds} 秒后自动重试"
     },
     "empty": {
-      "configureRemoteTitle": "配置远程地址",
-      "configureRemoteDescription": "设置远程 MediaMTX 地址以便在浏览器中查看直播。这应是浏览器可以访问到 MediaMTX 的地址。",
-      "goToConfig": "前往配置",
-      "noStreamsTitle": "没有正在直播的流",
-      "noStreamsDescription": "MediaMTX 已连接，但目前没有任何直播流。向 MediaMTX 推流后即可在此查看。"
+      "noStreamsTitle": "没有正在推流的流",
+      "noStreamsLead": "将任意推流端指向 MediaMTX，它就会显示在这里：",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "网格密度",
-      "two": "两列",
-      "three": "三列",
-      "four": "四列"
+    "banner": {
+      "playbackUrlTitle": "未设置播放 URL",
+      "playbackUrlLead": "在应用配置中设置面向浏览器的 MediaMTX URL 以启用直播播放。",
+      "openAppConfig": "打开应用配置"
     },
     "card": {
-      "onlineSince": "在线时间：{date}",
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "暂无快照 — 首次抓取约需 30 秒",
+      "onlineSince": "{time} 起在线 · {uptime}",
       "idle": "空闲",
-      "live": "直播中",
-      "stop": "停止",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {# 位观众}}",
       "play": "播放",
-      "actionsAria": "直播流操作",
-      "viewRecordings": "查看录像"
+      "stop": "停止",
+      "playAria": "播放 {streamName}",
+      "actionsAria": "流操作",
+      "stub": {
+        "title": "尚未实现",
+        "description": "此操作已在路线图中 — 已记录。"
+      },
+      "menu": {
+        "openDetail": "打开流详情",
+        "viewRecordings": "查看录像",
+        "takeSnapshot": "拍摄快照",
+        "record": "录制",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "复制推流 URL",
+        "shareEmbed": "分享与嵌入…",
+        "editPathConfig": "编辑路径配置",
+        "editHooks": "编辑钩子"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "录像",
-    "header": "录像",
-    "subHeader": "浏览各个直播流的录像",
-    "subHeaderForStream": "录像所属直播流：{streamName}",
-    "invalidConfig": "配置无效",
-    "errors": {
-      "configTitle": "配置错误",
-      "configDescription": "无法加载配置。请检查数据库连接。",
-      "directoryTitle": "无法访问录像目录",
-      "directoryLead": "无法读取录像目录：",
-      "directoryHint": "请确认目录存在并具有正确的权限。",
-      "checkConfigBtn": "检查配置",
-      "readErrorTitle": "无法读取录像",
-      "readErrorDescription": "无法读取录像目录。请确认目录存在。"
-    },
-    "empty": {
-      "noRecordingsTitle": "未找到录像",
-      "noRecordingsLead": "尚未保存任何录像。当 MediaMTX 开始录制直播流后，录像会显示在此处。",
-      "noRecordingsHint": "请确认在 MediaMTX 配置中已设置 <code>MTX_RECORD=yes</code>。",
-      "noMatchingTitle": "没有匹配的直播流",
-      "noMatchingDescription": "没有直播流与“{query}”匹配。"
-    },
-    "search": {
-      "placeholder": "搜索直播流"
-    },
-    "groups": {
-      "today": "今天",
-      "yesterday": "昨天"
+    "toolbar": {
+      "summary": "{streams, plural, other {# 个流}} · {recordings, plural, other {# 个录像}}",
+      "filterPlaceholder": "筛选流…",
+      "filterAria": "筛选流"
     },
     "card": {
-      "recordingCount": "{count, plural, one {# 个录像} other {# 个录像}}",
+      "recordingsChip": "{count, plural, other {# 个录像}}",
       "latest": "最新 {time}",
-      "viewBtn": "查看"
+      "openAria": "查看 {name} 的录像"
     },
-    "recordingCard": {
-      "stop": "停止",
+    "empty": {
+      "noRecordingsTitle": "暂无录像",
+      "noRecordingsLead": "当 MediaMTX 开始录制流后，录像会显示在此处。",
+      "enableRecording": "启用录制",
+      "noMatchingTitle": "没有匹配的流",
+      "noMatchingDescription": "没有流与“{query}”匹配。"
+    },
+    "errors": {
+      "directoryTitle": "无法读取录像目录",
+      "directoryLead": "无法读取录像，位置：",
+      "openAppConfig": "打开应用配置",
+      "readErrorTitle": "无法读取录像",
+      "readErrorDescription": "请确认录像目录存在并具有正确的权限。"
+    },
+    "detail": {
+      "totals": "{count, plural, other {# 个录像}}"
+    },
+    "groups": {
+      "todayEyebrow": "今天 — {date}",
+      "yesterdayEyebrow": "昨天 — {date}"
+    },
+    "row": {
       "play": "播放",
-      "downloadAria": "下载录像 {filePath}",
-      "downloadError": "下载视频时出错"
+      "close": "关闭",
+      "cancel": "取消",
+      "playAria": "播放 {time} 的录像",
+      "downloadAria": "下载录像 {file}",
+      "downloading": "下载中… {received} / {total} · {rate}",
+      "downloadComplete": "下载完成",
+      "downloadFailed": "下载失败"
+    },
+    "player": {
+      "play": "播放",
+      "pause": "暂停",
+      "seek": "跳转"
+    },
+    "pagination": {
+      "aria": "分页",
+      "showing": "显示第 {from}–{to} 项，共 {total} 项",
+      "previous": "上一页",
+      "next": "下一页"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "设置",
-      "clientConfig": "客户端配置",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "配置",
-    "pageSubHeader": "管理你的应用配置",
     "invalidConfig": "配置无效",
+    "appConfig": {
+      "pageHeader": "应用配置",
+      "pageSubHeader": "MediaMTX Connect 使用的连接与存储。"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX 配置",
+      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {# 项未保存的更改}}",
+      "needsAttention": "{count, plural, other {# 个字段需要处理}}",
+      "discard": "放弃",
+      "reset": "重置",
+      "save": "保存",
+      "saveToServer": "保存到服务器"
+    },
     "formFields": {
       "oneValuePerLine": "每行一个值。"
     },
     "clientForm": {
-      "title": "应用设置",
-      "description": "MediaMTX Connect 使用的连接和存储路径。",
       "sections": {
         "mediamtxConnection": "MediaMTX 连接",
         "storage": "存储"
       },
+      "playbackBadge": "直播播放所需",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "MediaMTX URL",
           "description": "MediaMTX 实例的地址。在 Docker 网络内可使用容器名；否则请使用外部 IP 或主机名。"
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "MediaMTX API 的端口"
+          "label": "API 端口",
+          "description": "MediaMTX API 的端口。"
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "用于浏览器访问的、对外公开的 MediaMTX 服务器 IP 或主机名。"
+          "label": "播放 URL",
+          "description": "浏览器可访问的、对外公开的 MediaMTX 服务器 URL。直播播放会从这里加载流。"
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "存放 MediaMTX 录像的目录（使用 Docker 时不建议修改）"
+          "label": "录像目录",
+          "description": "存放 MediaMTX 录像的目录（使用 Docker 时不建议修改）。"
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "存放生成的截图的目录（使用 Docker 时不建议修改）"
+          "label": "截图目录",
+          "description": "存放生成的快照的目录（使用 Docker 时不建议修改）。"
         }
       },
-      "actions": {
-        "reset": "重置",
-        "submit": "提交"
-      },
       "toasts": {
-        "success": "已更新客户端配置",
-        "errorTitle": "更新客户端配置时出现问题",
-        "errorDescription": "请检查表单的填写内容。"
+        "success": "应用配置已保存",
+        "errorTitle": "无法保存应用配置",
+        "errorDescription": "请检查表单的填写内容后重试。"
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "日志",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "钩子",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "日志",
-          "limits": "限制"
-        },
-        "api": {
-          "http": "HTTP API",
-          "metrics": "指标",
-          "pprof": "PPROF",
-          "enableDescription": "启用 MediaMTX HTTP API。"
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "服务器",
-          "tls": "TLS",
-          "auth": "认证",
-          "enableDescription": "启用 RTSP 服务器。"
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "启用 RTMP 服务器。"
-        },
-        "hls": {
-          "server": "服务器",
-          "segments": "分片",
-          "corsProxies": "CORS / 代理",
-          "enableDescription": "启用 HLS 服务器。"
-        },
-        "webrtc": {
-          "server": "服务器",
-          "network": "网络",
-          "iceServers": "ICE 服务器",
-          "addServer": "添加服务器",
-          "noIceServers": "尚未配置 ICE 服务器。",
-          "iceServerLabel": "ICE 服务器 {index}",
-          "removeIceServer": "移除 ICE 服务器",
-          "iceFields": {
-            "url": "URL",
-            "username": "用户名",
-            "password": "密码"
-          },
-          "enableDescription": "启用 WebRTC 服务器。"
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "启用 SRT 服务器。"
-        }
+      "sectionDescriptions": {
+        "logging": "日志输出、超时和全局限制。",
+        "api": "MediaMTX Connect 自身使用的 HTTP API。",
+        "hooks": "MediaMTX 在连接事件时运行的命令。",
+        "rtsp": "通过 RTSP 推流和观看流。",
+        "rtmp": "通过 RTMP 推流和观看流。",
+        "hls": "将流以 HLS 形式提供，用于浏览器播放。",
+        "webrtc": "低延迟的浏览器播放与推流。",
+        "srt": "通过 SRT 推流和观看流。"
+      },
+      "enabled": "已启用",
+      "off": "关闭",
+      "hiddenWhileOff": "{count, plural, other {关闭时隐藏 # 个选项}}",
+      "rail": {
+        "onThisPage": "本页内容",
+        "aria": "配置章节"
+      },
+      "iceServers": {
+        "add": "添加 ICE 服务器",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE 服务器 {index} 的 URL",
+        "usernameAria": "ICE 服务器 {index} 的用户名",
+        "passwordAria": "ICE 服务器 {index} 的密码",
+        "removeAria": "移除 ICE 服务器 {index}"
+      },
+      "help": {
+        "logLevel": "日志输出的详细程度（error、warn、info 或 debug）。",
+        "logDestinations": "日志写入位置（stdout、file 或 syslog）。",
+        "logFile": "当 logDestinations 包含 file 时日志文件的路径。",
+        "readTimeout": "读取操作的超时时间。",
+        "writeTimeout": "写入操作的超时时间。",
+        "writeQueueSize": "每个连接的发送队列大小。必须是 2 的幂。",
+        "udpMaxPayloadSize": "发送 UDP 数据包的最大大小。",
+        "externalAuthenticationURL": "外部认证服务器的 URL，每次连接时调用。",
+        "apiAddress": "HTTP API 的监听地址。",
+        "metrics": "暴露兼容 Prometheus 的指标。",
+        "metricsAddress": "指标端点的监听地址。",
+        "pprof": "暴露 Go pprof 性能分析端点。",
+        "pprofAddress": "pprof 端点的监听地址。",
+        "runOnConnect": "客户端连接时运行的命令。",
+        "runOnConnectRestart": "命令退出时重新启动。",
+        "runOnDisconnect": "客户端断开连接时运行的命令。",
+        "rtspAddress": "RTSP 服务器（TCP）的监听地址。",
+        "rtspsAddress": "RTSPS（TLS）服务器的监听地址。",
+        "rtpAddress": "通过 UDP 接收 RTP 数据包的监听地址。",
+        "rtcpAddress": "通过 UDP 接收 RTCP 数据包的监听地址。",
+        "multicastIPRange": "用于组播传输的 IP 范围。",
+        "multicastRTPPort": "组播 RTP 数据包的端口。",
+        "multicastRTCPPort": "组播 RTCP 数据包的端口。",
+        "protocols": "RTSP 服务器接受的传输协议（udp、multicast 或 tcp）。",
+        "encryption": "TLS 加密策略（no、strict 或 optional）。",
+        "serverKey": "TLS 服务器密钥的路径。",
+        "serverCert": "TLS 服务器证书的路径。",
+        "authMethods": "RTSP 服务器接受的认证方式（basic 或 digest）。",
+        "rtmpAddress": "RTMP 服务器的监听地址。",
+        "rtmpEncryption": "RTMP 的 TLS 加密策略（no、strict 或 optional）。",
+        "rtmpsAddress": "RTMPS（TLS）服务器的监听地址。",
+        "rtmpServerKey": "RTMPS 服务器密钥的路径。",
+        "rtmpServerCert": "RTMPS 服务器证书的路径。",
+        "hlsAddress": "HLS 服务器的监听地址。",
+        "hlsEncryption": "通过 TLS（HTTPS）提供 HLS。",
+        "hlsServerKey": "HLS 服务器密钥的路径。",
+        "hlsServerCert": "HLS 服务器证书的路径。",
+        "hlsAlwaysRemux": "即使无人观看也对流进行重新封装。",
+        "hlsVariant": "HLS 变体（mpegts、fmp4 或 lowLatency）。",
+        "hlsSegmentCount": "播放列表中保留的分片数量。",
+        "hlsSegmentDuration": "每个分片的最短时长。",
+        "hlsPartDuration": "低延迟模式下每个部分的时长。",
+        "hlsSegmentMaxSize": "每个分片的最大大小。",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin 头的值。",
+        "hlsTrustedProxies": "位于 HLS 服务器之前的代理的 IP 或网络。",
+        "hlsDirectory": "将分片写入该目录的磁盘，而不是 RAM。",
+        "webrtcAddress": "WebRTC HTTP 服务器的监听地址。",
+        "webrtcEncryption": "通过 TLS（HTTPS）提供 WebRTC。",
+        "webrtcServerKey": "WebRTC 服务器密钥的路径。",
+        "webrtcServerCert": "WebRTC 服务器证书的路径。",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin 头的值。",
+        "webrtcTrustedProxies": "位于 WebRTC 服务器之前的代理的 IP 或网络。",
+        "webrtcLocalUDPAddress": "用于 WebRTC 流量的本地 UDP 地址。",
+        "webrtcLocalTCPAddress": "用于 WebRTC 流量的本地 TCP 地址。",
+        "webrtcIPsFromInterfaces": "从主机的网络接口收集候选 IP。",
+        "webrtcIPsFromInterfacesList": "收集候选 IP 的接口。为空表示全部。",
+        "webrtcAdditionalHosts": "作为 WebRTC 候选通告的额外主机或 IP。",
+        "webrtcICEServers2": "用于建立 WebRTC 连接的 STUN 或 TURN 服务器。",
+        "srtAddress": "SRT 服务器的监听地址。"
       },
       "toasts": {
-        "success": "已更新全局配置",
-        "errorTitle": "更新全局配置时出现问题",
-        "errorDescription": "请检查表单的填写内容。"
+        "success": "MediaMTX 配置已保存",
+        "errorTitle": "无法保存 MediaMTX 配置",
+        "errorDescription": "请检查表单的填写内容后重试。"
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# 项未保存的更改} other {# 项未保存的更改}}",
-      "discard": "放弃",
-      "saveChanges": "保存更改"
     }
   }
 }

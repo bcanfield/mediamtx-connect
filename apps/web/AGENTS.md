@@ -9,5 +9,5 @@ and TanStack Query.
 - No raw `fetch` to the API, no hand-written response types — types flow from
   `@connect/contract`.
 - Dev server proxies `/rpc` to the api app (see `vite.config.ts`); in
-  production the api serves this app's `dist/` itself, so all URLs are
-  same-origin relative.
+  production the api serves this app's built output (copied to
+  `apps/api/public` at build time), so all URLs are same-origin relative.

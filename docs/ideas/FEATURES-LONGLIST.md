@@ -256,7 +256,7 @@ These are the features that best fit MediaMTX's native shape — its full protoc
 - **HTTP auth mock-server scaffolding** — generate Express/FastAPI/Go stub as a starting point.
 - **HTTP auth latency probe** — periodic ping with p50/p95 graph; warns when response approaches readTimeout.
 - **HTTP auth self-signed cert hint** — input for `authHTTPFingerprint` with extract-from-URL helper.
-- **Connect app-level login** — wrap the Next.js app in Auth.js (Credentials, GitHub, Google) with optional Clerk, IdP-shared OIDC SSO, magic-link, and TOTP 2FA for admins.
+- **Connect app-level login** — wrap the app (Hono API + SPA) in Auth.js (Credentials, GitHub, Google) with optional Clerk, IdP-shared OIDC SSO, magic-link, and TOTP 2FA for admins.
 - **Connect session list with kick** — admins revoke a colleague's browser session.
 - **Connect API token management** — generate scoped tokens for external automation, stored hashed.
 - **Brute-force lockout on Connect login** — N failed logins in M minutes triggers a temporary IP block.
@@ -340,9 +340,9 @@ These are the features that best fit MediaMTX's native shape — its full protoc
 - **OpenTelemetry exporter** — OTLP push of scraped MediaMTX + app metrics to any collector.
 - **Datadog/StatsD bridge** — translate Prometheus families to dogstatsd lines.
 - **Health-probe presets page** — generate Uptime Kuma / Pingdom / Datadog Synthetics configs for `/api/health` and `/api/metrics`.
-- **SQLite metric rollup tables** — 7d at 1m, 90d at 1h, with cron downsampling.
+- **Metric rollup tables** — 7d at 1m, 90d at 1h, with cron downsampling.
 - **"Last 24h" charts** — time-series areas that survive MediaMTX restarts.
-- **Postgres-as-Marketplace upgrade path** — swap to Vercel Marketplace Neon Postgres with one Prisma migration.
+- **Postgres-as-Marketplace upgrade path** — introduce a database (e.g. Vercel Marketplace Neon Postgres) when rollup data outgrows a local store.
 - **Per-card and per-row sparklines** — 60-pixel last-15-min outbound bytes on every stream card and recording row.
 - **Day-of-week × hour-of-day heatmap** — answers "when do people watch?" at a glance.
 - **Top-N usage reports** — most-watched paths over 24 h / 7 d / 30 d, exportable to CSV.
@@ -355,7 +355,7 @@ These are the features that best fit MediaMTX's native shape — its full protoc
 - **Geo distribution map of viewers** — bundled MaxMind GeoLite2 country DB on a Leaflet world map.
 - **MediaMTX and app log viewer** — SSE tail of the MediaMTX log file plus Connect's own Pino logs with level filter, free-text search, and a combined timestamp-sorted timeline.
 - **Log level toggle from UI** — patch logLevel and confirm the change took effect without restart.
-- **Search across rotated logs** — index `mediamtx.log.N` files in SQLite FTS for fast grep.
+- **Search across rotated logs** — index `mediamtx.log.N` files in a local full-text index for fast grep.
 - **Syslog destination wizard** — configure logDestinations: [syslog] and verify with a journalctl tail.
 - **pprof launcher panel** — buttons for CPU 15s/30s, heap snapshot, goroutine dump.
 - **In-browser flamegraph** — render captured CPU profiles with speedscope so users skip `go tool pprof`.
@@ -434,10 +434,10 @@ These are the features that best fit MediaMTX's native shape — its full protoc
 - **In-app plugin SDK** — small Plugin interface for `registerSidebarItem`, `registerStreamCardAction`, `registerHookHandler` loaded from a `plugins/` directory.
 - **Hook plugin marketplace** — curated `runOn*` scripts users install with one click.
 - **Slash-command palette** — cmdk-style command bar that any plugin can register actions into.
-- **Postgres / MySQL DB option** — abstract the Prisma backend so larger deployments move off SQLite.
-- **GraphQL or tRPC API layer** — for plugin authors and external automation; sits in front of server actions.
+- **Postgres / MySQL DB option** — introduce a database layer so larger deployments can grow beyond the JSON config store.
+- **GraphQL or tRPC API layer** — for plugin authors and external automation; sits in front of the oRPC procedures.
 - **OpenAPI spec for the Connect API** — first-class spec for `/api/health`, screenshots, recordings, etc.
-- **Connect CLI** — wraps server actions (config get/set, recording list/delete, alert rules) for ops automation.
+- **Connect CLI** — wraps the oRPC procedures (config get/set, recording list/delete, alert rules) for ops automation.
 - **Terraform / Pulumi provider** — declare paths, users, alerts as infrastructure-as-code.
 - **Packaged "category" modes** — NVR (DVR-tuned defaults, motion calendar), streaming-platform (public gallery + chat + viewer count), surveillance kiosk (full-screen multi-cam auto-cycle), and demo-showcase (curated public link).
 - **Inline docs and "why is this offline?" troubleshooter** — context-sensitive MediaMTX docs snippets on every form field plus a log-pattern matcher that suggests fixes.

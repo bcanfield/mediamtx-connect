@@ -19,7 +19,7 @@ export MEDIAMTX_RTSP_URL=rtsp://your-mediamtx-server:8554
 2. Build and run:
 
 ```bash
-docker-compose -f docker-compose-cam.yml up --build
+docker compose -f docker-compose-cam.yml up --build
 ```
 
 The stream will be available at `rtsp://your-mediamtx-server:8554/mystream`.
@@ -36,4 +36,4 @@ Edit the `command` in `docker-compose-cam.yml` to adjust:
 
 ## Audio
 
-The setup includes optional audio streaming via PulseAudio. See `rpicam/audio_stream.sh` for configuration.
+The compose `command` captures audio directly via ALSA (`alsasrc device=hw:1,0`). An alternative PulseAudio path ships in the image but is not wired up by default — run `rpicam/audio_entry.sh` in the container (or set it as the entrypoint); see `rpicam/audio_stream.sh` for configuration.

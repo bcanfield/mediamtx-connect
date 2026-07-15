@@ -4,11 +4,7 @@ import { flushSync } from 'react-dom'
 import { useTranslations } from 'use-intl'
 
 import { useTheme } from '@/components/theme-context'
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const TRANSITION_DURATION_MS = 450
@@ -24,7 +20,6 @@ export function ModeToggle() {
   }, [])
 
   const isDark = mounted && resolvedTheme === 'dark'
-  const label = isDark ? t('lightMode') : t('darkMode')
   const ariaLabel = isDark ? t('switchToLight') : t('switchToDark')
 
   const toggle = useCallback(() => {
@@ -70,31 +65,28 @@ export function ModeToggle() {
   }, [isDark, setTheme])
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <SidebarMenuButton
-          ref={buttonRef}
-          onClick={toggle}
-          tooltip={label}
-          aria-label={ariaLabel}
-        >
-          <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
-            <Sun
-              className={cn(
-                'absolute transition-all duration-500',
-                isDark ? '-rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100',
-              )}
-            />
-            <Moon
-              className={cn(
-                'absolute transition-all duration-500',
-                isDark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-0 opacity-0',
-              )}
-            />
-          </span>
-          <span>{label}</span>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    </SidebarMenu>
+    <Button
+      ref={buttonRef}
+      variant="ghost"
+      size="icon"
+      onClick={toggle}
+      aria-label={ariaLabel}
+      title={ariaLabel}
+    >
+      <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
+        <Sun
+          className={cn(
+            'absolute size-4 transition-all duration-500',
+            isDark ? '-rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100',
+          )}
+        />
+        <Moon
+          className={cn(
+            'absolute size-4 transition-all duration-500',
+            isDark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-0 opacity-0',
+          )}
+        />
+      </span>
+    </Button>
   )
 }

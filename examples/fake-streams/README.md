@@ -10,16 +10,10 @@ Loops a test video file and pushes it to MediaMTX as 5 separate streams (`stream
 
 ### With Docker Compose
 
-Add this service to your `docker-compose.yml`:
+The dev compose file already includes this service behind the `streams` profile:
 
-```yaml
-fake-streams:
-  build: ./examples/fake-streams
-  depends_on:
-    mediamtx:
-      condition: service_healthy
-  networks:
-    - mtx
+```bash
+docker compose -f docker-compose.dev.yml --profile streams up -d
 ```
 
 ### Standalone
@@ -35,4 +29,3 @@ docker run --network=host fake-streams
 - `Dockerfile` - Alpine container with ffmpeg
 - `ffmpeg-test.sh` - Script that creates 5 RTSP streams
 - `test.mp4` - Sample video file
-- `config/mediamtx.yml` - MediaMTX configuration for local testing

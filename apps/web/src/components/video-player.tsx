@@ -62,11 +62,10 @@ export function VideoPlayer({ props }: { props: { address: string } }) {
   }, [props.address])
   return (
     <video
-      className="w-full"
+      className="h-full w-full bg-black object-contain"
       ref={videoRef}
       muted={true}
       autoPlay
-      controls
       playsInline
     />
   )

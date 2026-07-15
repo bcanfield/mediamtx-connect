@@ -53,7 +53,7 @@ MediaMTX Connect today is a single-tenant editor over the global MediaMTX config
 
 ## App-level auth on the Connect UI itself
 
-- **Connect login** — wrap the Next.js app in Auth.js (Credentials + GitHub + Google providers). Today the app is single-user; this turns it into a multi-operator console. New table `connect_users` in the local store.
+- **Connect login** — wrap the app (Hono API + SPA) in Auth.js (Credentials + GitHub + Google providers). Today the app is single-user; this turns it into a multi-operator console. New table `connect_users` in the local store.
 - **Clerk integration option** — alternative flow for teams who already pay for Clerk; gated behind an env var.
 - **OIDC SSO with the same IdP as MediaMTX** — if the operator picked Keycloak for `authMethod: jwt`, offer to reuse it for the Connect UI. Saves a second IdP.
 - **2FA on the Connect UI** — TOTP enrollment for any Connect user with admin role. Independent of MediaMTX's own auth.
@@ -71,7 +71,7 @@ MediaMTX Connect today is a single-tenant editor over the global MediaMTX config
 
 ## Audit log
 
-- **Local audit table** — every config change, kick, recording delete, user add — stored in SQLite/Prisma with `who`, `when`, `what`, before/after JSON diff.
+- **Local audit table** — every config change, kick, recording delete, user add — stored in the JSON config store (or a future database) with `who`, `when`, `what`, before/after JSON diff.
 - **Diff viewer** — open any audit row to see a colored YAML diff of the affected `paths.<name>` or root config block.
 - **Audit export** — CSV/JSON download for compliance teams; filter by user, action, date range.
 - **Tamper-evidence** — append-only with hash-chained rows; UI shows a "verified" badge if the chain is intact.

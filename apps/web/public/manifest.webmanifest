@@ -4,8 +4,8 @@
   "description": "Web UI companion for MediaMTX",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0c1016",
-  "theme_color": "#0c1016",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
   "icons": [
     {
       "src": "/icon512_maskable.png",

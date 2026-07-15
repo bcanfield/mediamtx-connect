@@ -132,7 +132,7 @@ MediaMTX is fundamentally a multi-protocol media router: every path can be sourc
 ## Stream health & uptime
 
 - **"Online for" promotion** — Convert the existing `readyTime` into a live-updating "Online for 2h 13m" duration. Citation: `v3/paths/list` `readyTime`.
-- **Uptime history sparkline** — Per-path 24-hour timeline of online/offline derived from `runOnReady` / `runOnNotReady` hooks writing to a small SQLite table. Citation: `runOnReady`, `runOnNotReady`.
+- **Uptime history sparkline** — Per-path 24-hour timeline of online/offline derived from `runOnReady` / `runOnNotReady` hooks writing to a small persisted table/JSON store. Citation: `runOnReady`, `runOnNotReady`.
 - **MTBF tile** — Show "mean time between failures" and "last outage" on the stream card kebab. Citation: derived from `runOnReady`/`runOnNotReady` log.
 - **Reader / publisher count** — Pull `bytesSent` plus `readers[]` and `source` from `v3/paths/get/{name}` to render "1 publisher · 4 readers" badges. Citation: `v3/paths/get/{name}`.
 - **Connection table per protocol** — Pages that surface `v3/rtspconns/list`, `v3/rtmpconns/list`, `v3/webrtcsessions/list`, `v3/srtconns/list`, `v3/hlsmuxers/list` with kick buttons. Citation: those endpoints + corresponding `kick` POSTs.

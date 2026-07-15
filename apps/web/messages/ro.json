@@ -26,220 +26,295 @@
       "switchLanguage": "Schimbă limba",
       "searchPlaceholder": "Caută limba…",
       "noResults": "Nicio limbă găsită."
+    },
+    "connection": {
+      "connected": "conectat",
+      "offline": "offline"
     }
   },
   "Nav": {
-    "brand": "Connect",
-    "groups": {
-      "application": "Aplicație",
-      "settings": "Setări"
-    },
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Principal",
     "items": {
       "live": "Live",
       "recordings": "Înregistrări",
-      "clientConfig": "Configurare client",
-      "mediamtx": "MediaMTX"
+      "appConfig": "Configurare aplicație",
+      "mediamtxConfig": "Configurare MediaMTX"
     }
   },
   "Streams": {
-    "crumbLive": "Live",
-    "header": "Fluxuri",
-    "subHeader": "Vizualizări live ale fluxurilor active",
+    "toolbar": {
+      "summary": "{count, plural, one {# flux} few {# fluxuri} other {# de fluxuri}} · {live} în redare",
+      "playbackAria": "Mod de redare",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Densitatea grilei"
+    },
     "errors": {
-      "configTitle": "Eroare de configurare",
-      "configDescription": "Configurația nu poate fi încărcată. Verificați conexiunea la baza de date.",
-      "connectionTitle": "Nu se poate conecta la MediaMTX",
-      "connectionLead": "MediaMTX nu poate fi accesat la",
-      "connectionHint": "Asigurați-vă că MediaMTX rulează și că URL-ul din configurație este corect.",
-      "checkConfigBtn": "Verifică configurația"
+      "unreachableTitle": "MediaMTX nu poate fi accesat",
+      "unreachableLead": "Niciun răspuns de la API-ul MediaMTX la",
+      "openAppConfig": "Deschide configurarea aplicației",
+      "retry": "Reîncearcă",
+      "retryCountdown": "reîncercare automată în {seconds} s"
     },
     "empty": {
-      "configureRemoteTitle": "Configurați URL-ul de la distanță",
-      "configureRemoteDescription": "Setați URL-ul MediaMTX de la distanță pentru a vizualiza fluxurile în browser. Acesta trebuie să fie URL-ul prin care browserul poate ajunge la MediaMTX.",
-      "goToConfig": "Mergi la configurare",
-      "noStreamsTitle": "Niciun flux activ",
-      "noStreamsDescription": "MediaMTX este conectat, dar momentan nu există fluxuri active. Porniți un flux către MediaMTX pentru a-l vedea aici."
+      "noStreamsTitle": "Niciun flux nu publică",
+      "noStreamsLead": "Direcționați orice sursă de publicare către MediaMTX și va apărea aici:",
+      "streamNamePlaceholder": "mystream"
     },
-    "density": {
-      "aria": "Densitatea grilei",
-      "two": "Două coloane",
-      "three": "Trei coloane",
-      "four": "Patru coloane"
+    "banner": {
+      "playbackUrlTitle": "URL-ul de redare nu este setat",
+      "playbackUrlLead": "Setați URL-ul MediaMTX accesibil din browser în configurarea aplicației pentru a activa redarea live.",
+      "openAppConfig": "Deschide configurarea aplicației"
     },
     "card": {
-      "onlineSince": "Online din {date}",
-      "idle": "Inactiv",
       "live": "LIVE",
-      "stop": "Oprește",
+      "snapshot": "SNAPSHOT",
+      "protocolHls": "HLS",
+      "noSnapshot": "încă niciun instantaneu — prima captură în ~30 s",
+      "onlineSince": "online din {time} · {uptime}",
+      "idle": "inactiv",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# spectator} few {# spectatori} other {# de spectatori}}",
       "play": "Redă",
+      "stop": "Oprește",
+      "playAria": "Redă {streamName}",
       "actionsAria": "Acțiuni pentru flux",
-      "viewRecordings": "Vezi înregistrările"
+      "stub": {
+        "title": "Încă neimplementat",
+        "description": "Această acțiune este în plan — a fost consemnată."
+      },
+      "menu": {
+        "openDetail": "Deschide detaliile fluxului",
+        "viewRecordings": "Vezi înregistrările",
+        "takeSnapshot": "Fă un instantaneu",
+        "record": "Înregistrare",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Copiază URL-urile de publicare",
+        "shareEmbed": "Partajează și încorporează…",
+        "editPathConfig": "Editează configurația căii",
+        "editHooks": "Editează hook-urile"
+      }
     }
   },
   "Recordings": {
     "crumbRecordings": "Înregistrări",
-    "header": "Înregistrări",
-    "subHeader": "Răsfoiți înregistrările din diferitele fluxuri",
-    "subHeaderForStream": "Înregistrări pentru: {streamName}",
-    "invalidConfig": "Configurație invalidă",
-    "errors": {
-      "configTitle": "Eroare de configurare",
-      "configDescription": "Configurația nu poate fi încărcată. Verificați conexiunea la baza de date.",
-      "directoryTitle": "Nu se poate accesa directorul de înregistrări",
-      "directoryLead": "Nu se poate citi directorul de înregistrări de la",
-      "directoryHint": "Asigurați-vă că directorul există și are permisiunile corecte.",
-      "checkConfigBtn": "Verifică configurația",
-      "readErrorTitle": "Înregistrările nu pot fi citite",
-      "readErrorDescription": "Directorul de înregistrări nu a putut fi citit. Asigurați-vă că directorul există."
+    "toolbar": {
+      "summary": "{streams, plural, one {# flux} few {# fluxuri} other {# de fluxuri}} · {recordings, plural, one {# înregistrare} few {# înregistrări} other {# de înregistrări}}",
+      "filterPlaceholder": "Filtrează fluxurile…",
+      "filterAria": "Filtrează fluxurile"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# înregistrare} few {# înregistrări} other {# de înregistrări}}",
+      "latest": "ultima {time}",
+      "openAria": "Vezi înregistrările pentru {name}"
     },
     "empty": {
-      "noRecordingsTitle": "Nu s-au găsit înregistrări",
-      "noRecordingsLead": "Încă nu există înregistrări salvate. Înregistrările vor apărea aici imediat ce MediaMTX începe să înregistreze fluxurile.",
-      "noRecordingsHint": "Asigurați-vă că <code>MTX_RECORD=yes</code> este setat în configurația MediaMTX.",
+      "noRecordingsTitle": "Încă nicio înregistrare",
+      "noRecordingsLead": "Înregistrările apar aici imediat ce MediaMTX începe să înregistreze fluxurile.",
+      "enableRecording": "Activează înregistrarea",
       "noMatchingTitle": "Niciun flux care să corespundă",
       "noMatchingDescription": "Niciun flux nu corespunde cu „{query}”."
     },
-    "search": {
-      "placeholder": "Caută fluxuri"
+    "errors": {
+      "directoryTitle": "Directorul de înregistrări nu poate fi citit",
+      "directoryLead": "Nu se pot citi înregistrările de la",
+      "openAppConfig": "Deschide configurarea aplicației",
+      "readErrorTitle": "Înregistrările nu au putut fi citite",
+      "readErrorDescription": "Asigurați-vă că directorul de înregistrări există și are permisiunile corecte."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# înregistrare} few {# înregistrări} other {# de înregistrări}}"
     },
     "groups": {
-      "today": "Astăzi",
-      "yesterday": "Ieri"
+      "todayEyebrow": "Astăzi — {date}",
+      "yesterdayEyebrow": "Ieri — {date}"
     },
-    "card": {
-      "recordingCount": "{count, plural, one {# înregistrare} few {# înregistrări} other {# de înregistrări}}",
-      "latest": "Ultima {time}",
-      "viewBtn": "Vezi"
-    },
-    "recordingCard": {
-      "stop": "Oprește",
+    "row": {
       "play": "Redă",
-      "downloadAria": "Descarcă înregistrarea {filePath}",
-      "downloadError": "Eroare la descărcarea videoclipului"
+      "close": "Închide",
+      "cancel": "Anulează",
+      "playAria": "Redă înregistrarea de la {time}",
+      "downloadAria": "Descarcă înregistrarea {file}",
+      "downloading": "se descarcă… {received} din {total} · {rate}",
+      "downloadComplete": "Descărcare finalizată",
+      "downloadFailed": "Descărcarea a eșuat"
+    },
+    "player": {
+      "play": "Redă",
+      "pause": "Pauză",
+      "seek": "Derulează"
+    },
+    "pagination": {
+      "aria": "Paginare",
+      "showing": "Se afișează {from}–{to} din {total}",
+      "previous": "Pagina anterioară",
+      "next": "Pagina următoare"
     }
   },
   "Config": {
-    "crumbs": {
-      "settings": "Setări",
-      "clientConfig": "Configurare client",
-      "mediamtx": "MediaMTX"
-    },
-    "pageHeader": "Configurare",
-    "pageSubHeader": "Gestionați configurarea aplicației",
     "invalidConfig": "Configurație invalidă",
+    "appConfig": {
+      "pageHeader": "Configurare aplicație",
+      "pageSubHeader": "Conexiunea și stocarea folosite de MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Configurare MediaMTX",
+      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
+      "needsAttention": "{count, plural, one {# câmp necesită atenție} few {# câmpuri necesită atenție} other {# de câmpuri necesită atenție}}",
+      "discard": "Renunță",
+      "reset": "Resetează",
+      "save": "Salvează",
+      "saveToServer": "Salvează pe server"
+    },
     "formFields": {
       "oneValuePerLine": "O valoare pe rând."
     },
     "clientForm": {
-      "title": "Setări aplicație",
-      "description": "Căi de conexiune și stocare utilizate de MediaMTX Connect.",
       "sections": {
         "mediamtxConnection": "Conexiune MediaMTX",
         "storage": "Stocare"
       },
+      "playbackBadge": "Necesar pentru redarea live",
       "fields": {
         "mediaMtxUrl": {
-          "label": "MediaMtx Url",
+          "label": "URL MediaMTX",
           "description": "Adresa instanței dvs. MediaMTX. Într-o rețea Docker puteți folosi numele containerului; altfel folosiți IP-ul sau hostname-ul extern."
         },
         "mediaMtxApiPort": {
-          "label": "MediaMtx Api Port",
-          "description": "Portul API-ului MediaMTX"
+          "label": "Port API",
+          "description": "Portul API-ului MediaMTX."
         },
         "remoteMediaMtxUrl": {
-          "label": "Remote MediaMtx URL",
-          "description": "Este IP-ul sau hostname-ul orientat extern, accesibil din browser, al serverului dvs. MediaMTX."
+          "label": "URL de redare",
+          "description": "URL-ul accesibil din browser, orientat extern, al serverului dvs. MediaMTX. Redarea live încarcă fluxurile de aici."
         },
         "recordingsDirectory": {
-          "label": "Recordings Directory",
-          "description": "Director care conține înregistrările MediaMTX (nu este recomandat să-l modificați dacă folosiți Docker)"
+          "label": "Director de înregistrări",
+          "description": "Director care conține înregistrările MediaMTX (nu este recomandat să-l modificați dacă folosiți Docker)."
         },
         "screenshotsDirectory": {
-          "label": "Screenshots Directory",
-          "description": "Director pentru stocarea capturilor de ecran generate (nu este recomandat să-l modificați dacă folosiți Docker)"
+          "label": "Director de capturi de ecran",
+          "description": "Director pentru instantaneele generate (nu este recomandat să-l modificați dacă folosiți Docker)."
         }
       },
-      "actions": {
-        "reset": "Resetează",
-        "submit": "Trimite"
-      },
       "toasts": {
-        "success": "Configurarea clientului a fost actualizată",
-        "errorTitle": "A apărut o problemă la actualizarea configurării clientului",
-        "errorDescription": "Verificați valorile formularului."
+        "success": "Configurarea aplicației a fost salvată",
+        "errorTitle": "Configurarea aplicației nu a putut fi salvată",
+        "errorDescription": "Verificați valorile formularului și încercați din nou."
       }
     },
     "mediamtxForm": {
-      "tabs": {
+      "sectionTitles": {
         "logging": "Jurnalizare",
         "api": "API",
-        "hooks": "Hooks",
+        "hooks": "Hook-uri",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT"
       },
-      "sections": {
-        "logging": {
-          "logging": "Jurnalizare",
-          "limits": "Limite"
-        },
-        "api": {
-          "http": "API HTTP",
-          "metrics": "Metrici",
-          "pprof": "PPROF",
-          "enableDescription": "Activează API-ul HTTP MediaMTX."
-        },
-        "hooks": {
-          "hooks": "Hooks"
-        },
-        "rtsp": {
-          "server": "Server",
-          "tls": "TLS",
-          "auth": "Autentificare",
-          "enableDescription": "Activează serverul RTSP."
-        },
-        "rtmp": {
-          "rtmp": "RTMP",
-          "enableDescription": "Activează serverul RTMP."
-        },
-        "hls": {
-          "server": "Server",
-          "segments": "Segmente",
-          "corsProxies": "CORS / Proxy",
-          "enableDescription": "Activează serverul HLS."
-        },
-        "webrtc": {
-          "server": "Server",
-          "network": "Rețea",
-          "iceServers": "Servere ICE",
-          "addServer": "Adaugă server",
-          "noIceServers": "Nu există servere ICE configurate.",
-          "iceServerLabel": "Server ICE {index}",
-          "removeIceServer": "Elimină serverul ICE",
-          "iceFields": {
-            "url": "URL",
-            "username": "Nume utilizator",
-            "password": "Parolă"
-          },
-          "enableDescription": "Activează serverul WebRTC."
-        },
-        "srt": {
-          "srt": "SRT",
-          "enableDescription": "Activează serverul SRT."
-        }
+      "sectionDescriptions": {
+        "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
+        "api": "API-ul HTTP pe care îl folosește chiar MediaMTX Connect.",
+        "hooks": "Comenzi pe care MediaMTX le rulează la evenimentele de conexiune.",
+        "rtsp": "Publicați și citiți fluxuri prin RTSP.",
+        "rtmp": "Publicați și citiți fluxuri prin RTMP.",
+        "hls": "Serviți fluxurile ca HLS pentru redare în browser.",
+        "webrtc": "Redare și publicare în browser cu latență redusă.",
+        "srt": "Publicați și citiți fluxuri prin SRT."
+      },
+      "enabled": "Activat",
+      "off": "Dezactivat",
+      "hiddenWhileOff": "{count, plural, one {# opțiune ascunsă cât timp e dezactivat} few {# opțiuni ascunse cât timp e dezactivat} other {# de opțiuni ascunse cât timp e dezactivat}}",
+      "rail": {
+        "onThisPage": "Pe această pagină",
+        "aria": "Secțiuni de configurare"
+      },
+      "iceServers": {
+        "add": "Adaugă server ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL-ul serverului ICE {index}",
+        "usernameAria": "Numele de utilizator al serverului ICE {index}",
+        "passwordAria": "Parola serverului ICE {index}",
+        "removeAria": "Elimină serverul ICE {index}"
+      },
+      "help": {
+        "logLevel": "Nivelul de detaliu al jurnalului (error, warn, info sau debug).",
+        "logDestinations": "Unde se scriu jurnalele (stdout, file sau syslog).",
+        "logFile": "Calea fișierului de jurnal când logDestinations include file.",
+        "readTimeout": "Timpul limită pentru operațiunile de citire.",
+        "writeTimeout": "Timpul limită pentru operațiunile de scriere.",
+        "writeQueueSize": "Dimensiunea cozii de ieșire per conexiune. Trebuie să fie o putere a lui doi.",
+        "udpMaxPayloadSize": "Dimensiunea maximă a pachetelor UDP de ieșire.",
+        "externalAuthenticationURL": "URL-ul unui server extern de autentificare, apelat la fiecare conexiune.",
+        "apiAddress": "Adresa de ascultare a API-ului HTTP.",
+        "metrics": "Expune metrici compatibile cu Prometheus.",
+        "metricsAddress": "Adresa de ascultare a punctului final de metrici.",
+        "pprof": "Expune punctul final de profilare Go pprof.",
+        "pprofAddress": "Adresa de ascultare a punctului final pprof.",
+        "runOnConnect": "Comandă de rulat când un client se conectează.",
+        "runOnConnectRestart": "Repornește comanda dacă se încheie.",
+        "runOnDisconnect": "Comandă de rulat când un client se deconectează.",
+        "rtspAddress": "Adresa de ascultare a serverului RTSP (TCP).",
+        "rtspsAddress": "Adresa de ascultare a serverului RTSPS (TLS).",
+        "rtpAddress": "Adresa de ascultare pentru pachete RTP prin UDP.",
+        "rtcpAddress": "Adresa de ascultare pentru pachete RTCP prin UDP.",
+        "multicastIPRange": "Intervalul de IP-uri folosit pentru livrarea multicast.",
+        "multicastRTPPort": "Portul pentru pachetele RTP multicast.",
+        "multicastRTCPPort": "Portul pentru pachetele RTCP multicast.",
+        "protocols": "Protocoalele de transport acceptate de serverul RTSP (udp, multicast sau tcp).",
+        "encryption": "Politica de criptare TLS (no, strict sau optional).",
+        "serverKey": "Calea cheii serverului TLS.",
+        "serverCert": "Calea certificatului serverului TLS.",
+        "authMethods": "Metodele de autentificare acceptate de serverul RTSP (basic sau digest).",
+        "rtmpAddress": "Adresa de ascultare a serverului RTMP.",
+        "rtmpEncryption": "Politica de criptare TLS pentru RTMP (no, strict sau optional).",
+        "rtmpsAddress": "Adresa de ascultare a serverului RTMPS (TLS).",
+        "rtmpServerKey": "Calea cheii serverului RTMPS.",
+        "rtmpServerCert": "Calea certificatului serverului RTMPS.",
+        "hlsAddress": "Adresa de ascultare a serverului HLS.",
+        "hlsEncryption": "Servește HLS prin TLS (HTTPS).",
+        "hlsServerKey": "Calea cheii serverului HLS.",
+        "hlsServerCert": "Calea certificatului serverului HLS.",
+        "hlsAlwaysRemux": "Remuxează fluxurile chiar și atunci când nu se uită nimeni.",
+        "hlsVariant": "Varianta HLS (mpegts, fmp4 sau lowLatency).",
+        "hlsSegmentCount": "Numărul de segmente păstrate în playlist.",
+        "hlsSegmentDuration": "Durata minimă a fiecărui segment.",
+        "hlsPartDuration": "Durata fiecărei părți în modul cu latență redusă.",
+        "hlsSegmentMaxSize": "Dimensiunea maximă a fiecărui segment.",
+        "hlsAllowOrigin": "Valoarea antetului Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP-urile sau rețelele proxy-urilor plasate înaintea serverului HLS.",
+        "hlsDirectory": "Scrie segmentele pe disc în acest director în loc de RAM.",
+        "webrtcAddress": "Adresa de ascultare a serverului HTTP WebRTC.",
+        "webrtcEncryption": "Servește WebRTC prin TLS (HTTPS).",
+        "webrtcServerKey": "Calea cheii serverului WebRTC.",
+        "webrtcServerCert": "Calea certificatului serverului WebRTC.",
+        "webrtcAllowOrigin": "Valoarea antetului Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP-urile sau rețelele proxy-urilor plasate înaintea serverului WebRTC.",
+        "webrtcLocalUDPAddress": "Adresa UDP locală folosită pentru traficul WebRTC.",
+        "webrtcLocalTCPAddress": "Adresa TCP locală folosită pentru traficul WebRTC.",
+        "webrtcIPsFromInterfaces": "Colectează IP-uri candidate de pe interfețele de rețea ale gazdei.",
+        "webrtcIPsFromInterfacesList": "Interfețele de pe care se colectează IP-uri candidate. Gol înseamnă toate.",
+        "webrtcAdditionalHosts": "Hosturi sau IP-uri suplimentare anunțate drept candidați WebRTC.",
+        "webrtcICEServers2": "Servere STUN sau TURN folosite pentru stabilirea conexiunilor WebRTC.",
+        "srtAddress": "Adresa de ascultare a serverului SRT."
       },
       "toasts": {
-        "success": "Configurarea globală a fost actualizată",
-        "errorTitle": "A apărut o problemă la actualizarea configurării globale",
-        "errorDescription": "Verificați valorile formularului."
+        "success": "Configurarea MediaMTX a fost salvată",
+        "errorTitle": "Configurarea MediaMTX nu a putut fi salvată",
+        "errorDescription": "Verificați valorile formularului și încercați din nou."
       }
-    },
-    "stickySaveBar": {
-      "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
-      "discard": "Renunță",
-      "saveChanges": "Salvează modificările"
     }
   }
 }

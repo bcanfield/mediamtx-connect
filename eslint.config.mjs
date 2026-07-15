@@ -10,6 +10,9 @@ export default antfu(
       'apps/api/public',
       // standalone demo-capture rig with throwaway scripts
       'demo/**',
+      // design reference material from the design handoff, not app code
+      'MediaMTX Connect design handoff/**',
+      'Geist (Vercel) Design System/**',
     ],
   },
   {

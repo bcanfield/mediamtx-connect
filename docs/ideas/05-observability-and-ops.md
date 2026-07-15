@@ -26,9 +26,9 @@ MediaMTX exposes a Prometheus-compatible `/metrics` endpoint (default `:9998`), 
 
 ## Historical metrics (rollups)
 
-- **SQLite rollup table.** New Prisma model `MetricSample(metric, labels, value, ts)` plus `MetricRollup1m/5m/1h/1d`. Cron downsamples in place; keeps 7d at 1m, 90d at 1h.
+- **Metric rollup store.** New persisted `MetricSample(metric, labels, value, ts)` model plus `MetricRollup1m/5m/1h/1d` — needs a database, since the app today only has the JSON config store. Cron downsamples in place; keeps 7d at 1m, 90d at 1h.
 - **"Last 24h" charts on the dashboard.** Time-series area chart for paths/sessions/bytes that survives MediaMTX restarts, since MediaMTX itself only exposes counters since process start.
-- **Postgres-as-Marketplace upgrade path.** When data exceeds SQLite's comfort zone, swap to Vercel Marketplace Neon Postgres without changing the UI — single Prisma migration. Building block: `metrics` scraper.
+- **Postgres-as-Marketplace upgrade path.** When rollup data outgrows a local store, use Vercel Marketplace Neon Postgres without changing the UI. Building block: `metrics` scraper.
 - **Live activity sparklines.** Each `stream-card` and recording row gets a 60-pixel sparkline of the last 15 min of `paths_outbound_bytes` for that path. Tiny but addictive.
 - **Heatmap: day-of-week × hour-of-day.** 7×24 grid colored by avg sessions or bytes-out, rendered from rollups. Answers "when do people watch?" at a glance.
 - **Top-N reports.** "Top 10 most-watched paths last 24h / 7d / 30d" by `paths_outbound_bytes` or peak `paths_readers`. Downloadable as CSV.
@@ -59,7 +59,7 @@ MediaMTX exposes a Prometheus-compatible `/metrics` endpoint (default `:9998`), 
 - **Log level toggle from UI.** PATCH `configGlobalSet` with the new `logLevel`; show the change took effect (no restart needed — MediaMTX hot-reloads).
 - **Pino app-log viewer.** Tail MediaMTX Connect's own Pino logs (last 1k lines, level filter, free-text search) — useful for debugging cron jobs without `docker logs`.
 - **Combined timeline.** Interleave MediaMTX log lines with app log lines on one timestamp-sorted view for correlation. Use trace IDs when present.
-- **Search across rolled logs.** If MediaMTX is rotating to `mediamtx.log.1`, `.2`, etc., index them in SQLite FTS for fast grep.
+- **Search across rolled logs.** If MediaMTX is rotating to `mediamtx.log.1`, `.2`, etc., index them in a local full-text index for fast grep.
 - **Syslog destination wizard.** UI to configure `logDestinations: [syslog]` + `sysLogPrefix` and verify a journalctl tail matches.
 
 ## Profiling & debugging (pprof)
@@ -137,9 +137,9 @@ MediaMTX exposes a Prometheus-compatible `/metrics` endpoint (default `:9998`), 
 
 ## Backup / restore
 
-- **Backup wizard.** One screen to take an encrypted tarball of: configGlobal, Prisma DB, recordings dir, screenshots dir. Push to S3, GCS, or Vercel Blob.
+- **Backup wizard.** One screen to take an encrypted tarball of: configGlobal, the JSON config store, recordings dir, screenshots dir. Push to S3, GCS, or Vercel Blob.
 - **Scheduled backups.** Cron entry that snapshots nightly, retains N days, prunes the rest.
-- **Restore flow.** Upload a backup; preview manifest; restore sequentially with progress. DB restore goes through `prisma migrate resolve`.
+- **Restore flow.** Upload a backup; preview manifest; restore sequentially with progress. Config-store restore is an atomic JSON file swap.
 - **Backup integrity probe.** Weekly cron that downloads the latest backup, untars to `/tmp`, verifies checksums, deletes — confirms backups actually restore.
 
 ## Misc operations

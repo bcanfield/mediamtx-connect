@@ -9,10 +9,9 @@ import {
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { AppSidebar } from '@/components/app-sidebar'
+import { AppHeader } from '@/components/app-header'
 import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 import { ClientConfigPage } from '@/features/client-config/client-config-page'
 import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
@@ -27,12 +26,12 @@ const rootRoute = createRootRoute({
   component: () => (
     <I18nProvider>
       <ThemeProvider>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
+        <div className="flex min-h-svh flex-col">
+          <AppHeader />
+          <main className="flex flex-1 flex-col">
             <Outlet />
-          </SidebarInset>
-        </SidebarProvider>
+          </main>
+        </div>
         <Toaster />
       </ThemeProvider>
       <ServiceWorker />
