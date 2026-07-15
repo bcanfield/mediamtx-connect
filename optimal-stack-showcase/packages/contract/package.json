@@ -1,0 +1,20 @@
+{
+  "name": "@showcase/contract",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@orpc/contract": "^1.14.8",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@showcase/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

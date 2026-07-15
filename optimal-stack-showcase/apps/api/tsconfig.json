@@ -1,0 +1,7 @@
+{
+  "extends": "@showcase/typescript-config/base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src", "tsdown.config.ts"]
+}

@@ -17,6 +17,8 @@ export default antfu(
       'next-env.d.ts',
       'src/lib/mediamtx/generated.ts',
       'src/lib/prisma/migrations/**',
+      // standalone example project with its own linter (Biome)
+      'optimal-stack-showcase/**',
     ],
   },
   {
