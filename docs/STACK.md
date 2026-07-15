@@ -46,11 +46,13 @@ For local dev against a real MediaMTX with fake streams, use the dev compose
 stack (`pnpm mediamtx`) and point the api at it:
 
 ```sh
+# Absolute paths on purpose: turbo runs the api with a cwd of apps/api, so a
+# relative ./.data here would land in apps/api/.data, not the repo root.
 BACKEND_SERVER_MEDIAMTX_URL=http://127.0.0.1 \
 REMOTE_MEDIAMTX_URL=http://localhost \
-DATA_DIR=./.data \
-MEDIAMTX_RECORDINGS_DIR=./.data/recordings \
-MEDIAMTX_SCREENSHOTS_DIR=./.data/screenshots \
+DATA_DIR=$PWD/.data \
+MEDIAMTX_RECORDINGS_DIR=$PWD/.data/recordings \
+MEDIAMTX_SCREENSHOTS_DIR=$PWD/.data/screenshots \
 pnpm dev
 ```
 
