@@ -63,9 +63,15 @@ cache-friendly layering, `pnpm install` with a BuildKit store cache mount,
   say JIT packages "rely on the application bundler to compile the package",
   and Hono's official Dockerfile ships compiled `dist/` JS — no first-party
   example of this stack runs `.ts` in production.
-- **TypeScript is pinned to 5.9.x**, not 7.x: typescript-eslint (used by
-  `@antfu/eslint-config`) crashes against the TS 7 native compiler's API. The
-  root `package.json` carries the pin so peer resolution stays on 5.9.
+- **All third-party versions are centralized in the pnpm catalog**
+  (`pnpm-workspace.yaml`) and referenced as `catalog:` — one place to bump,
+  guaranteed consistency across apps.
+- **TypeScript is 6.0.x, the official bridge to 7**: per the TypeScript repo,
+  "6.0 is the final JavaScript-based release" — it errors on everything 7.0
+  removes, so passing 6.0 means 7-ready (all packages also verified against
+  tsc 7.0.2 directly). The blocker for 7 itself is typescript-eslint, whose
+  peer range is `<6.1.0`; its 8.64 crashes outright on the TS 7 native API.
+  When typescript-eslint ships 7 support, the bump is one catalog line.
 - **ESLint over Biome**: `@antfu/eslint-config` covers linting and formatting
   in one tool (no Prettier), including JSON/YAML/Markdown.
 - `packages/typescript-config` follows Turborepo's shared-config convention —
