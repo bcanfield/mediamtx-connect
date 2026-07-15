@@ -1,21 +1,181 @@
 import { oc } from '@orpc/contract'
 import { z } from 'zod'
 
-export const EntrySchema = z.object({
-  id: z.number().int(),
-  message: z.string(),
-  // z.date() works over the wire: oRPC's RPC serializer preserves native Date
-  createdAt: z.date(),
+export const HealthSchema = z.object({
+  status: z.literal('ok'),
+  uptime: z.number(),
 })
 
-export type Entry = z.infer<typeof EntrySchema>
+export const AppConfigSchema = z.object({
+  mediaMtxUrl: z.string().min(1),
+  mediaMtxApiPort: z.coerce.number().int().gt(0),
+  remoteMediaMtxUrl: z.string().nullable(),
+  recordingsDirectory: z.string().min(1),
+  screenshotsDirectory: z.string().min(1),
+})
+
+export type AppConfig = z.infer<typeof AppConfigSchema>
+
+// Mirrors MediaMTX v1.11.3 GlobalConf. Field names match the YAML keys 1:1.
+export const GlobalConfigSchema = z.object({
+  logLevel: z.string().optional(),
+  logDestinations: z.array(z.string()).optional(),
+  logFile: z.string().optional(),
+  readTimeout: z.string().optional(),
+  writeTimeout: z.string().optional(),
+  writeQueueSize: z.coerce.number().optional(),
+  udpMaxPayloadSize: z.coerce.number().optional(),
+  externalAuthenticationURL: z.string().optional(),
+  api: z.boolean().optional(),
+  apiAddress: z.string().optional(),
+  metrics: z.boolean().optional(),
+  metricsAddress: z.string().optional(),
+  pprof: z.boolean().optional(),
+  pprofAddress: z.string().optional(),
+  runOnConnect: z.string().optional(),
+  runOnConnectRestart: z.boolean().optional(),
+  runOnDisconnect: z.string().optional(),
+  rtsp: z.boolean().optional(),
+  protocols: z.array(z.string()).optional(),
+  encryption: z.string().optional(),
+  rtspAddress: z.string().optional(),
+  rtspsAddress: z.string().optional(),
+  rtpAddress: z.string().optional(),
+  rtcpAddress: z.string().optional(),
+  multicastIPRange: z.string().optional(),
+  multicastRTPPort: z.coerce.number().optional(),
+  multicastRTCPPort: z.coerce.number().optional(),
+  serverKey: z.string().optional(),
+  serverCert: z.string().optional(),
+  authMethods: z.array(z.string()).optional(),
+  rtmp: z.boolean().optional(),
+  rtmpAddress: z.string().optional(),
+  rtmpEncryption: z.string().optional(),
+  rtmpsAddress: z.string().optional(),
+  rtmpServerKey: z.string().optional(),
+  rtmpServerCert: z.string().optional(),
+  hls: z.boolean().optional(),
+  hlsAddress: z.string().optional(),
+  hlsEncryption: z.boolean().optional(),
+  hlsServerKey: z.string().optional(),
+  hlsServerCert: z.string().optional(),
+  hlsAlwaysRemux: z.boolean().optional(),
+  hlsVariant: z.string().optional(),
+  hlsSegmentCount: z.coerce.number().optional(),
+  hlsSegmentDuration: z.string().optional(),
+  hlsPartDuration: z.string().optional(),
+  hlsSegmentMaxSize: z.string().optional(),
+  hlsAllowOrigin: z.string().optional(),
+  hlsTrustedProxies: z.array(z.string()).optional(),
+  hlsDirectory: z.string().optional(),
+  webrtc: z.boolean().optional(),
+  webrtcAddress: z.string().optional(),
+  webrtcEncryption: z.boolean().optional(),
+  webrtcServerKey: z.string().optional(),
+  webrtcServerCert: z.string().optional(),
+  webrtcAllowOrigin: z.string().optional(),
+  webrtcTrustedProxies: z.array(z.string()).optional(),
+  webrtcLocalUDPAddress: z.string().optional(),
+  webrtcLocalTCPAddress: z.string().optional(),
+  webrtcIPsFromInterfaces: z.boolean().optional(),
+  webrtcIPsFromInterfacesList: z.array(z.string()).optional(),
+  webrtcAdditionalHosts: z.array(z.string()).optional(),
+  webrtcICEServers2: z
+    .array(
+      z.object({
+        url: z.string().optional(),
+        username: z.string().optional(),
+        password: z.string().optional(),
+      }),
+    )
+    .optional(),
+  srt: z.boolean().optional(),
+  srtAddress: z.string().optional(),
+  record: z.boolean().optional(),
+  recordPath: z.string().optional(),
+  recordFormat: z.string().optional(),
+  recordPartDuration: z.string().optional(),
+  recordSegmentDuration: z.string().optional(),
+  recordDeleteAfter: z.string().optional(),
+})
+
+export type GlobalConfig = z.infer<typeof GlobalConfigSchema>
+export type GlobalConfigFormData = z.input<typeof GlobalConfigSchema>
+
+export const StreamSchema = z.object({
+  name: z.string(),
+  readyTime: z.string().nullable(),
+})
+
+export type Stream = z.infer<typeof StreamSchema>
+
+// The live view's connection tri-state, resolved server-side instead of via
+// try/catch in a page component.
+export const StreamsStateSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('connection-error'),
+    mediaMtxUrl: z.string(),
+    mediaMtxApiPort: z.number(),
+  }),
+  z.object({
+    status: z.literal('connected'),
+    streams: z.array(StreamSchema),
+    hlsAddress: z.string(),
+    remoteMediaMtxUrl: z.string().nullable(),
+  }),
+])
+
+export type StreamsState = z.infer<typeof StreamsStateSchema>
+
+export const RecordingStreamSummarySchema = z.object({
+  name: z.string(),
+  count: z.number().int(),
+  // native Date survives the wire — oRPC's RPC serializer preserves it
+  latestMtime: z.date().nullable(),
+  screenshotUrl: z.string().nullable(),
+})
+
+export type RecordingStreamSummary = z.infer<typeof RecordingStreamSummarySchema>
+
+export const RecordingSchema = z.object({
+  name: z.string(),
+  createdAt: z.date(),
+  fileSize: z.number(),
+  screenshotUrl: z.string().nullable(),
+})
+
+export type Recording = z.infer<typeof RecordingSchema>
 
 export const contract = {
-  health: oc.output(z.object({ status: z.literal('ok'), uptime: z.number() })),
-  entries: {
-    list: oc.output(z.array(EntrySchema)),
-    add: oc
-      .input(z.object({ message: z.string().min(1).max(280) }))
-      .output(EntrySchema),
+  health: oc.output(HealthSchema),
+  streams: {
+    list: oc.output(StreamsStateSchema),
+  },
+  recordings: {
+    listStreams: oc.output(z.array(RecordingStreamSummarySchema)),
+    listForStream: oc
+      .input(
+        z.object({
+          streamName: z.string().min(1),
+          page: z.number().int().min(1).default(1),
+          take: z.number().int().min(1).max(100).default(10),
+        }),
+      )
+      .output(
+        z.object({
+          recordings: z.array(RecordingSchema),
+          totalCount: z.number().int(),
+        }),
+      ),
+  },
+  config: {
+    app: {
+      get: oc.output(AppConfigSchema),
+      update: oc.input(AppConfigSchema).output(AppConfigSchema),
+    },
+    mediamtx: {
+      getGlobal: oc.output(GlobalConfigSchema.nullable()),
+      updateGlobal: oc.input(GlobalConfigSchema).output(z.void()),
+    },
   },
 }

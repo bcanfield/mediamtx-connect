@@ -3,43 +3,95 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
-  Link,
   Outlet,
   RouterProvider,
 } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { AboutPage } from './pages/about'
-import { GuestbookPage } from './pages/guestbook'
+
+import { AppSidebar } from '@/components/app-sidebar'
+import { ServiceWorker } from '@/components/service-worker'
+import { ThemeProvider } from '@/components/theme-provider'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { Toaster } from '@/components/ui/sonner'
+import { ClientConfigPage } from '@/features/client-config/client-config-page'
+import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
+import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
+import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
+import { LiveViewPage } from '@/features/streams/live-view-page'
+import { I18nProvider } from '@/i18n/provider'
+
+import './globals.css'
 
 const rootRoute = createRootRoute({
   component: () => (
-    <div
-      style={{ fontFamily: 'system-ui', maxWidth: 640, margin: '2rem auto' }}
-    >
-      <nav style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-        <Link to="/">Guestbook</Link>
-        <Link to="/about">About</Link>
-      </nav>
-      <Outlet />
-    </div>
+    <I18nProvider>
+      <ThemeProvider>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <Outlet />
+          </SidebarInset>
+        </SidebarProvider>
+        <Toaster />
+      </ThemeProvider>
+      <ServiceWorker />
+    </I18nProvider>
   ),
 })
 
-const indexRoute = createRoute({
+function playSearch(search: Record<string, unknown>) {
+  return { play: typeof search.play === 'string' ? search.play : undefined }
+}
+
+const liveRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: GuestbookPage,
+  component: LiveViewPage,
+  validateSearch: playSearch,
 })
 
-const aboutRoute = createRoute({
+const recordingsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/about',
-  component: AboutPage,
+  path: '/recordings',
+  component: RecordingsIndexPage,
+})
+
+const streamRecordingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/recordings/$streamname',
+  component: function StreamRecordingsRoute() {
+    const { streamname } = streamRecordingsRoute.useParams()
+    const { page, take } = streamRecordingsRoute.useSearch()
+    return <StreamRecordingsPage streamName={streamname} page={page} take={take} />
+  },
+  validateSearch: (search: Record<string, unknown>) => ({
+    ...playSearch(search),
+    page: Number(search.page) >= 1 ? Number(search.page) : undefined,
+    take: Number(search.take) >= 1 ? Number(search.take) : undefined,
+  }),
+})
+
+const configRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config',
+  component: ClientConfigPage,
+})
+
+const mediamtxConfigRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/mediamtx/global',
+  component: MediaMTXConfigPage,
 })
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([indexRoute, aboutRoute]),
+  routeTree: rootRoute.addChildren([
+    liveRoute,
+    recordingsRoute,
+    streamRecordingsRoute,
+    configRoute,
+    mediamtxConfigRoute,
+  ]),
 })
 
 declare module '@tanstack/react-router' {

@@ -1,5 +1,5 @@
 {
-  "name": "@showcase/api",
+  "name": "@connect/api",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -14,16 +14,18 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@connect/contract": "workspace:*",
     "@hono/node-server": "catalog:",
     "@orpc/contract": "catalog:",
     "@orpc/server": "catalog:",
-    "@showcase/contract": "workspace:*",
     "@t3-oss/env-core": "catalog:",
     "hono": "catalog:",
+    "node-cron": "catalog:",
+    "pino": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@showcase/typescript-config": "workspace:*",
+    "@connect/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",

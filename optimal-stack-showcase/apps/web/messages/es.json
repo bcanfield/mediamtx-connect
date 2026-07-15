@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Interfaz web para MediaMTX. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Este campo es obligatorio",
+      "mustBePositive": "Debe ser mayor que 0"
+    }
+  },
+  "Common": {
+    "retry": "Reintentar",
+    "loading": "Cargando…",
+    "theme": {
+      "lightMode": "Modo claro",
+      "darkMode": "Modo oscuro",
+      "switchToLight": "Cambiar a tema claro",
+      "switchToDark": "Cambiar a tema oscuro"
+    },
+    "locale": {
+      "switchLanguage": "Cambiar idioma",
+      "searchPlaceholder": "Buscar idioma…",
+      "noResults": "No se encontró ningún idioma."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Aplicación",
+      "settings": "Configuración"
+    },
+    "items": {
+      "live": "En vivo",
+      "recordings": "Grabaciones",
+      "clientConfig": "Configuración del cliente",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "En vivo",
+    "header": "Transmisiones",
+    "subHeader": "Vistas en vivo de tus transmisiones activas",
+    "errors": {
+      "configTitle": "Error de configuración",
+      "configDescription": "No se pudo cargar la configuración. Verifica la conexión con la base de datos.",
+      "connectionTitle": "No se puede conectar a MediaMTX",
+      "connectionLead": "No se puede acceder a MediaMTX en",
+      "connectionHint": "Asegúrate de que MediaMTX esté en ejecución y que la URL en tu configuración sea correcta.",
+      "checkConfigBtn": "Revisar configuración"
+    },
+    "empty": {
+      "configureRemoteTitle": "Configurar URL remota",
+      "configureRemoteDescription": "Configura tu URL remota de MediaMTX para ver las transmisiones en el navegador. Debe ser la URL que tu navegador pueda usar para alcanzar MediaMTX.",
+      "goToConfig": "Ir a configuración",
+      "noStreamsTitle": "Sin transmisiones activas",
+      "noStreamsDescription": "MediaMTX está conectado pero ninguna transmisión está activa. Inicia una transmisión hacia MediaMTX para verla aquí."
+    },
+    "density": {
+      "aria": "Densidad de cuadrícula",
+      "two": "Dos columnas",
+      "three": "Tres columnas",
+      "four": "Cuatro columnas"
+    },
+    "card": {
+      "onlineSince": "En línea desde {date}",
+      "idle": "Inactiva",
+      "live": "EN VIVO",
+      "stop": "Detener",
+      "play": "Reproducir",
+      "actionsAria": "Acciones de transmisión",
+      "viewRecordings": "Ver grabaciones"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Grabaciones",
+    "header": "Grabaciones",
+    "subHeader": "Explora tus grabaciones de las distintas transmisiones",
+    "subHeaderForStream": "Grabaciones de: {streamName}",
+    "invalidConfig": "Configuración no válida",
+    "errors": {
+      "configTitle": "Error de configuración",
+      "configDescription": "No se pudo cargar la configuración. Verifica la conexión con la base de datos.",
+      "directoryTitle": "No se puede acceder al directorio de grabaciones",
+      "directoryLead": "No se puede leer el directorio de grabaciones en",
+      "directoryHint": "Asegúrate de que el directorio exista y tenga los permisos correctos.",
+      "checkConfigBtn": "Revisar configuración",
+      "readErrorTitle": "No se pudieron leer las grabaciones",
+      "readErrorDescription": "No se pudo leer el directorio de grabaciones. Asegúrate de que el directorio exista."
+    },
+    "empty": {
+      "noRecordingsTitle": "No se encontraron grabaciones",
+      "noRecordingsLead": "Aún no se han guardado grabaciones. Aparecerán aquí cuando MediaMTX empiece a grabar transmisiones.",
+      "noRecordingsHint": "Asegúrate de que <code>MTX_RECORD=yes</code> esté configurado en tu archivo de MediaMTX.",
+      "noMatchingTitle": "Sin transmisiones coincidentes",
+      "noMatchingDescription": "Ninguna transmisión coincide con «{query}»."
+    },
+    "search": {
+      "placeholder": "Buscar transmisiones"
+    },
+    "groups": {
+      "today": "Hoy",
+      "yesterday": "Ayer"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# grabación} other {# grabaciones}}",
+      "latest": "Última {time}",
+      "viewBtn": "Ver"
+    },
+    "recordingCard": {
+      "stop": "Detener",
+      "play": "Reproducir",
+      "downloadAria": "Descargar grabación {filePath}",
+      "downloadError": "Error al descargar el video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Configuración",
+      "clientConfig": "Configuración del cliente",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Configuración",
+    "pageSubHeader": "Administra la configuración de tu aplicación",
+    "invalidConfig": "Configuración no válida",
+    "formFields": {
+      "oneValuePerLine": "Un valor por línea."
+    },
+    "clientForm": {
+      "title": "Ajustes de la aplicación",
+      "description": "Rutas de conexión y almacenamiento utilizadas por MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Conexión a MediaMTX",
+        "storage": "Almacenamiento"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "URL de MediaMTX",
+          "description": "La dirección de tu instancia de MediaMTX. Dentro de una red de Docker puedes usar el nombre del contenedor; en otro caso, usa la IP o el nombre de host externo."
+        },
+        "mediaMtxApiPort": {
+          "label": "Puerto de la API de MediaMTX",
+          "description": "El puerto de la API de MediaMTX."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "URL remota de MediaMTX",
+          "description": "Es la IP o nombre de host accesible desde el navegador y orientado al exterior para tu servidor de MediaMTX."
+        },
+        "recordingsDirectory": {
+          "label": "Directorio de grabaciones",
+          "description": "Directorio que contiene las grabaciones de MediaMTX (no se recomienda cambiarlo si usas Docker)."
+        },
+        "screenshotsDirectory": {
+          "label": "Directorio de capturas",
+          "description": "Directorio donde se guardan las capturas generadas (no se recomienda cambiarlo si usas Docker)."
+        }
+      },
+      "actions": {
+        "reset": "Restablecer",
+        "submit": "Enviar"
+      },
+      "toasts": {
+        "success": "Configuración del cliente actualizada",
+        "errorTitle": "Hubo un problema al actualizar la configuración del cliente",
+        "errorDescription": "Verifica los valores del formulario."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Registros",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Registros",
+          "limits": "Límites"
+        },
+        "api": {
+          "http": "API HTTP",
+          "metrics": "Métricas",
+          "pprof": "PPROF",
+          "enableDescription": "Habilita la API HTTP de MediaMTX."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Servidor",
+          "tls": "TLS",
+          "auth": "Autenticación",
+          "enableDescription": "Habilita el servidor RTSP."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "Habilita el servidor RTMP."
+        },
+        "hls": {
+          "server": "Servidor",
+          "segments": "Segmentos",
+          "corsProxies": "CORS / Proxies",
+          "enableDescription": "Habilita el servidor HLS."
+        },
+        "webrtc": {
+          "server": "Servidor",
+          "network": "Red",
+          "iceServers": "Servidores ICE",
+          "addServer": "Agregar servidor",
+          "noIceServers": "No hay servidores ICE configurados.",
+          "iceServerLabel": "Servidor ICE {index}",
+          "removeIceServer": "Eliminar servidor ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Usuario",
+            "password": "Contraseña"
+          },
+          "enableDescription": "Habilita el servidor WebRTC."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "Habilita el servidor SRT."
+        }
+      },
+      "toasts": {
+        "success": "Configuración global actualizada",
+        "errorTitle": "Hubo un problema al actualizar la configuración global",
+        "errorDescription": "Verifica los valores del formulario."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# cambio sin guardar} other {# cambios sin guardar}}",
+      "discard": "Descartar",
+      "saveChanges": "Guardar cambios"
+    }
+  }
+}

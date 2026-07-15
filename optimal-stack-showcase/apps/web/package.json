@@ -1,5 +1,5 @@
 {
-  "name": "@showcase/web",
+  "name": "@connect/web",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -10,20 +10,43 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@connect/contract": "workspace:*",
+    "@hookform/resolvers": "catalog:",
     "@orpc/client": "catalog:",
     "@orpc/contract": "catalog:",
     "@orpc/tanstack-query": "catalog:",
-    "@showcase/contract": "workspace:*",
+    "@radix-ui/react-dropdown-menu": "catalog:",
+    "@radix-ui/react-label": "catalog:",
+    "@radix-ui/react-popover": "catalog:",
+    "@radix-ui/react-progress": "catalog:",
+    "@radix-ui/react-select": "catalog:",
+    "@radix-ui/react-separator": "catalog:",
+    "@radix-ui/react-slot": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "cmdk": "catalog:",
+    "dayjs": "catalog:",
+    "hls.js": "catalog:",
+    "lucide-react": "catalog:",
+    "radix-ui": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "react-hook-form": "catalog:",
+    "sonner": "catalog:",
+    "tailwind-merge": "catalog:",
+    "use-intl": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@showcase/typescript-config": "workspace:*",
+    "@connect/typescript-config": "workspace:*",
+    "@tailwindcss/vite": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
+    "tailwindcss": "catalog:",
+    "tw-animate-css": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

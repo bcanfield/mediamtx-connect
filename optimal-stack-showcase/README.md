@@ -1,21 +1,31 @@
-# Optimal Stack Showcase
+# MediaMTX Connect (new stack)
 
-Minimal reference implementation of the mid-2026 full-stack TypeScript
-monorepo: **pnpm workspaces + Turborepo**, a decoupled **Vite + React 19 +
-TanStack Router** SPA and a **Hono (Node 22)** backend, connected by a shared
+MediaMTX Connect rebuilt on the mid-2026 full-stack TypeScript monorepo:
+**pnpm workspaces + Turborepo**, a decoupled **Vite + React 19 + TanStack
+Router** SPA and a **Hono (Node 22)** backend, connected by a shared
 **oRPC contract package** (Zod v4) for end-to-end type safety — shipped as
-**one distroless Docker image** where Hono serves the static frontend build.
+**one Docker image** where Hono serves the static frontend build and shells
+out to ffmpeg for recording thumbnails.
+
+Feature-for-feature port of the Next.js app at the repo root — live stream
+viewing (HLS), recordings browsing/playback/download, app config, and the
+full MediaMTX global config editor, in 30 languages. `MIGRATION.md` documents
+the mapping; `docs/FEATURES.md` at the repo root remains the feature
+inventory.
 
 ## Layout
 
 ```
 ├── AGENTS.md / CLAUDE.md      agent context (CLAUDE.md imports AGENTS.md)
+├── MIGRATION.md               how the Next.js app maps onto this stack
 ├── turbo.json                 task graph: build / typecheck / dev
 ├── eslint.config.mjs          @antfu/eslint-config (lint + format, one tool)
-├── Dockerfile                 turbo prune → slim build → distroless runtime
+├── Dockerfile                 turbo prune → slim build → node:22-slim + ffmpeg
+├── docker-compose.yml         MediaMTX + this app, one network
 ├── apps/
-│   ├── web/                   Vite SPA; dev proxies /rpc → api
-│   └── api/                   Hono; mounts oRPC at /rpc, serves web dist in prod
+│   ├── web/                   Vite SPA; dev proxies /rpc, /media, /api → api
+│   └── api/                   Hono; oRPC at /rpc, media streaming at /media,
+│                              config.json store, ffmpeg thumbnail crons
 └── packages/
     ├── contract/              oRPC contract + Zod schemas (single source of truth)
     └── typescript-config/     shared tsconfig base (Turborepo convention)
@@ -29,20 +39,38 @@ pnpm dev          # web http://localhost:5173, api http://localhost:3000
 pnpm build        # turbo-cached build of everything
 pnpm typecheck
 pnpm lint
+pnpm i18n:check   # message-key parity across the 30 locales
 ```
+
+For local dev against a real MediaMTX with fake streams, use the dev compose
+stack at the repo root (`npm run mediamtx`) and point the api at it:
+
+```sh
+BACKEND_SERVER_MEDIAMTX_URL=http://127.0.0.1 \
+REMOTE_MEDIAMTX_URL=http://localhost \
+DATA_DIR=./.data \
+MEDIAMTX_RECORDINGS_DIR=./.data/recordings \
+MEDIAMTX_SCREENSHOTS_DIR=./.data/screenshots \
+pnpm dev
+```
+
+Env vars seed `config.json` on first boot; afterwards the in-app `/config`
+page is the source of truth.
 
 ## Single-image deploy
 
 ```sh
-docker build -t showcase .
-docker run -p 3000:3000 showcase
-# http://localhost:3000 — SPA + API from one process, one image
+docker compose up -d      # MediaMTX + app
+# or just the app image:
+docker build -t mediamtx-connect .
+docker run -p 3000:3000 mediamtx-connect
 ```
 
 The Dockerfile follows the reference pattern: `turbo prune --docker` for
 cache-friendly layering, `pnpm install` with a BuildKit store cache mount,
-`pnpm deploy --legacy --prod` for a self-contained output, and
-`gcr.io/distroless/nodejs22-debian12` as the runtime (glibc end to end).
+`pnpm deploy --legacy --prod` for a self-contained output. The runtime is
+`node:22-bookworm-slim` + ffmpeg (the thumbnail generator) rather than
+distroless — see `MIGRATION.md` §5.
 
 ## How the type safety works
 
@@ -52,34 +80,29 @@ cache-friendly layering, `pnpm install` with a BuildKit store cache mount,
    compiler rejects handlers that drift from the contract.
 3. `apps/web/src/orpc.ts` builds a `ContractRouterClient<typeof contract>`
    and wraps it in TanStack Query utils — inputs, outputs, and even native
-   `Date` values are typed across the wire with zero codegen.
+   `Date` values (recording mtimes) are typed across the wire with zero
+   codegen.
+
+Binary payloads (thumbnails, MP4 playback/download with HTTP Range support)
+deliberately bypass oRPC: they are plain Hono routes under `/media/*`.
 
 ## Validated choices (and why they stay)
 
 - **tsdown (the api bundler) is required, not optional.** Node's native
   TypeScript support can't run this code: relative imports would need explicit
-  `.ts` extensions, and the just-in-time `@showcase/contract` package resolves
-  through `node_modules`, where Node refuses to strip types. Turborepo's docs
-  say JIT packages "rely on the application bundler to compile the package",
-  and Hono's official Dockerfile ships compiled `dist/` JS — no first-party
-  example of this stack runs `.ts` in production.
+  `.ts` extensions, and the just-in-time `@connect/contract` package resolves
+  through `node_modules`, where Node refuses to strip types.
 - **All third-party versions are centralized in the pnpm catalog**
   (`pnpm-workspace.yaml`) and referenced as `catalog:` — one place to bump,
   guaranteed consistency across apps.
-- **TypeScript is 6.0.x, the official bridge to 7**: per the TypeScript repo,
-  "6.0 is the final JavaScript-based release" — it errors on everything 7.0
-  removes, so passing 6.0 means 7-ready (all packages also verified against
-  tsc 7.0.2 directly). The blocker for 7 itself is typescript-eslint, whose
-  peer range is `<6.1.0`; its 8.64 crashes outright on the TS 7 native API.
-  When typescript-eslint ships 7 support, the bump is one catalog line.
+- **TypeScript is 6.0.x, the official bridge to 7** — bump the catalog to
+  `^7` once typescript-eslint supports it.
 - **ESLint over Biome**: `@antfu/eslint-config` covers linting and formatting
   in one tool (no Prettier), including JSON/YAML/Markdown.
-- `packages/typescript-config` follows Turborepo's shared-config convention —
-  it also makes `turbo prune --docker` carry the tsconfig into the image
-  without hacks.
-
-## Deliberately omitted (next steps in the reference doc)
-
-- `packages/db` (Drizzle + Postgres/PostGIS) — the guestbook uses an
-  in-memory array so the example runs with zero infrastructure.
-- Vitest/Playwright, Lefthook, Changesets, Better Auth, OpenAPI handler.
+- **No database.** The old app's Prisma + SQLite held one row of five
+  settings; a Zod-validated `config.json` with atomic writes replaced it.
+  `packages/db` (Drizzle) is the slot if a real database ever earns its way in.
+- **use-intl over next-intl**: same author, same message format, same
+  `useTranslations` API — all 30 `messages/*.json` files ported unchanged.
+  Locale is persisted client-side; there is no URL locale prefix (this is a
+  self-hosted dashboard, SEO machinery buys nothing).

@@ -1,4 +1,4 @@
 {
-  "extends": "@showcase/typescript-config/base.json",
+  "extends": "@connect/typescript-config/base.json",
   "include": ["src"]
 }

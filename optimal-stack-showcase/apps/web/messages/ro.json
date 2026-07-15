@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Interfață web pentru MediaMTX. Vizionați fluxuri, răsfoiți înregistrări și editați configurația din browser."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Acest câmp este obligatoriu",
+      "mustBePositive": "Trebuie să fie mai mare decât 0"
+    }
+  },
+  "Common": {
+    "retry": "Reîncearcă",
+    "loading": "Se încarcă…",
+    "theme": {
+      "lightMode": "Mod luminos",
+      "darkMode": "Mod întunecat",
+      "switchToLight": "Comută la tema luminoasă",
+      "switchToDark": "Comută la tema întunecată"
+    },
+    "locale": {
+      "switchLanguage": "Schimbă limba",
+      "searchPlaceholder": "Caută limba…",
+      "noResults": "Nicio limbă găsită."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Aplicație",
+      "settings": "Setări"
+    },
+    "items": {
+      "live": "Live",
+      "recordings": "Înregistrări",
+      "clientConfig": "Configurare client",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Live",
+    "header": "Fluxuri",
+    "subHeader": "Vizualizări live ale fluxurilor active",
+    "errors": {
+      "configTitle": "Eroare de configurare",
+      "configDescription": "Configurația nu poate fi încărcată. Verificați conexiunea la baza de date.",
+      "connectionTitle": "Nu se poate conecta la MediaMTX",
+      "connectionLead": "MediaMTX nu poate fi accesat la",
+      "connectionHint": "Asigurați-vă că MediaMTX rulează și că URL-ul din configurație este corect.",
+      "checkConfigBtn": "Verifică configurația"
+    },
+    "empty": {
+      "configureRemoteTitle": "Configurați URL-ul de la distanță",
+      "configureRemoteDescription": "Setați URL-ul MediaMTX de la distanță pentru a vizualiza fluxurile în browser. Acesta trebuie să fie URL-ul prin care browserul poate ajunge la MediaMTX.",
+      "goToConfig": "Mergi la configurare",
+      "noStreamsTitle": "Niciun flux activ",
+      "noStreamsDescription": "MediaMTX este conectat, dar momentan nu există fluxuri active. Porniți un flux către MediaMTX pentru a-l vedea aici."
+    },
+    "density": {
+      "aria": "Densitatea grilei",
+      "two": "Două coloane",
+      "three": "Trei coloane",
+      "four": "Patru coloane"
+    },
+    "card": {
+      "onlineSince": "Online din {date}",
+      "idle": "Inactiv",
+      "live": "LIVE",
+      "stop": "Oprește",
+      "play": "Redă",
+      "actionsAria": "Acțiuni pentru flux",
+      "viewRecordings": "Vezi înregistrările"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Înregistrări",
+    "header": "Înregistrări",
+    "subHeader": "Răsfoiți înregistrările din diferitele fluxuri",
+    "subHeaderForStream": "Înregistrări pentru: {streamName}",
+    "invalidConfig": "Configurație invalidă",
+    "errors": {
+      "configTitle": "Eroare de configurare",
+      "configDescription": "Configurația nu poate fi încărcată. Verificați conexiunea la baza de date.",
+      "directoryTitle": "Nu se poate accesa directorul de înregistrări",
+      "directoryLead": "Nu se poate citi directorul de înregistrări de la",
+      "directoryHint": "Asigurați-vă că directorul există și are permisiunile corecte.",
+      "checkConfigBtn": "Verifică configurația",
+      "readErrorTitle": "Înregistrările nu pot fi citite",
+      "readErrorDescription": "Directorul de înregistrări nu a putut fi citit. Asigurați-vă că directorul există."
+    },
+    "empty": {
+      "noRecordingsTitle": "Nu s-au găsit înregistrări",
+      "noRecordingsLead": "Încă nu există înregistrări salvate. Înregistrările vor apărea aici imediat ce MediaMTX începe să înregistreze fluxurile.",
+      "noRecordingsHint": "Asigurați-vă că <code>MTX_RECORD=yes</code> este setat în configurația MediaMTX.",
+      "noMatchingTitle": "Niciun flux care să corespundă",
+      "noMatchingDescription": "Niciun flux nu corespunde cu „{query}”."
+    },
+    "search": {
+      "placeholder": "Caută fluxuri"
+    },
+    "groups": {
+      "today": "Astăzi",
+      "yesterday": "Ieri"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# înregistrare} few {# înregistrări} other {# de înregistrări}}",
+      "latest": "Ultima {time}",
+      "viewBtn": "Vezi"
+    },
+    "recordingCard": {
+      "stop": "Oprește",
+      "play": "Redă",
+      "downloadAria": "Descarcă înregistrarea {filePath}",
+      "downloadError": "Eroare la descărcarea videoclipului"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Setări",
+      "clientConfig": "Configurare client",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Configurare",
+    "pageSubHeader": "Gestionați configurarea aplicației",
+    "invalidConfig": "Configurație invalidă",
+    "formFields": {
+      "oneValuePerLine": "O valoare pe rând."
+    },
+    "clientForm": {
+      "title": "Setări aplicație",
+      "description": "Căi de conexiune și stocare utilizate de MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Conexiune MediaMTX",
+        "storage": "Stocare"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Adresa instanței dvs. MediaMTX. Într-o rețea Docker puteți folosi numele containerului; altfel folosiți IP-ul sau hostname-ul extern."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Portul API-ului MediaMTX"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Este IP-ul sau hostname-ul orientat extern, accesibil din browser, al serverului dvs. MediaMTX."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Director care conține înregistrările MediaMTX (nu este recomandat să-l modificați dacă folosiți Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Director pentru stocarea capturilor de ecran generate (nu este recomandat să-l modificați dacă folosiți Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Resetează",
+        "submit": "Trimite"
+      },
+      "toasts": {
+        "success": "Configurarea clientului a fost actualizată",
+        "errorTitle": "A apărut o problemă la actualizarea configurării clientului",
+        "errorDescription": "Verificați valorile formularului."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Jurnalizare",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Jurnalizare",
+          "limits": "Limite"
+        },
+        "api": {
+          "http": "API HTTP",
+          "metrics": "Metrici",
+          "pprof": "PPROF",
+          "enableDescription": "Activează API-ul HTTP MediaMTX."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Autentificare",
+          "enableDescription": "Activează serverul RTSP."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "Activează serverul RTMP."
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Segmente",
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Activează serverul HLS."
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Rețea",
+          "iceServers": "Servere ICE",
+          "addServer": "Adaugă server",
+          "noIceServers": "Nu există servere ICE configurate.",
+          "iceServerLabel": "Server ICE {index}",
+          "removeIceServer": "Elimină serverul ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Nume utilizator",
+            "password": "Parolă"
+          },
+          "enableDescription": "Activează serverul WebRTC."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "Activează serverul SRT."
+        }
+      },
+      "toasts": {
+        "success": "Configurarea globală a fost actualizată",
+        "errorTitle": "A apărut o problemă la actualizarea configurării globale",
+        "errorDescription": "Verificați valorile formularului."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
+      "discard": "Renunță",
+      "saveChanges": "Salvează modificările"
+    }
+  }
+}

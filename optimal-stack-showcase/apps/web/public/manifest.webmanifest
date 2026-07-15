@@ -1,0 +1,23 @@
+{
+  "name": "MediaMTX Connect",
+  "short_name": "MediaMTX Connect",
+  "description": "Web UI companion for MediaMTX",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1016",
+  "theme_color": "#0c1016",
+  "icons": [
+    {
+      "src": "/icon512_maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon512_rounded.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

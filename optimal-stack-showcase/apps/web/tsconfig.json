@@ -1,8 +1,13 @@
 {
-  "extends": "@showcase/typescript-config/base.json",
+  "extends": "@connect/typescript-config/base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
   },
   "include": ["src", "vite.config.ts"]
 }

@@ -10,7 +10,8 @@
     "build": "turbo build",
     "typecheck": "turbo typecheck",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "i18n:check": "node scripts/i18n-check.mjs"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",

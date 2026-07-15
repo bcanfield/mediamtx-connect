@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Antarmuka web untuk MediaMTX. Tonton aliran, telusuri rekaman, dan ubah konfigurasi dari peramban Anda."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Bidang ini wajib diisi",
+      "mustBePositive": "Harus lebih besar dari 0"
+    }
+  },
+  "Common": {
+    "retry": "Coba lagi",
+    "loading": "Memuat…",
+    "theme": {
+      "lightMode": "Mode terang",
+      "darkMode": "Mode gelap",
+      "switchToLight": "Beralih ke tema terang",
+      "switchToDark": "Beralih ke tema gelap"
+    },
+    "locale": {
+      "switchLanguage": "Ganti bahasa",
+      "searchPlaceholder": "Cari bahasa…",
+      "noResults": "Bahasa tidak ditemukan."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Aplikasi",
+      "settings": "Pengaturan"
+    },
+    "items": {
+      "live": "Langsung",
+      "recordings": "Rekaman",
+      "clientConfig": "Konfigurasi klien",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Langsung",
+    "header": "Aliran",
+    "subHeader": "Tampilan langsung dari aliran aktif Anda",
+    "errors": {
+      "configTitle": "Kesalahan konfigurasi",
+      "configDescription": "Tidak dapat memuat konfigurasi. Periksa koneksi basis data Anda.",
+      "connectionTitle": "Tidak dapat terhubung ke MediaMTX",
+      "connectionLead": "Tidak dapat menjangkau MediaMTX di",
+      "connectionHint": "Pastikan MediaMTX berjalan dan URL pada konfigurasi sudah benar.",
+      "checkConfigBtn": "Periksa konfigurasi"
+    },
+    "empty": {
+      "configureRemoteTitle": "Konfigurasi URL jarak jauh",
+      "configureRemoteDescription": "Atur URL MediaMTX jarak jauh Anda untuk melihat aliran di peramban. Ini harus URL yang dapat dijangkau peramban Anda untuk mengakses MediaMTX.",
+      "goToConfig": "Ke konfigurasi",
+      "noStreamsTitle": "Tidak ada aliran aktif",
+      "noStreamsDescription": "MediaMTX terhubung tetapi saat ini tidak ada aliran yang aktif. Mulai streaming ke MediaMTX agar aliran muncul di sini."
+    },
+    "density": {
+      "aria": "Kepadatan kisi",
+      "two": "Dua kolom",
+      "three": "Tiga kolom",
+      "four": "Empat kolom"
+    },
+    "card": {
+      "onlineSince": "Online sejak {date}",
+      "idle": "Tidak aktif",
+      "live": "LANGSUNG",
+      "stop": "Hentikan",
+      "play": "Putar",
+      "actionsAria": "Tindakan aliran",
+      "viewRecordings": "Lihat rekaman"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Rekaman",
+    "header": "Rekaman",
+    "subHeader": "Telusuri rekaman dari berbagai aliran Anda",
+    "subHeaderForStream": "Rekaman untuk: {streamName}",
+    "invalidConfig": "Konfigurasi tidak valid",
+    "errors": {
+      "configTitle": "Kesalahan konfigurasi",
+      "configDescription": "Tidak dapat memuat konfigurasi. Periksa koneksi basis data Anda.",
+      "directoryTitle": "Tidak dapat mengakses direktori rekaman",
+      "directoryLead": "Tidak dapat membaca direktori rekaman di",
+      "directoryHint": "Pastikan direktori ada dan memiliki izin yang benar.",
+      "checkConfigBtn": "Periksa konfigurasi",
+      "readErrorTitle": "Tidak dapat membaca rekaman",
+      "readErrorDescription": "Tidak dapat membaca direktori rekaman. Pastikan direktori tersebut ada."
+    },
+    "empty": {
+      "noRecordingsTitle": "Tidak ada rekaman ditemukan",
+      "noRecordingsLead": "Belum ada rekaman yang disimpan. Rekaman akan muncul di sini setelah MediaMTX mulai merekam aliran.",
+      "noRecordingsHint": "Pastikan <code>MTX_RECORD=yes</code> sudah diatur di konfigurasi MediaMTX Anda.",
+      "noMatchingTitle": "Tidak ada aliran yang cocok",
+      "noMatchingDescription": "Tidak ada aliran yang cocok dengan «{query}»."
+    },
+    "search": {
+      "placeholder": "Cari aliran"
+    },
+    "groups": {
+      "today": "Hari ini",
+      "yesterday": "Kemarin"
+    },
+    "card": {
+      "recordingCount": "{count, plural, other {# rekaman}}",
+      "latest": "Terbaru {time}",
+      "viewBtn": "Lihat"
+    },
+    "recordingCard": {
+      "stop": "Hentikan",
+      "play": "Putar",
+      "downloadAria": "Unduh rekaman {filePath}",
+      "downloadError": "Kesalahan saat mengunduh video"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Pengaturan",
+      "clientConfig": "Konfigurasi klien",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Konfigurasi",
+    "pageSubHeader": "Kelola konfigurasi aplikasi Anda",
+    "invalidConfig": "Konfigurasi tidak valid",
+    "formFields": {
+      "oneValuePerLine": "Satu nilai per baris."
+    },
+    "clientForm": {
+      "title": "Pengaturan aplikasi",
+      "description": "Jalur koneksi dan penyimpanan yang digunakan oleh MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Koneksi MediaMTX",
+        "storage": "Penyimpanan"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Alamat instans MediaMTX Anda. Di dalam jaringan Docker Anda dapat memakai nama kontainer; jika tidak, gunakan IP atau hostname eksternal."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Porta API MediaMTX"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Ini adalah IP atau hostname server MediaMTX Anda yang dapat diakses peramban, menghadap ke luar."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Direktori yang berisi rekaman MediaMTX (tidak disarankan diubah jika menggunakan Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Direktori tempat menyimpan tangkapan layar yang dihasilkan (tidak disarankan diubah jika menggunakan Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Atur ulang",
+        "submit": "Kirim"
+      },
+      "toasts": {
+        "success": "Konfigurasi klien diperbarui",
+        "errorTitle": "Terjadi masalah saat memperbarui konfigurasi klien",
+        "errorDescription": "Periksa kembali nilai pada formulir."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Log",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Log",
+          "limits": "Batas"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Metrik",
+          "pprof": "PPROF",
+          "enableDescription": "Aktifkan API HTTP MediaMTX."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Server",
+          "tls": "TLS",
+          "auth": "Autentikasi",
+          "enableDescription": "Aktifkan server RTSP."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "Aktifkan server RTMP."
+        },
+        "hls": {
+          "server": "Server",
+          "segments": "Segmen",
+          "corsProxies": "CORS / Proxy",
+          "enableDescription": "Aktifkan server HLS."
+        },
+        "webrtc": {
+          "server": "Server",
+          "network": "Jaringan",
+          "iceServers": "Server ICE",
+          "addServer": "Tambah server",
+          "noIceServers": "Tidak ada server ICE yang dikonfigurasi.",
+          "iceServerLabel": "Server ICE {index}",
+          "removeIceServer": "Hapus server ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Nama pengguna",
+            "password": "Kata sandi"
+          },
+          "enableDescription": "Aktifkan server WebRTC."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "Aktifkan server SRT."
+        }
+      },
+      "toasts": {
+        "success": "Konfigurasi global diperbarui",
+        "errorTitle": "Terjadi masalah saat memperbarui konfigurasi global",
+        "errorDescription": "Periksa kembali nilai pada formulir."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, other {# perubahan yang belum disimpan}}",
+      "discard": "Buang",
+      "saveChanges": "Simpan perubahan"
+    }
+  }
+}

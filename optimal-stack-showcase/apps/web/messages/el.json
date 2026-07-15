@@ -1,0 +1,245 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Διαδικτυακή διεπαφή για το MediaMTX. Παρακολουθήστε ροές, περιηγηθείτε σε εγγραφές και επεξεργαστείτε τις ρυθμίσεις από τον περιηγητή σας."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Αυτό το πεδίο είναι υποχρεωτικό",
+      "mustBePositive": "Πρέπει να είναι μεγαλύτερο από 0"
+    }
+  },
+  "Common": {
+    "retry": "Επανάληψη",
+    "loading": "Φόρτωση…",
+    "theme": {
+      "lightMode": "Φωτεινή λειτουργία",
+      "darkMode": "Σκοτεινή λειτουργία",
+      "switchToLight": "Αλλαγή σε φωτεινό θέμα",
+      "switchToDark": "Αλλαγή σε σκοτεινό θέμα"
+    },
+    "locale": {
+      "switchLanguage": "Αλλαγή γλώσσας",
+      "searchPlaceholder": "Αναζήτηση γλώσσας…",
+      "noResults": "Δεν βρέθηκε γλώσσα."
+    }
+  },
+  "Nav": {
+    "brand": "Connect",
+    "groups": {
+      "application": "Εφαρμογή",
+      "settings": "Ρυθμίσεις"
+    },
+    "items": {
+      "live": "Ζωντανά",
+      "recordings": "Εγγραφές",
+      "clientConfig": "Ρύθμιση πελάτη",
+      "mediamtx": "MediaMTX"
+    }
+  },
+  "Streams": {
+    "crumbLive": "Ζωντανά",
+    "header": "Ροές",
+    "subHeader": "Ζωντανές προβολές των ενεργών ροών σας",
+    "errors": {
+      "configTitle": "Σφάλμα ρύθμισης",
+      "configDescription": "Δεν είναι δυνατή η φόρτωση των ρυθμίσεων. Ελέγξτε τη σύνδεση με τη βάση δεδομένων.",
+      "connectionTitle": "Δεν είναι δυνατή η σύνδεση με το MediaMTX",
+      "connectionLead": "Δεν είναι εφικτή η πρόσβαση στο MediaMTX στη διεύθυνση",
+      "connectionHint": "Βεβαιωθείτε ότι το MediaMTX εκτελείται και ότι το URL στις ρυθμίσεις σας είναι σωστό.",
+      "checkConfigBtn": "Έλεγχος ρυθμίσεων"
+    },
+    "empty": {
+      "configureRemoteTitle": "Ρύθμιση απομακρυσμένου URL",
+      "configureRemoteDescription": "Ρυθμίστε το απομακρυσμένο URL του MediaMTX για να βλέπετε τις ροές στον περιηγητή. Πρόκειται για το URL μέσω του οποίου ο περιηγητής σας μπορεί να φτάσει στο MediaMTX.",
+      "goToConfig": "Μετάβαση στις ρυθμίσεις",
+      "noStreamsTitle": "Καμία ενεργή ροή",
+      "noStreamsDescription": "Το MediaMTX είναι συνδεδεμένο, αλλά δεν υπάρχουν ενεργές ροές αυτή τη στιγμή. Ξεκινήστε μια ροή προς το MediaMTX για να εμφανιστεί εδώ."
+    },
+    "density": {
+      "aria": "Πυκνότητα πλέγματος",
+      "two": "Δύο στήλες",
+      "three": "Τρεις στήλες",
+      "four": "Τέσσερις στήλες"
+    },
+    "card": {
+      "onlineSince": "Συνδεδεμένος από {date}",
+      "idle": "Αδρανής",
+      "live": "ΖΩΝΤΑΝΑ",
+      "stop": "Διακοπή",
+      "play": "Αναπαραγωγή",
+      "actionsAria": "Ενέργειες ροής",
+      "viewRecordings": "Προβολή εγγραφών"
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Εγγραφές",
+    "header": "Εγγραφές",
+    "subHeader": "Περιηγηθείτε στις εγγραφές από τις διάφορες ροές σας",
+    "subHeaderForStream": "Εγγραφές για: {streamName}",
+    "invalidConfig": "Μη έγκυρη ρύθμιση",
+    "errors": {
+      "configTitle": "Σφάλμα ρύθμισης",
+      "configDescription": "Δεν είναι δυνατή η φόρτωση των ρυθμίσεων. Ελέγξτε τη σύνδεση με τη βάση δεδομένων.",
+      "directoryTitle": "Δεν είναι δυνατή η πρόσβαση στον φάκελο εγγραφών",
+      "directoryLead": "Δεν είναι δυνατή η ανάγνωση του φακέλου εγγραφών στο",
+      "directoryHint": "Βεβαιωθείτε ότι ο φάκελος υπάρχει και έχει σωστά δικαιώματα.",
+      "checkConfigBtn": "Έλεγχος ρυθμίσεων",
+      "readErrorTitle": "Αδυναμία ανάγνωσης εγγραφών",
+      "readErrorDescription": "Δεν ήταν δυνατή η ανάγνωση του φακέλου εγγραφών. Βεβαιωθείτε ότι ο φάκελος υπάρχει."
+    },
+    "empty": {
+      "noRecordingsTitle": "Δεν βρέθηκαν εγγραφές",
+      "noRecordingsLead": "Δεν έχουν αποθηκευτεί ακόμη εγγραφές. Οι εγγραφές θα εμφανιστούν εδώ μόλις το MediaMTX αρχίσει να καταγράφει τις ροές.",
+      "noRecordingsHint": "Βεβαιωθείτε ότι έχει οριστεί <code>MTX_RECORD=yes</code> στις ρυθμίσεις MediaMTX.",
+      "noMatchingTitle": "Καμία αντίστοιχη ροή",
+      "noMatchingDescription": "Καμία ροή δεν ταιριάζει με «{query}»."
+    },
+    "search": {
+      "placeholder": "Αναζήτηση ροών"
+    },
+    "groups": {
+      "today": "Σήμερα",
+      "yesterday": "Χθες"
+    },
+    "card": {
+      "recordingCount": "{count, plural, one {# εγγραφή} other {# εγγραφές}}",
+      "latest": "Τελευταία {time}",
+      "viewBtn": "Προβολή"
+    },
+    "recordingCard": {
+      "stop": "Διακοπή",
+      "play": "Αναπαραγωγή",
+      "downloadAria": "Λήψη εγγραφής {filePath}",
+      "downloadError": "Σφάλμα κατά τη λήψη του βίντεο"
+    }
+  },
+  "Config": {
+    "crumbs": {
+      "settings": "Ρυθμίσεις",
+      "clientConfig": "Ρύθμιση πελάτη",
+      "mediamtx": "MediaMTX"
+    },
+    "pageHeader": "Ρυθμίσεις",
+    "pageSubHeader": "Διαχειριστείτε τις ρυθμίσεις της εφαρμογής σας",
+    "invalidConfig": "Μη έγκυρη ρύθμιση",
+    "formFields": {
+      "oneValuePerLine": "Μία τιμή ανά γραμμή."
+    },
+    "clientForm": {
+      "title": "Ρυθμίσεις εφαρμογής",
+      "description": "Διαδρομές σύνδεσης και αποθήκευσης που χρησιμοποιεί το MediaMTX Connect.",
+      "sections": {
+        "mediamtxConnection": "Σύνδεση MediaMTX",
+        "storage": "Αποθήκευση"
+      },
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMtx Url",
+          "description": "Η διεύθυνση της εγκατάστασης MediaMTX σας. Σε δίκτυο Docker μπορείτε να χρησιμοποιήσετε το όνομα του container· διαφορετικά χρησιμοποιήστε εξωτερική IP ή όνομα host."
+        },
+        "mediaMtxApiPort": {
+          "label": "MediaMtx Api Port",
+          "description": "Η θύρα του API του MediaMTX"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Remote MediaMtx URL",
+          "description": "Είναι η προσβάσιμη από περιηγητή, εκτεθειμένη προς τα έξω IP ή όνομα host του διακομιστή MediaMTX."
+        },
+        "recordingsDirectory": {
+          "label": "Recordings Directory",
+          "description": "Φάκελος που περιέχει τις εγγραφές MediaMTX (δεν συνιστάται η αλλαγή αν χρησιμοποιείτε Docker)"
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshots Directory",
+          "description": "Φάκελος αποθήκευσης δημιουργημένων στιγμιοτύπων (δεν συνιστάται η αλλαγή αν χρησιμοποιείτε Docker)"
+        }
+      },
+      "actions": {
+        "reset": "Επαναφορά",
+        "submit": "Υποβολή"
+      },
+      "toasts": {
+        "success": "Οι ρυθμίσεις πελάτη ενημερώθηκαν",
+        "errorTitle": "Παρουσιάστηκε πρόβλημα κατά την ενημέρωση των ρυθμίσεων πελάτη",
+        "errorDescription": "Ελέγξτε τις τιμές της φόρμας."
+      }
+    },
+    "mediamtxForm": {
+      "tabs": {
+        "logging": "Καταγραφή",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT"
+      },
+      "sections": {
+        "logging": {
+          "logging": "Καταγραφή",
+          "limits": "Όρια"
+        },
+        "api": {
+          "http": "HTTP API",
+          "metrics": "Μετρικές",
+          "pprof": "PPROF",
+          "enableDescription": "Ενεργοποίηση του HTTP API του MediaMTX."
+        },
+        "hooks": {
+          "hooks": "Hooks"
+        },
+        "rtsp": {
+          "server": "Διακομιστής",
+          "tls": "TLS",
+          "auth": "Αυθεντικοποίηση",
+          "enableDescription": "Ενεργοποίηση του διακομιστή RTSP."
+        },
+        "rtmp": {
+          "rtmp": "RTMP",
+          "enableDescription": "Ενεργοποίηση του διακομιστή RTMP."
+        },
+        "hls": {
+          "server": "Διακομιστής",
+          "segments": "Τμήματα",
+          "corsProxies": "CORS / Διαμεσολαβητές",
+          "enableDescription": "Ενεργοποίηση του διακομιστή HLS."
+        },
+        "webrtc": {
+          "server": "Διακομιστής",
+          "network": "Δίκτυο",
+          "iceServers": "Διακομιστές ICE",
+          "addServer": "Προσθήκη διακομιστή",
+          "noIceServers": "Δεν έχουν ρυθμιστεί διακομιστές ICE.",
+          "iceServerLabel": "Διακομιστής ICE {index}",
+          "removeIceServer": "Αφαίρεση διακομιστή ICE",
+          "iceFields": {
+            "url": "URL",
+            "username": "Όνομα χρήστη",
+            "password": "Κωδικός πρόσβασης"
+          },
+          "enableDescription": "Ενεργοποίηση του διακομιστή WebRTC."
+        },
+        "srt": {
+          "srt": "SRT",
+          "enableDescription": "Ενεργοποίηση του διακομιστή SRT."
+        }
+      },
+      "toasts": {
+        "success": "Οι καθολικές ρυθμίσεις ενημερώθηκαν",
+        "errorTitle": "Παρουσιάστηκε πρόβλημα κατά την ενημέρωση των καθολικών ρυθμίσεων",
+        "errorDescription": "Ελέγξτε τις τιμές της φόρμας."
+      }
+    },
+    "stickySaveBar": {
+      "unsaved": "{count, plural, one {# μη αποθηκευμένη αλλαγή} other {# μη αποθηκευμένες αλλαγές}}",
+      "discard": "Απόρριψη",
+      "saveChanges": "Αποθήκευση αλλαγών"
+    }
+  }
+}
