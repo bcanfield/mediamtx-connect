@@ -10,21 +10,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@orpc/client": "^1.14.8",
-    "@orpc/contract": "^1.14.8",
-    "@orpc/tanstack-query": "^1.14.8",
+    "@orpc/client": "catalog:",
+    "@orpc/contract": "catalog:",
+    "@orpc/tanstack-query": "catalog:",
     "@showcase/contract": "workspace:*",
-    "@tanstack/react-query": "^5.101.2",
-    "@tanstack/react-router": "^1.170.18",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-router": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@showcase/typescript-config": "workspace:*",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.3",
-    "typescript": "^5.9.3",
-    "vite": "^8.1.4"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   }
 }

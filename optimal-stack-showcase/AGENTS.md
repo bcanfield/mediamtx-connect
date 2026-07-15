@@ -38,9 +38,13 @@ distroless Docker image where Hono serves the SPA build.
 - Env vars go through `apps/api/src/env.ts` (t3-env + Zod). Never read
   `process.env` elsewhere.
 - Named exports only. Zod v4 for all validation.
-- TypeScript is pinned to 5.9.x everywhere (including the root, which anchors
-  peer resolution): typescript-eslint crashes under TypeScript 7. Don't bump
-  to 7 until typescript-eslint supports it.
+- Third-party versions live in the pnpm catalog (`pnpm-workspace.yaml`);
+  package.json files reference them as `catalog:`. Bump versions there only,
+  never inline in a package.
+- TypeScript is `^6.0.3` — the final JS-based line and the official bridge to
+  the native 7.0 compiler. typescript-eslint's peer range (`<6.1.0`) does not
+  yet allow 7.x; bump the catalog to `^7` when it does. All packages are
+  verified to typecheck under 7.0.2 already.
 - The api needs its bundle step (tsdown): Node can't run this code natively —
   relative imports are extensionless and the JIT contract package resolves
   through node_modules, both unsupported by Node's type stripping. Production
