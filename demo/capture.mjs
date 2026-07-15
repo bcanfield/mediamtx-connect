@@ -8,9 +8,10 @@ import { chromium } from '@playwright/test'
 const BASE = process.env.DEMO_BASE_URL || 'http://localhost:3000'
 const OUT = '.work/video'
 
-const overlay = () => {
+function overlay() {
   const init = () => {
-    if (!document.body || document.getElementById('dcap')) return
+    if (!document.body || document.getElementById('dcap'))
+      return
     const s = document.createElement('style')
     s.textContent = `
       #dcur{position:fixed;z-index:2147483647;width:28px;height:28px;margin:-4px 0 0 -4px;
@@ -29,17 +30,18 @@ const overlay = () => {
     const ring = document.createElement('div'); ring.id = 'dclick'
     const cap = document.createElement('div'); cap.id = 'dcap'
     document.body.append(c, ring, cap)
-    let x = window.innerWidth / 2, y = window.innerHeight / 2
+    let x = window.innerWidth / 2; let y = window.innerHeight / 2
     const place = () => { c.style.transform = `translate(${x}px,${y}px)` }
     place()
     window.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; place() }, true)
     window.__cap = (t) => { cap.textContent = t || ''; cap.style.opacity = t ? '1' : '0' }
     window.__ring = () => {
       ring.style.left = `${x}px`; ring.style.top = `${y}px`
-      ring.animate([{ opacity: .9, transform: 'scale(.4)' }, { opacity: 0, transform: 'scale(1)' }], { duration: 450 })
+      ring.animate([{ opacity: 0.9, transform: 'scale(.4)' }, { opacity: 0, transform: 'scale(1)' }], { duration: 450 })
     }
   }
-  if (document.body) init()
+  if (document.body)
+    init()
   else document.addEventListener('DOMContentLoaded', init)
 }
 
@@ -73,7 +75,8 @@ async function main() {
       const el = loc.first()
       await el.scrollIntoViewIfNeeded({ timeout: 3000 })
       const box = await el.boundingBox({ timeout: 3000 })
-      if (!box) throw new Error('no box')
+      if (!box)
+        throw new Error('no box')
       await moveTo(box.x + box.width / 2, box.y + box.height / 2)
       await page.evaluate(() => window.__ring && window.__ring()).catch(() => {})
       await sleep(120)

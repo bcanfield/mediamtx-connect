@@ -6,45 +6,33 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 
 | Layer | Tool | Scope | Location |
 |-------|------|-------|----------|
-| Unit | Vitest | Pure functions, Zod schemas, fs helpers, query helpers | `*.test.ts` colocated |
-| Component | Vitest + Testing Library (jsdom) | Forms, interactive components (RHF + Zod, toasts, progress) | `*.test.tsx` colocated |
-| Contract | Vitest + MSW | MediaMTX HTTP client behavior (`v3/pathsList`, `v3/configGlobal*`), error paths | `src/lib/mediamtx/*.test.ts` |
-| Integration | Vitest + real Prisma (temp SQLite) | Server actions, `instrumentation.ts` cron + ffmpeg spawn | `*.int.test.ts` colocated |
-| E2E | Playwright | Full browser flows, byte-range MP4 streaming, accessibility | `tests/e2e/*.spec.ts` |
+| E2E | Playwright | Full browser flows, byte-range MP4 streaming, locale switching, accessibility | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
+
+> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Re-introducing Vitest for contract schemas, `recordings-fs.ts`, `config-store.ts`, and form components is tracked in `docs/debt/`. Until then, the E2E suite is the behavioral gate.
 
 ## Decision: which layer for a new feature?
 
-- Touched a Zod schema, util, or query helper → **unit**.
-- Added/changed a form, button, or interactive component → **component**.
-- Added/changed a call to MediaMTX → **contract** (assert request shape + 4xx/5xx handling).
-- Added/changed a server action, query that hits Prisma, or `instrumentation.ts` → **integration**.
 - Added a route, navigation, byte-range, or cross-page flow → **E2E**.
-- Changed `Dockerfile`, `start.sh`, Prisma binary targets, or boot order → ensure **image smoke** still passes.
-
-If a feature spans layers, write the lowest-cost test that proves it; only add an E2E when the value is end-to-end (routing, real HTTP, real video element).
+- Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
+- Everything else → cover it through the closest E2E flow for now (see the note above).
 
 ## Commands
 
 ```bash
-npm test                # vitest run (unit + component + contract + integration)
-npm run test:watch      # vitest watch
-npm run test:cov        # vitest run --coverage
-npm run test:e2e        # playwright, headless
-npm run test:e2e:dev    # playwright UI
+pnpm build             # e2e runs the built single-server (apps/api/dist)
+pnpm test:e2e          # playwright, headless
+pnpm test:e2e:dev      # playwright UI
 ```
 
 ## Conventions
 
-- **Colocate** unit/component/integration tests next to the file under test (`foo.ts` → `foo.test.ts`). E2E stays in `tests/e2e/`.
+- **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
-- **Use `userEvent`, not `fireEvent`.** Use `getByRole` over `getByTestId`. No `data-testid` unless there is no accessible alternative.
-- **Mock at the boundary**, not the internals. Mock `fetch`/MediaMTX via MSW. Mock `child_process.spawn` and `node-cron` via `vi.mock`. Never mock Prisma — use a temp SQLite file.
+- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`).
 - **Resilient E2E.** Assert "state A or state B" when both are valid (see `CONTRIBUTING.md`). Never `toHaveCount(n)` against live data.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
-- **Determinism.** Fake timers for cron/retention. Fixed `Date.now()` via `vi.setSystemTime` when testing timestamps. No `setTimeout` in tests.
-- **Fixtures live next to the test**. Recordings/screenshots fixtures: `tests/e2e/fixtures/` or `__fixtures__/` in feature folders. No network in unit/component tests.
-- **MediaMTX swagger** is the contract. When `swagger.json` changes, regen the client and re-run contract tests; failures are the signal.
+- **Fixtures** come from `pnpm setup:test-data` (ffmpeg-generated MP4s + PNGs under `test-data/`), which honors the same env vars the server boots with.
 
 ## E2E projects
 
@@ -54,7 +42,7 @@ npm run test:e2e:dev    # playwright UI
 - `firefox`, `webkit` — catches HLS-native fallback regressions
 - `mobile-chrome` (Pixel 7), `mobile-safari` (iPhone 14) — covers the responsive grid
 
-`firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`) run in `chromium` only — running them cross-browser doesn't change the outcome.
+`firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only — running them cross-browser doesn't change the outcome.
 
 Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
@@ -62,26 +50,22 @@ Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/confi
 
 PRs must pass, in order:
 
-1. `lint` + `typecheck`
-2. `vitest run --coverage` — must pass; coverage uploaded to Codecov for the README badge (no threshold gate)
-3. `build`
-4. `test:e2e` (sharded across runners when wall-clock > 5 min)
-5. **Docker image smoke** — runs in parallel with `test`. Builds the production image via Buildx (with GHA cache), runs the container, polls `/api/health` for up to 2 min, asserts `status: healthy` + `database: connected`. Catches Alpine-glibc Prisma binary regressions and `start.sh` migrate-on-boot failures.
-
-Coverage is reported, not gated. The Codecov badge on the README reflects the current %. Scope is everything under `src/` except `app/` (Next pages), `components/ui/` (shadcn primitives), generated MediaMTX, and Prisma migrations — see `vitest.config.ts`.
+1. `lint` + `typecheck` + `i18n:check`
+2. `build` (Turborepo, all packages)
+3. `test:e2e` against a real MediaMTX with fake streams
+4. **Docker image smoke** — runs in parallel with `test`. Builds the production image via Buildx (with GHA cache), runs the container, polls `/api/health` for up to 2 min, asserts `status: healthy`.
 
 Playwright traces, screenshots, and HTML report upload on failure only.
 
 ## What we explicitly don't test
 
-- shadcn/Radix primitives (`src/components/ui/*`) — upstream's job.
-- `src/lib/mediamtx/generated.ts` — auto-generated, do not edit, do not unit test.
+- shadcn/Radix primitives (`apps/web/src/components/ui/*`) — upstream's job.
 - Visual regression of pages — flaky across OS font rendering; not worth the maintenance.
 - Lighthouse / Core Web Vitals — not a stated product goal.
 
 ## Adding a layer or tool
 
-If you add a new test layer (load testing, mutation testing, visual regression, etc.):
+If you add a new test layer (Vitest unit tests, load testing, visual regression, etc.):
 
 1. Update the **Layers** table.
 2. Update the **Decision** list so contributors know when to use it.
