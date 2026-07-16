@@ -39,3 +39,5 @@ npm-debug.log*
 *.tsbuildinfo
 
 .automaker
+# Local planning artifacts (specs, tickets) — see ask-matt flow
+.scratch/
