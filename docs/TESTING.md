@@ -51,7 +51,9 @@ pnpm test:e2e:dev      # playwright UI
 
 `firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only — running them cross-browser doesn't change the outcome.
 
-Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
+`path-defaults` is a UI spec that deliberately stays out of the `uiSpecs` pattern: it writes to the live MediaMTX pathdefaults surface, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state.
+
+Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates
 
