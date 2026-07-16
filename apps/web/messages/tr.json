@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX yapılandırması",
       "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir."
     },
+    "pathDefaults": {
+      "pageHeader": "Yol varsayılanları",
+      "pageSubHeader": "Her akışın devraldığı ayarlar, sunucuya kaydedilir."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# kaydedilmemiş değişiklik}}",
       "needsAttention": "{count, plural, other {# alanın düzeltilmesi gerekiyor}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Kayıt"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
@@ -230,7 +235,8 @@
         "rtmp": "RTMP üzerinden akış yayınlayın ve okuyun.",
         "hls": "Tarayıcıda oynatma için akışları HLS olarak sunun.",
         "webrtc": "Düşük gecikmeli tarayıcı oynatma ve yayınlama.",
-        "srt": "SRT üzerinden akış yayınlayın ve okuyun."
+        "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
+        "recording": "Akışları diske kaydeder. Her yol bu ayarları devralır."
       },
       "enabled": "Etkin",
       "off": "Kapalı",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Aday IP'lerin toplanacağı arayüzler. Boş bırakılırsa tümü.",
         "webrtcAdditionalHosts": "WebRTC adayı olarak duyurulan ek ana makineler veya IP'ler.",
         "webrtcICEServers2": "WebRTC bağlantılarını kurmak için kullanılan STUN veya TURN sunucuları.",
-        "srtAddress": "SRT sunucusunun dinleme adresi."
+        "srtAddress": "SRT sunucusunun dinleme adresi.",
+        "recordPath": "Kayıt parçalarının yolu. %path akışın adıdır.",
+        "recordFormat": "Kayıt parçalarının kapsayıcısı (fmp4 veya mpegts).",
+        "recordPartDuration": "fmp4 kayıtlarında her bölümün süresi.",
+        "recordSegmentDuration": "Her kayıt parçasının süresi.",
+        "recordDeleteAfter": "Bu süreden sonra parçaları siler. Sıfır silmeyi devre dışı bırakır."
       },
       "toasts": {
         "success": "MediaMTX yapılandırması kaydedildi",

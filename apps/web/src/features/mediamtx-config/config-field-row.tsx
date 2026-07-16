@@ -1,6 +1,5 @@
-import type { GlobalConfigFormData } from '@connect/contract'
 import type { ChangeEvent } from 'react'
-import type { Control, FieldPath } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { useFormState } from 'react-hook-form'
 import { useTranslations } from 'use-intl'
 
@@ -14,9 +13,6 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-
-type Ctrl = Control<GlobalConfigFormData>
-type Name = FieldPath<GlobalConfigFormData>
 
 function fromTextarea(event: ChangeEvent<HTMLTextAreaElement>): string[] {
   return event.target.value.split('\n')
@@ -56,18 +52,18 @@ export function RowShell({
   )
 }
 
-function useFieldHelp(name: Name): string | undefined {
+function useFieldHelp(name: string): string | undefined {
   const t = useTranslations('Config.mediamtxForm.help')
   return t.has(name) ? t(name) : undefined
 }
 
-export function TextFieldRow({
+export function TextFieldRow<T extends FieldValues>({
   control,
   name,
   kind = 'text',
 }: {
-  control: Ctrl
-  name: Name
+  control: Control<T>
+  name: FieldPath<T>
   kind?: 'text' | 'number'
 }) {
   const help = useFieldHelp(name)
@@ -90,12 +86,12 @@ export function TextFieldRow({
   )
 }
 
-export function SwitchFieldRow({
+export function SwitchFieldRow<T extends FieldValues>({
   control,
   name,
 }: {
-  control: Ctrl
-  name: Name
+  control: Control<T>
+  name: FieldPath<T>
 }) {
   const help = useFieldHelp(name)
   const { dirtyFields } = useFormState({ control, name, exact: true })
@@ -121,12 +117,12 @@ export function SwitchFieldRow({
   )
 }
 
-export function ListFieldRow({
+export function ListFieldRow<T extends FieldValues>({
   control,
   name,
 }: {
-  control: Ctrl
-  name: Name
+  control: Control<T>
+  name: FieldPath<T>
 }) {
   const t = useTranslations('Config.formFields')
   const help = useFieldHelp(name)

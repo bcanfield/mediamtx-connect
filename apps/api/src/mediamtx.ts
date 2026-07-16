@@ -1,7 +1,7 @@
-import type { AppConfig, GlobalConfig } from '@connect/contract'
+import type { AppConfig, GlobalConfig, PathDefaults } from '@connect/contract'
 
-// Minimal hand-rolled client for the three MediaMTX endpoints this app uses
-// (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
+// Minimal hand-rolled client for the handful of MediaMTX endpoints this app
+// uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
 export interface MediaMtxPath {
   name?: string
   confName?: string
@@ -34,6 +34,13 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     configGlobalGet: () => request<GlobalConfig>('/config/global/get'),
     configGlobalPatch: (conf: GlobalConfig) =>
       request<void>('/config/global/patch', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(conf),
+      }),
+    configPathDefaultsGet: () => request<PathDefaults>('/config/pathdefaults/get'),
+    configPathDefaultsPatch: (conf: PathDefaults) =>
+      request<void>('/config/pathdefaults/patch', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(conf),

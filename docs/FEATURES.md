@@ -52,7 +52,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 2.1 Recordings index (`/recordings`)
 - **All-streams recording grid** — every subdirectory of the recordings mount renders as a whole-card-clickable tile: 16:9 thumbnail with a mono timestamp pill (top-right) and an "N RECORDINGS" chip (bottom-left), footer with name, "latest <relative time>" via `useFormatter`, and an arrow affordance. `apps/web/src/features/recordings/recordings-index-page.tsx`, `apps/web/src/features/recordings/recordings-index-view.tsx`
 - **Toolbar** — totals summary ("N streams · M recordings") on the left; a 280 px filter input with search-icon prefix and a `/` keyboard-hint badge on the right. Pressing `/` anywhere focuses the filter; filtering is client-side and instant.
-- **Empty / error states** — dashed panel with an "Enable recording" CTA into the MediaMTX config when no recordings exist (`apps/web/src/features/recordings/recordings-index-empty.tsx`); red-tinted `StatusPanel` with the mono directory path and "Open App Config" CTA when the mount is unreadable (`apps/web/src/features/recordings/recordings-index-page.tsx`). Note the "Enable recording" CTA lands on a page with no `record*` field — see `docs/debt/20260715131524-record-fields-not-surfaced.md`.
+- **Empty / error states** — dashed panel with an "Enable recording" CTA into the MediaMTX path defaults (§3.3) when no recordings exist (`apps/web/src/features/recordings/recordings-index-empty.tsx`); red-tinted `StatusPanel` with the mono directory path and "Open App Config" CTA when the mount is unreadable (`apps/web/src/features/recordings/recordings-index-page.tsx`).
 - **`summarizeStreamRecordings`** — api-side fs helper returns `{count, latestMtime}` per subdirectory in one walk. `apps/api/src/recordings-fs.ts`
 
 ### 2.2 Per-stream recording browser (`/recordings/{streamname}`)
@@ -95,7 +95,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Floating save bar** — the shared `SaveBar` mounts only while the form is dirty: amber dot + "n unsaved changes (· m fields need attention)", Reset (ghost) + Save (disabled while invalid). `apps/web/src/components/save-bar.tsx`
 
 ### 3.2 MediaMTX global server config — `/config/mediamtx/global`
-- **MediaMTX `GlobalConf` editor** — 65 controls across eight sections: 58 field rows, 6 protocol enable switches (`api`, `rtsp`, `rtmp`, `hls`, `webrtc`, `srt`), and the `webrtcICEServers2` rows. `GlobalConfigSchema` mirrors MediaMTX v1.11.3 with 71 keys, so 6 are editable nowhere: the `record*` group (`record`, `recordPath`, `recordFormat`, `recordPartDuration`, `recordSegmentDuration`, `recordDeleteAfter`), which MediaMTX 1.19.2 in fact serves from `pathDefaults` rather than global config — see `docs/debt/20260715131524-record-fields-not-surfaced.md`. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`, `apps/web/src/features/mediamtx-config/sections.ts`, `packages/contract/src/index.ts` (`GlobalConfigSchema`)
+- **MediaMTX `GlobalConf` editor** — 65 controls across eight sections: 58 field rows, 6 protocol enable switches (`api`, `rtsp`, `rtmp`, `hls`, `webrtc`, `srt`), and the `webrtcICEServers2` rows. `GlobalConfigSchema` mirrors MediaMTX v1.11.3, minus the `record*` group — MediaMTX serves those from path defaults, not global, so they live on the path-defaults scope (§3.3, ADR 0002). `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`, `apps/web/src/features/mediamtx-config/sections.ts`, `packages/contract/src/index.ts` (`GlobalConfigSchema`)
 - **Scroll-with-rail layout (not tabs)** — a sticky 200 px "ON THIS PAGE" anchor rail beside one continuously scrolling form of eight sections (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), driven by a data descriptor. Rail rows scroll-spy the active section (IntersectionObserver) and show a red error-count pill or a mono "OFF" label for disabled protocols. On mobile the rail collapses to a sticky horizontal chip row. `apps/web/src/features/mediamtx-config/sections.ts`, `apps/web/src/hooks/use-scroll-spy.ts`
 - **`ConfigFieldRow`** — 280 px fixed key column (MediaMTX config key verbatim in Geist Mono, never localized per `docs/I18N.md`, with an amber dirty dot) + localized help text below + control column (mono inputs full-width, switches right-aligned), hairline row separators. `apps/web/src/features/mediamtx-config/config-field-row.tsx`
 - **Per-field localized help text** — `Config.mediamtxForm.help.*` messages describe every exposed key.
@@ -105,6 +105,12 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Pending-changes bar** — the shared `SaveBar` with dirty-key chips (mono pills named by config key; erroring keys turn red with a ✕), Discard (ghost) + "Save to server" (primary). `apps/web/src/components/save-bar.tsx`
 - **Live read/write through MediaMTX HTTP API** — `config.mediamtx.getGlobal` (`v3/config/global/get`) + `config.mediamtx.updateGlobal` (`v3/config/global/patch`). `apps/api/src/router.ts`, `apps/api/src/mediamtx.ts`
 - **Toast feedback** on success/error (success: `MediaMTX config saved`); submit gated on dirty + valid.
+
+### 3.3 MediaMTX path defaults — `/config/mediamtx/path-defaults`
+- **Path-defaults editor** — the settings every MediaMTX path inherits, on the scope MediaMTX actually serves them from (`v3/config/pathdefaults`). One Recording section: a `record` header switch plus `recordPath`, `recordFormat`, `recordPartDuration`, `recordSegmentDuration`, `recordDeleteAfter`. Route is a *sibling* of the per-path route, not `paths/defaults`, which would reserve `defaults` as a path name (ADR 0002). `apps/web/src/features/mediamtx-config/path-defaults-page.tsx`, `apps/web/src/features/mediamtx-config/sections.ts` (`PATH_DEFAULTS_SCOPE`)
+- **Scope-parameterized rail form** — `MediaMTXConfigForm` takes a `ConfigScope` (schema + section descriptors) and a save procedure, and serves both the global and path-defaults pages from one implementation: same rail, scroll-spy, dirty tracking, save bar and toasts. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`
+- **Live read/write through MediaMTX HTTP API** — `config.mediamtx.getPathDefaults` (`v3/config/pathdefaults/get`) + `config.mediamtx.updatePathDefaults` (`v3/config/pathdefaults/patch`). The PATCH is sparse: only the surfaced keys are sent, so unlisted path-defaults keys are left untouched. `apps/api/src/router.ts`, `apps/api/src/mediamtx.ts`
+- **"Enable recording" CTA target** — the recordings empty state links here, where recording can actually be enabled. `apps/web/src/features/recordings/recordings-index-empty.tsx`
 
 ---
 
@@ -207,6 +213,7 @@ SPA routes (TanStack Router, `apps/web/src/main.tsx`):
 | `/recordings/{streamname}` | Per-stream paginated browser | `apps/web/src/features/recordings/stream-recordings-page.tsx` |
 | `/config` | Client app config | `apps/web/src/features/client-config/client-config-page.tsx` |
 | `/config/mediamtx/global` | MediaMTX server config | `apps/web/src/features/mediamtx-config/mediamtx-config-page.tsx` |
+| `/config/mediamtx/path-defaults` | MediaMTX path defaults (recording) | `apps/web/src/features/mediamtx-config/path-defaults-page.tsx` |
 
 HTTP endpoints (Hono, `apps/api/src/server.ts` + `apps/api/src/media.ts`):
 
@@ -235,6 +242,8 @@ Defined in `packages/contract/src/index.ts`, implemented in `apps/api/src/router
 | `config.app.update` | mutation | Validates + persists app settings atomically. |
 | `config.mediamtx.getGlobal` | query | Fetches MediaMTX `GlobalConf` via API; `null` when unreachable. |
 | `config.mediamtx.updateGlobal` | mutation | Patches `GlobalConf` changes to MediaMTX; throws on failure. |
+| `config.mediamtx.getPathDefaults` | query | Fetches MediaMTX path defaults via API; `null` when unreachable. |
+| `config.mediamtx.updatePathDefaults` | mutation | Sparse-patches path defaults to MediaMTX; throws on failure. |
 
 ---
 

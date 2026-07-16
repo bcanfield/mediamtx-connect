@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX-konfiguration",
       "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren."
     },
+    "pathDefaults": {
+      "pageHeader": "Standardværdier for stier",
+      "pageSubHeader": "Indstillinger som hver stream arver, gemt på serveren."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",
       "needsAttention": "{count, plural, one {# felt kræver opmærksomhed} other {# felter kræver opmærksomhed}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Optagelse"
       },
       "sectionDescriptions": {
         "logging": "Logoutput, timeouts og globale grænser.",
@@ -230,7 +235,8 @@
         "rtmp": "Publicér og læs streams over RTMP.",
         "hls": "Servér streams som HLS til afspilning i browseren.",
         "webrtc": "Afspilning og publicering i browseren med lav latenstid.",
-        "srt": "Publicér og læs streams over SRT."
+        "srt": "Publicér og læs streams over SRT.",
+        "recording": "Optag streams til disk. Hver sti arver disse indstillinger."
       },
       "enabled": "Aktiveret",
       "off": "Fra",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Grænseflader der indsamles kandidat-IP'er fra. Tom betyder alle.",
         "webrtcAdditionalHosts": "Yderligere værter eller IP'er der annonceres som WebRTC-kandidater.",
         "webrtcICEServers2": "STUN- eller TURN-servere brugt til at etablere WebRTC-forbindelser.",
-        "srtAddress": "Lytteadresse for SRT-serveren."
+        "srtAddress": "Lytteadresse for SRT-serveren.",
+        "recordPath": "Sti for optagelsessegmenter. %path er streamens navn.",
+        "recordFormat": "Container for optagelsessegmenter (fmp4 eller mpegts).",
+        "recordPartDuration": "Varighed af hver del i fmp4-optagelser.",
+        "recordSegmentDuration": "Varighed af hvert optagelsessegment.",
+        "recordDeleteAfter": "Slet segmenter efter denne periode. Nul deaktiverer sletning."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen er gemt",

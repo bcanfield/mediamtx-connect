@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX Config",
       "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server."
     },
+    "pathDefaults": {
+      "pageHeader": "Mga default ng path",
+      "pageSubHeader": "Mga setting na minamana ng bawat stream, nakaimbak sa server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",
       "needsAttention": "{count, plural, one {# field ang nangangailangan ng atensyon} other {# na field ang nangangailangan ng atensyon}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Pag-record"
       },
       "sectionDescriptions": {
         "logging": "Log output, mga timeout, at mga global na limitasyon.",
@@ -230,7 +235,8 @@
         "rtmp": "Mag-publish at magbasa ng mga stream sa pamamagitan ng RTMP.",
         "hls": "Ihain ang mga stream bilang HLS para sa playback sa browser.",
         "webrtc": "Low-latency na playback at pag-publish sa browser.",
-        "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT."
+        "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
+        "recording": "I-record ang mga stream sa disk. Minamana ito ng bawat path."
       },
       "enabled": "Naka-enable",
       "off": "Naka-off",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Mga interface na pagkukunan ng mga candidate IP. Ang walang laman ay nangangahulugang lahat.",
         "webrtcAdditionalHosts": "Mga karagdagang host o IP na ina-advertise bilang mga WebRTC candidate.",
         "webrtcICEServers2": "Mga STUN o TURN server na ginagamit para magtatag ng mga koneksyong WebRTC.",
-        "srtAddress": "Listen address ng SRT server."
+        "srtAddress": "Listen address ng SRT server.",
+        "recordPath": "Path ng mga segment ng recording. Ang %path ay ang pangalan ng stream.",
+        "recordFormat": "Container ng mga segment ng recording (fmp4 o mpegts).",
+        "recordPartDuration": "Tagal ng bawat bahagi sa mga fmp4 na recording.",
+        "recordSegmentDuration": "Tagal ng bawat segment ng recording.",
+        "recordDeleteAfter": "Burahin ang mga segment pagkatapos ng tagal na ito. Ang zero ay hindi nagbubura."
       },
       "toasts": {
         "success": "Na-save ang MediaMTX config",

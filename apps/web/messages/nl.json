@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX-configuratie",
       "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server."
     },
+    "pathDefaults": {
+      "pageHeader": "Padstandaarden",
+      "pageSubHeader": "Instellingen die elke stream overneemt, opgeslagen op de server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",
       "needsAttention": "{count, plural, one {# veld heeft aandacht nodig} other {# velden hebben aandacht nodig}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Opnemen"
       },
       "sectionDescriptions": {
         "logging": "Loguitvoer, time-outs en globale limieten.",
@@ -230,7 +235,8 @@
         "rtmp": "Streams publiceren en lezen via RTMP.",
         "hls": "Streams aanbieden als HLS voor afspelen in de browser.",
         "webrtc": "Afspelen en publiceren in de browser met lage latentie.",
-        "srt": "Streams publiceren en lezen via SRT."
+        "srt": "Streams publiceren en lezen via SRT.",
+        "recording": "Neem streams op naar schijf. Elk pad neemt deze instellingen over."
       },
       "enabled": "Ingeschakeld",
       "off": "Uit",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Interfaces om kandidaat-IP's van te verzamelen. Leeg betekent alle.",
         "webrtcAdditionalHosts": "Extra hosts of IP's die als WebRTC-kandidaten worden aangekondigd.",
         "webrtcICEServers2": "STUN- of TURN-servers gebruikt om WebRTC-verbindingen op te zetten.",
-        "srtAddress": "Luisteradres van de SRT-server."
+        "srtAddress": "Luisteradres van de SRT-server.",
+        "recordPath": "Pad van de opnamesegmenten. %path is de streamnaam.",
+        "recordFormat": "Container van de opnamesegmenten (fmp4 of mpegts).",
+        "recordPartDuration": "Duur van elk deel in fmp4-opnamen.",
+        "recordSegmentDuration": "Duur van elk opnamesegment.",
+        "recordDeleteAfter": "Verwijder segmenten na deze periode. Nul schakelt verwijderen uit."
       },
       "toasts": {
         "success": "MediaMTX-configuratie opgeslagen",

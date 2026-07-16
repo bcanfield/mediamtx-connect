@@ -166,6 +166,10 @@
       "pageHeader": "Konfigurasi MediaMTX",
       "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server."
     },
+    "pathDefaults": {
+      "pageHeader": "Default jalur",
+      "pageSubHeader": "Pengaturan yang diwarisi setiap aliran, disimpan di server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# perubahan belum disimpan}}",
       "needsAttention": "{count, plural, other {# bidang perlu diperiksa}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Perekaman"
       },
       "sectionDescriptions": {
         "logging": "Keluaran log, batas waktu, dan batas global.",
@@ -230,7 +235,8 @@
         "rtmp": "Publikasikan dan baca aliran melalui RTMP.",
         "hls": "Sajikan aliran sebagai HLS untuk pemutaran di peramban.",
         "webrtc": "Pemutaran dan publikasi di peramban dengan latensi rendah.",
-        "srt": "Publikasikan dan baca aliran melalui SRT."
+        "srt": "Publikasikan dan baca aliran melalui SRT.",
+        "recording": "Rekam aliran ke disk. Setiap jalur mewarisi pengaturan ini."
       },
       "enabled": "Aktif",
       "off": "Nonaktif",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Antarmuka tempat mengumpulkan IP kandidat. Kosong berarti semua.",
         "webrtcAdditionalHosts": "Host atau IP tambahan yang diumumkan sebagai kandidat WebRTC.",
         "webrtcICEServers2": "Server STUN atau TURN yang digunakan untuk membangun koneksi WebRTC.",
-        "srtAddress": "Alamat dengar server SRT."
+        "srtAddress": "Alamat dengar server SRT.",
+        "recordPath": "Jalur segmen rekaman. %path adalah nama aliran.",
+        "recordFormat": "Kontainer segmen rekaman (fmp4 atau mpegts).",
+        "recordPartDuration": "Durasi setiap bagian dalam rekaman fmp4.",
+        "recordSegmentDuration": "Durasi setiap segmen rekaman.",
+        "recordDeleteAfter": "Hapus segmen setelah durasi ini. Nol menonaktifkan penghapusan."
       },
       "toasts": {
         "success": "Konfigurasi MediaMTX disimpan",

@@ -14,7 +14,7 @@ export function RecordingsIndexEmpty() {
         <p className="text-[12px] text-muted-foreground">{t('noRecordingsLead')}</p>
       </div>
       <Button asChild size="sm">
-        <Link href="/config/mediamtx/global">{t('enableRecording')}</Link>
+        <Link href="/config/mediamtx/path-defaults">{t('enableRecording')}</Link>
       </Button>
     </div>
   )

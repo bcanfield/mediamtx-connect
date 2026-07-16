@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX-asetukset",
       "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle."
     },
+    "pathDefaults": {
+      "pageHeader": "Polkujen oletusarvot",
+      "pageSubHeader": "Asetukset, jotka jokainen striimi perii, tallennetaan palvelimelle."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",
       "needsAttention": "{count, plural, one {# kenttä vaatii huomiota} other {# kenttää vaatii huomiota}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Tallennus"
       },
       "sectionDescriptions": {
         "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
@@ -230,7 +235,8 @@
         "rtmp": "Julkaise ja vastaanota striimejä RTMP:llä.",
         "hls": "Tarjoa striimit HLS-muodossa selaintoistoa varten.",
         "webrtc": "Matalan viiveen selaintoisto ja julkaisu.",
-        "srt": "Julkaise ja vastaanota striimejä SRT:llä."
+        "srt": "Julkaise ja vastaanota striimejä SRT:llä.",
+        "recording": "Tallenna striimit levylle. Jokainen polku perii nämä asetukset."
       },
       "enabled": "Käytössä",
       "off": "Pois",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Liitännät, joista ehdokas-IP:t kerätään. Tyhjä tarkoittaa kaikkia.",
         "webrtcAdditionalHosts": "Lisäisännät tai IP:t, joita mainostetaan WebRTC-ehdokkaina.",
         "webrtcICEServers2": "STUN- tai TURN-palvelimet WebRTC-yhteyksien muodostamiseen.",
-        "srtAddress": "SRT-palvelimen kuunteluosoite."
+        "srtAddress": "SRT-palvelimen kuunteluosoite.",
+        "recordPath": "Tallennussegmenttien polku. %path on striimin nimi.",
+        "recordFormat": "Tallennussegmenttien säiliö (fmp4 tai mpegts).",
+        "recordPartDuration": "Kunkin osan kesto fmp4-tallenteissa.",
+        "recordSegmentDuration": "Kunkin tallennussegmentin kesto.",
+        "recordDeleteAfter": "Poista segmentit tämän ajan jälkeen. Nolla poistaa käytöstä."
       },
       "toasts": {
         "success": "MediaMTX-asetukset tallennettu",

@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX konfiguráció",
       "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve."
     },
+    "pathDefaults": {
+      "pageHeader": "Útvonalak alapértékei",
+      "pageSubHeader": "Minden stream által örökölt beállítások, a kiszolgálóra mentve."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# mentetlen módosítás} other {# mentetlen módosítás}}",
       "needsAttention": "{count, plural, one {# mező figyelmet igényel} other {# mező figyelmet igényel}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Felvétel"
       },
       "sectionDescriptions": {
         "logging": "Naplókimenet, időkorlátok és globális korlátok.",
@@ -230,7 +235,8 @@
         "rtmp": "Folyamok közzététele és fogadása RTMP-n keresztül.",
         "hls": "Folyamok kiszolgálása HLS-ként a böngészős lejátszáshoz.",
         "webrtc": "Alacsony késleltetésű böngészős lejátszás és közzététel.",
-        "srt": "Folyamok közzététele és fogadása SRT-n keresztül."
+        "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
+        "recording": "Streamek rögzítése lemezre. Minden útvonal örökli ezeket a beállításokat."
       },
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Interfészek, amelyekről a jelölt IP-címeket gyűjti. Üres esetén az összes.",
         "webrtcAdditionalHosts": "További hosztok vagy IP-címek, amelyeket WebRTC-jelöltként hirdet.",
         "webrtcICEServers2": "WebRTC kapcsolatok létrehozásához használt STUN vagy TURN szerverek.",
-        "srtAddress": "Az SRT szerver figyelési címe."
+        "srtAddress": "Az SRT szerver figyelési címe.",
+        "recordPath": "A felvételi szegmensek útvonala. A %path a stream neve.",
+        "recordFormat": "A felvételi szegmensek konténere (fmp4 vagy mpegts).",
+        "recordPartDuration": "Az egyes részek hossza fmp4 felvételeknél.",
+        "recordSegmentDuration": "Az egyes felvételi szegmensek hossza.",
+        "recordDeleteAfter": "Szegmensek törlése ennyi idő után. A nulla kikapcsolja a törlést."
       },
       "toasts": {
         "success": "MediaMTX konfiguráció mentve",

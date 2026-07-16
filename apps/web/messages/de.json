@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX-Konfiguration",
       "pageSubHeader": "Globale MediaMTX-Servereinstellungen, gespeichert auf dem Server."
     },
+    "pathDefaults": {
+      "pageHeader": "Pfad-Standardwerte",
+      "pageSubHeader": "Einstellungen, die jeder Stream erbt, gespeichert auf dem Server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# nicht gespeicherte Änderung} other {# nicht gespeicherte Änderungen}}",
       "needsAttention": "{count, plural, one {# Feld benötigt Aufmerksamkeit} other {# Felder benötigen Aufmerksamkeit}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Aufzeichnung"
       },
       "sectionDescriptions": {
         "logging": "Log-Ausgabe, Timeouts und globale Grenzwerte.",
@@ -230,7 +235,8 @@
         "rtmp": "Streams über RTMP veröffentlichen und lesen.",
         "hls": "Streams als HLS für die Browser-Wiedergabe bereitstellen.",
         "webrtc": "Browser-Wiedergabe und -Veröffentlichung mit niedriger Latenz.",
-        "srt": "Streams über SRT veröffentlichen und lesen."
+        "srt": "Streams über SRT veröffentlichen und lesen.",
+        "recording": "Streams auf die Festplatte aufzeichnen. Jeder Pfad erbt diese Einstellungen."
       },
       "enabled": "Aktiviert",
       "off": "Aus",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Schnittstellen, von denen Kandidaten-IPs gesammelt werden. Leer bedeutet alle.",
         "webrtcAdditionalHosts": "Zusätzliche Hosts oder IPs, die als WebRTC-Kandidaten angekündigt werden.",
         "webrtcICEServers2": "STUN- oder TURN-Server zum Aufbau von WebRTC-Verbindungen.",
-        "srtAddress": "Listen-Adresse des SRT-Servers."
+        "srtAddress": "Listen-Adresse des SRT-Servers.",
+        "recordPath": "Pfad der Aufzeichnungssegmente. %path ist der Stream-Name.",
+        "recordFormat": "Container der Aufzeichnungssegmente (fmp4 oder mpegts).",
+        "recordPartDuration": "Dauer jedes Teils in fmp4-Aufzeichnungen.",
+        "recordSegmentDuration": "Dauer jedes Aufzeichnungssegments.",
+        "recordDeleteAfter": "Segmente nach dieser Dauer löschen. Null deaktiviert das Löschen."
       },
       "toasts": {
         "success": "MediaMTX-Konfiguration gespeichert",

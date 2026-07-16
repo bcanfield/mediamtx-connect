@@ -15,6 +15,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { ClientConfigPage } from '@/features/client-config/client-config-page'
 import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
+import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
 import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
 import { LiveViewPage } from '@/features/streams/live-view-page'
@@ -83,6 +84,14 @@ const mediamtxConfigRoute = createRoute({
   component: MediaMTXConfigPage,
 })
 
+// Sibling of the per-path route, not `paths/defaults` — that would reserve
+// `defaults` as a path name and shadow a real MediaMTX path (ADR 0002).
+const pathDefaultsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/mediamtx/path-defaults',
+  component: PathDefaultsPage,
+})
+
 const router = createRouter({
   routeTree: rootRoute.addChildren([
     liveRoute,
@@ -90,6 +99,7 @@ const router = createRouter({
     streamRecordingsRoute,
     configRoute,
     mediamtxConfigRoute,
+    pathDefaultsRoute,
   ]),
 })
 

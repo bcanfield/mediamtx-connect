@@ -121,6 +121,29 @@ export const router = os.router({
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update global config' })
         }
       }),
+
+      getPathDefaults: os.config.mediamtx.getPathDefaults.handler(async () => {
+        const config = await getAppConfig()
+        try {
+          return await mediaMtxApi(config).configPathDefaultsGet()
+        }
+        catch (error) {
+          logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+          return null
+        }
+      }),
+
+      updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        logger.info('Updating path defaults')
+        try {
+          await mediaMtxApi(config).configPathDefaultsPatch(input)
+        }
+        catch (error) {
+          logger.error({ err: error }, 'Failed to update path defaults')
+          throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path defaults' })
+        }
+      }),
     },
   },
 })

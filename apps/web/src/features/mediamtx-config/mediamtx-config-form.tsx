@@ -1,9 +1,8 @@
-import type { GlobalConfig, GlobalConfigFormData } from '@connect/contract'
-import type { Control } from 'react-hook-form'
-import type { SectionDef } from './sections'
-import { GlobalConfigSchema } from '@connect/contract'
+import type { GlobalConfigFormData } from '@connect/contract'
+import type { Control, FieldErrors, FieldPath, FieldValues, Resolver } from 'react-hook-form'
+import type { ConfigScope, SectionDef } from './sections'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { useForm, useFormState, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
@@ -13,32 +12,35 @@ import { Form, FormField } from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 import { useScrollSpy } from '@/hooks/use-scroll-spy'
 import { cn } from '@/lib/utils'
-import { orpc } from '@/orpc'
 
 import { ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
 import { IceServersRows } from './ice-servers-rows'
-import { countErrorsForSection, SECTIONS } from './sections'
+import { countErrorsForSection } from './sections'
 
-const SECTION_IDS = SECTIONS.map(s => `mtx-${s.id}`)
-
-export function MediaMTXConfigForm({
-  globalConf,
+// The rail form for one MediaMTX config scope (ADR 0002). Global and path
+// defaults differ only in schema, sections, and the procedure that saves them.
+export function MediaMTXConfigForm<T extends FieldValues>({
+  scope,
+  conf,
+  onSave,
 }: {
-  globalConf?: GlobalConfig
+  scope: ConfigScope<T>
+  conf: T
+  onSave: (values: T) => Promise<unknown>
 }) {
   const t = useTranslations('Config.mediamtxForm')
   const tSaveBar = useTranslations('Config.saveBar')
-  const form = useForm({
-    resolver: zodResolver(GlobalConfigSchema),
+  const form = useForm<T>({
+    // The scope pairs its schema with its section descriptors; a generic T
+    // can't prove that to the resolver's own inference.
+    resolver: zodResolver(scope.schema) as Resolver<T, unknown, T>,
     mode: 'onBlur',
-    defaultValues: globalConf,
+    defaultValues: conf as never,
   })
 
-  const updateGlobalConfig = useMutation(orpc.config.mediamtx.updateGlobal.mutationOptions())
-
-  const onSubmit = async (values: GlobalConfig) => {
+  const onSubmit = async (values: T) => {
     try {
-      await updateGlobalConfig.mutateAsync(values)
+      await onSave(values)
       form.reset(values)
       toast.success(t('toasts.success'))
     }
@@ -49,9 +51,11 @@ export function MediaMTXConfigForm({
     }
   }
 
-  const onReset = () => form.reset(globalConf)
+  const onReset = () => form.reset(conf)
 
-  const { isDirty, isValid, dirtyFields, errors } = form.formState
+  const offById = useOffById(form.control, scope)
+  const { isDirty, isValid, dirtyFields } = form.formState
+  const errors = form.formState.errors as Record<string, unknown>
   const dirtyKeys = Object.keys(dirtyFields)
   const errorCount = Object.keys(errors).length
   const summary = errorCount > 0
@@ -61,14 +65,19 @@ export function MediaMTXConfigForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <SectionRail control={form.control} variant="chips" />
+        <SectionRail control={form.control} scope={scope} offById={offById} variant="chips" />
 
         <div className="flex items-start gap-8">
-          <SectionRail control={form.control} variant="rail" />
+          <SectionRail control={form.control} scope={scope} offById={offById} variant="rail" />
 
           <div className="flex min-w-0 flex-1 flex-col gap-8">
-            {SECTIONS.map(section => (
-              <ConfigSection key={section.id} section={section} control={form.control} />
+            {scope.sections.map(section => (
+              <ConfigSection
+                key={section.id}
+                section={section}
+                control={form.control}
+                isOff={offById[section.id] ?? false}
+              />
             ))}
           </div>
         </div>
@@ -76,7 +85,7 @@ export function MediaMTXConfigForm({
         {dirtyKeys.length > 0 && (
           <SaveBar
             summary={summary}
-            chips={dirtyKeys.map(key => ({ key, error: Boolean(errors[key as keyof typeof errors]) }))}
+            chips={dirtyKeys.map(key => ({ key, error: Boolean(errors[key]) }))}
             onDiscard={onReset}
             discardLabel={tSaveBar('discard')}
             saveLabel={tSaveBar('saveToServer')}
@@ -88,37 +97,54 @@ export function MediaMTXConfigForm({
   )
 }
 
+// Watches only the sections' enable switches — never the whole form, which
+// would re-render every section on each keystroke.
+function useOffById<T extends FieldValues>(
+  control: Control<T>,
+  scope: ConfigScope<T>,
+): Record<string, boolean> {
+  const enableFields = useMemo(
+    () => scope.sections
+      .map(s => s.enableField)
+      .filter((name): name is FieldPath<T> => Boolean(name)),
+    [scope],
+  )
+  const values = useWatch({ control, name: enableFields })
+
+  const offByField = new Map(enableFields.map((name, i) => [name, values[i] === false]))
+  return Object.fromEntries(
+    scope.sections.map(s => [s.id, s.enableField ? offByField.get(s.enableField) === true : false]),
+  )
+}
+
 // One nav, two renderings: sticky side rail on desktop, horizontal chip row
 // on mobile (board 2e). Error counts and OFF states roll up live.
-function SectionRail({
+function SectionRail<T extends FieldValues>({
   control,
+  scope,
+  offById,
   variant,
 }: {
-  control: Control<GlobalConfigFormData>
+  control: Control<T>
+  scope: ConfigScope<T>
+  offById: Record<string, boolean>
   variant: 'rail' | 'chips'
 }) {
   const t = useTranslations('Config.mediamtxForm')
-  const activeId = useScrollSpy(SECTION_IDS)
+  // useScrollSpy re-arms its observer when this array's identity changes.
+  const sectionIds = useMemo(() => scope.sections.map(s => `mtx-${s.id}`), [scope])
+  const activeId = useScrollSpy(sectionIds)
   const { errors } = useFormState({ control })
-  const enables = useWatch({ control, name: ['api', 'rtsp', 'rtmp', 'hls', 'webrtc', 'srt'] })
-  const enabledById: Record<string, boolean | undefined> = {
-    api: enables[0],
-    rtsp: enables[1],
-    rtmp: enables[2],
-    hls: enables[3],
-    webrtc: enables[4],
-    srt: enables[5],
-  }
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const rows = SECTIONS.map((section) => {
-    const errCount = countErrorsForSection(errors, section)
-    const off = section.enableField ? enabledById[section.id] === false : false
-    return { section, errCount, off }
-  })
+  const rows = scope.sections.map(section => ({
+    section,
+    errCount: countErrorsForSection(errors as FieldErrors<FieldValues>, section),
+    off: offById[section.id] ?? false,
+  }))
 
   if (variant === 'chips') {
     return (
@@ -193,16 +219,16 @@ function RailOffLabel() {
   )
 }
 
-function ConfigSection({
+function ConfigSection<T extends FieldValues>({
   section,
   control,
+  isOff,
 }: {
-  section: SectionDef
-  control: Control<GlobalConfigFormData>
+  section: SectionDef<T>
+  control: Control<T>
+  isOff: boolean
 }) {
   const t = useTranslations('Config.mediamtxForm')
-  const enabled = useWatch({ control, name: section.enableField ?? 'api' })
-  const isOff = section.enableField ? enabled === false : false
 
   return (
     <section id={`mtx-${section.id}`} className="scroll-mt-30">
@@ -248,19 +274,22 @@ function ConfigSection({
                         />
                       ),
               )}
-              {section.hasIceServers && <IceServersRows control={control} />}
+              {/* webrtcICEServers2 exists only on the global scope. */}
+              {section.hasIceServers && (
+                <IceServersRows control={control as unknown as Control<GlobalConfigFormData>} />
+              )}
             </div>
           )}
     </section>
   )
 }
 
-function SectionEnableSwitch({
+function SectionEnableSwitch<T extends FieldValues>({
   section,
   control,
 }: {
-  section: SectionDef
-  control: Control<GlobalConfigFormData>
+  section: SectionDef<T>
+  control: Control<T>
 }) {
   const t = useTranslations('Config.mediamtxForm')
 

@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX 설정",
       "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다."
     },
+    "pathDefaults": {
+      "pageHeader": "경로 기본값",
+      "pageSubHeader": "모든 스트림이 상속하는 설정으로, 서버에 저장됩니다."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",
       "needsAttention": "{count, plural, other {확인이 필요한 필드 #개}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "녹화"
       },
       "sectionDescriptions": {
         "logging": "로그 출력, 타임아웃 및 전역 제한.",
@@ -230,7 +235,8 @@
         "rtmp": "RTMP로 스트림을 게시하고 시청합니다.",
         "hls": "브라우저 재생을 위해 스트림을 HLS로 제공합니다.",
         "webrtc": "저지연 브라우저 재생 및 게시.",
-        "srt": "SRT로 스트림을 게시하고 시청합니다."
+        "srt": "SRT로 스트림을 게시하고 시청합니다.",
+        "recording": "스트림을 디스크에 녹화합니다. 모든 경로가 이 설정을 상속합니다."
       },
       "enabled": "활성화됨",
       "off": "꺼짐",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "후보 IP를 수집할 인터페이스. 비어 있으면 전체.",
         "webrtcAdditionalHosts": "WebRTC 후보로 알리는 추가 호스트 또는 IP.",
         "webrtcICEServers2": "WebRTC 연결 수립에 사용되는 STUN 또는 TURN 서버.",
-        "srtAddress": "SRT 서버의 수신 주소."
+        "srtAddress": "SRT 서버의 수신 주소.",
+        "recordPath": "녹화 세그먼트의 경로입니다. %path는 스트림 이름입니다.",
+        "recordFormat": "녹화 세그먼트의 컨테이너(fmp4 또는 mpegts)입니다.",
+        "recordPartDuration": "fmp4 녹화에서 각 파트의 길이입니다.",
+        "recordSegmentDuration": "각 녹화 세그먼트의 길이입니다.",
+        "recordDeleteAfter": "이 기간이 지난 세그먼트를 삭제합니다. 0이면 삭제하지 않습니다."
       },
       "toasts": {
         "success": "MediaMTX 설정이 저장되었습니다",

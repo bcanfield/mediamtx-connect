@@ -91,6 +91,15 @@ export const GlobalConfigSchema = z.object({
     .optional(),
   srt: z.boolean().optional(),
   srtAddress: z.string().optional(),
+})
+
+export type GlobalConfig = z.infer<typeof GlobalConfigSchema>
+export type GlobalConfigFormData = z.input<typeof GlobalConfigSchema>
+
+// MediaMTX serves these from /v3/config/pathdefaults, not /v3/config/global —
+// every path inherits them. Sparse by design: unlisted keys are left alone by
+// the PATCH, and MediaMTX returns many more keys than we surface.
+export const PathDefaultsSchema = z.object({
   record: z.boolean().optional(),
   recordPath: z.string().optional(),
   recordFormat: z.string().optional(),
@@ -99,8 +108,8 @@ export const GlobalConfigSchema = z.object({
   recordDeleteAfter: z.string().optional(),
 })
 
-export type GlobalConfig = z.infer<typeof GlobalConfigSchema>
-export type GlobalConfigFormData = z.input<typeof GlobalConfigSchema>
+export type PathDefaults = z.infer<typeof PathDefaultsSchema>
+export type PathDefaultsFormData = z.input<typeof PathDefaultsSchema>
 
 export const StreamSchema = z.object({
   name: z.string(),
@@ -176,6 +185,8 @@ export const contract = {
     mediamtx: {
       getGlobal: oc.output(GlobalConfigSchema.nullable()),
       updateGlobal: oc.input(GlobalConfigSchema).output(z.void()),
+      getPathDefaults: oc.output(PathDefaultsSchema.nullable()),
+      updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
     },
   },
 }
