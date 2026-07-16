@@ -1,7 +1,7 @@
 import type { RecordingStreamSummary } from '@connect/contract'
 import { ArrowRight, CircleDashed, Search } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useFormatter, useNow, useTranslations } from 'use-intl'
 
 import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
@@ -89,6 +89,7 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
 function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
   const t = useTranslations('Recordings.card')
   const format = useFormatter()
+  const now = useNow()
   const [thumbnailError, setThumbnailError] = useState(false)
   const showThumbnail = stream.screenshotUrl && !thumbnailError
 
@@ -135,7 +136,7 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
           <p className="truncate text-[13.5px] font-medium">{stream.name}</p>
           {stream.latestMtime && (
             <p className="truncate text-[11.5px] text-mute">
-              {t('latest', { time: format.relativeTime(stream.latestMtime) })}
+              {t('latest', { time: format.relativeTime(stream.latestMtime, now) })}
             </p>
           )}
         </div>

@@ -34,6 +34,7 @@ services:
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
       - mediamtx-connect-data:/data
+      - mediamtx-connect-screenshots:/screenshots
     ports:
       - '3000:3000'
 
@@ -43,3 +44,6 @@ networks:
 
 volumes:
   mediamtx-connect-data:
+  # Thumbnails are regenerable, but without a volume they land on the container's
+  # writable layer and vanish on every recreate.
+  mediamtx-connect-screenshots:

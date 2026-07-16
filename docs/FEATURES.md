@@ -32,17 +32,17 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **"Stream online since" metadata** — `readyTime` renders as "online since {time} · {uptime}" on the card footer meta line.
 
 ### 1.2 Stream cards
-- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (render only when the data exists; backed by optional props so future fields don't reflow), bottom scrim. Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
+- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (resolution · bitrate · viewers) + bottom scrim — all backed by optional props that **no caller passes today**, so they never render; `StreamSchema` carries only `{name, readyTime}` (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
 - **Play / Stop** — footer buttons (outline Play / primary Stop) plus a centered 46 px circular play affordance on idle cards.
 - **URL-state-driven selection** — `?play=foo,bar` typed search param (TanStack Router `validateSearch`) tracks which streams are live, so the active set survives reload/share.
-- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record with ON/OFF state, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. Only "View recordings" is functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast. `apps/web/src/features/streams/stream-card.tsx`
+- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. Only "View recordings" is functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast (`docs/debt/20260715131447-stream-card-action-stubs.md`). "Record" renders an ON/OFF state that is hard-wired OFF — the `recording` prop has no caller. `apps/web/src/features/streams/stream-card.tsx`
 
 ### 1.3 HLS video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `apps/web/src/components/video-player.tsx`
 - **Native HLS fallback** — uses `<video>` native HLS where supported (Safari).
-- **Live-edge sync** — caps `liveSyncPlaybackRate` at 1.5× to stay near the live edge.
-- **Automatic media-error recovery** — retries via `recoverMediaError` with a 2 s debounce.
-- **Fatal-error escalation** — destroys and rebuilds the HLS instance on unrecoverable errors.
+- **Live-edge sync** — caps `maxLiveSyncPlaybackRate` at 1.5× to stay near the live edge.
+- **Automatic media-error recovery** — calls `recoverMediaError` immediately on every `MEDIA_ERROR`, in place, with no teardown.
+- **Fatal-error escalation** — any other fatal error logs, destroys the HLS instance, and rebuilds it after 2 s.
 - **Autoplay-muted on manifest parse** — works around browser autoplay policies. Live tiles render chrome-free (no native controls); stop/start happens through the card.
 
 ---
@@ -52,7 +52,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ### 2.1 Recordings index (`/recordings`)
 - **All-streams recording grid** — every subdirectory of the recordings mount renders as a whole-card-clickable tile: 16:9 thumbnail with a mono timestamp pill (top-right) and an "N RECORDINGS" chip (bottom-left), footer with name, "latest <relative time>" via `useFormatter`, and an arrow affordance. `apps/web/src/features/recordings/recordings-index-page.tsx`, `apps/web/src/features/recordings/recordings-index-view.tsx`
 - **Toolbar** — totals summary ("N streams · M recordings") on the left; a 280 px filter input with search-icon prefix and a `/` keyboard-hint badge on the right. Pressing `/` anywhere focuses the filter; filtering is client-side and instant.
-- **Empty / error states** — dashed panel with an "Enable recording" CTA into the MediaMTX config when no recordings exist; red-tinted panel with the mono directory path and "Open App Config" CTA when the mount is unreadable. `apps/web/src/features/recordings/recordings-index-empty.tsx`
+- **Empty / error states** — dashed panel with an "Enable recording" CTA into the MediaMTX config when no recordings exist (`apps/web/src/features/recordings/recordings-index-empty.tsx`); red-tinted `StatusPanel` with the mono directory path and "Open App Config" CTA when the mount is unreadable (`apps/web/src/features/recordings/recordings-index-page.tsx`). Note the "Enable recording" CTA lands on a page with no `record*` field — see `docs/debt/20260715131524-record-fields-not-surfaced.md`.
 - **`summarizeStreamRecordings`** — api-side fs helper returns `{count, latestMtime}` per subdirectory in one walk. `apps/api/src/recordings-fs.ts`
 
 ### 2.2 Per-stream recording browser (`/recordings/{streamname}`)
@@ -72,10 +72,10 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Path safety + 404s** — resolved paths must stay inside the recordings mount; file existence validated before stream open.
 
 ### 2.5 Thumbnails / screenshots
-- **`GET /media/screenshots/{streamName}/latest`** — returns the most recent PNG for a stream as `image/png`, or plain 404 when missing (cards fall back via `onError`). `apps/api/src/media.ts`
+- **`GET /media/screenshots/{streamName}/latest`** — serves `live.png` (the periodic live snapshot, see §4) when present; otherwise the newest recording thumbnail, or plain 404 when the stream has neither (cards fall back via `onError`). `apps/api/src/media.ts`
 - **`GET /media/screenshots/{streamName}/{file}.png`** — serves a specific recording's thumbnail.
 - **`Cache-Control: no-store`** — set on every screenshot response so the freshest snapshot is always served.
-- **Stream-scoped storage** — thumbnails live under `<screenshotsDirectory>/<streamName>/`.
+- **Stream-scoped storage** — thumbnails live under `<screenshotsDirectory>/<streamName>/`: one `live.png` per stream, plus one PNG per recording named after its MP4.
 
 ---
 
@@ -95,7 +95,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Floating save bar** — the shared `SaveBar` mounts only while the form is dirty: amber dot + "n unsaved changes (· m fields need attention)", Reset (ghost) + Save (disabled while invalid). `apps/web/src/components/save-bar.tsx`
 
 ### 3.2 MediaMTX global server config — `/config/mediamtx/global`
-- **Comprehensive MediaMTX `GlobalConf` editor** — ~75 fields, every option exposed by MediaMTX v1.11.3 covered by the schema. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`, `packages/contract/src/index.ts` (`GlobalConfigSchema`)
+- **MediaMTX `GlobalConf` editor** — 65 controls across eight sections: 58 field rows, 6 protocol enable switches (`api`, `rtsp`, `rtmp`, `hls`, `webrtc`, `srt`), and the `webrtcICEServers2` rows. `GlobalConfigSchema` mirrors MediaMTX v1.11.3 with 71 keys, so 6 are editable nowhere: the `record*` group (`record`, `recordPath`, `recordFormat`, `recordPartDuration`, `recordSegmentDuration`, `recordDeleteAfter`), which MediaMTX 1.19.2 in fact serves from `pathDefaults` rather than global config — see `docs/debt/20260715131524-record-fields-not-surfaced.md`. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`, `apps/web/src/features/mediamtx-config/sections.ts`, `packages/contract/src/index.ts` (`GlobalConfigSchema`)
 - **Scroll-with-rail layout (not tabs)** — a sticky 200 px "ON THIS PAGE" anchor rail beside one continuously scrolling form of eight sections (Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, SRT), driven by a data descriptor. Rail rows scroll-spy the active section (IntersectionObserver) and show a red error-count pill or a mono "OFF" label for disabled protocols. On mobile the rail collapses to a sticky horizontal chip row. `apps/web/src/features/mediamtx-config/sections.ts`, `apps/web/src/hooks/use-scroll-spy.ts`
 - **`ConfigFieldRow`** — 280 px fixed key column (MediaMTX config key verbatim in Geist Mono, never localized per `docs/I18N.md`, with an amber dirty dot) + localized help text below + control column (mono inputs full-width, switches right-aligned), hairline row separators. `apps/web/src/features/mediamtx-config/config-field-row.tsx`
 - **Per-field localized help text** — `Config.mediamtxForm.help.*` messages describe every exposed key.
@@ -112,8 +112,9 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 - **First-run bootstrap** — creates `config.json` from env vars (`BACKEND_SERVER_MEDIAMTX_URL`, `MEDIAMTX_API_PORT`, `REMOTE_MEDIAMTX_URL`, `MEDIAMTX_RECORDINGS_DIR`, `MEDIAMTX_SCREENSHOTS_DIR`) and ensures `recordingsDirectory` / `screenshotsDirectory` exist on server boot. After the file exists, the `/config` UI is the source of truth — re-setting env vars takes effect only after deleting `config.json`. `apps/api/src/config-store.ts`
 - **Env / Config drift warning** — on subsequent boots, for each bootstrap env var that the operator has *explicitly* set in the environment (raw `process.env` via `rawEnv` in `apps/api/src/env.ts`, distinct from schema defaults), if its value differs from the corresponding stored config value a single structured `WARN` log lists each mismatch and reminds the operator that env only seeds the first boot.
-- **Thumbnail generation cron** — every 30 minutes (`*/30 * * * *`) scans the recordings tree for MP4s without a sibling PNG and spawns `ffmpeg -ss 00:00:00 -i <file>.mp4 -frames:v 1 <file>.png`. Non-blocking, parallel. Also runs once on boot.
-- **Screenshot retention cron** — daily at midnight (`0 0 0 * * *`) deletes thumbnails older than 2 days, per stream subdirectory.
+- **Live snapshot cron** — every 30 seconds (`*/30 * * * * *`) lists MediaMTX paths and, for each `ready` one, grabs a single frame off the RTSP feed (`rtsp://<mediaMtxUrl host>:<rtspAddress port>/<path>`) into `<screenshotsDirectory>/<streamName>/live.png`. MediaMTX exposes no snapshot endpoint, so this wraps the protocol it already serves. Written via tmp+rename so `/latest` never serves a half-written file; each `ffmpeg` is SIGKILLed after 15s so a stalled camera can't pile up processes. Non-blocking, parallel. Also runs once on boot. This is what backs the card's "first capture in ~30s" copy — snapshots do **not** require recording to be enabled.
+- **Thumbnail generation cron** — every 30 minutes (`*/30 * * * *`) scans the recordings tree for MP4s without a sibling PNG and spawns `ffmpeg -ss 00:00:00 -i <file>.mp4 -frames:v 1 <file>.png`. Non-blocking, parallel. Also runs once on boot. Backs the per-recording thumbnails in the recordings list.
+- **Screenshot retention cron** — daily at midnight (`0 0 0 * * *`) deletes thumbnails older than 2 days, per stream subdirectory. A live stream's `live.png` is refreshed every 30s so it never ages out; once a stream goes offline its last frame survives 2 days, then the card falls back to a recording thumbnail (or the "no snapshot yet" placeholder).
 - **Pino-structured logging** of every spawn / deletion.
 
 ---
@@ -122,7 +123,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 - **`GET /api/health`** — JSON health endpoint with config-store readability check; returns 200 healthy or 503 unhealthy. Used by the Docker `HEALTHCHECK`. `apps/api/src/server.ts`
 - **Pino logger** — structured logs across the api; a console-backed logger in the web app; `console.*` lint-banned elsewhere. `apps/api/src/logger.ts`, `apps/web/src/lib/logger.ts`
-- **Centralized env loader** — `apps/api/src/env.ts` validates env via t3-env + Zod. The web app has no env access at all.
+- **Centralized env loader** — `apps/api/src/env.ts` validates env via t3-env + Zod: the five bootstrap vars (see §4) plus `PORT` (default `3000`), `LOG_LEVEL` (default `info`, consumed by `apps/api/src/logger.ts`), and `NODE_ENV`. The web app has no runtime env — its only build-time read is `import.meta.env.DEV` in `apps/web/src/lib/logger.ts`; everything else flows through the API.
 - **Client data fetching via TanStack Query** — data-driven pages always refetch on mount, so the UI reflects fresh server state.
 
 ---
@@ -145,7 +146,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 8.1 shadcn/ui primitives (`apps/web/src/components/ui/`)
 - Layout / nav: Breadcrumb.
-- Content: Card, AspectRatio, Skeleton, Progress, Badge.
+- Content: Card, AspectRatio, Progress, Badge.
 - Inputs: Button, Input, Textarea, Switch, Label, ToggleGroup, Toggle.
 - Surfaces: Popover, DropdownMenu, Dialog, Command.
 - Form: RHF integration (FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel).
@@ -159,6 +160,8 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **PageLayout** — page title (20 px, negative tracking) + subheader + content in a width-variant container (7xl default, 1060 px wide, 920 px reading, 640 px narrow), 28 px gutters. `apps/web/src/components/page-layout.tsx`
 - **ModeToggle** — single-click Light ↔ Dark theme toggle backed by the in-app `ThemeProvider`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `apps/web/src/components/mode-toggle.tsx`
 - **VideoPlayer** — shared HLS.js component (see §1.3). `apps/web/src/components/video-player.tsx`
+- **StatusPanel** — shared panel behind the designed empty / error / disconnected states on the live and recordings screens (§1.1, §2.1). `apps/web/src/components/status-panel.tsx`
+- **mediaCardShell** — shared class string giving stream cards and recording summary cards one media-tile shell. `apps/web/src/components/media-card.ts`
 - **ThemeProvider** — in-app theme context (light/dark/system), dark default, `class`-based, persisted to `localStorage`. Paired with an inline pre-bundle script in `index.html` that sets the `<html>` class before first paint to avoid a theme flash. `apps/web/src/components/theme-provider.tsx`, `apps/web/index.html`
 - **ServiceWorker** — registers `/sw.js` for offline / PWA support, with browser-capability guard. `apps/web/src/components/service-worker.tsx`
 - **LocaleSwitcher** — see §9.
@@ -241,6 +244,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 - **`AppConfigSchema`** — coerced types, non-empty strings, positive port, nullable remote URL.
 - **`GlobalConfigSchema`** — full MediaMTX `GlobalConf` mirror with optional fields and coercion across logging, transports (RTSP/RTMP/HLS/WebRTC/SRT), API/metrics/profiling, recording, and ICE servers.
+- **`HealthSchema`** — `{status: 'ok', uptime}`, the `health` procedure's output.
+- **`StreamSchema`** — `{name, readyTime}`, the element type of `StreamsStateSchema`'s connected branch.
 - **`StreamsStateSchema`** — discriminated union for the live view connection state.
 - **`RecordingSchema` / `RecordingStreamSummarySchema`** — recording metadata with native `Date` values preserved over the wire by oRPC's serializer.
 - Localized form-message variants live feature-side: `apps/web/src/features/client-config/client-config.schemas.ts`.
@@ -259,14 +264,14 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **Port 3000** + node-based `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries) — no curl in the image.
 
 ### 13.2 Compose stacks
-- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volume for `/data`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889-8890 (WebRTC) / 9997 (API)`, dependency ordering. The app container sets the bootstrap env vars so first-boot seeding produces correct values.
+- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889-8890 (WebRTC) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it absolute, never to the api-relative `../../` form `.env.example` uses.
 - **`docker-compose.dev.yml`** — dev variant with optional `fake-streams` service behind `--profile streams` for offline testing.
 
 ### 13.3 Multi-arch
 - **`linux/amd64` + `linux/arm64`** images published on release via `.github/workflows/docker.yml`.
 
 ### 13.4 Sample `mediamtx.yml`
-- Pre-wired configuration enabling RTSP, RTMP, HLS, WebRTC, SRT, recording, and the API. `mediamtx.yml`
+- Sample configuration that explicitly enables the API (`api: yes`), HLS (`hls: yes`), permissive `authInternalUsers` for the Docker bridge network, and recording via `pathDefaults.record` + `recordPath`, plus an `all_others` catch-all path. RTSP, RTMP, WebRTC, and SRT are served by MediaMTX's own defaults rather than by any key in this file. `mediamtx.yml`
 
 ---
 
@@ -279,6 +284,12 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 ## 15. Testing & Quality
 
+### 15.0 Vitest unit tests (`apps/api/src/*.test.ts`)
+- **`jobs.test.ts`** — the live snapshot cron: only `ready` paths are captured, paths without a name are skipped, the RTSP url is built from the configured host + `rtspAddress` port (with an `:8554` fallback), tmp+rename on ffmpeg exit 0, tmp discarded on failure, a stalled ffmpeg SIGKILLed at 15s, and no kill for one that already exited. Sibling modules are mocked with factories; timers are faked. `apps/api/src/jobs.test.ts`
+- **`media.test.ts`** — `/screenshots/{streamName}/latest` resolution: `live.png` wins while a stream runs (and the directory is never read), the newest recording thumbnail is picked out of deliberately unsorted `readdir` output once it doesn't, non-png files are ignored, missing directory / no-pngs both 404, a stream name escaping the screenshots root is rejected even when the escaped file exists, and every response carries `Cache-Control: no-store`. Routes are driven through `media.request()`; `node:fs` is faked over `importActual`. `apps/api/src/media.test.ts`
+- **`config-store.test.ts`** — the settings store: `updateAppConfig` writes via tmp+rename (asserting the rename lands after the write) and creates `DATA_DIR` first, an invalid config is rejected before any file is touched; `bootstrapConfig` seeds from env only on first boot, leaves an existing `config.json` alone when env disagrees, and warns about drift **only** for vars the operator explicitly set — a value that differs merely because it came from a schema default is not drift. `apps/api/src/config-store.test.ts`
+- **Scope** — `apps/api` only; `apps/web` and `packages/contract` have no unit runner yet (`docs/debt/`). Rationale and alternatives: `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`. Layer-choice guidance: `docs/TESTING.md`.
+
 ### 15.1 Playwright E2E (`tests/e2e/`)
 - **`streams.spec.ts`** — top-nav tabs + active state, the designed Live View states (unreachable / no streams / playback banner / grid), toolbar summary, stream-card playback buttons + actions menu.
 - **`recordings.spec.ts`** — index states, totals summary + `/`-shortcut filter, client-side filtering, card navigation, day-grouped rows, inline player open/close with URL tracking, breadcrumb navigation.
@@ -287,7 +298,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`i18n.spec.ts`** — default English, locale switcher round-trip, persistence across reloads, translated nav.
 - **`a11y.spec.ts`** — axe-core accessibility smoke.
 - **`mediamtx.spec.ts`** — MediaMTX connectivity smoke tests.
-- **Runner config** (`playwright.config.ts`) — Chromium (+ Firefox/WebKit/mobile for UI specs), 1280×720, parallel workers, retries in CI, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env.
+- **Runner config** (`playwright.config.ts`) — Chromium (+ Firefox/WebKit/mobile for UI specs), 1280×720, parallel workers, 2 retries in CI and 1 locally, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env.
 
 ### 15.2 Linting & types
 - **ESLint 10 + `@antfu/eslint-config`** (lint + format in one tool) with custom rules:
@@ -303,8 +314,12 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
 | `pnpm lint` / `lint:fix` | ESLint check / autofix. |
-| `pnpm i18n:check` | Message-key parity + README translation staleness. |
+| `pnpm i18n:check` | Message-key parity + README translation staleness (runs both checks below). |
+| `pnpm i18n:check:messages` | Message-key parity only (`scripts/i18n-check.mjs`). |
+| `pnpm i18n:check:readme` | README translation staleness only (`scripts/readme-i18n-check.mjs`). |
+| `pnpm test` | Vitest unit suites across packages (turbo). |
 | `pnpm test:e2e` | Playwright suite (needs a prior build). |
+| `pnpm test:e2e:dev` | Playwright suite in UI mode. |
 | `pnpm setup` | Run `./scripts/setup-dev.sh`. |
 | `pnpm dev:all` | Start MediaMTX (with fake streams) and the dev servers together; tears the stack down on exit. |
 | `pnpm mediamtx` / `mediamtx:stop` | Start / stop MediaMTX with fake test streams. |
@@ -347,13 +362,13 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | Styling | Tailwind CSS 4, shadcn/ui (Radix UI) |
 | Forms | React Hook Form 7 + Zod 4 |
 | Video (browser) | HLS.js 1.6.x |
-| Video (server) | ffmpeg (thumbnails) |
+| Video (server) | ffmpeg (live snapshots + recording thumbnails) |
 | Settings storage | JSON file (`config.json`), atomic writes — no database |
 | Logging | Pino (api), console wrapper (web) |
 | Scheduling | node-cron |
 | Icons | Lucide React |
 | i18n | `use-intl` (client-side locale, 30 languages) |
-| Testing | Playwright |
+| Testing | Playwright (E2E) + Vitest (api unit) |
 | Linting | ESLint 10 + `@antfu/eslint-config` |
 | Packaging | Docker (turbo-pruned multi-stage, multi-arch, single image) |
 | Release | semantic-release, Renovate |
