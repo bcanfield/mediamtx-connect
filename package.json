@@ -6,7 +6,9 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "turbo dev",
+    "predev": "node scripts/seed-fixtures.mjs",
+    "dev": "docker compose -f docker-compose.dev.yml up -d && turbo dev",
+    "dev:stop": "docker compose -f docker-compose.dev.yml down",
     "build": "turbo build && rm -rf apps/api/public && cp -R apps/web/dist apps/api/public",
     "typecheck": "turbo typecheck",
     "lint": "eslint",
@@ -17,11 +19,6 @@
     "test": "turbo test",
     "test:e2e": "playwright test",
     "test:e2e:dev": "playwright test --ui",
-    "mediamtx": "./scripts/start-mediamtx.sh",
-    "mediamtx:stop": "docker compose -f docker-compose.dev.yml --profile streams down",
-    "dev:all": "./scripts/dev-all.sh",
-    "setup": "./scripts/setup-dev.sh",
-    "setup:test-data": "./scripts/setup-test-data.sh",
     "release": "semantic-release"
   },
   "devDependencies": {

@@ -5,18 +5,24 @@
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
 cd mediamtx-connect
-cp .env.example .env
-pnpm setup      # deps + test fixtures — once
-pnpm dev:all    # MediaMTX + fake streams + web/api dev servers
+pnpm install
+pnpm dev
 ```
 
-Web dev server at http://localhost:5173 (api on :3000). Ctrl-C tears the docker stack down.
+That's it — no `.env`, no separate setup step. `pnpm dev` starts MediaMTX + fake
+streams in Docker, seeds sample recordings/screenshots into `.dev-data/`, and
+runs the web + api dev servers. Web dev server at http://localhost:5173 (api on
+:3000). `pnpm dev:stop` stops the Docker stack (it's left running between
+sessions by design, like a local database).
 
-Needs `ffmpeg` on PATH (`brew install ffmpeg`). The Docker image bundles it, but in dev the api runs on the host and spawns it for snapshots and recording thumbnails — without it, the snapshot cron logs a spawn error every 30s and stream cards stay on "no snapshot yet".
+Requires Docker (for MediaMTX) and Node ≥22 + pnpm. `ffmpeg` is optional: the
+committed fixtures give the Recordings and Streams pages content out of the box;
+install ffmpeg (`brew install ffmpeg`) only if you want the api to generate live
+snapshots from the fake streams.
 
-To run the pieces separately, use `pnpm mediamtx` and `pnpm dev` in two terminals. Without MediaMTX, the Streams page shows a "Cannot connect" message; Recordings and Config still work against the seeded test data.
-
-Full script catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.md`.
+Everything is configurable at runtime under **Config** — env vars only seed the
+first boot (`.env.example` documents the optional overrides). Full script
+catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.md`.
 
 ## Tests
 
@@ -42,7 +48,7 @@ await expect(page.locator('[class*="card"]')).toHaveCount(3)
 
 ## App settings storage
 
-There is no database. The five app settings persist in a Zod-validated `config.json` under `$DATA_DIR` (seeded from env on first boot). Delete the file to re-seed from env.
+There is no database. The five app settings persist in a Zod-validated `config.json` under `$DATA_DIR` (seeded from env on first boot, then owned by the Config UI). Delete the file to re-seed from env.
 
 ## Code style
 

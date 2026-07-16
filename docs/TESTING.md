@@ -39,7 +39,7 @@ pnpm test:e2e:dev      # playwright UI
 - **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`).
 - **Resilient E2E.** Assert "state A or state B" when both are valid (see `CONTRIBUTING.md`). Never `toHaveCount(n)` against live data.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
-- **Fixtures** come from `pnpm setup:test-data` (ffmpeg-generated MP4s + PNGs under `test-data/`), which honors the same env vars the server boots with.
+- **Fixtures** are small committed MP4s + PNGs under `tests/fixtures/`. Playwright's `globalSetup` copies them into `test-results/e2e-data/` (via `scripts/seed-fixtures.mjs`) before the webserver boots — hermetic and offline, no ffmpeg or MediaMTX needed.
 
 ## E2E projects
 

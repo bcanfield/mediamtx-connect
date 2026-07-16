@@ -1,11 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .env
 
-# dev
+# dev — seeded sample data (pnpm dev) + local prod-compose recordings
+/.dev-data
 /recordings
 /screenshots
-/test-data
-/.data
 
 # dependencies
 node_modules
