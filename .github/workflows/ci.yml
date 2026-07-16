@@ -27,6 +27,8 @@ jobs:
         run: pnpm typecheck
       - name: i18n key parity + README translation sync
         run: pnpm i18n:check
+      - name: Unit tests
+        run: pnpm test
       - name: Build
         run: pnpm build
 

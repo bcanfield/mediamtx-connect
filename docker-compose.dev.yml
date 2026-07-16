@@ -10,7 +10,11 @@ services:
       - dev
     volumes:
       - ./mediamtx.yml:/mediamtx.yml:ro
-      - ${MEDIAMTX_RECORDINGS_DIR:-./test-data/recordings}:/recordings
+      # Not ${MEDIAMTX_RECORDINGS_DIR}: .env sets that to ../../test-data/recordings
+      # for the api (which runs from apps/api), but compose resolves from the repo
+      # root — so interpolating it here mounts a directory outside the repo and
+      # MediaMTX records where nothing reads. Dev recordings always live here.
+      - ./test-data/recordings:/recordings
     ports:
       - '8554:8554' # RTSP
       - '8890:8890/udp' # WebRTC/ICE UDP

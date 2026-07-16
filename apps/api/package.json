@@ -11,7 +11,9 @@
     "dev": "tsx watch --env-file-if-exists=../../.env src/server.ts",
     "build": "tsdown",
     "start": "node --env-file-if-exists=../../.env dist/server.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@connect/contract": "workspace:*",
@@ -29,6 +31,7 @@
     "@types/node": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

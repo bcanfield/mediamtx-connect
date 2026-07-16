@@ -4,6 +4,7 @@ import path from 'node:path'
 import cron from 'node-cron'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
+import { mediaMtxApi } from './mediamtx'
 
 function getSubdirectories(dirPath: string): string[] {
   const files = fs.readdirSync(dirPath).filter(f => !f.startsWith('.'))
@@ -51,6 +52,66 @@ async function generateScreenshots() {
   }
 }
 
+// Grab one frame from each live stream and keep it as live.png. MediaMTX has no
+// snapshot endpoint, so we pull a frame off the RTSP feed it already serves.
+// Written via tmp+rename so /latest never serves a half-written file.
+export async function captureLiveSnapshots() {
+  const config = await getAppConfig()
+  const api = mediaMtxApi(config)
+  const [paths, globalConf] = await Promise.all([api.pathsList(), api.configGlobalGet()])
+
+  const host = new URL(config.mediaMtxUrl).hostname
+  const rtspPort = (globalConf.rtspAddress ?? ':8554').split(':').pop()
+  const liveStreams = (paths.items ?? [])
+    .filter(p => p.ready)
+    .map(p => p.name)
+    .filter(name => name !== undefined)
+
+  logger.info(`Capturing snapshots for ${liveStreams.length} live streams`)
+
+  for (const streamName of liveStreams) {
+    const dir = path.join(config.screenshotsDirectory, streamName)
+    fs.mkdirSync(dir, { recursive: true })
+
+    const outputFile = path.join(dir, 'live.png')
+    const tmp = `${outputFile}.tmp`
+    // -c:v/-f are explicit because the tmp name has no .png for ffmpeg to sniff.
+    const proc = cp.spawn('ffmpeg', [
+      '-y',
+      '-rtsp_transport',
+      'tcp',
+      '-i',
+      `rtsp://${host}:${rtspPort}/${streamName}`,
+      '-frames:v',
+      '1',
+      '-update',
+      '1',
+      '-c:v',
+      'png',
+      '-f',
+      'image2',
+      tmp,
+    ])
+
+    // A camera that accepts the connection then stalls would pile up a new
+    // ffmpeg every tick, so cap each capture well under the 30s interval.
+    const killTimer = setTimeout(() => proc.kill('SIGKILL'), 15_000)
+    proc.on('error', (err) => {
+      clearTimeout(killTimer)
+      logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
+    })
+    proc.on('close', (code) => {
+      clearTimeout(killTimer)
+      if (code === 0) {
+        fs.renameSync(tmp, outputFile)
+        return
+      }
+      fs.rmSync(tmp, { force: true })
+      logger.warn(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
+    })
+  }
+}
+
 // Deletes screenshots older than 2 days, per stream subdirectory.
 async function cleanupScreenshots() {
   logger.info('Cleaning up screenshots')
@@ -72,6 +133,15 @@ async function cleanupScreenshots() {
 }
 
 export function startJobs() {
+  captureLiveSnapshots().catch((error) => {
+    logger.error({ err: error }, 'Unable to run captureLiveSnapshots')
+  })
+  cron.schedule('*/30 * * * * *', () => {
+    captureLiveSnapshots().catch((error) => {
+      logger.error({ err: error }, 'Unable to run captureLiveSnapshots')
+    })
+  })
+
   generateScreenshots().catch((error) => {
     logger.error({ err: error }, 'Unable to run generateScreenshots')
   })

@@ -25,11 +25,21 @@ media.get('/screenshots/:streamName/latest', async (c) => {
   if (!dir || !existsSync(dir))
     return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
 
-  const screenshots = readdirSync(dir).filter(f => !f.startsWith('.'))
-  const latest = screenshots.at(-1)
+  // live.png is the periodic snapshot of the running stream. Streams that are
+  // offline (or predate the capture job) fall back to their newest recording
+  // thumbnail, whose %Y-%m-%d_%H-%M-%S name sorts chronologically.
+  const live = path.join(dir, 'live.png')
+  if (existsSync(live)) {
+    return streamResponse(live, {
+      'Content-Type': 'image/png',
+      'Cache-Control': 'no-store',
+    })
+  }
+
+  const latest = readdirSync(dir).filter(f => f.endsWith('.png')).sort().at(-1)
   if (!latest)
     return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
-  return streamResponse(path.join(dir, `${path.parse(latest).name}.png`), {
+  return streamResponse(path.join(dir, latest), {
     'Content-Type': 'image/png',
     'Cache-Control': 'no-store',
   })

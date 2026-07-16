@@ -6,20 +6,23 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 
 | Layer | Tool | Scope | Location |
 |-------|------|-------|----------|
+| Unit | Vitest | api logic that E2E can't reach: process spawning, timers, filesystem edge cases | `apps/api/src/*.test.ts` (colocated) |
 | E2E | Playwright | Full browser flows, byte-range MP4 streaming, locale switching, accessibility | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Re-introducing Vitest for contract schemas, `recordings-fs.ts`, `config-store.ts`, and form components is tracked in `docs/debt/`. Until then, the E2E suite is the behavioral gate.
+> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), currently covering `jobs.ts` only; contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
 
 ## Decision: which layer for a new feature?
 
 - Added a route, navigation, byte-range, or cross-page flow → **E2E**.
 - Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
+- Wrote api logic a browser can't observe — a cron, a spawned process, a timer, a filesystem fallback → **Unit**.
 - Everything else → cover it through the closest E2E flow for now (see the note above).
 
 ## Commands
 
 ```bash
+pnpm test              # vitest, all packages (turbo)
 pnpm build             # e2e runs the built single-server (apps/api/dist)
 pnpm test:e2e          # playwright, headless
 pnpm test:e2e:dev      # playwright UI
@@ -27,6 +30,10 @@ pnpm test:e2e:dev      # playwright UI
 
 ## Conventions
 
+- **Unit tests colocate** next to the module (`src/jobs.ts` → `src/jobs.test.ts`).
+- **Mock sibling modules with a factory, not automock.** `vi.mock('./config-store', () => ({ ... }))` — a bare `vi.mock` still loads the real module, and `config-store` imports `env.ts`, which validates `process.env` at import time and throws.
+- **Fake timers in any suite that touches a job.** The snapshot cron arms a 15s kill timer; without `vi.useFakeTimers()` it outlives the run.
+- **A test you haven't seen fail isn't a test.** Break the line it covers and confirm it goes red before moving on.
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
 - **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`).

@@ -12,6 +12,8 @@ pnpm dev:all    # MediaMTX + fake streams + web/api dev servers
 
 Web dev server at http://localhost:5173 (api on :3000). Ctrl-C tears the docker stack down.
 
+Needs `ffmpeg` on PATH (`brew install ffmpeg`). The Docker image bundles it, but in dev the api runs on the host and spawns it for snapshots and recording thumbnails — without it, the snapshot cron logs a spawn error every 30s and stream cards stay on "no snapshot yet".
+
 To run the pieces separately, use `pnpm mediamtx` and `pnpm dev` in two terminals. Without MediaMTX, the Streams page shows a "Cannot connect" message; Recordings and Config still work against the seeded test data.
 
 Full script catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.md`.
