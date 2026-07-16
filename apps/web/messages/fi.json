@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Tallennus"
+        "recording": "Tallennus",
+        "pathHooks": "Polun hookit"
       },
       "sectionDescriptions": {
         "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
@@ -241,7 +242,8 @@
         "hls": "Tarjoa striimit HLS-muodossa selaintoistoa varten.",
         "webrtc": "Matalan viiveen selaintoisto ja julkaisu.",
         "srt": "Julkaise ja vastaanota striimejä SRT:llä.",
-        "recording": "Tallenna striimit levylle."
+        "recording": "Tallenna striimit levylle.",
+        "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa."
       },
       "enabled": "Käytössä",
       "off": "Pois",
@@ -324,7 +326,22 @@
         "recordFormat": "Tallennussegmenttien säiliö (fmp4 tai mpegts).",
         "recordPartDuration": "Kunkin osan kesto fmp4-tallenteissa.",
         "recordSegmentDuration": "Kunkin tallennussegmentin kesto.",
-        "recordDeleteAfter": "Poista segmentit tämän ajan jälkeen. Nolla poistaa käytöstä."
+        "recordDeleteAfter": "Poista segmentit tämän ajan jälkeen. Nolla poistaa käytöstä.",
+        "runOnInit": "Komento, joka suoritetaan polun alustuessa.",
+        "runOnInitRestart": "Käynnistä komento uudelleen, jos se päättyy.",
+        "runOnDemand": "Komento, joka suoritetaan, kun asiakas alkaa lukea eikä polulla ole lähetintä.",
+        "runOnDemandRestart": "Käynnistä komento uudelleen, jos se päättyy.",
+        "runOnDemandStartTimeout": "Kuinka kauan odotetaan pyynnöstä käynnistyvän lähettimen käynnistymistä.",
+        "runOnDemandCloseAfter": "Pysäytä pyynnöstä käynnistyvä komento tämän ajan kuluttua siitä, kun viimeinen lukija poistuu.",
+        "runOnUnDemand": "Komento, joka suoritetaan, kun pyynnöstä käynnistyvä komento pysäytetään.",
+        "runOnReady": "Komento, joka suoritetaan, kun striimi on valmis luettavaksi.",
+        "runOnReadyRestart": "Käynnistä komento uudelleen, jos se päättyy.",
+        "runOnNotReady": "Komento, joka suoritetaan, kun striimi ei ole enää valmis.",
+        "runOnRead": "Komento, joka suoritetaan, kun asiakas alkaa lukea tätä polkua.",
+        "runOnReadRestart": "Käynnistä komento uudelleen, jos se päättyy.",
+        "runOnUnread": "Komento, joka suoritetaan, kun asiakas lopettaa tämän polun lukemisen.",
+        "runOnRecordSegmentCreate": "Komento, joka suoritetaan, kun tallennussegmentti luodaan.",
+        "runOnRecordSegmentComplete": "Komento, joka suoritetaan, kun tallennussegmentti on valmis."
       },
       "toasts": {
         "success": "MediaMTX-asetukset tallennettu",

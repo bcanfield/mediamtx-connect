@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Inspelning"
+        "recording": "Inspelning",
+        "pathHooks": "Sökvägshooks"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsgränser och globala begränsningar.",
@@ -241,7 +242,8 @@
         "hls": "Servera strömmar som HLS för uppspelning i webbläsaren.",
         "webrtc": "Uppspelning och publicering i webbläsaren med låg latens.",
         "srt": "Publicera och läs strömmar via SRT.",
-        "recording": "Spela in strömmar till disk."
+        "recording": "Spela in strömmar till disk.",
+        "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser."
       },
       "enabled": "Aktiverad",
       "off": "Av",
@@ -324,7 +326,22 @@
         "recordFormat": "Behållare för inspelningssegment (fmp4 eller mpegts).",
         "recordPartDuration": "Längd på varje del i fmp4-inspelningar.",
         "recordSegmentDuration": "Längd på varje inspelningssegment.",
-        "recordDeleteAfter": "Ta bort segment efter denna tid. Noll inaktiverar borttagning."
+        "recordDeleteAfter": "Ta bort segment efter denna tid. Noll inaktiverar borttagning.",
+        "runOnInit": "Kommando som körs när sökvägen initieras.",
+        "runOnInitRestart": "Starta om kommandot om det avslutas.",
+        "runOnDemand": "Kommando som körs när en klient börjar läsa och sökvägen saknar utgivare.",
+        "runOnDemandRestart": "Starta om kommandot om det avslutas.",
+        "runOnDemandStartTimeout": "Hur länge det väntas på att utgivaren vid behov startar.",
+        "runOnDemandCloseAfter": "Stoppa kommandot vid behov så här lång tid efter att den sista läsaren lämnat.",
+        "runOnUnDemand": "Kommando som körs när kommandot vid behov stoppas.",
+        "runOnReady": "Kommando som körs när strömmen är redo att läsas.",
+        "runOnReadyRestart": "Starta om kommandot om det avslutas.",
+        "runOnNotReady": "Kommando som körs när strömmen inte längre är redo.",
+        "runOnRead": "Kommando som körs när en klient börjar läsa denna sökväg.",
+        "runOnReadRestart": "Starta om kommandot om det avslutas.",
+        "runOnUnread": "Kommando som körs när en klient slutar läsa denna sökväg.",
+        "runOnRecordSegmentCreate": "Kommando som körs när ett inspelningssegment skapas.",
+        "runOnRecordSegmentComplete": "Kommando som körs när ett inspelningssegment är färdigt."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen har sparats",

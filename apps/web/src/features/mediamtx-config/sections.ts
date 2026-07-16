@@ -131,7 +131,7 @@ export const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
 
 // Shared by both path-scoped surfaces: a path's own config is the per-path
 // override of the same keys path defaults sets server-wide (ADR 0002).
-// Recording is the only group surfaced so far; MediaMTX serves many more keys.
+// MediaMTX serves many more keys than these two groups.
 export const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
   {
     id: 'recording',
@@ -142,6 +142,28 @@ export const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
       { name: 'recordPartDuration', kind: 'text' },
       { name: 'recordSegmentDuration', kind: 'text' },
       { name: 'recordDeleteAfter', kind: 'text' },
+    ],
+  },
+  // Path-scoped hooks, in MediaMTX's own lifecycle order. `hooks` is taken by
+  // the global scope's connect/disconnect commands, which are a different set.
+  {
+    id: 'pathHooks',
+    fields: [
+      { name: 'runOnInit', kind: 'text' },
+      { name: 'runOnInitRestart', kind: 'switch' },
+      { name: 'runOnDemand', kind: 'text' },
+      { name: 'runOnDemandRestart', kind: 'switch' },
+      { name: 'runOnDemandStartTimeout', kind: 'text' },
+      { name: 'runOnDemandCloseAfter', kind: 'text' },
+      { name: 'runOnUnDemand', kind: 'text' },
+      { name: 'runOnReady', kind: 'text' },
+      { name: 'runOnReadyRestart', kind: 'switch' },
+      { name: 'runOnNotReady', kind: 'text' },
+      { name: 'runOnRead', kind: 'text' },
+      { name: 'runOnReadRestart', kind: 'switch' },
+      { name: 'runOnUnread', kind: 'text' },
+      { name: 'runOnRecordSegmentCreate', kind: 'text' },
+      { name: 'runOnRecordSegmentComplete', kind: 'text' },
     ],
   },
 ]

@@ -15,3 +15,5 @@ created: 2026-07-15
 The StreamCard actions menu ships 6 stubbed items (open stream detail, take snapshot, record toggle, copy publish URLs, share & embed, edit hooks) that only log and toast "Not implemented yet". The grouping mirrors design board 1h's extension contract, so the menu shape is final but the behaviors are absent. "View recordings" and "Edit path config" are functional today.
 
 2026-07-16: "Edit path config" paid off — it deep-links to `/config/mediamtx/paths/{name}` (ticket 02). "Edit hooks" (ticket 03) targets the same route with the hooks section preselected, and the record toggle (ticket 04) writes the per-path override that route now exposes.
+
+2026-07-16: "Edit hooks" paid off (ticket 03) — same route, `?section=pathHooks`. 5 stubs left: open stream detail, take snapshot, record toggle, copy publish URLs, share & embed. Tickets 04 (record toggle) and 08 (snapshot) claim two more.

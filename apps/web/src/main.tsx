@@ -93,13 +93,18 @@ const pathDefaultsRoute = createRoute({
   component: PathDefaultsPage,
 })
 
+// `section` lands the page on one group of keys rather than at the top.
 const pathConfigRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/config/mediamtx/paths/$name',
   component: function PathConfigRoute() {
     const { name } = pathConfigRoute.useParams()
-    return <PathConfigPage name={name} />
+    const { section } = pathConfigRoute.useSearch()
+    return <PathConfigPage name={name} section={section} />
   },
+  validateSearch: (search: Record<string, unknown>) => ({
+    section: typeof search.section === 'string' ? search.section : undefined,
+  }),
 })
 
 const router = createRouter({

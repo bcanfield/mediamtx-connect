@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Ghi hình"
+        "recording": "Ghi hình",
+        "pathHooks": "Hooks đường dẫn"
       },
       "sectionDescriptions": {
         "logging": "Đầu ra nhật ký, thời gian chờ và giới hạn toàn cục.",
@@ -241,7 +242,8 @@
         "hls": "Cung cấp luồng dưới dạng HLS để phát trên trình duyệt.",
         "webrtc": "Phát và đẩy luồng độ trễ thấp trên trình duyệt.",
         "srt": "Đẩy và xem luồng qua SRT.",
-        "recording": "Ghi luồng xuống đĩa."
+        "recording": "Ghi luồng xuống đĩa.",
+        "pathHooks": "Các lệnh MediaMTX chạy khi có sự kiện vòng đời của chính đường dẫn."
       },
       "enabled": "Đã bật",
       "off": "Tắt",
@@ -324,7 +326,22 @@
         "recordFormat": "Định dạng chứa của các phân đoạn ghi (fmp4 hoặc mpegts).",
         "recordPartDuration": "Thời lượng mỗi phần trong bản ghi fmp4.",
         "recordSegmentDuration": "Thời lượng của mỗi phân đoạn ghi.",
-        "recordDeleteAfter": "Xóa phân đoạn sau khoảng thời gian này. Số không sẽ tắt việc xóa."
+        "recordDeleteAfter": "Xóa phân đoạn sau khoảng thời gian này. Số không sẽ tắt việc xóa.",
+        "runOnInit": "Lệnh chạy khi đường dẫn được khởi tạo.",
+        "runOnInitRestart": "Khởi động lại lệnh nếu nó kết thúc.",
+        "runOnDemand": "Lệnh chạy khi một máy khách bắt đầu đọc và đường dẫn chưa có trình đẩy luồng.",
+        "runOnDemandRestart": "Khởi động lại lệnh nếu nó kết thúc.",
+        "runOnDemandStartTimeout": "Thời gian chờ trình đẩy luồng theo yêu cầu khởi động.",
+        "runOnDemandCloseAfter": "Dừng lệnh theo yêu cầu sau khoảng thời gian này kể từ khi người đọc cuối cùng rời đi.",
+        "runOnUnDemand": "Lệnh chạy khi lệnh theo yêu cầu bị dừng.",
+        "runOnReady": "Lệnh chạy khi luồng sẵn sàng để đọc.",
+        "runOnReadyRestart": "Khởi động lại lệnh nếu nó kết thúc.",
+        "runOnNotReady": "Lệnh chạy khi luồng không còn sẵn sàng.",
+        "runOnRead": "Lệnh chạy khi một máy khách bắt đầu đọc đường dẫn này.",
+        "runOnReadRestart": "Khởi động lại lệnh nếu nó kết thúc.",
+        "runOnUnread": "Lệnh chạy khi một máy khách ngừng đọc đường dẫn này.",
+        "runOnRecordSegmentCreate": "Lệnh chạy khi một phân đoạn ghi được tạo.",
+        "runOnRecordSegmentComplete": "Lệnh chạy khi một phân đoạn ghi hoàn tất."
       },
       "toasts": {
         "success": "Đã lưu cấu hình MediaMTX",

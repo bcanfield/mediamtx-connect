@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Nagrywanie"
+        "recording": "Nagrywanie",
+        "pathHooks": "Hooki ścieżki"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
@@ -241,7 +242,8 @@
         "hls": "Udostępniaj transmisje jako HLS do odtwarzania w przeglądarce.",
         "webrtc": "Odtwarzanie i publikowanie w przeglądarce z niskim opóźnieniem.",
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
-        "recording": "Nagrywaj strumienie na dysk."
+        "recording": "Nagrywaj strumienie na dysk.",
+        "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki."
       },
       "enabled": "Włączone",
       "off": "Wyłączone",
@@ -324,7 +326,22 @@
         "recordFormat": "Kontener segmentów nagrań (fmp4 lub mpegts).",
         "recordPartDuration": "Czas trwania każdej części w nagraniach fmp4.",
         "recordSegmentDuration": "Czas trwania każdego segmentu nagrania.",
-        "recordDeleteAfter": "Usuwaj segmenty po tym czasie. Zero wyłącza usuwanie."
+        "recordDeleteAfter": "Usuwaj segmenty po tym czasie. Zero wyłącza usuwanie.",
+        "runOnInit": "Polecenie uruchamiane przy inicjalizacji ścieżki.",
+        "runOnInitRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnDemand": "Polecenie uruchamiane, gdy klient zaczyna odbierać, a ścieżka nie ma źródła publikującego.",
+        "runOnDemandRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnDemandStartTimeout": "Czas oczekiwania na uruchomienie źródła na żądanie.",
+        "runOnDemandCloseAfter": "Zatrzymaj polecenie na żądanie po tym czasie od odejścia ostatniego odbiorcy.",
+        "runOnUnDemand": "Polecenie uruchamiane, gdy polecenie na żądanie zostaje zatrzymane.",
+        "runOnReady": "Polecenie uruchamiane, gdy strumień jest gotowy do odbioru.",
+        "runOnReadyRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnNotReady": "Polecenie uruchamiane, gdy strumień przestaje być gotowy.",
+        "runOnRead": "Polecenie uruchamiane, gdy klient zaczyna odbierać tę ścieżkę.",
+        "runOnReadRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnUnread": "Polecenie uruchamiane, gdy klient przestaje odbierać tę ścieżkę.",
+        "runOnRecordSegmentCreate": "Polecenie uruchamiane, gdy zostanie utworzony segment nagrania.",
+        "runOnRecordSegmentComplete": "Polecenie uruchamiane, gdy segment nagrania zostanie ukończony."
       },
       "toasts": {
         "success": "Zapisano konfigurację MediaMTX",

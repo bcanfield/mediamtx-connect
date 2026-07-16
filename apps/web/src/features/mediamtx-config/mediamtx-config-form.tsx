@@ -2,7 +2,7 @@ import type { GlobalConfigFormData } from '@connect/contract'
 import type { Control, FieldErrors, FieldPath, FieldValues, Resolver } from 'react-hook-form'
 import type { ConfigScope, SectionDef } from './sections'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm, useFormState, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
@@ -23,6 +23,7 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   scope,
   conf,
   onSave,
+  initialSection,
 }: {
   scope: ConfigScope<T>
   conf: T
@@ -30,6 +31,8 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   // whole config ignore it; the path scope sends it as its sparse override so
   // untouched keys keep tracking path defaults (ADR 0002).
   onSave: (values: T, changed: Partial<T>) => Promise<unknown>
+  // Section to land on, for deep links that mean one group of keys.
+  initialSection?: string
 }) {
   const t = useTranslations('Config.mediamtxForm')
   const tSaveBar = useTranslations('Config.saveBar')
@@ -58,6 +61,13 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   }
 
   const onReset = () => form.reset(conf)
+
+  // Jump straight there rather than smooth-scrolling the whole page past every
+  // section above it. Sections are rendered by the time this runs.
+  useEffect(() => {
+    if (initialSection)
+      document.getElementById(`mtx-${initialSection}`)?.scrollIntoView({ block: 'start' })
+  }, [initialSection])
 
   const offById = useOffById(form.control, scope)
   const { isDirty, isValid, dirtyFields } = form.formState

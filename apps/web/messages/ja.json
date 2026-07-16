@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "録画"
+        "recording": "録画",
+        "pathHooks": "パスフック"
       },
       "sectionDescriptions": {
         "logging": "ログ出力、タイムアウト、グローバル制限。",
@@ -241,7 +242,8 @@
         "hls": "ブラウザ再生用に HLS としてストリームを配信します。",
         "webrtc": "低遅延のブラウザ再生と配信。",
         "srt": "SRT でストリームを配信・視聴します。",
-        "recording": "ストリームをディスクに録画します。"
+        "recording": "ストリームをディスクに録画します。",
+        "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。"
       },
       "enabled": "有効",
       "off": "オフ",
@@ -324,7 +326,22 @@
         "recordFormat": "録画セグメントのコンテナ（fmp4 または mpegts）。",
         "recordPartDuration": "fmp4 録画における各パートの長さ。",
         "recordSegmentDuration": "各録画セグメントの長さ。",
-        "recordDeleteAfter": "この期間を過ぎたセグメントを削除します。ゼロで削除を無効化します。"
+        "recordDeleteAfter": "この期間を過ぎたセグメントを削除します。ゼロで削除を無効化します。",
+        "runOnInit": "パスの初期化時に実行するコマンド。",
+        "runOnInitRestart": "コマンドが終了した場合に再起動します。",
+        "runOnDemand": "配信元がいないパスをクライアントが視聴し始めたときに実行するコマンド。",
+        "runOnDemandRestart": "コマンドが終了した場合に再起動します。",
+        "runOnDemandStartTimeout": "オンデマンド配信元の起動を待つ時間。",
+        "runOnDemandCloseAfter": "最後の視聴者が離れてからこの時間が経過するとオンデマンドコマンドを停止します。",
+        "runOnUnDemand": "オンデマンドコマンドが停止したときに実行するコマンド。",
+        "runOnReady": "ストリームが視聴可能になったときに実行するコマンド。",
+        "runOnReadyRestart": "コマンドが終了した場合に再起動します。",
+        "runOnNotReady": "ストリームが視聴できなくなったときに実行するコマンド。",
+        "runOnRead": "クライアントがこのパスの視聴を開始したときに実行するコマンド。",
+        "runOnReadRestart": "コマンドが終了した場合に再起動します。",
+        "runOnUnread": "クライアントがこのパスの視聴を停止したときに実行するコマンド。",
+        "runOnRecordSegmentCreate": "録画セグメントが作成されたときに実行するコマンド。",
+        "runOnRecordSegmentComplete": "録画セグメントが完了したときに実行するコマンド。"
       },
       "toasts": {
         "success": "MediaMTX 設定を保存しました",

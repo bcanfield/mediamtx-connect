@@ -257,8 +257,15 @@ export function StreamCard({
                   {t('menu.editPathConfig')}
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={stub('edit-hooks')}>
-                {t('menu.editHooks')}
+              {/* Hooks are a section of a path's config, not a surface of
+                  their own — same route as "Edit path config" (ADR 0002). */}
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/config/mediamtx/paths/${encodeURIComponent(streamName)}`}
+                  search={{ section: 'pathHooks' }}
+                >
+                  {t('menu.editHooks')}
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Aufzeichnung"
+        "recording": "Aufzeichnung",
+        "pathHooks": "Pfad-Hooks"
       },
       "sectionDescriptions": {
         "logging": "Log-Ausgabe, Timeouts und globale Grenzwerte.",
@@ -241,7 +242,8 @@
         "hls": "Streams als HLS für die Browser-Wiedergabe bereitstellen.",
         "webrtc": "Browser-Wiedergabe und -Veröffentlichung mit niedriger Latenz.",
         "srt": "Streams über SRT veröffentlichen und lesen.",
-        "recording": "Streams auf die Festplatte aufzeichnen."
+        "recording": "Streams auf die Festplatte aufzeichnen.",
+        "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt."
       },
       "enabled": "Aktiviert",
       "off": "Aus",
@@ -324,7 +326,22 @@
         "recordFormat": "Container der Aufzeichnungssegmente (fmp4 oder mpegts).",
         "recordPartDuration": "Dauer jedes Teils in fmp4-Aufzeichnungen.",
         "recordSegmentDuration": "Dauer jedes Aufzeichnungssegments.",
-        "recordDeleteAfter": "Segmente nach dieser Dauer löschen. Null deaktiviert das Löschen."
+        "recordDeleteAfter": "Segmente nach dieser Dauer löschen. Null deaktiviert das Löschen.",
+        "runOnInit": "Befehl, der ausgeführt wird, wenn der Pfad initialisiert wird.",
+        "runOnInitRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnDemand": "Befehl, der ausgeführt wird, wenn ein Client zu lesen beginnt und der Pfad keinen Publisher hat.",
+        "runOnDemandRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnDemandStartTimeout": "Wie lange auf den Start des On-Demand-Publishers gewartet wird.",
+        "runOnDemandCloseAfter": "Den On-Demand-Befehl so lange nach dem Weggang des letzten Lesers stoppen.",
+        "runOnUnDemand": "Befehl, der ausgeführt wird, wenn der On-Demand-Befehl gestoppt wird.",
+        "runOnReady": "Befehl, der ausgeführt wird, wenn der Stream bereit zum Lesen ist.",
+        "runOnReadyRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnNotReady": "Befehl, der ausgeführt wird, wenn der Stream nicht mehr bereit ist.",
+        "runOnRead": "Befehl, der ausgeführt wird, wenn ein Client beginnt, diesen Pfad zu lesen.",
+        "runOnReadRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnUnread": "Befehl, der ausgeführt wird, wenn ein Client aufhört, diesen Pfad zu lesen.",
+        "runOnRecordSegmentCreate": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment erstellt wird.",
+        "runOnRecordSegmentComplete": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment abgeschlossen ist."
       },
       "toasts": {
         "success": "MediaMTX-Konfiguration gespeichert",

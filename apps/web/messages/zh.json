@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "录制"
+        "recording": "录制",
+        "pathHooks": "路径钩子"
       },
       "sectionDescriptions": {
         "logging": "日志输出、超时和全局限制。",
@@ -241,7 +242,8 @@
         "hls": "将流以 HLS 形式提供，用于浏览器播放。",
         "webrtc": "低延迟的浏览器播放与推流。",
         "srt": "通过 SRT 推流和观看流。",
-        "recording": "将流录制到磁盘。"
+        "recording": "将流录制到磁盘。",
+        "pathHooks": "MediaMTX 在路径自身生命周期事件时运行的命令。"
       },
       "enabled": "已启用",
       "off": "关闭",
@@ -324,7 +326,22 @@
         "recordFormat": "录制分段的容器格式（fmp4 或 mpegts）。",
         "recordPartDuration": "fmp4 录制中每个分片的时长。",
         "recordSegmentDuration": "每个录制分段的时长。",
-        "recordDeleteAfter": "超过该时长后删除分段。设为零则不删除。"
+        "recordDeleteAfter": "超过该时长后删除分段。设为零则不删除。",
+        "runOnInit": "路径初始化时运行的命令。",
+        "runOnInitRestart": "命令退出时重新启动。",
+        "runOnDemand": "客户端开始读取但路径没有发布者时运行的命令。",
+        "runOnDemandRestart": "命令退出时重新启动。",
+        "runOnDemandStartTimeout": "等待按需发布者启动的时长。",
+        "runOnDemandCloseAfter": "最后一个读取者离开后，经过该时长停止按需命令。",
+        "runOnUnDemand": "按需命令停止时运行的命令。",
+        "runOnReady": "流可供读取时运行的命令。",
+        "runOnReadyRestart": "命令退出时重新启动。",
+        "runOnNotReady": "流不再可供读取时运行的命令。",
+        "runOnRead": "客户端开始读取该路径时运行的命令。",
+        "runOnReadRestart": "命令退出时重新启动。",
+        "runOnUnread": "客户端停止读取该路径时运行的命令。",
+        "runOnRecordSegmentCreate": "创建录制分段时运行的命令。",
+        "runOnRecordSegmentComplete": "录制分段完成时运行的命令。"
       },
       "toasts": {
         "success": "MediaMTX 配置已保存",

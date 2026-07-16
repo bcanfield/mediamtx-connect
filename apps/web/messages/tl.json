@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Pag-record"
+        "recording": "Pag-record",
+        "pathHooks": "Hooks ng path"
       },
       "sectionDescriptions": {
         "logging": "Log output, mga timeout, at mga global na limitasyon.",
@@ -241,7 +242,8 @@
         "hls": "Ihain ang mga stream bilang HLS para sa playback sa browser.",
         "webrtc": "Low-latency na playback at pag-publish sa browser.",
         "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
-        "recording": "I-record ang mga stream sa disk."
+        "recording": "I-record ang mga stream sa disk.",
+        "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path."
       },
       "enabled": "Naka-enable",
       "off": "Naka-off",
@@ -324,7 +326,22 @@
         "recordFormat": "Container ng mga segment ng recording (fmp4 o mpegts).",
         "recordPartDuration": "Tagal ng bawat bahagi sa mga fmp4 na recording.",
         "recordSegmentDuration": "Tagal ng bawat segment ng recording.",
-        "recordDeleteAfter": "Burahin ang mga segment pagkatapos ng tagal na ito. Ang zero ay hindi nagbubura."
+        "recordDeleteAfter": "Burahin ang mga segment pagkatapos ng tagal na ito. Ang zero ay hindi nagbubura.",
+        "runOnInit": "Command na patatakbuhin kapag na-initialize ang path.",
+        "runOnInitRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnDemand": "Command na patatakbuhin kapag may client na nagsimulang magbasa at walang publisher ang path.",
+        "runOnDemandRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnDemandStartTimeout": "Gaano katagal hihintayin na magsimula ang on-demand publisher.",
+        "runOnDemandCloseAfter": "Ihinto ang on-demand command nang ganito katagal pagkatapos umalis ang huling reader.",
+        "runOnUnDemand": "Command na patatakbuhin kapag inihinto ang on-demand command.",
+        "runOnReady": "Command na patatakbuhin kapag handa nang basahin ang stream.",
+        "runOnReadyRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnNotReady": "Command na patatakbuhin kapag hindi na handa ang stream.",
+        "runOnRead": "Command na patatakbuhin kapag may client na nagsimulang magbasa ng path na ito.",
+        "runOnReadRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnUnread": "Command na patatakbuhin kapag may client na huminto sa pagbabasa ng path na ito.",
+        "runOnRecordSegmentCreate": "Command na patatakbuhin kapag nagawa ang isang segment ng recording.",
+        "runOnRecordSegmentComplete": "Command na patatakbuhin kapag kumpleto na ang isang segment ng recording."
       },
       "toasts": {
         "success": "Na-save ang MediaMTX config",

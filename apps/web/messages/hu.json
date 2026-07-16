@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Felvétel"
+        "recording": "Felvétel",
+        "pathHooks": "Útvonal hookok"
       },
       "sectionDescriptions": {
         "logging": "Naplókimenet, időkorlátok és globális korlátok.",
@@ -241,7 +242,8 @@
         "hls": "Folyamok kiszolgálása HLS-ként a böngészős lejátszáshoz.",
         "webrtc": "Alacsony késleltetésű böngészős lejátszás és közzététel.",
         "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
-        "recording": "Streamek rögzítése lemezre."
+        "recording": "Streamek rögzítése lemezre.",
+        "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat."
       },
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",
@@ -324,7 +326,22 @@
         "recordFormat": "A felvételi szegmensek konténere (fmp4 vagy mpegts).",
         "recordPartDuration": "Az egyes részek hossza fmp4 felvételeknél.",
         "recordSegmentDuration": "Az egyes felvételi szegmensek hossza.",
-        "recordDeleteAfter": "Szegmensek törlése ennyi idő után. A nulla kikapcsolja a törlést."
+        "recordDeleteAfter": "Szegmensek törlése ennyi idő után. A nulla kikapcsolja a törlést.",
+        "runOnInit": "Az útvonal inicializálásakor futtatandó parancs.",
+        "runOnInitRestart": "A parancs újraindítása, ha kilép.",
+        "runOnDemand": "Akkor futtatandó parancs, amikor egy kliens olvasni kezd, és az útvonalnak nincs közvetítője.",
+        "runOnDemandRestart": "A parancs újraindítása, ha kilép.",
+        "runOnDemandStartTimeout": "Meddig várjon az igény szerinti közvetítő elindulására.",
+        "runOnDemandCloseAfter": "Az igény szerinti parancs leállítása ennyi idővel az utolsó olvasó távozása után.",
+        "runOnUnDemand": "Az igény szerinti parancs leállításakor futtatandó parancs.",
+        "runOnReady": "Akkor futtatandó parancs, amikor a stream készen áll az olvasásra.",
+        "runOnReadyRestart": "A parancs újraindítása, ha kilép.",
+        "runOnNotReady": "Akkor futtatandó parancs, amikor a stream már nem áll készen.",
+        "runOnRead": "Akkor futtatandó parancs, amikor egy kliens olvasni kezdi ezt az útvonalat.",
+        "runOnReadRestart": "A parancs újraindítása, ha kilép.",
+        "runOnUnread": "Akkor futtatandó parancs, amikor egy kliens abbahagyja ennek az útvonalnak az olvasását.",
+        "runOnRecordSegmentCreate": "Felvételi szegmens létrehozásakor futtatandó parancs.",
+        "runOnRecordSegmentComplete": "Felvételi szegmens befejeződésekor futtatandó parancs."
       },
       "toasts": {
         "success": "MediaMTX konfiguráció mentve",

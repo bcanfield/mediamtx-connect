@@ -8,11 +8,18 @@ import {
 } from '@tanstack/react-router'
 import { createElement } from 'react'
 
+// TanStack types `search` off a literal `to`; this shim's `to` is a plain
+// string, which collapses that inference to `never`. The route's own
+// validateSearch is what actually parses these, so take them as a record.
 export function Link({
   href,
+  search,
   ...props
-}: Omit<ComponentProps<typeof RouterLink>, 'to'> & { href: string }) {
-  return createElement(RouterLink, { to: href, ...props })
+}: Omit<ComponentProps<typeof RouterLink>, 'to' | 'search'> & {
+  href: string
+  search?: Record<string, string>
+}) {
+  return createElement(RouterLink, { to: href, search: search as never, ...props })
 }
 
 export function usePathname(): string {

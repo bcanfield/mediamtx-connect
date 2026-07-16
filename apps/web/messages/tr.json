@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Kayıt"
+        "recording": "Kayıt",
+        "pathHooks": "Yol Hook’ları"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
@@ -241,7 +242,8 @@
         "hls": "Tarayıcıda oynatma için akışları HLS olarak sunun.",
         "webrtc": "Düşük gecikmeli tarayıcı oynatma ve yayınlama.",
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
-        "recording": "Akışları diske kaydeder."
+        "recording": "Akışları diske kaydeder.",
+        "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar."
       },
       "enabled": "Etkin",
       "off": "Kapalı",
@@ -324,7 +326,22 @@
         "recordFormat": "Kayıt parçalarının kapsayıcısı (fmp4 veya mpegts).",
         "recordPartDuration": "fmp4 kayıtlarında her bölümün süresi.",
         "recordSegmentDuration": "Her kayıt parçasının süresi.",
-        "recordDeleteAfter": "Bu süreden sonra parçaları siler. Sıfır silmeyi devre dışı bırakır."
+        "recordDeleteAfter": "Bu süreden sonra parçaları siler. Sıfır silmeyi devre dışı bırakır.",
+        "runOnInit": "Yol başlatıldığında çalıştırılacak komut.",
+        "runOnInitRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnDemand": "Bir istemci okumaya başladığında ve yolun yayıncısı olmadığında çalıştırılacak komut.",
+        "runOnDemandRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnDemandStartTimeout": "İstek üzerine çalışan yayıncının başlaması için beklenecek süre.",
+        "runOnDemandCloseAfter": "Son okuyucu ayrıldıktan bu kadar süre sonra istek üzerine çalışan komutu durdurur.",
+        "runOnUnDemand": "İstek üzerine çalışan komut durdurulduğunda çalıştırılacak komut.",
+        "runOnReady": "Akış okunmaya hazır olduğunda çalıştırılacak komut.",
+        "runOnReadyRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnNotReady": "Akış artık hazır olmadığında çalıştırılacak komut.",
+        "runOnRead": "Bir istemci bu yolu okumaya başladığında çalıştırılacak komut.",
+        "runOnReadRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnUnread": "Bir istemci bu yolu okumayı bıraktığında çalıştırılacak komut.",
+        "runOnRecordSegmentCreate": "Bir kayıt parçası oluşturulduğunda çalıştırılacak komut.",
+        "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut."
       },
       "toasts": {
         "success": "MediaMTX yapılandırması kaydedildi",

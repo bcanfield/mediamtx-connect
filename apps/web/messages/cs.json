@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Nahrávání"
+        "recording": "Nahrávání",
+        "pathHooks": "Hooky cesty"
       },
       "sectionDescriptions": {
         "logging": "Výstup logů, časové limity a globální limity.",
@@ -241,7 +242,8 @@
         "hls": "Servírujte streamy jako HLS pro přehrávání v prohlížeči.",
         "webrtc": "Přehrávání a publikování v prohlížeči s nízkou latencí.",
         "srt": "Publikujte a přijímejte streamy přes SRT.",
-        "recording": "Nahrávat streamy na disk."
+        "recording": "Nahrávat streamy na disk.",
+        "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty."
       },
       "enabled": "Zapnuto",
       "off": "Vypnuto",
@@ -324,7 +326,22 @@
         "recordFormat": "Kontejner segmentů nahrávek (fmp4 nebo mpegts).",
         "recordPartDuration": "Délka každé části v nahrávkách fmp4.",
         "recordSegmentDuration": "Délka každého segmentu nahrávky.",
-        "recordDeleteAfter": "Smazat segmenty po této době. Nula mazání vypne."
+        "recordDeleteAfter": "Smazat segmenty po této době. Nula mazání vypne.",
+        "runOnInit": "Příkaz spuštěný při inicializaci cesty.",
+        "runOnInitRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnDemand": "Příkaz spuštěný, když klient začne číst a cesta nemá vysílač.",
+        "runOnDemandRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnDemandStartTimeout": "Jak dlouho čekat na spuštění vysílače na vyžádání.",
+        "runOnDemandCloseAfter": "Zastavit příkaz na vyžádání po této době od odchodu posledního čtenáře.",
+        "runOnUnDemand": "Příkaz spuštěný při zastavení příkazu na vyžádání.",
+        "runOnReady": "Příkaz spuštěný, když je stream připraven ke čtení.",
+        "runOnReadyRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnNotReady": "Příkaz spuštěný, když stream již není připraven.",
+        "runOnRead": "Příkaz spuštěný, když klient začne číst tuto cestu.",
+        "runOnReadRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnUnread": "Příkaz spuštěný, když klient přestane číst tuto cestu.",
+        "runOnRecordSegmentCreate": "Příkaz spuštěný při vytvoření segmentu nahrávky.",
+        "runOnRecordSegmentComplete": "Příkaz spuštěný při dokončení segmentu nahrávky."
       },
       "toasts": {
         "success": "Konfigurace MediaMTX uložena",

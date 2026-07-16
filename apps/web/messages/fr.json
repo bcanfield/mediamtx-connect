@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Enregistrement"
+        "recording": "Enregistrement",
+        "pathHooks": "Hooks de chemin"
       },
       "sectionDescriptions": {
         "logging": "Sortie des journaux, délais d'expiration et limites globales.",
@@ -241,7 +242,8 @@
         "hls": "Servir les flux en HLS pour la lecture dans le navigateur.",
         "webrtc": "Lecture et publication à faible latence dans le navigateur.",
         "srt": "Publier et lire des flux via SRT.",
-        "recording": "Enregistre les flux sur le disque."
+        "recording": "Enregistre les flux sur le disque.",
+        "pathHooks": "Commandes que MediaMTX exécute lors des événements de cycle de vie d'un chemin."
       },
       "enabled": "Activé",
       "off": "Désactivé",
@@ -324,7 +326,22 @@
         "recordFormat": "Conteneur des segments d’enregistrement (fmp4 ou mpegts).",
         "recordPartDuration": "Durée de chaque partie dans les enregistrements fmp4.",
         "recordSegmentDuration": "Durée de chaque segment d’enregistrement.",
-        "recordDeleteAfter": "Supprime les segments après cette durée. Zéro désactive la suppression."
+        "recordDeleteAfter": "Supprime les segments après cette durée. Zéro désactive la suppression.",
+        "runOnInit": "Commande à exécuter lors de l'initialisation du chemin.",
+        "runOnInitRestart": "Relance la commande si elle se termine.",
+        "runOnDemand": "Commande à exécuter lorsqu'un client commence à lire et qu'aucune source ne publie sur le chemin.",
+        "runOnDemandRestart": "Relance la commande si elle se termine.",
+        "runOnDemandStartTimeout": "Délai d'attente du démarrage de la source à la demande.",
+        "runOnDemandCloseAfter": "Arrête la commande à la demande après ce délai, une fois le dernier lecteur parti.",
+        "runOnUnDemand": "Commande à exécuter lorsque la commande à la demande est arrêtée.",
+        "runOnReady": "Commande à exécuter lorsque le flux est prêt à être lu.",
+        "runOnReadyRestart": "Relance la commande si elle se termine.",
+        "runOnNotReady": "Commande à exécuter lorsque le flux n'est plus prêt.",
+        "runOnRead": "Commande à exécuter lorsqu'un client commence à lire ce chemin.",
+        "runOnReadRestart": "Relance la commande si elle se termine.",
+        "runOnUnread": "Commande à exécuter lorsqu'un client arrête de lire ce chemin.",
+        "runOnRecordSegmentCreate": "Commande à exécuter lorsqu'un segment d'enregistrement est créé.",
+        "runOnRecordSegmentComplete": "Commande à exécuter lorsqu'un segment d'enregistrement est terminé."
       },
       "toasts": {
         "success": "Config MediaMTX enregistrée",
