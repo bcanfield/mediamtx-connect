@@ -170,6 +170,11 @@
       "pageHeader": "Valores predeterminados de rutas",
       "pageSubHeader": "Ajustes que hereda cada transmisión, guardados en el servidor."
     },
+    "pathConfig": {
+      "pageHeader": "Config de ruta · {name}",
+      "pageSubHeader": "Ajustes de esta transmisión, guardados en el servidor.",
+      "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# cambio sin guardar} other {# cambios sin guardar}}",
       "needsAttention": "{count, plural, one {# campo necesita atención} other {# campos necesitan atención}}",
@@ -236,7 +241,7 @@
         "hls": "Sirve transmisiones como HLS para reproducción en el navegador.",
         "webrtc": "Reproducción y publicación de baja latencia en el navegador.",
         "srt": "Publica y lee transmisiones por SRT.",
-        "recording": "Graba las transmisiones en disco. Todas las rutas heredan estos ajustes."
+        "recording": "Graba las transmisiones en disco."
       },
       "enabled": "Habilitado",
       "off": "Desactivado",

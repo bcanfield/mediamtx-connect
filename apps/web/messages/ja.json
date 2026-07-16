@@ -170,6 +170,11 @@
       "pageHeader": "パス既定値",
       "pageSubHeader": "すべてのストリームが継承する設定。サーバーに保存されます。"
     },
+    "pathConfig": {
+      "pageHeader": "パス設定 · {name}",
+      "pageSubHeader": "このストリームの設定。サーバーに保存されます。",
+      "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。"
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {未保存の変更が # 件}}",
       "needsAttention": "{count, plural, other {# 個の項目に確認が必要です}}",
@@ -236,7 +241,7 @@
         "hls": "ブラウザ再生用に HLS としてストリームを配信します。",
         "webrtc": "低遅延のブラウザ再生と配信。",
         "srt": "SRT でストリームを配信・視聴します。",
-        "recording": "ストリームをディスクに録画します。すべてのパスがこの設定を継承します。"
+        "recording": "ストリームをディスクに録画します。"
       },
       "enabled": "有効",
       "off": "オフ",

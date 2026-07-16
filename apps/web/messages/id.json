@@ -170,6 +170,11 @@
       "pageHeader": "Default jalur",
       "pageSubHeader": "Pengaturan yang diwarisi setiap aliran, disimpan di server."
     },
+    "pathConfig": {
+      "pageHeader": "Konfigurasi jalur · {name}",
+      "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",
+      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# perubahan belum disimpan}}",
       "needsAttention": "{count, plural, other {# bidang perlu diperiksa}}",
@@ -236,7 +241,7 @@
         "hls": "Sajikan aliran sebagai HLS untuk pemutaran di peramban.",
         "webrtc": "Pemutaran dan publikasi di peramban dengan latensi rendah.",
         "srt": "Publikasikan dan baca aliran melalui SRT.",
-        "recording": "Rekam aliran ke disk. Setiap jalur mewarisi pengaturan ini."
+        "recording": "Rekam aliran ke disk."
       },
       "enabled": "Aktif",
       "off": "Nonaktif",

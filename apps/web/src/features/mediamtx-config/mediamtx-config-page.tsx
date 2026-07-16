@@ -24,7 +24,7 @@ export function MediaMTXConfigPage() {
               <MediaMTXConfigForm
                 scope={GLOBAL_SCOPE}
                 conf={globalConf.data}
-                onSave={updateGlobalConfig.mutateAsync}
+                onSave={values => updateGlobalConfig.mutateAsync(values)}
               />
             )
           : <div className="text-[13px] text-muted-foreground">{t('invalidConfig')}</div>

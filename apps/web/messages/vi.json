@@ -170,6 +170,11 @@
       "pageHeader": "Giá trị mặc định của đường dẫn",
       "pageSubHeader": "Các thiết lập mà mọi luồng đều kế thừa, được lưu trên máy chủ."
     },
+    "pathConfig": {
+      "pageHeader": "Cấu hình đường dẫn · {name}",
+      "pageSubHeader": "Cài đặt của luồng này, được lưu trên máy chủ.",
+      "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",
       "needsAttention": "{count, plural, other {# trường cần chú ý}}",
@@ -236,7 +241,7 @@
         "hls": "Cung cấp luồng dưới dạng HLS để phát trên trình duyệt.",
         "webrtc": "Phát và đẩy luồng độ trễ thấp trên trình duyệt.",
         "srt": "Đẩy và xem luồng qua SRT.",
-        "recording": "Ghi luồng xuống đĩa. Mọi đường dẫn đều kế thừa các thiết lập này."
+        "recording": "Ghi luồng xuống đĩa."
       },
       "enabled": "Đã bật",
       "off": "Tắt",

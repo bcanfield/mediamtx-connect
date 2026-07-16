@@ -170,6 +170,11 @@
       "pageHeader": "Padstandaarden",
       "pageSubHeader": "Instellingen die elke stream overneemt, opgeslagen op de server."
     },
+    "pathConfig": {
+      "pageHeader": "Padconfiguratie · {name}",
+      "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",
+      "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",
       "needsAttention": "{count, plural, one {# veld heeft aandacht nodig} other {# velden hebben aandacht nodig}}",
@@ -236,7 +241,7 @@
         "hls": "Streams aanbieden als HLS voor afspelen in de browser.",
         "webrtc": "Afspelen en publiceren in de browser met lage latentie.",
         "srt": "Streams publiceren en lezen via SRT.",
-        "recording": "Neem streams op naar schijf. Elk pad neemt deze instellingen over."
+        "recording": "Neem streams op naar schijf."
       },
       "enabled": "Ingeschakeld",
       "off": "Uit",

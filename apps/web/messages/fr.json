@@ -170,6 +170,11 @@
       "pageHeader": "Valeurs par défaut des chemins",
       "pageSubHeader": "Paramètres hérités par chaque flux, enregistrés sur le serveur."
     },
+    "pathConfig": {
+      "pageHeader": "Config du chemin · {name}",
+      "pageSubHeader": "Paramètres de ce flux, enregistrés sur le serveur.",
+      "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# modification non enregistrée} other {# modifications non enregistrées}}",
       "needsAttention": "{count, plural, one {# champ nécessite votre attention} other {# champs nécessitent votre attention}}",
@@ -236,7 +241,7 @@
         "hls": "Servir les flux en HLS pour la lecture dans le navigateur.",
         "webrtc": "Lecture et publication à faible latence dans le navigateur.",
         "srt": "Publier et lire des flux via SRT.",
-        "recording": "Enregistre les flux sur le disque. Chaque chemin hérite de ces paramètres."
+        "recording": "Enregistre les flux sur le disque."
       },
       "enabled": "Activé",
       "off": "Désactivé",

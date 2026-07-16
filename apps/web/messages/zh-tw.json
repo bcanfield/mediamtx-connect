@@ -170,6 +170,11 @@
       "pageHeader": "路徑預設值",
       "pageSubHeader": "每個串流都會繼承的設定，儲存至伺服器。"
     },
+    "pathConfig": {
+      "pageHeader": "路徑設定 · {name}",
+      "pageSubHeader": "此串流的設定，儲存到伺服器。",
+      "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。"
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# 個未儲存的變更}}",
       "needsAttention": "{count, plural, other {# 個欄位需要注意}}",
@@ -236,7 +241,7 @@
         "hls": "以 HLS 形式提供串流，供瀏覽器播放。",
         "webrtc": "低延遲的瀏覽器播放與發布。",
         "srt": "透過 SRT 發布與觀看串流。",
-        "recording": "將串流錄製到磁碟。所有路徑都會繼承這些設定。"
+        "recording": "將串流錄製到磁碟。"
       },
       "enabled": "已啟用",
       "off": "關閉",

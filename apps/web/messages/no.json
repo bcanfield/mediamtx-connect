@@ -170,6 +170,11 @@
       "pageHeader": "Standardverdier for stier",
       "pageSubHeader": "Innstillinger som hver strøm arver, lagret på serveren."
     },
+    "pathConfig": {
+      "pageHeader": "Bane-konfigurasjon · {name}",
+      "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",
+      "inheritedSubHeader": "Innstillinger for denne strømmen, arves for øyeblikket fra {confName}. Lagring overstyrer bare det du har endret."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# ulagret endring} other {# ulagrede endringer}}",
       "needsAttention": "{count, plural, one {# felt trenger oppmerksomhet} other {# felter trenger oppmerksomhet}}",
@@ -236,7 +241,7 @@
         "hls": "Server strømmer som HLS for avspilling i nettleseren.",
         "webrtc": "Avspilling og publisering i nettleseren med lav forsinkelse.",
         "srt": "Publiser og les strømmer over SRT.",
-        "recording": "Ta opp strømmer til disk. Hver sti arver disse innstillingene."
+        "recording": "Ta opp strømmer til disk."
       },
       "enabled": "Aktivert",
       "off": "Av",

@@ -170,6 +170,11 @@
       "pageHeader": "Path Defaults",
       "pageSubHeader": "Settings inherited by every stream, saved to the server."
     },
+    "pathConfig": {
+      "pageHeader": "Path Config · {name}",
+      "pageSubHeader": "Settings for this stream, saved to the server.",
+      "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",
       "needsAttention": "{count, plural, one {# field needs attention} other {# fields need attention}}",
@@ -236,7 +241,7 @@
         "hls": "Serve streams as HLS for browser playback.",
         "webrtc": "Low-latency browser playback and publishing.",
         "srt": "Publish and read streams over SRT.",
-        "recording": "Record streams to disk. Every path inherits these settings."
+        "recording": "Record streams to disk."
       },
       "enabled": "Enabled",
       "off": "Off",

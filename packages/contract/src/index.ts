@@ -111,6 +111,24 @@ export const PathDefaultsSchema = z.object({
 export type PathDefaults = z.infer<typeof PathDefaultsSchema>
 export type PathDefaultsFormData = z.input<typeof PathDefaultsSchema>
 
+// A path's own config is exactly the per-path override of the defaults scope —
+// same keys, applied to one path (ADR 0002).
+export const PathConfigSchema = PathDefaultsSchema
+
+export type PathConfig = z.infer<typeof PathConfigSchema>
+export type PathConfigFormData = z.input<typeof PathConfigSchema>
+
+// What a path resolves to right now: its own overrides merged over path
+// defaults, as MediaMTX itself resolves them. `confName` is the config entry
+// the values come from — a wildcard (`all_others`) until the path is
+// materialized, its own name after.
+export const EffectivePathConfigSchema = z.object({
+  confName: z.string(),
+  conf: PathConfigSchema,
+})
+
+export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
+
 export const StreamSchema = z.object({
   name: z.string(),
   readyTime: z.string().nullable(),
@@ -187,6 +205,14 @@ export const contract = {
       updateGlobal: oc.input(GlobalConfigSchema).output(z.void()),
       getPathDefaults: oc.output(PathDefaultsSchema.nullable()),
       updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
+      getPathConfig: oc
+        .input(z.object({ name: z.string().min(1) }))
+        .output(EffectivePathConfigSchema.nullable()),
+      // `conf` carries only the keys the operator changed: MediaMTX stores it
+      // as a sparse override, so everything omitted keeps tracking defaults.
+      updatePathConfig: oc
+        .input(z.object({ name: z.string().min(1), conf: PathConfigSchema }))
+        .output(z.void()),
     },
   },
 }

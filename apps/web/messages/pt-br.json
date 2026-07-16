@@ -170,6 +170,11 @@
       "pageHeader": "Padrões de caminhos",
       "pageSubHeader": "Configurações herdadas por cada transmissão, salvas no servidor."
     },
+    "pathConfig": {
+      "pageHeader": "Configuração do caminho · {name}",
+      "pageSubHeader": "Configurações desta transmissão, salvas no servidor.",
+      "inheritedSubHeader": "Configurações desta transmissão, atualmente herdadas de {confName}. Ao salvar, apenas o que você alterou é substituído."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# alteração não salva} other {# alterações não salvas}}",
       "needsAttention": "{count, plural, one {# campo precisa de atenção} other {# campos precisam de atenção}}",
@@ -236,7 +241,7 @@
         "hls": "Sirva transmissões como HLS para reprodução no navegador.",
         "webrtc": "Reprodução e publicação de baixa latência no navegador.",
         "srt": "Publique e leia transmissões via SRT.",
-        "recording": "Grava as transmissões em disco. Todos os caminhos herdam estas configurações."
+        "recording": "Grava as transmissões em disco."
       },
       "enabled": "Habilitado",
       "off": "Desligado",

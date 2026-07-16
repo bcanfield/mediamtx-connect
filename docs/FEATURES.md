@@ -35,7 +35,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (resolution · bitrate · viewers) + bottom scrim — all backed by optional props that **no caller passes today**, so they never render; `StreamSchema` carries only `{name, readyTime}` (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
 - **Play / Stop** — footer buttons (outline Play / primary Stop) plus a centered 46 px circular play affordance on idle cards.
 - **URL-state-driven selection** — `?play=foo,bar` typed search param (TanStack Router `validateSearch`) tracks which streams are live, so the active set survives reload/share.
-- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. Only "View recordings" is functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast (`docs/debt/20260715131447-stream-card-action-stubs.md`). "Record" renders an ON/OFF state that is hard-wired OFF — the `recording` prop has no caller. `apps/web/src/features/streams/stream-card.tsx`
+- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. "View recordings" and "Edit path config" (deep-links to `/config/mediamtx/paths/{name}`, §3.4) are functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast (`docs/debt/20260715131447-stream-card-action-stubs.md`). "Record" renders an ON/OFF state that is hard-wired OFF — the `recording` prop has no caller. `apps/web/src/features/streams/stream-card.tsx`
 
 ### 1.3 HLS video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `apps/web/src/components/video-player.tsx`
@@ -108,9 +108,15 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 
 ### 3.3 MediaMTX path defaults — `/config/mediamtx/path-defaults`
 - **Path-defaults editor** — the settings every MediaMTX path inherits, on the scope MediaMTX actually serves them from (`v3/config/pathdefaults`). One Recording section: a `record` header switch plus `recordPath`, `recordFormat`, `recordPartDuration`, `recordSegmentDuration`, `recordDeleteAfter`. Route is a *sibling* of the per-path route, not `paths/defaults`, which would reserve `defaults` as a path name (ADR 0002). `apps/web/src/features/mediamtx-config/path-defaults-page.tsx`, `apps/web/src/features/mediamtx-config/sections.ts` (`PATH_DEFAULTS_SCOPE`)
-- **Scope-parameterized rail form** — `MediaMTXConfigForm` takes a `ConfigScope` (schema + section descriptors) and a save procedure, and serves both the global and path-defaults pages from one implementation: same rail, scroll-spy, dirty tracking, save bar and toasts. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`
+- **Scope-parameterized rail form** — `MediaMTXConfigForm` takes a `ConfigScope` (schema + section descriptors) and a save procedure, and serves the global, path-defaults and per-path pages from one implementation: same rail, scroll-spy, dirty tracking, save bar and toasts. Hands `onSave` the changed keys alongside the full values, so a scope can save a sparse override instead of the whole config. `apps/web/src/features/mediamtx-config/mediamtx-config-form.tsx`
 - **Live read/write through MediaMTX HTTP API** — `config.mediamtx.getPathDefaults` (`v3/config/pathdefaults/get`) + `config.mediamtx.updatePathDefaults` (`v3/config/pathdefaults/patch`). The PATCH is sparse: only the surfaced keys are sent, so unlisted path-defaults keys are left untouched. `apps/api/src/router.ts`, `apps/api/src/mediamtx.ts`
 - **"Enable recording" CTA target** — the recordings empty state links here, where recording can actually be enabled. `apps/web/src/features/recordings/recordings-index-empty.tsx`
+
+### 3.4 MediaMTX path config — `/config/mediamtx/paths/$name`
+- **Per-path editor** — one stream's own settings, reached from that stream's card ("Edit path config"). Same Recording section as path defaults: both scopes are the same key set, one applied server-wide and one to a single path (ADR 0002). `apps/web/src/features/mediamtx-config/path-config-page.tsx`, `apps/web/src/features/mediamtx-config/sections.ts` (`PATH_CONFIG_SCOPE`)
+- **Effective config, never a raw scope** — the page shows the path's own overrides merged over path defaults, so an inherited value renders as its real value rather than as unset. MediaMTX resolves defaults into the entry it serves, so the merge is its own. A wildcard-backed path has no entry under its own name (`config/paths/get/$name` → 404); its config is reached through the runtime path's `confName`, and the subheader names the entry the values come from. `apps/api/src/router.ts` (`getPathConfig`)
+- **Materialize-on-save** — saving a change to a wildcard-backed stream creates its config entry (`config/paths/add`), overriding only the keys that changed; a path that already has an entry is patched instead. Verified non-disruptive against v1.19.2: the live session keeps its `readyTime` and does not reconnect. Because the override is sparse, untouched keys keep tracking path defaults — a later change to a default still reaches the stream. `apps/api/src/router.ts` (`updatePathConfig`), `apps/api/src/mediamtx.ts`
+- **Live read/write through MediaMTX HTTP API** — `config.mediamtx.getPathConfig` (`v3/paths/get` + `v3/config/paths/get`) + `config.mediamtx.updatePathConfig` (`v3/config/paths/add`|`patch`). `apps/api/src/router.ts`, `apps/api/src/mediamtx.ts`
 
 ---
 
@@ -214,6 +220,7 @@ SPA routes (TanStack Router, `apps/web/src/main.tsx`):
 | `/config` | Client app config | `apps/web/src/features/client-config/client-config-page.tsx` |
 | `/config/mediamtx/global` | MediaMTX server config | `apps/web/src/features/mediamtx-config/mediamtx-config-page.tsx` |
 | `/config/mediamtx/path-defaults` | MediaMTX path defaults (recording) | `apps/web/src/features/mediamtx-config/path-defaults-page.tsx` |
+| `/config/mediamtx/paths/{name}` | One path's effective config | `apps/web/src/features/mediamtx-config/path-config-page.tsx` |
 
 HTTP endpoints (Hono, `apps/api/src/server.ts` + `apps/api/src/media.ts`):
 
@@ -244,6 +251,8 @@ Defined in `packages/contract/src/index.ts`, implemented in `apps/api/src/router
 | `config.mediamtx.updateGlobal` | mutation | Patches `GlobalConf` changes to MediaMTX; throws on failure. |
 | `config.mediamtx.getPathDefaults` | query | Fetches MediaMTX path defaults via API; `null` when unreachable. |
 | `config.mediamtx.updatePathDefaults` | mutation | Sparse-patches path defaults to MediaMTX; throws on failure. |
+| `config.mediamtx.getPathConfig` | query | Resolves one path's effective config through its `confName`; `null` when unreachable or unknown. |
+| `config.mediamtx.updatePathConfig` | mutation | Writes a path's sparse override, materializing its entry on first save; throws on failure. |
 
 ---
 

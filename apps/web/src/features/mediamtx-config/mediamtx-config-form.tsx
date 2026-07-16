@@ -26,7 +26,10 @@ export function MediaMTXConfigForm<T extends FieldValues>({
 }: {
   scope: ConfigScope<T>
   conf: T
-  onSave: (values: T) => Promise<unknown>
+  // `changed` holds only the keys the operator edited. Scopes that PATCH a
+  // whole config ignore it; the path scope sends it as its sparse override so
+  // untouched keys keep tracking path defaults (ADR 0002).
+  onSave: (values: T, changed: Partial<T>) => Promise<unknown>
 }) {
   const t = useTranslations('Config.mediamtxForm')
   const tSaveBar = useTranslations('Config.saveBar')
@@ -39,8 +42,11 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   })
 
   const onSubmit = async (values: T) => {
+    const changed = Object.fromEntries(
+      Object.keys(form.formState.dirtyFields).map(key => [key, values[key]]),
+    ) as Partial<T>
     try {
-      await onSave(values)
+      await onSave(values, changed)
       form.reset(values)
       toast.success(t('toasts.success'))
     }

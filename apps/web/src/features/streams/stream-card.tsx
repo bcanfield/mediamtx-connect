@@ -252,8 +252,10 @@ export function StreamCard({
                 {t('menu.shareEmbed')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={stub('edit-path-config')}>
-                {t('menu.editPathConfig')}
+              <DropdownMenuItem asChild>
+                <Link href={`/config/mediamtx/paths/${encodeURIComponent(streamName)}`}>
+                  {t('menu.editPathConfig')}
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={stub('edit-hooks')}>
                 {t('menu.editHooks')}

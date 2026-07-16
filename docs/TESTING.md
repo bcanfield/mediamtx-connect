@@ -51,9 +51,11 @@ pnpm test:e2e:dev      # playwright UI
 
 `firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only — running them cross-browser doesn't change the outcome.
 
-`path-defaults` is a UI spec that deliberately stays out of the `uiSpecs` pattern: it writes to the live MediaMTX pathdefaults surface, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state.
+`path-defaults` and `path-config` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
 
-Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
+`path-config` additionally runs `mode: 'serial'`. Its tests share one mutable resource — `stream1`'s config entry — and materializing it changes what the read tests see, so within-file parallelism races them against each other.
+
+Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates
 

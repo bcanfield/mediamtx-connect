@@ -73,4 +73,20 @@ test.describe('Live View - With MediaMTX Running', () => {
       await expect(page.getByRole('menuitem', { name: 'View recordings' })).toBeVisible()
     }
   })
+
+  test('card actions deep-link to the stream\'s own path config', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.isVisible().catch(() => false)) {
+      // The card's first paragraph is its stream name.
+      const streamName = await card.locator('p').first().textContent() ?? ''
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      // Navigates rather than toasting "Not implemented yet" — this action is
+      // no longer a stub. Read-only: opening the page materializes nothing.
+      await page.getByRole('menuitem', { name: 'Edit path config' }).click()
+      await expect(page).toHaveURL(`/config/mediamtx/paths/${encodeURIComponent(streamName)}`)
+      await expect(page.getByRole('heading', { name: `Path Config · ${streamName}` })).toBeVisible()
+    }
+  })
 })

@@ -170,6 +170,11 @@
       "pageHeader": "Útvonalak alapértékei",
       "pageSubHeader": "Minden stream által örökölt beállítások, a kiszolgálóra mentve."
     },
+    "pathConfig": {
+      "pageHeader": "Útvonal-konfiguráció · {name}",
+      "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",
+      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# mentetlen módosítás} other {# mentetlen módosítás}}",
       "needsAttention": "{count, plural, one {# mező figyelmet igényel} other {# mező figyelmet igényel}}",
@@ -236,7 +241,7 @@
         "hls": "Folyamok kiszolgálása HLS-ként a böngészős lejátszáshoz.",
         "webrtc": "Alacsony késleltetésű böngészős lejátszás és közzététel.",
         "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
-        "recording": "Streamek rögzítése lemezre. Minden útvonal örökli ezeket a beállításokat."
+        "recording": "Streamek rögzítése lemezre."
       },
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",

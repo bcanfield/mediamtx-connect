@@ -170,6 +170,11 @@
       "pageHeader": "Pfad-Standardwerte",
       "pageSubHeader": "Einstellungen, die jeder Stream erbt, gespeichert auf dem Server."
     },
+    "pathConfig": {
+      "pageHeader": "Pfad-Konfiguration · {name}",
+      "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
+      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# nicht gespeicherte Änderung} other {# nicht gespeicherte Änderungen}}",
       "needsAttention": "{count, plural, one {# Feld benötigt Aufmerksamkeit} other {# Felder benötigen Aufmerksamkeit}}",
@@ -236,7 +241,7 @@
         "hls": "Streams als HLS für die Browser-Wiedergabe bereitstellen.",
         "webrtc": "Browser-Wiedergabe und -Veröffentlichung mit niedriger Latenz.",
         "srt": "Streams über SRT veröffentlichen und lesen.",
-        "recording": "Streams auf die Festplatte aufzeichnen. Jeder Pfad erbt diese Einstellungen."
+        "recording": "Streams auf die Festplatte aufzeichnen."
       },
       "enabled": "Aktiviert",
       "off": "Aus",

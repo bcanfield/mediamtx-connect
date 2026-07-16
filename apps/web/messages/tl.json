@@ -170,6 +170,11 @@
       "pageHeader": "Mga default ng path",
       "pageSubHeader": "Mga setting na minamana ng bawat stream, nakaimbak sa server."
     },
+    "pathConfig": {
+      "pageHeader": "Config ng path · {name}",
+      "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",
+      "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",
       "needsAttention": "{count, plural, one {# field ang nangangailangan ng atensyon} other {# na field ang nangangailangan ng atensyon}}",
@@ -236,7 +241,7 @@
         "hls": "Ihain ang mga stream bilang HLS para sa playback sa browser.",
         "webrtc": "Low-latency na playback at pag-publish sa browser.",
         "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
-        "recording": "I-record ang mga stream sa disk. Minamana ito ng bawat path."
+        "recording": "I-record ang mga stream sa disk."
       },
       "enabled": "Naka-enable",
       "off": "Naka-off",

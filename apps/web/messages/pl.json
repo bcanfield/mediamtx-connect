@@ -170,6 +170,11 @@
       "pageHeader": "Domyślne ustawienia ścieżek",
       "pageSubHeader": "Ustawienia dziedziczone przez każdy strumień, zapisywane na serwerze."
     },
+    "pathConfig": {
+      "pageHeader": "Konfiguracja ścieżki · {name}",
+      "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",
+      "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanej zmiany}}",
       "needsAttention": "{count, plural, one {# pole wymaga uwagi} few {# pola wymagają uwagi} many {# pól wymaga uwagi} other {# pola wymaga uwagi}}",
@@ -236,7 +241,7 @@
         "hls": "Udostępniaj transmisje jako HLS do odtwarzania w przeglądarce.",
         "webrtc": "Odtwarzanie i publikowanie w przeglądarce z niskim opóźnieniem.",
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
-        "recording": "Nagrywaj strumienie na dysk. Każda ścieżka dziedziczy te ustawienia."
+        "recording": "Nagrywaj strumienie na dysk."
       },
       "enabled": "Włączone",
       "off": "Wyłączone",
