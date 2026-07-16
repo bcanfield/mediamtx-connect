@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Optagelse"
+        "recording": "Optagelse",
+        "pathHooks": "Sti-hooks"
       },
       "sectionDescriptions": {
         "logging": "Logoutput, timeouts og globale grænser.",
@@ -241,7 +242,8 @@
         "hls": "Servér streams som HLS til afspilning i browseren.",
         "webrtc": "Afspilning og publicering i browseren med lav latenstid.",
         "srt": "Publicér og læs streams over SRT.",
-        "recording": "Optag streams til disk."
+        "recording": "Optag streams til disk.",
+        "pathHooks": "Kommandoer som MediaMTX kører ved stiens egne livscyklushændelser."
       },
       "enabled": "Aktiveret",
       "off": "Fra",
@@ -324,7 +326,22 @@
         "recordFormat": "Container for optagelsessegmenter (fmp4 eller mpegts).",
         "recordPartDuration": "Varighed af hver del i fmp4-optagelser.",
         "recordSegmentDuration": "Varighed af hvert optagelsessegment.",
-        "recordDeleteAfter": "Slet segmenter efter denne periode. Nul deaktiverer sletning."
+        "recordDeleteAfter": "Slet segmenter efter denne periode. Nul deaktiverer sletning.",
+        "runOnInit": "Kommando der køres, når stien initialiseres.",
+        "runOnInitRestart": "Genstart kommandoen, hvis den afsluttes.",
+        "runOnDemand": "Kommando der køres, når en klient begynder at læse, og stien ikke har nogen udgiver.",
+        "runOnDemandRestart": "Genstart kommandoen, hvis den afsluttes.",
+        "runOnDemandStartTimeout": "Hvor længe der ventes på, at udgiveren efter behov starter.",
+        "runOnDemandCloseAfter": "Stop kommandoen efter behov så lang tid efter, at den sidste læser er gået.",
+        "runOnUnDemand": "Kommando der køres, når kommandoen efter behov stoppes.",
+        "runOnReady": "Kommando der køres, når streamen er klar til at blive læst.",
+        "runOnReadyRestart": "Genstart kommandoen, hvis den afsluttes.",
+        "runOnNotReady": "Kommando der køres, når streamen ikke længere er klar.",
+        "runOnRead": "Kommando der køres, når en klient begynder at læse denne sti.",
+        "runOnReadRestart": "Genstart kommandoen, hvis den afsluttes.",
+        "runOnUnread": "Kommando der køres, når en klient holder op med at læse denne sti.",
+        "runOnRecordSegmentCreate": "Kommando der køres, når et optagelsessegment oprettes.",
+        "runOnRecordSegmentComplete": "Kommando der køres, når et optagelsessegment er færdigt."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen er gemt",

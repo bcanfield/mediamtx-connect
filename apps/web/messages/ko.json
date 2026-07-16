@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "녹화"
+        "recording": "녹화",
+        "pathHooks": "경로 훅"
       },
       "sectionDescriptions": {
         "logging": "로그 출력, 타임아웃 및 전역 제한.",
@@ -241,7 +242,8 @@
         "hls": "브라우저 재생을 위해 스트림을 HLS로 제공합니다.",
         "webrtc": "저지연 브라우저 재생 및 게시.",
         "srt": "SRT로 스트림을 게시하고 시청합니다.",
-        "recording": "스트림을 디스크에 녹화합니다."
+        "recording": "스트림을 디스크에 녹화합니다.",
+        "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령."
       },
       "enabled": "활성화됨",
       "off": "꺼짐",
@@ -324,7 +326,22 @@
         "recordFormat": "녹화 세그먼트의 컨테이너(fmp4 또는 mpegts)입니다.",
         "recordPartDuration": "fmp4 녹화에서 각 파트의 길이입니다.",
         "recordSegmentDuration": "각 녹화 세그먼트의 길이입니다.",
-        "recordDeleteAfter": "이 기간이 지난 세그먼트를 삭제합니다. 0이면 삭제하지 않습니다."
+        "recordDeleteAfter": "이 기간이 지난 세그먼트를 삭제합니다. 0이면 삭제하지 않습니다.",
+        "runOnInit": "경로가 초기화될 때 실행할 명령.",
+        "runOnInitRestart": "명령이 종료되면 다시 실행합니다.",
+        "runOnDemand": "게시자가 없는 경로를 클라이언트가 시청하기 시작할 때 실행할 명령.",
+        "runOnDemandRestart": "명령이 종료되면 다시 실행합니다.",
+        "runOnDemandStartTimeout": "온디맨드 게시자가 시작될 때까지 기다리는 시간.",
+        "runOnDemandCloseAfter": "마지막 시청자가 나간 뒤 이 시간이 지나면 온디맨드 명령을 중지합니다.",
+        "runOnUnDemand": "온디맨드 명령이 중지될 때 실행할 명령.",
+        "runOnReady": "스트림을 시청할 수 있게 되었을 때 실행할 명령.",
+        "runOnReadyRestart": "명령이 종료되면 다시 실행합니다.",
+        "runOnNotReady": "스트림을 더 이상 시청할 수 없게 되었을 때 실행할 명령.",
+        "runOnRead": "클라이언트가 이 경로의 시청을 시작할 때 실행할 명령.",
+        "runOnReadRestart": "명령이 종료되면 다시 실행합니다.",
+        "runOnUnread": "클라이언트가 이 경로의 시청을 중지할 때 실행할 명령.",
+        "runOnRecordSegmentCreate": "녹화 세그먼트가 생성될 때 실행할 명령.",
+        "runOnRecordSegmentComplete": "녹화 세그먼트가 완료될 때 실행할 명령."
       },
       "toasts": {
         "success": "MediaMTX 설정이 저장되었습니다",

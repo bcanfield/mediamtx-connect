@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "錄影"
+        "recording": "錄影",
+        "pathHooks": "路徑掛鉤"
       },
       "sectionDescriptions": {
         "logging": "記錄輸出、逾時與全域限制。",
@@ -241,7 +242,8 @@
         "hls": "以 HLS 形式提供串流，供瀏覽器播放。",
         "webrtc": "低延遲的瀏覽器播放與發布。",
         "srt": "透過 SRT 發布與觀看串流。",
-        "recording": "將串流錄製到磁碟。"
+        "recording": "將串流錄製到磁碟。",
+        "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。"
       },
       "enabled": "已啟用",
       "off": "關閉",
@@ -324,7 +326,22 @@
         "recordFormat": "錄影分段的容器格式（fmp4 或 mpegts）。",
         "recordPartDuration": "fmp4 錄影中每個分片的長度。",
         "recordSegmentDuration": "每個錄影分段的長度。",
-        "recordDeleteAfter": "超過此期間後刪除分段。設為零則不刪除。"
+        "recordDeleteAfter": "超過此期間後刪除分段。設為零則不刪除。",
+        "runOnInit": "路徑初始化時執行的命令。",
+        "runOnInitRestart": "命令結束時重新啟動。",
+        "runOnDemand": "用戶端開始讀取且路徑沒有發布端時執行的命令。",
+        "runOnDemandRestart": "命令結束時重新啟動。",
+        "runOnDemandStartTimeout": "等待隨選發布端啟動的時間。",
+        "runOnDemandCloseAfter": "最後一個讀取端離開後，經過此時間停止隨選命令。",
+        "runOnUnDemand": "隨選命令停止時執行的命令。",
+        "runOnReady": "串流準備好可供讀取時執行的命令。",
+        "runOnReadyRestart": "命令結束時重新啟動。",
+        "runOnNotReady": "串流不再就緒時執行的命令。",
+        "runOnRead": "用戶端開始讀取此路徑時執行的命令。",
+        "runOnReadRestart": "命令結束時重新啟動。",
+        "runOnUnread": "用戶端停止讀取此路徑時執行的命令。",
+        "runOnRecordSegmentCreate": "建立錄影分段時執行的命令。",
+        "runOnRecordSegmentComplete": "錄影分段完成時執行的命令。"
       },
       "toasts": {
         "success": "已儲存 MediaMTX 設定",

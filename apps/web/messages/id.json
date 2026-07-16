@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Perekaman"
+        "recording": "Perekaman",
+        "pathHooks": "Hooks Jalur"
       },
       "sectionDescriptions": {
         "logging": "Keluaran log, batas waktu, dan batas global.",
@@ -241,7 +242,8 @@
         "hls": "Sajikan aliran sebagai HLS untuk pemutaran di peramban.",
         "webrtc": "Pemutaran dan publikasi di peramban dengan latensi rendah.",
         "srt": "Publikasikan dan baca aliran melalui SRT.",
-        "recording": "Rekam aliran ke disk."
+        "recording": "Rekam aliran ke disk.",
+        "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri."
       },
       "enabled": "Aktif",
       "off": "Nonaktif",
@@ -324,7 +326,22 @@
         "recordFormat": "Kontainer segmen rekaman (fmp4 atau mpegts).",
         "recordPartDuration": "Durasi setiap bagian dalam rekaman fmp4.",
         "recordSegmentDuration": "Durasi setiap segmen rekaman.",
-        "recordDeleteAfter": "Hapus segmen setelah durasi ini. Nol menonaktifkan penghapusan."
+        "recordDeleteAfter": "Hapus segmen setelah durasi ini. Nol menonaktifkan penghapusan.",
+        "runOnInit": "Perintah yang dijalankan saat jalur diinisialisasi.",
+        "runOnInitRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnDemand": "Perintah yang dijalankan saat klien mulai membaca dan jalur tidak memiliki penerbit.",
+        "runOnDemandRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnDemandStartTimeout": "Berapa lama menunggu penerbit sesuai permintaan dimulai.",
+        "runOnDemandCloseAfter": "Hentikan perintah sesuai permintaan setelah durasi ini sejak pembaca terakhir keluar.",
+        "runOnUnDemand": "Perintah yang dijalankan saat perintah sesuai permintaan dihentikan.",
+        "runOnReady": "Perintah yang dijalankan saat aliran siap dibaca.",
+        "runOnReadyRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnNotReady": "Perintah yang dijalankan saat aliran tidak lagi siap.",
+        "runOnRead": "Perintah yang dijalankan saat klien mulai membaca jalur ini.",
+        "runOnReadRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnUnread": "Perintah yang dijalankan saat klien berhenti membaca jalur ini.",
+        "runOnRecordSegmentCreate": "Perintah yang dijalankan saat segmen rekaman dibuat.",
+        "runOnRecordSegmentComplete": "Perintah yang dijalankan saat segmen rekaman selesai."
       },
       "toasts": {
         "success": "Konfigurasi MediaMTX disimpan",

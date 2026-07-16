@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Recording"
+        "recording": "Recording",
+        "pathHooks": "Path Hooks"
       },
       "sectionDescriptions": {
         "logging": "Log output, timeouts and global limits.",
@@ -241,7 +242,8 @@
         "hls": "Serve streams as HLS for browser playback.",
         "webrtc": "Low-latency browser playback and publishing.",
         "srt": "Publish and read streams over SRT.",
-        "recording": "Record streams to disk."
+        "recording": "Record streams to disk.",
+        "pathHooks": "Commands MediaMTX runs on a path's own lifecycle events."
       },
       "enabled": "Enabled",
       "off": "Off",
@@ -324,7 +326,22 @@
         "recordFormat": "Container of recording segments (fmp4 or mpegts).",
         "recordPartDuration": "Duration of each part in fmp4 recordings.",
         "recordSegmentDuration": "Duration of each recording segment.",
-        "recordDeleteAfter": "Delete segments after this duration. Zero disables deletion."
+        "recordDeleteAfter": "Delete segments after this duration. Zero disables deletion.",
+        "runOnInit": "Command to run when the path is initialized.",
+        "runOnInitRestart": "Restart the command if it exits.",
+        "runOnDemand": "Command to run when a client starts reading and the path has no publisher.",
+        "runOnDemandRestart": "Restart the command if it exits.",
+        "runOnDemandStartTimeout": "How long to wait for the on-demand publisher to start.",
+        "runOnDemandCloseAfter": "Stop the on-demand command this long after the last reader leaves.",
+        "runOnUnDemand": "Command to run when the on-demand command is stopped.",
+        "runOnReady": "Command to run when the stream is ready to be read.",
+        "runOnReadyRestart": "Restart the command if it exits.",
+        "runOnNotReady": "Command to run when the stream is no longer ready.",
+        "runOnRead": "Command to run when a client starts reading this path.",
+        "runOnReadRestart": "Restart the command if it exits.",
+        "runOnUnread": "Command to run when a client stops reading this path.",
+        "runOnRecordSegmentCreate": "Command to run when a recording segment is created.",
+        "runOnRecordSegmentComplete": "Command to run when a recording segment is complete."
       },
       "toasts": {
         "success": "MediaMTX config saved",

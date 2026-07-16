@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Înregistrare"
+        "recording": "Înregistrare",
+        "pathHooks": "Hook-uri de cale"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
@@ -241,7 +242,8 @@
         "hls": "Serviți fluxurile ca HLS pentru redare în browser.",
         "webrtc": "Redare și publicare în browser cu latență redusă.",
         "srt": "Publicați și citiți fluxuri prin SRT.",
-        "recording": "Înregistrează fluxurile pe disc."
+        "recording": "Înregistrează fluxurile pe disc.",
+        "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii."
       },
       "enabled": "Activat",
       "off": "Dezactivat",
@@ -324,7 +326,22 @@
         "recordFormat": "Containerul segmentelor de înregistrare (fmp4 sau mpegts).",
         "recordPartDuration": "Durata fiecărei părți în înregistrările fmp4.",
         "recordSegmentDuration": "Durata fiecărui segment de înregistrare.",
-        "recordDeleteAfter": "Șterge segmentele după această durată. Zero dezactivează ștergerea."
+        "recordDeleteAfter": "Șterge segmentele după această durată. Zero dezactivează ștergerea.",
+        "runOnInit": "Comandă de rulat când calea este inițializată.",
+        "runOnInitRestart": "Repornește comanda dacă se încheie.",
+        "runOnDemand": "Comandă de rulat când un client începe să citească, iar calea nu are un publicator.",
+        "runOnDemandRestart": "Repornește comanda dacă se încheie.",
+        "runOnDemandStartTimeout": "Cât se așteaptă pornirea publicatorului la cerere.",
+        "runOnDemandCloseAfter": "Oprește comanda la cerere după acest interval de la plecarea ultimului cititor.",
+        "runOnUnDemand": "Comandă de rulat când comanda la cerere este oprită.",
+        "runOnReady": "Comandă de rulat când fluxul este gata de citire.",
+        "runOnReadyRestart": "Repornește comanda dacă se încheie.",
+        "runOnNotReady": "Comandă de rulat când fluxul nu mai este gata.",
+        "runOnRead": "Comandă de rulat când un client începe să citească această cale.",
+        "runOnReadRestart": "Repornește comanda dacă se încheie.",
+        "runOnUnread": "Comandă de rulat când un client încetează să citească această cale.",
+        "runOnRecordSegmentCreate": "Comandă de rulat când este creat un segment de înregistrare.",
+        "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet."
       },
       "toasts": {
         "success": "Configurarea MediaMTX a fost salvată",

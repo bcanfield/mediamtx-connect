@@ -7,7 +7,7 @@ import { orpc } from '@/orpc'
 import { MediaMTXConfigForm } from './mediamtx-config-form'
 import { PATH_CONFIG_SCOPE } from './sections'
 
-export function PathConfigPage({ name }: { name: string }) {
+export function PathConfigPage({ name, section }: { name: string, section?: string }) {
   const t = useTranslations('Config')
   const queryClient = useQueryClient()
   const options = orpc.config.mediamtx.getPathConfig.queryOptions({ input: { name } })
@@ -34,6 +34,7 @@ export function PathConfigPage({ name }: { name: string }) {
               <MediaMTXConfigForm
                 scope={PATH_CONFIG_SCOPE}
                 conf={effective.conf}
+                initialSection={section}
                 onSave={async (_values, changed) => {
                   await updatePathConfig.mutateAsync({ name, conf: changed })
                   // The first save materializes an entry, so confName and the

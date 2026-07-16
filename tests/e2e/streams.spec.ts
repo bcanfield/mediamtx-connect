@@ -89,4 +89,21 @@ test.describe('Live View - With MediaMTX Running', () => {
       await expect(page.getByRole('heading', { name: `Path Config · ${streamName}` })).toBeVisible()
     }
   })
+
+  test('card actions deep-link to the stream\'s hooks', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.isVisible().catch(() => false)) {
+      const streamName = await card.locator('p').first().textContent() ?? ''
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      // No longer a stub: the same path-config route as "Edit path config",
+      // landed on the hooks section rather than a surface of its own.
+      await page.getByRole('menuitem', { name: 'Edit hooks' }).click()
+      await expect(page).toHaveURL(
+        `/config/mediamtx/paths/${encodeURIComponent(streamName)}?section=pathHooks`,
+      )
+      await expect(page.getByRole('heading', { name: 'Path Hooks' })).toBeInViewport()
+    }
+  })
 })

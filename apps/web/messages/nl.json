@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Opnemen"
+        "recording": "Opnemen",
+        "pathHooks": "Pad-hooks"
       },
       "sectionDescriptions": {
         "logging": "Loguitvoer, time-outs en globale limieten.",
@@ -241,7 +242,8 @@
         "hls": "Streams aanbieden als HLS voor afspelen in de browser.",
         "webrtc": "Afspelen en publiceren in de browser met lage latentie.",
         "srt": "Streams publiceren en lezen via SRT.",
-        "recording": "Neem streams op naar schijf."
+        "recording": "Neem streams op naar schijf.",
+        "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf."
       },
       "enabled": "Ingeschakeld",
       "off": "Uit",
@@ -324,7 +326,22 @@
         "recordFormat": "Container van de opnamesegmenten (fmp4 of mpegts).",
         "recordPartDuration": "Duur van elk deel in fmp4-opnamen.",
         "recordSegmentDuration": "Duur van elk opnamesegment.",
-        "recordDeleteAfter": "Verwijder segmenten na deze periode. Nul schakelt verwijderen uit."
+        "recordDeleteAfter": "Verwijder segmenten na deze periode. Nul schakelt verwijderen uit.",
+        "runOnInit": "Opdracht die wordt uitgevoerd wanneer het pad wordt geïnitialiseerd.",
+        "runOnInitRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnDemand": "Opdracht die wordt uitgevoerd wanneer een client begint te lezen en het pad geen publisher heeft.",
+        "runOnDemandRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnDemandStartTimeout": "Hoelang er wordt gewacht tot de on-demand publisher start.",
+        "runOnDemandCloseAfter": "Stop de on-demand opdracht zo lang na het vertrek van de laatste lezer.",
+        "runOnUnDemand": "Opdracht die wordt uitgevoerd wanneer de on-demand opdracht wordt gestopt.",
+        "runOnReady": "Opdracht die wordt uitgevoerd wanneer de stream gereed is om te lezen.",
+        "runOnReadyRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnNotReady": "Opdracht die wordt uitgevoerd wanneer de stream niet langer gereed is.",
+        "runOnRead": "Opdracht die wordt uitgevoerd wanneer een client dit pad begint te lezen.",
+        "runOnReadRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnUnread": "Opdracht die wordt uitgevoerd wanneer een client stopt met het lezen van dit pad.",
+        "runOnRecordSegmentCreate": "Opdracht die wordt uitgevoerd wanneer een opnamesegment wordt aangemaakt.",
+        "runOnRecordSegmentComplete": "Opdracht die wordt uitgevoerd wanneer een opnamesegment is voltooid."
       },
       "toasts": {
         "success": "MediaMTX-configuratie opgeslagen",

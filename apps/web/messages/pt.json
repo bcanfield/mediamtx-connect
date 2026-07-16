@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Gravação"
+        "recording": "Gravação",
+        "pathHooks": "Hooks de caminho"
       },
       "sectionDescriptions": {
         "logging": "Saída de registos, tempos limite e limites globais.",
@@ -241,7 +242,8 @@
         "hls": "Serve transmissões como HLS para reprodução no navegador.",
         "webrtc": "Reprodução e publicação de baixa latência no navegador.",
         "srt": "Publica e lê transmissões por SRT.",
-        "recording": "Grava as transmissões no disco."
+        "recording": "Grava as transmissões no disco.",
+        "pathHooks": "Comandos que o MediaMTX executa nos eventos do ciclo de vida de um caminho."
       },
       "enabled": "Ativado",
       "off": "Desligado",
@@ -324,7 +326,22 @@
         "recordFormat": "Contentor dos segmentos de gravação (fmp4 ou mpegts).",
         "recordPartDuration": "Duração de cada parte nas gravações fmp4.",
         "recordSegmentDuration": "Duração de cada segmento de gravação.",
-        "recordDeleteAfter": "Elimina os segmentos após este período. Zero desativa a eliminação."
+        "recordDeleteAfter": "Elimina os segmentos após este período. Zero desativa a eliminação.",
+        "runOnInit": "Comando a executar quando o caminho é inicializado.",
+        "runOnInitRestart": "Reinicia o comando se este terminar.",
+        "runOnDemand": "Comando a executar quando um cliente começa a ler e nada está a publicar no caminho.",
+        "runOnDemandRestart": "Reinicia o comando se este terminar.",
+        "runOnDemandStartTimeout": "Tempo de espera pelo arranque da origem a pedido.",
+        "runOnDemandCloseAfter": "Para o comando a pedido após este período depois de o último leitor sair.",
+        "runOnUnDemand": "Comando a executar quando o comando a pedido é parado.",
+        "runOnReady": "Comando a executar quando a transmissão está pronta para ser lida.",
+        "runOnReadyRestart": "Reinicia o comando se este terminar.",
+        "runOnNotReady": "Comando a executar quando a transmissão deixa de estar pronta.",
+        "runOnRead": "Comando a executar quando um cliente começa a ler este caminho.",
+        "runOnReadRestart": "Reinicia o comando se este terminar.",
+        "runOnUnread": "Comando a executar quando um cliente deixa de ler este caminho.",
+        "runOnRecordSegmentCreate": "Comando a executar quando um segmento de gravação é criado.",
+        "runOnRecordSegmentComplete": "Comando a executar quando um segmento de gravação fica completo."
       },
       "toasts": {
         "success": "Configuração do MediaMTX guardada",

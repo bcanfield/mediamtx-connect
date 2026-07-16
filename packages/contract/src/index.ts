@@ -106,6 +106,25 @@ export const PathDefaultsSchema = z.object({
   recordPartDuration: z.string().optional(),
   recordSegmentDuration: z.string().optional(),
   recordDeleteAfter: z.string().optional(),
+
+  // The path's own lifecycle hooks. Distinct from the global scope's
+  // runOnConnect/runOnDisconnect, which fire per client connection and belong
+  // to the server, not to any path (ADR 0002).
+  runOnInit: z.string().optional(),
+  runOnInitRestart: z.boolean().optional(),
+  runOnDemand: z.string().optional(),
+  runOnDemandRestart: z.boolean().optional(),
+  runOnDemandStartTimeout: z.string().optional(),
+  runOnDemandCloseAfter: z.string().optional(),
+  runOnUnDemand: z.string().optional(),
+  runOnReady: z.string().optional(),
+  runOnReadyRestart: z.boolean().optional(),
+  runOnNotReady: z.string().optional(),
+  runOnRead: z.string().optional(),
+  runOnReadRestart: z.boolean().optional(),
+  runOnUnread: z.string().optional(),
+  runOnRecordSegmentCreate: z.string().optional(),
+  runOnRecordSegmentComplete: z.string().optional(),
 })
 
 export type PathDefaults = z.infer<typeof PathDefaultsSchema>

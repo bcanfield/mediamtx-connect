@@ -230,7 +230,8 @@
         "hls": "HLS",
         "webrtc": "WebRTC",
         "srt": "SRT",
-        "recording": "Registrazione"
+        "recording": "Registrazione",
+        "pathHooks": "Hooks del percorso"
       },
       "sectionDescriptions": {
         "logging": "Output dei log, timeout e limiti globali.",
@@ -241,7 +242,8 @@
         "hls": "Servi i flussi come HLS per la riproduzione nel browser.",
         "webrtc": "Riproduzione e pubblicazione a bassa latenza nel browser.",
         "srt": "Pubblica e leggi flussi via SRT.",
-        "recording": "Registra i flussi su disco."
+        "recording": "Registra i flussi su disco.",
+        "pathHooks": "Comandi che MediaMTX esegue sugli eventi del ciclo di vita di un percorso."
       },
       "enabled": "Abilitato",
       "off": "Disattivato",
@@ -324,7 +326,22 @@
         "recordFormat": "Contenitore dei segmenti di registrazione (fmp4 o mpegts).",
         "recordPartDuration": "Durata di ogni parte nelle registrazioni fmp4.",
         "recordSegmentDuration": "Durata di ogni segmento di registrazione.",
-        "recordDeleteAfter": "Elimina i segmenti dopo questo periodo. Zero disattiva l’eliminazione."
+        "recordDeleteAfter": "Elimina i segmenti dopo questo periodo. Zero disattiva l’eliminazione.",
+        "runOnInit": "Comando da eseguire quando il percorso viene inizializzato.",
+        "runOnInitRestart": "Riavvia il comando se termina.",
+        "runOnDemand": "Comando da eseguire quando un client inizia a leggere e il percorso non ha un publisher.",
+        "runOnDemandRestart": "Riavvia il comando se termina.",
+        "runOnDemandStartTimeout": "Quanto attendere l’avvio del publisher on-demand.",
+        "runOnDemandCloseAfter": "Ferma il comando on-demand dopo questo tempo dall’uscita dell’ultimo lettore.",
+        "runOnUnDemand": "Comando da eseguire quando il comando on-demand viene fermato.",
+        "runOnReady": "Comando da eseguire quando il flusso è pronto per essere letto.",
+        "runOnReadyRestart": "Riavvia il comando se termina.",
+        "runOnNotReady": "Comando da eseguire quando il flusso non è più pronto.",
+        "runOnRead": "Comando da eseguire quando un client inizia a leggere questo percorso.",
+        "runOnReadRestart": "Riavvia il comando se termina.",
+        "runOnUnread": "Comando da eseguire quando un client smette di leggere questo percorso.",
+        "runOnRecordSegmentCreate": "Comando da eseguire quando viene creato un segmento di registrazione.",
+        "runOnRecordSegmentComplete": "Comando da eseguire quando un segmento di registrazione è completo."
       },
       "toasts": {
         "success": "Config MediaMTX salvata",
