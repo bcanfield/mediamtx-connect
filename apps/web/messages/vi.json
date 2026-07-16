@@ -166,6 +166,10 @@
       "pageHeader": "Cấu hình MediaMTX",
       "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ."
     },
+    "pathDefaults": {
+      "pageHeader": "Giá trị mặc định của đường dẫn",
+      "pageSubHeader": "Các thiết lập mà mọi luồng đều kế thừa, được lưu trên máy chủ."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",
       "needsAttention": "{count, plural, other {# trường cần chú ý}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Ghi hình"
       },
       "sectionDescriptions": {
         "logging": "Đầu ra nhật ký, thời gian chờ và giới hạn toàn cục.",
@@ -230,7 +235,8 @@
         "rtmp": "Đẩy và xem luồng qua RTMP.",
         "hls": "Cung cấp luồng dưới dạng HLS để phát trên trình duyệt.",
         "webrtc": "Phát và đẩy luồng độ trễ thấp trên trình duyệt.",
-        "srt": "Đẩy và xem luồng qua SRT."
+        "srt": "Đẩy và xem luồng qua SRT.",
+        "recording": "Ghi luồng xuống đĩa. Mọi đường dẫn đều kế thừa các thiết lập này."
       },
       "enabled": "Đã bật",
       "off": "Tắt",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Các giao diện để thu thập IP ứng viên. Để trống nghĩa là tất cả.",
         "webrtcAdditionalHosts": "Các máy chủ hoặc IP bổ sung được quảng bá làm ứng viên WebRTC.",
         "webrtcICEServers2": "Máy chủ STUN hoặc TURN dùng để thiết lập kết nối WebRTC.",
-        "srtAddress": "Địa chỉ lắng nghe của máy chủ SRT."
+        "srtAddress": "Địa chỉ lắng nghe của máy chủ SRT.",
+        "recordPath": "Đường dẫn của các phân đoạn ghi. %path là tên luồng.",
+        "recordFormat": "Định dạng chứa của các phân đoạn ghi (fmp4 hoặc mpegts).",
+        "recordPartDuration": "Thời lượng mỗi phần trong bản ghi fmp4.",
+        "recordSegmentDuration": "Thời lượng của mỗi phân đoạn ghi.",
+        "recordDeleteAfter": "Xóa phân đoạn sau khoảng thời gian này. Số không sẽ tắt việc xóa."
       },
       "toasts": {
         "success": "Đã lưu cấu hình MediaMTX",

@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX Config",
       "pageSubHeader": "Global MediaMTX server settings, saved to the server."
     },
+    "pathDefaults": {
+      "pageHeader": "Path Defaults",
+      "pageSubHeader": "Settings inherited by every stream, saved to the server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",
       "needsAttention": "{count, plural, one {# field needs attention} other {# fields need attention}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Recording"
       },
       "sectionDescriptions": {
         "logging": "Log output, timeouts and global limits.",
@@ -230,7 +235,8 @@
         "rtmp": "Publish and read streams over RTMP.",
         "hls": "Serve streams as HLS for browser playback.",
         "webrtc": "Low-latency browser playback and publishing.",
-        "srt": "Publish and read streams over SRT."
+        "srt": "Publish and read streams over SRT.",
+        "recording": "Record streams to disk. Every path inherits these settings."
       },
       "enabled": "Enabled",
       "off": "Off",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Interfaces to gather candidate IPs from. Empty means all.",
         "webrtcAdditionalHosts": "Additional hosts or IPs advertised as WebRTC candidates.",
         "webrtcICEServers2": "STUN or TURN servers used to establish WebRTC connections.",
-        "srtAddress": "Listen address of the SRT server."
+        "srtAddress": "Listen address of the SRT server.",
+        "recordPath": "Path of recording segments. %path is the stream name.",
+        "recordFormat": "Container of recording segments (fmp4 or mpegts).",
+        "recordPartDuration": "Duration of each part in fmp4 recordings.",
+        "recordSegmentDuration": "Duration of each recording segment.",
+        "recordDeleteAfter": "Delete segments after this duration. Zero disables deletion."
       },
       "toasts": {
         "success": "MediaMTX config saved",

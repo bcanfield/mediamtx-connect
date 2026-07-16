@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX 設定",
       "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。"
     },
+    "pathDefaults": {
+      "pageHeader": "路徑預設值",
+      "pageSubHeader": "每個串流都會繼承的設定，儲存至伺服器。"
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# 個未儲存的變更}}",
       "needsAttention": "{count, plural, other {# 個欄位需要注意}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "錄影"
       },
       "sectionDescriptions": {
         "logging": "記錄輸出、逾時與全域限制。",
@@ -230,7 +235,8 @@
         "rtmp": "透過 RTMP 發布與觀看串流。",
         "hls": "以 HLS 形式提供串流，供瀏覽器播放。",
         "webrtc": "低延遲的瀏覽器播放與發布。",
-        "srt": "透過 SRT 發布與觀看串流。"
+        "srt": "透過 SRT 發布與觀看串流。",
+        "recording": "將串流錄製到磁碟。所有路徑都會繼承這些設定。"
       },
       "enabled": "已啟用",
       "off": "關閉",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "收集候選 IP 的介面。留空表示全部。",
         "webrtcAdditionalHosts": "作為 WebRTC 候選通告的額外主機或 IP。",
         "webrtcICEServers2": "用於建立 WebRTC 連線的 STUN 或 TURN 伺服器。",
-        "srtAddress": "SRT 伺服器的監聽位址。"
+        "srtAddress": "SRT 伺服器的監聽位址。",
+        "recordPath": "錄影分段的路徑。%path 為串流名稱。",
+        "recordFormat": "錄影分段的容器格式（fmp4 或 mpegts）。",
+        "recordPartDuration": "fmp4 錄影中每個分片的長度。",
+        "recordSegmentDuration": "每個錄影分段的長度。",
+        "recordDeleteAfter": "超過此期間後刪除分段。設為零則不刪除。"
       },
       "toasts": {
         "success": "已儲存 MediaMTX 設定",

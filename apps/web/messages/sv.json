@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX-konfiguration",
       "pageSubHeader": "Globala MediaMTX-serverinställningar, sparade på servern."
     },
+    "pathDefaults": {
+      "pageHeader": "Standardvärden för sökvägar",
+      "pageSubHeader": "Inställningar som varje ström ärver, sparade på servern."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",
       "needsAttention": "{count, plural, one {# fält behöver åtgärdas} other {# fält behöver åtgärdas}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Inspelning"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsgränser och globala begränsningar.",
@@ -230,7 +235,8 @@
         "rtmp": "Publicera och läs strömmar via RTMP.",
         "hls": "Servera strömmar som HLS för uppspelning i webbläsaren.",
         "webrtc": "Uppspelning och publicering i webbläsaren med låg latens.",
-        "srt": "Publicera och läs strömmar via SRT."
+        "srt": "Publicera och läs strömmar via SRT.",
+        "recording": "Spela in strömmar till disk. Varje sökväg ärver dessa inställningar."
       },
       "enabled": "Aktiverad",
       "off": "Av",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Gränssnitt att samla kandidat-IP-adresser från. Tomt betyder alla.",
         "webrtcAdditionalHosts": "Ytterligare värdar eller IP-adresser som annonseras som WebRTC-kandidater.",
         "webrtcICEServers2": "STUN- eller TURN-servrar som används för att upprätta WebRTC-anslutningar.",
-        "srtAddress": "Lyssningsadress för SRT-servern."
+        "srtAddress": "Lyssningsadress för SRT-servern.",
+        "recordPath": "Sökväg för inspelningssegment. %path är strömmens namn.",
+        "recordFormat": "Behållare för inspelningssegment (fmp4 eller mpegts).",
+        "recordPartDuration": "Längd på varje del i fmp4-inspelningar.",
+        "recordSegmentDuration": "Längd på varje inspelningssegment.",
+        "recordDeleteAfter": "Ta bort segment efter denna tid. Noll inaktiverar borttagning."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen har sparats",

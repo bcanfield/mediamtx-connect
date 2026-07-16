@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX 配置",
       "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。"
     },
+    "pathDefaults": {
+      "pageHeader": "路径默认设置",
+      "pageSubHeader": "每个流都会继承的设置，保存到服务器。"
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# 项未保存的更改}}",
       "needsAttention": "{count, plural, other {# 个字段需要处理}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "录制"
       },
       "sectionDescriptions": {
         "logging": "日志输出、超时和全局限制。",
@@ -230,7 +235,8 @@
         "rtmp": "通过 RTMP 推流和观看流。",
         "hls": "将流以 HLS 形式提供，用于浏览器播放。",
         "webrtc": "低延迟的浏览器播放与推流。",
-        "srt": "通过 SRT 推流和观看流。"
+        "srt": "通过 SRT 推流和观看流。",
+        "recording": "将流录制到磁盘。所有路径都会继承这些设置。"
       },
       "enabled": "已启用",
       "off": "关闭",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "收集候选 IP 的接口。为空表示全部。",
         "webrtcAdditionalHosts": "作为 WebRTC 候选通告的额外主机或 IP。",
         "webrtcICEServers2": "用于建立 WebRTC 连接的 STUN 或 TURN 服务器。",
-        "srtAddress": "SRT 服务器的监听地址。"
+        "srtAddress": "SRT 服务器的监听地址。",
+        "recordPath": "录制分段的路径。%path 为流名称。",
+        "recordFormat": "录制分段的容器格式（fmp4 或 mpegts）。",
+        "recordPartDuration": "fmp4 录制中每个分片的时长。",
+        "recordSegmentDuration": "每个录制分段的时长。",
+        "recordDeleteAfter": "超过该时长后删除分段。设为零则不删除。"
       },
       "toasts": {
         "success": "MediaMTX 配置已保存",

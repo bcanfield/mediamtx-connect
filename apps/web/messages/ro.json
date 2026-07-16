@@ -166,6 +166,10 @@
       "pageHeader": "Configurare MediaMTX",
       "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server."
     },
+    "pathDefaults": {
+      "pageHeader": "Valori implicite pentru căi",
+      "pageSubHeader": "Setări moștenite de fiecare flux, salvate pe server."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
       "needsAttention": "{count, plural, one {# câmp necesită atenție} few {# câmpuri necesită atenție} other {# de câmpuri necesită atenție}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Înregistrare"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
@@ -230,7 +235,8 @@
         "rtmp": "Publicați și citiți fluxuri prin RTMP.",
         "hls": "Serviți fluxurile ca HLS pentru redare în browser.",
         "webrtc": "Redare și publicare în browser cu latență redusă.",
-        "srt": "Publicați și citiți fluxuri prin SRT."
+        "srt": "Publicați și citiți fluxuri prin SRT.",
+        "recording": "Înregistrează fluxurile pe disc. Fiecare cale moștenește aceste setări."
       },
       "enabled": "Activat",
       "off": "Dezactivat",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Interfețele de pe care se colectează IP-uri candidate. Gol înseamnă toate.",
         "webrtcAdditionalHosts": "Hosturi sau IP-uri suplimentare anunțate drept candidați WebRTC.",
         "webrtcICEServers2": "Servere STUN sau TURN folosite pentru stabilirea conexiunilor WebRTC.",
-        "srtAddress": "Adresa de ascultare a serverului SRT."
+        "srtAddress": "Adresa de ascultare a serverului SRT.",
+        "recordPath": "Calea segmentelor de înregistrare. %path este numele fluxului.",
+        "recordFormat": "Containerul segmentelor de înregistrare (fmp4 sau mpegts).",
+        "recordPartDuration": "Durata fiecărei părți în înregistrările fmp4.",
+        "recordSegmentDuration": "Durata fiecărui segment de înregistrare.",
+        "recordDeleteAfter": "Șterge segmentele după această durată. Zero dezactivează ștergerea."
       },
       "toasts": {
         "success": "Configurarea MediaMTX a fost salvată",

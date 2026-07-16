@@ -166,6 +166,10 @@
       "pageHeader": "MediaMTX 設定",
       "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。"
     },
+    "pathDefaults": {
+      "pageHeader": "パス既定値",
+      "pageSubHeader": "すべてのストリームが継承する設定。サーバーに保存されます。"
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {未保存の変更が # 件}}",
       "needsAttention": "{count, plural, other {# 個の項目に確認が必要です}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "録画"
       },
       "sectionDescriptions": {
         "logging": "ログ出力、タイムアウト、グローバル制限。",
@@ -230,7 +235,8 @@
         "rtmp": "RTMP でストリームを配信・視聴します。",
         "hls": "ブラウザ再生用に HLS としてストリームを配信します。",
         "webrtc": "低遅延のブラウザ再生と配信。",
-        "srt": "SRT でストリームを配信・視聴します。"
+        "srt": "SRT でストリームを配信・視聴します。",
+        "recording": "ストリームをディスクに録画します。すべてのパスがこの設定を継承します。"
       },
       "enabled": "有効",
       "off": "オフ",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "候補 IP を収集するインターフェース。空の場合はすべて。",
         "webrtcAdditionalHosts": "WebRTC 候補として通知する追加のホストまたは IP。",
         "webrtcICEServers2": "WebRTC 接続の確立に使用する STUN または TURN サーバー。",
-        "srtAddress": "SRT サーバーのリッスンアドレス。"
+        "srtAddress": "SRT サーバーのリッスンアドレス。",
+        "recordPath": "録画セグメントのパス。%path はストリーム名です。",
+        "recordFormat": "録画セグメントのコンテナ（fmp4 または mpegts）。",
+        "recordPartDuration": "fmp4 録画における各パートの長さ。",
+        "recordSegmentDuration": "各録画セグメントの長さ。",
+        "recordDeleteAfter": "この期間を過ぎたセグメントを削除します。ゼロで削除を無効化します。"
       },
       "toasts": {
         "success": "MediaMTX 設定を保存しました",

@@ -36,7 +36,7 @@ pnpm test:e2e:dev      # playwright UI
 - **A test you haven't seen fail isn't a test.** Break the line it covers and confirm it goes red before moving on.
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
-- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`).
+- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `save-bar`).
 - **Resilient E2E.** Assert "state A or state B" when both are valid (see `CONTRIBUTING.md`). Never `toHaveCount(n)` against live data.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
 - **Fixtures** are small committed MP4s + PNGs under `tests/fixtures/`. Playwright's `globalSetup` copies them into `test-results/e2e-data/` (via `scripts/seed-fixtures.mjs`) before the webserver boots — hermetic and offline, no ffmpeg or MediaMTX needed.

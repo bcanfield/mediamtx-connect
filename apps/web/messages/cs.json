@@ -166,6 +166,10 @@
       "pageHeader": "Konfigurace MediaMTX",
       "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server."
     },
+    "pathDefaults": {
+      "pageHeader": "Výchozí hodnoty cest",
+      "pageSubHeader": "Nastavení, která dědí každý stream, uložená na serveru."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# neuložená změna} few {# neuložené změny} many {# neuložené změny} other {# neuložených změn}}",
       "needsAttention": "{count, plural, one {# pole vyžaduje pozornost} few {# pole vyžadují pozornost} many {# pole vyžaduje pozornost} other {# polí vyžaduje pozornost}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Nahrávání"
       },
       "sectionDescriptions": {
         "logging": "Výstup logů, časové limity a globální limity.",
@@ -230,7 +235,8 @@
         "rtmp": "Publikujte a přijímejte streamy přes RTMP.",
         "hls": "Servírujte streamy jako HLS pro přehrávání v prohlížeči.",
         "webrtc": "Přehrávání a publikování v prohlížeči s nízkou latencí.",
-        "srt": "Publikujte a přijímejte streamy přes SRT."
+        "srt": "Publikujte a přijímejte streamy přes SRT.",
+        "recording": "Nahrávat streamy na disk. Tato nastavení dědí každá cesta."
       },
       "enabled": "Zapnuto",
       "off": "Vypnuto",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Rozhraní, ze kterých se shromažďují kandidátní IP. Prázdné znamená všechna.",
         "webrtcAdditionalHosts": "Další hostitelé nebo IP inzerované jako kandidáti WebRTC.",
         "webrtcICEServers2": "Servery STUN nebo TURN používané k navazování spojení WebRTC.",
-        "srtAddress": "Adresa naslouchání serveru SRT."
+        "srtAddress": "Adresa naslouchání serveru SRT.",
+        "recordPath": "Cesta k segmentům nahrávek. %path je název streamu.",
+        "recordFormat": "Kontejner segmentů nahrávek (fmp4 nebo mpegts).",
+        "recordPartDuration": "Délka každé části v nahrávkách fmp4.",
+        "recordSegmentDuration": "Délka každého segmentu nahrávky.",
+        "recordDeleteAfter": "Smazat segmenty po této době. Nula mazání vypne."
       },
       "toasts": {
         "success": "Konfigurace MediaMTX uložena",

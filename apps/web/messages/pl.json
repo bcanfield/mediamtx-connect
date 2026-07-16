@@ -166,6 +166,10 @@
       "pageHeader": "Konfiguracja MediaMTX",
       "pageSubHeader": "Globalne ustawienia serwera MediaMTX, zapisywane na serwerze."
     },
+    "pathDefaults": {
+      "pageHeader": "Domyślne ustawienia ścieżek",
+      "pageSubHeader": "Ustawienia dziedziczone przez każdy strumień, zapisywane na serwerze."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanej zmiany}}",
       "needsAttention": "{count, plural, one {# pole wymaga uwagi} few {# pola wymagają uwagi} many {# pól wymaga uwagi} other {# pola wymaga uwagi}}",
@@ -220,7 +224,8 @@
         "rtmp": "RTMP",
         "hls": "HLS",
         "webrtc": "WebRTC",
-        "srt": "SRT"
+        "srt": "SRT",
+        "recording": "Nagrywanie"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
@@ -230,7 +235,8 @@
         "rtmp": "Publikuj i odbieraj transmisje przez RTMP.",
         "hls": "Udostępniaj transmisje jako HLS do odtwarzania w przeglądarce.",
         "webrtc": "Odtwarzanie i publikowanie w przeglądarce z niskim opóźnieniem.",
-        "srt": "Publikuj i odbieraj transmisje przez SRT."
+        "srt": "Publikuj i odbieraj transmisje przez SRT.",
+        "recording": "Nagrywaj strumienie na dysk. Każda ścieżka dziedziczy te ustawienia."
       },
       "enabled": "Włączone",
       "off": "Wyłączone",
@@ -308,7 +314,12 @@
         "webrtcIPsFromInterfacesList": "Interfejsy, z których zbierane są kandydujące adresy IP. Puste oznacza wszystkie.",
         "webrtcAdditionalHosts": "Dodatkowe hosty lub adresy IP ogłaszane jako kandydaci WebRTC.",
         "webrtcICEServers2": "Serwery STUN lub TURN używane do nawiązywania połączeń WebRTC.",
-        "srtAddress": "Adres nasłuchiwania serwera SRT."
+        "srtAddress": "Adres nasłuchiwania serwera SRT.",
+        "recordPath": "Ścieżka segmentów nagrań. %path to nazwa strumienia.",
+        "recordFormat": "Kontener segmentów nagrań (fmp4 lub mpegts).",
+        "recordPartDuration": "Czas trwania każdej części w nagraniach fmp4.",
+        "recordSegmentDuration": "Czas trwania każdego segmentu nagrania.",
+        "recordDeleteAfter": "Usuwaj segmenty po tym czasie. Zero wyłącza usuwanie."
       },
       "toasts": {
         "success": "Zapisano konfigurację MediaMTX",
