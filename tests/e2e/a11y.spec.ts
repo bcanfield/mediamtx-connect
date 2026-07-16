@@ -7,6 +7,9 @@ const pages = [
   { name: 'Client Config', path: '/config' },
   { name: 'MediaMTX Global Config', path: '/config/mediamtx/global' },
   { name: 'MediaMTX Path Defaults', path: '/config/mediamtx/path-defaults' },
+  // Rendering this route writes nothing; whether stream1 is materialized when
+  // the sweep lands doesn't change the markup axe sees.
+  { name: 'MediaMTX Path Config', path: '/config/mediamtx/paths/stream1' },
 ] as const
 
 for (const { name, path } of pages) {

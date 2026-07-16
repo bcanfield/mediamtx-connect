@@ -144,6 +144,49 @@ export const router = os.router({
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path defaults' })
         }
       }),
+
+      // A wildcard-backed path has no entry under its own name, so its config
+      // is reached through the runtime path's confName (ADR 0002). MediaMTX
+      // resolves defaults into whichever entry we read, so this is already
+      // effective config.
+      getPathConfig: os.config.mediamtx.getPathConfig.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        const api = mediaMtxApi(config)
+        try {
+          const runtime = await api.pathsGet(input.name)
+          const confName = runtime?.confName ?? input.name
+          const conf = await api.configPathGet(confName)
+          if (!conf)
+            return null
+          return { confName, conf }
+        }
+        catch (error) {
+          logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+          return null
+        }
+      }),
+
+      // Writes the path's own override only — never path defaults, whose blast
+      // radius is every stream on the server. A wildcard-backed path has no
+      // entry to patch, so the first save materializes one.
+      updatePathConfig: os.config.mediamtx.updatePathConfig.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        const api = mediaMtxApi(config)
+        try {
+          const existing = await api.configPathGet(input.name)
+          if (existing) {
+            await api.configPathPatch(input.name, input.conf)
+          }
+          else {
+            logger.info({ path: input.name }, 'Materializing path config entry')
+            await api.configPathAdd(input.name, input.conf)
+          }
+        }
+        catch (error) {
+          logger.error({ err: error }, 'Failed to update path config')
+          throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path config' })
+        }
+      }),
     },
   },
 })

@@ -24,7 +24,7 @@ export function PathDefaultsPage() {
               <MediaMTXConfigForm
                 scope={PATH_DEFAULTS_SCOPE}
                 conf={pathDefaults.data}
-                onSave={updatePathDefaults.mutateAsync}
+                onSave={values => updatePathDefaults.mutateAsync(values)}
               />
             )
           : <div className="text-[13px] text-muted-foreground">{t('invalidConfig')}</div>

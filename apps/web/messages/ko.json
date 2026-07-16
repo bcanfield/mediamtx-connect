@@ -170,6 +170,11 @@
       "pageHeader": "경로 기본값",
       "pageSubHeader": "모든 스트림이 상속하는 설정으로, 서버에 저장됩니다."
     },
+    "pathConfig": {
+      "pageHeader": "경로 설정 · {name}",
+      "pageSubHeader": "이 스트림의 설정이며 서버에 저장됩니다.",
+      "inheritedSubHeader": "이 스트림의 설정으로, 현재 {confName}에서 상속됩니다. 저장하면 변경한 항목만 재정의됩니다."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",
       "needsAttention": "{count, plural, other {확인이 필요한 필드 #개}}",
@@ -236,7 +241,7 @@
         "hls": "브라우저 재생을 위해 스트림을 HLS로 제공합니다.",
         "webrtc": "저지연 브라우저 재생 및 게시.",
         "srt": "SRT로 스트림을 게시하고 시청합니다.",
-        "recording": "스트림을 디스크에 녹화합니다. 모든 경로가 이 설정을 상속합니다."
+        "recording": "스트림을 디스크에 녹화합니다."
       },
       "enabled": "활성화됨",
       "off": "꺼짐",

@@ -170,6 +170,11 @@
       "pageHeader": "Valori implicite pentru căi",
       "pageSubHeader": "Setări moștenite de fiecare flux, salvate pe server."
     },
+    "pathConfig": {
+      "pageHeader": "Configurare cale · {name}",
+      "pageSubHeader": "Setările acestui flux, salvate pe server.",
+      "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
       "needsAttention": "{count, plural, one {# câmp necesită atenție} few {# câmpuri necesită atenție} other {# de câmpuri necesită atenție}}",
@@ -236,7 +241,7 @@
         "hls": "Serviți fluxurile ca HLS pentru redare în browser.",
         "webrtc": "Redare și publicare în browser cu latență redusă.",
         "srt": "Publicați și citiți fluxuri prin SRT.",
-        "recording": "Înregistrează fluxurile pe disc. Fiecare cale moștenește aceste setări."
+        "recording": "Înregistrează fluxurile pe disc."
       },
       "enabled": "Activat",
       "off": "Dezactivat",

@@ -170,6 +170,11 @@
       "pageHeader": "Výchozí hodnoty cest",
       "pageSubHeader": "Nastavení, která dědí každý stream, uložená na serveru."
     },
+    "pathConfig": {
+      "pageHeader": "Konfigurace cesty · {name}",
+      "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",
+      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# neuložená změna} few {# neuložené změny} many {# neuložené změny} other {# neuložených změn}}",
       "needsAttention": "{count, plural, one {# pole vyžaduje pozornost} few {# pole vyžadují pozornost} many {# pole vyžaduje pozornost} other {# polí vyžaduje pozornost}}",
@@ -236,7 +241,7 @@
         "hls": "Servírujte streamy jako HLS pro přehrávání v prohlížeči.",
         "webrtc": "Přehrávání a publikování v prohlížeči s nízkou latencí.",
         "srt": "Publikujte a přijímejte streamy přes SRT.",
-        "recording": "Nahrávat streamy na disk. Tato nastavení dědí každá cesta."
+        "recording": "Nahrávat streamy na disk."
       },
       "enabled": "Zapnuto",
       "off": "Vypnuto",

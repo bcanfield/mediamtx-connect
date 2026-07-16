@@ -3,7 +3,10 @@ import { defineConfig, devices } from '@playwright/test'
 
 // Tests that exercise pure HTTP behavior (no UI rendering) only need to run
 // once; cross-browser execution doesn't change their outcome.
-const uiSpecs = /(?:config|recordings|streams|a11y)\.spec\.ts/
+// Anchored on the path separator: unanchored, this also matched any spec
+// *ending* in one of these names (path-config.spec.ts), opting it into five
+// browsers that would then race each other writing the same MediaMTX key.
+const uiSpecs = /\/(?:config|recordings|streams|a11y)\.spec\.ts/
 
 export default defineConfig({
   testDir: './tests/e2e',

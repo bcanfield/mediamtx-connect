@@ -15,6 +15,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { ClientConfigPage } from '@/features/client-config/client-config-page'
 import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
+import { PathConfigPage } from '@/features/mediamtx-config/path-config-page'
 import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
 import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
@@ -92,6 +93,15 @@ const pathDefaultsRoute = createRoute({
   component: PathDefaultsPage,
 })
 
+const pathConfigRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/mediamtx/paths/$name',
+  component: function PathConfigRoute() {
+    const { name } = pathConfigRoute.useParams()
+    return <PathConfigPage name={name} />
+  },
+})
+
 const router = createRouter({
   routeTree: rootRoute.addChildren([
     liveRoute,
@@ -100,6 +110,7 @@ const router = createRouter({
     configRoute,
     mediamtxConfigRoute,
     pathDefaultsRoute,
+    pathConfigRoute,
   ]),
 })
 

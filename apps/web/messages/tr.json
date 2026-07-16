@@ -170,6 +170,11 @@
       "pageHeader": "Yol varsayılanları",
       "pageSubHeader": "Her akışın devraldığı ayarlar, sunucuya kaydedilir."
     },
+    "pathConfig": {
+      "pageHeader": "Yol yapılandırması · {name}",
+      "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",
+      "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar."
+    },
     "saveBar": {
       "unsaved": "{count, plural, other {# kaydedilmemiş değişiklik}}",
       "needsAttention": "{count, plural, other {# alanın düzeltilmesi gerekiyor}}",
@@ -236,7 +241,7 @@
         "hls": "Tarayıcıda oynatma için akışları HLS olarak sunun.",
         "webrtc": "Düşük gecikmeli tarayıcı oynatma ve yayınlama.",
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
-        "recording": "Akışları diske kaydeder. Her yol bu ayarları devralır."
+        "recording": "Akışları diske kaydeder."
       },
       "enabled": "Etkin",
       "off": "Kapalı",

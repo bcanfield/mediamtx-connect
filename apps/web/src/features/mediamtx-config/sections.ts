@@ -1,7 +1,7 @@
-import type { GlobalConfigFormData, PathDefaultsFormData } from '@connect/contract'
+import type { GlobalConfigFormData, PathConfigFormData, PathDefaultsFormData } from '@connect/contract'
 import type { FieldPath, FieldValues } from 'react-hook-form'
 import type { ZodType } from 'zod'
-import { GlobalConfigSchema, PathDefaultsSchema } from '@connect/contract'
+import { GlobalConfigSchema, PathConfigSchema, PathDefaultsSchema } from '@connect/contract'
 
 export type FieldKind = 'text' | 'number' | 'switch' | 'list'
 
@@ -129,9 +129,10 @@ export const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
   },
 ]
 
-// Path defaults are inherited by every path (ADR 0002). Recording is the only
-// group surfaced so far; MediaMTX serves many more keys from this scope.
-export const PATH_DEFAULTS_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
+// Shared by both path-scoped surfaces: a path's own config is the per-path
+// override of the same keys path defaults sets server-wide (ADR 0002).
+// Recording is the only group surfaced so far; MediaMTX serves many more keys.
+export const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
   {
     id: 'recording',
     enableField: 'record',
@@ -160,7 +161,12 @@ export const GLOBAL_SCOPE: ConfigScope<GlobalConfigFormData> = {
 
 export const PATH_DEFAULTS_SCOPE: ConfigScope<PathDefaultsFormData> = {
   schema: PathDefaultsSchema,
-  sections: PATH_DEFAULTS_SECTIONS,
+  sections: PATH_SECTIONS,
+}
+
+export const PATH_CONFIG_SCOPE: ConfigScope<PathConfigFormData> = {
+  schema: PathConfigSchema,
+  sections: PATH_SECTIONS,
 }
 
 export function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): string[] {

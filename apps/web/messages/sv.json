@@ -170,6 +170,11 @@
       "pageHeader": "Standardvärden för sökvägar",
       "pageSubHeader": "Inställningar som varje ström ärver, sparade på servern."
     },
+    "pathConfig": {
+      "pageHeader": "Sökvägskonfiguration · {name}",
+      "pageSubHeader": "Inställningar för den här strömmen, sparas på servern.",
+      "inheritedSubHeader": "Inställningar för den här strömmen, ärvs för närvarande från {confName}. Sparande skriver bara över det du ändrat."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",
       "needsAttention": "{count, plural, one {# fält behöver åtgärdas} other {# fält behöver åtgärdas}}",
@@ -236,7 +241,7 @@
         "hls": "Servera strömmar som HLS för uppspelning i webbläsaren.",
         "webrtc": "Uppspelning och publicering i webbläsaren med låg latens.",
         "srt": "Publicera och läs strömmar via SRT.",
-        "recording": "Spela in strömmar till disk. Varje sökväg ärver dessa inställningar."
+        "recording": "Spela in strömmar till disk."
       },
       "enabled": "Aktiverad",
       "off": "Av",

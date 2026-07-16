@@ -170,6 +170,11 @@
       "pageHeader": "Standardværdier for stier",
       "pageSubHeader": "Indstillinger som hver stream arver, gemt på serveren."
     },
+    "pathConfig": {
+      "pageHeader": "Sti-konfiguration · {name}",
+      "pageSubHeader": "Indstillinger for dette stream, gemmes på serveren.",
+      "inheritedSubHeader": "Indstillinger for dette stream, arves i øjeblikket fra {confName}. Gem overskriver kun det, du har ændret."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",
       "needsAttention": "{count, plural, one {# felt kræver opmærksomhed} other {# felter kræver opmærksomhed}}",
@@ -236,7 +241,7 @@
         "hls": "Servér streams som HLS til afspilning i browseren.",
         "webrtc": "Afspilning og publicering i browseren med lav latenstid.",
         "srt": "Publicér og læs streams over SRT.",
-        "recording": "Optag streams til disk. Hver sti arver disse indstillinger."
+        "recording": "Optag streams til disk."
       },
       "enabled": "Aktiveret",
       "off": "Fra",

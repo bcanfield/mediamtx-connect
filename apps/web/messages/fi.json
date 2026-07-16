@@ -170,6 +170,11 @@
       "pageHeader": "Polkujen oletusarvot",
       "pageSubHeader": "Asetukset, jotka jokainen striimi perii, tallennetaan palvelimelle."
     },
+    "pathConfig": {
+      "pageHeader": "Polun asetukset · {name}",
+      "pageSubHeader": "Tämän lähetyksen asetukset, tallennetaan palvelimelle.",
+      "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",
       "needsAttention": "{count, plural, one {# kenttä vaatii huomiota} other {# kenttää vaatii huomiota}}",
@@ -236,7 +241,7 @@
         "hls": "Tarjoa striimit HLS-muodossa selaintoistoa varten.",
         "webrtc": "Matalan viiveen selaintoisto ja julkaisu.",
         "srt": "Julkaise ja vastaanota striimejä SRT:llä.",
-        "recording": "Tallenna striimit levylle. Jokainen polku perii nämä asetukset."
+        "recording": "Tallenna striimit levylle."
       },
       "enabled": "Käytössä",
       "off": "Pois",

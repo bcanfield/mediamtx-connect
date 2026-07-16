@@ -170,6 +170,11 @@
       "pageHeader": "Valori predefiniti dei percorsi",
       "pageSubHeader": "Impostazioni ereditate da ogni flusso, salvate sul server."
     },
+    "pathConfig": {
+      "pageHeader": "Config del percorso · {name}",
+      "pageSubHeader": "Impostazioni di questo stream, salvate sul server.",
+      "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato."
+    },
     "saveBar": {
       "unsaved": "{count, plural, one {# modifica non salvata} other {# modifiche non salvate}}",
       "needsAttention": "{count, plural, one {# campo richiede attenzione} other {# campi richiedono attenzione}}",
@@ -236,7 +241,7 @@
         "hls": "Servi i flussi come HLS per la riproduzione nel browser.",
         "webrtc": "Riproduzione e pubblicazione a bassa latenza nel browser.",
         "srt": "Pubblica e leggi flussi via SRT.",
-        "recording": "Registra i flussi su disco. Ogni percorso eredita queste impostazioni."
+        "recording": "Registra i flussi su disco."
       },
       "enabled": "Abilitato",
       "off": "Disattivato",
