@@ -6,6 +6,7 @@ const pages = [
   { name: 'Recordings', path: '/recordings' },
   { name: 'Client Config', path: '/config' },
   { name: 'MediaMTX Global Config', path: '/config/mediamtx/global' },
+  { name: 'MediaMTX Path Defaults', path: '/config/mediamtx/path-defaults' },
 ] as const
 
 for (const { name, path } of pages) {

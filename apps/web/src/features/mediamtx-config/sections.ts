@@ -5,6 +5,8 @@ import { GlobalConfigSchema, PathDefaultsSchema } from '@connect/contract'
 
 export type FieldKind = 'text' | 'number' | 'switch' | 'list'
 
+// Field names are MediaMTX config keys verbatim, and are rendered
+// untranslated in every scope below (docs/I18N.md).
 export interface SectionField<T extends FieldValues> {
   name: FieldPath<T>
   kind: FieldKind
@@ -18,8 +20,7 @@ export interface SectionDef<T extends FieldValues> {
   hasIceServers?: boolean
 }
 
-// Board 2e's eight sections, in scroll order. Field names are MediaMTX
-// config keys verbatim and are rendered untranslated (docs/I18N.md).
+// Board 2e's eight global-scope sections, in scroll order.
 export const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
   {
     id: 'logging',
