@@ -131,7 +131,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 ## 6. Data Layer
 
 - **JSON config store (no database)** — the app's five settings persist in `$DATA_DIR/config.json`, Zod-validated on read and write, written atomically (temp file + rename). `apps/api/src/config-store.ts`
-- **Env-seeded first boot** — see §4; sensible production-shaped defaults (`http://mediamtx`, port `9997`) come from the env schema. The three dir vars — `DATA_DIR`, `MEDIAMTX_RECORDINGS_DIR`, `MEDIAMTX_SCREENSHOTS_DIR` — default to their container paths (`/data`, `/recordings`, `/screenshots`) only when `NODE_ENV=production`; elsewhere they are required, so a missing value fails env validation up front instead of an ENOENT on the first config write or a silently empty recordings list. Relative values resolve against the api's cwd (`apps/api`), not the repo root. `apps/api/src/env.ts`
+- **Env-seeded first boot** — see §4; every bootstrap var has a default, so a fresh clone and a bare `docker run` both boot with zero configuration. Defaults are picked by `NODE_ENV`: production uses the container mounts (`/data`, `/recordings`, `/screenshots`) and the compose hostname (`http://mediamtx`); dev writes under `<repo>/.dev-data/*` and reaches MediaMTX on `http://127.0.0.1`. The dev dirs are resolved from `env.ts` via `import.meta.url`, so they're the same absolute path whether the api runs from `apps/api` (tsx) or the repo root (built bundle) — no cwd-relative surprises. Env vars are optional first-boot overrides, not required input. `apps/api/src/env.ts`
 
 ---
 
@@ -264,7 +264,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **Port 3000** + node-based `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries) — no curl in the image.
 
 ### 13.2 Compose stacks
-- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889-8890 (WebRTC) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it absolute, never to the api-relative `../../` form `.env.example` uses.
+- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889-8890 (WebRTC) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
 - **`docker-compose.dev.yml`** — dev variant with optional `fake-streams` service behind `--profile streams` for offline testing.
 
 ### 13.3 Multi-arch
@@ -310,7 +310,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ### 15.3 Scripts (root `package.json`)
 | Script | Purpose |
 |--------|---------|
-| `pnpm dev` | web (5173) + api (3000) dev servers via turbo. |
+| `pnpm dev` | Starts MediaMTX + fake streams (Docker), seeds sample data into `.dev-data/` (`predev`), then runs web (5173) + api (3000) via turbo. Zero config. |
+| `pnpm dev:stop` | Stop the dev Docker stack (MediaMTX + fake streams). |
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
 | `pnpm lint` / `lint:fix` | ESLint check / autofix. |
@@ -320,17 +321,10 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm test` | Vitest unit suites across packages (turbo). |
 | `pnpm test:e2e` | Playwright suite (needs a prior build). |
 | `pnpm test:e2e:dev` | Playwright suite in UI mode. |
-| `pnpm setup` | Run `./scripts/setup-dev.sh`. |
-| `pnpm dev:all` | Start MediaMTX (with fake streams) and the dev servers together; tears the stack down on exit. |
-| `pnpm mediamtx` / `mediamtx:stop` | Start / stop MediaMTX with fake test streams. |
-| `pnpm setup:test-data` | Generate sample recordings for tests. |
 | `pnpm release` | semantic-release. |
 
 ### 15.4 Helper scripts (`scripts/`)
-- **`setup-dev.sh`** — bootstraps a dev environment (pnpm install + test data).
-- **`setup-test-data.sh`** — generates sample recordings for tests. Sources `.env` and writes fixtures to `MEDIAMTX_RECORDINGS_DIR` / `MEDIAMTX_SCREENSHOTS_DIR` (or the test defaults), so fixtures and seeded config never disagree.
-- **`start-mediamtx.sh`** — wraps the dev compose flow.
-- **`dev-all.sh`** — runs `start-mediamtx.sh` then `pnpm dev`, with a trap that brings the dev compose stack down on exit.
+- **`seed-fixtures.mjs`** — cross-platform Node script (no deps, no ffmpeg) that copies the committed `tests/fixtures/{recordings,screenshots}` into a `--target` dir (default `<repo>/.dev-data`) if empty. Runs as `predev` for dev and via Playwright `globalSetup` for e2e. Idempotent — never clobbers a dir that already has content.
 - **`i18n-check.mjs` / `readme-i18n-check.mjs`** — the two i18n CI guards.
 
 ---

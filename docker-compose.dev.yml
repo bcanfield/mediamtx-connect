@@ -1,6 +1,6 @@
-# Development only - runs MediaMTX for local development with `pnpm dev`
-# Usage: docker compose -f docker-compose.dev.yml up -d
-# With fake streams: docker compose -f docker-compose.dev.yml --profile streams up -d
+# Development only — the MediaMTX side of `pnpm dev` (the app runs on the host
+# with hot reload). `pnpm dev` brings this up; `pnpm dev:stop` tears it down.
+# Standalone: docker compose -f docker-compose.dev.yml up -d
 services:
   mediamtx:
     image: bluenviron/mediamtx:1.19.2
@@ -10,11 +10,11 @@ services:
       - dev
     volumes:
       - ./mediamtx.yml:/mediamtx.yml:ro
-      # Not ${MEDIAMTX_RECORDINGS_DIR}: .env sets that to ../../test-data/recordings
-      # for the api (which runs from apps/api), but compose resolves from the repo
-      # root — so interpolating it here mounts a directory outside the repo and
-      # MediaMTX records where nothing reads. Dev recordings always live here.
-      - ./test-data/recordings:/recordings
+      # Same physical dir the host api reads (env.ts dev default: <repo>/.dev-data
+      # /recordings). Compose resolves relative paths against the repo root, and
+      # env.ts anchors its dev dirs to the repo root too, so both agree — this is
+      # what fixes the old "MediaMTX records where nothing reads" mismatch.
+      - ./.dev-data/recordings:/recordings
     ports:
       - '8554:8554' # RTSP
       - '8890:8890/udp' # WebRTC/ICE UDP
@@ -23,9 +23,10 @@ services:
       - '8889:8889' # WebRTC HTTP
       - '9997:9997' # API
 
-  # Optional: generates 5 fake RTSP streams for testing
+  # 5 fake RTSP streams (stream1..5) so the Streams page has live content.
+  # The MediaMTX image is FROM scratch (no shell), so there's no container
+  # healthcheck to gate on — this just retries until MediaMTX accepts the push.
   fake-streams:
-    profiles: [streams]
     build: ./examples/fake-streams
     container_name: fake-streams
     networks:

@@ -7,6 +7,7 @@ const uiSpecs = /(?:config|recordings|streams|a11y)\.spec\.ts/
 
 export default defineConfig({
   testDir: './tests/e2e',
+  globalSetup: './tests/e2e/global-setup.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
@@ -32,9 +33,9 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
     env: {
-      DATA_DIR: './test-data/data',
-      MEDIAMTX_RECORDINGS_DIR: './test-data/recordings',
-      MEDIAMTX_SCREENSHOTS_DIR: './test-data/screenshots',
+      DATA_DIR: './test-results/e2e-data/data',
+      MEDIAMTX_RECORDINGS_DIR: './test-results/e2e-data/recordings',
+      MEDIAMTX_SCREENSHOTS_DIR: './test-results/e2e-data/screenshots',
       BACKEND_SERVER_MEDIAMTX_URL: 'http://127.0.0.1',
       REMOTE_MEDIAMTX_URL: 'http://localhost',
       ...Object.fromEntries(Object.entries(process.env).filter(([, v]) => v !== undefined)) as Record<string, string>,

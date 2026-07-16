@@ -37,12 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     env:
-      # Pin all data dirs so the fixture script and the webserver agree on
-      # paths. Without this, env.ts defaults to /recordings, /screenshots and
-      # /data and the non-root runner fails with EACCES on first boot.
-      DATA_DIR: ./test-data/data
-      MEDIAMTX_RECORDINGS_DIR: ./test-data/recordings
-      MEDIAMTX_SCREENSHOTS_DIR: ./test-data/screenshots
+      # Hermetic e2e data dir seeded from committed fixtures. Pinned so the
+      # seeder and the webserver agree; kept separate from the dev dir
+      # (.dev-data) that env.ts defaults to.
+      DATA_DIR: ./test-results/e2e-data/data
+      MEDIAMTX_RECORDINGS_DIR: ./test-results/e2e-data/recordings
+      MEDIAMTX_SCREENSHOTS_DIR: ./test-results/e2e-data/screenshots
       BACKEND_SERVER_MEDIAMTX_URL: http://127.0.0.1
       REMOTE_MEDIAMTX_URL: http://localhost
 
@@ -57,16 +57,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install ffmpeg
-        # The api's cron spawns ffmpeg to generate screenshots for orphan
-        # recordings. Without this, the server logs spawn errors on boot and
-        # the cron is a no-op.
+        # Committed PNG fixtures cover recording thumbnails; ffmpeg here only
+        # feeds the live-snapshot cron. Without it the server logs spawn errors.
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Setup test data
-        # Run before docker compose so Docker doesn't auto-create
-        # ./test-data/recordings as root and break later mkdir calls.
-        run: pnpm setup:test-data
+      - name: Seed test fixtures
+        run: node scripts/seed-fixtures.mjs --target ./test-results/e2e-data
       - name: Start MediaMTX with fake streams
-        run: ./scripts/start-mediamtx.sh
+        run: |
+          docker compose -f docker-compose.dev.yml up -d
+          echo "Waiting for MediaMTX API..."
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:9997/v3/paths/list > /dev/null; then
+              echo "MediaMTX API is ready"; break
+            fi
+            [ "$i" = "30" ] && { echo "MediaMTX did not become ready"; docker logs mediamtx 2>&1 | tail -20; exit 1; }
+            sleep 2
+          done
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps
       - name: Build application
@@ -89,7 +95,7 @@ jobs:
           retention-days: 7
       - name: Cleanup
         if: always()
-        run: docker compose -f docker-compose.dev.yml --profile streams down
+        run: docker compose -f docker-compose.dev.yml down
 
   image-smoke:
     name: Docker image smoke
