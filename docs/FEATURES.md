@@ -32,10 +32,15 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **"Stream online since" metadata** — `readyTime` renders as "online since {time} · {uptime}" on the card footer meta line.
 
 ### 1.2 Stream cards
-- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (resolution · bitrate · viewers) + bottom scrim — all backed by optional props that **no caller passes today**, so they never render; `StreamSchema` carries only `{name, readyTime}` (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
+- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry (resolution · bitrate · viewers) + bottom scrim — all backed by optional props that **no caller passes today**, so they never render; `StreamSchema` carries only `{name, readyTime, recording}` (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
+- **Record state indicator** — a card's footer shows "· ● REC" whenever the stream is *effectively* recording: its own override merged over path defaults, as MediaMTX resolves it. Inherited `true` is the stock setup, so a card reading only the stream's own (usually absent) entry would claim OFF while MediaMTX writes files (ADR 0002). `apps/web/src/features/streams/stream-card.tsx`
 - **Play / Stop** — footer buttons (outline Play / primary Stop) plus a centered 46 px circular play affordance on idle cards.
 - **URL-state-driven selection** — `?play=foo,bar` typed search param (TanStack Router `validateSearch`) tracks which streams are live, so the active set survives reload/share.
-- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. "View recordings", "Edit path config" (deep-links to `/config/mediamtx/paths/{name}`, §3.4) and "Edit hooks" (the same route with `?section=pathHooks`, §3.4) are functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast (`docs/debt/20260715131447-stream-card-action-stubs.md`). "Record" renders an ON/OFF state that is hard-wired OFF — the `recording` prop has no caller. `apps/web/src/features/streams/stream-card.tsx`
+- **Stream actions menu** — `MoreHorizontal` `DropdownMenu` grouped per the design's extension contract: [Open stream detail, View recordings, Take snapshot] / [Record, Copy publish URLs, Share & embed…] / [Edit path config, Edit hooks]. "View recordings", "Record" (§1.2.1), "Edit path config" (deep-links to `/config/mediamtx/paths/{name}`, §3.4) and "Edit hooks" (the same route with `?section=pathHooks`, §3.4) are functional; the rest are stubs that log via the shared logger and show a "Not implemented yet" toast (`docs/debt/20260715131447-stream-card-action-stubs.md`). `apps/web/src/features/streams/stream-card.tsx`
+
+#### 1.2.1 Record toggle
+- **Per-stream record toggle** — the actions menu's "Record" item shows effective ON/OFF and flips it for that one stream, via `config.mediamtx.updatePathConfig` (§3.4). It writes the path's own `{record}` override only: path defaults are the other place `record` lives, and writing them from a card would start or stop recording for every stream on the server (ADR 0002). A wildcard-backed stream — the normal case — has no entry to patch, so the first toggle materializes a sparse one; the live session survives it, unlike a hook write. Failures toast and leave the state alone. `apps/web/src/features/streams/stream-card.tsx`
+- **One read per distinct `confName`** — `streams.list` resolves record state for the whole grid by reading each *distinct* `confName` once (normally one, the `all_others` wildcard), not once per card. MediaMTX resolves path defaults into whichever entry it serves, so the read is already effective config. `apps/api/src/router.ts` (`streams.list`)
 
 ### 1.3 HLS video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `apps/web/src/components/video-player.tsx`
@@ -244,7 +249,7 @@ Defined in `packages/contract/src/index.ts`, implemented in `apps/api/src/router
 | Procedure | Kind | What it does |
 |-----------|------|--------------|
 | `health` | query | Status + process uptime. |
-| `streams.list` | query | MediaMTX paths + hlsAddress + remote URL, or a typed `connection-error` state. |
+| `streams.list` | query | MediaMTX paths (with effective record state) + hlsAddress + remote URL, or a typed `connection-error` state. |
 | `recordings.listStreams` | query | Per-stream `{count, latestMtime, screenshotUrl}` summaries; throws on unreadable mount. |
 | `recordings.listForStream` | query | Paginated recording metadata (`page`, `take`) + total count for a stream. |
 | `config.app.get` | query | Reads the config store. |
@@ -265,7 +270,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`AppConfigSchema`** — coerced types, non-empty strings, positive port, nullable remote URL.
 - **`GlobalConfigSchema`** — full MediaMTX `GlobalConf` mirror with optional fields and coercion across logging, transports (RTSP/RTMP/HLS/WebRTC/SRT), API/metrics/profiling, recording, and ICE servers.
 - **`HealthSchema`** — `{status: 'ok', uptime}`, the `health` procedure's output.
-- **`StreamSchema`** — `{name, readyTime}`, the element type of `StreamsStateSchema`'s connected branch.
+- **`StreamSchema`** — `{name, readyTime, recording}`, the element type of `StreamsStateSchema`'s connected branch. `recording` is effective state — the path's own override merged over path defaults (§1.2.1).
 - **`StreamsStateSchema`** — discriminated union for the live view connection state.
 - **`RecordingSchema` / `RecordingStreamSummarySchema`** — recording metadata with native `Date` values preserved over the wire by oRPC's serializer.
 - Localized form-message variants live feature-side: `apps/web/src/features/client-config/client-config.schemas.ts`.
@@ -308,6 +313,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`jobs.test.ts`** — the live snapshot cron: only `ready` paths are captured, paths without a name are skipped, the RTSP url is built from the configured host + `rtspAddress` port (with an `:8554` fallback), tmp+rename on ffmpeg exit 0, tmp discarded on failure, a stalled ffmpeg SIGKILLed at 15s, and no kill for one that already exited. Sibling modules are mocked with factories; timers are faked. `apps/api/src/jobs.test.ts`
 - **`media.test.ts`** — `/screenshots/{streamName}/latest` resolution: `live.png` wins while a stream runs (and the directory is never read), the newest recording thumbnail is picked out of deliberately unsorted `readdir` output once it doesn't, non-png files are ignored, missing directory / no-pngs both 404, a stream name escaping the screenshots root is rejected even when the escaped file exists, and every response carries `Cache-Control: no-store`. Routes are driven through `media.request()`; `node:fs` is faked over `importActual`. `apps/api/src/media.test.ts`
 - **`config-store.test.ts`** — the settings store: `updateAppConfig` writes via tmp+rename (asserting the rename lands after the write) and creates `DATA_DIR` first, an invalid config is rejected before any file is touched; `bootstrapConfig` seeds from env only on first boot, leaves an existing `config.json` alone when env disagrees, and warns about drift **only** for vars the operator explicitly set — a value that differs merely because it came from a schema default is not drift. `apps/api/src/config-store.test.ts`
+- **`router.test.ts`** — `streams.list` record state: an inherited `true` surfaces as recording when only path defaults enable it (the stock setup), a stream with its own entry reports that entry's state, and the whole grid costs one `configPathGet` per distinct `confName` rather than one per stream. `apps/api/src/router.test.ts`
 - **Scope** — `apps/api` only; `apps/web` and `packages/contract` have no unit runner yet (`docs/debt/`). Rationale and alternatives: `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`. Layer-choice guidance: `docs/TESTING.md`.
 
 ### 15.1 Playwright E2E (`tests/e2e/`)
@@ -318,7 +324,10 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`i18n.spec.ts`** — default English, locale switcher round-trip, persistence across reloads, translated nav.
 - **`a11y.spec.ts`** — axe-core accessibility smoke.
 - **`mediamtx.spec.ts`** — MediaMTX connectivity smoke tests.
-- **Runner config** (`playwright.config.ts`) — Chromium (+ Firefox/WebKit/mobile for UI specs), 1280×720, parallel workers, 2 retries in CI and 1 locally, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env.
+- **`path-defaults.spec.ts`** — the path-defaults page: Recording + Path Hooks sections, edit + save round-trip against live MediaMTX, restoring what it wrote.
+- **`path-config.spec.ts`** — the per-path page: effective config inherited from the wildcard entry, path-scoped hooks only, `?section=pathHooks` deep link, a hook write, and a save that materializes a sparse entry without restarting the session.
+- **`record-toggle.spec.ts`** — the card's record toggle: a card reports state inherited from path defaults (the stock setup); stopping one stream materializes its own override while path defaults, the wildcard entry, other cards, and the live session all stay put; starting one that already has an entry patches it in place.
+- **Runner config** (`playwright.config.ts`) — Chromium (+ Firefox/WebKit/mobile for UI specs), 1280×720, parallel workers, 2 retries in CI and 1 locally, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The three specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`) stay out of the UI-spec pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
 
 ### 15.2 Linting & types
 - **ESLint 10 + `@antfu/eslint-config`** (lint + format in one tool) with custom rules:

@@ -28,6 +28,7 @@ const densityClass: Record<Density, string> = {
 interface Stream {
   name: string
   readyTime?: string | null
+  recording: boolean
 }
 
 const segmentedGroup = 'gap-0.5 rounded-md border border-input p-0.5'
@@ -123,6 +124,7 @@ export function LiveStreamsView({
             key={stream.name}
             streamName={stream.name}
             readyTime={stream.readyTime}
+            recording={stream.recording}
             hlsAddress={hlsAddress}
             remoteMediaMtxUrl={remoteMediaMtxUrl}
             playDisabled={playDisabled}

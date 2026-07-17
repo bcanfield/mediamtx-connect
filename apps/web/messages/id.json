@@ -87,6 +87,10 @@
         "title": "Belum diimplementasikan",
         "description": "Tindakan ini ada di peta jalan — sudah dicatat."
       },
+      "recordError": {
+        "title": "Tidak dapat mengubah perekaman",
+        "description": "MediaMTX menolak perubahan — perekaman stream ini tidak berubah."
+      },
       "menu": {
         "openDetail": "Buka detail aliran",
         "viewRecordings": "Lihat rekaman",

@@ -87,6 +87,10 @@
         "title": "Még nincs megvalósítva",
         "description": "Ez a művelet szerepel a tervekben — feljegyeztük."
       },
+      "recordError": {
+        "title": "A felvétel módosítása nem sikerült",
+        "description": "A MediaMTX elutasította a módosítást – ennek a streamnek a felvétele változatlan."
+      },
       "menu": {
         "openDetail": "Folyam részleteinek megnyitása",
         "viewRecordings": "Felvételek megtekintése",

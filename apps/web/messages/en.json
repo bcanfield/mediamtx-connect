@@ -87,6 +87,10 @@
         "title": "Not implemented yet",
         "description": "This action is on the roadmap — it was logged."
       },
+      "recordError": {
+        "title": "Couldn't change recording",
+        "description": "MediaMTX rejected the change — this stream's recording is unchanged."
+      },
       "menu": {
         "openDetail": "Open stream detail",
         "viewRecordings": "View recordings",

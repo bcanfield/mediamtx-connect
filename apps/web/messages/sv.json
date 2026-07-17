@@ -87,6 +87,10 @@
         "title": "Inte implementerat än",
         "description": "Denna åtgärd finns på färdplanen — den har loggats."
       },
+      "recordError": {
+        "title": "Det gick inte att ändra inspelningen",
+        "description": "MediaMTX avvisade ändringen – inspelningen för den här strömmen är oförändrad."
+      },
       "menu": {
         "openDetail": "Öppna strömdetaljer",
         "viewRecordings": "Visa inspelningar",

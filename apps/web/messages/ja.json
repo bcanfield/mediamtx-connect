@@ -87,6 +87,10 @@
         "title": "未実装です",
         "description": "この操作はロードマップにあります — 記録されました。"
       },
+      "recordError": {
+        "title": "録画を変更できませんでした",
+        "description": "MediaMTX が変更を拒否しました — このストリームの録画状態は変わっていません。"
+      },
       "menu": {
         "openDetail": "ストリーム詳細を開く",
         "viewRecordings": "録画を表示",

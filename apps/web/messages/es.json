@@ -87,6 +87,10 @@
         "title": "Aún no implementado",
         "description": "Esta acción está en la hoja de ruta — se ha registrado."
       },
+      "recordError": {
+        "title": "No se pudo cambiar la grabación",
+        "description": "MediaMTX rechazó el cambio: la grabación de este stream no se ha modificado."
+      },
       "menu": {
         "openDetail": "Abrir detalle de la transmisión",
         "viewRecordings": "Ver grabaciones",

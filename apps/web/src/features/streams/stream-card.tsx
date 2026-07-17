@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { MoreHorizontal, Play } from 'lucide-react'
 import { useState } from 'react'
@@ -18,11 +19,11 @@ import { VideoPlayer } from '@/components/video-player'
 import { Link } from '@/i18n/navigation'
 import { logger } from '@/lib/logger'
 import { cn } from '@/lib/utils'
+import { orpc } from '@/orpc'
 
 // Overlay-zone contract from the design handoff (board 1h): every optional
-// prop adds a chip in its zone; nothing reflows. Codecs, telemetry, sharing
-// and recording state aren't in the API yet — the zones render only when the
-// data shows up.
+// prop adds a chip in its zone; nothing reflows. Codecs, telemetry and sharing
+// aren't in the API yet — those zones render only when the data shows up.
 export interface StreamCardProps {
   streamName: string
   readyTime?: string | null
@@ -32,7 +33,8 @@ export interface StreamCardProps {
   codecs?: string[]
   resolution?: string
   bitrate?: string
-  recording?: boolean
+  /** Effective record state: the stream's own override merged over path defaults. */
+  recording: boolean
   viewers?: number
 }
 
@@ -56,7 +58,7 @@ export function StreamCard({
   codecs = [],
   resolution,
   bitrate,
-  recording = false,
+  recording,
   viewers,
 }: StreamCardProps) {
   const t = useTranslations('Streams.card')
@@ -64,6 +66,8 @@ export function StreamCard({
   const navigate = useNavigate()
   const search = useSearch({ strict: false }) as { play?: string }
   const [thumbnailError, setThumbnailError] = useState(false)
+  const queryClient = useQueryClient()
+  const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
 
   const playing = search.play?.split(',').filter(Boolean) ?? []
   const isLive = playing.includes(streamName)
@@ -83,6 +87,20 @@ export function StreamCard({
       }),
       resetScroll: false,
     })
+  }
+
+  // Writes this stream's own override and nothing else. Path defaults are the
+  // other place `record` lives, and writing them would start or stop recording
+  // for every stream on the server (ADR 0002). A wildcard-backed stream has no
+  // entry to patch, so the API materializes one; the live session survives it.
+  const toggleRecord = async () => {
+    try {
+      await updatePathConfig.mutateAsync({ name: streamName, conf: { record: !recording } })
+      await queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() })
+    }
+    catch {
+      toast.error(t('recordError.title'), { description: t('recordError.description') })
+    }
   }
 
   const stub = (action: string) => () => {
@@ -239,7 +257,7 @@ export function StreamCard({
                 {t('menu.takeSnapshot')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={stub('toggle-record')}>
+              <DropdownMenuItem onClick={toggleRecord}>
                 <span className="flex-1">{t('menu.record')}</span>
                 <span className="font-mono text-[10px] uppercase text-faint">
                   {recording ? t('menu.recordOn') : t('menu.recordOff')}

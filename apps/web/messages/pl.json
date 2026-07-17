@@ -87,6 +87,10 @@
         "title": "Jeszcze niezaimplementowane",
         "description": "Ta akcja jest w planach — została odnotowana."
       },
+      "recordError": {
+        "title": "Nie udało się zmienić nagrywania",
+        "description": "MediaMTX odrzucił zmianę — nagrywanie tego strumienia pozostało bez zmian."
+      },
       "menu": {
         "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",

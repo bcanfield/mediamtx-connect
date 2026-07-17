@@ -87,6 +87,10 @@
         "title": "아직 구현되지 않았습니다",
         "description": "이 작업은 로드맵에 있습니다 — 기록되었습니다."
       },
+      "recordError": {
+        "title": "녹화를 변경할 수 없습니다",
+        "description": "MediaMTX가 변경을 거부했습니다 — 이 스트림의 녹화 상태는 그대로입니다."
+      },
       "menu": {
         "openDetail": "스트림 상세 열기",
         "viewRecordings": "녹화 보기",

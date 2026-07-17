@@ -87,6 +87,10 @@
         "title": "尚未实现",
         "description": "此操作已在路线图中 — 已记录。"
       },
+      "recordError": {
+        "title": "无法更改录制",
+        "description": "MediaMTX 拒绝了此更改 — 该流的录制状态未改变。"
+      },
       "menu": {
         "openDetail": "打开流详情",
         "viewRecordings": "查看录像",

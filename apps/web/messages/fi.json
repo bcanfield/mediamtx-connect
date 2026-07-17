@@ -87,6 +87,10 @@
         "title": "Ei vielä toteutettu",
         "description": "Tämä toiminto on suunnitelmissa — se kirjattiin."
       },
+      "recordError": {
+        "title": "Tallennuksen muuttaminen epäonnistui",
+        "description": "MediaMTX hylkäsi muutoksen – tämän striimin tallennus on ennallaan."
+      },
       "menu": {
         "openDetail": "Avaa striimin tiedot",
         "viewRecordings": "Näytä tallenteet",

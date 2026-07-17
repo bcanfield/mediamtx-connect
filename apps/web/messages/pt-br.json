@@ -87,6 +87,10 @@
         "title": "Ainda não implementado",
         "description": "Esta ação está no roadmap — foi registrada."
       },
+      "recordError": {
+        "title": "Não foi possível alterar a gravação",
+        "description": "O MediaMTX rejeitou a alteração — a gravação deste stream não foi modificada."
+      },
       "menu": {
         "openDetail": "Abrir detalhes da transmissão",
         "viewRecordings": "Ver gravações",
