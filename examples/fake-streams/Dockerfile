@@ -6,9 +6,8 @@ RUN apk add --no-cache ffmpeg
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the shell script from the local directory to the container's /app directory
+# Streams are generated from ffmpeg lavfi sources, so no video file is needed.
 COPY ffmpeg-test.sh /app/
-COPY test.mp4 /app/
 
 # Set execute permissions for the shell script (if needed)
 RUN chmod +x /app/ffmpeg-test.sh
