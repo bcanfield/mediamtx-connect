@@ -1,3 +1,5 @@
+import type { PlaybackMode, PlaybackProtocol } from '@/lib/playback'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { MoreHorizontal, Play } from 'lucide-react'
@@ -19,6 +21,7 @@ import { VideoPlayer } from '@/components/video-player'
 import { CONNECTION_POLL_MS } from '@/hooks/use-connection-state'
 import { Link } from '@/i18n/navigation'
 import { logger } from '@/lib/logger'
+import { hlsUrlFor, whepUrlFor } from '@/lib/playback'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
@@ -29,7 +32,13 @@ export interface StreamCardProps {
   streamName: string
   readyTime?: string | null
   hlsAddress?: string
+  /** MediaMTX's WebRTC port suffix. Absent or empty means WHEP isn't reachable. */
+  webrtcAddress?: string
   remoteMediaMtxUrl: string
+  /** Which transport playback reaches for. What actually plays is the pill's job. */
+  playbackMode: PlaybackMode
+  /** Referentially stable — the player's effect keys on it. */
+  iceServers?: RTCIceServer[]
   playDisabled?: boolean
   codecs?: string[]
   resolution?: string
@@ -44,6 +53,8 @@ export interface StreamCardProps {
 const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em]'
 const overlayPillLive = cn(overlayPill, 'gap-1.5 border-live/35 text-live-foreground')
 const overlayPillNeutral = cn(overlayPill, 'border-white/15 text-white/90')
+// The overlay always sits on black video, so these are fixed rather than themed.
+const overlayPillWarn = cn(overlayPill, 'border-amber-300/35 text-amber-300')
 
 function formatUptime(readyTime: string): string {
   const totalMinutes = Math.max(0, Math.floor((Date.now() - new Date(readyTime).getTime()) / 60000))
@@ -56,7 +67,10 @@ export function StreamCard({
   streamName,
   readyTime,
   hlsAddress,
+  webrtcAddress,
   remoteMediaMtxUrl,
+  playbackMode,
+  iceServers,
   playDisabled = false,
   codecs = [],
   resolution,
@@ -74,6 +88,10 @@ export function StreamCard({
   const navigate = useNavigate()
   const search = useSearch({ strict: false }) as { play?: string }
   const [thumbnailError, setThumbnailError] = useState(false)
+  // What the player reports it's actually playing — null while it's still
+  // establishing a transport. Never inferred from playbackMode: a WebRTC
+  // attempt that lost to a firewall is playing HLS regardless of what was asked.
+  const [protocol, setProtocol] = useState<PlaybackProtocol | null>(null)
   const queryClient = useQueryClient()
   const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
 
@@ -119,6 +137,13 @@ export function StreamCard({
     toast.info(t('stub.title'), { description: t('stub.description') })
   }
 
+  const protocolLabel = { webrtc: t('protocolWebrtc'), hls: t('protocolHls') }
+  // LOW-LAT is an explicit ask for WebRTC. Landing on HLS anyway is a fine
+  // outcome — a playing stream beats a black card — but it isn't what was
+  // asked for, so say so rather than let the pill quietly read HLS. AUTO
+  // expresses no preference, so the same fallback needs no announcement.
+  const fellBackFromLowLat = playbackMode === 'low-lat' && protocol === 'hls'
+
   const telemetry = [resolution, bitrate, viewers !== undefined ? t('viewers', { count: viewers }) : undefined]
     .filter(Boolean)
     .join(' · ')
@@ -132,7 +157,11 @@ export function StreamCard({
         {isLive
           ? (
               <VideoPlayer
-                address={`${remoteMediaMtxUrl}${hlsAddress}/${streamName}/index.m3u8`}
+                hlsUrl={hlsUrlFor(remoteMediaMtxUrl, hlsAddress ?? '', streamName)}
+                whepUrl={whepUrlFor(remoteMediaMtxUrl, webrtcAddress, streamName)}
+                mode={playbackMode}
+                iceServers={iceServers}
+                onProtocolChange={setProtocol}
               />
             )
           : thumbnailError
@@ -162,8 +191,13 @@ export function StreamCard({
                     {t('live')}
                   </span>
                   <span className={overlayPillNeutral}>
-                    {t('protocolHls')}
+                    {protocol ? protocolLabel[protocol] : t('protocolConnecting')}
                   </span>
+                  {fellBackFromLowLat && (
+                    <span className={overlayPillWarn}>
+                      {t('protocolFellBack')}
+                    </span>
+                  )}
                 </>
               )
             : !thumbnailError && (

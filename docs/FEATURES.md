@@ -28,11 +28,11 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Live streams dashboard** — grid of all active MediaMTX paths (14px gap, density-driven columns), fetched via TanStack Query. `apps/web/src/features/streams/live-view-page.tsx`
 - **MediaMTX path discovery** — the api calls MediaMTX `v3/paths/list` and resolves the connection state server-side into a discriminated union (`connection-error` vs `connected`). `apps/api/src/router.ts` (`streams.list`)
 - **Designed connection states** (per the design handoff, board 1c) — server-unreachable renders a centered red-tinted panel with the MediaMTX URL in mono, "Open App Config" + "Retry" buttons, and a visible auto-retry countdown (15 s); zero streams renders a dashed panel with publish-URL hints (RTSP/RTMP/SRT) in a mono code well; missing playback URL renders an amber banner above the grid with cards at 75 % opacity and Play disabled. `apps/web/src/features/streams/live-view-states.tsx`
-- **Toolbar** — stream-count summary on the left ("N streams · M playing"); playback-mode segmented control (AUTO / LOW-LAT / COMPAT, persisted in `localStorage('playbackMode')` — currently a logged stub, the player is HLS-only) and 2/3/4 density segmented control (persisted in `localStorage('liveDensity')`) on the right. `apps/web/src/features/streams/live-streams-view.tsx`
+- **Toolbar** — stream-count summary on the left ("N streams · M playing"); playback-mode segmented control (AUTO / LOW-LAT / COMPAT, persisted in `localStorage('playbackMode')`, §1.3.1) and 2/3/4 density segmented control (persisted in `localStorage('liveDensity')`) on the right. `apps/web/src/features/streams/live-streams-view.tsx`
 - **"Stream online since" metadata** — `readyTime` renders as "online since {time} · {uptime}" on the card footer meta line.
 
 ### 1.2 Stream cards
-- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + protocol pill while playing, SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry + bottom scrim. Every zone is an optional prop that renders only when its data shows up, so a stream missing any of it still lays out (§1.2.2). Nothing passes resolution or bitrate yet: resolution is deferred on scope rather than for lack of data (the path list's `tracks2` carries it), while bitrate is published as a cumulative counter where the design wants a rate (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
+- **Overlay-zone media tile** — 16:9 media area with reserved overlay zones (design handoff §3): top-left status pills (LIVE with pulsing dot + playback-protocol pill while playing, §1.3.1; SNAPSHOT while idle), bottom-left codec chips + bottom-right telemetry + bottom scrim. Every zone is an optional prop that renders only when its data shows up, so a stream missing any of it still lays out (§1.2.2). Nothing passes resolution or bitrate yet: resolution is deferred on scope rather than for lack of data (the path list's `tracks2` carries it), while bitrate is published as a cumulative counter where the design wants a rate (`docs/debt/20260715131524-missing-media-metadata-chips.md`). Latest screenshot loads via `/media/screenshots/{streamName}/latest`; the missing-thumbnail state is a diagonal-stripe placeholder with a mono "no snapshot yet" caption. `apps/web/src/features/streams/stream-card.tsx`
 - **Record state indicator** — a card's footer shows "· ● REC" whenever the stream is *effectively* recording: its own override merged over path defaults, as MediaMTX resolves it. Inherited `true` is the stock setup, so a card reading only the stream's own (usually absent) entry would claim OFF while MediaMTX writes files (ADR 0002). `apps/web/src/features/streams/stream-card.tsx`
 - **Play / Stop** — footer buttons (outline Play / primary Stop) plus a centered 46 px circular play affordance on idle cards.
 - **URL-state-driven selection** — `?play=foo,bar` typed search param (TanStack Router `validateSearch`) tracks which streams are live, so the active set survives reload/share.
@@ -49,13 +49,24 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **No new MediaMTX calls** — `tracks` and `readers` were already in the `v3/paths/list` response `streams.list` polls; they were dropped at the contract boundary. Lighting the chips up widened `StreamSchema` and the api client's `MediaMtxPath`, and added no request. `packages/contract/src/index.ts`, `apps/api/src/mediamtx.ts`
 - **One "latest snapshot" resolver** — `latestScreenshotPathFor` decides which PNG is a stream's latest (live.png, else the newest recording thumbnail by name). The `/media/screenshots/{name}/latest` route, the recordings screenshot-URL helper, and the card's snapshot age all read it, so they can't disagree about which file is current — the URL helper used to answer from any non-dot file and could hand back a URL the route then 404'd. `apps/api/src/recordings-fs.ts`
 
-### 1.3 HLS video player
+### 1.3 Video player
 - **HLS.js streaming** — adaptive bitrate playback in any modern browser. `apps/web/src/components/video-player.tsx`
 - **Native HLS fallback** — uses `<video>` native HLS where supported (Safari).
 - **Live-edge sync** — caps `maxLiveSyncPlaybackRate` at 1.5× to stay near the live edge.
 - **Automatic media-error recovery** — calls `recoverMediaError` immediately on every `MEDIA_ERROR`, in place, with no teardown.
 - **Fatal-error escalation** — any other fatal error logs, destroys the HLS instance, and rebuilds it after 2 s.
 - **Autoplay-muted on manifest parse** — works around browser autoplay policies. Live tiles render chrome-free (no native controls); stop/start happens through the card.
+
+#### 1.3.1 WebRTC (WHEP) playback and the mode toggle
+- **LOW-LAT plays over WebRTC** — the player reads the stream from MediaMTX's own WHEP endpoint (`{remoteMediaMtxUrl}{webrtcAddress}/{stream}/whep`) instead of HLS. Any stream MediaMTX serves can be read over WebRTC whatever it was published over, so this needs no server-side work. `apps/web/src/lib/whep.ts`
+- **AUTO prefers WebRTC, COMPAT forces HLS** — AUTO tries WebRTC and drops to HLS silently; COMPAT never reaches for WebRTC and is exactly the HLS path above. `apps/web/src/lib/playback.ts` (`resolveTransport`)
+- **Falls back rather than fails** — blocked UDP, no route to the WebRTC port, or a stalled connection (8 s cap) all fall back to HLS at connect time, and a session that connects and then drops mid-stream (route change, `failed` ICE) falls back too rather than freezing the card — a playing stream beats a black one. `webrtc: false` server-side or an empty `webrtcAddress` skips the attempt entirely. `apps/web/src/components/video-player.tsx`
+- **The pill reports the transport in use, not the one requested** — the player reports what actually connected and the card renders that (`WEBRTC` / `HLS`, `CONNECTING` while negotiating). It is never inferred from the mode: a LOW-LAT attempt beaten by a firewall is playing HLS and says so. It is a *playback* protocol, unrelated to the source protocol. `apps/web/src/features/streams/stream-card.tsx`
+- **LOW-LAT announces a fallback, AUTO doesn't** — falling back under LOW-LAT adds a `WEBRTC UNAVAILABLE` pill, since low latency was asked for and not delivered. AUTO expresses no preference, so the same fallback is silent.
+- **No latency figure** — the design's pill nominally carries one, but no single number is measurable across both transports (hls.js reports distance-from-live-edge; WebRTC's `getStats` reports jitter-buffer delay — different things). The protocol label ships without it rather than hardcode a decorative "~0.4s".
+- **Per-card transport** — each card negotiates its own peer connection and honors the mode independently, so the camera wall can have several playing at once. Changing the mode renegotiates every playing card.
+- **No new contract surface** — the WebRTC address and MediaMTX's own `webrtcICEServers2` come from the existing `config.mediamtx.getGlobal` (§3.3); they are server-wide, so they never belonged on `streams.list`. `apps/web/src/features/streams/live-view-page.tsx`
+- **Hand-rolled WHEP client** — one POST of a fully-gathered SDP offer, one DELETE of the session resource on teardown; no dependency (ADR 0003). Unit-tested in node against a fake `RTCPeerConnection`. `apps/web/src/lib/whep.test.ts`
 
 ---
 
@@ -185,7 +196,7 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **SaveBar** — shared floating pending-changes bar for both config pages: amber dot + summary, optional mono dirty-key chips, Discard/Reset + Save. Renders only while dirty. `apps/web/src/components/save-bar.tsx`
 - **PageLayout** — page title (20 px, negative tracking) + subheader + content in a width-variant container (7xl default, 1060 px wide, 920 px reading, 640 px narrow), 28 px gutters. `apps/web/src/components/page-layout.tsx`
 - **ModeToggle** — single-click Light ↔ Dark theme toggle backed by the in-app `ThemeProvider`. Uses the View Transitions API to play a circle-reveal clip-path animation centered on the button (graceful fallback when the API is unsupported). `apps/web/src/components/mode-toggle.tsx`
-- **VideoPlayer** — shared HLS.js component (see §1.3). `apps/web/src/components/video-player.tsx`
+- **VideoPlayer** — shared player: HLS.js, or WebRTC/WHEP with HLS fallback depending on the playback mode (see §1.3). `apps/web/src/components/video-player.tsx`
 - **StatusPanel** — shared panel behind the designed empty / error / disconnected states on the live and recordings screens (§1.1, §2.1). `apps/web/src/components/status-panel.tsx`
 - **mediaCardShell** — shared class string giving stream cards and recording summary cards one media-tile shell. `apps/web/src/components/media-card.ts`
 - **ThemeProvider** — in-app theme context (light/dark/system), dark default, `class`-based, persisted to `localStorage`. Paired with an inline pre-bundle script in `index.html` that sets the `<html>` class before first paint to avoid a theme flash. `apps/web/src/components/theme-provider.tsx`, `apps/web/index.html`
@@ -296,14 +307,15 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **Port 3000** + node-based `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries) — no curl in the image.
 
 ### 13.2 Compose stacks
-- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889-8890 (WebRTC) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
+- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889 (WebRTC/WHEP signalling) / 8189-udp (WebRTC ICE) / 8890-udp (SRT) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
 - **`docker-compose.dev.yml`** — dev variant with optional `fake-streams` service behind `--profile streams` for offline testing.
 
 ### 13.3 Multi-arch
 - **`linux/amd64` + `linux/arm64`** images published on release via `.github/workflows/docker.yml`.
 
 ### 13.4 Sample `mediamtx.yml`
-- Sample configuration that explicitly enables the API (`api: yes`), HLS (`hls: yes`), permissive `authInternalUsers` for the Docker bridge network, and recording via `pathDefaults.record` + `recordPath`, plus an `all_others` catch-all path. RTSP, RTMP, WebRTC, and SRT are served by MediaMTX's own defaults rather than by any key in this file. `mediamtx.yml`
+- Sample configuration that explicitly enables the API (`api: yes`), HLS (`hls: yes`), WebRTC (`webrtc: yes` + `webrtcAddress`, for WHEP playback — §1.3.1), permissive `authInternalUsers` for the Docker bridge network, and recording via `pathDefaults.record` + `recordPath`, plus an `all_others` catch-all path. RTSP, RTMP, and SRT are served by MediaMTX's own defaults rather than by any key in this file. `mediamtx.yml`
+- **`webrtcAdditionalHosts: [127.0.0.1]`** — in Docker, MediaMTX gathers ICE candidates from its own container interfaces, which a browser on the host cannot route to; WHEP then negotiates successfully and never connects, and the player falls back to HLS. This advertises the published host port instead. It carries the same caveat as `REMOTE_MEDIAMTX_URL` (§3.1): `localhost` is correct only when the browser and the stack share a host — reaching the stack from another machine means putting that host's address here. `mediamtx.yml`
 
 ---
 
@@ -391,7 +403,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | Language | TypeScript 6.0 (strict, verified against tsc 7) |
 | Styling | Tailwind CSS 4, shadcn/ui (Radix UI) |
 | Forms | React Hook Form 7 + Zod 4 |
-| Video (browser) | HLS.js 1.6.x |
+| Video (browser) | HLS.js 1.6.x + native WebRTC (WHEP, no dependency) |
 | Video (server) | ffmpeg (live snapshots + recording thumbnails) |
 | Settings storage | JSON file (`config.json`), atomic writes — no database |
 | Logging | Pino (api), console wrapper (web) |
