@@ -95,6 +95,14 @@
         "title": "Înregistrarea nu a putut fi modificată",
         "description": "MediaMTX a respins modificarea — înregistrarea acestui flux este neschimbată."
       },
+      "copyPublish": {
+        "title": "URL-urile de publicare au fost copiate",
+        "description": "Lipiți-le în cameră sau în encoder."
+      },
+      "copyPublishError": {
+        "title": "Nu s-a putut copia",
+        "description": "Browserul a blocat accesul la clipboard."
+      },
       "menu": {
         "openDetail": "Deschide detaliile fluxului",
         "viewRecordings": "Vezi înregistrările",

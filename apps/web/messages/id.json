@@ -95,6 +95,14 @@
         "title": "Tidak dapat mengubah perekaman",
         "description": "MediaMTX menolak perubahan — perekaman stream ini tidak berubah."
       },
+      "copyPublish": {
+        "title": "URL publikasi disalin",
+        "description": "Tempelkan ke kamera atau encoder Anda."
+      },
+      "copyPublishError": {
+        "title": "Tidak bisa menyalin",
+        "description": "Browser Anda memblokir akses papan klip."
+      },
       "menu": {
         "openDetail": "Buka detail aliran",
         "viewRecordings": "Lihat rekaman",

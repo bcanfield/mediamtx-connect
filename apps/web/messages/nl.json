@@ -95,6 +95,14 @@
         "title": "Opname kon niet worden gewijzigd",
         "description": "MediaMTX heeft de wijziging geweigerd — de opname van deze stream is ongewijzigd."
       },
+      "copyPublish": {
+        "title": "Publicatie-URL's gekopieerd",
+        "description": "Plak ze in je camera of encoder."
+      },
+      "copyPublishError": {
+        "title": "Kopiëren mislukt",
+        "description": "Je browser blokkeerde toegang tot het klembord."
+      },
       "menu": {
         "openDetail": "Streamdetail openen",
         "viewRecordings": "Opnames bekijken",

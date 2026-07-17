@@ -1,5 +1,6 @@
 import type { Stream } from '@connect/contract'
 import type { PlaybackMode } from '@/lib/playback'
+import type { PublishTarget } from '@/lib/publish'
 
 import { useSearch } from '@tanstack/react-router'
 import { useState } from 'react'
@@ -31,6 +32,7 @@ export function LiveStreamsView({
   webrtcAddress,
   iceServers,
   remoteMediaMtxUrl,
+  publishTargets,
   playDisabled = false,
 }: {
   streams: Stream[]
@@ -38,6 +40,7 @@ export function LiveStreamsView({
   webrtcAddress?: string
   iceServers?: RTCIceServer[]
   remoteMediaMtxUrl: string
+  publishTargets: PublishTarget[]
   playDisabled?: boolean
 }) {
   const t = useTranslations('Streams.toolbar')
@@ -121,6 +124,7 @@ export function LiveStreamsView({
             iceServers={iceServers}
             playbackMode={playbackMode}
             remoteMediaMtxUrl={remoteMediaMtxUrl}
+            publishTargets={publishTargets}
             playDisabled={playDisabled}
           />
         ))}

@@ -1,4 +1,5 @@
 import type { PlaybackMode, PlaybackProtocol } from '@/lib/playback'
+import type { PublishTarget } from '@/lib/publish'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
@@ -22,6 +23,7 @@ import { CONNECTION_POLL_MS } from '@/hooks/use-connection-state'
 import { Link } from '@/i18n/navigation'
 import { logger } from '@/lib/logger'
 import { hlsUrlFor, whepUrlFor } from '@/lib/playback'
+import { publishUrl } from '@/lib/publish'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
@@ -35,6 +37,8 @@ export interface StreamCardProps {
   /** MediaMTX's WebRTC port suffix. Absent or empty means WHEP isn't reachable. */
   webrtcAddress?: string
   remoteMediaMtxUrl: string
+  /** The server's publish URLs, prebuilt from its configured listen addresses. */
+  publishTargets: PublishTarget[]
   /** Which transport playback reaches for. What actually plays is the pill's job. */
   playbackMode: PlaybackMode
   /** Referentially stable — the player's effect keys on it. */
@@ -69,6 +73,7 @@ export function StreamCard({
   hlsAddress,
   webrtcAddress,
   remoteMediaMtxUrl,
+  publishTargets,
   playbackMode,
   iceServers,
   playDisabled = false,
@@ -126,6 +131,17 @@ export function StreamCard({
     }
     catch {
       toast.error(t('recordError.title'), { description: t('recordError.description') })
+    }
+  }
+
+  const copyPublishUrls = async () => {
+    const text = publishTargets.map(target => publishUrl(target, streamName)).join('\n')
+    try {
+      await navigator.clipboard.writeText(text)
+      toast.success(t('copyPublish.title'), { description: t('copyPublish.description') })
+    }
+    catch {
+      toast.error(t('copyPublishError.title'), { description: t('copyPublishError.description') })
     }
   }
 
@@ -307,7 +323,7 @@ export function StreamCard({
                   {recording ? t('menu.recordOn') : t('menu.recordOff')}
                 </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={stub('copy-publish-urls')}>
+              <DropdownMenuItem onClick={copyPublishUrls}>
                 {t('menu.copyPublishUrls')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={stub('share-embed')}>

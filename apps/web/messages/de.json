@@ -95,6 +95,14 @@
         "title": "Aufnahme konnte nicht geändert werden",
         "description": "MediaMTX hat die Änderung abgelehnt – die Aufnahme dieses Streams ist unverändert."
       },
+      "copyPublish": {
+        "title": "Veröffentlichungs-URLs kopiert",
+        "description": "Füge sie in deine Kamera oder deinen Encoder ein."
+      },
+      "copyPublishError": {
+        "title": "Kopieren nicht möglich",
+        "description": "Dein Browser hat den Zugriff auf die Zwischenablage blockiert."
+      },
       "menu": {
         "openDetail": "Stream-Detail öffnen",
         "viewRecordings": "Aufzeichnungen ansehen",

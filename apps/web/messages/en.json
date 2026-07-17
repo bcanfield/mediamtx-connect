@@ -95,6 +95,14 @@
         "title": "Couldn't change recording",
         "description": "MediaMTX rejected the change — this stream's recording is unchanged."
       },
+      "copyPublish": {
+        "title": "Publish URLs copied",
+        "description": "Paste them into your camera or encoder."
+      },
+      "copyPublishError": {
+        "title": "Couldn't copy",
+        "description": "Your browser blocked clipboard access."
+      },
       "menu": {
         "openDetail": "Open stream detail",
         "viewRecordings": "View recordings",

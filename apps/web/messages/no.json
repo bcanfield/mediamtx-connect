@@ -95,6 +95,14 @@
         "title": "Kunne ikke endre opptak",
         "description": "MediaMTX avviste endringen – opptaket for denne strømmen er uendret."
       },
+      "copyPublish": {
+        "title": "Publiserings-URL-er kopiert",
+        "description": "Lim dem inn i kameraet eller koderen din."
+      },
+      "copyPublishError": {
+        "title": "Kunne ikke kopiere",
+        "description": "Nettleseren din blokkerte tilgang til utklippstavlen."
+      },
       "menu": {
         "openDetail": "Åpne strømdetaljer",
         "viewRecordings": "Vis opptak",

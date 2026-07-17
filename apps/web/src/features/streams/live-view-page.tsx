@@ -3,6 +3,7 @@ import { useQueries } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
 import { PageLayout } from '@/components/page-layout'
+import { publishTargets } from '@/lib/publish'
 import { toIceServers } from '@/lib/whep'
 import { orpc } from '@/orpc'
 
@@ -59,6 +60,9 @@ export function LiveViewPage() {
     [globalQuery.data?.webrtcICEServers2],
   )
 
+  const host = publishHost(configQuery.data?.mediaMtxUrl)
+  const targets = useMemo(() => publishTargets(host, globalQuery.data), [host, globalQuery.data])
+
   return (
     <PageLayout>
       {state?.status === 'connection-error' && (
@@ -70,7 +74,7 @@ export function LiveViewPage() {
       )}
 
       {connected && !hasStreams && (
-        <ZeroStreamsPanel host={publishHost(configQuery.data?.mediaMtxUrl)} />
+        <ZeroStreamsPanel targets={targets} />
       )}
 
       {connected && hasStreams && (
@@ -82,6 +86,7 @@ export function LiveViewPage() {
             webrtcAddress={webrtcAddress}
             iceServers={iceServers}
             remoteMediaMtxUrl={remoteMediaMtxUrl ?? ''}
+            publishTargets={targets}
             playDisabled={!remoteMediaMtxUrl}
           />
         </>

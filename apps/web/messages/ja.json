@@ -95,6 +95,14 @@
         "title": "録画を変更できませんでした",
         "description": "MediaMTX が変更を拒否しました — このストリームの録画状態は変わっていません。"
       },
+      "copyPublish": {
+        "title": "配信 URL をコピーしました",
+        "description": "カメラまたはエンコーダーに貼り付けてください。"
+      },
+      "copyPublishError": {
+        "title": "コピーできませんでした",
+        "description": "ブラウザがクリップボードへのアクセスをブロックしました。"
+      },
       "menu": {
         "openDetail": "ストリーム詳細を開く",
         "viewRecordings": "録画を表示",

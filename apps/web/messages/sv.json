@@ -95,6 +95,14 @@
         "title": "Det gick inte att ändra inspelningen",
         "description": "MediaMTX avvisade ändringen – inspelningen för den här strömmen är oförändrad."
       },
+      "copyPublish": {
+        "title": "Publicerings-URL:er kopierade",
+        "description": "Klistra in dem i din kamera eller kodare."
+      },
+      "copyPublishError": {
+        "title": "Det gick inte att kopiera",
+        "description": "Din webbläsare blockerade åtkomst till urklipp."
+      },
       "menu": {
         "openDetail": "Öppna strömdetaljer",
         "viewRecordings": "Visa inspelningar",

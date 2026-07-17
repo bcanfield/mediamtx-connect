@@ -95,6 +95,14 @@
         "title": "Nahrávání se nepodařilo změnit",
         "description": "MediaMTX změnu odmítl — nahrávání tohoto streamu zůstalo beze změny."
       },
+      "copyPublish": {
+        "title": "URL adresy pro publikování zkopírovány",
+        "description": "Vložte je do své kamery nebo enkodéru."
+      },
+      "copyPublishError": {
+        "title": "Nelze zkopírovat",
+        "description": "Váš prohlížeč zablokoval přístup ke schránce."
+      },
       "menu": {
         "openDetail": "Otevřít detail streamu",
         "viewRecordings": "Zobrazit záznamy",

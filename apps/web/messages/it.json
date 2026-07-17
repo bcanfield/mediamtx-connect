@@ -95,6 +95,14 @@
         "title": "Impossibile modificare la registrazione",
         "description": "MediaMTX ha rifiutato la modifica: la registrazione di questo stream è invariata."
       },
+      "copyPublish": {
+        "title": "URL di pubblicazione copiati",
+        "description": "Incollali nella tua telecamera o nell'encoder."
+      },
+      "copyPublishError": {
+        "title": "Impossibile copiare",
+        "description": "Il browser ha bloccato l'accesso agli appunti."
+      },
       "menu": {
         "openDetail": "Apri il dettaglio del flusso",
         "viewRecordings": "Visualizza registrazioni",

@@ -53,7 +53,7 @@ pnpm test:e2e:dev      # playwright UI
 
 `firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only — running them cross-browser doesn't change the outcome.
 
-`path-defaults`, `path-config` and `record-toggle` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
+`path-defaults`, `path-config`, `record-toggle` and `publish-urls` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. `publish-urls` patches the server-wide `rtmpAddress` to a non-default port and restores it (RTMP has no fixture publisher, so moving its port leaves the RTSP streams untouched). The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
 
 `path-config` and `record-toggle` additionally run `mode: 'serial'`. Each shares one mutable resource — a stream's config entry — and materializing it changes what the read tests see, so within-file parallelism races them against each other.
 
