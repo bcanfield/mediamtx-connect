@@ -103,6 +103,14 @@
         "title": "Nie udało się skopiować",
         "description": "Przeglądarka zablokowała dostęp do schowka."
       },
+      "snapshotSuccess": {
+        "title": "Zrzut wykonany",
+        "description": "Miniatura pokazuje teraz właśnie przechwyconą klatkę."
+      },
+      "snapshotError": {
+        "title": "Nie udało się wykonać zrzutu",
+        "description": "MediaMTX nie mógł pobrać klatki — strumień może być offline."
+      },
       "menu": {
         "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",

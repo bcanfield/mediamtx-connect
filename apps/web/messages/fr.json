@@ -103,6 +103,14 @@
         "title": "Copie impossible",
         "description": "Votre navigateur a bloqué l'accès au presse-papiers."
       },
+      "snapshotSuccess": {
+        "title": "Instantané capturé",
+        "description": "La miniature affiche désormais l'image que vous venez de capturer."
+      },
+      "snapshotError": {
+        "title": "Impossible de capturer l'instantané",
+        "description": "MediaMTX n'a pas pu capturer d'image — le flux est peut-être hors ligne."
+      },
       "menu": {
         "openDetail": "Ouvrir le détail du flux",
         "viewRecordings": "Voir les enregistrements",

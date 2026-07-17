@@ -103,6 +103,14 @@
         "title": "Não foi possível copiar",
         "description": "O seu navegador bloqueou o acesso à área de transferência."
       },
+      "snapshotSuccess": {
+        "title": "Instantâneo capturado",
+        "description": "A miniatura mostra agora o fotograma que acabou de capturar."
+      },
+      "snapshotError": {
+        "title": "Não foi possível capturar o instantâneo",
+        "description": "O MediaMTX não conseguiu obter um fotograma — o stream pode estar offline."
+      },
       "menu": {
         "openDetail": "Abrir detalhe da transmissão",
         "viewRecordings": "Ver gravações",

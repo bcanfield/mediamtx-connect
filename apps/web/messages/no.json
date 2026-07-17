@@ -103,6 +103,14 @@
         "title": "Kunne ikke kopiere",
         "description": "Nettleseren din blokkerte tilgang til utklippstavlen."
       },
+      "snapshotSuccess": {
+        "title": "Øyeblikksbilde tatt",
+        "description": "Miniatyrbildet viser nå bildet du nettopp tok."
+      },
+      "snapshotError": {
+        "title": "Kunne ikke ta øyeblikksbilde",
+        "description": "MediaMTX kunne ikke hente et bilde – strømmen er kanskje frakoblet."
+      },
       "menu": {
         "openDetail": "Åpne strømdetaljer",
         "viewRecordings": "Vis opptak",

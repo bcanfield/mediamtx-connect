@@ -4,6 +4,7 @@ import process from 'node:process'
 import { contract } from '@connect/contract'
 import { implement, ORPCError } from '@orpc/server'
 import { getAppConfig, updateAppConfig } from './config-store'
+import { captureSnapshot } from './jobs'
 import { logger } from './logger'
 import { mediaMtxApi } from './mediamtx'
 import {
@@ -23,6 +24,16 @@ export const router = os.router({
   })),
 
   streams: {
+    snapshot: os.streams.snapshot.handler(async ({ input }) => {
+      try {
+        await captureSnapshot(input.name)
+      }
+      catch (error) {
+        logger.error({ err: error }, `Failed to capture snapshot for ${input.name}`)
+        throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to capture snapshot' })
+      }
+    }),
+
     list: os.streams.list.handler(async () => {
       const config = await getAppConfig()
       const api = mediaMtxApi(config)

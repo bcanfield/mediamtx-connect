@@ -103,6 +103,14 @@
         "title": "Kopiointi ei onnistunut",
         "description": "Selaimesi esti leikepöydän käytön."
       },
+      "snapshotSuccess": {
+        "title": "Tilannekuva otettu",
+        "description": "Pienoiskuvassa näkyy nyt juuri ottamasi ruutu."
+      },
+      "snapshotError": {
+        "title": "Tilannekuvan ottaminen epäonnistui",
+        "description": "MediaMTX ei saanut ruutua — striimi voi olla offline-tilassa."
+      },
       "menu": {
         "openDetail": "Avaa striimin tiedot",
         "viewRecordings": "Näytä tallenteet",

@@ -103,6 +103,14 @@
         "title": "Det gick inte att kopiera",
         "description": "Din webbläsare blockerade åtkomst till urklipp."
       },
+      "snapshotSuccess": {
+        "title": "Ögonblicksbild tagen",
+        "description": "Miniatyren visar nu bilden du just fångade."
+      },
+      "snapshotError": {
+        "title": "Det gick inte att ta ögonblicksbild",
+        "description": "MediaMTX kunde inte fånga en bild – strömmen kan vara offline."
+      },
       "menu": {
         "openDetail": "Öppna strömdetaljer",
         "viewRecordings": "Visa inspelningar",

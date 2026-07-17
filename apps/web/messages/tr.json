@@ -103,6 +103,14 @@
         "title": "Kopyalanamadı",
         "description": "Tarayıcınız pano erişimini engelledi."
       },
+      "snapshotSuccess": {
+        "title": "Anlık görüntü alındı",
+        "description": "Küçük resimde artık az önce yakaladığınız kare görünüyor."
+      },
+      "snapshotError": {
+        "title": "Anlık görüntü alınamadı",
+        "description": "MediaMTX bir kare yakalayamadı — akış çevrimdışı olabilir."
+      },
       "menu": {
         "openDetail": "Akış detayını aç",
         "viewRecordings": "Kayıtları görüntüle",

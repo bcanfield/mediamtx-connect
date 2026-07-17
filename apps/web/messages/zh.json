@@ -103,6 +103,14 @@
         "title": "无法复制",
         "description": "你的浏览器阻止了剪贴板访问。"
       },
+      "snapshotSuccess": {
+        "title": "已捕获快照",
+        "description": "缩略图现在显示你刚刚抓取的画面。"
+      },
+      "snapshotError": {
+        "title": "无法捕获快照",
+        "description": "MediaMTX 无法抓取画面 — 该流可能已离线。"
+      },
       "menu": {
         "openDetail": "打开流详情",
         "viewRecordings": "查看录像",

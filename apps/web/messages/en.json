@@ -103,6 +103,14 @@
         "title": "Couldn't copy",
         "description": "Your browser blocked clipboard access."
       },
+      "snapshotSuccess": {
+        "title": "Snapshot captured",
+        "description": "The thumbnail now shows the frame you just grabbed."
+      },
+      "snapshotError": {
+        "title": "Couldn't capture snapshot",
+        "description": "MediaMTX couldn't grab a frame — the stream may be offline."
+      },
       "menu": {
         "openDetail": "Open stream detail",
         "viewRecordings": "View recordings",

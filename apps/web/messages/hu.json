@@ -103,6 +103,14 @@
         "title": "Nem sikerült másolni",
         "description": "A böngésző letiltotta a vágólaphoz való hozzáférést."
       },
+      "snapshotSuccess": {
+        "title": "Pillanatkép elkészült",
+        "description": "A bélyegkép most a rögzített képkockát mutatja."
+      },
+      "snapshotError": {
+        "title": "Nem sikerült pillanatképet készíteni",
+        "description": "A MediaMTX nem tudott képkockát rögzíteni — az adatfolyam offline lehet."
+      },
       "menu": {
         "openDetail": "Folyam részleteinek megnyitása",
         "viewRecordings": "Felvételek megtekintése",

@@ -103,6 +103,14 @@
         "title": "Nelze zkopírovat",
         "description": "Váš prohlížeč zablokoval přístup ke schránce."
       },
+      "snapshotSuccess": {
+        "title": "Snímek pořízen",
+        "description": "Náhled nyní zobrazuje právě zachycený snímek."
+      },
+      "snapshotError": {
+        "title": "Snímek se nepodařilo pořídit",
+        "description": "MediaMTX nedokázal zachytit snímek — stream může být offline."
+      },
       "menu": {
         "openDetail": "Otevřít detail streamu",
         "viewRecordings": "Zobrazit záznamy",

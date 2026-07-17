@@ -52,36 +52,71 @@ async function generateScreenshots() {
   }
 }
 
-// Grab one frame from each live stream and keep it as live.png. MediaMTX has no
-// snapshot endpoint, so we pull a frame off the RTSP feed it already serves.
-// Written via tmp+rename so /latest never serves a half-written file.
-export async function captureLiveSnapshots() {
-  const config = await getAppConfig()
-  const api = mediaMtxApi(config)
-  const [paths, globalConf] = await Promise.all([api.pathsList(), api.configGlobalGet()])
+// A shared permit gate over ffmpeg snapshot captures. Both the 30s cron and the
+// on-demand mutation acquire here, so the cap counts them together: the cron
+// already spawns one process per ready stream with no cap, and a user-triggered
+// capture stacks on top of that (ticket 08). A bound covering only one source
+// would not bound the server.
+export const MAX_CONCURRENT_CAPTURES = 4
 
-  const host = new URL(config.mediaMtxUrl).hostname
-  const rtspPort = (globalConf.rtspAddress ?? ':8554').split(':').pop()
-  const liveStreams = (paths.items ?? [])
-    .filter(p => p.ready)
-    .map(p => p.name)
-    .filter(name => name !== undefined)
+let activeCaptures = 0
+const captureWaiters: Array<() => void> = []
 
-  logger.info(`Capturing snapshots for ${liveStreams.length} live streams`)
+function acquireCaptureSlot(): Promise<void> {
+  if (activeCaptures < MAX_CONCURRENT_CAPTURES) {
+    activeCaptures++
+    return Promise.resolve()
+  }
+  return new Promise((resolve) => {
+    captureWaiters.push(resolve)
+  })
+}
 
-  for (const streamName of liveStreams) {
-    const dir = path.join(config.screenshotsDirectory, streamName)
-    fs.mkdirSync(dir, { recursive: true })
+function releaseCaptureSlot() {
+  // Hand the permit straight to the next waiter rather than decrement then
+  // re-increment, so the count never dips and lets an extra capture in.
+  const next = captureWaiters.shift()
+  if (next) {
+    next()
+    return
+  }
+  activeCaptures--
+}
 
-    const outputFile = path.join(dir, 'live.png')
-    const tmp = `${outputFile}.tmp`
+// Test-only: the gate is module-level shared state, so a suite that spawns
+// without driving each capture to close must reset it between cases.
+export function __resetCaptureSlots() {
+  activeCaptures = 0
+  captureWaiters.length = 0
+}
+
+function rtspUrlFor(mediaMtxUrl: string, rtspAddress: string | undefined, streamName: string): string {
+  const host = new URL(mediaMtxUrl).hostname
+  const rtspPort = (rtspAddress ?? ':8554').split(':').pop()
+  return `rtsp://${host}:${rtspPort}/${streamName}`
+}
+
+// Grab one frame off a stream's RTSP feed and keep it as live.png. MediaMTX has
+// no snapshot endpoint, so we pull the frame from the RTSP feed it already
+// serves. Written via tmp+rename so /latest never serves a half-written file.
+// Acquires a shared permit first and releases it when ffmpeg exits, so no caller
+// exceeds the concurrency cap. Resolves on success, rejects on failure.
+async function captureFrame(streamName: string, rtspUrl: string, screenshotsDirectory: string): Promise<void> {
+  await acquireCaptureSlot()
+
+  const dir = path.join(screenshotsDirectory, streamName)
+  fs.mkdirSync(dir, { recursive: true })
+  const outputFile = path.join(dir, 'live.png')
+  const tmp = `${outputFile}.tmp`
+
+  return new Promise((resolve, reject) => {
     // -c:v/-f are explicit because the tmp name has no .png for ffmpeg to sniff.
     const proc = cp.spawn('ffmpeg', [
       '-y',
       '-rtsp_transport',
       'tcp',
       '-i',
-      `rtsp://${host}:${rtspPort}/${streamName}`,
+      rtspUrl,
       '-frames:v',
       '1',
       '-update',
@@ -96,20 +131,74 @@ export async function captureLiveSnapshots() {
     // A camera that accepts the connection then stalls would pile up a new
     // ffmpeg every tick, so cap each capture well under the 30s interval.
     const killTimer = setTimeout(() => proc.kill('SIGKILL'), 15_000)
-    proc.on('error', (err) => {
+
+    // A failed spawn fires both 'error' and 'close', so release the permit and
+    // settle exactly once — a double release would over-count the gate and let
+    // an extra ffmpeg past the cap.
+    let settled = false
+    const finish = (done: () => void) => {
+      if (settled)
+        return
+      settled = true
       clearTimeout(killTimer)
+      releaseCaptureSlot()
+      done()
+    }
+
+    proc.on('error', (err) => {
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
+      finish(() => reject(err))
     })
     proc.on('close', (code) => {
-      clearTimeout(killTimer)
-      if (code === 0) {
-        fs.renameSync(tmp, outputFile)
-        return
-      }
-      fs.rmSync(tmp, { force: true })
-      logger.warn(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
+      finish(() => {
+        if (code === 0) {
+          fs.renameSync(tmp, outputFile)
+          resolve()
+          return
+        }
+        fs.rmSync(tmp, { force: true })
+        logger.warn(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
+        reject(new Error(`ffmpeg exited ${code} capturing snapshot for ${streamName}`))
+      })
     })
+  })
+}
+
+// The 30s cron: capture every ready stream. Fire-and-forget per stream — the
+// shared gate caps how many ffmpeg run at once, and captureFrame logs its own
+// failures, so a rejected capture here is nothing to act on.
+export async function captureLiveSnapshots() {
+  const config = await getAppConfig()
+  const api = mediaMtxApi(config)
+  const [paths, globalConf] = await Promise.all([api.pathsList(), api.configGlobalGet()])
+
+  const liveStreams = (paths.items ?? [])
+    .filter(p => p.ready)
+    .map(p => p.name)
+    .filter(name => name !== undefined)
+
+  logger.info(`Capturing snapshots for ${liveStreams.length} live streams`)
+
+  for (const streamName of liveStreams) {
+    captureFrame(
+      streamName,
+      rtspUrlFor(config.mediaMtxUrl, globalConf.rtspAddress, streamName),
+      config.screenshotsDirectory,
+    ).catch(() => {})
   }
+}
+
+// On-demand capture of one stream, exposed as a mutation. Shares the cron's gate
+// so a user-triggered capture cannot overload a server already mid-sweep. Awaits
+// the ffmpeg exit and rejects on failure so the caller can report the outcome.
+export async function captureSnapshot(streamName: string): Promise<void> {
+  const config = await getAppConfig()
+  const globalConf = await mediaMtxApi(config).configGlobalGet()
+  await captureFrame(
+    streamName,
+    rtspUrlFor(config.mediaMtxUrl, globalConf.rtspAddress, streamName),
+    config.screenshotsDirectory,
+  )
 }
 
 // Deletes screenshots older than 2 days, per stream subdirectory.

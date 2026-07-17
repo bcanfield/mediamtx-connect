@@ -93,12 +93,17 @@ export function StreamCard({
   const navigate = useNavigate()
   const search = useSearch({ strict: false }) as { play?: string }
   const [thumbnailError, setThumbnailError] = useState(false)
+  // Bumped after an on-demand capture to force the idle thumbnail to re-request:
+  // the file path is stable, so without a changing query the <img> keeps the
+  // frame it already decoded even though the bytes on disk changed.
+  const [snapshotVersion, setSnapshotVersion] = useState(0)
   // What the player reports it's actually playing — null while it's still
   // establishing a transport. Never inferred from playbackMode: a WebRTC
   // attempt that lost to a firewall is playing HLS regardless of what was asked.
   const [protocol, setProtocol] = useState<PlaybackProtocol | null>(null)
   const queryClient = useQueryClient()
   const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
+  const takeSnapshot = useMutation(orpc.streams.snapshot.mutationOptions())
 
   const playing = search.play?.split(',').filter(Boolean) ?? []
   const isLive = playing.includes(streamName)
@@ -142,6 +147,21 @@ export function StreamCard({
     }
     catch {
       toast.error(t('copyPublishError.title'), { description: t('copyPublishError.description') })
+    }
+  }
+
+  // Capture a frame now rather than waiting up to 30s for the cron. On success,
+  // re-request the thumbnail and refresh the grid so the snapshot-age chip moves.
+  const snapshotNow = async () => {
+    try {
+      await takeSnapshot.mutateAsync({ name: streamName })
+      setThumbnailError(false)
+      setSnapshotVersion(v => v + 1)
+      await queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() })
+      toast.success(t('snapshotSuccess.title'), { description: t('snapshotSuccess.description') })
+    }
+    catch {
+      toast.error(t('snapshotError.title'), { description: t('snapshotError.description') })
     }
   }
 
@@ -192,7 +212,7 @@ export function StreamCard({
                 <img
                   alt=""
                   onError={() => setThumbnailError(true)}
-                  src={`/media/screenshots/${encodeURIComponent(streamName)}/latest`}
+                  src={`/media/screenshots/${encodeURIComponent(streamName)}/latest${snapshotVersion > 0 ? `?v=${snapshotVersion}` : ''}`}
                   className="size-full object-cover"
                 />
               )}
@@ -313,7 +333,7 @@ export function StreamCard({
               <DropdownMenuItem asChild>
                 <Link href={`/recordings/${streamName}`}>{t('menu.viewRecordings')}</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={stub('take-snapshot')}>
+              <DropdownMenuItem onClick={snapshotNow} disabled={takeSnapshot.isPending}>
                 {t('menu.takeSnapshot')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />

@@ -208,6 +208,10 @@ export const contract = {
   health: oc.output(HealthSchema),
   streams: {
     list: oc.output(StreamsStateSchema),
+    // Capture a frame for one stream now, off the same RTSP feed the snapshot
+    // cron pulls — MediaMTX has no snapshot endpoint. Throws when the capture
+    // fails so the card can surface it; concurrency is bounded server-side.
+    snapshot: oc.input(z.object({ name: z.string().min(1) })).output(z.void()),
   },
   recordings: {
     listStreams: oc.output(z.array(RecordingStreamSummarySchema)),
