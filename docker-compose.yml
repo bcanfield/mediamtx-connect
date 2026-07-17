@@ -12,10 +12,14 @@ services:
       - mtx
     ports:
       - '8554:8554' # RTSP
-      - '8890:8890/udp' # WebRTC/ICE UDP
       - '1935:1935' # RTMP
       - '8888:8888' # HLS
-      - '8889:8889' # WebRTC HTTP
+      - '8889:8889' # WebRTC HTTP (WHEP signalling)
+      # WebRTC media itself. MediaMTX's ICE UDP port is 8189, not 8890 — 8890 is
+      # SRT. Without this published, WHEP negotiates fine and then never connects,
+      # and the player silently falls back to HLS.
+      - '8189:8189/udp' # WebRTC ICE
+      - '8890:8890/udp' # SRT
       - '9997:9997' # API
 
   mediamtx-connect:

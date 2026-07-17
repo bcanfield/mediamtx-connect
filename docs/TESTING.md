@@ -6,11 +6,13 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 
 | Layer | Tool | Scope | Location |
 |-------|------|-------|----------|
-| Unit | Vitest | api logic that E2E can't reach: process spawning, timers, filesystem edge cases | `apps/api/src/*.test.ts` (colocated) |
+| Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
 | E2E | Playwright | Full browser flows, byte-range MP4 streaming, locale switching, accessibility | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), currently covering `jobs.ts` only; contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
+> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), covering `jobs.ts` and `router.ts`, and for `apps/web`, covering `lib/whep.ts` + `lib/playback.ts` (see `docs/adr/0003-hand-rolled-whep-client.md`). Contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
+
+> **No component tests.** `apps/web`'s Vitest runs in the default node environment — there is no jsdom and no Testing Library. It is for logic a browser isn't needed to exercise (URL building, protocol negotiation against a fake `RTCPeerConnection`). Components are still covered through E2E.
 
 ## Decision: which layer for a new feature?
 

@@ -1,10 +1,12 @@
 import type { Stream } from '@connect/contract'
+import type { PlaybackMode } from '@/lib/playback'
+
 import { useSearch } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslations } from 'use-intl'
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { logger } from '@/lib/logger'
+import { isPlaybackMode, PLAYBACK_MODE_KEY, readPlaybackMode } from '@/lib/playback'
 import { cn } from '@/lib/utils'
 
 import { StreamCard } from './stream-card'
@@ -12,13 +14,6 @@ import { StreamCard } from './stream-card'
 type Density = '2' | '3' | '4'
 const DENSITY_KEY = 'liveDensity'
 const DEFAULT_DENSITY: Density = '3'
-
-// Playback transport preference (board 2a). Persisted and logged only — the
-// player is HLS-only today, so the mode doesn't change behavior yet.
-type PlaybackMode = 'auto' | 'low-lat' | 'compat'
-const PLAYBACK_MODE_KEY = 'playbackMode'
-const DEFAULT_PLAYBACK_MODE: PlaybackMode = 'auto'
-const PLAYBACK_MODES: PlaybackMode[] = ['auto', 'low-lat', 'compat']
 
 const densityClass: Record<Density, string> = {
   2: 'sm:grid-cols-2',
@@ -33,11 +28,15 @@ const segmentedItem
 export function LiveStreamsView({
   streams,
   hlsAddress,
+  webrtcAddress,
+  iceServers,
   remoteMediaMtxUrl,
   playDisabled = false,
 }: {
   streams: Stream[]
   hlsAddress: string
+  webrtcAddress?: string
+  iceServers?: RTCIceServer[]
   remoteMediaMtxUrl: string
   playDisabled?: boolean
 }) {
@@ -47,12 +46,7 @@ export function LiveStreamsView({
     const stored = window.localStorage.getItem(DENSITY_KEY)
     return stored === '2' || stored === '3' || stored === '4' ? stored : DEFAULT_DENSITY
   })
-  const [playbackMode, setPlaybackMode] = useState<PlaybackMode>(() => {
-    const stored = window.localStorage.getItem(PLAYBACK_MODE_KEY)
-    return PLAYBACK_MODES.includes(stored as PlaybackMode)
-      ? (stored as PlaybackMode)
-      : DEFAULT_PLAYBACK_MODE
-  })
+  const [playbackMode, setPlaybackMode] = useState<PlaybackMode>(readPlaybackMode)
 
   const updateDensity = (value: string) => {
     if (value !== '2' && value !== '3' && value !== '4')
@@ -62,11 +56,10 @@ export function LiveStreamsView({
   }
 
   const updatePlaybackMode = (value: string) => {
-    if (!PLAYBACK_MODES.includes(value as PlaybackMode))
+    if (!isPlaybackMode(value))
       return
-    setPlaybackMode(value as PlaybackMode)
+    setPlaybackMode(value)
     window.localStorage.setItem(PLAYBACK_MODE_KEY, value)
-    logger.info('playback mode is stubbed — persisted but the player is HLS-only today', { mode: value })
   }
 
   const liveCount = search.play?.split(',').filter(Boolean).length ?? 0
@@ -124,6 +117,9 @@ export function LiveStreamsView({
             viewers={stream.viewers}
             snapshotMtime={stream.snapshotMtime}
             hlsAddress={hlsAddress}
+            webrtcAddress={webrtcAddress}
+            iceServers={iceServers}
+            playbackMode={playbackMode}
             remoteMediaMtxUrl={remoteMediaMtxUrl}
             playDisabled={playDisabled}
           />
