@@ -103,6 +103,14 @@
         "title": "Nu s-a putut copia",
         "description": "Browserul a blocat accesul la clipboard."
       },
+      "snapshotSuccess": {
+        "title": "Instantaneu capturat",
+        "description": "Miniatura afișează acum cadrul pe care tocmai l-ai capturat."
+      },
+      "snapshotError": {
+        "title": "Instantaneul nu a putut fi capturat",
+        "description": "MediaMTX nu a putut captura un cadru — fluxul ar putea fi offline."
+      },
       "menu": {
         "openDetail": "Deschide detaliile fluxului",
         "viewRecordings": "Vezi înregistrările",

@@ -103,6 +103,14 @@
         "title": "Kopiëren mislukt",
         "description": "Je browser blokkeerde toegang tot het klembord."
       },
+      "snapshotSuccess": {
+        "title": "Momentopname gemaakt",
+        "description": "De miniatuur toont nu het zojuist vastgelegde beeld."
+      },
+      "snapshotError": {
+        "title": "Kan momentopname niet maken",
+        "description": "MediaMTX kon geen beeld vastleggen — de stream is mogelijk offline."
+      },
       "menu": {
         "openDetail": "Streamdetail openen",
         "viewRecordings": "Opnames bekijken",

@@ -103,6 +103,14 @@
         "title": "コピーできませんでした",
         "description": "ブラウザがクリップボードへのアクセスをブロックしました。"
       },
+      "snapshotSuccess": {
+        "title": "スナップショットを取得しました",
+        "description": "サムネイルに、今取得したフレームが表示されます。"
+      },
+      "snapshotError": {
+        "title": "スナップショットを取得できませんでした",
+        "description": "MediaMTX がフレームを取得できませんでした — ストリームがオフラインの可能性があります。"
+      },
       "menu": {
         "openDetail": "ストリーム詳細を開く",
         "viewRecordings": "録画を表示",

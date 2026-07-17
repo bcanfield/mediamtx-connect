@@ -103,6 +103,14 @@
         "title": "No se pudo copiar",
         "description": "Tu navegador bloqueó el acceso al portapapeles."
       },
+      "snapshotSuccess": {
+        "title": "Instantánea capturada",
+        "description": "La miniatura ahora muestra el fotograma que acabas de capturar."
+      },
+      "snapshotError": {
+        "title": "No se pudo capturar la instantánea",
+        "description": "MediaMTX no pudo obtener un fotograma: puede que el stream esté desconectado."
+      },
       "menu": {
         "openDetail": "Abrir detalle de la transmisión",
         "viewRecordings": "Ver grabaciones",

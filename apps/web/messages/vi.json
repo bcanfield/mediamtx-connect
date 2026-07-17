@@ -103,6 +103,14 @@
         "title": "Không thể sao chép",
         "description": "Trình duyệt của bạn đã chặn quyền truy cập bảng nhớ tạm."
       },
+      "snapshotSuccess": {
+        "title": "Đã chụp ảnh nhanh",
+        "description": "Hình thu nhỏ giờ hiển thị khung hình bạn vừa chụp."
+      },
+      "snapshotError": {
+        "title": "Không thể chụp ảnh nhanh",
+        "description": "MediaMTX không thể lấy khung hình — luồng có thể đang ngoại tuyến."
+      },
       "menu": {
         "openDetail": "Mở chi tiết luồng",
         "viewRecordings": "Xem bản ghi",

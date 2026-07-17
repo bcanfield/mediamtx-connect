@@ -103,6 +103,14 @@
         "title": "Hindi makopya",
         "description": "Hinarang ng iyong browser ang access sa clipboard."
       },
+      "snapshotSuccess": {
+        "title": "Nakuha ang snapshot",
+        "description": "Ipinapakita na ng thumbnail ang frame na kakakuha mo lang."
+      },
+      "snapshotError": {
+        "title": "Hindi makuha ang snapshot",
+        "description": "Hindi makakuha ng frame ang MediaMTX — maaaring offline ang stream."
+      },
       "menu": {
         "openDetail": "Buksan ang detalye ng stream",
         "viewRecordings": "Tingnan ang mga recording",

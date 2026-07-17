@@ -103,6 +103,14 @@
         "title": "Impossibile copiare",
         "description": "Il browser ha bloccato l'accesso agli appunti."
       },
+      "snapshotSuccess": {
+        "title": "Istantanea catturata",
+        "description": "La miniatura ora mostra il fotogramma appena catturato."
+      },
+      "snapshotError": {
+        "title": "Impossibile catturare l'istantanea",
+        "description": "MediaMTX non è riuscito a catturare un fotogramma: lo stream potrebbe essere offline."
+      },
       "menu": {
         "openDetail": "Apri il dettaglio del flusso",
         "viewRecordings": "Visualizza registrazioni",

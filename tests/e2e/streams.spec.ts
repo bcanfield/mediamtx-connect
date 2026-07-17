@@ -141,4 +141,19 @@ test.describe('Live View - With MediaMTX Running', () => {
       await expect(page.getByRole('heading', { name: 'Path Hooks' })).toBeInViewport()
     }
   })
+
+  test('taking a snapshot on demand reports the outcome', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    // Needs a ready stream to have a frame to grab; "online since" is that
+    // readiness. A ready stream yields a frame, so this is the success toast
+    // rather than the old "Not implemented yet" stub.
+    if (await card.getByText(/^online since/).count() > 0) {
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      await page.getByRole('menuitem', { name: 'Take snapshot' }).click()
+      // The capture spawns ffmpeg against the RTSP feed, so allow it time.
+      await expect(page.getByText('Snapshot captured')).toBeVisible({ timeout: 20_000 })
+    }
+  })
 })

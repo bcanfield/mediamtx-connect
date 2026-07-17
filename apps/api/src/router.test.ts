@@ -2,6 +2,7 @@ import type { MediaMtxPath } from './mediamtx'
 import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
+import { captureSnapshot } from './jobs'
 import { mediaMtxApi } from './mediamtx'
 import { router } from './router'
 
@@ -12,6 +13,7 @@ vi.mock('./logger', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }))
 vi.mock('./mediamtx', () => ({ mediaMtxApi: vi.fn() }))
+vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
 
 const CONFIG = {
   mediaMtxUrl: 'http://127.0.0.1',
@@ -81,6 +83,26 @@ describe('streams.list record state', () => {
     const state = await call(router.streams.list, undefined as never)
 
     expect(state.status === 'connected' && state.streams.map(s => s.recording)).toEqual([true, false])
+  })
+})
+
+describe('streams.snapshot', () => {
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('captures the requested stream on demand', async () => {
+    vi.mocked(captureSnapshot).mockResolvedValue()
+
+    await call(router.streams.snapshot, { name: 'front-door' })
+
+    expect(captureSnapshot).toHaveBeenCalledWith('front-door')
+  })
+
+  it('surfaces a capture failure as an error', async () => {
+    vi.mocked(captureSnapshot).mockRejectedValue(new Error('ffmpeg exited 1'))
+
+    await expect(call(router.streams.snapshot, { name: 'front-door' })).rejects.toThrow()
   })
 })
 

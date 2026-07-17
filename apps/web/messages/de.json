@@ -103,6 +103,14 @@
         "title": "Kopieren nicht möglich",
         "description": "Dein Browser hat den Zugriff auf die Zwischenablage blockiert."
       },
+      "snapshotSuccess": {
+        "title": "Schnappschuss aufgenommen",
+        "description": "Das Vorschaubild zeigt jetzt das gerade aufgenommene Bild."
+      },
+      "snapshotError": {
+        "title": "Schnappschuss konnte nicht aufgenommen werden",
+        "description": "MediaMTX konnte kein Bild aufnehmen – der Stream ist möglicherweise offline."
+      },
       "menu": {
         "openDetail": "Stream-Detail öffnen",
         "viewRecordings": "Aufzeichnungen ansehen",

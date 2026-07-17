@@ -103,6 +103,14 @@
         "title": "Kunne ikke kopiere",
         "description": "Din browser blokerede adgang til udklipsholderen."
       },
+      "snapshotSuccess": {
+        "title": "Øjebliksbillede taget",
+        "description": "Miniaturen viser nu det billede, du lige har taget."
+      },
+      "snapshotError": {
+        "title": "Kunne ikke tage øjebliksbillede",
+        "description": "MediaMTX kunne ikke hente et billede – streamen er muligvis offline."
+      },
       "menu": {
         "openDetail": "Åbn streamdetaljer",
         "viewRecordings": "Vis optagelser",

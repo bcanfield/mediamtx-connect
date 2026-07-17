@@ -103,6 +103,14 @@
         "title": "無法複製",
         "description": "你的瀏覽器封鎖了剪貼簿存取。"
       },
+      "snapshotSuccess": {
+        "title": "已擷取快照",
+        "description": "縮圖現在顯示你剛剛擷取的畫面。"
+      },
+      "snapshotError": {
+        "title": "無法擷取快照",
+        "description": "MediaMTX 無法擷取畫面 — 該串流可能已離線。"
+      },
       "menu": {
         "openDetail": "開啟串流詳細資訊",
         "viewRecordings": "檢視錄影",

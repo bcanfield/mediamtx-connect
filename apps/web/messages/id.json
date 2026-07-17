@@ -103,6 +103,14 @@
         "title": "Tidak bisa menyalin",
         "description": "Browser Anda memblokir akses papan klip."
       },
+      "snapshotSuccess": {
+        "title": "Cuplikan diambil",
+        "description": "Gambar kecil kini menampilkan bingkai yang baru saja Anda ambil."
+      },
+      "snapshotError": {
+        "title": "Tidak dapat mengambil cuplikan",
+        "description": "MediaMTX tidak dapat mengambil bingkai — stream mungkin sedang offline."
+      },
       "menu": {
         "openDetail": "Buka detail aliran",
         "viewRecordings": "Lihat rekaman",
