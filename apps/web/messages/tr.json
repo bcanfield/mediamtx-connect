@@ -87,6 +87,10 @@
         "title": "Henüz uygulanmadı",
         "description": "Bu eylem yol haritasında — kayda geçirildi."
       },
+      "recordError": {
+        "title": "Kayıt değiştirilemedi",
+        "description": "MediaMTX değişikliği reddetti — bu yayının kayıt durumu değişmedi."
+      },
       "menu": {
         "openDetail": "Akış detayını aç",
         "viewRecordings": "Kayıtları görüntüle",

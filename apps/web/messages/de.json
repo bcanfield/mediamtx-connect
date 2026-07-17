@@ -87,6 +87,10 @@
         "title": "Noch nicht implementiert",
         "description": "Diese Aktion steht auf der Roadmap — sie wurde protokolliert."
       },
+      "recordError": {
+        "title": "Aufnahme konnte nicht geändert werden",
+        "description": "MediaMTX hat die Änderung abgelehnt – die Aufnahme dieses Streams ist unverändert."
+      },
       "menu": {
         "openDetail": "Stream-Detail öffnen",
         "viewRecordings": "Aufzeichnungen ansehen",

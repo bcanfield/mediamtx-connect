@@ -87,6 +87,10 @@
         "title": "Zatím neimplementováno",
         "description": "Tato akce je v plánu — byla zaznamenána."
       },
+      "recordError": {
+        "title": "Nahrávání se nepodařilo změnit",
+        "description": "MediaMTX změnu odmítl — nahrávání tohoto streamu zůstalo beze změny."
+      },
       "menu": {
         "openDetail": "Otevřít detail streamu",
         "viewRecordings": "Zobrazit záznamy",

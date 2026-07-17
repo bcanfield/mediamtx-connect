@@ -151,6 +151,10 @@ export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
 export const StreamSchema = z.object({
   name: z.string(),
   readyTime: z.string().nullable(),
+  // Effective record state — the path's own override merged over path defaults,
+  // as MediaMTX resolves it. Inherited `true` is the stock setup, so a card
+  // that read only the path's own (absent) entry would claim it's off.
+  recording: z.boolean(),
 })
 
 export type Stream = z.infer<typeof StreamSchema>

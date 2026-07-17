@@ -87,6 +87,10 @@
         "title": "Hindi pa naipapatupad",
         "description": "Nasa roadmap ang aksyong ito — nai-log na ito."
       },
+      "recordError": {
+        "title": "Hindi mabago ang pag-record",
+        "description": "Tinanggihan ng MediaMTX ang pagbabago — hindi nagbago ang pag-record ng stream na ito."
+      },
       "menu": {
         "openDetail": "Buksan ang detalye ng stream",
         "viewRecordings": "Tingnan ang mga recording",

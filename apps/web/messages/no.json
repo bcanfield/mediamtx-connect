@@ -87,6 +87,10 @@
         "title": "Ikke implementert ennå",
         "description": "Denne handlingen står på veikartet — den er logget."
       },
+      "recordError": {
+        "title": "Kunne ikke endre opptak",
+        "description": "MediaMTX avviste endringen – opptaket for denne strømmen er uendret."
+      },
       "menu": {
         "openDetail": "Åpne strømdetaljer",
         "viewRecordings": "Vis opptak",

@@ -30,11 +30,24 @@ export const router = os.router({
           api.pathsList(),
           api.configGlobalGet(),
         ])
+        const items = paths.items ?? []
+
+        // Streams share a config entry — normally the one wildcard, `all_others`
+        // — so resolve record state per distinct confName rather than per card
+        // (ADR 0002). MediaMTX resolves path defaults into whichever entry it
+        // serves, so what comes back is already effective config.
+        const confNames = [...new Set(items.map(p => p.confName ?? ''))]
+        const confs = await Promise.all(confNames.map(name => api.configPathGet(name)))
+        const recordByConfName = new Map(
+          confNames.map((name, i) => [name, confs[i]?.record ?? false]),
+        )
+
         return {
           status: 'connected' as const,
-          streams: (paths.items ?? []).map(p => ({
+          streams: items.map(p => ({
             name: p.name ?? '',
             readyTime: p.readyTime ?? null,
+            recording: recordByConfName.get(p.confName ?? '') ?? false,
           })),
           hlsAddress: globalConf.hlsAddress ?? '',
           remoteMediaMtxUrl: config.remoteMediaMtxUrl,

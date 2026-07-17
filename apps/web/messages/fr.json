@@ -87,6 +87,10 @@
         "title": "Pas encore implémenté",
         "description": "Cette action est sur la feuille de route — elle a été consignée."
       },
+      "recordError": {
+        "title": "Impossible de modifier l'enregistrement",
+        "description": "MediaMTX a refusé la modification : l'enregistrement de ce flux est inchangé."
+      },
       "menu": {
         "openDetail": "Ouvrir le détail du flux",
         "viewRecordings": "Voir les enregistrements",

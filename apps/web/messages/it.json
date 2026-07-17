@@ -87,6 +87,10 @@
         "title": "Non ancora implementato",
         "description": "Questa azione è nella roadmap — è stata registrata."
       },
+      "recordError": {
+        "title": "Impossibile modificare la registrazione",
+        "description": "MediaMTX ha rifiutato la modifica: la registrazione di questo stream è invariata."
+      },
       "menu": {
         "openDetail": "Apri il dettaglio del flusso",
         "viewRecordings": "Visualizza registrazioni",

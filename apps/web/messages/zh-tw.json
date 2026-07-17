@@ -87,6 +87,10 @@
         "title": "尚未實作",
         "description": "此操作已列入藍圖 — 已記錄。"
       },
+      "recordError": {
+        "title": "無法變更錄影",
+        "description": "MediaMTX 拒絕了此變更 — 該串流的錄影狀態未改變。"
+      },
       "menu": {
         "openDetail": "開啟串流詳細資訊",
         "viewRecordings": "檢視錄影",

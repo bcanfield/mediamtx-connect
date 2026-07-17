@@ -87,6 +87,10 @@
         "title": "Chưa được triển khai",
         "description": "Hành động này nằm trong lộ trình — đã được ghi nhận."
       },
+      "recordError": {
+        "title": "Không thể thay đổi ghi hình",
+        "description": "MediaMTX đã từ chối thay đổi — trạng thái ghi hình của luồng này không đổi."
+      },
       "menu": {
         "openDetail": "Mở chi tiết luồng",
         "viewRecordings": "Xem bản ghi",

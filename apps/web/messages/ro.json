@@ -87,6 +87,10 @@
         "title": "Încă neimplementat",
         "description": "Această acțiune este în plan — a fost consemnată."
       },
+      "recordError": {
+        "title": "Înregistrarea nu a putut fi modificată",
+        "description": "MediaMTX a respins modificarea — înregistrarea acestui flux este neschimbată."
+      },
       "menu": {
         "openDetail": "Deschide detaliile fluxului",
         "viewRecordings": "Vezi înregistrările",

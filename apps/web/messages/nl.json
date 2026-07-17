@@ -87,6 +87,10 @@
         "title": "Nog niet geïmplementeerd",
         "description": "Deze actie staat op de roadmap — ze is geregistreerd."
       },
+      "recordError": {
+        "title": "Opname kon niet worden gewijzigd",
+        "description": "MediaMTX heeft de wijziging geweigerd — de opname van deze stream is ongewijzigd."
+      },
       "menu": {
         "openDetail": "Streamdetail openen",
         "viewRecordings": "Opnames bekijken",
