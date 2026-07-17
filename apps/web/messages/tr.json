@@ -95,6 +95,14 @@
         "title": "Kayıt değiştirilemedi",
         "description": "MediaMTX değişikliği reddetti — bu yayının kayıt durumu değişmedi."
       },
+      "copyPublish": {
+        "title": "Yayın URL'leri kopyalandı",
+        "description": "Bunları kameranıza veya kodlayıcınıza yapıştırın."
+      },
+      "copyPublishError": {
+        "title": "Kopyalanamadı",
+        "description": "Tarayıcınız pano erişimini engelledi."
+      },
       "menu": {
         "openDetail": "Akış detayını aç",
         "viewRecordings": "Kayıtları görüntüle",

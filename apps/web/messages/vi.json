@@ -95,6 +95,14 @@
         "title": "Không thể thay đổi ghi hình",
         "description": "MediaMTX đã từ chối thay đổi — trạng thái ghi hình của luồng này không đổi."
       },
+      "copyPublish": {
+        "title": "Đã sao chép URL phát hành",
+        "description": "Dán chúng vào camera hoặc bộ mã hóa của bạn."
+      },
+      "copyPublishError": {
+        "title": "Không thể sao chép",
+        "description": "Trình duyệt của bạn đã chặn quyền truy cập bảng nhớ tạm."
+      },
       "menu": {
         "openDetail": "Mở chi tiết luồng",
         "viewRecordings": "Xem bản ghi",

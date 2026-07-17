@@ -95,6 +95,14 @@
         "title": "无法更改录制",
         "description": "MediaMTX 拒绝了此更改 — 该流的录制状态未改变。"
       },
+      "copyPublish": {
+        "title": "已复制发布 URL",
+        "description": "将它们粘贴到你的摄像头或编码器中。"
+      },
+      "copyPublishError": {
+        "title": "无法复制",
+        "description": "你的浏览器阻止了剪贴板访问。"
+      },
       "menu": {
         "openDetail": "打开流详情",
         "viewRecordings": "查看录像",

@@ -1,3 +1,5 @@
+import type { PublishTarget } from '@/lib/publish'
+
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'use-intl'
@@ -72,14 +74,8 @@ export function ServerUnreachablePanel({
   )
 }
 
-export function ZeroStreamsPanel({ host }: { host: string }) {
+export function ZeroStreamsPanel({ targets }: { targets: PublishTarget[] }) {
   const t = useTranslations('Streams.empty')
-
-  const hints = [
-    { protocol: 'RTSP', url: `rtsp://${host}:8554/` },
-    { protocol: 'RTMP', url: `rtmp://${host}:1935/` },
-    { protocol: 'SRT', url: `srt://${host}:8890?streamid=publish:` },
-  ]
 
   return (
     <div className="mx-auto my-14 flex w-full max-w-lg flex-col items-center gap-5 rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
@@ -90,9 +86,9 @@ export function ZeroStreamsPanel({ host }: { host: string }) {
         <p className="text-[12px] text-muted-foreground">{t('noStreamsLead')}</p>
       </div>
       <div className="flex w-full flex-col gap-1.5 overflow-x-auto rounded-md border bg-card p-3.5 text-left font-mono text-[11.5px] text-muted-foreground">
-        {hints.map(hint => (
-          <span key={hint.protocol} className="whitespace-nowrap">
-            {hint.url}
+        {targets.map(target => (
+          <span key={target.protocol} className="whitespace-nowrap">
+            {target.prefix}
             <span className="text-link">{t('streamNamePlaceholder')}</span>
           </span>
         ))}

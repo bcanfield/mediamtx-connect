@@ -95,6 +95,14 @@
         "title": "No se pudo cambiar la grabación",
         "description": "MediaMTX rechazó el cambio: la grabación de este stream no se ha modificado."
       },
+      "copyPublish": {
+        "title": "URLs de publicación copiadas",
+        "description": "Pégalas en tu cámara o codificador."
+      },
+      "copyPublishError": {
+        "title": "No se pudo copiar",
+        "description": "Tu navegador bloqueó el acceso al portapapeles."
+      },
       "menu": {
         "openDetail": "Abrir detalle de la transmisión",
         "viewRecordings": "Ver grabaciones",

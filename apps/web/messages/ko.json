@@ -95,6 +95,14 @@
         "title": "녹화를 변경할 수 없습니다",
         "description": "MediaMTX가 변경을 거부했습니다 — 이 스트림의 녹화 상태는 그대로입니다."
       },
+      "copyPublish": {
+        "title": "게시 URL을 복사했습니다",
+        "description": "카메라나 인코더에 붙여넣으세요."
+      },
+      "copyPublishError": {
+        "title": "복사할 수 없습니다",
+        "description": "브라우저가 클립보드 접근을 차단했습니다."
+      },
       "menu": {
         "openDetail": "스트림 상세 열기",
         "viewRecordings": "녹화 보기",

@@ -95,6 +95,14 @@
         "title": "Nie udało się zmienić nagrywania",
         "description": "MediaMTX odrzucił zmianę — nagrywanie tego strumienia pozostało bez zmian."
       },
+      "copyPublish": {
+        "title": "Skopiowano adresy URL publikowania",
+        "description": "Wklej je do kamery lub enkodera."
+      },
+      "copyPublishError": {
+        "title": "Nie udało się skopiować",
+        "description": "Przeglądarka zablokowała dostęp do schowka."
+      },
       "menu": {
         "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",

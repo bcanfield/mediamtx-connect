@@ -95,6 +95,14 @@
         "title": "Impossible de modifier l'enregistrement",
         "description": "MediaMTX a refusé la modification : l'enregistrement de ce flux est inchangé."
       },
+      "copyPublish": {
+        "title": "URL de publication copiées",
+        "description": "Collez-les dans votre caméra ou votre encodeur."
+      },
+      "copyPublishError": {
+        "title": "Copie impossible",
+        "description": "Votre navigateur a bloqué l'accès au presse-papiers."
+      },
       "menu": {
         "openDetail": "Ouvrir le détail du flux",
         "viewRecordings": "Voir les enregistrements",

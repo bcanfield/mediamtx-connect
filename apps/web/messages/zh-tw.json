@@ -95,6 +95,14 @@
         "title": "無法變更錄影",
         "description": "MediaMTX 拒絕了此變更 — 該串流的錄影狀態未改變。"
       },
+      "copyPublish": {
+        "title": "已複製發布 URL",
+        "description": "將它們貼到你的攝影機或編碼器中。"
+      },
+      "copyPublishError": {
+        "title": "無法複製",
+        "description": "你的瀏覽器封鎖了剪貼簿存取。"
+      },
       "menu": {
         "openDetail": "開啟串流詳細資訊",
         "viewRecordings": "檢視錄影",

@@ -95,6 +95,14 @@
         "title": "Tallennuksen muuttaminen epäonnistui",
         "description": "MediaMTX hylkäsi muutoksen – tämän striimin tallennus on ennallaan."
       },
+      "copyPublish": {
+        "title": "Julkaisu-URL-osoitteet kopioitu",
+        "description": "Liitä ne kameraan tai enkooderiin."
+      },
+      "copyPublishError": {
+        "title": "Kopiointi ei onnistunut",
+        "description": "Selaimesi esti leikepöydän käytön."
+      },
       "menu": {
         "openDetail": "Avaa striimin tiedot",
         "viewRecordings": "Näytä tallenteet",

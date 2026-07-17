@@ -95,6 +95,14 @@
         "title": "Optagelsen kunne ikke ændres",
         "description": "MediaMTX afviste ændringen – optagelsen for dette stream er uændret."
       },
+      "copyPublish": {
+        "title": "Udgivelses-URL'er kopieret",
+        "description": "Indsæt dem i dit kamera eller din encoder."
+      },
+      "copyPublishError": {
+        "title": "Kunne ikke kopiere",
+        "description": "Din browser blokerede adgang til udklipsholderen."
+      },
       "menu": {
         "openDetail": "Åbn streamdetaljer",
         "viewRecordings": "Vis optagelser",

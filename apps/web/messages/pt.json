@@ -95,6 +95,14 @@
         "title": "Não foi possível alterar a gravação",
         "description": "O MediaMTX rejeitou a alteração — a gravação deste stream não foi modificada."
       },
+      "copyPublish": {
+        "title": "URLs de publicação copiados",
+        "description": "Cole-os na sua câmara ou codificador."
+      },
+      "copyPublishError": {
+        "title": "Não foi possível copiar",
+        "description": "O seu navegador bloqueou o acesso à área de transferência."
+      },
       "menu": {
         "openDetail": "Abrir detalhe da transmissão",
         "viewRecordings": "Ver gravações",
