@@ -7,6 +7,7 @@ import { getAppConfig, updateAppConfig } from './config-store'
 import { logger } from './logger'
 import { mediaMtxApi } from './mediamtx'
 import {
+  latestScreenshotMtimeFor,
   latestScreenshotUrlFor,
   listStreamRecordingFiles,
   screenshotUrlFor,
@@ -48,6 +49,9 @@ export const router = os.router({
             name: p.name ?? '',
             readyTime: p.readyTime ?? null,
             recording: recordByConfName.get(p.confName ?? '') ?? false,
+            codecs: p.tracks ?? [],
+            viewers: p.readers?.length ?? 0,
+            snapshotMtime: latestScreenshotMtimeFor(config, p.name ?? ''),
           })),
           hlsAddress: globalConf.hlsAddress ?? '',
           remoteMediaMtxUrl: config.remoteMediaMtxUrl,

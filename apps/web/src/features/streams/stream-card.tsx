@@ -3,7 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router'
 import { MoreHorizontal, Play } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useFormatter, useNow, useTranslations } from 'use-intl'
 
 import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
@@ -16,14 +16,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { VideoPlayer } from '@/components/video-player'
+import { CONNECTION_POLL_MS } from '@/hooks/use-connection-state'
 import { Link } from '@/i18n/navigation'
 import { logger } from '@/lib/logger'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
 // Overlay-zone contract from the design handoff (board 1h): every optional
-// prop adds a chip in its zone; nothing reflows. Codecs, telemetry and sharing
-// aren't in the API yet — those zones render only when the data shows up.
+// prop adds a chip in its zone; nothing reflows. Nothing passes resolution or
+// bitrate yet — those zones render only when the data shows up.
 export interface StreamCardProps {
   streamName: string
   readyTime?: string | null
@@ -36,6 +37,8 @@ export interface StreamCardProps {
   /** Effective record state: the stream's own override merged over path defaults. */
   recording: boolean
   viewers?: number
+  /** When the idle card's snapshot was captured. Null until the first capture. */
+  snapshotMtime?: Date | null
 }
 
 const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em]'
@@ -60,9 +63,14 @@ export function StreamCard({
   bitrate,
   recording,
   viewers,
+  snapshotMtime,
 }: StreamCardProps) {
   const t = useTranslations('Streams.card')
   const format = useFormatter()
+  // Snapshot age is relative to now, and both ends move: the capture job rewrites
+  // the PNG every 30s and the grid refetches on the connection poll. A `now`
+  // frozen at mount would drift and eventually render a fresh snapshot as future.
+  const now = useNow({ updateInterval: CONNECTION_POLL_MS })
   const navigate = useNavigate()
   const search = useSearch({ strict: false }) as { play?: string }
   const [thumbnailError, setThumbnailError] = useState(false)
@@ -160,7 +168,9 @@ export function StreamCard({
               )
             : !thumbnailError && (
                 <span className={overlayPillNeutral}>
-                  {t('snapshot')}
+                  {snapshotMtime
+                    ? t('snapshotWithAge', { age: format.relativeTime(snapshotMtime, now) })
+                    : t('snapshot')}
                 </span>
               )}
         </div>

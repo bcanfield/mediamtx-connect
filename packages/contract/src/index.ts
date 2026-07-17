@@ -155,6 +155,14 @@ export const StreamSchema = z.object({
   // as MediaMTX resolves it. Inherited `true` is the stock setup, so a card
   // that read only the path's own (absent) entry would claim it's off.
   recording: z.boolean(),
+  // MediaMTX's per-track codec names, straight off the path list.
+  codecs: z.array(z.string()),
+  // MediaMTX counts a reader per consumer of the path, whatever protocol it
+  // reads over — including this app's own player while a card is playing.
+  viewers: z.number().int(),
+  // Age of the snapshot a card shows while idle. Ours, not MediaMTX's: the
+  // mtime of the PNG the capture job writes. Null until the first capture.
+  snapshotMtime: z.date().nullable(),
 })
 
 export type Stream = z.infer<typeof StreamSchema>

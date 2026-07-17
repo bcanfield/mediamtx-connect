@@ -52,9 +52,9 @@ describe('streams.list record state', () => {
 
     const state = await call(router.streams.list, undefined as never)
 
-    expect(state.status === 'connected' && state.streams).toEqual([
-      { name: 'stream1', readyTime: '2026-07-16T10:00:00Z', recording: true },
-      { name: 'stream2', readyTime: '2026-07-16T10:00:00Z', recording: true },
+    expect(state.status === 'connected' && state.streams.map(s => ({ name: s.name, recording: s.recording }))).toEqual([
+      { name: 'stream1', recording: true },
+      { name: 'stream2', recording: true },
     ])
   })
 
@@ -81,5 +81,54 @@ describe('streams.list record state', () => {
     const state = await call(router.streams.list, undefined as never)
 
     expect(state.status === 'connected' && state.streams.map(s => s.recording)).toEqual([true, false])
+  })
+})
+
+describe('streams.list card metadata', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+    api.configGlobalGet.mockResolvedValue({ hlsAddress: ':8888' })
+    api.configPathGet.mockResolvedValue({ record: false })
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('carries the codecs and viewer count the path list already returns', async () => {
+    api.pathsList.mockResolvedValue({
+      items: [{
+        ...wildcardPaths('stream1')[0],
+        tracks: ['H264', 'MPEG-4 Audio'],
+        readers: [{ type: 'hlsMuxer', id: 'a' }, { type: 'webRTCSession', id: 'b' }],
+      }],
+    })
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status === 'connected' && state.streams[0]).toMatchObject({
+      codecs: ['H264', 'MPEG-4 Audio'],
+      viewers: 2,
+    })
+  })
+
+  it('reports no codecs and no viewers for a path publishing neither', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1') })
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status === 'connected' && state.streams[0]).toMatchObject({
+      codecs: [],
+      viewers: 0,
+    })
+  })
+
+  it('reports no snapshot age for a stream our capture job has never written', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1') })
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status === 'connected' && state.streams[0]?.snapshotMtime).toBeNull()
   })
 })

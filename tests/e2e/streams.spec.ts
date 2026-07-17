@@ -74,6 +74,41 @@ test.describe('Live View - With MediaMTX Running', () => {
     }
   })
 
+  test('cards show the codecs the stream is publishing', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    // Codec chips come from the path list's tracks, which only a ready stream
+    // has. "online since" on the footer is that same readiness, so a card
+    // showing it has to show its codecs too.
+    if (await card.getByText(/^online since/).count() > 0)
+      await expect(card).toContainText(/H264|H265|AV1|VP9|MPEG-4 Audio|Opus/)
+  })
+
+  test('cards show how many people are watching', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.count() > 0) {
+      // Nobody watching is the normal resting state and reads "0 viewers" — the
+      // count is always known, so the zone always renders.
+      await expect(card.getByText(/^\d+ viewers?$/)).toBeVisible()
+    }
+  })
+
+  test('an idle card says how old its snapshot is', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+    const pill = card.locator('span').filter({ hasText: /^SNAPSHOT/ }).first()
+
+    // The pill renders only when the thumbnail loaded, which means our capture
+    // job has written a PNG — so whenever it's on screen its age is known and
+    // has to be shown. A bare "SNAPSHOT" here is the bug. The age is
+    // relativeTime output ("now", "2 minutes ago"), so match it loosely.
+    if (await pill.count() > 0)
+      await expect(pill).toHaveText(/^SNAPSHOT · \S/)
+  })
+
   test('card actions deep-link to the stream\'s own path config', async ({ page }) => {
     await page.waitForLoadState('networkidle')
     const card = page.locator('[data-testid="stream-card"]').first()
