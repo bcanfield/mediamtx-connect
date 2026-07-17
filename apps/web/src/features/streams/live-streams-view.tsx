@@ -1,3 +1,4 @@
+import type { Stream } from '@connect/contract'
 import { useSearch } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslations } from 'use-intl'
@@ -23,12 +24,6 @@ const densityClass: Record<Density, string> = {
   2: 'sm:grid-cols-2',
   3: 'sm:grid-cols-2 lg:grid-cols-3',
   4: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
-}
-
-interface Stream {
-  name: string
-  readyTime?: string | null
-  recording: boolean
 }
 
 const segmentedGroup = 'gap-0.5 rounded-md border border-input p-0.5'
@@ -125,6 +120,9 @@ export function LiveStreamsView({
             streamName={stream.name}
             readyTime={stream.readyTime}
             recording={stream.recording}
+            codecs={stream.codecs}
+            viewers={stream.viewers}
+            snapshotMtime={stream.snapshotMtime}
             hlsAddress={hlsAddress}
             remoteMediaMtxUrl={remoteMediaMtxUrl}
             playDisabled={playDisabled}

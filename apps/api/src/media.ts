@@ -1,9 +1,10 @@
-import { createReadStream, existsSync, readdirSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { Readable } from 'node:stream'
 import { Hono } from 'hono'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
+import { latestScreenshotPathFor } from './recordings-fs'
 
 // Binary/streaming endpoints — screenshots and recordings. JSON lives in the
 // oRPC router; files live here.
@@ -21,25 +22,17 @@ function streamResponse(filePath: string, headers: Record<string, string>, statu
 
 media.get('/screenshots/:streamName/latest', async (c) => {
   const config = await getAppConfig()
-  const dir = safeJoin(config.screenshotsDirectory, c.req.param('streamName'))
-  if (!dir || !existsSync(dir))
+  const streamName = c.req.param('streamName')
+  // Only for its verdict: the resolver joins the name itself, and a `..` in it
+  // would walk out of the screenshots directory.
+  if (!safeJoin(config.screenshotsDirectory, streamName))
     return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
 
-  // live.png is the periodic snapshot of the running stream. Streams that are
-  // offline (or predate the capture job) fall back to their newest recording
-  // thumbnail, whose %Y-%m-%d_%H-%M-%S name sorts chronologically.
-  const live = path.join(dir, 'live.png')
-  if (existsSync(live)) {
-    return streamResponse(live, {
-      'Content-Type': 'image/png',
-      'Cache-Control': 'no-store',
-    })
-  }
-
-  const latest = readdirSync(dir).filter(f => f.endsWith('.png')).sort().at(-1)
-  if (!latest)
+  const filePath = latestScreenshotPathFor(config, streamName)
+  if (!filePath)
     return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
-  return streamResponse(path.join(dir, latest), {
+
+  return streamResponse(filePath, {
     'Content-Type': 'image/png',
     'Cache-Control': 'no-store',
   })

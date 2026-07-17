@@ -73,6 +73,7 @@
     "card": {
       "live": "LIVE",
       "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
       "protocolHls": "HLS",
       "noSnapshot": "ancora nessuna istantanea — prima cattura tra ~30s",
       "onlineSince": "online dalle {time} · {uptime}",

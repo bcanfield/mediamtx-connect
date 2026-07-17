@@ -2,12 +2,18 @@ import type { AppConfig, GlobalConfig, PathConfig, PathDefaults } from '@connect
 
 // Minimal hand-rolled client for the handful of MediaMTX endpoints this app
 // uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
+export interface MediaMtxPathReader {
+  type?: string
+  id?: string
+}
+
 export interface MediaMtxPath {
   name?: string
   confName?: string
   ready?: boolean
   readyTime?: string | null
   tracks?: string[]
+  readers?: MediaMtxPathReader[]
   bytesReceived?: number
   bytesSent?: number
 }

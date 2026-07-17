@@ -1,5 +1,5 @@
 import type { AppConfig } from '@connect/contract'
-import fs from 'node:fs'
+import { existsSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 
 export interface StreamSummary {
@@ -8,8 +8,7 @@ export interface StreamSummary {
 }
 
 export function summarizeStreamRecordings(directoryPath: string): Record<string, StreamSummary> {
-  const directories = fs
-    .readdirSync(directoryPath, { withFileTypes: true })
+  const directories = readdirSync(directoryPath, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
 
@@ -17,10 +16,10 @@ export function summarizeStreamRecordings(directoryPath: string): Record<string,
 
   for (const dir of directories) {
     const dirPath = path.join(directoryPath, dir)
-    const files = fs.readdirSync(dirPath)
+    const files = readdirSync(dirPath)
     let latestMtime: Date | null = null
     for (const file of files) {
-      const stat = fs.statSync(path.join(dirPath, file))
+      const stat = statSync(path.join(dirPath, file))
       if (!latestMtime || stat.mtime > latestMtime)
         latestMtime = stat.mtime
     }
@@ -31,8 +30,7 @@ export function summarizeStreamRecordings(directoryPath: string): Record<string,
 }
 
 export function listStreamRecordingFiles(recordingsDirectory: string, streamName: string): string[] {
-  return fs
-    .readdirSync(path.join(recordingsDirectory, streamName))
+  return readdirSync(path.join(recordingsDirectory, streamName))
     .filter(f => !f.startsWith('.'))
     .sort((one, two) => (one > two ? -1 : 1))
 }
@@ -41,18 +39,39 @@ export function listStreamRecordingFiles(recordingsDirectory: string, streamName
 export function screenshotUrlFor(config: AppConfig, streamName: string, recordingFileName: string): string | null {
   const pngName = `${path.parse(recordingFileName).name}.png`
   const pngPath = path.join(config.screenshotsDirectory, streamName, pngName)
-  return fs.existsSync(pngPath)
+  return existsSync(pngPath)
     ? `/media/screenshots/${encodeURIComponent(streamName)}/${encodeURIComponent(pngName)}`
     : null
 }
 
-// Most recent PNG in a stream's screenshot dir, or null.
-export function latestScreenshotUrlFor(config: AppConfig, streamName: string): string | null {
+// The file `/media/screenshots/{stream}/latest` serves, or null when a stream
+// has no snapshot at all. live.png is the periodic capture of the running
+// stream; streams that are offline (or predate the capture job) fall back to
+// their newest recording thumbnail, whose %Y-%m-%d_%H-%M-%S name sorts
+// chronologically. Resolved here rather than at each caller so the route, the
+// URL helper and the card's snapshot age can't disagree about which file is
+// "latest".
+export function latestScreenshotPathFor(config: AppConfig, streamName: string): string | null {
   const dir = path.join(config.screenshotsDirectory, streamName)
-  if (!fs.existsSync(dir))
+  if (!existsSync(dir))
     return null
-  const pngs = fs.readdirSync(dir).filter(f => !f.startsWith('.'))
-  if (pngs.length === 0)
-    return null
-  return `/media/screenshots/${encodeURIComponent(streamName)}/latest`
+
+  const live = path.join(dir, 'live.png')
+  if (existsSync(live))
+    return live
+
+  const latest = readdirSync(dir).filter(f => f.endsWith('.png')).sort().at(-1)
+  return latest ? path.join(dir, latest) : null
+}
+
+export function latestScreenshotUrlFor(config: AppConfig, streamName: string): string | null {
+  return latestScreenshotPathFor(config, streamName)
+    ? `/media/screenshots/${encodeURIComponent(streamName)}/latest`
+    : null
+}
+
+// When the snapshot a card would show was captured, or null when there is none.
+export function latestScreenshotMtimeFor(config: AppConfig, streamName: string): Date | null {
+  const filePath = latestScreenshotPathFor(config, streamName)
+  return filePath ? statSync(filePath).mtime : null
 }

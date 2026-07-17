@@ -73,6 +73,7 @@
     "card": {
       "live": "LIVE",
       "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
       "protocolHls": "HLS",
       "noSnapshot": "még nincs pillanatkép — első rögzítés ~30 mp múlva",
       "onlineSince": "online {time} óta · {uptime}",
