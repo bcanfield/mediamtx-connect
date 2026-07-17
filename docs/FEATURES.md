@@ -317,7 +317,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 ### 13.2 Compose stacks
 - **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889 (WebRTC/WHEP signalling) / 8189-udp (WebRTC ICE) / 8890-udp (SRT) / 9997 (API)`, dependency ordering. The app container sets four of the five bootstrap env vars; `REMOTE_MEDIAMTX_URL` is left to its `http://localhost` schema default, which is correct only when the browser and the stack share a host — deployments reached from another machine must set it (see §3.1). The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
-- **`docker-compose.dev.yml`** — dev variant with optional `fake-streams` service behind `--profile streams` for offline testing.
+- **`docker-compose.dev.yml`** — dev variant: MediaMTX on the `bluenviron/mediamtx:*-ffmpeg` image mounting the dev-only **`mediamtx.dev.yml`** (a diverse named-camera fleet generated in-server via `runOnInit`/`runOnDemand`), plus the always-on **`fake-streams`** publisher for the wildcard-backed `stream1..5`. `pnpm dev` starts it; no profile flag.
+- **`mediamtx.dev.yml`** — dev-only MediaMTX config that mirrors `mediamtx.yml`'s base settings and adds a diverse stream fleet to exercise the feature surface: multiple codecs (H264 / H265 / M-JPEG), audio (AAC / Opus / none), mixed resolutions and frame rates, always-on vs on-demand (`runOnDemand`) vs offline (no source), named-entry vs wildcard-backed paths, and a per-path `record` override. Not shipped in the image.
 
 ### 13.3 Multi-arch
 - **`linux/amd64` + `linux/arm64`** images published on release via `.github/workflows/docker.yml`.
@@ -330,7 +331,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 ## 14. Examples (in-repo recipes)
 
-- **`examples/fake-streams/`** — Dockerized test rig that publishes 5 synthetic RTSP streams via ffmpeg, used for offline development.
+- **`examples/fake-streams/`** — Dockerized test rig that publishes five wildcard-backed RTSP streams (`stream1..5`) from ffmpeg `lavfi` sources, each with a different codec/resolution/audio mix. No video files. Used by `pnpm dev` and CI; the named/on-demand cameras live in `mediamtx.dev.yml`.
 - **`examples/raspberry-pi-camera/`** — GStreamer pipeline + ALSA audio capture + Docker compose for streaming a Raspberry Pi camera into MediaMTX.
 
 ---
