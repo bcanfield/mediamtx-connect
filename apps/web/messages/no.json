@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webgrensesnitt for MediaMTX. Se strømmer, bla gjennom opptak og rediger konfigurasjon fra nettleseren din."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Dette feltet er obligatorisk",
+      "mustBePositive": "Må være større enn 0"
+    }
+  },
+  "Common": {
+    "retry": "Prøv igjen",
+    "loading": "Laster…",
+    "theme": {
+      "lightMode": "Lyst modus",
+      "darkMode": "Mørkt modus",
+      "switchToLight": "Bytt til lyst tema",
+      "switchToDark": "Bytt til mørkt tema"
+    },
+    "locale": {
+      "switchLanguage": "Bytt språk",
+      "searchPlaceholder": "Søk språk…",
+      "noResults": "Fant ikke noe språk."
+    },
+    "connection": {
+      "connected": "tilkoblet",
+      "offline": "frakoblet"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primær",
+    "items": {
+      "live": "Live",
+      "recordings": "Opptak",
+      "appConfig": "Appkonfigurasjon",
+      "mediamtxConfig": "MediaMTX-konfigurasjon"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# strøm} other {# strømmer}} · {live} spilles av",
+      "playbackAria": "Avspillingsmodus",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Rutenettsdensitet"
+    },
+    "errors": {
+      "unreachableTitle": "Kan ikke nå MediaMTX",
+      "unreachableLead": "Ingen respons fra MediaMTX-API-et på",
+      "openAppConfig": "Åpne appkonfigurasjon",
+      "retry": "Prøv igjen",
+      "retryCountdown": "automatisk nytt forsøk om {seconds}s"
+    },
+    "empty": {
+      "noStreamsTitle": "Ingen strømmer publiserer",
+      "noStreamsLead": "Pek en hvilken som helst publisher mot MediaMTX, så dukker den opp her:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "Avspillings-URL er ikke satt",
+      "playbackUrlLead": "Angi den nettleservendte MediaMTX-URL-en i appkonfigurasjonen for å aktivere liveavspilling.",
+      "openAppConfig": "Åpne appkonfigurasjon"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "ingen øyeblikksbilder ennå — første tas om ~30s",
+      "onlineSince": "online siden {time} · {uptime}",
+      "idle": "inaktiv",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# seer} other {# seere}}",
+      "play": "Spill av",
+      "stop": "Stopp",
+      "playAria": "Spill av {streamName}",
+      "actionsAria": "Strømhandlinger",
+      "stub": {
+        "title": "Ikke implementert ennå",
+        "description": "Denne handlingen står på veikartet — den er logget."
+      },
+      "recordError": {
+        "title": "Kunne ikke endre opptak",
+        "description": "MediaMTX avviste endringen – opptaket for denne strømmen er uendret."
+      },
+      "copyPublish": {
+        "title": "Publiserings-URL-er kopiert",
+        "description": "Lim dem inn i kameraet eller koderen din."
+      },
+      "copyPublishError": {
+        "title": "Kunne ikke kopiere",
+        "description": "Nettleseren din blokkerte tilgang til utklippstavlen."
+      },
+      "snapshotSuccess": {
+        "title": "Øyeblikksbilde tatt",
+        "description": "Miniatyrbildet viser nå bildet du nettopp tok."
+      },
+      "snapshotError": {
+        "title": "Kunne ikke ta øyeblikksbilde",
+        "description": "MediaMTX kunne ikke hente et bilde – strømmen er kanskje frakoblet."
+      },
+      "menu": {
+        "openDetail": "Åpne strømdetaljer",
+        "viewRecordings": "Vis opptak",
+        "takeSnapshot": "Ta øyeblikksbilde",
+        "record": "Ta opp",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopier publiserings-URL-er",
+        "shareEmbed": "Del & bygg inn…",
+        "editPathConfig": "Rediger banekonfigurasjon",
+        "editHooks": "Rediger hooks"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Opptak",
+    "toolbar": {
+      "summary": "{streams, plural, one {# strøm} other {# strømmer}} · {recordings, plural, one {# opptak} other {# opptak}}",
+      "filterPlaceholder": "Filtrer strømmer…",
+      "filterAria": "Filtrer strømmer"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# opptak} other {# opptak}}",
+      "latest": "siste {time}",
+      "openAria": "Vis opptak for {name}"
+    },
+    "empty": {
+      "noRecordingsTitle": "Ingen opptak ennå",
+      "noRecordingsLead": "Opptak vises her så snart MediaMTX begynner å ta opp strømmer.",
+      "enableRecording": "Aktiver opptak",
+      "noMatchingTitle": "Ingen matchende strømmer",
+      "noMatchingDescription": "Ingen strømmer matcher «{query}»."
+    },
+    "errors": {
+      "directoryTitle": "Kan ikke lese opptaksmappen",
+      "directoryLead": "Kan ikke lese opptakene på",
+      "openAppConfig": "Åpne appkonfigurasjon",
+      "readErrorTitle": "Kunne ikke lese opptak",
+      "readErrorDescription": "Sørg for at opptaksmappen finnes og har riktige tillatelser."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# opptak} other {# opptak}}"
+    },
+    "groups": {
+      "todayEyebrow": "I dag — {date}",
+      "yesterdayEyebrow": "I går — {date}"
+    },
+    "row": {
+      "play": "Spill av",
+      "close": "Lukk",
+      "cancel": "Avbryt",
+      "playAria": "Spill av opptaket fra {time}",
+      "downloadAria": "Last ned opptak {file}",
+      "downloading": "laster ned… {received} av {total} · {rate}",
+      "downloadComplete": "Nedlasting fullført",
+      "downloadFailed": "Nedlasting mislyktes"
+    },
+    "player": {
+      "play": "Spill av",
+      "pause": "Pause",
+      "seek": "Spol"
+    },
+    "pagination": {
+      "aria": "Paginering",
+      "showing": "Viser {from}–{to} av {total}",
+      "previous": "Forrige side",
+      "next": "Neste side"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Ugyldig konfigurasjon",
+    "appConfig": {
+      "pageHeader": "Appkonfigurasjon",
+      "pageSubHeader": "Tilkobling og lagring brukt av MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-konfigurasjon",
+      "pageSubHeader": "Globale MediaMTX-serverinnstillinger, lagret på serveren."
+    },
+    "pathDefaults": {
+      "pageHeader": "Standardverdier for stier",
+      "pageSubHeader": "Innstillinger som hver strøm arver, lagret på serveren."
+    },
+    "pathConfig": {
+      "pageHeader": "Bane-konfigurasjon · {name}",
+      "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",
+      "inheritedSubHeader": "Innstillinger for denne strømmen, arves for øyeblikket fra {confName}. Lagring overstyrer bare det du har endret."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# ulagret endring} other {# ulagrede endringer}}",
+      "needsAttention": "{count, plural, one {# felt trenger oppmerksomhet} other {# felter trenger oppmerksomhet}}",
+      "discard": "Forkast",
+      "reset": "Tilbakestill",
+      "save": "Lagre",
+      "saveToServer": "Lagre på serveren"
+    },
+    "formFields": {
+      "oneValuePerLine": "Én verdi per linje."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "MediaMTX-tilkobling",
+        "storage": "Lagring"
+      },
+      "playbackBadge": "Kreves for liveavspilling",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX-URL",
+          "description": "Adressen til MediaMTX-instansen din. I et Docker-nettverk kan du bruke containernavnet; ellers bruker du ekstern IP eller vertsnavn."
+        },
+        "mediaMtxApiPort": {
+          "label": "API-port",
+          "description": "Porten til MediaMTX-API-et."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Avspillings-URL",
+          "description": "Den nettlesertilgjengelige, utadvendte URL-en til MediaMTX-serveren din. Liveavspilling laster strømmer herfra."
+        },
+        "recordingsDirectory": {
+          "label": "Opptaksmappe",
+          "description": "Mappe som inneholder MediaMTX-opptak (ikke anbefalt å endre hvis du bruker Docker)."
+        },
+        "screenshotsDirectory": {
+          "label": "Skjermbildemappe",
+          "description": "Mappe for genererte øyeblikksbilder (ikke anbefalt å endre hvis du bruker Docker)."
+        }
+      },
+      "toasts": {
+        "success": "Appkonfigurasjonen er lagret",
+        "errorTitle": "Kunne ikke lagre appkonfigurasjonen",
+        "errorDescription": "Sjekk skjemaverdiene og prøv igjen."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Logging",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Opptak",
+        "pathHooks": "Sti-hooks"
+      },
+      "sectionDescriptions": {
+        "logging": "Loggutdata, tidsavbrudd og globale grenser.",
+        "api": "HTTP-API-et som MediaMTX Connect selv bruker.",
+        "hooks": "Kommandoer MediaMTX kjører ved tilkoblingshendelser.",
+        "rtsp": "Publiser og les strømmer over RTSP.",
+        "rtmp": "Publiser og les strømmer over RTMP.",
+        "hls": "Server strømmer som HLS for avspilling i nettleseren.",
+        "webrtc": "Avspilling og publisering i nettleseren med lav forsinkelse.",
+        "srt": "Publiser og les strømmer over SRT.",
+        "recording": "Ta opp strømmer til disk.",
+        "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser."
+      },
+      "enabled": "Aktivert",
+      "off": "Av",
+      "hiddenWhileOff": "{count, plural, one {# alternativ skjult mens avslått} other {# alternativer skjult mens avslått}}",
+      "rail": {
+        "onThisPage": "På denne siden",
+        "aria": "Konfigurasjonsseksjoner"
+      },
+      "iceServers": {
+        "add": "Legg til ICE-server",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL for ICE-server {index}",
+        "usernameAria": "Brukernavn for ICE-server {index}",
+        "passwordAria": "Passord for ICE-server {index}",
+        "removeAria": "Fjern ICE-server {index}"
+      },
+      "help": {
+        "logLevel": "Detaljnivå for loggutdata (error, warn, info eller debug).",
+        "logDestinations": "Hvor logger skrives (stdout, file eller syslog).",
+        "logFile": "Bane til loggfilen når logDestinations inkluderer file.",
+        "readTimeout": "Tidsavbrudd for leseoperasjoner.",
+        "writeTimeout": "Tidsavbrudd for skriveoperasjoner.",
+        "writeQueueSize": "Størrelse på utgående kø per tilkobling. Må være en toerpotens.",
+        "udpMaxPayloadSize": "Maksimal størrelse på utgående UDP-pakker.",
+        "externalAuthenticationURL": "URL til en ekstern autentiseringsserver som kalles ved hver tilkobling.",
+        "apiAddress": "Lytteadresse for HTTP-API-et.",
+        "metrics": "Eksponer Prometheus-kompatible metrikker.",
+        "metricsAddress": "Lytteadresse for metrikk-endepunktet.",
+        "pprof": "Eksponer Go sitt pprof-profileringsendepunkt.",
+        "pprofAddress": "Lytteadresse for pprof-endepunktet.",
+        "runOnConnect": "Kommando som kjøres når en klient kobler til.",
+        "runOnConnectRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnDisconnect": "Kommando som kjøres når en klient kobler fra.",
+        "rtspAddress": "Lytteadresse for RTSP-serveren (TCP).",
+        "rtspsAddress": "Lytteadresse for RTSPS-serveren (TLS).",
+        "rtpAddress": "Lytteadresse for RTP-pakker over UDP.",
+        "rtcpAddress": "Lytteadresse for RTCP-pakker over UDP.",
+        "multicastIPRange": "IP-område brukt for multicast-levering.",
+        "multicastRTPPort": "Port for multicast-RTP-pakker.",
+        "multicastRTCPPort": "Port for multicast-RTCP-pakker.",
+        "protocols": "Transportprotokoller som RTSP-serveren godtar (udp, multicast eller tcp).",
+        "encryption": "TLS-krypteringspolicy (no, strict eller optional).",
+        "serverKey": "Bane til TLS-servernøkkelen.",
+        "serverCert": "Bane til TLS-serversertifikatet.",
+        "authMethods": "Autentiseringsmetoder som RTSP-serveren godtar (basic eller digest).",
+        "rtmpAddress": "Lytteadresse for RTMP-serveren.",
+        "rtmpEncryption": "TLS-krypteringspolicy for RTMP (no, strict eller optional).",
+        "rtmpsAddress": "Lytteadresse for RTMPS-serveren (TLS).",
+        "rtmpServerKey": "Bane til RTMPS-servernøkkelen.",
+        "rtmpServerCert": "Bane til RTMPS-serversertifikatet.",
+        "hlsAddress": "Lytteadresse for HLS-serveren.",
+        "hlsEncryption": "Server HLS over TLS (HTTPS).",
+        "hlsServerKey": "Bane til HLS-servernøkkelen.",
+        "hlsServerCert": "Bane til HLS-serversertifikatet.",
+        "hlsAlwaysRemux": "Remux strømmer selv når ingen ser på.",
+        "hlsVariant": "HLS-variant (mpegts, fmp4 eller lowLatency).",
+        "hlsSegmentCount": "Antall segmenter som beholdes i spillelisten.",
+        "hlsSegmentDuration": "Minste varighet for hvert segment.",
+        "hlsPartDuration": "Varighet for hver del i modus med lav forsinkelse.",
+        "hlsSegmentMaxSize": "Maksimal størrelse for hvert segment.",
+        "hlsAllowOrigin": "Verdi for Access-Control-Allow-Origin-headeren.",
+        "hlsTrustedProxies": "IP-er eller nettverk for proxyer plassert foran HLS-serveren.",
+        "hlsDirectory": "Skriv segmenter til disk i denne mappen i stedet for RAM.",
+        "webrtcAddress": "Lytteadresse for WebRTC-HTTP-serveren.",
+        "webrtcEncryption": "Server WebRTC over TLS (HTTPS).",
+        "webrtcServerKey": "Bane til WebRTC-servernøkkelen.",
+        "webrtcServerCert": "Bane til WebRTC-serversertifikatet.",
+        "webrtcAllowOrigin": "Verdi for Access-Control-Allow-Origin-headeren.",
+        "webrtcTrustedProxies": "IP-er eller nettverk for proxyer plassert foran WebRTC-serveren.",
+        "webrtcLocalUDPAddress": "Lokal UDP-adresse brukt for WebRTC-trafikk.",
+        "webrtcLocalTCPAddress": "Lokal TCP-adresse brukt for WebRTC-trafikk.",
+        "webrtcIPsFromInterfaces": "Samle kandidat-IP-er fra vertens nettverksgrensesnitt.",
+        "webrtcIPsFromInterfacesList": "Grensesnitt å samle kandidat-IP-er fra. Tomt betyr alle.",
+        "webrtcAdditionalHosts": "Ekstra verter eller IP-er som annonseres som WebRTC-kandidater.",
+        "webrtcICEServers2": "STUN- eller TURN-servere brukt for å etablere WebRTC-tilkoblinger.",
+        "srtAddress": "Lytteadresse for SRT-serveren.",
+        "recordPath": "Sti for opptakssegmenter. %path er navnet på strømmen.",
+        "recordFormat": "Container for opptakssegmenter (fmp4 eller mpegts).",
+        "recordPartDuration": "Varighet på hver del i fmp4-opptak.",
+        "recordSegmentDuration": "Varighet på hvert opptakssegment.",
+        "recordDeleteAfter": "Slett segmenter etter denne perioden. Null deaktiverer sletting.",
+        "runOnInit": "Kommando som kjøres når stien initialiseres.",
+        "runOnInitRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnDemand": "Kommando som kjøres når en klient begynner å lese og stien ikke har noen utgiver.",
+        "runOnDemandRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnDemandStartTimeout": "Hvor lenge det ventes på at utgiveren ved behov starter.",
+        "runOnDemandCloseAfter": "Stopp kommandoen ved behov så lang tid etter at den siste leseren har gått.",
+        "runOnUnDemand": "Kommando som kjøres når kommandoen ved behov stoppes.",
+        "runOnReady": "Kommando som kjøres når strømmen er klar til å leses.",
+        "runOnReadyRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnNotReady": "Kommando som kjøres når strømmen ikke lenger er klar.",
+        "runOnRead": "Kommando som kjøres når en klient begynner å lese denne stien.",
+        "runOnReadRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnUnread": "Kommando som kjøres når en klient slutter å lese denne stien.",
+        "runOnRecordSegmentCreate": "Kommando som kjøres når et opptakssegment opprettes.",
+        "runOnRecordSegmentComplete": "Kommando som kjøres når et opptakssegment er fullført."
+      },
+      "toasts": {
+        "success": "MediaMTX-konfigurasjonen er lagret",
+        "errorTitle": "Kunne ikke lagre MediaMTX-konfigurasjonen",
+        "errorDescription": "Sjekk skjemaverdiene og prøv igjen."
+      }
+    }
+  }
+}

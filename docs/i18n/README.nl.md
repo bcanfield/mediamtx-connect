@@ -41,7 +41,6 @@
 
 <p align="center">
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://codecov.io/gh/bcanfield/mediamtx-connect"><img src="https://codecov.io/gh/bcanfield/mediamtx-connect/branch/main/graph/badge.svg" alt="Coverage"></a>
   <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
   <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
 </p>
@@ -58,7 +57,7 @@ Heb je MediaMTX al draaien? Zet Connect ernaast:
 docker run -d \
   -p 3000:3000 \
   -v /pad/naar/opnames:/recordings \
-  -v mediamtx-connect-data:/app/prisma \
+  -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
 

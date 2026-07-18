@@ -1,18 +1,19 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .env
 
-# db
-*.db*
-
-# dev
+# dev — seeded sample data (pnpm dev) + local prod-compose recordings
+/.dev-data
 /recordings
 /screenshots
-/test-data
+
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+node_modules
+/.pnpm-store/
+
+# build output
+dist
+.turbo
+apps/api/public
 
 # testing
 /coverage
@@ -21,21 +22,12 @@
 /.playwright-mcp/
 /home-*.png
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
 # misc
 .DS_Store
 *.pem
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # local env files
 .env*.local
@@ -43,11 +35,9 @@ yarn-error.log*
 # claude code local settings
 .claude/settings.local.json
 
-# vercel
-.vercel
-
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 .automaker
+# Local planning artifacts (specs, tickets) — see ask-matt flow
+.scratch/

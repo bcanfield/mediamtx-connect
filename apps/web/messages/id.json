@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Antarmuka web untuk MediaMTX. Tonton aliran, telusuri rekaman, dan ubah konfigurasi dari peramban Anda."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Bidang ini wajib diisi",
+      "mustBePositive": "Harus lebih besar dari 0"
+    }
+  },
+  "Common": {
+    "retry": "Coba lagi",
+    "loading": "Memuat…",
+    "theme": {
+      "lightMode": "Mode terang",
+      "darkMode": "Mode gelap",
+      "switchToLight": "Beralih ke tema terang",
+      "switchToDark": "Beralih ke tema gelap"
+    },
+    "locale": {
+      "switchLanguage": "Ganti bahasa",
+      "searchPlaceholder": "Cari bahasa…",
+      "noResults": "Bahasa tidak ditemukan."
+    },
+    "connection": {
+      "connected": "terhubung",
+      "offline": "luring"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Navigasi utama",
+    "items": {
+      "live": "Langsung",
+      "recordings": "Rekaman",
+      "appConfig": "Konfigurasi aplikasi",
+      "mediamtxConfig": "Konfigurasi MediaMTX"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, other {# aliran}} · {live} diputar",
+      "playbackAria": "Mode pemutaran",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Kepadatan kisi"
+    },
+    "errors": {
+      "unreachableTitle": "Tidak dapat menjangkau MediaMTX",
+      "unreachableLead": "Tidak ada respons dari API MediaMTX di",
+      "openAppConfig": "Buka konfigurasi aplikasi",
+      "retry": "Coba lagi",
+      "retryCountdown": "coba ulang otomatis dalam {seconds} dtk"
+    },
+    "empty": {
+      "noStreamsTitle": "Tidak ada aliran yang dipublikasikan",
+      "noStreamsLead": "Arahkan publisher apa pun ke MediaMTX dan aliran akan muncul di sini:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "URL pemutaran belum diatur",
+      "playbackUrlLead": "Atur URL MediaMTX yang dapat diakses peramban di konfigurasi aplikasi untuk mengaktifkan pemutaran langsung.",
+      "openAppConfig": "Buka konfigurasi aplikasi"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "belum ada snapshot — tangkapan pertama dalam ~30 dtk",
+      "onlineSince": "online sejak {time} · {uptime}",
+      "idle": "tidak aktif",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, other {# penonton}}",
+      "play": "Putar",
+      "stop": "Hentikan",
+      "playAria": "Putar {streamName}",
+      "actionsAria": "Tindakan aliran",
+      "stub": {
+        "title": "Belum diimplementasikan",
+        "description": "Tindakan ini ada di peta jalan — sudah dicatat."
+      },
+      "recordError": {
+        "title": "Tidak dapat mengubah perekaman",
+        "description": "MediaMTX menolak perubahan — perekaman stream ini tidak berubah."
+      },
+      "copyPublish": {
+        "title": "URL publikasi disalin",
+        "description": "Tempelkan ke kamera atau encoder Anda."
+      },
+      "copyPublishError": {
+        "title": "Tidak bisa menyalin",
+        "description": "Browser Anda memblokir akses papan klip."
+      },
+      "snapshotSuccess": {
+        "title": "Cuplikan diambil",
+        "description": "Gambar kecil kini menampilkan bingkai yang baru saja Anda ambil."
+      },
+      "snapshotError": {
+        "title": "Tidak dapat mengambil cuplikan",
+        "description": "MediaMTX tidak dapat mengambil bingkai — stream mungkin sedang offline."
+      },
+      "menu": {
+        "openDetail": "Buka detail aliran",
+        "viewRecordings": "Lihat rekaman",
+        "takeSnapshot": "Ambil snapshot",
+        "record": "Rekam",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Salin URL publikasi",
+        "shareEmbed": "Bagikan & sematkan…",
+        "editPathConfig": "Ubah konfigurasi path",
+        "editHooks": "Ubah hooks"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Rekaman",
+    "toolbar": {
+      "summary": "{streams, plural, other {# aliran}} · {recordings, plural, other {# rekaman}}",
+      "filterPlaceholder": "Filter aliran…",
+      "filterAria": "Filter aliran"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, other {# rekaman}}",
+      "latest": "terbaru {time}",
+      "openAria": "Lihat rekaman untuk {name}"
+    },
+    "empty": {
+      "noRecordingsTitle": "Belum ada rekaman",
+      "noRecordingsLead": "Rekaman muncul di sini setelah MediaMTX mulai merekam aliran.",
+      "enableRecording": "Aktifkan perekaman",
+      "noMatchingTitle": "Tidak ada aliran yang cocok",
+      "noMatchingDescription": "Tidak ada aliran yang cocok dengan “{query}”."
+    },
+    "errors": {
+      "directoryTitle": "Tidak dapat membaca direktori rekaman",
+      "directoryLead": "Tidak dapat membaca rekaman di",
+      "openAppConfig": "Buka konfigurasi aplikasi",
+      "readErrorTitle": "Tidak dapat membaca rekaman",
+      "readErrorDescription": "Pastikan direktori rekaman ada dan memiliki izin yang benar."
+    },
+    "detail": {
+      "totals": "{count, plural, other {# rekaman}}"
+    },
+    "groups": {
+      "todayEyebrow": "Hari ini — {date}",
+      "yesterdayEyebrow": "Kemarin — {date}"
+    },
+    "row": {
+      "play": "Putar",
+      "close": "Tutup",
+      "cancel": "Batal",
+      "playAria": "Putar rekaman dari {time}",
+      "downloadAria": "Unduh rekaman {file}",
+      "downloading": "mengunduh… {received} dari {total} · {rate}",
+      "downloadComplete": "Unduhan selesai",
+      "downloadFailed": "Unduhan gagal"
+    },
+    "player": {
+      "play": "Putar",
+      "pause": "Jeda",
+      "seek": "Geser posisi"
+    },
+    "pagination": {
+      "aria": "Penomoran halaman",
+      "showing": "Menampilkan {from}–{to} dari {total}",
+      "previous": "Halaman sebelumnya",
+      "next": "Halaman berikutnya"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Konfigurasi tidak valid",
+    "appConfig": {
+      "pageHeader": "Konfigurasi aplikasi",
+      "pageSubHeader": "Koneksi dan penyimpanan yang digunakan MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Konfigurasi MediaMTX",
+      "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server."
+    },
+    "pathDefaults": {
+      "pageHeader": "Default jalur",
+      "pageSubHeader": "Pengaturan yang diwarisi setiap aliran, disimpan di server."
+    },
+    "pathConfig": {
+      "pageHeader": "Konfigurasi jalur · {name}",
+      "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",
+      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, other {# perubahan belum disimpan}}",
+      "needsAttention": "{count, plural, other {# bidang perlu diperiksa}}",
+      "discard": "Buang",
+      "reset": "Atur ulang",
+      "save": "Simpan",
+      "saveToServer": "Simpan ke server"
+    },
+    "formFields": {
+      "oneValuePerLine": "Satu nilai per baris."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "Koneksi MediaMTX",
+        "storage": "Penyimpanan"
+      },
+      "playbackBadge": "Diperlukan untuk pemutaran langsung",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX URL",
+          "description": "Alamat instans MediaMTX Anda. Di dalam jaringan Docker Anda dapat memakai nama kontainer; jika tidak, gunakan IP atau hostname eksternal."
+        },
+        "mediaMtxApiPort": {
+          "label": "Porta API",
+          "description": "Porta API MediaMTX."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "URL pemutaran",
+          "description": "URL server MediaMTX Anda yang dapat diakses peramban dan menghadap ke luar. Pemutaran langsung memuat aliran dari sini."
+        },
+        "recordingsDirectory": {
+          "label": "Direktori rekaman",
+          "description": "Direktori yang berisi rekaman MediaMTX (tidak disarankan diubah jika menggunakan Docker)."
+        },
+        "screenshotsDirectory": {
+          "label": "Direktori tangkapan layar",
+          "description": "Direktori untuk snapshot yang dihasilkan (tidak disarankan diubah jika menggunakan Docker)."
+        }
+      },
+      "toasts": {
+        "success": "Konfigurasi aplikasi disimpan",
+        "errorTitle": "Tidak dapat menyimpan konfigurasi aplikasi",
+        "errorDescription": "Periksa kembali nilai formulir dan coba lagi."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Log",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Perekaman",
+        "pathHooks": "Hooks Jalur"
+      },
+      "sectionDescriptions": {
+        "logging": "Keluaran log, batas waktu, dan batas global.",
+        "api": "API HTTP yang digunakan oleh MediaMTX Connect sendiri.",
+        "hooks": "Perintah yang dijalankan MediaMTX pada peristiwa koneksi.",
+        "rtsp": "Publikasikan dan baca aliran melalui RTSP.",
+        "rtmp": "Publikasikan dan baca aliran melalui RTMP.",
+        "hls": "Sajikan aliran sebagai HLS untuk pemutaran di peramban.",
+        "webrtc": "Pemutaran dan publikasi di peramban dengan latensi rendah.",
+        "srt": "Publikasikan dan baca aliran melalui SRT.",
+        "recording": "Rekam aliran ke disk.",
+        "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri."
+      },
+      "enabled": "Aktif",
+      "off": "Nonaktif",
+      "hiddenWhileOff": "{count, plural, other {# opsi disembunyikan saat nonaktif}}",
+      "rail": {
+        "onThisPage": "Di halaman ini",
+        "aria": "Bagian konfigurasi"
+      },
+      "iceServers": {
+        "add": "Tambah server ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL server ICE {index}",
+        "usernameAria": "Nama pengguna server ICE {index}",
+        "passwordAria": "Kata sandi server ICE {index}",
+        "removeAria": "Hapus server ICE {index}"
+      },
+      "help": {
+        "logLevel": "Tingkat kerincian keluaran log (error, warn, info, atau debug).",
+        "logDestinations": "Tempat menulis log (stdout, file, atau syslog).",
+        "logFile": "Jalur berkas log saat logDestinations menyertakan file.",
+        "readTimeout": "Batas waktu untuk operasi baca.",
+        "writeTimeout": "Batas waktu untuk operasi tulis.",
+        "writeQueueSize": "Ukuran antrean keluar per koneksi. Harus berupa pangkat dua.",
+        "udpMaxPayloadSize": "Ukuran maksimum paket UDP keluar.",
+        "externalAuthenticationURL": "URL server autentikasi eksternal, dipanggil pada setiap koneksi.",
+        "apiAddress": "Alamat dengar API HTTP.",
+        "metrics": "Ekspos metrik yang kompatibel dengan Prometheus.",
+        "metricsAddress": "Alamat dengar endpoint metrik.",
+        "pprof": "Ekspos endpoint profiling Go pprof.",
+        "pprofAddress": "Alamat dengar endpoint pprof.",
+        "runOnConnect": "Perintah yang dijalankan saat klien terhubung.",
+        "runOnConnectRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnDisconnect": "Perintah yang dijalankan saat klien terputus.",
+        "rtspAddress": "Alamat dengar server RTSP (TCP).",
+        "rtspsAddress": "Alamat dengar server RTSPS (TLS).",
+        "rtpAddress": "Alamat dengar untuk paket RTP melalui UDP.",
+        "rtcpAddress": "Alamat dengar untuk paket RTCP melalui UDP.",
+        "multicastIPRange": "Rentang IP yang digunakan untuk pengiriman multicast.",
+        "multicastRTPPort": "Porta untuk paket RTP multicast.",
+        "multicastRTCPPort": "Porta untuk paket RTCP multicast.",
+        "protocols": "Protokol transpor yang diterima server RTSP (udp, multicast, atau tcp).",
+        "encryption": "Kebijakan enkripsi TLS (no, strict, atau optional).",
+        "serverKey": "Jalur kunci server TLS.",
+        "serverCert": "Jalur sertifikat server TLS.",
+        "authMethods": "Metode autentikasi yang diterima server RTSP (basic atau digest).",
+        "rtmpAddress": "Alamat dengar server RTMP.",
+        "rtmpEncryption": "Kebijakan enkripsi TLS untuk RTMP (no, strict, atau optional).",
+        "rtmpsAddress": "Alamat dengar server RTMPS (TLS).",
+        "rtmpServerKey": "Jalur kunci server RTMPS.",
+        "rtmpServerCert": "Jalur sertifikat server RTMPS.",
+        "hlsAddress": "Alamat dengar server HLS.",
+        "hlsEncryption": "Sajikan HLS melalui TLS (HTTPS).",
+        "hlsServerKey": "Jalur kunci server HLS.",
+        "hlsServerCert": "Jalur sertifikat server HLS.",
+        "hlsAlwaysRemux": "Remux aliran bahkan saat tidak ada yang menonton.",
+        "hlsVariant": "Varian HLS (mpegts, fmp4, atau lowLatency).",
+        "hlsSegmentCount": "Jumlah segmen yang disimpan di playlist.",
+        "hlsSegmentDuration": "Durasi minimum setiap segmen.",
+        "hlsPartDuration": "Durasi setiap bagian dalam mode latensi rendah.",
+        "hlsSegmentMaxSize": "Ukuran maksimum setiap segmen.",
+        "hlsAllowOrigin": "Nilai header Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP atau jaringan proxy yang ditempatkan di depan server HLS.",
+        "hlsDirectory": "Tulis segmen ke disk di direktori ini alih-alih RAM.",
+        "webrtcAddress": "Alamat dengar server HTTP WebRTC.",
+        "webrtcEncryption": "Sajikan WebRTC melalui TLS (HTTPS).",
+        "webrtcServerKey": "Jalur kunci server WebRTC.",
+        "webrtcServerCert": "Jalur sertifikat server WebRTC.",
+        "webrtcAllowOrigin": "Nilai header Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP atau jaringan proxy yang ditempatkan di depan server WebRTC.",
+        "webrtcLocalUDPAddress": "Alamat UDP lokal yang digunakan untuk lalu lintas WebRTC.",
+        "webrtcLocalTCPAddress": "Alamat TCP lokal yang digunakan untuk lalu lintas WebRTC.",
+        "webrtcIPsFromInterfaces": "Kumpulkan IP kandidat dari antarmuka jaringan host.",
+        "webrtcIPsFromInterfacesList": "Antarmuka tempat mengumpulkan IP kandidat. Kosong berarti semua.",
+        "webrtcAdditionalHosts": "Host atau IP tambahan yang diumumkan sebagai kandidat WebRTC.",
+        "webrtcICEServers2": "Server STUN atau TURN yang digunakan untuk membangun koneksi WebRTC.",
+        "srtAddress": "Alamat dengar server SRT.",
+        "recordPath": "Jalur segmen rekaman. %path adalah nama aliran.",
+        "recordFormat": "Kontainer segmen rekaman (fmp4 atau mpegts).",
+        "recordPartDuration": "Durasi setiap bagian dalam rekaman fmp4.",
+        "recordSegmentDuration": "Durasi setiap segmen rekaman.",
+        "recordDeleteAfter": "Hapus segmen setelah durasi ini. Nol menonaktifkan penghapusan.",
+        "runOnInit": "Perintah yang dijalankan saat jalur diinisialisasi.",
+        "runOnInitRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnDemand": "Perintah yang dijalankan saat klien mulai membaca dan jalur tidak memiliki penerbit.",
+        "runOnDemandRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnDemandStartTimeout": "Berapa lama menunggu penerbit sesuai permintaan dimulai.",
+        "runOnDemandCloseAfter": "Hentikan perintah sesuai permintaan setelah durasi ini sejak pembaca terakhir keluar.",
+        "runOnUnDemand": "Perintah yang dijalankan saat perintah sesuai permintaan dihentikan.",
+        "runOnReady": "Perintah yang dijalankan saat aliran siap dibaca.",
+        "runOnReadyRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnNotReady": "Perintah yang dijalankan saat aliran tidak lagi siap.",
+        "runOnRead": "Perintah yang dijalankan saat klien mulai membaca jalur ini.",
+        "runOnReadRestart": "Mulai ulang perintah jika berhenti.",
+        "runOnUnread": "Perintah yang dijalankan saat klien berhenti membaca jalur ini.",
+        "runOnRecordSegmentCreate": "Perintah yang dijalankan saat segmen rekaman dibuat.",
+        "runOnRecordSegmentComplete": "Perintah yang dijalankan saat segmen rekaman selesai."
+      },
+      "toasts": {
+        "success": "Konfigurasi MediaMTX disimpan",
+        "errorTitle": "Tidak dapat menyimpan konfigurasi MediaMTX",
+        "errorDescription": "Periksa kembali nilai formulir dan coba lagi."
+      }
+    }
+  }
+}

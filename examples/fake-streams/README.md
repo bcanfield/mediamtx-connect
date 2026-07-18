@@ -1,25 +1,35 @@
 # Fake Streams for Development
 
-Generate fake RTSP streams for testing MediaMTX Connect without real cameras.
+Generate synthetic RTSP streams for testing MediaMTX Connect without real cameras.
 
 ## What It Does
 
-Loops a test video file and pushes it to MediaMTX as 5 separate streams (`stream1` through `stream5`).
+Publishes five streams (`stream1`–`stream5`) to MediaMTX from ffmpeg `lavfi`
+sources — no video files needed. Each varies so the Streams page shows a diverse
+fleet:
+
+| Path | Video | Audio | Resolution |
+|------|-------|-------|------------|
+| `stream1` | H264 | AAC | 1280×720 @30 |
+| `stream2` | H264 | — | 1280×720 @25 |
+| `stream3` | H264 | Opus | 640×480 @25 |
+| `stream4` | H265/HEVC | — | 960×540 @20 |
+| `stream5` | M-JPEG | — | 1280×720 @15 |
+
+These are **not** declared in `mediamtx.dev.yml`, so they ride the `all_others`
+wildcard (confName `all_others`) — the normal, wildcard-backed case. The named
+and on-demand cameras (`front-door`, `warehouse-cam`, `parking-lot`, …) live in
+`mediamtx.dev.yml` instead.
 
 ## Usage
 
 ### With Docker Compose
 
-Add this service to your `docker-compose.yml`:
+`pnpm dev` starts this service automatically as part of the dev stack. To run
+just the MediaMTX side standalone:
 
-```yaml
-fake-streams:
-  build: ./examples/fake-streams
-  depends_on:
-    mediamtx:
-      condition: service_healthy
-  networks:
-    - mtx
+```bash
+docker compose -f docker-compose.dev.yml up -d
 ```
 
 ### Standalone
@@ -32,7 +42,5 @@ docker run --network=host fake-streams
 
 ## Files
 
-- `Dockerfile` - Alpine container with ffmpeg
-- `ffmpeg-test.sh` - Script that creates 5 RTSP streams
-- `test.mp4` - Sample video file
-- `config/mediamtx.yml` - MediaMTX configuration for local testing
+- `Dockerfile` — Alpine container with ffmpeg
+- `ffmpeg-test.sh` — publishes the five streams from lavfi sources

@@ -1,0 +1,20 @@
+{
+  "name": "@connect/contract",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@orpc/contract": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@connect/typescript-config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

@@ -1,105 +1,99 @@
 # Project Structure
 
-A simple, low-ceremony Next.js layout optimized for clarity and agent navigation. Pairs with `.agents/skills/next-best-practices/`.
+A pnpm + Turborepo monorepo optimized for clarity and agent navigation. Commands and cross-package conventions live in `AGENTS.md`; this doc covers layout and naming.
 
 ## Layout
 
 ```
-src/
-├── app/                          # Routing only — pages import from features
-│   ├── [locale]/                 # i18n: every UI route lives under this segment
-│   │   ├── layout.tsx            # owns <html lang>, NextIntlClientProvider
-│   │   ├── page.tsx
-│   │   └── (groups, sub-routes)
-│   ├── api/                      # Route handlers — top-level, NOT locale-prefixed
-│   ├── manifest.ts               # PWA — top-level, locale-neutral
-│   └── globals.css
+apps/
+├── api/                          # Hono backend (Node 22, bundled with tsdown)
+│   └── src/
+│       ├── server.ts             # Hono app: /rpc, /media, /api/health, SPA serve
+│       ├── router.ts             # oRPC handlers — implement(contract)
+│       ├── media.ts              # Binary routes: screenshots, MP4s (Range)
+│       ├── config-store.ts       # config.json read/write + first-boot seed
+│       ├── recordings-fs.ts      # Recordings filesystem helpers
+│       ├── mediamtx.ts           # Typed fetch client for the MediaMTX API
+│       ├── jobs.ts               # node-cron: thumbnails + retention
+│       ├── env.ts                # t3-env — the only process.env access
+│       └── logger.ts             # Pino
 │
-├── i18n/                         # next-intl wiring (small, stable)
-│   ├── routing.ts                # locales, defaultLocale, localePrefix
-│   ├── request.ts                # getRequestConfig — loads messages/{locale}.json
-│   └── navigation.ts             # locale-aware Link, useRouter, etc.
-│
-├── proxy.ts                      # next-intl middleware (Next 16 'proxy' name)
-│
-├── features/                     # Domain code — bulk of the app
-│   └── posts/
-│       ├── post-card.tsx         # Flat. No components/ subfolder.
-│       ├── post-list.tsx
-│       ├── create-post-form.tsx
-│       ├── posts.actions.ts      # 'use server' — mutations
-│       ├── posts.queries.ts      # Server-only reads (cache())
-│       ├── posts.schemas.ts      # Zod
-│       └── posts.types.ts
-│
-├── components/                   # Shared UI, no business logic
-│   └── ui/                       # Primitives (button.tsx, input.tsx)
-│
-messages/
-├── en.json                       # Source of truth — every key lives here first
-└── es.json                       # Mirrors en.json. CI's i18n:check enforces parity.
-│
-├── lib/                          # Infrastructure
-│   ├── db.ts                     # Prisma/Drizzle client
-│   ├── auth.ts
-│   ├── env.ts                    # Validated env (zod)
-│   ├── logger.ts
-│   └── utils.ts
-│
-├── hooks/                        # Shared hooks (3+ consumers)
-└── proxy.ts                      # v16+ (middleware.ts on v14-15)
+└── web/                          # Vite + React 19 SPA
+    ├── index.html                # Shell: theme script, manifest link
+    ├── messages/                 # i18n messages, one JSON per locale
+    │   ├── en.json               # Source of truth — every key lives here first
+    │   └── *.json                # Mirror en.json. CI's i18n:check enforces parity.
+    ├── public/                   # PWA statics: manifest, sw.js, icons
+    └── src/
+        ├── main.tsx              # Providers + TanStack Router route tree
+        ├── orpc.ts               # Typed oRPC client + TanStack Query utils
+        ├── globals.css           # Tailwind 4 + shadcn tokens
+        ├── i18n/                 # use-intl wiring
+        │   ├── locales.ts        # Locale list + names + detection
+        │   ├── provider.tsx      # IntlProvider + locale persistence
+        │   └── navigation.ts     # href-based Link/useRouter compat layer
+        ├── features/             # Domain code — bulk of the app
+        │   └── streams/
+        │       ├── stream-card.tsx        # Flat. No components/ subfolder.
+        │       ├── live-view-page.tsx     # Route component (wired in main.tsx)
+        │       └── ...
+        ├── components/           # Shared UI, no business logic
+        │   └── ui/               # shadcn primitives (button.tsx, input.tsx)
+        ├── hooks/                # Shared hooks (3+ consumers)
+        └── lib/                  # utils.ts (cn), logger.ts
+
+packages/
+├── contract/                     # oRPC contract + Zod schemas — the ONLY
+│   └── src/index.ts              # place API shapes are defined
+└── typescript-config/            # Shared tsconfig base
 ```
 
 ## Rules
 
-> **i18n is not optional.** Every user-visible string goes through `messages/*.json` via `useTranslations` (client) or `getTranslations` (server). Use `Link` / `useRouter` / `usePathname` from `@/i18n/navigation`, not `next/link` or `next/navigation`. New feature folder → new namespace in `messages/en.json`. ESLint enforces "no raw JSX literals" in `src/features/**` and `src/components/**`. Full policy and "add a language" workflow: `docs/I18N.md`.
+> **i18n is not optional.** Every user-visible string goes through `apps/web/messages/*.json` via `useTranslations`. New feature folder → new namespace in `messages/en.json`. ESLint enforces "no raw JSX literals" in `apps/web/src/features/**` and `apps/web/src/components/**`. Full policy and "add a language" workflow: `docs/I18N.md`.
 
-1. **`app/` is routing only.** Pages import a feature component and render it. No business logic in `app/`.
-2. **Flat feature folders.** No `components/`, `actions/`, `schemas/` subdirs until a feature exceeds ~10 files.
-3. **No barrel `index.ts` files.** Import from the actual file: `from '@/features/posts/post-card'`. Barrels hurt tree-shaking, hide locations, and add maintenance.
-4. **Descriptive, greppable filenames.** `post-card.tsx`, not `card.tsx`. Filename search must be useful.
-5. **Split reads from writes.** `*.actions.ts` for `'use server'` mutations, `*.queries.ts` for server-only reads. No `services/`, `repositories/`, `controllers/`.
+1. **Routes are wired in `main.tsx`, pages live in features.** A route component imports a feature page and renders it. No business logic in the route tree.
+2. **API shapes live in the contract.** Adding an endpoint means: schema + procedure in `packages/contract`, handler in `apps/api/src/router.ts`, consumption via `orpc.*` in the web app — all in one commit. Binary/streaming responses are plain Hono routes in `apps/api/src/media.ts` instead.
+3. **Flat feature folders.** No `components/`, `schemas/` subdirs until a feature exceeds ~10 files.
+4. **No barrel `index.ts` files** (the contract package's single entry is the exception). Import from the actual file: `from '@/features/streams/stream-card'`.
+5. **Descriptive, greppable filenames.** `stream-card.tsx`, not `card.tsx`. Filename search must be useful.
 6. **Promote at 3+ consumers.** Code starts in the feature that owns it. Move to `components/`, `hooks/`, or `lib/utils.ts` only when a third caller appears.
-7. **One env file (`lib/env.ts`).** All `process.env` access goes through it.
-8. **Use Next.js conventions.** Route groups `(group)`, private folders `_components`, colocation. Don't reinvent organization the framework provides.
+7. **One env file (`apps/api/src/env.ts`).** All `process.env` access goes through it. The web app has no env — everything flows through the API.
+8. **Import workspace packages by name** (`@connect/contract`), never by relative path across package boundaries.
 
 ## Server / Client / API Boundaries
 
-Aligned with `next-best-practices/data-patterns.md`:
+| Need                          | Use                                            |
+|-------------------------------|------------------------------------------------|
+| Read in the UI                | `useQuery(orpc.<ns>.<proc>.queryOptions())`    |
+| Mutation from UI              | `useMutation(orpc.<ns>.<proc>.mutationOptions())` + query invalidation |
+| Binary / streaming response   | Hono route in `apps/api/src/media.ts`, consumed as an `<img>`/`<video>`/fetch URL |
+| Filesystem / MediaMTX access  | api-side only (`recordings-fs.ts`, `mediamtx.ts`) |
 
-| Need                          | Use                                |
-|-------------------------------|------------------------------------|
-| Read in a server component    | Direct DB call in `*.queries.ts`   |
-| Mutation from UI              | Server Action in `*.actions.ts`    |
-| Webhook / external REST API   | `app/api/*/route.ts`               |
-| Client-side read              | Pass from server, or route handler |
-
-- Don't put mutations in route handlers when a Server Action works.
-- Don't make a route handler for internal reads — fetch directly in the Server Component.
+- Don't call `fetch` on JSON endpoints from the web app — the oRPC client is the only JSON path.
+- Don't push binary payloads through oRPC — that's what `/media/*` is for.
 
 ## Naming
 
 | Type                  | Pattern                | Example                   |
 |-----------------------|------------------------|---------------------------|
-| Component             | `kebab-case.tsx`       | `post-card.tsx`           |
-| Server actions file   | `[feature].actions.ts` | `posts.actions.ts`        |
-| Queries file          | `[feature].queries.ts` | `posts.queries.ts`        |
-| Schema                | `[feature].schemas.ts` | `posts.schemas.ts`        |
+| Component             | `kebab-case.tsx`       | `stream-card.tsx`         |
+| Feature page          | `[feature]-page.tsx`   | `live-view-page.tsx`      |
+| Schema (form-local)   | `[feature].schemas.ts` | `client-config.schemas.ts`|
 | Hook                  | `use-[name].ts`        | `use-mobile.ts`           |
-| Folder                | kebab-case             | `posts`, `billing`        |
+| Folder                | kebab-case             | `streams`, `recordings`   |
 
 ## Imports
 
 ```ts
-// tsconfig: { "paths": { "@/*": ["./src/*"] } }
-import { env } from '@/lib/env'
-import { db } from '@/lib/db'
+// apps/web tsconfig: { "paths": { "@/*": ["./src/*"] } }
+import { AppConfigSchema } from '@connect/contract' // workspace package by name
 import { Button } from '@/components/ui/button'
-import { PostCard } from '@/features/posts/post-card'   // direct file
-import { createPost } from '@/features/posts/posts.actions'
+import { StreamCard } from '@/features/streams/stream-card' // direct file
+import { orpc } from '@/orpc'
 
 // Same feature: relative
-import { PostCard } from './post-card'
+import { StreamCard } from './stream-card'
 ```
 
 ## What this structure deliberately omits
@@ -108,8 +102,8 @@ import { PostCard } from './post-card'
 - DDD layers (`domain/`, `application/`, `infrastructure/`).
 - `services/`, `repositories/`, `dto/`, `controllers/`.
 - Root `types/` or `constants/` folders (colocate with usage).
-- Per-feature `__tests__/` requirement (colocate or use `tests/` — your call).
+- A database — the app's five settings live in a Zod-validated JSON file (`apps/api/src/config-store.ts`). `packages/db` is the slot if one ever earns its way in.
 
 ## When to deviate
 
-- **Feature exceeds ~15 files** — split into `posts/components/`, `posts/server/`. Don't pre-split.
+- **Feature exceeds ~15 files** — split into `streams/components/` etc. Don't pre-split (see `mediamtx-config/sections/` for the existing precedent).

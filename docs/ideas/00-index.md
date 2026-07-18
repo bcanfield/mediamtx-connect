@@ -32,7 +32,7 @@ To stay exhaustive without drowning in one giant document, the surface area was 
 |------|-----------|
 | **Reach** | Does every MediaMTX user benefit, or only a niche (e.g. SRT-only, Pi-only)? |
 | **Existing API support** | Does MediaMTX already expose the data/endpoints, or would we need to ask upstream? Existing-only is much cheaper. |
-| **Net-new infra** | Does it require new long-running components (Prometheus, queue, message bus)? Prefer ideas that fit our existing Next.js + SQLite + cron shape. |
+| **Net-new infra** | Does it require new long-running components (Prometheus, queue, message bus)? Prefer ideas that fit our existing Hono + JSON-config-store + node-cron shape. |
 | **Maintenance contract** | Will the feature need to track MediaMTX schema changes? Pin to stable APIs first; defer features built on `deprecated: true` fields. |
 | **Auth gating** | Does it need authn/authz before it's safe to ship? If so, it's blocked on `04-auth-security-hooks.md` work. |
 
@@ -45,7 +45,7 @@ These don't fit cleanly inside any one domain — they're product-shaped or infr
 ### Onboarding & first-run experience
 
 - **Setup wizard** — replace today's three-field config form with a multi-step wizard: detect the running MediaMTX, test API reachability, prompt for the remote URL, walk the user through publishing their first stream. Wraps `v3/configGlobalGet` + `v3/pathsList` + a "publish a test stream" page.
-- **Doctor / preflight page** — one screen that runs every diagnostic in the app (API reach, recordings dir writable, screenshots dir writable, ffmpeg present, MediaMTX version supported, time-sync, port binds OK) with green/red rows. Mirrors `npm run doctor`-style ergonomics.
+- **Doctor / preflight page** — one screen that runs every diagnostic in the app (API reach, recordings dir writable, screenshots dir writable, ffmpeg present, MediaMTX version supported, time-sync, port binds OK) with green/red rows. Mirrors `pnpm doctor`-style ergonomics.
 - **Sample stream provisioner** — one click installs the `examples/fake-streams/` rig so a new user has something to look at immediately.
 - **Empty-state CTAs everywhere** — every empty list (no streams, no recordings, no users, no hooks) ships with a "do this next" CTA that deep-links into the right wizard.
 
@@ -106,9 +106,9 @@ These fit MediaMTX's pluggable model (data goes out via a hook; events come back
 - **Per-user theme + density** — extend the existing `ModeToggle` and `liveDensity` localStorage keys into a full Settings page for accent color, density, motion-reduction, font size.
 - **Captions/subtitles** in the player — wire transcripts (above) into the HLS.js player.
 - **Audio description track** — surface secondary audio if MediaMTX exposes it.
-- **High-contrast and reduce-motion modes** — explicit toggles that override `next-themes` for accessibility users.
+- **High-contrast and reduce-motion modes** — explicit toggles that override the in-app ThemeProvider for accessibility users.
 - **Locale expansion** — beyond `en`/`es`, ship `fr`/`de`/`ja`/`zh`/`pt` from the same `messages/` system. Add a community-translation contribution flow (e.g. Crowdin).
-- **RTL support** — Arabic/Hebrew layouts at the `[locale]` segment level.
+- **RTL support** — Arabic/Hebrew layouts driven by the client-side locale setting.
 - **Keyboard shortcuts** — `?` opens a cheatsheet; `j/k` between streams, `space` play/pause, `g r` go to recordings.
 - **Screen-reader optimized live view** — narrate stream-up/stream-down state changes via ARIA live regions.
 
@@ -120,10 +120,10 @@ These fit MediaMTX's pluggable model (data goes out via a hook; events come back
 
 ### Data model & developer experience
 
-- **Postgres / MySQL option** — abstract the Prisma backend so larger deployments can move off SQLite without forking. Docs + Marketplace integration with Vercel Neon Postgres.
-- **Full GraphQL or tRPC layer** — for plugin authors and external automation; sits in front of the existing server actions.
+- **Postgres / MySQL option** — introduce a database layer so larger deployments can grow beyond the JSON config store without forking. Docs + Marketplace integration with Vercel Neon Postgres.
+- **Full GraphQL or tRPC layer** — for plugin authors and external automation; sits in front of the existing oRPC procedures.
 - **OpenAPI for the Connect API** — first-class spec for `/api/health`, `/api/.../first-screenshot`, etc., so external tooling can integrate.
-- **CLI** — `mediamtx-connect` CLI that wraps server actions (config get/set, recording list/delete, alert rules) for ops automation.
+- **CLI** — `mediamtx-connect` CLI that wraps the existing oRPC procedures (config get/set, recording list/delete, alert rules) for ops automation.
 - **Terraform / Pulumi provider** — declare paths, users, and alerts as infrastructure-as-code.
 
 ### Competitive / category-shaped ideas

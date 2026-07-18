@@ -1,86 +1,54 @@
 import { expect, test } from '@playwright/test'
-import { getNavItem, openMobileNavIfNeeded } from './open-mobile-nav'
+import { getNavItem } from './open-mobile-nav'
 
-test.describe('Streams Page', () => {
+test.describe('Live View', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
   })
 
-  test('should load the streams page with header', async ({ page }) => {
+  test('should load the top nav with the Live tab active', async ({ page }) => {
     await page.waitForLoadState('networkidle')
-    await expect(page.locator('h2').filter({ hasText: 'Streams' })).toBeVisible({ timeout: 10000 })
+    await expect(getNavItem(page, 'Live')).toHaveAttribute('aria-current', 'page')
   })
 
-  test('should show subheader text', async ({ page }) => {
-    await expect(page.getByText('Live views of your active streams').first()).toBeVisible()
-  })
-
-  test('should have working navigation to config page', async ({ page }) => {
-    await openMobileNavIfNeeded(page)
-    await getNavItem(page, 'Client Config').click({ force: true })
+  test('should have working navigation to App Config', async ({ page }) => {
+    await getNavItem(page, 'App Config').click({ force: true })
     await expect(page).toHaveURL(/\/config/)
   })
 
   test('should have working navigation to recordings page', async ({ page }) => {
-    await openMobileNavIfNeeded(page)
     await getNavItem(page, 'Recordings').click({ force: true })
     await expect(page).toHaveURL(/\/recordings/)
   })
 })
 
-test.describe('Streams Page - With MediaMTX Running', () => {
+test.describe('Live View - With MediaMTX Running', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
   })
 
-  test('should show connection status', async ({ page }) => {
+  test('should show one of the designed page states', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
     const bodyText = await page.locator('body').textContent()
-    const hasConnectionError = bodyText?.includes('Cannot connect to MediaMTX') ?? false
-    const hasStreams = bodyText?.includes('stream') ?? false
-    const hasNoStreams = bodyText?.includes('No Active Streams') ?? false
-    const hasConfigurePrompt = bodyText?.includes('Configure Remote URL') ?? false
+    const hasConnectionError = bodyText?.includes('Can\'t reach MediaMTX') ?? false
+    const hasStreams = (await page.locator('[data-testid="stream-card"]').count()) > 0
+    const hasNoStreams = bodyText?.includes('No streams are publishing') ?? false
+    const hasPlaybackBanner = bodyText?.includes('Playback URL not set') ?? false
 
-    // Page should show one of these states
-    expect(hasConnectionError || hasStreams || hasNoStreams || hasConfigurePrompt).toBe(true)
+    expect(hasConnectionError || hasStreams || hasNoStreams || hasPlaybackBanner).toBe(true)
   })
 
-  test('should display stream cards when MediaMTX is connected', async ({ page }) => {
-    const bodyText = await page.locator('body').textContent()
-    const hasConnectionError = bodyText?.includes('Cannot connect to MediaMTX') ?? false
+  test('should show the toolbar summary when streams exist', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const cardCount = await page.locator('[data-testid="stream-card"]').count()
 
-    if (!hasConnectionError) {
-      // Either has streams (stream names visible), no active streams message, or configure prompt
-      const hasNoStreams = bodyText?.includes('No Active Streams') ?? false
-      const hasConfigurePrompt = bodyText?.includes('Configure Remote URL') ?? false
-      const hasStreamContent
-        = bodyText?.includes('stream1')
-          || bodyText?.includes('stream2')
-          || bodyText?.includes('stream3')
-      const buttonCount = await page.locator('button').count()
-
-      expect(hasStreamContent || hasNoStreams || hasConfigurePrompt || buttonCount > 2).toBe(true)
-    }
-  })
-
-  test('should show stream cards when available', async ({ page }) => {
-    const bodyText = await page.locator('body').textContent()
-    const hasConnectionError = bodyText?.includes('Cannot connect to MediaMTX') ?? false
-    const hasConfigurePrompt = bodyText?.includes('Configure Remote URL') ?? false
-
-    // Only check for cards if we're connected and configured
-    if (!hasConnectionError && !hasConfigurePrompt) {
-      const hasNoStreams = bodyText?.includes('No Active Streams') ?? false
-      // Check for stream names or buttons which indicate cards are present
-      const hasStreamContent
-        = bodyText?.includes('stream1')
-          || bodyText?.includes('stream2')
-          || bodyText?.includes('stream3')
-      const buttonCount = await page.locator('button').count()
-      expect(hasNoStreams || hasStreamContent || buttonCount > 2).toBe(true)
+    if (cardCount > 0) {
+      await expect(page.getByText(/\d+ streams? · \d+ playing/).first()).toBeVisible()
     }
   })
 
   test('should display stream names when streams exist', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
     const cardCount = await page.locator('[data-testid="stream-card"]').count()
 
     if (cardCount > 0) {
@@ -94,23 +62,98 @@ test.describe('Streams Page - With MediaMTX Running', () => {
       expect(hasStreamNames).toBe(true)
     }
   })
-})
 
-test.describe('Streams Page - Remote URL Configuration', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+  test('stream cards expose playback and an actions menu', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.isVisible().catch(() => false)) {
+      await expect(card.getByRole('button', { name: 'Play', exact: true })).toBeVisible()
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      await expect(page.getByRole('menuitem', { name: 'View recordings' })).toBeVisible()
+    }
   })
 
-  test('should render streams page content', async ({ page }) => {
-    // Wait for the page to fully load
+  test('cards show the codecs the stream is publishing', async ({ page }) => {
     await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
 
-    // The page should have the header and some content
-    await expect(page.locator('h2').filter({ hasText: 'Streams' })).toBeVisible()
+    // Codec chips come from the path list's tracks, which only a ready stream
+    // has. "online since" on the footer is that same readiness, so a card
+    // showing it has to show its codecs too.
+    if (await card.getByText(/^online since/).count() > 0)
+      await expect(card).toContainText(/H264|H265|AV1|VP9|MPEG-4 Audio|Opus/)
+  })
 
-    // There should be some visible content - either alerts, cards, or buttons
-    // Just verify the page rendered something meaningful
-    const buttons = await page.locator('button').count()
-    expect(buttons).toBeGreaterThan(0)
+  test('cards show how many people are watching', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.count() > 0) {
+      // Nobody watching is the normal resting state and reads "0 viewers" — the
+      // count is always known, so the zone always renders.
+      await expect(card.getByText(/^\d+ viewers?$/)).toBeVisible()
+    }
+  })
+
+  test('an idle card says how old its snapshot is', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+    const pill = card.locator('span').filter({ hasText: /^SNAPSHOT/ }).first()
+
+    // The pill renders only when the thumbnail loaded, which means our capture
+    // job has written a PNG — so whenever it's on screen its age is known and
+    // has to be shown. A bare "SNAPSHOT" here is the bug. The age is
+    // relativeTime output ("now", "2 minutes ago"), so match it loosely.
+    if (await pill.count() > 0)
+      await expect(pill).toHaveText(/^SNAPSHOT · \S/)
+  })
+
+  test('card actions deep-link to the stream\'s own path config', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.isVisible().catch(() => false)) {
+      // The card's first paragraph is its stream name.
+      const streamName = await card.locator('p').first().textContent() ?? ''
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      // Navigates rather than toasting "Not implemented yet" — this action is
+      // no longer a stub. Read-only: opening the page materializes nothing.
+      await page.getByRole('menuitem', { name: 'Edit path config' }).click()
+      await expect(page).toHaveURL(`/config/mediamtx/paths/${encodeURIComponent(streamName)}`)
+      await expect(page.getByRole('heading', { name: `Path Config · ${streamName}` })).toBeVisible()
+    }
+  })
+
+  test('card actions deep-link to the stream\'s hooks', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    if (await card.isVisible().catch(() => false)) {
+      const streamName = await card.locator('p').first().textContent() ?? ''
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      // No longer a stub: the same path-config route as "Edit path config",
+      // landed on the hooks section rather than a surface of its own.
+      await page.getByRole('menuitem', { name: 'Edit hooks' }).click()
+      await expect(page).toHaveURL(
+        `/config/mediamtx/paths/${encodeURIComponent(streamName)}?section=pathHooks`,
+      )
+      await expect(page.getByRole('heading', { name: 'Path Hooks' })).toBeInViewport()
+    }
+  })
+
+  test('taking a snapshot on demand reports the outcome', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-card"]').first()
+
+    // Needs a ready stream to have a frame to grab; "online since" is that
+    // readiness. A ready stream yields a frame, so this is the success toast
+    // rather than the old "Not implemented yet" stub.
+    if (await card.getByText(/^online since/).count() > 0) {
+      await card.getByRole('button', { name: 'Stream actions' }).click()
+      await page.getByRole('menuitem', { name: 'Take snapshot' }).click()
+      // The capture spawns ffmpeg against the RTSP feed, so allow it time.
+      await expect(page.getByText('Snapshot captured')).toBeVisible({ timeout: 20_000 })
+    }
   })
 })

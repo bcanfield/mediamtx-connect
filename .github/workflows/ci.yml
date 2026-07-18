@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [main, beta]
 
-env:
-  DATABASE_URL: 'file:./src/lib/prisma/database.db'
-
 jobs:
   build:
     name: Build
@@ -16,70 +13,72 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: npm
+          node-version: '22'
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
       - name: Typecheck
-        run: npm run typecheck
-      - name: i18n key parity
-        run: npm run i18n:check
-      - name: Unit + integration tests
-        run: npm run test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: coverage/lcov.info
-          fail_ci_if_error: false
+        run: pnpm typecheck
+      - name: i18n key parity + README translation sync
+        run: pnpm i18n:check
+      - name: Unit tests
+        run: pnpm test
       - name: Build
-        run: npm run build
+        run: pnpm build
 
   test:
     name: E2E Tests
     runs-on: ubuntu-latest
     needs: build
     env:
-      # Pin both dirs so `db:seed` writes the same paths the fixture script
-      # creates and the webserver's instrumentation hook tries to mkdir.
-      # Without this, env.ts defaults to /recordings and /screenshots and the
-      # non-root runner fails with EACCES on first boot.
-      MEDIAMTX_RECORDINGS_DIR: ./test-data/recordings
-      MEDIAMTX_SCREENSHOTS_DIR: ./test-data/screenshots
+      # Hermetic e2e data dir seeded from committed fixtures. Pinned so the
+      # seeder and the webserver agree; kept separate from the dev dir
+      # (.dev-data) that env.ts defaults to.
+      DATA_DIR: ./test-results/e2e-data/data
+      MEDIAMTX_RECORDINGS_DIR: ./test-results/e2e-data/recordings
+      MEDIAMTX_SCREENSHOTS_DIR: ./test-results/e2e-data/screenshots
+      BACKEND_SERVER_MEDIAMTX_URL: http://127.0.0.1
+      REMOTE_MEDIAMTX_URL: http://localhost
 
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: npm
+          node-version: '22'
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Install ffmpeg
-        # The instrumentation cron spawns ffmpeg to generate screenshots
-        # for orphan recordings. Without this, the server logs spawn errors
-        # on boot and the cron is a no-op.
+        # Committed PNG fixtures cover recording thumbnails; ffmpeg here only
+        # feeds the live-snapshot cron. Without it the server logs spawn errors.
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Setup database and test data
-        # Run before docker compose so Docker doesn't auto-create
-        # ./test-data/recordings as root and break later mkdir calls.
-        run: |
-          npm run migrate
-          npm run db:seed
-          npm run setup:test-data
+      - name: Seed test fixtures
+        run: node scripts/seed-fixtures.mjs --target ./test-results/e2e-data
       - name: Start MediaMTX with fake streams
-        run: ./scripts/start-mediamtx.sh
+        run: |
+          docker compose -f docker-compose.dev.yml up -d
+          echo "Waiting for MediaMTX API..."
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:9997/v3/paths/list > /dev/null; then
+              echo "MediaMTX API is ready"; break
+            fi
+            [ "$i" = "30" ] && { echo "MediaMTX did not become ready"; docker logs mediamtx 2>&1 | tail -20; exit 1; }
+            sleep 2
+          done
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
       - name: Build application
-        run: npm run build
+        run: pnpm build
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: pnpm test:e2e
       - name: Show logs on failure
         if: failure()
         run: |
@@ -96,7 +95,7 @@ jobs:
           retention-days: 7
       - name: Cleanup
         if: always()
-        run: docker compose -f docker-compose.dev.yml --profile streams down
+        run: docker compose -f docker-compose.dev.yml down
 
   image-smoke:
     name: Docker image smoke
@@ -140,7 +139,6 @@ jobs:
       - name: Assert health response shape
         run: |
           grep -q '"status":"healthy"' /tmp/health.json
-          grep -q '"database":"connected"' /tmp/health.json
       - name: Container logs on failure
         if: failure()
         run: docker logs mediamtx-connect-smoke 2>&1 | tail -200
@@ -162,16 +160,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: pnpm/action-setup@v4
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: npm
+          node-version: '22'
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
+        run: pnpm install --frozen-lockfile
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run release
+        run: pnpm release

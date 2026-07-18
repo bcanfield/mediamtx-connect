@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webové rozhraní pro MediaMTX. Sledujte streamy, procházejte záznamy a upravujte konfiguraci z prohlížeče."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Toto pole je povinné",
+      "mustBePositive": "Musí být větší než 0"
+    }
+  },
+  "Common": {
+    "retry": "Zkusit znovu",
+    "loading": "Načítání…",
+    "theme": {
+      "lightMode": "Světlý režim",
+      "darkMode": "Tmavý režim",
+      "switchToLight": "Přepnout na světlý motiv",
+      "switchToDark": "Přepnout na tmavý motiv"
+    },
+    "locale": {
+      "switchLanguage": "Změnit jazyk",
+      "searchPlaceholder": "Hledat jazyk…",
+      "noResults": "Žádný jazyk nenalezen."
+    },
+    "connection": {
+      "connected": "připojeno",
+      "offline": "offline"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Hlavní",
+    "items": {
+      "live": "Živě",
+      "recordings": "Záznamy",
+      "appConfig": "Konfigurace aplikace",
+      "mediamtxConfig": "Konfigurace MediaMTX"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# stream} few {# streamy} many {# streamu} other {# streamů}} · {live} se přehrává",
+      "playbackAria": "Režim přehrávání",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Hustota mřížky"
+    },
+    "errors": {
+      "unreachableTitle": "MediaMTX není dostupné",
+      "unreachableLead": "Žádná odpověď od API MediaMTX na",
+      "openAppConfig": "Otevřít konfiguraci aplikace",
+      "retry": "Zkusit znovu",
+      "retryCountdown": "automatický pokus za {seconds} s"
+    },
+    "empty": {
+      "noStreamsTitle": "Žádný stream nevysílá",
+      "noStreamsLead": "Nasměrujte libovolný vysílač na MediaMTX a objeví se zde:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "URL přehrávání není nastavena",
+      "playbackUrlLead": "Nastavte v konfiguraci aplikace URL MediaMTX viditelnou z prohlížeče, abyste povolili živé přehrávání.",
+      "openAppConfig": "Otevřít konfiguraci aplikace"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "zatím žádný snímek — první zachycení za ~30 s",
+      "onlineSince": "online od {time} · {uptime}",
+      "idle": "nečinný",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# divák} few {# diváci} many {# diváka} other {# diváků}}",
+      "play": "Přehrát",
+      "stop": "Zastavit",
+      "playAria": "Přehrát {streamName}",
+      "actionsAria": "Akce streamu",
+      "stub": {
+        "title": "Zatím neimplementováno",
+        "description": "Tato akce je v plánu — byla zaznamenána."
+      },
+      "recordError": {
+        "title": "Nahrávání se nepodařilo změnit",
+        "description": "MediaMTX změnu odmítl — nahrávání tohoto streamu zůstalo beze změny."
+      },
+      "copyPublish": {
+        "title": "URL adresy pro publikování zkopírovány",
+        "description": "Vložte je do své kamery nebo enkodéru."
+      },
+      "copyPublishError": {
+        "title": "Nelze zkopírovat",
+        "description": "Váš prohlížeč zablokoval přístup ke schránce."
+      },
+      "snapshotSuccess": {
+        "title": "Snímek pořízen",
+        "description": "Náhled nyní zobrazuje právě zachycený snímek."
+      },
+      "snapshotError": {
+        "title": "Snímek se nepodařilo pořídit",
+        "description": "MediaMTX nedokázal zachytit snímek — stream může být offline."
+      },
+      "menu": {
+        "openDetail": "Otevřít detail streamu",
+        "viewRecordings": "Zobrazit záznamy",
+        "takeSnapshot": "Pořídit snímek",
+        "record": "Nahrávání",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Kopírovat publikační URL",
+        "shareEmbed": "Sdílet a vložit…",
+        "editPathConfig": "Upravit konfiguraci cesty",
+        "editHooks": "Upravit hooky"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Záznamy",
+    "toolbar": {
+      "summary": "{streams, plural, one {# stream} few {# streamy} many {# streamu} other {# streamů}} · {recordings, plural, one {# záznam} few {# záznamy} many {# záznamu} other {# záznamů}}",
+      "filterPlaceholder": "Filtrovat streamy…",
+      "filterAria": "Filtrovat streamy"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# záznam} few {# záznamy} many {# záznamu} other {# záznamů}}",
+      "latest": "poslední {time}",
+      "openAria": "Zobrazit záznamy pro {name}"
+    },
+    "empty": {
+      "noRecordingsTitle": "Zatím žádné záznamy",
+      "noRecordingsLead": "Záznamy se zde objeví, jakmile MediaMTX začne nahrávat streamy.",
+      "enableRecording": "Povolit nahrávání",
+      "noMatchingTitle": "Žádné odpovídající streamy",
+      "noMatchingDescription": "Žádný stream neodpovídá výrazu „{query}“."
+    },
+    "errors": {
+      "directoryTitle": "Adresář záznamů nelze přečíst",
+      "directoryLead": "Záznamy nelze přečíst na",
+      "openAppConfig": "Otevřít konfiguraci aplikace",
+      "readErrorTitle": "Záznamy se nepodařilo načíst",
+      "readErrorDescription": "Ujistěte se, že adresář záznamů existuje a má správná oprávnění."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# záznam} few {# záznamy} many {# záznamu} other {# záznamů}}"
+    },
+    "groups": {
+      "todayEyebrow": "Dnes — {date}",
+      "yesterdayEyebrow": "Včera — {date}"
+    },
+    "row": {
+      "play": "Přehrát",
+      "close": "Zavřít",
+      "cancel": "Zrušit",
+      "playAria": "Přehrát záznam z {time}",
+      "downloadAria": "Stáhnout záznam {file}",
+      "downloading": "stahování… {received} z {total} · {rate}",
+      "downloadComplete": "Stahování dokončeno",
+      "downloadFailed": "Stahování se nezdařilo"
+    },
+    "player": {
+      "play": "Přehrát",
+      "pause": "Pozastavit",
+      "seek": "Posunout"
+    },
+    "pagination": {
+      "aria": "Stránkování",
+      "showing": "Zobrazeno {from}–{to} z {total}",
+      "previous": "Předchozí stránka",
+      "next": "Další stránka"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Neplatná konfigurace",
+    "appConfig": {
+      "pageHeader": "Konfigurace aplikace",
+      "pageSubHeader": "Připojení a úložiště používané MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Konfigurace MediaMTX",
+      "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server."
+    },
+    "pathDefaults": {
+      "pageHeader": "Výchozí hodnoty cest",
+      "pageSubHeader": "Nastavení, která dědí každý stream, uložená na serveru."
+    },
+    "pathConfig": {
+      "pageHeader": "Konfigurace cesty · {name}",
+      "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",
+      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# neuložená změna} few {# neuložené změny} many {# neuložené změny} other {# neuložených změn}}",
+      "needsAttention": "{count, plural, one {# pole vyžaduje pozornost} few {# pole vyžadují pozornost} many {# pole vyžaduje pozornost} other {# polí vyžaduje pozornost}}",
+      "discard": "Zahodit",
+      "reset": "Resetovat",
+      "save": "Uložit",
+      "saveToServer": "Uložit na server"
+    },
+    "formFields": {
+      "oneValuePerLine": "Jedna hodnota na řádek."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "Připojení k MediaMTX",
+        "storage": "Úložiště"
+      },
+      "playbackBadge": "Vyžadováno pro živé přehrávání",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "URL MediaMTX",
+          "description": "Adresa vaší instance MediaMTX. V síti Docker můžete použít název kontejneru; jinak použijte externí IP nebo název hostitele."
+        },
+        "mediaMtxApiPort": {
+          "label": "Port API",
+          "description": "Port API MediaMTX."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "URL přehrávání",
+          "description": "Z prohlížeče dostupná, navenek směřující URL vašeho serveru MediaMTX. Živé přehrávání odtud načítá streamy."
+        },
+        "recordingsDirectory": {
+          "label": "Adresář záznamů",
+          "description": "Adresář obsahující záznamy MediaMTX (při použití Dockeru se nedoporučuje měnit)."
+        },
+        "screenshotsDirectory": {
+          "label": "Adresář snímků obrazovky",
+          "description": "Adresář pro generované snímky (při použití Dockeru se nedoporučuje měnit)."
+        }
+      },
+      "toasts": {
+        "success": "Konfigurace aplikace uložena",
+        "errorTitle": "Konfiguraci aplikace se nepodařilo uložit",
+        "errorDescription": "Zkontrolujte hodnoty ve formuláři a zkuste to znovu."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Logování",
+        "api": "API",
+        "hooks": "Hooky",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Nahrávání",
+        "pathHooks": "Hooky cesty"
+      },
+      "sectionDescriptions": {
+        "logging": "Výstup logů, časové limity a globální limity.",
+        "api": "HTTP API, které používá samotný MediaMTX Connect.",
+        "hooks": "Příkazy, které MediaMTX spouští při událostech připojení.",
+        "rtsp": "Publikujte a přijímejte streamy přes RTSP.",
+        "rtmp": "Publikujte a přijímejte streamy přes RTMP.",
+        "hls": "Servírujte streamy jako HLS pro přehrávání v prohlížeči.",
+        "webrtc": "Přehrávání a publikování v prohlížeči s nízkou latencí.",
+        "srt": "Publikujte a přijímejte streamy přes SRT.",
+        "recording": "Nahrávat streamy na disk.",
+        "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty."
+      },
+      "enabled": "Zapnuto",
+      "off": "Vypnuto",
+      "hiddenWhileOff": "{count, plural, one {# možnost je skryta, když je vypnuto} few {# možnosti jsou skryty, když je vypnuto} many {# možnosti je skryto, když je vypnuto} other {# možností je skryto, když je vypnuto}}",
+      "rail": {
+        "onThisPage": "Na této stránce",
+        "aria": "Sekce konfigurace"
+      },
+      "iceServers": {
+        "add": "Přidat server ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL serveru ICE {index}",
+        "usernameAria": "Uživatelské jméno serveru ICE {index}",
+        "passwordAria": "Heslo serveru ICE {index}",
+        "removeAria": "Odebrat server ICE {index}"
+      },
+      "help": {
+        "logLevel": "Podrobnost výstupu logu (error, warn, info nebo debug).",
+        "logDestinations": "Kam zapisovat logy (stdout, file nebo syslog).",
+        "logFile": "Cesta k souboru logu, když logDestinations obsahuje file.",
+        "readTimeout": "Časový limit operací čtení.",
+        "writeTimeout": "Časový limit operací zápisu.",
+        "writeQueueSize": "Velikost odchozí fronty na připojení. Musí být mocninou dvou.",
+        "udpMaxPayloadSize": "Maximální velikost odchozích paketů UDP.",
+        "externalAuthenticationURL": "URL externího ověřovacího serveru, volaného při každém připojení.",
+        "apiAddress": "Adresa naslouchání HTTP API.",
+        "metrics": "Zpřístupnit metriky kompatibilní s Prometheus.",
+        "metricsAddress": "Adresa naslouchání koncového bodu metrik.",
+        "pprof": "Zpřístupnit profilovací koncový bod Go pprof.",
+        "pprofAddress": "Adresa naslouchání koncového bodu pprof.",
+        "runOnConnect": "Příkaz spuštěný při připojení klienta.",
+        "runOnConnectRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnDisconnect": "Příkaz spuštěný při odpojení klienta.",
+        "rtspAddress": "Adresa naslouchání serveru RTSP (TCP).",
+        "rtspsAddress": "Adresa naslouchání serveru RTSPS (TLS).",
+        "rtpAddress": "Adresa naslouchání pro pakety RTP přes UDP.",
+        "rtcpAddress": "Adresa naslouchání pro pakety RTCP přes UDP.",
+        "multicastIPRange": "Rozsah IP používaný pro multicast doručování.",
+        "multicastRTPPort": "Port pro multicast pakety RTP.",
+        "multicastRTCPPort": "Port pro multicast pakety RTCP.",
+        "protocols": "Přenosové protokoly přijímané serverem RTSP (udp, multicast nebo tcp).",
+        "encryption": "Zásada šifrování TLS (no, strict nebo optional).",
+        "serverKey": "Cesta ke klíči serveru TLS.",
+        "serverCert": "Cesta k certifikátu serveru TLS.",
+        "authMethods": "Metody ověřování přijímané serverem RTSP (basic nebo digest).",
+        "rtmpAddress": "Adresa naslouchání serveru RTMP.",
+        "rtmpEncryption": "Zásada šifrování TLS pro RTMP (no, strict nebo optional).",
+        "rtmpsAddress": "Adresa naslouchání serveru RTMPS (TLS).",
+        "rtmpServerKey": "Cesta ke klíči serveru RTMPS.",
+        "rtmpServerCert": "Cesta k certifikátu serveru RTMPS.",
+        "hlsAddress": "Adresa naslouchání serveru HLS.",
+        "hlsEncryption": "Servírovat HLS přes TLS (HTTPS).",
+        "hlsServerKey": "Cesta ke klíči serveru HLS.",
+        "hlsServerCert": "Cesta k certifikátu serveru HLS.",
+        "hlsAlwaysRemux": "Remuxovat streamy, i když se nikdo nedívá.",
+        "hlsVariant": "Varianta HLS (mpegts, fmp4 nebo lowLatency).",
+        "hlsSegmentCount": "Počet segmentů uchovávaných v playlistu.",
+        "hlsSegmentDuration": "Minimální délka každého segmentu.",
+        "hlsPartDuration": "Délka každé části v režimu nízké latence.",
+        "hlsSegmentMaxSize": "Maximální velikost každého segmentu.",
+        "hlsAllowOrigin": "Hodnota hlavičky Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP adresy nebo sítě proxy umístěných před serverem HLS.",
+        "hlsDirectory": "Zapisovat segmenty na disk do tohoto adresáře místo do RAM.",
+        "webrtcAddress": "Adresa naslouchání HTTP serveru WebRTC.",
+        "webrtcEncryption": "Servírovat WebRTC přes TLS (HTTPS).",
+        "webrtcServerKey": "Cesta ke klíči serveru WebRTC.",
+        "webrtcServerCert": "Cesta k certifikátu serveru WebRTC.",
+        "webrtcAllowOrigin": "Hodnota hlavičky Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP adresy nebo sítě proxy umístěných před serverem WebRTC.",
+        "webrtcLocalUDPAddress": "Místní adresa UDP používaná pro provoz WebRTC.",
+        "webrtcLocalTCPAddress": "Místní adresa TCP používaná pro provoz WebRTC.",
+        "webrtcIPsFromInterfaces": "Shromažďovat kandidátní IP ze síťových rozhraní hostitele.",
+        "webrtcIPsFromInterfacesList": "Rozhraní, ze kterých se shromažďují kandidátní IP. Prázdné znamená všechna.",
+        "webrtcAdditionalHosts": "Další hostitelé nebo IP inzerované jako kandidáti WebRTC.",
+        "webrtcICEServers2": "Servery STUN nebo TURN používané k navazování spojení WebRTC.",
+        "srtAddress": "Adresa naslouchání serveru SRT.",
+        "recordPath": "Cesta k segmentům nahrávek. %path je název streamu.",
+        "recordFormat": "Kontejner segmentů nahrávek (fmp4 nebo mpegts).",
+        "recordPartDuration": "Délka každé části v nahrávkách fmp4.",
+        "recordSegmentDuration": "Délka každého segmentu nahrávky.",
+        "recordDeleteAfter": "Smazat segmenty po této době. Nula mazání vypne.",
+        "runOnInit": "Příkaz spuštěný při inicializaci cesty.",
+        "runOnInitRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnDemand": "Příkaz spuštěný, když klient začne číst a cesta nemá vysílač.",
+        "runOnDemandRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnDemandStartTimeout": "Jak dlouho čekat na spuštění vysílače na vyžádání.",
+        "runOnDemandCloseAfter": "Zastavit příkaz na vyžádání po této době od odchodu posledního čtenáře.",
+        "runOnUnDemand": "Příkaz spuštěný při zastavení příkazu na vyžádání.",
+        "runOnReady": "Příkaz spuštěný, když je stream připraven ke čtení.",
+        "runOnReadyRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnNotReady": "Příkaz spuštěný, když stream již není připraven.",
+        "runOnRead": "Příkaz spuštěný, když klient začne číst tuto cestu.",
+        "runOnReadRestart": "Restartovat příkaz, pokud skončí.",
+        "runOnUnread": "Příkaz spuštěný, když klient přestane číst tuto cestu.",
+        "runOnRecordSegmentCreate": "Příkaz spuštěný při vytvoření segmentu nahrávky.",
+        "runOnRecordSegmentComplete": "Příkaz spuštěný při dokončení segmentu nahrávky."
+      },
+      "toasts": {
+        "success": "Konfigurace MediaMTX uložena",
+        "errorTitle": "Konfiguraci MediaMTX se nepodařilo uložit",
+        "errorDescription": "Zkontrolujte hodnoty ve formuláři a zkuste to znovu."
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@
       "source": "vercel-labs/agent-browser",
       "sourceType": "github",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "computedHash": "228f87d57035100d9dc6efcfc05aafd4b6e3962adacaa04b8217ab2fadb15dc8"
+      "computedHash": "ecc7641aea05f85ca3b11e7759d32aaf52fe05946ab4b63739c7bf78a41237a2"
     },
     "frontend-design": {
       "source": "anthropics/skills",
@@ -13,23 +13,23 @@
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
     },
-    "next-best-practices": {
-      "source": "vercel-labs/next-skills",
+    "shadcn-ui": {
+      "source": "google-labs-code/stitch-skills",
       "sourceType": "github",
-      "skillPath": "skills/next-best-practices/SKILL.md",
-      "computedHash": "f4678aef4ffc10a5ea64a91e57abe5a5081af813b06d58d565caf3e8ef56e26c"
+      "skillPath": "plugins/stitch-build/skills/shadcn-ui/SKILL.md",
+      "computedHash": "dadbca54d35a33fe73e40018611af2179689305bf6da812ab2643987fefd9da3"
     },
-    "next-cache-components": {
-      "source": "vercel-labs/next-skills",
+    "tailwind-css-patterns": {
+      "source": "giuseppe-trisciuoglio/developer-kit",
       "sourceType": "github",
-      "skillPath": "skills/next-cache-components/SKILL.md",
-      "computedHash": "f835d8226c28abf012cc013928e2627c8a7a046de61127ef229be1711bd1f255"
+      "skillPath": "plugins/developer-kit-typescript/skills/tailwind-css-patterns/SKILL.md",
+      "computedHash": "6092620c3af955a46ea2b94ca8a40197ac8392e6bbdc8c7515659328b186c770"
     },
-    "next-upgrade": {
-      "source": "vercel-labs/next-skills",
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
       "sourceType": "github",
-      "skillPath": "skills/next-upgrade/SKILL.md",
-      "computedHash": "e3aeb1f9e8a68d24df0c1c2e3c8ab97ede09a7251a2c76988318d02254346979"
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
     }
   }
 }

@@ -1,0 +1,235 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Geist + Geist Mono (v1.7.2, OFL) — binaries in /public/fonts */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  /* Geist extensions */
+  --color-link: var(--link);
+  --color-warning: var(--warning);
+  --color-live: var(--live);
+  --color-live-foreground: var(--live-foreground);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-row: var(--border-row);
+  --color-border-hover: var(--border-hover);
+  --color-surface-raised: var(--surface-raised);
+  --shadow-overlay: 0 8px 30px var(--shadow-overlay-color);
+  --radius-sm: calc(var(--radius) - 4px);
+  /* 10px — status panels, callouts, save bar */
+  --radius-panel: calc(var(--radius) + 2px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+/* Geist (Vercel) design language. Dark is the default theme; light derives
+   from the Geist source tokens. base radius 8px → md 6px (buttons/inputs),
+   lg 8px (menus), xl 12px (cards). */
+:root {
+  --radius: 0.5rem;
+
+  --background: #fafafa;
+  --foreground: #171717;
+
+  --card: #ffffff;
+  --card-foreground: #171717;
+
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+
+  --primary: #171717;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f2f2f2;
+  --secondary-foreground: #171717;
+
+  --muted: #f2f2f2;
+  --muted-foreground: #4d4d4d;
+
+  --accent: #f2f2f2;
+  --accent-foreground: #171717;
+
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+
+  --border: #ebebeb;
+  --input: #ebebeb;
+  --ring: #0070f3;
+
+  --chart-1: #0070f3;
+  --chart-2: #50e3c2;
+  --chart-3: #f5a623;
+  --chart-4: #7928ca;
+  --chart-5: #e5484d;
+
+  --link: #0070f3;
+  --warning: #a35200;
+  --live: #e5484d;
+  --live-foreground: #ca2b30;
+  --mute: #8f8f8f;
+  --faint: #a1a1a1;
+  --border-subtle: #f0f0f0;
+  --border-row: #f2f2f2;
+  --border-hover: #c9c9c9;
+  --surface-raised: #ffffff;
+  --shadow-overlay-color: rgb(0 0 0 / 0.15);
+  --hatch-a: #efefef;
+  --hatch-b: #f5f5f5;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --card: #111111;
+  --card-foreground: #ededed;
+
+  --popover: #161616;
+  --popover-foreground: #ededed;
+
+  --primary: #ededed;
+  --primary-foreground: #0a0a0a;
+
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ededed;
+
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1a1;
+
+  --accent: #1a1a1a;
+  --accent-foreground: #ededed;
+
+  --destructive: #ff4d4d;
+  --destructive-foreground: #ffffff;
+
+  --border: #262626;
+  --input: #262626;
+  --ring: #0070f3;
+
+  --chart-1: #0070f3;
+  --chart-2: #50e3c2;
+  --chart-3: #f5a623;
+  --chart-4: #7928ca;
+  --chart-5: #ff4d4d;
+
+  /* #0070f3 misses WCAG AA for small text on #0a0a0a (4.34:1) — text/fill
+     blue is lightened; the focus ring and status dot keep the vivid blue. */
+  --link: #4da2ff;
+  --warning: #f5a623;
+  --live: #ff4d4d;
+  --live-foreground: #ff6b6b;
+  --mute: #8f8f8f;
+  /* handoff says #666666, lightened to pass 4.5:1 on #0a0a0a */
+  --faint: #7d7d7d;
+  --border-subtle: #1f1f1f;
+  --border-row: #161616;
+  --border-hover: #3a3a3a;
+  --surface-raised: #161616;
+  --shadow-overlay-color: rgb(0 0 0 / 0.55);
+  --hatch-a: #101010;
+  --hatch-b: #131313;
+}
+
+/* diagonal-stripe placeholder for missing thumbnails */
+@utility bg-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--hatch-a) 0 10px,
+    var(--hatch-b) 10px 20px
+  );
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-variant-numeric: tabular-nums;
+    font-size: 13.5px;
+  }
+  ::selection {
+    background-color: color-mix(in oklch, var(--link) 25%, transparent);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}

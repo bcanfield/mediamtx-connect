@@ -12,15 +12,18 @@ services:
       - mtx
     ports:
       - '8554:8554' # RTSP
-      - '8890:8890/udp' # WebRTC/ICE UDP
       - '1935:1935' # RTMP
       - '8888:8888' # HLS
-      - '8889:8889' # WebRTC HTTP
+      - '8889:8889' # WebRTC HTTP (WHEP signalling)
+      # WebRTC media itself. MediaMTX's ICE UDP port is 8189, not 8890 — 8890 is
+      # SRT. Without this published, WHEP negotiates fine and then never connects,
+      # and the player silently falls back to HLS.
+      - '8189:8189/udp' # WebRTC ICE
+      - '8890:8890/udp' # SRT
       - '9997:9997' # API
 
   mediamtx-connect:
-    # image: ghcr.io/bcanfield/mediamtx-connect:latest
-    build: . # Uncomment to build from source
+    build: .
     depends_on:
       - mediamtx
     container_name: mediamtx-connect
@@ -34,14 +37,10 @@ services:
       MEDIAMTX_SCREENSHOTS_DIR: /screenshots
     volumes:
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
-      - mediamtx-connect-data:/app/prisma
+      - mediamtx-connect-data:/data
+      - mediamtx-connect-screenshots:/screenshots
     ports:
       - '3000:3000'
-    healthcheck:
-      test: [CMD, curl, -f, 'http://localhost:3000/api/health']
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 networks:
   mtx:
@@ -49,3 +48,6 @@ networks:
 
 volumes:
   mediamtx-connect-data:
+  # Thumbnails are regenerable, but without a volume they land on the container's
+  # writable layer and vanish on every recreate.
+  mediamtx-connect-screenshots:

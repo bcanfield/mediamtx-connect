@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "MediaMTX के लिए वेब इंटरफ़ेस। अपने ब्राउज़र से स्ट्रीम देखें, रिकॉर्डिंग ब्राउज़ करें और कॉन्फ़िगरेशन संपादित करें।"
+  },
+  "Forms": {
+    "errors": {
+      "required": "यह फ़ील्ड आवश्यक है",
+      "mustBePositive": "0 से अधिक होना चाहिए"
+    }
+  },
+  "Common": {
+    "retry": "पुनः प्रयास करें",
+    "loading": "लोड हो रहा है…",
+    "theme": {
+      "lightMode": "लाइट मोड",
+      "darkMode": "डार्क मोड",
+      "switchToLight": "लाइट थीम पर स्विच करें",
+      "switchToDark": "डार्क थीम पर स्विच करें"
+    },
+    "locale": {
+      "switchLanguage": "भाषा बदलें",
+      "searchPlaceholder": "भाषा खोजें…",
+      "noResults": "कोई भाषा नहीं मिली।"
+    },
+    "connection": {
+      "connected": "कनेक्टेड",
+      "offline": "ऑफ़लाइन"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "प्राथमिक",
+    "items": {
+      "live": "लाइव",
+      "recordings": "रिकॉर्डिंग",
+      "appConfig": "ऐप कॉन्फ़िगरेशन",
+      "mediamtxConfig": "MediaMTX कॉन्फ़िगरेशन"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# स्ट्रीम} other {# स्ट्रीम}} · {live} चल रही हैं",
+      "playbackAria": "प्लेबैक मोड",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "ग्रिड घनत्व"
+    },
+    "errors": {
+      "unreachableTitle": "MediaMTX तक नहीं पहुँचा जा सकता",
+      "unreachableLead": "इस पते पर MediaMTX API से कोई प्रतिक्रिया नहीं:",
+      "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें",
+      "retry": "पुनः प्रयास करें",
+      "retryCountdown": "{seconds} सेकंड में स्वतः पुनः प्रयास"
+    },
+    "empty": {
+      "noStreamsTitle": "कोई स्ट्रीम प्रकाशित नहीं हो रही",
+      "noStreamsLead": "किसी भी प्रकाशक को MediaMTX की ओर पॉइंट करें और वह यहाँ दिखाई देगा:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "प्लेबैक URL सेट नहीं है",
+      "playbackUrlLead": "लाइव प्लेबैक सक्षम करने के लिए ऐप कॉन्फ़िगरेशन में ब्राउज़र की ओर वाला MediaMTX URL सेट करें।",
+      "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "अभी कोई स्नैपशॉट नहीं — पहला कैप्चर ~30 सेकंड में",
+      "onlineSince": "{time} से ऑनलाइन · {uptime}",
+      "idle": "निष्क्रिय",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# दर्शक} other {# दर्शक}}",
+      "play": "चलाएँ",
+      "stop": "रोकें",
+      "playAria": "{streamName} चलाएँ",
+      "actionsAria": "स्ट्रीम क्रियाएँ",
+      "stub": {
+        "title": "अभी लागू नहीं हुआ",
+        "description": "यह क्रिया रोडमैप पर है — इसे लॉग कर लिया गया है।"
+      },
+      "recordError": {
+        "title": "रिकॉर्डिंग नहीं बदली जा सकी",
+        "description": "MediaMTX ने यह बदलाव अस्वीकार कर दिया — इस स्ट्रीम की रिकॉर्डिंग अपरिवर्तित है।"
+      },
+      "copyPublish": {
+        "title": "प्रकाशन URL कॉपी किए गए",
+        "description": "उन्हें अपने कैमरे या एन्कोडर में पेस्ट करें।"
+      },
+      "copyPublishError": {
+        "title": "कॉपी नहीं हो सका",
+        "description": "आपके ब्राउज़र ने क्लिपबोर्ड एक्सेस को अवरुद्ध कर दिया।"
+      },
+      "snapshotSuccess": {
+        "title": "स्नैपशॉट कैप्चर किया गया",
+        "description": "थंबनेल में अब वही फ़्रेम दिख रहा है जो आपने अभी कैप्चर किया।"
+      },
+      "snapshotError": {
+        "title": "स्नैपशॉट कैप्चर नहीं किया जा सका",
+        "description": "MediaMTX फ़्रेम कैप्चर नहीं कर सका — हो सकता है स्ट्रीम ऑफ़लाइन हो।"
+      },
+      "menu": {
+        "openDetail": "स्ट्रीम विवरण खोलें",
+        "viewRecordings": "रिकॉर्डिंग देखें",
+        "takeSnapshot": "स्नैपशॉट लें",
+        "record": "रिकॉर्ड",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "प्रकाशन URL कॉपी करें",
+        "shareEmbed": "साझा और एम्बेड करें…",
+        "editPathConfig": "पाथ कॉन्फ़िगरेशन संपादित करें",
+        "editHooks": "Hooks संपादित करें"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "रिकॉर्डिंग",
+    "toolbar": {
+      "summary": "{streams, plural, one {# स्ट्रीम} other {# स्ट्रीम}} · {recordings, plural, one {# रिकॉर्डिंग} other {# रिकॉर्डिंग}}",
+      "filterPlaceholder": "स्ट्रीम फ़िल्टर करें…",
+      "filterAria": "स्ट्रीम फ़िल्टर करें"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# रिकॉर्डिंग} other {# रिकॉर्डिंग}}",
+      "latest": "नवीनतम {time}",
+      "openAria": "{name} की रिकॉर्डिंग देखें"
+    },
+    "empty": {
+      "noRecordingsTitle": "अभी कोई रिकॉर्डिंग नहीं",
+      "noRecordingsLead": "जब MediaMTX स्ट्रीम रिकॉर्ड करना शुरू करेगा तो रिकॉर्डिंग यहाँ दिखाई देंगी।",
+      "enableRecording": "रिकॉर्डिंग सक्षम करें",
+      "noMatchingTitle": "कोई मेल खाती स्ट्रीम नहीं",
+      "noMatchingDescription": "कोई स्ट्रीम “{query}” से मेल नहीं खाती।"
+    },
+    "errors": {
+      "directoryTitle": "रिकॉर्डिंग डायरेक्टरी नहीं पढ़ी जा सकती",
+      "directoryLead": "इस स्थान पर रिकॉर्डिंग नहीं पढ़ी जा सकतीं:",
+      "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें",
+      "readErrorTitle": "रिकॉर्डिंग पढ़ी नहीं जा सकीं",
+      "readErrorDescription": "सुनिश्चित करें कि रिकॉर्डिंग डायरेक्टरी मौजूद है और उसकी अनुमतियाँ सही हैं।"
+    },
+    "detail": {
+      "totals": "{count, plural, one {# रिकॉर्डिंग} other {# रिकॉर्डिंग}}"
+    },
+    "groups": {
+      "todayEyebrow": "आज — {date}",
+      "yesterdayEyebrow": "कल — {date}"
+    },
+    "row": {
+      "play": "चलाएँ",
+      "close": "बंद करें",
+      "cancel": "रद्द करें",
+      "playAria": "{time} की रिकॉर्डिंग चलाएँ",
+      "downloadAria": "रिकॉर्डिंग {file} डाउनलोड करें",
+      "downloading": "डाउनलोड हो रहा है… {total} में से {received} · {rate}",
+      "downloadComplete": "डाउनलोड पूर्ण",
+      "downloadFailed": "डाउनलोड विफल"
+    },
+    "player": {
+      "play": "चलाएँ",
+      "pause": "पॉज़ करें",
+      "seek": "सीक करें"
+    },
+    "pagination": {
+      "aria": "पेजिनेशन",
+      "showing": "{total} में से {from}–{to} दिखा रहे हैं",
+      "previous": "पिछला पृष्ठ",
+      "next": "अगला पृष्ठ"
+    }
+  },
+  "Config": {
+    "invalidConfig": "अमान्य कॉन्फ़िगरेशन",
+    "appConfig": {
+      "pageHeader": "ऐप कॉन्फ़िगरेशन",
+      "pageSubHeader": "MediaMTX Connect द्वारा उपयोग किए जाने वाले कनेक्शन और स्टोरेज।"
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX कॉन्फ़िगरेशन",
+      "pageSubHeader": "ग्लोबल MediaMTX सर्वर सेटिंग्स, सर्वर पर सहेजी जाती हैं।"
+    },
+    "pathDefaults": {
+      "pageHeader": "पथ डिफ़ॉल्ट",
+      "pageSubHeader": "हर स्ट्रीम को विरासत में मिलने वाली सेटिंग्स, सर्वर पर सहेजी जाती हैं।"
+    },
+    "pathConfig": {
+      "pageHeader": "पथ कॉन्फ़िग · {name}",
+      "pageSubHeader": "इस स्ट्रीम की सेटिंग्स, सर्वर पर सहेजी जाती हैं।",
+      "inheritedSubHeader": "इस स्ट्रीम की सेटिंग्स, फ़िलहाल {confName} से विरासत में मिली हैं। सहेजने पर केवल वही बदला जाएगा जो आपने बदला है।"
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# सहेजा न गया परिवर्तन} other {# सहेजे न गए परिवर्तन}}",
+      "needsAttention": "{count, plural, one {# फ़ील्ड पर ध्यान देने की आवश्यकता है} other {# फ़ील्ड पर ध्यान देने की आवश्यकता है}}",
+      "discard": "त्यागें",
+      "reset": "रीसेट करें",
+      "save": "सहेजें",
+      "saveToServer": "सर्वर पर सहेजें"
+    },
+    "formFields": {
+      "oneValuePerLine": "प्रत्येक पंक्ति में एक मान।"
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "MediaMTX कनेक्शन",
+        "storage": "स्टोरेज"
+      },
+      "playbackBadge": "लाइव प्लेबैक के लिए आवश्यक",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX URL",
+          "description": "आपकी MediaMTX इंस्टेंस का पता। Docker नेटवर्क के भीतर आप कंटेनर का नाम उपयोग कर सकते हैं; अन्यथा बाहरी IP या होस्टनेम का उपयोग करें।"
+        },
+        "mediaMtxApiPort": {
+          "label": "API पोर्ट",
+          "description": "MediaMTX API का पोर्ट।"
+        },
+        "remoteMediaMtxUrl": {
+          "label": "प्लेबैक URL",
+          "description": "आपके MediaMTX सर्वर का ब्राउज़र से सुलभ, बाहर की ओर मुख वाला URL। लाइव प्लेबैक यहीं से स्ट्रीम लोड करता है।"
+        },
+        "recordingsDirectory": {
+          "label": "रिकॉर्डिंग डायरेक्टरी",
+          "description": "MediaMTX रिकॉर्डिंग वाली डायरेक्टरी (Docker उपयोग करते समय बदलने की अनुशंसा नहीं की जाती)।"
+        },
+        "screenshotsDirectory": {
+          "label": "स्क्रीनशॉट डायरेक्टरी",
+          "description": "उत्पन्न स्नैपशॉट के लिए डायरेक्टरी (Docker उपयोग करते समय बदलने की अनुशंसा नहीं की जाती)।"
+        }
+      },
+      "toasts": {
+        "success": "ऐप कॉन्फ़िगरेशन सहेजा गया",
+        "errorTitle": "ऐप कॉन्फ़िगरेशन सहेजा नहीं जा सका",
+        "errorDescription": "अपने फ़ॉर्म के मानों की दोबारा जाँच करें और पुनः प्रयास करें।"
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "लॉगिंग",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "रिकॉर्डिंग",
+        "pathHooks": "पथ Hooks"
+      },
+      "sectionDescriptions": {
+        "logging": "लॉग आउटपुट, टाइमआउट और ग्लोबल सीमाएँ।",
+        "api": "वह HTTP API जिसका MediaMTX Connect स्वयं उपयोग करता है।",
+        "hooks": "कनेक्शन इवेंट पर MediaMTX द्वारा चलाए जाने वाले कमांड।",
+        "rtsp": "RTSP पर स्ट्रीम प्रकाशित करें और पढ़ें।",
+        "rtmp": "RTMP पर स्ट्रीम प्रकाशित करें और पढ़ें।",
+        "hls": "ब्राउज़र प्लेबैक के लिए स्ट्रीम को HLS के रूप में परोसें।",
+        "webrtc": "कम विलंबता वाला ब्राउज़र प्लेबैक और प्रकाशन।",
+        "srt": "SRT पर स्ट्रीम प्रकाशित करें और पढ़ें।",
+        "recording": "स्ट्रीम को डिस्क पर रिकॉर्ड करें।",
+        "pathHooks": "पाथ के अपने लाइफ़साइकिल इवेंट पर MediaMTX द्वारा चलाए जाने वाले कमांड।"
+      },
+      "enabled": "सक्षम",
+      "off": "बंद",
+      "hiddenWhileOff": "{count, plural, one {बंद रहते हुए # विकल्प छिपा है} other {बंद रहते हुए # विकल्प छिपे हैं}}",
+      "rail": {
+        "onThisPage": "इस पृष्ठ पर",
+        "aria": "कॉन्फ़िगरेशन अनुभाग"
+      },
+      "iceServers": {
+        "add": "ICE सर्वर जोड़ें",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "ICE सर्वर {index} URL",
+        "usernameAria": "ICE सर्वर {index} उपयोगकर्ता नाम",
+        "passwordAria": "ICE सर्वर {index} पासवर्ड",
+        "removeAria": "ICE सर्वर {index} हटाएँ"
+      },
+      "help": {
+        "logLevel": "लॉग आउटपुट की वर्बोसिटी (error, warn, info या debug)।",
+        "logDestinations": "लॉग कहाँ लिखे जाएँ (stdout, file या syslog)।",
+        "logFile": "logDestinations में file शामिल होने पर लॉग फ़ाइल का पाथ।",
+        "readTimeout": "पढ़ने की क्रियाओं के लिए टाइमआउट।",
+        "writeTimeout": "लिखने की क्रियाओं के लिए टाइमआउट।",
+        "writeQueueSize": "प्रति कनेक्शन आउटगोइंग कतार का आकार। दो की घात होना चाहिए।",
+        "udpMaxPayloadSize": "आउटगोइंग UDP पैकेट का अधिकतम आकार।",
+        "externalAuthenticationURL": "बाहरी प्रमाणीकरण सर्वर का URL, हर कनेक्शन पर कॉल किया जाता है।",
+        "apiAddress": "HTTP API का लिसन पता।",
+        "metrics": "Prometheus-संगत मेट्रिक्स एक्सपोज़ करें।",
+        "metricsAddress": "मेट्रिक्स एंडपॉइंट का लिसन पता।",
+        "pprof": "Go pprof प्रोफ़ाइलिंग एंडपॉइंट एक्सपोज़ करें।",
+        "pprofAddress": "pprof एंडपॉइंट का लिसन पता।",
+        "runOnConnect": "क्लाइंट के कनेक्ट होने पर चलाया जाने वाला कमांड।",
+        "runOnConnectRestart": "कमांड बंद हो जाए तो उसे पुनः आरंभ करें।",
+        "runOnDisconnect": "क्लाइंट के डिस्कनेक्ट होने पर चलाया जाने वाला कमांड।",
+        "rtspAddress": "RTSP सर्वर (TCP) का लिसन पता।",
+        "rtspsAddress": "RTSPS (TLS) सर्वर का लिसन पता।",
+        "rtpAddress": "UDP पर RTP पैकेट के लिए लिसन पता।",
+        "rtcpAddress": "UDP पर RTCP पैकेट के लिए लिसन पता।",
+        "multicastIPRange": "मल्टीकास्ट डिलीवरी के लिए उपयोग की जाने वाली IP रेंज।",
+        "multicastRTPPort": "मल्टीकास्ट RTP पैकेट के लिए पोर्ट।",
+        "multicastRTCPPort": "मल्टीकास्ट RTCP पैकेट के लिए पोर्ट।",
+        "protocols": "RTSP सर्वर द्वारा स्वीकृत ट्रांसपोर्ट प्रोटोकॉल (udp, multicast या tcp)।",
+        "encryption": "TLS एन्क्रिप्शन नीति (no, strict या optional)।",
+        "serverKey": "TLS सर्वर कुंजी का पाथ।",
+        "serverCert": "TLS सर्वर प्रमाणपत्र का पाथ।",
+        "authMethods": "RTSP सर्वर द्वारा स्वीकृत प्रमाणीकरण विधियाँ (basic या digest)।",
+        "rtmpAddress": "RTMP सर्वर का लिसन पता।",
+        "rtmpEncryption": "RTMP के लिए TLS एन्क्रिप्शन नीति (no, strict या optional)।",
+        "rtmpsAddress": "RTMPS (TLS) सर्वर का लिसन पता।",
+        "rtmpServerKey": "RTMPS सर्वर कुंजी का पाथ।",
+        "rtmpServerCert": "RTMPS सर्वर प्रमाणपत्र का पाथ।",
+        "hlsAddress": "HLS सर्वर का लिसन पता।",
+        "hlsEncryption": "HLS को TLS (HTTPS) पर परोसें।",
+        "hlsServerKey": "HLS सर्वर कुंजी का पाथ।",
+        "hlsServerCert": "HLS सर्वर प्रमाणपत्र का पाथ।",
+        "hlsAlwaysRemux": "कोई न देख रहा हो तब भी स्ट्रीम को रीमक्स करें।",
+        "hlsVariant": "HLS वैरिएंट (mpegts, fmp4 या lowLatency)।",
+        "hlsSegmentCount": "प्लेलिस्ट में रखे जाने वाले सेगमेंट की संख्या।",
+        "hlsSegmentDuration": "प्रत्येक सेगमेंट की न्यूनतम अवधि।",
+        "hlsPartDuration": "कम-विलंबता मोड में प्रत्येक भाग की अवधि।",
+        "hlsSegmentMaxSize": "प्रत्येक सेगमेंट का अधिकतम आकार।",
+        "hlsAllowOrigin": "Access-Control-Allow-Origin हेडर का मान।",
+        "hlsTrustedProxies": "HLS सर्वर के आगे रखे गए प्रॉक्सी के IP या नेटवर्क।",
+        "hlsDirectory": "सेगमेंट को RAM के बजाय इस डायरेक्टरी में डिस्क पर लिखें।",
+        "webrtcAddress": "WebRTC HTTP सर्वर का लिसन पता।",
+        "webrtcEncryption": "WebRTC को TLS (HTTPS) पर परोसें।",
+        "webrtcServerKey": "WebRTC सर्वर कुंजी का पाथ।",
+        "webrtcServerCert": "WebRTC सर्वर प्रमाणपत्र का पाथ।",
+        "webrtcAllowOrigin": "Access-Control-Allow-Origin हेडर का मान।",
+        "webrtcTrustedProxies": "WebRTC सर्वर के आगे रखे गए प्रॉक्सी के IP या नेटवर्क।",
+        "webrtcLocalUDPAddress": "WebRTC ट्रैफ़िक के लिए उपयोग किया जाने वाला स्थानीय UDP पता।",
+        "webrtcLocalTCPAddress": "WebRTC ट्रैफ़िक के लिए उपयोग किया जाने वाला स्थानीय TCP पता।",
+        "webrtcIPsFromInterfaces": "होस्ट के नेटवर्क इंटरफ़ेस से कैंडिडेट IP एकत्र करें।",
+        "webrtcIPsFromInterfacesList": "जिन इंटरफ़ेस से कैंडिडेट IP एकत्र करने हैं। खाली का अर्थ है सभी।",
+        "webrtcAdditionalHosts": "WebRTC कैंडिडेट के रूप में विज्ञापित अतिरिक्त होस्ट या IP।",
+        "webrtcICEServers2": "WebRTC कनेक्शन स्थापित करने के लिए उपयोग किए जाने वाले STUN या TURN सर्वर।",
+        "srtAddress": "SRT सर्वर का लिसन पता।",
+        "recordPath": "रिकॉर्डिंग सेगमेंट का पथ। %path स्ट्रीम का नाम है।",
+        "recordFormat": "रिकॉर्डिंग सेगमेंट का कंटेनर (fmp4 या mpegts)।",
+        "recordPartDuration": "fmp4 रिकॉर्डिंग में हर भाग की अवधि।",
+        "recordSegmentDuration": "हर रिकॉर्डिंग सेगमेंट की अवधि।",
+        "recordDeleteAfter": "इस अवधि के बाद सेगमेंट हटाएँ। शून्य से हटाना बंद हो जाता है।",
+        "runOnInit": "पाथ के आरंभ होने पर चलाया जाने वाला कमांड।",
+        "runOnInitRestart": "कमांड बंद हो जाए तो उसे पुनः आरंभ करें।",
+        "runOnDemand": "जब कोई क्लाइंट पढ़ना शुरू करे और पाथ पर कोई प्रकाशक न हो, तब चलाया जाने वाला कमांड।",
+        "runOnDemandRestart": "कमांड बंद हो जाए तो उसे पुनः आरंभ करें।",
+        "runOnDemandStartTimeout": "ऑन-डिमांड प्रकाशक के शुरू होने के लिए कितनी देर प्रतीक्षा करें।",
+        "runOnDemandCloseAfter": "अंतिम रीडर के जाने के इतने समय बाद ऑन-डिमांड कमांड बंद करें।",
+        "runOnUnDemand": "ऑन-डिमांड कमांड बंद होने पर चलाया जाने वाला कमांड।",
+        "runOnReady": "स्ट्रीम के पढ़ने के लिए तैयार होने पर चलाया जाने वाला कमांड।",
+        "runOnReadyRestart": "कमांड बंद हो जाए तो उसे पुनः आरंभ करें।",
+        "runOnNotReady": "स्ट्रीम के अब तैयार न रहने पर चलाया जाने वाला कमांड।",
+        "runOnRead": "किसी क्लाइंट के इस पाथ को पढ़ना शुरू करने पर चलाया जाने वाला कमांड।",
+        "runOnReadRestart": "कमांड बंद हो जाए तो उसे पुनः आरंभ करें।",
+        "runOnUnread": "किसी क्लाइंट के इस पाथ को पढ़ना बंद करने पर चलाया जाने वाला कमांड।",
+        "runOnRecordSegmentCreate": "रिकॉर्डिंग सेगमेंट बनने पर चलाया जाने वाला कमांड।",
+        "runOnRecordSegmentComplete": "रिकॉर्डिंग सेगमेंट पूरा होने पर चलाया जाने वाला कमांड।"
+      },
+      "toasts": {
+        "success": "MediaMTX कॉन्फ़िगरेशन सहेजा गया",
+        "errorTitle": "MediaMTX कॉन्फ़िगरेशन सहेजा नहीं जा सका",
+        "errorDescription": "अपने फ़ॉर्म के मानों की दोबारा जाँच करें और पुनः प्रयास करें।"
+      }
+    }
+  }
+}
