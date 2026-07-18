@@ -5,48 +5,48 @@ test.describe('Recordings Page', () => {
     await page.goto('/recordings')
   })
 
-  test('should load the recordings page with header', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Recordings' }).first()).toBeVisible()
-    await expect(page.getByText('Browse your recordings').first()).toBeVisible()
-  })
-
-  test('should display stream cards or appropriate message', async ({ page }) => {
-    const body = page.locator('body')
-    const bodyText = await body.textContent()
-
-    // Cards have bg-card class from shadcn Card component
-    const hasRecordings = (await page.locator('.bg-card').count()) > 0
-    const hasNoRecordingsMessage = bodyText?.includes('No Recordings Found') ?? false
-    const hasDirectoryError = bodyText?.includes('Cannot Access Recordings Directory') ?? false
-
-    expect(hasRecordings || hasNoRecordingsMessage || hasDirectoryError).toBe(true)
-  })
-
-  test('should show recording count for each stream when recordings exist', async ({
-    page,
-  }) => {
-    // Wait for page to load
+  test('should show cards, an empty state, or an error panel', async ({ page }) => {
     await page.waitForLoadState('networkidle')
-
-    // Check if there are cards by looking for stream names
     const bodyText = await page.locator('body').textContent()
-    const hasStreamNames = bodyText?.includes('camera') || bodyText?.includes('living-room')
 
-    if (hasStreamNames) {
-      // Look for recording count pattern (e.g., "3 Recordings" or "1 Recording")
-      const hasRecordingCount = await page.getByText(/\d+ Recordings?/).first().isVisible().catch(() => false)
-      expect(hasRecordingCount).toBe(true)
+    const hasCards = (await page.locator('[data-testid="stream-summary-card"]').count()) > 0
+    const hasNoRecordingsMessage = bodyText?.includes('No recordings yet') ?? false
+    const hasDirectoryError = bodyText?.includes('Can\'t read the recordings directory') ?? false
+
+    expect(hasCards || hasNoRecordingsMessage || hasDirectoryError).toBe(true)
+  })
+
+  test('should show the totals summary and filter input when recordings exist', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const hasCards = (await page.locator('[data-testid="stream-summary-card"]').count()) > 0
+
+    if (hasCards) {
+      await expect(page.getByText(/\d+ streams? · \d+ recordings?/).first()).toBeVisible()
+      await expect(page.getByRole('searchbox', { name: 'Filter streams' })).toBeVisible()
     }
   })
 
-  test('should have view buttons when recordings exist', async ({ page }) => {
+  test('pressing / focuses the filter input', async ({ page }) => {
     await page.waitForLoadState('networkidle')
+    const filter = page.getByRole('searchbox', { name: 'Filter streams' })
 
-    const bodyText = await page.locator('body').textContent()
-    const hasStreamNames = bodyText?.includes('camera') || bodyText?.includes('living-room')
+    if (await filter.isVisible().catch(() => false)) {
+      await page.keyboard.press('/')
+      await expect(filter).toBeFocused()
+    }
+  })
 
-    if (hasStreamNames) {
-      await expect(page.getByRole('button', { name: 'View' }).first()).toBeVisible()
+  test('filters the grid client-side', async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    const filter = page.getByRole('searchbox', { name: 'Filter streams' })
+
+    if (await filter.isVisible().catch(() => false)) {
+      const allCount = await page.locator('[data-testid="stream-summary-card"]').count()
+      await filter.fill('definitely-no-such-stream')
+      await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(0)
+      await expect(page.getByText('No matching streams')).toBeVisible()
+      await filter.clear()
+      await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(allCount)
     }
   })
 })
@@ -55,7 +55,6 @@ test.describe('Recording Detail Page', () => {
   test('should handle non-existent stream gracefully', async ({ page }) => {
     await page.goto('/recordings/non-existent-stream')
     await expect(page.locator('body')).toBeVisible()
-    // Should show empty state or error message
     const bodyText = await page.locator('body').textContent()
     const hasContent = bodyText && bodyText.length > 0
     expect(hasContent).toBe(true)
@@ -63,88 +62,57 @@ test.describe('Recording Detail Page', () => {
 
   test('should navigate to detail page from recordings list', async ({ page }) => {
     await page.goto('/recordings')
+    await page.waitForLoadState('networkidle')
 
-    const viewButton = page.getByRole('button', { name: 'View' }).first()
-    if (await viewButton.isVisible().catch(() => false)) {
-      await viewButton.click()
+    const card = page.locator('[data-testid="stream-summary-card"]').first()
+    if (await card.isVisible().catch(() => false)) {
+      await card.click()
       await expect(page).toHaveURL(/\/recordings\/.+/)
     }
   })
 
-  test('should display recording detail page for test data', async ({ page }) => {
-    // Navigate to a known test data stream
-    await page.goto('/recordings/camera1')
-
-    // Page should load - either with recordings or appropriate message
-    await page.waitForLoadState('networkidle')
-    const bodyText = await page.locator('body').textContent()
-
-    // Should have some content
-    expect(bodyText && bodyText.length > 0).toBe(true)
-  })
-
-  test('should show recording cards or empty state on detail page', async ({ page }) => {
-    await page.goto('/recordings/camera1')
+  test('should show recording rows grouped by day when recordings exist', async ({ page }) => {
+    await page.goto('/recordings/stream1')
     await page.waitForLoadState('networkidle')
 
-    // Either has recording cards, pagination, empty state, or just rendered content
-    const hasCards = (await page.locator('.bg-card').count()) > 0
-    const hasNoRecordings = await page.getByText(/no recordings/i).isVisible().catch(() => false)
-    const hasError = await page.getByText(/error|cannot/i).isVisible().catch(() => false)
-    // Also check for any buttons or interactive elements (pagination, etc)
-    const hasButtons = (await page.locator('button').count()) > 0
-
-    expect(hasCards || hasNoRecordings || hasError || hasButtons).toBe(true)
-  })
-})
-
-test.describe('Recording Playback UI', () => {
-  test('should have play buttons on recording cards', async ({ page }) => {
-    await page.goto('/recordings/camera1')
-    await page.waitForLoadState('networkidle')
-
-    const hasCards = (await page.locator('.bg-card').count()) > 0
-    if (hasCards) {
-      // Recording cards should have play functionality
-      const playButtons = page.locator('button:has(svg)')
-      const buttonCount = await playButtons.count()
-      expect(buttonCount).toBeGreaterThan(0)
+    const rows = page.locator('[data-testid="recording-row"]')
+    if ((await rows.count()) > 0) {
+      await expect(rows.first().getByRole('button', { name: 'Play', exact: true })).toBeVisible()
+      // Day-group eyebrow headers render above the rows.
+      await expect(page.locator('section h2').first()).toBeVisible()
     }
   })
 
-  test('should display recording timestamps', async ({ page }) => {
-    await page.goto('/recordings/camera1')
+  test('opens an inline player and tracks it in the URL', async ({ page }) => {
+    await page.goto('/recordings/stream1')
     await page.waitForLoadState('networkidle')
 
-    const hasCards = (await page.locator('.bg-card').count()) > 0
-    if (hasCards) {
-      // Should show date/time for recordings
-      const bodyText = await page.locator('body').textContent()
-      // Look for date patterns like "2024" or time patterns
-      const hasDateInfo = bodyText?.match(/\d{4}/) !== null
-      expect(hasDateInfo).toBe(true)
+    const row = page.locator('[data-testid="recording-row"]').first()
+    if (await row.isVisible().catch(() => false)) {
+      await row.getByRole('button', { name: 'Play', exact: true }).click()
+      await expect(page).toHaveURL(/play=/)
+      await expect(row.locator('video')).toBeVisible()
+      await row.getByRole('button', { name: 'Close' }).click()
+      await expect(page).not.toHaveURL(/play=/)
     }
   })
 })
 
 test.describe('Recordings Navigation', () => {
-  test('should navigate back to recordings list from detail', async ({ page }) => {
-    await page.goto('/recordings/camera1')
+  test('should navigate back to recordings list from detail breadcrumb', async ({ page }) => {
+    await page.goto('/recordings/stream1')
+    await page.waitForLoadState('networkidle')
 
-    const backLink = page.getByRole('link', { name: 'Recordings' })
+    const backLink = page.getByRole('link', { name: 'Recordings', exact: true }).last()
     if (await backLink.isVisible().catch(() => false)) {
       await backLink.click()
       await expect(page).toHaveURL(/\/recordings$/)
     }
   })
 
-  test('should have breadcrumb or navigation on detail page', async ({ page }) => {
-    await page.goto('/recordings/camera1')
+  test('should show the breadcrumb on the detail page', async ({ page }) => {
+    await page.goto('/recordings/stream1')
     await page.waitForLoadState('networkidle')
-
-    // Should have navigation elements - check for any links
-    const allLinks = page.locator('a')
-    const linkCount = await allLinks.count()
-    expect(linkCount).toBeGreaterThan(0)
+    await expect(page.getByRole('navigation', { name: 'breadcrumb' })).toBeVisible()
   })
 })

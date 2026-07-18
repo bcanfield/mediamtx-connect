@@ -1,0 +1,37 @@
+{
+  "name": "@connect/api",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "dist",
+    "public"
+  ],
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/server.ts",
+    "build": "tsdown",
+    "start": "node --env-file-if-exists=../../.env dist/server.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@connect/contract": "workspace:*",
+    "@hono/node-server": "catalog:",
+    "@orpc/contract": "catalog:",
+    "@orpc/server": "catalog:",
+    "@t3-oss/env-core": "catalog:",
+    "hono": "catalog:",
+    "node-cron": "catalog:",
+    "pino": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@connect/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

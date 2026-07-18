@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Διαδικτυακή διεπαφή για το MediaMTX. Παρακολουθήστε ροές, περιηγηθείτε σε εγγραφές και επεξεργαστείτε τις ρυθμίσεις από τον περιηγητή σας."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Αυτό το πεδίο είναι υποχρεωτικό",
+      "mustBePositive": "Πρέπει να είναι μεγαλύτερο από 0"
+    }
+  },
+  "Common": {
+    "retry": "Επανάληψη",
+    "loading": "Φόρτωση…",
+    "theme": {
+      "lightMode": "Φωτεινή λειτουργία",
+      "darkMode": "Σκοτεινή λειτουργία",
+      "switchToLight": "Αλλαγή σε φωτεινό θέμα",
+      "switchToDark": "Αλλαγή σε σκοτεινό θέμα"
+    },
+    "locale": {
+      "switchLanguage": "Αλλαγή γλώσσας",
+      "searchPlaceholder": "Αναζήτηση γλώσσας…",
+      "noResults": "Δεν βρέθηκε γλώσσα."
+    },
+    "connection": {
+      "connected": "συνδεδεμένο",
+      "offline": "εκτός σύνδεσης"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Κύρια πλοήγηση",
+    "items": {
+      "live": "Ζωντανά",
+      "recordings": "Εγγραφές",
+      "appConfig": "Ρυθμίσεις εφαρμογής",
+      "mediamtxConfig": "Ρυθμίσεις MediaMTX"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# ροή} other {# ροές}} · {live} σε αναπαραγωγή",
+      "playbackAria": "Λειτουργία αναπαραγωγής",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Πυκνότητα πλέγματος"
+    },
+    "errors": {
+      "unreachableTitle": "Δεν είναι δυνατή η πρόσβαση στο MediaMTX",
+      "unreachableLead": "Καμία απόκριση από το API του MediaMTX στο",
+      "openAppConfig": "Άνοιγμα ρυθμίσεων εφαρμογής",
+      "retry": "Επανάληψη",
+      "retryCountdown": "αυτόματη επανάληψη σε {seconds} δ."
+    },
+    "empty": {
+      "noStreamsTitle": "Καμία ροή δεν μεταδίδεται",
+      "noStreamsLead": "Στρέψτε οποιονδήποτε publisher στο MediaMTX και θα εμφανιστεί εδώ:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "Το URL αναπαραγωγής δεν έχει οριστεί",
+      "playbackUrlLead": "Ορίστε το προσβάσιμο από τον περιηγητή URL του MediaMTX στις ρυθμίσεις εφαρμογής για να ενεργοποιήσετε τη ζωντανή αναπαραγωγή.",
+      "openAppConfig": "Άνοιγμα ρυθμίσεων εφαρμογής"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "δεν υπάρχει στιγμιότυπο ακόμη — πρώτη λήψη σε ~30 δ.",
+      "onlineSince": "σε σύνδεση από {time} · {uptime}",
+      "idle": "αδρανής",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# θεατής} other {# θεατές}}",
+      "play": "Αναπαραγωγή",
+      "stop": "Διακοπή",
+      "playAria": "Αναπαραγωγή {streamName}",
+      "actionsAria": "Ενέργειες ροής",
+      "stub": {
+        "title": "Δεν έχει υλοποιηθεί ακόμη",
+        "description": "Αυτή η ενέργεια είναι στον οδικό χάρτη — καταγράφηκε."
+      },
+      "recordError": {
+        "title": "Δεν ήταν δυνατή η αλλαγή της εγγραφής",
+        "description": "Το MediaMTX απέρριψε την αλλαγή — η εγγραφή αυτής της ροής παραμένει ως είχε."
+      },
+      "copyPublish": {
+        "title": "Τα URL δημοσίευσης αντιγράφηκαν",
+        "description": "Επικολλήστε τα στην κάμερα ή τον κωδικοποιητή σας."
+      },
+      "copyPublishError": {
+        "title": "Δεν ήταν δυνατή η αντιγραφή",
+        "description": "Το πρόγραμμα περιήγησής σας απέκλεισε την πρόσβαση στο πρόχειρο."
+      },
+      "snapshotSuccess": {
+        "title": "Το στιγμιότυπο καταγράφηκε",
+        "description": "Η μικρογραφία δείχνει τώρα το καρέ που μόλις καταγράψατε."
+      },
+      "snapshotError": {
+        "title": "Δεν ήταν δυνατή η λήψη στιγμιότυπου",
+        "description": "Το MediaMTX δεν μπόρεσε να καταγράψει καρέ — η ροή ίσως είναι εκτός σύνδεσης."
+      },
+      "menu": {
+        "openDetail": "Άνοιγμα λεπτομερειών ροής",
+        "viewRecordings": "Προβολή εγγραφών",
+        "takeSnapshot": "Λήψη στιγμιότυπου",
+        "record": "Εγγραφή",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Αντιγραφή URL δημοσίευσης",
+        "shareEmbed": "Κοινοποίηση και ενσωμάτωση…",
+        "editPathConfig": "Επεξεργασία ρύθμισης διαδρομής",
+        "editHooks": "Επεξεργασία hooks"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Εγγραφές",
+    "toolbar": {
+      "summary": "{streams, plural, one {# ροή} other {# ροές}} · {recordings, plural, one {# εγγραφή} other {# εγγραφές}}",
+      "filterPlaceholder": "Φιλτράρισμα ροών…",
+      "filterAria": "Φιλτράρισμα ροών"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# εγγραφή} other {# εγγραφές}}",
+      "latest": "τελευταία {time}",
+      "openAria": "Προβολή εγγραφών για {name}"
+    },
+    "empty": {
+      "noRecordingsTitle": "Καμία εγγραφή ακόμη",
+      "noRecordingsLead": "Οι εγγραφές εμφανίζονται εδώ μόλις το MediaMTX αρχίσει να καταγράφει ροές.",
+      "enableRecording": "Ενεργοποίηση εγγραφής",
+      "noMatchingTitle": "Καμία αντίστοιχη ροή",
+      "noMatchingDescription": "Καμία ροή δεν ταιριάζει με «{query}»."
+    },
+    "errors": {
+      "directoryTitle": "Δεν είναι δυνατή η ανάγνωση του φακέλου εγγραφών",
+      "directoryLead": "Αδυναμία ανάγνωσης εγγραφών στο",
+      "openAppConfig": "Άνοιγμα ρυθμίσεων εφαρμογής",
+      "readErrorTitle": "Αδυναμία ανάγνωσης εγγραφών",
+      "readErrorDescription": "Βεβαιωθείτε ότι ο φάκελος εγγραφών υπάρχει και έχει τα σωστά δικαιώματα."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# εγγραφή} other {# εγγραφές}}"
+    },
+    "groups": {
+      "todayEyebrow": "Σήμερα — {date}",
+      "yesterdayEyebrow": "Χθες — {date}"
+    },
+    "row": {
+      "play": "Αναπαραγωγή",
+      "close": "Κλείσιμο",
+      "cancel": "Ακύρωση",
+      "playAria": "Αναπαραγωγή της εγγραφής από {time}",
+      "downloadAria": "Λήψη εγγραφής {file}",
+      "downloading": "λήψη… {received} από {total} · {rate}",
+      "downloadComplete": "Η λήψη ολοκληρώθηκε",
+      "downloadFailed": "Η λήψη απέτυχε"
+    },
+    "player": {
+      "play": "Αναπαραγωγή",
+      "pause": "Παύση",
+      "seek": "Μετάβαση"
+    },
+    "pagination": {
+      "aria": "Σελιδοποίηση",
+      "showing": "Εμφάνιση {from}–{to} από {total}",
+      "previous": "Προηγούμενη σελίδα",
+      "next": "Επόμενη σελίδα"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Μη έγκυρη ρύθμιση",
+    "appConfig": {
+      "pageHeader": "Ρυθμίσεις εφαρμογής",
+      "pageSubHeader": "Σύνδεση και αποθήκευση που χρησιμοποιεί το MediaMTX Connect."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "Ρυθμίσεις MediaMTX",
+      "pageSubHeader": "Καθολικές ρυθμίσεις του διακομιστή MediaMTX, αποθηκεύονται στον διακομιστή."
+    },
+    "pathDefaults": {
+      "pageHeader": "Προεπιλογές διαδρομών",
+      "pageSubHeader": "Ρυθμίσεις που κληρονομεί κάθε ροή, αποθηκευμένες στον διακομιστή."
+    },
+    "pathConfig": {
+      "pageHeader": "Ρύθμιση διαδρομής · {name}",
+      "pageSubHeader": "Ρυθμίσεις αυτής της ροής, αποθηκεύονται στον διακομιστή.",
+      "inheritedSubHeader": "Ρυθμίσεις αυτής της ροής, κληρονομούνται προς το παρόν από {confName}. Η αποθήκευση αντικαθιστά μόνο όσα άλλαξες."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# μη αποθηκευμένη αλλαγή} other {# μη αποθηκευμένες αλλαγές}}",
+      "needsAttention": "{count, plural, one {# πεδίο χρειάζεται προσοχή} other {# πεδία χρειάζονται προσοχή}}",
+      "discard": "Απόρριψη",
+      "reset": "Επαναφορά",
+      "save": "Αποθήκευση",
+      "saveToServer": "Αποθήκευση στον διακομιστή"
+    },
+    "formFields": {
+      "oneValuePerLine": "Μία τιμή ανά γραμμή."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "Σύνδεση MediaMTX",
+        "storage": "Αποθήκευση"
+      },
+      "playbackBadge": "Απαιτείται για ζωντανή αναπαραγωγή",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX URL",
+          "description": "Η διεύθυνση της εγκατάστασης MediaMTX σας. Σε δίκτυο Docker μπορείτε να χρησιμοποιήσετε το όνομα του container· διαφορετικά χρησιμοποιήστε εξωτερική IP ή όνομα host."
+        },
+        "mediaMtxApiPort": {
+          "label": "Θύρα API",
+          "description": "Η θύρα του API του MediaMTX."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "URL αναπαραγωγής",
+          "description": "Το προσβάσιμο από περιηγητή, εξωτερικό URL του διακομιστή MediaMTX σας. Η ζωντανή αναπαραγωγή φορτώνει τις ροές από εδώ."
+        },
+        "recordingsDirectory": {
+          "label": "Φάκελος εγγραφών",
+          "description": "Φάκελος που περιέχει τις εγγραφές MediaMTX (δεν συνιστάται η αλλαγή αν χρησιμοποιείτε Docker)."
+        },
+        "screenshotsDirectory": {
+          "label": "Φάκελος στιγμιοτύπων",
+          "description": "Φάκελος για τα δημιουργημένα στιγμιότυπα (δεν συνιστάται η αλλαγή αν χρησιμοποιείτε Docker)."
+        }
+      },
+      "toasts": {
+        "success": "Οι ρυθμίσεις εφαρμογής αποθηκεύτηκαν",
+        "errorTitle": "Δεν ήταν δυνατή η αποθήκευση των ρυθμίσεων εφαρμογής",
+        "errorDescription": "Ελέγξτε τις τιμές της φόρμας και δοκιμάστε ξανά."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Καταγραφή",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Εγγραφή",
+        "pathHooks": "Hooks διαδρομής"
+      },
+      "sectionDescriptions": {
+        "logging": "Έξοδος καταγραφής, χρονικά όρια και καθολικά όρια.",
+        "api": "Το HTTP API που χρησιμοποιεί το ίδιο το MediaMTX Connect.",
+        "hooks": "Εντολές που εκτελεί το MediaMTX σε συμβάντα σύνδεσης.",
+        "rtsp": "Δημοσίευση και ανάγνωση ροών μέσω RTSP.",
+        "rtmp": "Δημοσίευση και ανάγνωση ροών μέσω RTMP.",
+        "hls": "Διάθεση ροών ως HLS για αναπαραγωγή στον περιηγητή.",
+        "webrtc": "Αναπαραγωγή και δημοσίευση στον περιηγητή με χαμηλή καθυστέρηση.",
+        "srt": "Δημοσίευση και ανάγνωση ροών μέσω SRT.",
+        "recording": "Εγγραφή ροών στον δίσκο.",
+        "pathHooks": "Εντολές που εκτελεί το MediaMTX στα συμβάντα κύκλου ζωής της ίδιας της διαδρομής."
+      },
+      "enabled": "Ενεργοποιημένο",
+      "off": "Απενεργοποιημένο",
+      "hiddenWhileOff": "{count, plural, one {# επιλογή κρυμμένη όσο είναι ανενεργό} other {# επιλογές κρυμμένες όσο είναι ανενεργό}}",
+      "rail": {
+        "onThisPage": "Σε αυτή τη σελίδα",
+        "aria": "Ενότητες ρυθμίσεων"
+      },
+      "iceServers": {
+        "add": "Προσθήκη διακομιστή ICE",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL διακομιστή ICE {index}",
+        "usernameAria": "Όνομα χρήστη διακομιστή ICE {index}",
+        "passwordAria": "Κωδικός πρόσβασης διακομιστή ICE {index}",
+        "removeAria": "Αφαίρεση διακομιστή ICE {index}"
+      },
+      "help": {
+        "logLevel": "Λεπτομέρεια της εξόδου καταγραφής (error, warn, info ή debug).",
+        "logDestinations": "Πού να γράφονται τα αρχεία καταγραφής (stdout, file ή syslog).",
+        "logFile": "Διαδρομή του αρχείου καταγραφής όταν το logDestinations περιλαμβάνει file.",
+        "readTimeout": "Χρονικό όριο για λειτουργίες ανάγνωσης.",
+        "writeTimeout": "Χρονικό όριο για λειτουργίες εγγραφής.",
+        "writeQueueSize": "Μέγεθος της εξερχόμενης ουράς ανά σύνδεση. Πρέπει να είναι δύναμη του δύο.",
+        "udpMaxPayloadSize": "Μέγιστο μέγεθος εξερχόμενων πακέτων UDP.",
+        "externalAuthenticationURL": "URL εξωτερικού διακομιστή αυθεντικοποίησης, καλείται σε κάθε σύνδεση.",
+        "apiAddress": "Διεύθυνση ακρόασης του HTTP API.",
+        "metrics": "Έκθεση μετρικών συμβατών με Prometheus.",
+        "metricsAddress": "Διεύθυνση ακρόασης του σημείου μετρικών.",
+        "pprof": "Έκθεση του σημείου προφίλ Go pprof.",
+        "pprofAddress": "Διεύθυνση ακρόασης του σημείου pprof.",
+        "runOnConnect": "Εντολή που εκτελείται όταν συνδέεται ένας πελάτης.",
+        "runOnConnectRestart": "Επανεκκίνηση της εντολής αν τερματιστεί.",
+        "runOnDisconnect": "Εντολή που εκτελείται όταν αποσυνδέεται ένας πελάτης.",
+        "rtspAddress": "Διεύθυνση ακρόασης του διακομιστή RTSP (TCP).",
+        "rtspsAddress": "Διεύθυνση ακρόασης του διακομιστή RTSPS (TLS).",
+        "rtpAddress": "Διεύθυνση ακρόασης για πακέτα RTP μέσω UDP.",
+        "rtcpAddress": "Διεύθυνση ακρόασης για πακέτα RTCP μέσω UDP.",
+        "multicastIPRange": "Εύρος IP που χρησιμοποιείται για παράδοση multicast.",
+        "multicastRTPPort": "Θύρα για πακέτα multicast RTP.",
+        "multicastRTCPPort": "Θύρα για πακέτα multicast RTCP.",
+        "protocols": "Πρωτόκολλα μεταφοράς που δέχεται ο διακομιστής RTSP (udp, multicast ή tcp).",
+        "encryption": "Πολιτική κρυπτογράφησης TLS (no, strict ή optional).",
+        "serverKey": "Διαδρομή του κλειδιού διακομιστή TLS.",
+        "serverCert": "Διαδρομή του πιστοποιητικού διακομιστή TLS.",
+        "authMethods": "Μέθοδοι αυθεντικοποίησης που δέχεται ο διακομιστής RTSP (basic ή digest).",
+        "rtmpAddress": "Διεύθυνση ακρόασης του διακομιστή RTMP.",
+        "rtmpEncryption": "Πολιτική κρυπτογράφησης TLS για RTMP (no, strict ή optional).",
+        "rtmpsAddress": "Διεύθυνση ακρόασης του διακομιστή RTMPS (TLS).",
+        "rtmpServerKey": "Διαδρομή του κλειδιού διακομιστή RTMPS.",
+        "rtmpServerCert": "Διαδρομή του πιστοποιητικού διακομιστή RTMPS.",
+        "hlsAddress": "Διεύθυνση ακρόασης του διακομιστή HLS.",
+        "hlsEncryption": "Διάθεση HLS μέσω TLS (HTTPS).",
+        "hlsServerKey": "Διαδρομή του κλειδιού διακομιστή HLS.",
+        "hlsServerCert": "Διαδρομή του πιστοποιητικού διακομιστή HLS.",
+        "hlsAlwaysRemux": "Remux των ροών ακόμη κι όταν δεν παρακολουθεί κανείς.",
+        "hlsVariant": "Παραλλαγή HLS (mpegts, fmp4 ή lowLatency).",
+        "hlsSegmentCount": "Αριθμός τμημάτων που διατηρούνται στη λίστα αναπαραγωγής.",
+        "hlsSegmentDuration": "Ελάχιστη διάρκεια κάθε τμήματος.",
+        "hlsPartDuration": "Διάρκεια κάθε μέρους σε λειτουργία χαμηλής καθυστέρησης.",
+        "hlsSegmentMaxSize": "Μέγιστο μέγεθος κάθε τμήματος.",
+        "hlsAllowOrigin": "Τιμή της κεφαλίδας Access-Control-Allow-Origin.",
+        "hlsTrustedProxies": "IP ή δίκτυα διαμεσολαβητών που βρίσκονται πριν από τον διακομιστή HLS.",
+        "hlsDirectory": "Εγγραφή τμημάτων στον δίσκο σε αυτόν τον φάκελο αντί για RAM.",
+        "webrtcAddress": "Διεύθυνση ακρόασης του διακομιστή HTTP WebRTC.",
+        "webrtcEncryption": "Διάθεση WebRTC μέσω TLS (HTTPS).",
+        "webrtcServerKey": "Διαδρομή του κλειδιού διακομιστή WebRTC.",
+        "webrtcServerCert": "Διαδρομή του πιστοποιητικού διακομιστή WebRTC.",
+        "webrtcAllowOrigin": "Τιμή της κεφαλίδας Access-Control-Allow-Origin.",
+        "webrtcTrustedProxies": "IP ή δίκτυα διαμεσολαβητών που βρίσκονται πριν από τον διακομιστή WebRTC.",
+        "webrtcLocalUDPAddress": "Τοπική διεύθυνση UDP για την κίνηση WebRTC.",
+        "webrtcLocalTCPAddress": "Τοπική διεύθυνση TCP για την κίνηση WebRTC.",
+        "webrtcIPsFromInterfaces": "Συλλογή υποψήφιων IP από τις διεπαφές δικτύου του host.",
+        "webrtcIPsFromInterfacesList": "Διεπαφές από τις οποίες συλλέγονται υποψήφιες IP. Κενό σημαίνει όλες.",
+        "webrtcAdditionalHosts": "Πρόσθετοι hosts ή IP που ανακοινώνονται ως υποψήφιοι WebRTC.",
+        "webrtcICEServers2": "Διακομιστές STUN ή TURN για την εγκαθίδρυση συνδέσεων WebRTC.",
+        "srtAddress": "Διεύθυνση ακρόασης του διακομιστή SRT.",
+        "recordPath": "Διαδρομή των τμημάτων εγγραφής. Το %path είναι το όνομα της ροής.",
+        "recordFormat": "Κοντέινερ των τμημάτων εγγραφής (fmp4 ή mpegts).",
+        "recordPartDuration": "Διάρκεια κάθε μέρους στις εγγραφές fmp4.",
+        "recordSegmentDuration": "Διάρκεια κάθε τμήματος εγγραφής.",
+        "recordDeleteAfter": "Διαγραφή τμημάτων μετά από αυτό το διάστημα. Το μηδέν την απενεργοποιεί.",
+        "runOnInit": "Εντολή που εκτελείται κατά την αρχικοποίηση της διαδρομής.",
+        "runOnInitRestart": "Επανεκκίνηση της εντολής αν τερματιστεί.",
+        "runOnDemand": "Εντολή που εκτελείται όταν ένας πελάτης αρχίζει να διαβάζει και η διαδρομή δεν έχει publisher.",
+        "runOnDemandRestart": "Επανεκκίνηση της εντολής αν τερματιστεί.",
+        "runOnDemandStartTimeout": "Πόση ώρα να αναμένεται η εκκίνηση του publisher κατ’ απαίτηση.",
+        "runOnDemandCloseAfter": "Διακοπή της εντολής κατ’ απαίτηση τόσο μετά την αποχώρηση του τελευταίου αναγνώστη.",
+        "runOnUnDemand": "Εντολή που εκτελείται όταν διακόπτεται η εντολή κατ’ απαίτηση.",
+        "runOnReady": "Εντολή που εκτελείται όταν η ροή είναι έτοιμη για ανάγνωση.",
+        "runOnReadyRestart": "Επανεκκίνηση της εντολής αν τερματιστεί.",
+        "runOnNotReady": "Εντολή που εκτελείται όταν η ροή δεν είναι πλέον έτοιμη.",
+        "runOnRead": "Εντολή που εκτελείται όταν ένας πελάτης αρχίζει να διαβάζει αυτή τη διαδρομή.",
+        "runOnReadRestart": "Επανεκκίνηση της εντολής αν τερματιστεί.",
+        "runOnUnread": "Εντολή που εκτελείται όταν ένας πελάτης σταματά να διαβάζει αυτή τη διαδρομή.",
+        "runOnRecordSegmentCreate": "Εντολή που εκτελείται όταν δημιουργείται ένα τμήμα εγγραφής.",
+        "runOnRecordSegmentComplete": "Εντολή που εκτελείται όταν ολοκληρώνεται ένα τμήμα εγγραφής."
+      },
+      "toasts": {
+        "success": "Οι ρυθμίσεις MediaMTX αποθηκεύτηκαν",
+        "errorTitle": "Δεν ήταν δυνατή η αποθήκευση των ρυθμίσεων MediaMTX",
+        "errorDescription": "Ελέγξτε τις τιμές της φόρμας και δοκιμάστε ξανά."
+      }
+    }
+  }
+}

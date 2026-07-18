@@ -1,4 +1,3 @@
-version: '3.4'
 services:
   gstreamer-video:
     container_name: gstreamer-video

@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Web-Oberfläche für MediaMTX. Streams ansehen, Aufzeichnungen durchsuchen und die Konfiguration im Browser bearbeiten."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Dieses Feld ist erforderlich",
+      "mustBePositive": "Muss größer als 0 sein"
+    }
+  },
+  "Common": {
+    "retry": "Wiederholen",
+    "loading": "Wird geladen…",
+    "theme": {
+      "lightMode": "Heller Modus",
+      "darkMode": "Dunkler Modus",
+      "switchToLight": "Zum hellen Design wechseln",
+      "switchToDark": "Zum dunklen Design wechseln"
+    },
+    "locale": {
+      "switchLanguage": "Sprache wechseln",
+      "searchPlaceholder": "Sprache suchen…",
+      "noResults": "Keine Sprache gefunden."
+    },
+    "connection": {
+      "connected": "verbunden",
+      "offline": "offline"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Primär",
+    "items": {
+      "live": "Live",
+      "recordings": "Aufzeichnungen",
+      "appConfig": "App-Konfiguration",
+      "mediamtxConfig": "MediaMTX-Konfiguration"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# Stream} other {# Streams}} · {live} in Wiedergabe",
+      "playbackAria": "Wiedergabemodus",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Rasterdichte"
+    },
+    "errors": {
+      "unreachableTitle": "MediaMTX nicht erreichbar",
+      "unreachableLead": "Keine Antwort von der MediaMTX-API unter",
+      "openAppConfig": "App-Konfiguration öffnen",
+      "retry": "Wiederholen",
+      "retryCountdown": "automatischer Neuversuch in {seconds}s"
+    },
+    "empty": {
+      "noStreamsTitle": "Keine Streams werden veröffentlicht",
+      "noStreamsLead": "Richte einen beliebigen Publisher auf MediaMTX und er erscheint hier:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "Wiedergabe-URL nicht gesetzt",
+      "playbackUrlLead": "Lege die browserseitige MediaMTX-URL in der App-Konfiguration fest, um die Live-Wiedergabe zu aktivieren.",
+      "openAppConfig": "App-Konfiguration öffnen"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "noch kein Schnappschuss — erste Aufnahme in ~30s",
+      "onlineSince": "online seit {time} · {uptime}",
+      "idle": "inaktiv",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# Zuschauer} other {# Zuschauer}}",
+      "play": "Wiedergabe",
+      "stop": "Stopp",
+      "playAria": "{streamName} wiedergeben",
+      "actionsAria": "Stream-Aktionen",
+      "stub": {
+        "title": "Noch nicht implementiert",
+        "description": "Diese Aktion steht auf der Roadmap — sie wurde protokolliert."
+      },
+      "recordError": {
+        "title": "Aufnahme konnte nicht geändert werden",
+        "description": "MediaMTX hat die Änderung abgelehnt – die Aufnahme dieses Streams ist unverändert."
+      },
+      "copyPublish": {
+        "title": "Veröffentlichungs-URLs kopiert",
+        "description": "Füge sie in deine Kamera oder deinen Encoder ein."
+      },
+      "copyPublishError": {
+        "title": "Kopieren nicht möglich",
+        "description": "Dein Browser hat den Zugriff auf die Zwischenablage blockiert."
+      },
+      "snapshotSuccess": {
+        "title": "Schnappschuss aufgenommen",
+        "description": "Das Vorschaubild zeigt jetzt das gerade aufgenommene Bild."
+      },
+      "snapshotError": {
+        "title": "Schnappschuss konnte nicht aufgenommen werden",
+        "description": "MediaMTX konnte kein Bild aufnehmen – der Stream ist möglicherweise offline."
+      },
+      "menu": {
+        "openDetail": "Stream-Detail öffnen",
+        "viewRecordings": "Aufzeichnungen ansehen",
+        "takeSnapshot": "Schnappschuss aufnehmen",
+        "record": "Aufzeichnen",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Publish-URLs kopieren",
+        "shareEmbed": "Teilen & einbetten…",
+        "editPathConfig": "Pfad-Konfiguration bearbeiten",
+        "editHooks": "Hooks bearbeiten"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Aufzeichnungen",
+    "toolbar": {
+      "summary": "{streams, plural, one {# Stream} other {# Streams}} · {recordings, plural, one {# Aufzeichnung} other {# Aufzeichnungen}}",
+      "filterPlaceholder": "Streams filtern…",
+      "filterAria": "Streams filtern"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# Aufzeichnung} other {# Aufzeichnungen}}",
+      "latest": "zuletzt {time}",
+      "openAria": "Aufzeichnungen für {name} ansehen"
+    },
+    "empty": {
+      "noRecordingsTitle": "Noch keine Aufzeichnungen",
+      "noRecordingsLead": "Aufzeichnungen erscheinen hier, sobald MediaMTX Streams aufzeichnet.",
+      "enableRecording": "Aufzeichnung aktivieren",
+      "noMatchingTitle": "Keine passenden Streams",
+      "noMatchingDescription": "Keine Streams entsprechen „{query}“."
+    },
+    "errors": {
+      "directoryTitle": "Aufzeichnungsverzeichnis kann nicht gelesen werden",
+      "directoryLead": "Aufzeichnungen können nicht gelesen werden unter",
+      "openAppConfig": "App-Konfiguration öffnen",
+      "readErrorTitle": "Aufzeichnungen konnten nicht gelesen werden",
+      "readErrorDescription": "Stelle sicher, dass das Aufzeichnungsverzeichnis existiert und die richtigen Berechtigungen hat."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# Aufzeichnung} other {# Aufzeichnungen}}"
+    },
+    "groups": {
+      "todayEyebrow": "Heute — {date}",
+      "yesterdayEyebrow": "Gestern — {date}"
+    },
+    "row": {
+      "play": "Wiedergabe",
+      "close": "Schließen",
+      "cancel": "Abbrechen",
+      "playAria": "Aufzeichnung von {time} abspielen",
+      "downloadAria": "Aufzeichnung {file} herunterladen",
+      "downloading": "wird heruntergeladen… {received} von {total} · {rate}",
+      "downloadComplete": "Download abgeschlossen",
+      "downloadFailed": "Download fehlgeschlagen"
+    },
+    "player": {
+      "play": "Wiedergabe",
+      "pause": "Pause",
+      "seek": "Spulen"
+    },
+    "pagination": {
+      "aria": "Seitennummerierung",
+      "showing": "Zeige {from}–{to} von {total}",
+      "previous": "Vorherige Seite",
+      "next": "Nächste Seite"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Ungültige Konfiguration",
+    "appConfig": {
+      "pageHeader": "App-Konfiguration",
+      "pageSubHeader": "Verbindung und Speicher, die von MediaMTX Connect verwendet werden."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX-Konfiguration",
+      "pageSubHeader": "Globale MediaMTX-Servereinstellungen, gespeichert auf dem Server."
+    },
+    "pathDefaults": {
+      "pageHeader": "Pfad-Standardwerte",
+      "pageSubHeader": "Einstellungen, die jeder Stream erbt, gespeichert auf dem Server."
+    },
+    "pathConfig": {
+      "pageHeader": "Pfad-Konfiguration · {name}",
+      "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
+      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# nicht gespeicherte Änderung} other {# nicht gespeicherte Änderungen}}",
+      "needsAttention": "{count, plural, one {# Feld benötigt Aufmerksamkeit} other {# Felder benötigen Aufmerksamkeit}}",
+      "discard": "Verwerfen",
+      "reset": "Zurücksetzen",
+      "save": "Speichern",
+      "saveToServer": "Auf dem Server speichern"
+    },
+    "formFields": {
+      "oneValuePerLine": "Ein Wert pro Zeile."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "MediaMTX-Verbindung",
+        "storage": "Speicher"
+      },
+      "playbackBadge": "Für Live-Wiedergabe erforderlich",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX-URL",
+          "description": "Die Adresse deiner MediaMTX-Instanz. Innerhalb eines Docker-Netzwerks kannst du den Container-Namen verwenden, ansonsten die externe IP oder den Hostnamen."
+        },
+        "mediaMtxApiPort": {
+          "label": "API-Port",
+          "description": "Der Port der MediaMTX-API."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Wiedergabe-URL",
+          "description": "Die vom Browser erreichbare, nach außen gerichtete URL deines MediaMTX-Servers. Die Live-Wiedergabe lädt Streams von hier."
+        },
+        "recordingsDirectory": {
+          "label": "Aufzeichnungsverzeichnis",
+          "description": "Verzeichnis mit den MediaMTX-Aufzeichnungen (bei Verwendung von Docker nicht zu ändern empfohlen)."
+        },
+        "screenshotsDirectory": {
+          "label": "Screenshot-Verzeichnis",
+          "description": "Verzeichnis für erzeugte Schnappschüsse (bei Verwendung von Docker nicht zu ändern empfohlen)."
+        }
+      },
+      "toasts": {
+        "success": "App-Konfiguration gespeichert",
+        "errorTitle": "App-Konfiguration konnte nicht gespeichert werden",
+        "errorDescription": "Überprüfe deine Formularwerte und versuche es erneut."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Protokollierung",
+        "api": "API",
+        "hooks": "Hooks",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Aufzeichnung",
+        "pathHooks": "Pfad-Hooks"
+      },
+      "sectionDescriptions": {
+        "logging": "Log-Ausgabe, Timeouts und globale Grenzwerte.",
+        "api": "Die HTTP-API, die MediaMTX Connect selbst verwendet.",
+        "hooks": "Befehle, die MediaMTX bei Verbindungsereignissen ausführt.",
+        "rtsp": "Streams über RTSP veröffentlichen und lesen.",
+        "rtmp": "Streams über RTMP veröffentlichen und lesen.",
+        "hls": "Streams als HLS für die Browser-Wiedergabe bereitstellen.",
+        "webrtc": "Browser-Wiedergabe und -Veröffentlichung mit niedriger Latenz.",
+        "srt": "Streams über SRT veröffentlichen und lesen.",
+        "recording": "Streams auf die Festplatte aufzeichnen.",
+        "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt."
+      },
+      "enabled": "Aktiviert",
+      "off": "Aus",
+      "hiddenWhileOff": "{count, plural, one {# Option ausgeblendet, solange deaktiviert} other {# Optionen ausgeblendet, solange deaktiviert}}",
+      "rail": {
+        "onThisPage": "Auf dieser Seite",
+        "aria": "Konfigurationsabschnitte"
+      },
+      "iceServers": {
+        "add": "ICE-Server hinzufügen",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "URL von ICE-Server {index}",
+        "usernameAria": "Benutzername von ICE-Server {index}",
+        "passwordAria": "Passwort von ICE-Server {index}",
+        "removeAria": "ICE-Server {index} entfernen"
+      },
+      "help": {
+        "logLevel": "Ausführlichkeit der Log-Ausgabe (error, warn, info oder debug).",
+        "logDestinations": "Wohin Logs geschrieben werden (stdout, file oder syslog).",
+        "logFile": "Pfad der Log-Datei, wenn logDestinations file enthält.",
+        "readTimeout": "Timeout für Lesevorgänge.",
+        "writeTimeout": "Timeout für Schreibvorgänge.",
+        "writeQueueSize": "Größe der ausgehenden Warteschlange pro Verbindung. Muss eine Zweierpotenz sein.",
+        "udpMaxPayloadSize": "Maximale Größe ausgehender UDP-Pakete.",
+        "externalAuthenticationURL": "URL eines externen Authentifizierungsservers, der bei jeder Verbindung aufgerufen wird.",
+        "apiAddress": "Listen-Adresse der HTTP-API.",
+        "metrics": "Prometheus-kompatible Metriken bereitstellen.",
+        "metricsAddress": "Listen-Adresse des Metrik-Endpunkts.",
+        "pprof": "Den Go-pprof-Profiling-Endpunkt bereitstellen.",
+        "pprofAddress": "Listen-Adresse des pprof-Endpunkts.",
+        "runOnConnect": "Befehl, der ausgeführt wird, wenn sich ein Client verbindet.",
+        "runOnConnectRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnDisconnect": "Befehl, der ausgeführt wird, wenn ein Client die Verbindung trennt.",
+        "rtspAddress": "Listen-Adresse des RTSP-Servers (TCP).",
+        "rtspsAddress": "Listen-Adresse des RTSPS-Servers (TLS).",
+        "rtpAddress": "Listen-Adresse für RTP-Pakete über UDP.",
+        "rtcpAddress": "Listen-Adresse für RTCP-Pakete über UDP.",
+        "multicastIPRange": "IP-Bereich für die Multicast-Auslieferung.",
+        "multicastRTPPort": "Port für Multicast-RTP-Pakete.",
+        "multicastRTCPPort": "Port für Multicast-RTCP-Pakete.",
+        "protocols": "Vom RTSP-Server akzeptierte Transportprotokolle (udp, multicast oder tcp).",
+        "encryption": "TLS-Verschlüsselungsrichtlinie (no, strict oder optional).",
+        "serverKey": "Pfad des TLS-Serverschlüssels.",
+        "serverCert": "Pfad des TLS-Serverzertifikats.",
+        "authMethods": "Vom RTSP-Server akzeptierte Authentifizierungsmethoden (basic oder digest).",
+        "rtmpAddress": "Listen-Adresse des RTMP-Servers.",
+        "rtmpEncryption": "TLS-Verschlüsselungsrichtlinie für RTMP (no, strict oder optional).",
+        "rtmpsAddress": "Listen-Adresse des RTMPS-Servers (TLS).",
+        "rtmpServerKey": "Pfad des RTMPS-Serverschlüssels.",
+        "rtmpServerCert": "Pfad des RTMPS-Serverzertifikats.",
+        "hlsAddress": "Listen-Adresse des HLS-Servers.",
+        "hlsEncryption": "HLS über TLS (HTTPS) ausliefern.",
+        "hlsServerKey": "Pfad des HLS-Serverschlüssels.",
+        "hlsServerCert": "Pfad des HLS-Serverzertifikats.",
+        "hlsAlwaysRemux": "Streams auch dann remuxen, wenn niemand zuschaut.",
+        "hlsVariant": "HLS-Variante (mpegts, fmp4 oder lowLatency).",
+        "hlsSegmentCount": "Anzahl der in der Playlist gehaltenen Segmente.",
+        "hlsSegmentDuration": "Mindestdauer jedes Segments.",
+        "hlsPartDuration": "Dauer jedes Parts im Low-Latency-Modus.",
+        "hlsSegmentMaxSize": "Maximale Größe jedes Segments.",
+        "hlsAllowOrigin": "Wert des Access-Control-Allow-Origin-Headers.",
+        "hlsTrustedProxies": "IPs oder Netzwerke von Proxys vor dem HLS-Server.",
+        "hlsDirectory": "Segmente statt im RAM in diesem Verzeichnis auf der Festplatte speichern.",
+        "webrtcAddress": "Listen-Adresse des WebRTC-HTTP-Servers.",
+        "webrtcEncryption": "WebRTC über TLS (HTTPS) ausliefern.",
+        "webrtcServerKey": "Pfad des WebRTC-Serverschlüssels.",
+        "webrtcServerCert": "Pfad des WebRTC-Serverzertifikats.",
+        "webrtcAllowOrigin": "Wert des Access-Control-Allow-Origin-Headers.",
+        "webrtcTrustedProxies": "IPs oder Netzwerke von Proxys vor dem WebRTC-Server.",
+        "webrtcLocalUDPAddress": "Lokale UDP-Adresse für WebRTC-Datenverkehr.",
+        "webrtcLocalTCPAddress": "Lokale TCP-Adresse für WebRTC-Datenverkehr.",
+        "webrtcIPsFromInterfaces": "Kandidaten-IPs von den Netzwerkschnittstellen des Hosts sammeln.",
+        "webrtcIPsFromInterfacesList": "Schnittstellen, von denen Kandidaten-IPs gesammelt werden. Leer bedeutet alle.",
+        "webrtcAdditionalHosts": "Zusätzliche Hosts oder IPs, die als WebRTC-Kandidaten angekündigt werden.",
+        "webrtcICEServers2": "STUN- oder TURN-Server zum Aufbau von WebRTC-Verbindungen.",
+        "srtAddress": "Listen-Adresse des SRT-Servers.",
+        "recordPath": "Pfad der Aufzeichnungssegmente. %path ist der Stream-Name.",
+        "recordFormat": "Container der Aufzeichnungssegmente (fmp4 oder mpegts).",
+        "recordPartDuration": "Dauer jedes Teils in fmp4-Aufzeichnungen.",
+        "recordSegmentDuration": "Dauer jedes Aufzeichnungssegments.",
+        "recordDeleteAfter": "Segmente nach dieser Dauer löschen. Null deaktiviert das Löschen.",
+        "runOnInit": "Befehl, der ausgeführt wird, wenn der Pfad initialisiert wird.",
+        "runOnInitRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnDemand": "Befehl, der ausgeführt wird, wenn ein Client zu lesen beginnt und der Pfad keinen Publisher hat.",
+        "runOnDemandRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnDemandStartTimeout": "Wie lange auf den Start des On-Demand-Publishers gewartet wird.",
+        "runOnDemandCloseAfter": "Den On-Demand-Befehl so lange nach dem Weggang des letzten Lesers stoppen.",
+        "runOnUnDemand": "Befehl, der ausgeführt wird, wenn der On-Demand-Befehl gestoppt wird.",
+        "runOnReady": "Befehl, der ausgeführt wird, wenn der Stream bereit zum Lesen ist.",
+        "runOnReadyRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnNotReady": "Befehl, der ausgeführt wird, wenn der Stream nicht mehr bereit ist.",
+        "runOnRead": "Befehl, der ausgeführt wird, wenn ein Client beginnt, diesen Pfad zu lesen.",
+        "runOnReadRestart": "Befehl neu starten, wenn er beendet wird.",
+        "runOnUnread": "Befehl, der ausgeführt wird, wenn ein Client aufhört, diesen Pfad zu lesen.",
+        "runOnRecordSegmentCreate": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment erstellt wird.",
+        "runOnRecordSegmentComplete": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment abgeschlossen ist."
+      },
+      "toasts": {
+        "success": "MediaMTX-Konfiguration gespeichert",
+        "errorTitle": "MediaMTX-Konfiguration konnte nicht gespeichert werden",
+        "errorDescription": "Überprüfe deine Formularwerte und versuche es erneut."
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Everything here is regenerable by the scripts — keep the repo light.
+.bin/
+.work/
+clips/
+output/
+*.log
+# MediaMTX drops a self-signed cert/key in its working dir — never commit these
+auto.crt
+auto.key

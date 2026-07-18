@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <title>MediaMTX Connect</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- Runs before the bundle to set the html class, avoiding a theme flash. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark'
+          if (t === 'system') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          var e = document.documentElement
+          e.classList.remove('light', 'dark')
+          e.classList.add(t)
+          e.style.colorScheme = t
+        }
+        catch (e) {}
+      })()
+    </script>
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

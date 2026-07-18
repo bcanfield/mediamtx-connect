@@ -1,0 +1,377 @@
+{
+  "App": {
+    "name": "MediaMTX Connect"
+  },
+  "Metadata": {
+    "titleDefault": "MediaMTX Connect",
+    "titleTemplate": "%s | MediaMTX Connect",
+    "description": "Webes felület a MediaMTX-hez. Nézzen folyamokat, böngésszen felvételek között, és szerkessze a konfigurációt a böngészőből."
+  },
+  "Forms": {
+    "errors": {
+      "required": "Ez a mező kötelező",
+      "mustBePositive": "Nagyobbnak kell lennie, mint 0"
+    }
+  },
+  "Common": {
+    "retry": "Újra",
+    "loading": "Betöltés…",
+    "theme": {
+      "lightMode": "Világos mód",
+      "darkMode": "Sötét mód",
+      "switchToLight": "Váltás világos témára",
+      "switchToDark": "Váltás sötét témára"
+    },
+    "locale": {
+      "switchLanguage": "Nyelv váltása",
+      "searchPlaceholder": "Nyelv keresése…",
+      "noResults": "Nem található nyelv."
+    },
+    "connection": {
+      "connected": "csatlakozva",
+      "offline": "offline"
+    }
+  },
+  "Nav": {
+    "brandPrimary": "MediaMTX",
+    "brandSecondary": "Connect",
+    "logoMark": "M",
+    "primaryAria": "Elsődleges",
+    "items": {
+      "live": "Élő",
+      "recordings": "Felvételek",
+      "appConfig": "Alkalmazás konfiguráció",
+      "mediamtxConfig": "MediaMTX konfiguráció"
+    }
+  },
+  "Streams": {
+    "toolbar": {
+      "summary": "{count, plural, one {# folyam} other {# folyam}} · {live} lejátszás alatt",
+      "playbackAria": "Lejátszási mód",
+      "playbackAuto": "AUTO",
+      "playbackLowLat": "LOW-LAT",
+      "playbackCompat": "COMPAT",
+      "densityAria": "Rács sűrűsége"
+    },
+    "errors": {
+      "unreachableTitle": "A MediaMTX nem érhető el",
+      "unreachableLead": "Nincs válasz a MediaMTX API-tól a következő címen:",
+      "openAppConfig": "Alkalmazás konfiguráció megnyitása",
+      "retry": "Újra",
+      "retryCountdown": "automatikus újrapróbálkozás {seconds} mp múlva"
+    },
+    "empty": {
+      "noStreamsTitle": "Egyetlen folyam sem közvetít",
+      "noStreamsLead": "Irányítson bármilyen közvetítőt a MediaMTX felé, és itt megjelenik:",
+      "streamNamePlaceholder": "mystream"
+    },
+    "banner": {
+      "playbackUrlTitle": "A lejátszási URL nincs beállítva",
+      "playbackUrlLead": "Állítsa be a böngésző felé néző MediaMTX URL-t az alkalmazás konfigurációban az élő lejátszás engedélyezéséhez.",
+      "openAppConfig": "Alkalmazás konfiguráció megnyitása"
+    },
+    "card": {
+      "live": "LIVE",
+      "snapshot": "SNAPSHOT",
+      "snapshotWithAge": "SNAPSHOT · {age}",
+      "protocolHls": "HLS",
+      "protocolWebrtc": "WEBRTC",
+      "protocolConnecting": "CONNECTING",
+      "protocolFellBack": "WEBRTC UNAVAILABLE",
+      "noSnapshot": "még nincs pillanatkép — első rögzítés ~30 mp múlva",
+      "onlineSince": "online {time} óta · {uptime}",
+      "idle": "inaktív",
+      "recIndicator": "· ● REC",
+      "viewers": "{count, plural, one {# néző} other {# néző}}",
+      "play": "Lejátszás",
+      "stop": "Leállítás",
+      "playAria": "{streamName} lejátszása",
+      "actionsAria": "Folyam műveletek",
+      "stub": {
+        "title": "Még nincs megvalósítva",
+        "description": "Ez a művelet szerepel a tervekben — feljegyeztük."
+      },
+      "recordError": {
+        "title": "A felvétel módosítása nem sikerült",
+        "description": "A MediaMTX elutasította a módosítást – ennek a streamnek a felvétele változatlan."
+      },
+      "copyPublish": {
+        "title": "Közzétételi URL-ek másolva",
+        "description": "Illessze be őket a kamerába vagy a kódolóba."
+      },
+      "copyPublishError": {
+        "title": "Nem sikerült másolni",
+        "description": "A böngésző letiltotta a vágólaphoz való hozzáférést."
+      },
+      "snapshotSuccess": {
+        "title": "Pillanatkép elkészült",
+        "description": "A bélyegkép most a rögzített képkockát mutatja."
+      },
+      "snapshotError": {
+        "title": "Nem sikerült pillanatképet készíteni",
+        "description": "A MediaMTX nem tudott képkockát rögzíteni — az adatfolyam offline lehet."
+      },
+      "menu": {
+        "openDetail": "Folyam részleteinek megnyitása",
+        "viewRecordings": "Felvételek megtekintése",
+        "takeSnapshot": "Pillanatkép készítése",
+        "record": "Felvétel",
+        "recordOn": "ON",
+        "recordOff": "OFF",
+        "copyPublishUrls": "Közzétételi URL-ek másolása",
+        "shareEmbed": "Megosztás és beágyazás…",
+        "editPathConfig": "Útvonal-konfiguráció szerkesztése",
+        "editHooks": "Hookok szerkesztése"
+      }
+    }
+  },
+  "Recordings": {
+    "crumbRecordings": "Felvételek",
+    "toolbar": {
+      "summary": "{streams, plural, one {# folyam} other {# folyam}} · {recordings, plural, one {# felvétel} other {# felvétel}}",
+      "filterPlaceholder": "Folyamok szűrése…",
+      "filterAria": "Folyamok szűrése"
+    },
+    "card": {
+      "recordingsChip": "{count, plural, one {# felvétel} other {# felvétel}}",
+      "latest": "legutóbbi {time}",
+      "openAria": "Felvételek megtekintése ehhez: {name}"
+    },
+    "empty": {
+      "noRecordingsTitle": "Még nincsenek felvételek",
+      "noRecordingsLead": "A felvételek itt jelennek meg, amint a MediaMTX elkezdi rögzíteni a folyamokat.",
+      "enableRecording": "Felvétel engedélyezése",
+      "noMatchingTitle": "Nincs egyező folyam",
+      "noMatchingDescription": "Egyetlen folyam sem felel meg ennek: „{query}”."
+    },
+    "errors": {
+      "directoryTitle": "A felvételek könyvtára nem olvasható",
+      "directoryLead": "A felvételek nem olvashatók itt:",
+      "openAppConfig": "Alkalmazás konfiguráció megnyitása",
+      "readErrorTitle": "A felvételek nem olvashatók",
+      "readErrorDescription": "Győződjön meg róla, hogy a felvételek könyvtára létezik és megfelelő jogosultságokkal rendelkezik."
+    },
+    "detail": {
+      "totals": "{count, plural, one {# felvétel} other {# felvétel}}"
+    },
+    "groups": {
+      "todayEyebrow": "Ma — {date}",
+      "yesterdayEyebrow": "Tegnap — {date}"
+    },
+    "row": {
+      "play": "Lejátszás",
+      "close": "Bezárás",
+      "cancel": "Mégse",
+      "playAria": "A(z) {time} időpontú felvétel lejátszása",
+      "downloadAria": "Felvétel letöltése: {file}",
+      "downloading": "letöltés… {received} / {total} · {rate}",
+      "downloadComplete": "Letöltés kész",
+      "downloadFailed": "A letöltés nem sikerült"
+    },
+    "player": {
+      "play": "Lejátszás",
+      "pause": "Szünet",
+      "seek": "Tekerés"
+    },
+    "pagination": {
+      "aria": "Lapozás",
+      "showing": "Megjelenítve: {from}–{to} / {total}",
+      "previous": "Előző oldal",
+      "next": "Következő oldal"
+    }
+  },
+  "Config": {
+    "invalidConfig": "Érvénytelen konfiguráció",
+    "appConfig": {
+      "pageHeader": "Alkalmazás konfiguráció",
+      "pageSubHeader": "A MediaMTX Connect által használt kapcsolat és tárolás."
+    },
+    "mediamtxConfig": {
+      "pageHeader": "MediaMTX konfiguráció",
+      "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve."
+    },
+    "pathDefaults": {
+      "pageHeader": "Útvonalak alapértékei",
+      "pageSubHeader": "Minden stream által örökölt beállítások, a kiszolgálóra mentve."
+    },
+    "pathConfig": {
+      "pageHeader": "Útvonal-konfiguráció · {name}",
+      "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",
+      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül."
+    },
+    "saveBar": {
+      "unsaved": "{count, plural, one {# mentetlen módosítás} other {# mentetlen módosítás}}",
+      "needsAttention": "{count, plural, one {# mező figyelmet igényel} other {# mező figyelmet igényel}}",
+      "discard": "Elvetés",
+      "reset": "Visszaállítás",
+      "save": "Mentés",
+      "saveToServer": "Mentés a szerverre"
+    },
+    "formFields": {
+      "oneValuePerLine": "Soronként egy érték."
+    },
+    "clientForm": {
+      "sections": {
+        "mediamtxConnection": "MediaMTX kapcsolat",
+        "storage": "Tárolás"
+      },
+      "playbackBadge": "Az élő lejátszáshoz szükséges",
+      "fields": {
+        "mediaMtxUrl": {
+          "label": "MediaMTX URL",
+          "description": "A MediaMTX példányának címe. Docker-hálózaton belül használhatja a konténer nevét; egyébként használja a külső IP-t vagy a hosztnevet."
+        },
+        "mediaMtxApiPort": {
+          "label": "API port",
+          "description": "A MediaMTX API portja."
+        },
+        "remoteMediaMtxUrl": {
+          "label": "Lejátszási URL",
+          "description": "A MediaMTX szerver böngészőből elérhető, kifelé mutató URL-je. Az élő lejátszás innen tölti be a folyamokat."
+        },
+        "recordingsDirectory": {
+          "label": "Felvételek könyvtára",
+          "description": "A MediaMTX felvételeket tartalmazó könyvtár (Docker használata esetén nem javasolt módosítani)."
+        },
+        "screenshotsDirectory": {
+          "label": "Képernyőképek könyvtára",
+          "description": "A generált pillanatképek könyvtára (Docker használata esetén nem javasolt módosítani)."
+        }
+      },
+      "toasts": {
+        "success": "Alkalmazás konfiguráció mentve",
+        "errorTitle": "Az alkalmazás konfiguráció mentése nem sikerült",
+        "errorDescription": "Ellenőrizze az űrlap értékeit, és próbálja újra."
+      }
+    },
+    "mediamtxForm": {
+      "sectionTitles": {
+        "logging": "Naplózás",
+        "api": "API",
+        "hooks": "Hookok",
+        "rtsp": "RTSP",
+        "rtmp": "RTMP",
+        "hls": "HLS",
+        "webrtc": "WebRTC",
+        "srt": "SRT",
+        "recording": "Felvétel",
+        "pathHooks": "Útvonal hookok"
+      },
+      "sectionDescriptions": {
+        "logging": "Naplókimenet, időkorlátok és globális korlátok.",
+        "api": "A HTTP API, amelyet maga a MediaMTX Connect használ.",
+        "hooks": "Parancsok, amelyeket a MediaMTX kapcsolati eseményekkor futtat.",
+        "rtsp": "Folyamok közzététele és fogadása RTSP-n keresztül.",
+        "rtmp": "Folyamok közzététele és fogadása RTMP-n keresztül.",
+        "hls": "Folyamok kiszolgálása HLS-ként a böngészős lejátszáshoz.",
+        "webrtc": "Alacsony késleltetésű böngészős lejátszás és közzététel.",
+        "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
+        "recording": "Streamek rögzítése lemezre.",
+        "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat."
+      },
+      "enabled": "Engedélyezve",
+      "off": "Kikapcsolva",
+      "hiddenWhileOff": "{count, plural, one {# beállítás rejtve kikapcsolt állapotban} other {# beállítás rejtve kikapcsolt állapotban}}",
+      "rail": {
+        "onThisPage": "Ezen az oldalon",
+        "aria": "Konfigurációs szakaszok"
+      },
+      "iceServers": {
+        "add": "ICE szerver hozzáadása",
+        "urlPlaceholder": "url",
+        "usernamePlaceholder": "username",
+        "passwordPlaceholder": "password",
+        "urlAria": "{index}. ICE szerver URL-je",
+        "usernameAria": "{index}. ICE szerver felhasználóneve",
+        "passwordAria": "{index}. ICE szerver jelszava",
+        "removeAria": "{index}. ICE szerver eltávolítása"
+      },
+      "help": {
+        "logLevel": "A naplókimenet részletessége (error, warn, info vagy debug).",
+        "logDestinations": "Hová íródjanak a naplók (stdout, file vagy syslog).",
+        "logFile": "A naplófájl elérési útja, ha a logDestinations tartalmazza a file értéket.",
+        "readTimeout": "Olvasási műveletek időkorlátja.",
+        "writeTimeout": "Írási műveletek időkorlátja.",
+        "writeQueueSize": "A kimenő sor mérete kapcsolatonként. Kettő hatványának kell lennie.",
+        "udpMaxPayloadSize": "A kimenő UDP csomagok maximális mérete.",
+        "externalAuthenticationURL": "Külső hitelesítési szerver URL-je, amely minden kapcsolatnál meghívódik.",
+        "apiAddress": "A HTTP API figyelési címe.",
+        "metrics": "Prometheus-kompatibilis metrikák közzététele.",
+        "metricsAddress": "A metrika-végpont figyelési címe.",
+        "pprof": "A Go pprof profilozó végpont közzététele.",
+        "pprofAddress": "A pprof végpont figyelési címe.",
+        "runOnConnect": "Kliens csatlakozásakor futtatandó parancs.",
+        "runOnConnectRestart": "A parancs újraindítása, ha kilép.",
+        "runOnDisconnect": "Kliens lecsatlakozásakor futtatandó parancs.",
+        "rtspAddress": "Az RTSP szerver figyelési címe (TCP).",
+        "rtspsAddress": "Az RTSPS (TLS) szerver figyelési címe.",
+        "rtpAddress": "Figyelési cím az RTP csomagokhoz UDP-n keresztül.",
+        "rtcpAddress": "Figyelési cím az RTCP csomagokhoz UDP-n keresztül.",
+        "multicastIPRange": "A multicast kézbesítéshez használt IP-tartomány.",
+        "multicastRTPPort": "Port a multicast RTP csomagokhoz.",
+        "multicastRTCPPort": "Port a multicast RTCP csomagokhoz.",
+        "protocols": "Az RTSP szerver által elfogadott átviteli protokollok (udp, multicast vagy tcp).",
+        "encryption": "TLS titkosítási szabályzat (no, strict vagy optional).",
+        "serverKey": "A TLS szerverkulcs elérési útja.",
+        "serverCert": "A TLS szervertanúsítvány elérési útja.",
+        "authMethods": "Az RTSP szerver által elfogadott hitelesítési módszerek (basic vagy digest).",
+        "rtmpAddress": "Az RTMP szerver figyelési címe.",
+        "rtmpEncryption": "TLS titkosítási szabályzat RTMP-hez (no, strict vagy optional).",
+        "rtmpsAddress": "Az RTMPS (TLS) szerver figyelési címe.",
+        "rtmpServerKey": "Az RTMPS szerverkulcs elérési útja.",
+        "rtmpServerCert": "Az RTMPS szervertanúsítvány elérési útja.",
+        "hlsAddress": "A HLS szerver figyelési címe.",
+        "hlsEncryption": "HLS kiszolgálása TLS-en (HTTPS) keresztül.",
+        "hlsServerKey": "A HLS szerverkulcs elérési útja.",
+        "hlsServerCert": "A HLS szervertanúsítvány elérési útja.",
+        "hlsAlwaysRemux": "Folyamok remuxolása akkor is, ha senki sem nézi.",
+        "hlsVariant": "HLS variáns (mpegts, fmp4 vagy lowLatency).",
+        "hlsSegmentCount": "A lejátszási listában megtartott szegmensek száma.",
+        "hlsSegmentDuration": "Az egyes szegmensek minimális hossza.",
+        "hlsPartDuration": "Az egyes részek hossza alacsony késleltetésű módban.",
+        "hlsSegmentMaxSize": "Az egyes szegmensek maximális mérete.",
+        "hlsAllowOrigin": "Az Access-Control-Allow-Origin fejléc értéke.",
+        "hlsTrustedProxies": "A HLS szerver elé helyezett proxyk IP-címei vagy hálózatai.",
+        "hlsDirectory": "Szegmensek lemezre írása ebbe a könyvtárba a RAM helyett.",
+        "webrtcAddress": "A WebRTC HTTP szerver figyelési címe.",
+        "webrtcEncryption": "WebRTC kiszolgálása TLS-en (HTTPS) keresztül.",
+        "webrtcServerKey": "A WebRTC szerverkulcs elérési útja.",
+        "webrtcServerCert": "A WebRTC szervertanúsítvány elérési útja.",
+        "webrtcAllowOrigin": "Az Access-Control-Allow-Origin fejléc értéke.",
+        "webrtcTrustedProxies": "A WebRTC szerver elé helyezett proxyk IP-címei vagy hálózatai.",
+        "webrtcLocalUDPAddress": "A WebRTC forgalomhoz használt helyi UDP-cím.",
+        "webrtcLocalTCPAddress": "A WebRTC forgalomhoz használt helyi TCP-cím.",
+        "webrtcIPsFromInterfaces": "Jelölt IP-címek gyűjtése a gazdagép hálózati interfészeiről.",
+        "webrtcIPsFromInterfacesList": "Interfészek, amelyekről a jelölt IP-címeket gyűjti. Üres esetén az összes.",
+        "webrtcAdditionalHosts": "További hosztok vagy IP-címek, amelyeket WebRTC-jelöltként hirdet.",
+        "webrtcICEServers2": "WebRTC kapcsolatok létrehozásához használt STUN vagy TURN szerverek.",
+        "srtAddress": "Az SRT szerver figyelési címe.",
+        "recordPath": "A felvételi szegmensek útvonala. A %path a stream neve.",
+        "recordFormat": "A felvételi szegmensek konténere (fmp4 vagy mpegts).",
+        "recordPartDuration": "Az egyes részek hossza fmp4 felvételeknél.",
+        "recordSegmentDuration": "Az egyes felvételi szegmensek hossza.",
+        "recordDeleteAfter": "Szegmensek törlése ennyi idő után. A nulla kikapcsolja a törlést.",
+        "runOnInit": "Az útvonal inicializálásakor futtatandó parancs.",
+        "runOnInitRestart": "A parancs újraindítása, ha kilép.",
+        "runOnDemand": "Akkor futtatandó parancs, amikor egy kliens olvasni kezd, és az útvonalnak nincs közvetítője.",
+        "runOnDemandRestart": "A parancs újraindítása, ha kilép.",
+        "runOnDemandStartTimeout": "Meddig várjon az igény szerinti közvetítő elindulására.",
+        "runOnDemandCloseAfter": "Az igény szerinti parancs leállítása ennyi idővel az utolsó olvasó távozása után.",
+        "runOnUnDemand": "Az igény szerinti parancs leállításakor futtatandó parancs.",
+        "runOnReady": "Akkor futtatandó parancs, amikor a stream készen áll az olvasásra.",
+        "runOnReadyRestart": "A parancs újraindítása, ha kilép.",
+        "runOnNotReady": "Akkor futtatandó parancs, amikor a stream már nem áll készen.",
+        "runOnRead": "Akkor futtatandó parancs, amikor egy kliens olvasni kezdi ezt az útvonalat.",
+        "runOnReadRestart": "A parancs újraindítása, ha kilép.",
+        "runOnUnread": "Akkor futtatandó parancs, amikor egy kliens abbahagyja ennek az útvonalnak az olvasását.",
+        "runOnRecordSegmentCreate": "Felvételi szegmens létrehozásakor futtatandó parancs.",
+        "runOnRecordSegmentComplete": "Felvételi szegmens befejeződésekor futtatandó parancs."
+      },
+      "toasts": {
+        "success": "MediaMTX konfiguráció mentve",
+        "errorTitle": "A MediaMTX konfiguráció mentése nem sikerült",
+        "errorDescription": "Ellenőrizze az űrlap értékeit, és próbálja újra."
+      }
+    }
+  }
+}
