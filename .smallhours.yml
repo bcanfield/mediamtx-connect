@@ -1,0 +1,38 @@
+# smallhours consumer config. Every key is OPTIONAL — delete any line to take
+# the default shown. setup-repo.sh drops this into a new consumer repo alongside
+# the stub workflow. Defaults live in scripts/lib/config.sh.
+#
+# Comments stay on their own lines so this passes strict YAML linters as-is.
+version: 1
+
+# Per-stage Claude model. Default: claude-sonnet-5 for every stage.
+# auto_fix and resolve_conflict are Phase 2.
+models:
+  implement: claude-sonnet-5
+  address_review: claude-sonnet-5
+  auto_fix: claude-sonnet-5
+  resolve_conflict: claude-sonnet-5
+
+# Per-stage --max-turns ceiling.
+# auto_fix and resolve_conflict are Phase 2.
+max_turns:
+  implement: 50
+  address_review: 30
+  auto_fix: 25
+  resolve_conflict: 20
+
+# Consecutive CI-fix attempts before giving up (Phase 2). Default: 3.
+attempt_cap: 3
+
+# Name of the consumer CI workflow the state machine gates on. Must match the
+# workflows entry in the stub's workflow_run trigger. Default: ci.
+ci_workflow: CI
+
+# Extra domains appended to the sandbox egress allowlist (GitHub + Anthropic are
+# always allowed). Default: none.
+egress_extra_domains: []
+
+# When true, the sandbox reaches registry.npmjs.org AND install lifecycle
+# scripts are disabled (NPM_CONFIG_IGNORE_SCRIPTS=true). When false (default),
+# npm has no network egress.
+npm_allowed: false
