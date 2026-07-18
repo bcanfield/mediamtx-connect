@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/bcanfield/mediamtx-connect/compare/2.1.3...2.1.4) (2026-07-18)
+
+### Bug Fixes
+
+* Bugfixes, translations, error fixes ([49b1357](https://github.com/bcanfield/mediamtx-connect/commit/49b1357f7aa0909a1cbaaee960570b5d0a2b7e6a))
+* Theming, spacing, bugfixes ([4e04022](https://github.com/bcanfield/mediamtx-connect/commit/4e04022929516bbd4759497c3ae8940ccd2e77a0))
+
 ## [2.1.3](https://github.com/bcanfield/mediamtx-connect/compare/2.1.2...2.1.3) (2026-07-10)
 
 ### Bug Fixes
