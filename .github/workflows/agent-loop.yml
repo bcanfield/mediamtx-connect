@@ -1,0 +1,42 @@
+# smallhours consumer stub — copy this into a consumer repo as
+# .github/workflows/agent-loop.yml. It is DELIBERATELY thin: triggers, a
+# permissions ceiling, and one versioned `uses:` line. All behaviour lives
+# behind the `@v1` tag in the toolkit repo, so this file rarely needs syncing
+# (drift is caught by setup/doctor.sh).
+#
+# Secret forwarding matches the three secrets agent-loop.yml declares as
+# required. setup-repo.sh creates those secrets + installs the Fixer App.
+#
+# Comments are kept on their own lines and scalars plain/single-quoted, so this
+# file passes strict consumer YAML linters (eslint-plugin-yml, yamllint) as-is.
+name: agent-loop
+
+# All five triggers the routing table keys off.
+on:
+  issues:
+    types: [labeled, unlabeled, closed]
+  pull_request_review:
+    types: [submitted]
+  workflow_run:
+    # Must match the ci_workflow name in .smallhours.yml.
+    workflows: [CI]
+    types: [completed]
+  schedule:
+    # Phase 1: no-op. Phase 2: sweep cadence. The stub never changes.
+    - cron: '*/15 * * * *'
+
+# Consumer-side ceiling. The reusable workflow cannot exceed this; it requests
+# less per job.
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  loop:
+    uses: bcanfield/smallhours/.github/workflows/agent-loop.yml@v1
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      AGENT_APP_ID: ${{ secrets.AGENT_APP_ID }}
+      AGENT_APP_PRIVATE_KEY: ${{ secrets.AGENT_APP_PRIVATE_KEY }}
