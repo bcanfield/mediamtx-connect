@@ -99,9 +99,6 @@ catalogs:
     hls.js:
       specifier: ^1.6.15
       version: 1.6.15
-    hono:
-      specifier: ^4.12.30
-      version: 4.12.30
     lucide-react:
       specifier: ^0.562.0
       version: 0.562.0
@@ -111,6 +108,9 @@ catalogs:
     pino:
       specifier: ^10.2.1
       version: 10.3.1
+    radix-ui:
+      specifier: ^1.4.3
+      version: 1.6.2
     react:
       specifier: ^19.2.7
       version: 19.2.7
@@ -217,7 +217,7 @@ importers:
         version: link:../../packages/contract
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.0.10(hono@4.12.30)
+        version: 2.0.10(hono@4.12.31)
       '@orpc/contract':
         specifier: 'catalog:'
         version: 1.14.8
@@ -229,7 +229,7 @@ importers:
         version: 0.13.11(typescript@6.0.3)(zod@4.4.3)
       hono:
         specifier: 'catalog:'
-        version: 4.12.30
+        version: 4.12.31
       node-cron:
         specifier: 'catalog:'
         version: 4.6.0
@@ -3711,8 +3711,8 @@ packages:
   hls.js@1.6.15:
     resolution: {integrity: sha512-E3a5VwgXimGHwpRGV+WxRTKeSp2DW5DI5MWv34ulL3t5UNmyJWCQ1KmLEHbYzcfThfXG8amBL+fCYPneGHC4VA==}
 
-  hono@4.12.30:
-    resolution: {integrity: sha512-emn+JoJjrN9YTpRDS5it/UI2SO9BAE37T6I3d963RxcZ81G9A4pr2SZTEiiaiKbzx+NKRg5BZ89fCL7gCJCUog==}
+  hono@4.12.31:
+    resolution: {integrity: sha512-zJIHFrl6bq3RDd2YusFNCDlM8qUprxKswyi/OPzPyzKDdyBXDqWx8bZlZ7R+saTdSTatUmb3O7K4SspGPaEOQg==}
     engines: {node: '>=16.9.0'}
 
   hook-std@2.0.0:
@@ -6368,9 +6368,9 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@hono/node-server@2.0.10(hono@4.12.30)':
+  '@hono/node-server@2.0.10(hono@4.12.31)':
     dependencies:
-      hono: 4.12.30
+      hono: 4.12.31
 
   '@hookform/resolvers@5.4.0(react-hook-form@7.71.1(react@19.2.7))':
     dependencies:
@@ -9471,7 +9471,7 @@ snapshots:
 
   hls.js@1.6.15: {}
 
-  hono@4.12.30: {}
+  hono@4.12.31: {}
 
   hook-std@2.0.0: {}
 
