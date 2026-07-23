@@ -41,7 +41,7 @@ catalog:
   eslint-plugin-react-refresh: ^0.5.3
   hls.js: ^1.6.15
   hono: ^4.12.30
-  lucide-react: ^0.562.0
+  lucide-react: ^1.0.0
   node-cron: ^4.2.1
   pino: ^10.2.1
   radix-ui: ^1.4.3
