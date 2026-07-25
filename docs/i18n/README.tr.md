@@ -79,6 +79,10 @@ http://localhost:3000 adresini açın, **Config** bölümüne gidin ve MediaMTX'
 
 > Not: Geliştirici belgeleri yalnızca İngilizce olarak tutulur. Uygulama arayüzü `/tr` altında Türkçe olarak sunulur.
 
+## Davranış Kuralları
+
+Bu proje bir [Davranış Kuralları](../../CODE_OF_CONDUCT.md) belgesini takip eder. Katılarak, bunu desteklemeniz beklenir.
+
 ## Lisans
 
 MIT

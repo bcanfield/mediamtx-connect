@@ -79,6 +79,10 @@ Abre http://localhost:3000, vai a **Config** e aponta-o para o teu MediaMTX.
 
 > Nota: a documentação para programadores é mantida apenas em inglês. A interface da aplicação está disponível em português em `/pt`.
 
+## Código de Conduta
+
+Este projeto segue um [Código de Conduta](../../CODE_OF_CONDUCT.md). Ao participar, espera-se que o respeite.
+
 ## Licença
 
 MIT

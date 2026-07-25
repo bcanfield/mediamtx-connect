@@ -79,6 +79,10 @@ Open http://localhost:3000, ga naar **Config** en richt het op je MediaMTX.
 
 > Opmerking: ontwikkelaarsdocumentatie wordt alleen in het Engels onderhouden. De applicatie-UI is in het Nederlands beschikbaar op `/nl`.
 
+## Gedragscode
+
+Dit project volgt een [Gedragscode](../../CODE_OF_CONDUCT.md). Door deel te nemen, wordt van je verwacht dat je je eraan houdt.
+
 ## Licentie
 
 MIT

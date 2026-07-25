@@ -79,6 +79,10 @@ Buka http://localhost:3000, ke **Config**, dan arahkan ke MediaMTX Anda.
 
 > Catatan: dokumentasi untuk pengembang hanya tersedia dalam bahasa Inggris. UI aplikasi tersedia dalam Bahasa Indonesia di `/id`.
 
+## Kode Etik
+
+Proyek ini mengikuti sebuah [Kode Etik](../../CODE_OF_CONDUCT.md). Dengan berpartisipasi, Anda diharapkan untuk mematuhinya.
+
 ## Lisensi
 
 MIT

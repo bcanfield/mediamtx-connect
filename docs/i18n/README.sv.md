@@ -79,6 +79,10 @@ docker compose up -d
 
 > Obs: utvecklardokumentation underhålls endast på engelska. Applikationens gränssnitt finns på svenska på `/sv`.
 
+## Uppförandekod
+
+Det här projektet följer en [uppförandekod](../../CODE_OF_CONDUCT.md). Genom att delta förväntas du upprätthålla den.
+
 ## Licens
 
 MIT

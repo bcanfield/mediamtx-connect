@@ -79,6 +79,10 @@ Otwórz http://localhost:3000, przejdź do **Config** i wskaż swoje MediaMTX.
 
 > Uwaga: dokumentacja dla deweloperów jest utrzymywana wyłącznie w języku angielskim. Interfejs aplikacji jest dostępny po polsku pod adresem `/pl`.
 
+## Kodeks postępowania
+
+Ten projekt przestrzega [Kodeksu postępowania](../../CODE_OF_CONDUCT.md). Uczestnicząc w nim, zobowiązujesz się go przestrzegać.
+
 ## Licencja
 
 MIT

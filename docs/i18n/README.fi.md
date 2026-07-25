@@ -79,6 +79,10 @@ Avaa http://localhost:3000, mene **Config**iin ja osoita se MediaMTX:ään.
 
 > Huomautus: kehittäjädokumentaatio ylläpidetään vain englanniksi. Sovelluksen käyttöliittymä on saatavilla suomeksi osoitteessa `/fi`.
 
+## Käytännesäännöt
+
+Tämä projekti noudattaa [käytännesääntöjä](../../CODE_OF_CONDUCT.md). Osallistumalla sinun odotetaan noudattavan niitä.
+
 ## Lisenssi
 
 MIT
