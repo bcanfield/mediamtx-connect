@@ -11,19 +11,25 @@
 # file passes strict consumer YAML linters (eslint-plugin-yml, yamllint) as-is.
 name: agent-loop
 
-# All five triggers the routing table keys off.
+# All the trigger surfaces the routing table keys off.
 on:
   issues:
     types: [labeled, unlabeled, closed]
+  pull_request:
+    # T9: an agent PR closed without merging hands the issue back.
+    types: [closed]
   pull_request_review:
-    types: [submitted]
+    # dismissed feeds the green-PR re-evaluation, not a re-summon.
+    types: [submitted, dismissed]
   workflow_run:
     # Must match the ci_workflow name in .smallhours.yml.
     workflows: [CI]
     types: [completed]
   schedule:
-    # Phase 1: no-op. Phase 2: sweep cadence. The stub never changes.
+    # Dispatcher + sweep cadence.
     - cron: '*/15 * * * *'
+  # Manual tick: runs the same dispatcher + sweep pass as the cron.
+  workflow_dispatch:
 
 # Consumer-side ceiling. The reusable workflow cannot exceed this; it requests
 # less per job.
