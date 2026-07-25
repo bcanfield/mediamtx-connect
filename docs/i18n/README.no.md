@@ -79,6 +79,10 @@ docker compose up -d
 
 > Merk: utviklerdokumentasjon vedlikeholdes kun på engelsk. Applikasjonens UI er tilgjengelig på norsk på `/no`.
 
+## Retningslinjer for oppførsel
+
+Dette prosjektet følger [retningslinjer for oppførsel](../../CODE_OF_CONDUCT.md). Ved å delta forventes det at du overholder dem.
+
 ## Lisens
 
 MIT

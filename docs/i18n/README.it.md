@@ -79,6 +79,10 @@ Apri http://localhost:3000, vai su **Config** e puntalo al tuo MediaMTX.
 
 > Nota: la documentazione per sviluppatori è mantenuta solo in inglese. L'interfaccia dell'applicazione è disponibile in italiano su `/it`.
 
+## Codice di Condotta
+
+Questo progetto segue un [Codice di Condotta](../../CODE_OF_CONDUCT.md). Partecipando, ci si aspetta che tu lo rispetti.
+
 ## Licenza
 
 MIT
