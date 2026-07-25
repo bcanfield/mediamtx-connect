@@ -93,6 +93,10 @@ Everything is configurable at runtime under **Config**. These env vars only seed
 
 [Architecture](ARCHITECTURE.md) · [Features](docs/FEATURES.md) · [Contributing](CONTRIBUTING.md)
 
+## Code of Conduct
+
+This project follows a [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you're expected to uphold it.
+
 ## License
 
 MIT
