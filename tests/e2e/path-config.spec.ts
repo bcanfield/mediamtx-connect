@@ -55,8 +55,11 @@ test.describe('MediaMTX Path Config Page', () => {
 
   test('should land on the hooks section only when deep-linked', async ({ page }) => {
     const hooks = page.getByRole('heading', { name: 'Path Hooks' })
-    // beforeEach already opened the plain route, which lands at the top.
-    await expect(hooks).not.toBeInViewport()
+    // beforeEach already opened the plain route, which lands at the top. The
+    // hooks heading sits within pixels of the 720px fold, so asserting it out
+    // of the viewport is flaky across CI runners — assert no scroll instead.
+    await expect(hooks).toBeAttached()
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
 
     await page.goto(`/config/mediamtx/paths/${STREAM}?section=pathHooks`)
     await expect(hooks).toBeInViewport()
