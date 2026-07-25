@@ -6,7 +6,7 @@
 version: 1
 
 # Per-stage Claude model. Default: claude-sonnet-5 for every stage.
-# auto_fix and resolve_conflict are Phase 2.
+# resolve_conflict is Phase 2 (M7).
 models:
   implement: claude-sonnet-5
   address_review: claude-sonnet-5
@@ -14,14 +14,15 @@ models:
   resolve_conflict: claude-sonnet-5
 
 # Per-stage --max-turns ceiling.
-# auto_fix and resolve_conflict are Phase 2.
+# resolve_conflict is Phase 2 (M7).
 max_turns:
   implement: 50
   address_review: 30
   auto_fix: 25
   resolve_conflict: 20
 
-# Consecutive CI-fix attempts before giving up (Phase 2). Default: 3.
+# Consecutive CI auto-fix attempts before giving up (0 disables auto-fix:
+# the first red hands straight off to a human). Default: 3.
 attempt_cap: 3
 
 # Max issues worked at once. ready-for-agent is an unbounded queue; the
