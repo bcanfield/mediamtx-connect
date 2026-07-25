@@ -15,9 +15,6 @@ catalogs:
     '@eslint-react/eslint-plugin':
       specifier: ^5.14.10
       version: 5.17.1
-    '@hono/node-server':
-      specifier: ^2.0.9
-      version: 2.0.10
     '@hookform/resolvers':
       specifier: ^5.2.2
       version: 5.4.0
@@ -96,6 +93,9 @@ catalogs:
     eslint-plugin-react-refresh:
       specifier: ^0.5.3
       version: 0.5.3
+    hls.js:
+      specifier: ^1.6.15
+      version: 1.6.16
     hono:
       specifier: ^4.12.30
       version: 4.12.31
@@ -217,7 +217,7 @@ importers:
         version: link:../../packages/contract
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.0.10(hono@4.12.31)
+        version: 2.0.11(hono@4.12.31)
       '@orpc/contract':
         specifier: 'catalog:'
         version: 1.14.8
@@ -850,8 +850,8 @@ packages:
   '@formatjs/icu-skeleton-parser@2.1.11':
     resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
-  '@hono/node-server@2.0.10':
-    resolution: {integrity: sha512-ZcnNVhKTmyDJeg0UlnZjvM73JBsTAuhrH/J4fjwGOw59PwOW51r4J+p6CsKZWXdKSme4MFqU62CZMOsdDrU4CA==}
+  '@hono/node-server@2.0.11':
+    resolution: {integrity: sha512-bjD221KPLoJTWUwso1J6fGKiTXEUFedG/s0visavY4zakFPkeGURMRNly+FhBHs7T8Dz4qHaZIMX9ZoJHSJtKA==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
@@ -6376,7 +6376,7 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@hono/node-server@2.0.10(hono@4.12.31)':
+  '@hono/node-server@2.0.11(hono@4.12.31)':
     dependencies:
       hono: 4.12.31
 
