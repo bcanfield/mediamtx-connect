@@ -79,6 +79,10 @@ docker compose up -d
 
 > Bemærk: udviklerdokumentation vedligeholdes kun på engelsk. Applikationens UI er tilgængelig på dansk på `/da`.
 
+## Adfærdskodeks
+
+Dette projekt følger et [adfærdskodeks](../../CODE_OF_CONDUCT.md). Ved at deltage forventes det, at du overholder det.
+
 ## Licens
 
 MIT

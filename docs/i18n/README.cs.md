@@ -79,6 +79,10 @@ Otevřete http://localhost:3000, přejděte do **Config** a nasměrujte ho na va
 
 > Poznámka: dokumentace pro vývojáře je udržována pouze v angličtině. Uživatelské rozhraní aplikace je v češtině dostupné na `/cs`.
 
+## Kodex chování
+
+Tento projekt se řídí [Kodexem chování](../../CODE_OF_CONDUCT.md). Účastí se očekává, že jej budete dodržovat.
+
 ## Licence
 
 MIT

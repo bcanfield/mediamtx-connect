@@ -79,6 +79,10 @@ docker compose up -d
 
 > Hinweis: Die Entwicklerdokumentation wird nur auf Englisch gepflegt. Die Anwendungsoberfläche ist auf Deutsch unter `/de` verfügbar.
 
+## Verhaltenskodex
+
+Dieses Projekt folgt einem [Verhaltenskodex](../../CODE_OF_CONDUCT.md). Durch die Teilnahme wird erwartet, dass du ihn einhältst.
+
 ## Lizenz
 
 MIT

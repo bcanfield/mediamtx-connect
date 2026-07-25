@@ -79,6 +79,10 @@ Ouvrez http://localhost:3000, allez dans **Config** et pointez-le vers votre Med
 
 > Note : la documentation pour les développeurs est maintenue uniquement en anglais. L'interface de l'application est disponible en français à l'adresse `/fr`.
 
+## Code de conduite
+
+Ce projet suit un [Code de conduite](../../CODE_OF_CONDUCT.md). En y participant, vous vous engagez à le respecter.
+
 ## Licence
 
 MIT

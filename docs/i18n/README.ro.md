@@ -79,6 +79,10 @@ Deschideți http://localhost:3000, mergeți la **Config** și îndreptați-l că
 
 > Notă: documentația pentru dezvoltatori este menținută doar în engleză. Interfața aplicației este disponibilă în română la `/ro`.
 
+## Cod de conduită
+
+Acest proiect respectă un [Cod de conduită](../../CODE_OF_CONDUCT.md). Prin participare, ești de acord să îl respecți.
+
 ## Licență
 
 MIT

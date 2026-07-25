@@ -79,6 +79,10 @@ Buksan ang http://localhost:3000, pumunta sa **Config**, at ituro ito sa iyong M
 
 > Tandaan: ang dokumentasyon para sa developer ay nasa English lamang. Available ang UI ng application sa Tagalog sa `/tl`.
 
+## Kodigo ng Pag-uugali
+
+Sinusunod ng proyektong ito ang isang [Kodigo ng Pag-uugali](../../CODE_OF_CONDUCT.md). Sa pakikilahok, inaasahang susundin mo ito.
+
 ## Lisensya
 
 MIT

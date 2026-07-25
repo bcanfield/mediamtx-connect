@@ -79,6 +79,10 @@ Mở http://localhost:3000, vào **Config**, và trỏ nó đến MediaMTX của
 
 > Lưu ý: tài liệu cho nhà phát triển chỉ được duy trì bằng tiếng Anh. Giao diện ứng dụng có sẵn bằng tiếng Việt tại `/vi`.
 
+## Quy tắc ứng xử
+
+Dự án này tuân theo một [Quy tắc ứng xử](../../CODE_OF_CONDUCT.md). Khi tham gia, bạn được kỳ vọng sẽ tuân thủ quy tắc này.
+
 ## Giấy phép
 
 MIT

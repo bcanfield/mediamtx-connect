@@ -79,6 +79,10 @@ Nyissa meg a http://localhost:3000 címet, lépjen a **Config**-ra, és mutasson
 
 > Megjegyzés: a fejlesztői dokumentáció csak angol nyelven van karbantartva. Az alkalmazás felülete magyar nyelven a `/hu` címen érhető el.
 
+## Magatartási kódex
+
+Ez a projekt egy [magatartási kódexet](../../CODE_OF_CONDUCT.md) követ. A részvétellel elvárt, hogy betartsd azt.
+
 ## Licenc
 
 MIT
