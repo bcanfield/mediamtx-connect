@@ -24,9 +24,26 @@ max_turns:
 # Consecutive CI-fix attempts before giving up (Phase 2). Default: 3.
 attempt_cap: 3
 
+# Max issues worked at once. ready-for-agent is an unbounded queue; the
+# dispatcher keeps at most this many in agent-working, promoting the rest as
+# slots free. Default: 3.
+max_concurrent: 3
+
 # Name of the consumer CI workflow the state machine gates on. Must match the
 # workflows entry in the stub's workflow_run trigger. Default: ci.
 ci_workflow: CI
+
+# Map canonical label names (CONTEXT.md vocabulary) to this repo's own label
+# strings, for repos with a pre-existing label scheme. Keys are canonical
+# names; values are what actually appears on issues/PRs. Unmapped names use
+# the canonical string. The workflow-trigger labels — ready-for-agent,
+# agent-working, and the PR marker agent — are FIXED in v1 and cannot be
+# remapped (the reusable workflow gates on them before config is readable).
+# Example:
+#   labels:
+#     in-review: "status: in review"
+#     ready-for-human: "status: needs human"
+labels: {}
 
 # Extra domains appended to the sandbox egress allowlist (GitHub + Anthropic are
 # always allowed). Default: none.
