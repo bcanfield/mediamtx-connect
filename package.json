@@ -6,8 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "predev": "node scripts/seed-fixtures.mjs",
-    "dev": "docker compose -f docker-compose.dev.yml up -d && turbo dev",
+    "dev": "node scripts/seed-fixtures.mjs && docker compose -f docker-compose.dev.yml up -d && turbo dev",
     "dev:stop": "docker compose -f docker-compose.dev.yml down",
     "build": "turbo build && rm -rf apps/api/public && cp -R apps/web/dist apps/api/public",
     "typecheck": "turbo typecheck",
