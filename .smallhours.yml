@@ -8,7 +8,7 @@ version: 1
 # Per-stage Claude model. Default: claude-sonnet-5 for every stage.
 # resolve_conflict is Phase 2 (M7).
 models:
-  implement: claude-sonnet-5
+  implement: claude-opus-5
   address_review: claude-sonnet-5
   auto_fix: claude-sonnet-5
   resolve_conflict: claude-sonnet-5
