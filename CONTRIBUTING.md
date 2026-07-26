@@ -9,11 +9,11 @@ pnpm install
 pnpm dev
 ```
 
-That's it — no `.env`, no separate setup step. `pnpm dev` starts MediaMTX + fake
-streams in Docker, seeds sample recordings/screenshots into `.dev-data/`, and
-runs the web + api dev servers. Web dev server at http://localhost:5173 (api on
-:3000). `pnpm dev:stop` stops the Docker stack (it's left running between
-sessions by design, like a local database).
+That's it — no `.env`, no separate setup step. `pnpm dev` seeds sample
+recordings/screenshots into `.dev-data/`, starts MediaMTX + fake streams in
+Docker, and runs the web + api dev servers. Web dev server at
+http://localhost:5173 (api on :3000). `pnpm dev:stop` stops the Docker stack
+(it's left running between sessions by design, like a local database).
 
 Requires Docker (for MediaMTX) and Node ≥22 + pnpm. `ffmpeg` is optional: the
 committed fixtures give the Recordings and Streams pages content out of the box;
