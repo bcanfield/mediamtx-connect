@@ -37,7 +37,7 @@ export interface StreamCardProps {
   /** MediaMTX's WebRTC port suffix. Absent or empty means WHEP isn't reachable. */
   webrtcAddress?: string
   remoteMediaMtxUrl: string
-  /** The server's publish URLs, prebuilt from its configured listen addresses. */
+  /** Publish URLs for the protocols the server serves, prebuilt from their listen addresses. */
   publishTargets: PublishTarget[]
   /** Which transport playback reaches for. What actually plays is the pill's job. */
   playbackMode: PlaybackMode
@@ -343,7 +343,7 @@ export function StreamCard({
                   {recording ? t('menu.recordOn') : t('menu.recordOff')}
                 </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={copyPublishUrls}>
+              <DropdownMenuItem onClick={copyPublishUrls} disabled={publishTargets.length === 0}>
                 {t('menu.copyPublishUrls')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={stub('share-embed')}>

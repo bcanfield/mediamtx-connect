@@ -85,14 +85,18 @@ export function ZeroStreamsPanel({ targets }: { targets: PublishTarget[] }) {
         </h2>
         <p className="text-[12px] text-muted-foreground">{t('noStreamsLead')}</p>
       </div>
-      <div className="flex w-full flex-col gap-1.5 overflow-x-auto rounded-md border bg-card p-3.5 text-left font-mono text-[11.5px] text-muted-foreground">
-        {targets.map(target => (
-          <span key={target.protocol} className="whitespace-nowrap">
-            {target.prefix}
-            <span className="text-link">{t('streamNamePlaceholder')}</span>
-          </span>
-        ))}
-      </div>
+      {/* A server with every source protocol disabled has no URL to hint at —
+          show no well rather than an empty one. */}
+      {targets.length > 0 && (
+        <div className="flex w-full flex-col gap-1.5 overflow-x-auto rounded-md border bg-card p-3.5 text-left font-mono text-[11.5px] text-muted-foreground">
+          {targets.map(target => (
+            <span key={target.protocol} className="whitespace-nowrap">
+              {target.prefix}
+              <span className="text-link">{t('streamNamePlaceholder')}</span>
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

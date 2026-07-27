@@ -35,6 +35,20 @@ describe('publishTargets', () => {
       'srt://cam.lan:8890?streamid=publish:',
     ])
   })
+
+  it('drops a protocol the server has disabled', () => {
+    const protocols = publishTargets('cam.lan', { rtmp: false }).map(t => t.protocol)
+    expect(protocols).toEqual(['RTSP', 'SRT'])
+  })
+
+  it('returns nothing when every source protocol is disabled', () => {
+    expect(publishTargets('cam.lan', { rtsp: false, rtmp: false, srt: false })).toEqual([])
+  })
+
+  it('keeps every protocol the server enables', () => {
+    const protocols = publishTargets('cam.lan', { rtsp: true, rtmp: true, srt: true }).map(t => t.protocol)
+    expect(protocols).toEqual(['RTSP', 'RTMP', 'SRT'])
+  })
 })
 
 describe('publishUrl', () => {
