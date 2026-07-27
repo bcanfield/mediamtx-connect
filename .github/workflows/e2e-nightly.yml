@@ -37,14 +37,7 @@ jobs:
       - name: Start MediaMTX with fake streams
         run: |
           docker compose -f docker-compose.dev.yml up -d
-          echo "Waiting for MediaMTX API..."
-          for i in $(seq 1 30); do
-            if curl -sf http://localhost:9997/v3/paths/list > /dev/null; then
-              echo "MediaMTX API is ready"; break
-            fi
-            [ "$i" = "30" ] && { echo "MediaMTX did not become ready"; docker logs mediamtx 2>&1 | tail -20; exit 1; }
-            sleep 2
-          done
+          node scripts/wait-for-mediamtx.mjs
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps
       - name: Build application

@@ -9,7 +9,8 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Layer | Tool | Scope | Location |
 |-------|------|-------|----------|
 | Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
-| E2E | Playwright | Full browser flows, byte-range MP4 streaming, locale switching, accessibility | `tests/e2e/*.spec.ts` |
+| API serving | Vitest + `app.request()` | HTTP behaviour of the Hono apps in-process against real fixtures: Range/206, content headers, traversal, health | `apps/api/src/media.serving.test.ts`, `health.test.ts` |
+| E2E | Playwright | Full browser flows, locale switching, accessibility, live MediaMTX round-trips | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
 > **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), covering `jobs.ts` and `router.ts`, and for `apps/web`, covering `lib/whep.ts` + `lib/playback.ts` (see `docs/adr/0003-hand-rolled-whep-client.md`). Contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
@@ -18,7 +19,8 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 
 ## Decision: which layer for a new feature?
 
-- Added a route, navigation, byte-range, or cross-page flow → **E2E**.
+- Added or changed an HTTP response — status, headers, Range, content type → **API serving** (`app.request()` in-process; no server, no browser, no Docker).
+- Added a route, navigation, or cross-page flow → **E2E**.
 - Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
 - Wrote api logic a browser can't observe — a cron, a spawned process, a timer, a filesystem fallback → **Unit**.
 - Everything else → cover it through the closest E2E flow for now (see the note above).
@@ -49,6 +51,7 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 - **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `save-bar`).
 - **Resilient E2E.** Assert "state A or state B" when both are valid (see `CONTRIBUTING.md`). Never `toHaveCount(n)` against live data.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
+- **A traversal test must escape to a file that exists.** Pointing `../..` at a path that isn't on disk passes on `existsSync` returning false and stays green with the guard deleted. `media.serving.test.ts`'s two traversal tests resolve to real fixture files and were both verified to return 200 with `safeJoin`'s check removed. This has shipped as a fake gate here once already.
 - **Fixtures** are small committed MP4s + PNGs under `tests/fixtures/`. Playwright's `globalSetup` copies them into `test-results/e2e-data/` (via `scripts/seed-fixtures.mjs`) before the webserver boots — hermetic and offline, no ffmpeg or MediaMTX needed.
 
 ## E2E projects
