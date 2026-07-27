@@ -11,7 +11,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
 | API serving | Vitest + `app.request()` | HTTP behaviour of the Hono apps in-process against real fixtures: Range/206, content headers, traversal, health | `apps/api/src/media.serving.test.ts`, `health.test.ts` |
 | Component | Vitest (happy-dom) + Testing Library + MSW | Rendered output, form state, Radix menus, and the oRPC calls behind them — deterministic, so assertions are unconditional | `apps/web/src/**/*.test.tsx` |
-| E2E | Playwright | Full browser flows, locale switching, accessibility, live MediaMTX round-trips | `tests/e2e/*.spec.ts` |
+| E2E | Playwright | Full browser flows, locale switching, accessibility, live MediaMTX round-trips, WHEP playback over a real peer connection | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
 > **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), covering `jobs.ts` and `router.ts`, and for `apps/web`, covering `lib/whep.ts` + `lib/playback.ts` (see `docs/adr/0003-hand-rolled-whep-client.md`). Contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
@@ -74,7 +74,7 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 
 ## E2E projects
 
-`playwright.config.ts` runs `chromium` only by default — 58 tests. It runs every spec, and this is what PRs and local runs get.
+`playwright.config.ts` runs `chromium` only by default — 60 tests. It runs every spec, and this is what PRs and local runs get.
 
 Setting `E2E_ALL_BROWSERS=1` adds four more projects:
 
@@ -84,6 +84,8 @@ Setting `E2E_ALL_BROWSERS=1` adds four more projects:
 Those four only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only; running them cross-browser doesn't change the outcome.
 
 **Only `.github/workflows/e2e-nightly.yml` sets that flag** (06:00 UTC daily, plus `workflow_dispatch`). The four extra projects tripled the PR suite for a regression class no current spec exercises — nothing in the cross-browser set drives HLS, `hls.js`, or WHEP. Moving them nightly keeps drift detection within a day. If a playback spec lands, cross-browser should be scoped to *that spec* rather than back to all of `uiSpecs`. See `docs/adr/0005-fast-test-suite.md`.
+
+That spec has now landed — `playback.spec.ts` drives WHEP against live MediaMTX — and it is still **chromium only**. Opting it into the other four projects is ADR 0005's payoff trigger, and it wants a deliberate look first: what Playwright's own Firefox and WebKit builds can negotiate over WebRTC is a separate question from what those browsers ship, and a nightly that goes red for the runner's WebRTC support rather than for ours is worse than no nightly coverage.
 
 `path-defaults`, `path-config`, `record-toggle` and `publish-urls` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. `publish-urls` patches the server-wide `rtmpAddress` to a non-default port and restores it (RTMP has no fixture publisher, so moving its port leaves the RTSP streams untouched). The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
 
