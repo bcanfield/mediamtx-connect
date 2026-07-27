@@ -1,118 +1,107 @@
 import { expect, test } from '@playwright/test'
 
+// Unguarded on purpose. globalSetup seeds tests/fixtures/recordings into the
+// e2e data dir before the server boots, so stream1..3 always have recordings —
+// the `if (hasCards)` wrappers these tests used to carry were tolerating a
+// state the fixtures rule out, and passing whenever the page rendered nothing.
+
 test.describe('Recordings Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/recordings')
   })
 
-  test('should show cards, an empty state, or an error panel', async ({ page }) => {
-    await page.waitForLoadState('networkidle')
-    const bodyText = await page.locator('body').textContent()
+  test('lists a card per stream that has recordings', async ({ page }) => {
+    const cards = page.locator('[data-testid="stream-summary-card"]')
 
-    const hasCards = (await page.locator('[data-testid="stream-summary-card"]').count()) > 0
-    const hasNoRecordingsMessage = bodyText?.includes('No recordings yet') ?? false
-    const hasDirectoryError = bodyText?.includes('Can\'t read the recordings directory') ?? false
-
-    expect(hasCards || hasNoRecordingsMessage || hasDirectoryError).toBe(true)
+    await expect(cards.first()).toBeVisible()
+    await expect(cards.filter({ hasText: 'stream1' })).toHaveCount(1)
   })
 
-  test('should show the totals summary and filter input when recordings exist', async ({ page }) => {
-    await page.waitForLoadState('networkidle')
-    const hasCards = (await page.locator('[data-testid="stream-summary-card"]').count()) > 0
-
-    if (hasCards) {
-      await expect(page.getByText(/\d+ streams? · \d+ recordings?/).first()).toBeVisible()
-      await expect(page.getByRole('searchbox', { name: 'Filter streams' })).toBeVisible()
-    }
+  test('shows the totals summary and the filter input', async ({ page }) => {
+    await expect(page.getByText(/\d+ streams? · \d+ recordings?/).first()).toBeVisible()
+    await expect(page.getByRole('searchbox', { name: 'Filter streams' })).toBeVisible()
   })
 
   test('pressing / focuses the filter input', async ({ page }) => {
-    await page.waitForLoadState('networkidle')
     const filter = page.getByRole('searchbox', { name: 'Filter streams' })
+    await expect(filter).toBeVisible()
 
-    if (await filter.isVisible().catch(() => false)) {
-      await page.keyboard.press('/')
-      await expect(filter).toBeFocused()
-    }
+    await page.keyboard.press('/')
+
+    await expect(filter).toBeFocused()
   })
 
   test('filters the grid client-side', async ({ page }) => {
-    await page.waitForLoadState('networkidle')
+    const cards = page.locator('[data-testid="stream-summary-card"]')
     const filter = page.getByRole('searchbox', { name: 'Filter streams' })
+    await expect(cards.first()).toBeVisible()
+    const allCount = await cards.count()
 
-    if (await filter.isVisible().catch(() => false)) {
-      const allCount = await page.locator('[data-testid="stream-summary-card"]').count()
-      await filter.fill('definitely-no-such-stream')
-      await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(0)
-      await expect(page.getByText('No matching streams')).toBeVisible()
-      await filter.clear()
-      await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(allCount)
-    }
+    await filter.fill('definitely-no-such-stream')
+    await expect(cards).toHaveCount(0)
+    await expect(page.getByText('No matching streams')).toBeVisible()
+
+    await filter.clear()
+    await expect(cards).toHaveCount(allCount)
   })
 })
 
 test.describe('Recording Detail Page', () => {
-  test('should handle non-existent stream gracefully', async ({ page }) => {
+  test('renders an unknown stream without crashing', async ({ page }) => {
     await page.goto('/recordings/non-existent-stream')
-    await expect(page.locator('body')).toBeVisible()
-    const bodyText = await page.locator('body').textContent()
-    const hasContent = bodyText && bodyText.length > 0
-    expect(hasContent).toBe(true)
+
+    await expect(page.getByRole('navigation', { name: 'breadcrumb' })).toBeVisible()
   })
 
-  test('should navigate to detail page from recordings list', async ({ page }) => {
+  test('navigates to the detail page from the list', async ({ page }) => {
     await page.goto('/recordings')
-    await page.waitForLoadState('networkidle')
+    const card = page.locator('[data-testid="stream-summary-card"]').filter({ hasText: 'stream1' })
 
-    const card = page.locator('[data-testid="stream-summary-card"]').first()
-    if (await card.isVisible().catch(() => false)) {
-      await card.click()
-      await expect(page).toHaveURL(/\/recordings\/.+/)
-    }
+    await card.click()
+
+    await expect(page).toHaveURL('/recordings/stream1')
   })
 
-  test('should show recording rows grouped by day when recordings exist', async ({ page }) => {
+  test('groups recording rows by day', async ({ page }) => {
     await page.goto('/recordings/stream1')
-    await page.waitForLoadState('networkidle')
-
     const rows = page.locator('[data-testid="recording-row"]')
-    if ((await rows.count()) > 0) {
-      await expect(rows.first().getByRole('button', { name: 'Play', exact: true })).toBeVisible()
-      // Day-group eyebrow headers render above the rows.
-      await expect(page.locator('section h2').first()).toBeVisible()
-    }
+
+    await expect(rows.first()).toBeVisible()
+    await expect(rows.first().getByRole('button', { name: 'Play', exact: true })).toBeVisible()
+    // Day-group eyebrow headers render above the rows.
+    await expect(page.locator('section h2').first()).toBeVisible()
   })
 
+  // The one recordings flow that genuinely needs a browser: a real <video>
+  // element pulling real MP4 bytes over the Range requests media.serving.test.ts
+  // covers at the header level.
   test('opens an inline player and tracks it in the URL', async ({ page }) => {
     await page.goto('/recordings/stream1')
-    await page.waitForLoadState('networkidle')
-
     const row = page.locator('[data-testid="recording-row"]').first()
-    if (await row.isVisible().catch(() => false)) {
-      await row.getByRole('button', { name: 'Play', exact: true }).click()
-      await expect(page).toHaveURL(/play=/)
-      await expect(row.locator('video')).toBeVisible()
-      await row.getByRole('button', { name: 'Close' }).click()
-      await expect(page).not.toHaveURL(/play=/)
-    }
+    await expect(row).toBeVisible()
+
+    await row.getByRole('button', { name: 'Play', exact: true }).click()
+
+    await expect(page).toHaveURL(/play=/)
+    await expect(row.locator('video')).toBeVisible()
+
+    await row.getByRole('button', { name: 'Close' }).click()
+    await expect(page).not.toHaveURL(/play=/)
   })
 })
 
 test.describe('Recordings Navigation', () => {
-  test('should navigate back to recordings list from detail breadcrumb', async ({ page }) => {
+  test('navigates back to the list from the detail breadcrumb', async ({ page }) => {
     await page.goto('/recordings/stream1')
-    await page.waitForLoadState('networkidle')
 
-    const backLink = page.getByRole('link', { name: 'Recordings', exact: true }).last()
-    if (await backLink.isVisible().catch(() => false)) {
-      await backLink.click()
-      await expect(page).toHaveURL(/\/recordings$/)
-    }
+    await page.getByRole('link', { name: 'Recordings', exact: true }).last().click()
+
+    await expect(page).toHaveURL(/\/recordings$/)
   })
 
-  test('should show the breadcrumb on the detail page', async ({ page }) => {
+  test('shows the breadcrumb on the detail page', async ({ page }) => {
     await page.goto('/recordings/stream1')
-    await page.waitForLoadState('networkidle')
+
     await expect(page.getByRole('navigation', { name: 'breadcrumb' })).toBeVisible()
   })
 })

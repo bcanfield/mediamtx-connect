@@ -2,7 +2,7 @@
 
 Reference for what to test, where it lives, and which tool runs it. Update this file when a layer or convention changes.
 
-> **In progress:** `docs/adr/0005-fast-test-suite.md` restructures these layers for speed. The CI half has landed (chromium-only PRs, cached Turborepo, docs-only skip — changes 3, 4, 6, 7). The layer half — a component layer under Vitest, `api`/`mediamtx` specs folded into unit tests, and the E2E specs they replace — has not. This file describes what ships today.
+> `docs/adr/0005-fast-test-suite.md` is the rationale for this file's current shape: why E2E is chromium-only, why the component layer exists, and why conditionals in a test body are a lint error.
 
 ## Layers
 
@@ -66,21 +66,22 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
 - **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `save-bar`).
-- **Resilient E2E.** Assert "state A or state B" when both are valid (see `CONTRIBUTING.md`). Never `toHaveCount(n)` against live data.
+- **No conditionals in a `test()` body — lint-enforced.** `if (await card.count() > 0) { ...assert... }` is green whether or not the feature works; 19 such tests had accumulated, and three of them ran in five browsers. The fixtures make unconditional assertions safe: `globalSetup` seeds the recordings, and `scripts/wait-for-mediamtx.mjs` gates the suite on the stream fleet being published *and* ready. If state genuinely varies, the test belongs in the component layer. Cleanup guards in `afterEach` (`if (!materialized) return`) are fine and not flagged.
+- **This supersedes the old "assert state A or state B" guidance.** That rule was a rational response to asserting against live data, and it is what produced the guarded tests. `toHaveCount(n)` against the *fixtures* is now correct — they are deterministic.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
 - **A traversal test must escape to a file that exists.** Pointing `../..` at a path that isn't on disk passes on `existsSync` returning false and stays green with the guard deleted. `media.serving.test.ts`'s two traversal tests resolve to real fixture files and were both verified to return 200 with `safeJoin`'s check removed. This has shipped as a fake gate here once already.
 - **Fixtures** are small committed MP4s + PNGs under `tests/fixtures/`. Playwright's `globalSetup` copies them into `test-results/e2e-data/` (via `scripts/seed-fixtures.mjs`) before the webserver boots — hermetic and offline, no ffmpeg or MediaMTX needed.
 
 ## E2E projects
 
-`playwright.config.ts` runs `chromium` only by default — 82 tests. It runs every spec, and this is what PRs and local runs get.
+`playwright.config.ts` runs `chromium` only by default — 58 tests. It runs every spec, and this is what PRs and local runs get.
 
-Setting `E2E_ALL_BROWSERS=1` adds four more projects, taking the run to 258 tests:
+Setting `E2E_ALL_BROWSERS=1` adds four more projects:
 
 - `firefox`, `webkit` — intended to catch HLS-native fallback regressions
 - `mobile-chrome` (Pixel 7), `mobile-safari` (iPhone 14) — covers the responsive grid
 
-Those four only run UI specs (`config`, `recordings`, `streams`, `a11y`) — 44 apiece. Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only; running them cross-browser doesn't change the outcome.
+Those four only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only; running them cross-browser doesn't change the outcome.
 
 **Only `.github/workflows/e2e-nightly.yml` sets that flag** (06:00 UTC daily, plus `workflow_dispatch`). The four extra projects tripled the PR suite for a regression class no current spec exercises — nothing in the cross-browser set drives HLS, `hls.js`, or WHEP. Moving them nightly keeps drift detection within a day. If a playback spec lands, cross-browser should be scoped to *that spec* rather than back to all of `uiSpecs`. See `docs/adr/0005-fast-test-suite.md`.
 

@@ -1,14 +1,11 @@
 # 0005 — Push coverage down the stack; shrink E2E to what needs a real server
 
 **Date:** 2026-07-27
-**Status:** Partially implemented
+**Status:** Implemented
 
-Changes **3, 4, 6, 7, 8** (CI restructuring, caching, chromium-only PRs, docs-only
-skip, `pnpm verify`) have landed. Changes **1, 2, 5** — the component layer,
-folding `api`/`mediamtx` into Vitest, and the conditional-assertion lint rule —
-have not, and **no E2E spec has been deleted**: their replacement does not exist
-yet, so removing them now would be a straight coverage loss. Strikethrough marks
-items withdrawn or revised by what implementation turned up.
+All eight changes have landed. Strikethrough marks items withdrawn or revised by
+what implementation turned up — three of them, listed under "What implementation
+disproved" below.
 
 ## Context
 
@@ -411,6 +408,38 @@ Local, on the implementation branch:
 The 258 → 82 figure is Playwright's own count and matches the CI log
 (`Running 258 tests using 2 workers`) exactly, so the E2E run should fall by
 roughly the same ratio once `workers: '100%'` is also in play.
+
+### Final shape, after all eight changes
+
+| | before | after |
+|---|---|---|
+| E2E tests (chromium) | 82 | **58** |
+| E2E executions in CI | 258 (5 projects, 2 workers) | **58** (1 project, 4 workers) |
+| E2E tests that can pass with the feature broken | 21 | **0** (lint-enforced) |
+| api unit/serving tests | 39 | **54** |
+| web tests | 31 logic | **31 logic + 21 component** |
+| `pnpm verify` | did not exist | **29.2s cold / 8.5s warm** |
+
+Net: 24 E2E tests removed, 36 fast tests added, and the Range/206 logic that the
+debt register wrongly believed was covered is now covered for the first time.
+
+### What implementation disproved
+
+Three things in the original proposal did not survive contact, and are struck
+through above rather than quietly dropped:
+
+1. **Dropping the ffmpeg install.** The claim that it only silenced cron noise
+   was wrong: `streams.spec.ts` asserts the "Snapshot captured" toast, which
+   spawns ffmpeg against the RTSP feed.
+2. **Sharing the build as an artifact.** Upload plus download costs more than the
+   3s rebuild it would have replaced; the Turborepo cache makes it a replay.
+3. **A separate browser-mode project for Radix.** happy-dom drives the dropdown
+   menu under `userEvent.click` with no shims at all.
+
+A fourth was caught only because the tests were checked against a mutated source:
+`vitest`'s `toHaveBeenCalledWith` is not strictly typed, so "a contract change
+breaks the component tests" was only half true until the assertions were given an
+explicit `satisfies`.
 
 ### Projected
 
