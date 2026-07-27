@@ -1,3 +1,4 @@
+import type { PublishTarget } from '@/lib/publish'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
 import { screen } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
@@ -31,12 +32,12 @@ afterEach(() => {
 })
 afterAll(() => server.close())
 
-async function openMenu(recording = false) {
+async function openMenu(recording = false, publishTargets: PublishTarget[] = []) {
   const view = await renderWithProviders(
     <StreamCard
       streamName="stream1"
       remoteMediaMtxUrl="http://localhost"
-      publishTargets={[]}
+      publishTargets={publishTargets}
       playbackMode="auto"
       recording={recording}
     />,
@@ -64,6 +65,22 @@ describe('stream actions menu', () => {
     await openMenu(false)
 
     expect(screen.getByRole('menuitem', { name: /Record.*OFF/ })).toBeInTheDocument()
+  })
+
+  // Every source protocol disabled leaves nothing to copy — offering the action
+  // would put an empty clipboard behind a success toast.
+  it('disables Copy publish URLs when the server serves no publish protocol', async () => {
+    await openMenu(false, [])
+
+    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
+      .toHaveAttribute('aria-disabled', 'true')
+  })
+
+  it('offers Copy publish URLs when the server serves one', async () => {
+    await openMenu(false, [{ protocol: 'RTSP', prefix: 'rtsp://cam.lan:8554/' }])
+
+    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
+      .not.toHaveAttribute('aria-disabled')
   })
 })
 
