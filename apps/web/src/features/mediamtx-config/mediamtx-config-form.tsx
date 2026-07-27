@@ -2,6 +2,7 @@ import type { GlobalConfigFormData } from '@connect/contract'
 import type { Control, FieldErrors, FieldPath, FieldValues, Resolver } from 'react-hook-form'
 import type { ConfigScope, SectionDef } from './sections'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TriangleAlertIcon } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
 import { useForm, useFormState, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -267,6 +268,13 @@ function ConfigSection<T extends FieldValues>({
           <SectionEnableSwitch control={control} section={section} />
         )}
       </header>
+
+      {section.warnsOnSave && (
+        <p className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-[11.5px] text-muted-foreground">
+          <TriangleAlertIcon aria-hidden className="mt-px size-3.5 shrink-0 text-warning" />
+          {t(`sectionWarnings.${section.id}`)}
+        </p>
+      )}
 
       {isOff
         ? (

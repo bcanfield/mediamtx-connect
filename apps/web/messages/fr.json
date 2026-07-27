@@ -269,6 +269,9 @@
         "recording": "Enregistre les flux sur le disque.",
         "pathHooks": "Commandes que MediaMTX exécute lors des événements de cycle de vie d'un chemin."
       },
+      "sectionWarnings": {
+        "pathHooks": "Enregistrer un hook redémarre le chemin et déconnecte son émetteur : le flux s'interrompt jusqu'à ce qu'il se reconnecte."
+      },
       "enabled": "Activé",
       "off": "Désactivé",
       "hiddenWhileOff": "{count, plural, one {# option masquée tant que désactivé} other {# options masquées tant que désactivé}}",

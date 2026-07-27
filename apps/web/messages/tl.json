@@ -269,6 +269,9 @@
         "recording": "I-record ang mga stream sa disk.",
         "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path."
       },
+      "sectionWarnings": {
+        "pathHooks": "Ang pag-save ng hook ay nagre-restart sa path at nagdidiskonekta sa publisher nito — mawawala ang stream hanggang muling kumonekta ang publisher."
+      },
       "enabled": "Naka-enable",
       "off": "Naka-off",
       "hiddenWhileOff": "{count, plural, one {# opsyon ang nakatago habang naka-off} other {# na opsyon ang nakatago habang naka-off}}",

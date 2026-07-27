@@ -269,6 +269,9 @@
         "recording": "Rekam aliran ke disk.",
         "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri."
       },
+      "sectionWarnings": {
+        "pathHooks": "Menyimpan hook akan memulai ulang jalur dan memutus koneksi publisher-nya — aliran terhenti sampai publisher terhubung kembali."
+      },
       "enabled": "Aktif",
       "off": "Nonaktif",
       "hiddenWhileOff": "{count, plural, other {# opsi disembunyikan saat nonaktif}}",

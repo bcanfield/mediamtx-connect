@@ -269,6 +269,9 @@
         "recording": "Streams auf die Festplatte aufzeichnen.",
         "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt."
       },
+      "sectionWarnings": {
+        "pathHooks": "Das Speichern eines Hooks startet den Pfad neu und trennt seinen Publisher — der Stream fällt aus, bis der Publisher sich wieder verbindet."
+      },
       "enabled": "Aktiviert",
       "off": "Aus",
       "hiddenWhileOff": "{count, plural, one {# Option ausgeblendet, solange deaktiviert} other {# Optionen ausgeblendet, solange deaktiviert}}",

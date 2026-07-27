@@ -269,6 +269,9 @@
         "recording": "Înregistrează fluxurile pe disc.",
         "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii."
       },
+      "sectionWarnings": {
+        "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează."
+      },
       "enabled": "Activat",
       "off": "Dezactivat",
       "hiddenWhileOff": "{count, plural, one {# opțiune ascunsă cât timp e dezactivat} few {# opțiuni ascunse cât timp e dezactivat} other {# de opțiuni ascunse cât timp e dezactivat}}",
