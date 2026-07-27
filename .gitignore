@@ -13,6 +13,7 @@ node_modules
 # build output
 dist
 .turbo
+.eslintcache
 apps/api/public
 
 # testing

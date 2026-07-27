@@ -120,48 +120,37 @@ test.describe('MediaMTX Global Config Page', () => {
     await expect(page.getByRole('heading', { name: 'MediaMTX Config' })).toBeVisible()
   })
 
+  // The `if (formVisible)` these carried tolerated a disconnected MediaMTX.
+  // scripts/wait-for-mediamtx.mjs now gates the suite on the fixture being up
+  // and ready, so a missing form is a failure rather than a branch.
   test('should display MediaMTX config keys verbatim when connected', async ({ page }) => {
     await page.goto('/config/mediamtx/global')
 
-    const formVisible = await page.locator('form').isVisible().catch(() => false)
-
-    if (formVisible) {
-      // Field labels are MediaMTX config keys, verbatim and never localized.
-      await expect(page.getByText('logLevel', { exact: true })).toBeVisible()
-      await expect(page.getByText('rtspAddress', { exact: true })).toBeVisible()
-      await expect(page.getByText('hlsAddress', { exact: true })).toBeVisible()
-    }
-    else {
-      const bodyText = await page.locator('body').textContent()
-      expect(bodyText).toBeTruthy()
-    }
+    // Field labels are MediaMTX config keys, verbatim and never localized.
+    await expect(page.getByText('logLevel', { exact: true })).toBeVisible()
+    await expect(page.getByText('rtspAddress', { exact: true })).toBeVisible()
+    await expect(page.getByText('hlsAddress', { exact: true })).toBeVisible()
   })
 
-  test('should reveal the pending-changes bar after editing when form is visible', async ({ page }) => {
+  test('should reveal the pending-changes bar after editing', async ({ page }) => {
     await page.goto('/config/mediamtx/global')
-    const formVisible = await page.locator('form').isVisible().catch(() => false)
 
-    if (formVisible) {
-      const logLevel = page.locator('input[name="logLevel"]').first()
-      await expect(logLevel).toBeVisible()
-      await logLevel.fill('debug')
+    const logLevel = page.locator('input[name="logLevel"]').first()
+    await expect(logLevel).toBeVisible()
+    await logLevel.fill('debug')
 
-      const saveBar = page.getByTestId('save-bar')
-      await expect(saveBar).toBeVisible({ timeout: 5000 })
-      // Dirty keys surface as mono chips by config key name.
-      await expect(saveBar.getByText('logLevel')).toBeVisible()
-      await expect(saveBar.getByRole('button', { name: 'Save to server' })).toBeVisible()
-    }
+    const saveBar = page.getByTestId('save-bar')
+    await expect(saveBar).toBeVisible({ timeout: 5000 })
+    // Dirty keys surface as mono chips by config key name.
+    await expect(saveBar.getByText('logLevel')).toBeVisible()
+    await expect(saveBar.getByRole('button', { name: 'Save to server' })).toBeVisible()
   })
 
   test('should render the section rail when connected', async ({ page }) => {
     await page.goto('/config/mediamtx/global')
-    const formVisible = await page.locator('form').isVisible().catch(() => false)
 
-    if (formVisible) {
-      const rail = page.getByRole('navigation', { name: 'Config sections' }).last()
-      await expect(rail.getByRole('button', { name: 'Logging' })).toBeVisible()
-      await expect(rail.getByRole('button', { name: 'WebRTC' })).toBeVisible()
-    }
+    const rail = page.getByRole('navigation', { name: 'Config sections' }).last()
+    await expect(rail.getByRole('button', { name: 'Logging' })).toBeVisible()
+    await expect(rail.getByRole('button', { name: 'WebRTC' })).toBeVisible()
   })
 })
