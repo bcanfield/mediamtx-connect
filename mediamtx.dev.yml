@@ -19,7 +19,10 @@
 # drives, and a wildcard-backed path can only be published from outside
 # this config.
 #
-# Keep the base settings below in sync with `mediamtx.yml`.
+# Keep the base settings below — api, hls, webrtc, webrtcAdditionalHosts,
+# pathDefaults, the `all_others` catch-all — in sync with `mediamtx.yml`, which
+# carries the matching pointer back here. There is no include/merge mechanism,
+# so the two copies only stay together by hand.
 
 # API settings
 api: yes
