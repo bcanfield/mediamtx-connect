@@ -16,7 +16,7 @@ models:
 # Per-stage --max-turns ceiling.
 # resolve_conflict is Phase 2 (M7).
 max_turns:
-  implement: 50
+  implement: 75
   address_review: 30
   auto_fix: 25
   resolve_conflict: 20
