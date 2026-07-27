@@ -269,6 +269,9 @@
         "recording": "ストリームをディスクに録画します。",
         "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。"
       },
+      "sectionWarnings": {
+        "pathHooks": "フックを保存するとパスが再起動し、パブリッシャーの接続が切れます。再接続するまでストリームは停止します。"
+      },
       "enabled": "有効",
       "off": "オフ",
       "hiddenWhileOff": "{count, plural, other {オフの間 # 個のオプションが非表示}}",

@@ -269,6 +269,9 @@
         "recording": "Graba las transmisiones en disco.",
         "pathHooks": "Comandos que MediaMTX ejecuta en los eventos del ciclo de vida de una ruta."
       },
+      "sectionWarnings": {
+        "pathHooks": "Guardar un hook reinicia la ruta y desconecta su publicador: la transmisión se corta hasta que vuelva a conectarse."
+      },
       "enabled": "Habilitado",
       "off": "Desactivado",
       "hiddenWhileOff": "{count, plural, one {# opción oculta mientras está desactivado} other {# opciones ocultas mientras está desactivado}}",

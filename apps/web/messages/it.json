@@ -269,6 +269,9 @@
         "recording": "Registra i flussi su disco.",
         "pathHooks": "Comandi che MediaMTX esegue sugli eventi del ciclo di vita di un percorso."
       },
+      "sectionWarnings": {
+        "pathHooks": "Salvare un hook riavvia il percorso e disconnette il suo publisher: il flusso si interrompe finché non si riconnette."
+      },
       "enabled": "Abilitato",
       "off": "Disattivato",
       "hiddenWhileOff": "{count, plural, one {# opzione nascosta finché disattivato} other {# opzioni nascoste finché disattivato}}",

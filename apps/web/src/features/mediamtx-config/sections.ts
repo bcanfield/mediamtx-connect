@@ -18,6 +18,8 @@ export interface SectionDef<T extends FieldValues> {
   enableField?: FieldPath<T>
   fields: SectionField<T>[]
   hasIceServers?: boolean
+  // sections whose save disrupts live streams; renders sectionWarnings.<id>
+  warnsOnSave?: boolean
 }
 
 // Board 2e's eight global-scope sections, in scroll order.
@@ -146,8 +148,12 @@ export const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
   },
   // Path-scoped hooks, in MediaMTX's own lifecycle order. `hooks` is taken by
   // the global scope's connect/disconnect commands, which are a different set.
+  // Writing any runOn* key makes MediaMTX re-create the path to arm the hook,
+  // which drops the publisher; a record* write doesn't (ADR 0002, verified on
+  // v1.19.2). Same save bar, different blast radius — hence the warning.
   {
     id: 'pathHooks',
+    warnsOnSave: true,
     fields: [
       { name: 'runOnInit', kind: 'text' },
       { name: 'runOnInitRestart', kind: 'switch' },

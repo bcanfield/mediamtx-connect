@@ -269,6 +269,9 @@
         "recording": "Streamek rögzítése lemezre.",
         "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat."
       },
+      "sectionWarnings": {
+        "pathHooks": "Egy hook mentése újraindítja az útvonalat és bontja a közzétevő kapcsolatát — a stream megszakad, amíg a közzétevő újra nem csatlakozik."
+      },
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",
       "hiddenWhileOff": "{count, plural, one {# beállítás rejtve kikapcsolt állapotban} other {# beállítás rejtve kikapcsolt állapotban}}",

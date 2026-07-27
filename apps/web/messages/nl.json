@@ -269,6 +269,9 @@
         "recording": "Neem streams op naar schijf.",
         "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf."
       },
+      "sectionWarnings": {
+        "pathHooks": "Een hook opslaan herstart het pad en verbreekt de verbinding met de publisher — de stream valt weg tot de publisher opnieuw verbindt."
+      },
       "enabled": "Ingeschakeld",
       "off": "Uit",
       "hiddenWhileOff": "{count, plural, one {# optie verborgen zolang uitgeschakeld} other {# opties verborgen zolang uitgeschakeld}}",

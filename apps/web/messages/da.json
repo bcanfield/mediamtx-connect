@@ -269,6 +269,9 @@
         "recording": "Optag streams til disk.",
         "pathHooks": "Kommandoer som MediaMTX kører ved stiens egne livscyklushændelser."
       },
+      "sectionWarnings": {
+        "pathHooks": "At gemme et hook genstarter stien og afbryder dens udgiver — streamen falder ud, indtil udgiveren forbinder igen."
+      },
       "enabled": "Aktiveret",
       "off": "Fra",
       "hiddenWhileOff": "{count, plural, one {# indstilling skjult mens slået fra} other {# indstillinger skjult mens slået fra}}",

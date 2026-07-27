@@ -269,6 +269,9 @@
         "recording": "Ghi luồng xuống đĩa.",
         "pathHooks": "Các lệnh MediaMTX chạy khi có sự kiện vòng đời của chính đường dẫn."
       },
+      "sectionWarnings": {
+        "pathHooks": "Lưu một hook sẽ khởi động lại đường dẫn và ngắt kết nối nguồn phát — luồng sẽ dừng cho đến khi nguồn phát kết nối lại."
+      },
       "enabled": "Đã bật",
       "off": "Tắt",
       "hiddenWhileOff": "{count, plural, other {# tùy chọn bị ẩn khi tắt}}",

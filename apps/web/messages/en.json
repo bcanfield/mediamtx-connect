@@ -269,6 +269,9 @@
         "recording": "Record streams to disk.",
         "pathHooks": "Commands MediaMTX runs on a path's own lifecycle events."
       },
+      "sectionWarnings": {
+        "pathHooks": "Saving a hook restarts the path and disconnects its publisher — the stream drops until it reconnects."
+      },
       "enabled": "Enabled",
       "off": "Off",
       "hiddenWhileOff": "{count, plural, one {# option hidden while off} other {# options hidden while off}}",

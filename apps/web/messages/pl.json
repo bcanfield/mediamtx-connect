@@ -269,6 +269,9 @@
         "recording": "Nagrywaj strumienie na dysk.",
         "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki."
       },
+      "sectionWarnings": {
+        "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie."
+      },
       "enabled": "Włączone",
       "off": "Wyłączone",
       "hiddenWhileOff": "{count, plural, one {# opcja ukryta, gdy wyłączone} few {# opcje ukryte, gdy wyłączone} many {# opcji ukrytych, gdy wyłączone} other {# opcji ukrytej, gdy wyłączone}}",
