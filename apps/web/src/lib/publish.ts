@@ -27,12 +27,20 @@ function portOf(address: string | undefined, fallback: number): number {
 
 // The one builder for a server's publish URLs, shared by the card's copy action
 // and the empty-state hints so the two can never disagree on a port.
+//
+// A protocol the server doesn't serve is left out entirely — its URL would look
+// valid and then silently refuse the publisher. MediaMTX's toggles default to
+// on, so only an explicit `false` drops a target: a missing flag (or a global
+// config we couldn't read) keeps it, same as the port fallback above.
 export function publishTargets(host: string, global: GlobalConfig | null | undefined): PublishTarget[] {
-  return [
-    { protocol: 'RTSP', prefix: `rtsp://${host}:${portOf(global?.rtspAddress, DEFAULT_PORTS.rtsp)}/` },
-    { protocol: 'RTMP', prefix: `rtmp://${host}:${portOf(global?.rtmpAddress, DEFAULT_PORTS.rtmp)}/` },
-    { protocol: 'SRT', prefix: `srt://${host}:${portOf(global?.srtAddress, DEFAULT_PORTS.srt)}?streamid=publish:` },
-  ]
+  const targets: PublishTarget[] = []
+  if (global?.rtsp !== false)
+    targets.push({ protocol: 'RTSP', prefix: `rtsp://${host}:${portOf(global?.rtspAddress, DEFAULT_PORTS.rtsp)}/` })
+  if (global?.rtmp !== false)
+    targets.push({ protocol: 'RTMP', prefix: `rtmp://${host}:${portOf(global?.rtmpAddress, DEFAULT_PORTS.rtmp)}/` })
+  if (global?.srt !== false)
+    targets.push({ protocol: 'SRT', prefix: `srt://${host}:${portOf(global?.srtAddress, DEFAULT_PORTS.srt)}?streamid=publish:` })
+  return targets
 }
 
 export function publishUrl(target: PublishTarget, streamName: string): string {
