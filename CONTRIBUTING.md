@@ -27,24 +27,34 @@ catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.m
 ## Tests
 
 ```bash
+pnpm verify           # lint + typecheck + i18n + unit/component — no Docker, seconds
+pnpm test:changed     # only tests your edits can reach
 pnpm build            # e2e runs the built single-server
-pnpm test:e2e         # headless
+pnpm test:e2e         # headless, chromium
 pnpm test:e2e:dev     # Playwright UI
 ```
 
-Spec inventory: `docs/FEATURES.md` §15.1.
+Spec inventory: `docs/FEATURES.md` §15.1. Layers and conventions: `docs/TESTING.md`.
 
-Write tests resilient to multiple states:
+Assert unconditionally. The fixtures are deterministic — `globalSetup` seeds the
+recordings and `scripts/wait-for-mediamtx.mjs` gates the suite on the stream
+fleet being ready — so there is no varying state to defend against:
 
 ```ts
 // Good
+await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(3)
+
+// Can't fail: green whether or not the feature works
 const cards = await page.locator('[class*="card"]').count()
 const empty = await page.getByText('No Recordings').isVisible()
 expect(cards > 0 || empty).toBe(true)
-
-// Brittle
-await expect(page.locator('[class*="card"]')).toHaveCount(3)
 ```
+
+> This reverses the "write tests resilient to multiple states" advice that used
+> to live here. It was a reasonable response to asserting against live MediaMTX,
+> but it is what produced 19 tests that passed with the feature broken. A
+> conditional inside a `test()` body is now a lint error; if state genuinely
+> varies, the test belongs in the component layer where it can be pinned.
 
 ## App settings storage
 

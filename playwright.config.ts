@@ -8,12 +8,20 @@ import { defineConfig, devices } from '@playwright/test'
 // browsers that would then race each other writing the same MediaMTX key.
 const uiSpecs = /\/(?:config|recordings|streams|a11y)\.spec\.ts/
 
+// The four extra browsers replay the same 44 UI tests, taking the run from 82
+// executions to 258. They stay opt-in: the nightly workflow sets this, PRs and
+// local runs get chromium only. See docs/adr/0005-fast-test-suite.md.
+const allBrowsers = !!process.env.E2E_ALL_BROWSERS
+
 export default defineConfig({
   testDir: './tests/e2e',
   globalSetup: './tests/e2e/global-setup.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 1,
+  retries: 1,
+  // Default is half the logical cores — 2 on a GitHub runner, which left half
+  // the machine idle.
+  workers: process.env.CI ? '100%' : undefined,
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:3000',
@@ -23,10 +31,14 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: uiSpecs },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: uiSpecs },
-    { name: 'mobile-chrome', use: { ...devices['Pixel 7'] }, testMatch: uiSpecs },
-    { name: 'mobile-safari', use: { ...devices['iPhone 14'] }, testMatch: uiSpecs },
+    ...allBrowsers
+      ? [
+          { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: uiSpecs },
+          { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: uiSpecs },
+          { name: 'mobile-chrome', use: { ...devices['Pixel 7'] }, testMatch: uiSpecs },
+          { name: 'mobile-safari', use: { ...devices['iPhone 14'] }, testMatch: uiSpecs },
+        ]
+      : [],
   ],
   webServer: {
     // Requires a prior `pnpm build` (which also copies the SPA into

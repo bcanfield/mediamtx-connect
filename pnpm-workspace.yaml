@@ -9,6 +9,8 @@ packages:
 # Single source of truth for third-party versions (pnpm catalogs).
 # Packages reference these as "catalog:"; bump versions here only.
 catalog:
+  # 6.0 is the final JS-based line and the official bridge to the native 7.0
+  # compiler: it errors on anything 7.0 drops, and typescript-eslint supports
   '@antfu/eslint-config': ^9.1.0
   '@axe-core/playwright': ^4.11.3
   '@eslint-react/eslint-plugin': ^5.14.10
@@ -27,6 +29,9 @@ catalog:
   '@tailwindcss/vite': ^4.1.18
   '@tanstack/react-query': ^5.101.2
   '@tanstack/react-router': ^1.170.18
+  '@testing-library/jest-dom': ^7.0.0
+  '@testing-library/react': ^16.3.2
+  '@testing-library/user-event': ^14.6.1
   '@types/node': ^26.1.1
   '@types/react': ^19.2.17
   '@types/react-dom': ^19.2.3
@@ -39,9 +44,11 @@ catalog:
   eslint: ^10.7.0
   eslint-plugin-react-hooks: ^7.1.1
   eslint-plugin-react-refresh: ^0.5.3
+  happy-dom: ^20.11.1
   hls.js: ^1.6.15
   hono: ^4.12.30
   lucide-react: ^0.562.0
+  msw: ^2.15.0
   node-cron: ^4.2.1
   pino: ^10.2.1
   radix-ui: ^1.4.3
@@ -56,8 +63,6 @@ catalog:
   tsx: ^4.23.1
   turbo: ^2.10.5
   tw-animate-css: ^1.4.0
-  # 6.0 is the final JS-based line and the official bridge to the native 7.0
-  # compiler: it errors on anything 7.0 drops, and typescript-eslint supports
   # it (peer <6.1.0) while 7.x is not yet supported. Bump to ^7 when
   # typescript-eslint does. Code is verified to also typecheck under 7.0.2.
   typescript: ^6.0.3

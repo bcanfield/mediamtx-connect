@@ -7,6 +7,39 @@ on:
     branches: [main, beta]
 
 jobs:
+  # Docs-only PRs don't need MediaMTX, Docker, or a browser. Gates only the
+  # expensive jobs (E2E, image smoke), and only on pull_request — pushes to
+  # main/beta always run everything so `release` never depends on a skipped job.
+  # A skipped required check reports success to branch protection; a skipped
+  # *workflow* would never report at all, which is why this is a job-level `if`
+  # rather than a top-level `paths-ignore`.
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Does this PR touch anything but docs?
+        id: filter
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Empty on push events, where the downstream jobs run unconditionally
+          # anyway. Fail open — an unknown base means run everything.
+          if [ -z "$BASE_SHA" ]; then
+            echo 'code=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git diff --name-only "$BASE_SHA" HEAD \
+            | grep -qvE '(^docs/|\.md$|^LICENSE$)'; then
+            echo 'code=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'code=false' >> "$GITHUB_OUTPUT"
+          fi
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -21,6 +54,19 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      # Turborepo's cache lives in .turbo, which dies with the runner — without
+      # this every run recomputes lint/typecheck/test/build for every package
+      # from cold, changed or not. Keyed per-commit so each run starts from the
+      # newest ancestor's cache rather than a fixed snapshot.
+      - name: Restore Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .turbo
+            .eslintcache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-build-
       - name: Lint
         run: pnpm lint
       - name: Typecheck
@@ -35,7 +81,8 @@ jobs:
   test:
     name: E2E Tests
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, changes]
+    if: github.event_name == 'push' || needs.changes.outputs.code == 'true'
     env:
       # Hermetic e2e data dir seeded from committed fixtures. Pinned so the
       # seeder and the webserver agree; kept separate from the dev dir
@@ -56,25 +103,44 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Restore Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: turbo-${{ runner.os }}-e2e-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-e2e-
+            turbo-${{ runner.os }}-build-
       - name: Install ffmpeg
-        # Committed PNG fixtures cover recording thumbnails; ffmpeg here only
-        # feeds the live-snapshot cron. Without it the server logs spawn errors.
+        # Not just cron noise-suppression: streams.spec.ts's "taking a snapshot
+        # on demand" asserts the "Snapshot captured" toast, which spawns ffmpeg
+        # against the RTSP feed. Removing this turns that test red.
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Seed test fixtures
         run: node scripts/seed-fixtures.mjs --target ./test-results/e2e-data
       - name: Start MediaMTX with fake streams
         run: |
           docker compose -f docker-compose.dev.yml up -d
-          echo "Waiting for MediaMTX API..."
-          for i in $(seq 1 30); do
-            if curl -sf http://localhost:9997/v3/paths/list > /dev/null; then
-              echo "MediaMTX API is ready"; break
-            fi
-            [ "$i" = "30" ] && { echo "MediaMTX did not become ready"; docker logs mediamtx 2>&1 | tail -20; exit 1; }
-            sleep 2
-          done
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+          node scripts/wait-for-mediamtx.mjs
+      - name: MediaMTX logs if it never readied
+        if: failure()
+        run: |
+          docker logs mediamtx 2>&1 | tail -30
+          docker logs fake-streams 2>&1 | tail -30
+      # Chromium only — the other four projects are nightly (e2e-nightly.yml).
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install Playwright chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright system deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+      # A turbo cache hit from the build job makes this a restore, not a rebuild.
       - name: Build application
         run: pnpm build
       - name: Run E2E tests
@@ -100,6 +166,8 @@ jobs:
   image-smoke:
     name: Docker image smoke
     runs-on: ubuntu-latest
+    needs: changes
+    if: github.event_name == 'push' || needs.changes.outputs.code == 'true'
 
     steps:
       - uses: actions/checkout@v4
