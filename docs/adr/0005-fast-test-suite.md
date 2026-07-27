@@ -136,7 +136,7 @@ moved on. ADR 0004 called this out and it remains true.
 ## Decision
 
 Move each test to the cheapest layer that can still catch its regression, and let
-E2E keep only what genuinely requires a real MediaMTX. Four changes, each
+E2E keep only what genuinely requires a real MediaMTX. Five changes, each
 independently landable.
 
 ### 1. A component/route layer — Vitest 4 browser mode + Testing Library + MSW
