@@ -368,6 +368,25 @@ before a push, and it costs three `package.json` lines.
 
 ### Measured after changes 3, 4, 6, 7, 8 landed
 
+CI run
+[30295825367](https://github.com/bcanfield/mediamtx-connect/actions/runs/30295825367),
+green, against the [baseline](https://github.com/bcanfield/mediamtx-connect/actions/runs/30213401612)
+at the top of this ADR. **Both are cold-cache runs** — this one *saved* the
+Turborepo and Playwright caches rather than restoring them, so it is the
+pessimistic number, not the steady state.
+
+| | before | after |
+|---|---|---|
+| **Total run wall clock** | 7m 16s | **3m 18s** |
+| `test` (E2E) job | 6m 39s | **~2m 27s** |
+| Playwright execution | `258 tests using 2 workers` — 4m 44s | **`82 tests using 4 workers` — 43.2s** |
+| `build` job | 28s | 39s (cold cache; lint 9s, typecheck 9s, unit 2s, build 2s) |
+| `changes` job | — | 8s |
+
+Playwright execution alone is **6.6× faster**. The `build` job is *slower* here
+because there was no cache to restore on the first run and it paid to save one —
+that reverses on subsequent runs.
+
 Local, on the implementation branch:
 
 | | before | after |
