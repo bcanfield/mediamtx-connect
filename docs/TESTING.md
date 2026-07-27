@@ -2,6 +2,8 @@
 
 Reference for what to test, where it lives, and which tool runs it. Update this file when a layer or convention changes.
 
+> **Proposed change:** `docs/adr/0005-fast-test-suite.md` proposes restructuring these layers for speed — a component layer under Vitest browser mode, `api`/`mediamtx` specs folded into unit tests, and a chromium-only PR matrix. This file describes what ships today; the ADR describes where it is headed.
+
 ## Layers
 
 | Layer | Tool | Scope | Location |
