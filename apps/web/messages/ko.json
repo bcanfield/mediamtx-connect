@@ -269,6 +269,9 @@
         "recording": "스트림을 디스크에 녹화합니다.",
         "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령."
       },
+      "sectionWarnings": {
+        "pathHooks": "훅을 저장하면 경로가 다시 시작되고 게시자의 연결이 끊깁니다. 게시자가 다시 연결될 때까지 스트림이 중단됩니다."
+      },
       "enabled": "활성화됨",
       "off": "꺼짐",
       "hiddenWhileOff": "{count, plural, other {꺼져 있는 동안 숨겨진 옵션 #개}}",

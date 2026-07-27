@@ -269,6 +269,9 @@
         "recording": "Tallenna striimit levylle.",
         "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa."
       },
+      "sectionWarnings": {
+        "pathHooks": "Hookin tallentaminen käynnistää polun uudelleen ja katkaisee sen julkaisijan yhteyden — striimi katkeaa, kunnes julkaisija yhdistää uudelleen."
+      },
       "enabled": "Käytössä",
       "off": "Pois",
       "hiddenWhileOff": "{count, plural, one {# valinta piilotettu, kun pois päältä} other {# valintaa piilotettu, kun pois päältä}}",

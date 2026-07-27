@@ -269,6 +269,9 @@
         "recording": "Ta opp strømmer til disk.",
         "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser."
       },
+      "sectionWarnings": {
+        "pathHooks": "Å lagre en hook starter stien på nytt og kobler fra utgiveren — strømmen faller ut til utgiveren kobler til igjen."
+      },
       "enabled": "Aktivert",
       "off": "Av",
       "hiddenWhileOff": "{count, plural, one {# alternativ skjult mens avslått} other {# alternativer skjult mens avslått}}",

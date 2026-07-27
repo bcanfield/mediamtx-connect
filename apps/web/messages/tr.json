@@ -269,6 +269,9 @@
         "recording": "Akışları diske kaydeder.",
         "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar."
       },
+      "sectionWarnings": {
+        "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir."
+      },
       "enabled": "Etkin",
       "off": "Kapalı",
       "hiddenWhileOff": "{count, plural, other {# seçenek kapalıyken gizli}}",

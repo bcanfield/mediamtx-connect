@@ -269,6 +269,9 @@
         "recording": "Spela in strömmar till disk.",
         "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser."
       },
+      "sectionWarnings": {
+        "pathHooks": "Att spara en hook startar om sökvägen och kopplar från dess utgivare — strömmen försvinner tills utgivaren ansluter igen."
+      },
       "enabled": "Aktiverad",
       "off": "Av",
       "hiddenWhileOff": "{count, plural, one {# alternativ dolt när avstängt} other {# alternativ dolda när avstängt}}",

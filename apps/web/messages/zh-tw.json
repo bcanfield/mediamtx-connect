@@ -269,6 +269,9 @@
         "recording": "將串流錄製到磁碟。",
         "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。"
       },
+      "sectionWarnings": {
+        "pathHooks": "儲存掛鉤會重新啟動路徑並中斷其發布者的連線：在發布者重新連線之前，串流會中斷。"
+      },
       "enabled": "已啟用",
       "off": "關閉",
       "hiddenWhileOff": "{count, plural, other {關閉時隱藏 # 個選項}}",

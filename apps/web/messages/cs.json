@@ -269,6 +269,9 @@
         "recording": "Nahrávat streamy na disk.",
         "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty."
       },
+      "sectionWarnings": {
+        "pathHooks": "Uložení hooku restartuje cestu a odpojí její vysílač — stream vypadne, dokud se vysílač znovu nepřipojí."
+      },
       "enabled": "Zapnuto",
       "off": "Vypnuto",
       "hiddenWhileOff": "{count, plural, one {# možnost je skryta, když je vypnuto} few {# možnosti jsou skryty, když je vypnuto} many {# možnosti je skryto, když je vypnuto} other {# možností je skryto, když je vypnuto}}",
