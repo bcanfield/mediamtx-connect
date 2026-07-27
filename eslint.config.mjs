@@ -73,4 +73,32 @@ export default antfu(
       ],
     },
   },
+  {
+    // A conditional inside a Playwright test body is almost always a test that
+    // can't fail: `if (await card.count() > 0) { ...assert... }` is green
+    // whether or not the feature works, and 19 of these had accumulated because
+    // asserting against live MediaMTX felt unsafe (ADR 0005).
+    //
+    // The fixtures make it safe: globalSetup seeds the recordings, and
+    // scripts/wait-for-mediamtx.mjs gates the suite on the stream fleet being
+    // published and ready. If state genuinely varies, the test belongs in the
+    // component layer where it can be made deterministic.
+    //
+    // Scoped to test() bodies — cleanup guards in afterEach (`if (!materialized)
+    // return`) are legitimate and stay allowed.
+    files: ['tests/e2e/**/*.spec.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'CallExpression[callee.name=\'test\'] > ArrowFunctionExpression IfStatement',
+          message: 'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
+        },
+        {
+          selector: 'CallExpression[callee.object.name=\'test\'][callee.property.name=/^(only|skip|fixme)$/] > ArrowFunctionExpression IfStatement',
+          message: 'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
+        },
+      ],
+    },
+  },
 )

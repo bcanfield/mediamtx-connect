@@ -4,8 +4,9 @@ import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { RPCHandler } from '@orpc/server/fetch'
 import { Hono } from 'hono'
-import { bootstrapConfig, getAppConfig } from './config-store'
+import { bootstrapConfig } from './config-store'
 import { env } from './env'
+import { health } from './health'
 import { startJobs } from './jobs'
 import { logger } from './logger'
 import { media } from './media'
@@ -13,21 +14,7 @@ import { router } from './router'
 
 const app = new Hono()
 
-// Plain-HTTP health endpoint for the Docker HEALTHCHECK; the config file
-// stands in for the old DB connectivity check.
-app.get('/api/health', async (c) => {
-  try {
-    await getAppConfig()
-    return c.json({ status: 'healthy', timestamp: new Date().toISOString() })
-  }
-  catch (error) {
-    return c.json({
-      status: 'unhealthy',
-      timestamp: new Date().toISOString(),
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }, 503)
-  }
-})
+app.route('/api', health)
 
 const rpcHandler = new RPCHandler(router)
 
