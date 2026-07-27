@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Konfigurasi jalur · {name}",
       "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",
-      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah."
+      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah.",
+      "notPublishing": {
+        "title": "Stream ini tidak sedang menyiarkan",
+        "lead": "Pengaturannya diwarisi dari entri wildcard, dan MediaMTX hanya menyebutkan entri mana selama stream berjalan. Mulai menyiarkan untuk mengedit jalur ini, atau ubah apa yang diwarisi semua stream.",
+        "openPathDefaults": "Buka default jalur"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# perubahan belum disimpan}}",

@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Padconfiguratie · {name}",
       "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",
-      "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd."
+      "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd.",
+      "notPublishing": {
+        "title": "Deze stream publiceert niet",
+        "lead": "De instellingen worden overgenomen van een wildcard-item, en MediaMTX vertelt alleen welk item dat is terwijl de stream draait. Start met publiceren om dit pad te bewerken, of wijzig wat alle streams overnemen.",
+        "openPathDefaults": "Padstandaarden openen"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",

@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Pfad-Konfiguration · {name}",
       "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
-      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast."
+      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast.",
+      "notPublishing": {
+        "title": "Dieser Stream sendet nicht",
+        "lead": "Seine Einstellungen werden von einem Wildcard-Eintrag geerbt, und MediaMTX nennt diesen Eintrag nur, solange der Stream läuft. Starte die Veröffentlichung, um diesen Pfad zu bearbeiten, oder ändere, was alle Streams erben.",
+        "openPathDefaults": "Pfad-Standardwerte öffnen"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# nicht gespeicherte Änderung} other {# nicht gespeicherte Änderungen}}",

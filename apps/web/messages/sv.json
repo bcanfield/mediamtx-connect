@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Sökvägskonfiguration · {name}",
       "pageSubHeader": "Inställningar för den här strömmen, sparas på servern.",
-      "inheritedSubHeader": "Inställningar för den här strömmen, ärvs för närvarande från {confName}. Sparande skriver bara över det du ändrat."
+      "inheritedSubHeader": "Inställningar för den här strömmen, ärvs för närvarande från {confName}. Sparande skriver bara över det du ändrat.",
+      "notPublishing": {
+        "title": "Den här strömmen sänder inte",
+        "lead": "Inställningarna ärvs från en wildcard-post, och MediaMTX anger vilken bara medan strömmen är igång. Börja sända för att redigera den här sökvägen, eller ändra det som alla strömmar ärver.",
+        "openPathDefaults": "Öppna standardvärden för sökvägar"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# osparad ändring} other {# osparade ändringar}}",

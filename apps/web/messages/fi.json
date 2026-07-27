@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Polun asetukset · {name}",
       "pageSubHeader": "Tämän lähetyksen asetukset, tallennetaan palvelimelle.",
-      "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat."
+      "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat.",
+      "notPublishing": {
+        "title": "Tämä lähetys ei ole käynnissä",
+        "lead": "Sen asetukset periytyvät jokerimerkkiä käyttävästä määrityksestä, ja MediaMTX kertoo mistä vain lähetyksen ollessa käynnissä. Aloita lähetys muokataksesi tätä polkua tai muuta sitä, mitä kaikki lähetykset perivät.",
+        "openPathDefaults": "Avaa polkujen oletusarvot"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",

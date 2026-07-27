@@ -184,9 +184,12 @@ export const router = os.router({
           const runtime = await api.pathsGet(input.name)
           const confName = runtime?.confName ?? input.name
           const conf = await api.configPathGet(confName)
+          // Neither lookup landed: the path isn't publishing and has no entry
+          // of its own. MediaMTX won't say which wildcard entry would match a
+          // name it has no runtime path for, so there is nothing to resolve.
           if (!conf)
-            return null
-          return { confName, conf }
+            return { status: 'not-publishing' as const }
+          return { status: 'resolved' as const, confName, conf }
         }
         catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)

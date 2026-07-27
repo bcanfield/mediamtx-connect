@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Útvonal-konfiguráció · {name}",
       "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",
-      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül."
+      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül.",
+      "notPublishing": {
+        "title": "Ez a stream nem sugároz",
+        "lead": "A beállításait egy helyettesítő bejegyzéstől örökli, és a MediaMTX csak futó stream esetén árulja el, melyiktől. Indítsd el a sugárzást az útvonal szerkesztéséhez, vagy módosítsd azt, amit minden stream örököl.",
+        "openPathDefaults": "Útvonalak alapértékeinek megnyitása"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# mentetlen módosítás} other {# mentetlen módosítás}}",

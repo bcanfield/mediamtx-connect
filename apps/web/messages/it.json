@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Config del percorso · {name}",
       "pageSubHeader": "Impostazioni di questo stream, salvate sul server.",
-      "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato."
+      "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato.",
+      "notPublishing": {
+        "title": "Questo flusso non sta pubblicando",
+        "lead": "Le sue impostazioni sono ereditate da una voce jolly e MediaMTX indica quale solo mentre il flusso è in esecuzione. Avvia la pubblicazione per modificare questo percorso, oppure cambia ciò che ereditano tutti i flussi.",
+        "openPathDefaults": "Apri i valori predefiniti dei percorsi"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modifica non salvata} other {# modifiche non salvate}}",

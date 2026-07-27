@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Config ng path · {name}",
       "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",
-      "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override."
+      "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override.",
+      "notPublishing": {
+        "title": "Hindi nagpa-publish ang stream na ito",
+        "lead": "Minana ang mga setting nito mula sa isang wildcard na entry, at sinasabi lang ng MediaMTX kung alin habang tumatakbo ang stream. Magsimulang mag-publish para ma-edit ang path na ito, o baguhin ang minamana ng lahat ng stream.",
+        "openPathDefaults": "Buksan ang mga default ng path"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",

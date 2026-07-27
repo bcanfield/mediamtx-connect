@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Path Config · {name}",
       "pageSubHeader": "Settings for this stream, saved to the server.",
-      "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed."
+      "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed.",
+      "notPublishing": {
+        "title": "This stream isn't publishing",
+        "lead": "Its settings are inherited from a wildcard entry, and MediaMTX names that entry only while the stream is running. Start publishing to edit this path, or change what every stream inherits.",
+        "openPathDefaults": "Open Path Defaults"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",

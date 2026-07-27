@@ -148,6 +148,17 @@ export const EffectivePathConfigSchema = z.object({
 
 export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
 
+// A path config lookup has two honest answers. MediaMTX names the wildcard
+// entry a path inherits from only through its runtime path, so a
+// wildcard-backed path that isn't publishing has nothing to resolve: no
+// runtime path to name the entry, and no entry under its own name.
+export const PathConfigStateSchema = z.discriminatedUnion('status', [
+  EffectivePathConfigSchema.extend({ status: z.literal('resolved') }),
+  z.object({ status: z.literal('not-publishing') }),
+])
+
+export type PathConfigState = z.infer<typeof PathConfigStateSchema>
+
 export const StreamSchema = z.object({
   name: z.string(),
   readyTime: z.string().nullable(),
@@ -240,9 +251,11 @@ export const contract = {
       updateGlobal: oc.input(GlobalConfigSchema).output(z.void()),
       getPathDefaults: oc.output(PathDefaultsSchema.nullable()),
       updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
+      // Null only when MediaMTX can't be reached — a path that resolves to
+      // nothing is a state of its own, not an error.
       getPathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
-        .output(EffectivePathConfigSchema.nullable()),
+        .output(PathConfigStateSchema.nullable()),
       // `conf` carries only the keys the operator changed: MediaMTX stores it
       // as a sparse override, so everything omitted keeps tracking defaults.
       updatePathConfig: oc

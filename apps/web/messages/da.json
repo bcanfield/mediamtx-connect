@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Sti-konfiguration · {name}",
       "pageSubHeader": "Indstillinger for dette stream, gemmes på serveren.",
-      "inheritedSubHeader": "Indstillinger for dette stream, arves i øjeblikket fra {confName}. Gem overskriver kun det, du har ændret."
+      "inheritedSubHeader": "Indstillinger for dette stream, arves i øjeblikket fra {confName}. Gem overskriver kun det, du har ændret.",
+      "notPublishing": {
+        "title": "Denne stream sender ikke",
+        "lead": "Indstillingerne arves fra en wildcard-post, og MediaMTX oplyser kun hvilken, mens streamen kører. Begynd at sende for at redigere denne sti, eller ændr det, som alle streams arver.",
+        "openPathDefaults": "Åbn standardværdier for stier"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# ikke-gemt ændring} other {# ikke-gemte ændringer}}",

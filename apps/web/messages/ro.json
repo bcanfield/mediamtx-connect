@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Configurare cale · {name}",
       "pageSubHeader": "Setările acestui flux, salvate pe server.",
-      "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat."
+      "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat.",
+      "notPublishing": {
+        "title": "Acest flux nu transmite",
+        "lead": "Setările sale sunt moștenite de la o intrare wildcard, iar MediaMTX spune care anume doar cât timp fluxul rulează. Începe transmisia pentru a edita această cale sau schimbă ce moștenesc toate fluxurile.",
+        "openPathDefaults": "Deschide valorile implicite pentru căi"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",

@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "路径配置 · {name}",
       "pageSubHeader": "该流的设置，保存到服务器。",
-      "inheritedSubHeader": "该流的设置，当前继承自 {confName}。保存时仅覆盖你更改过的项。"
+      "inheritedSubHeader": "该流的设置，当前继承自 {confName}。保存时仅覆盖你更改过的项。",
+      "notPublishing": {
+        "title": "该流当前未推流",
+        "lead": "它的设置继承自通配符条目，而 MediaMTX 只有在流运行时才会指明是哪一条。开始推流后即可编辑该路径，或者修改所有流继承的设置。",
+        "openPathDefaults": "打开路径默认设置"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# 项未保存的更改}}",

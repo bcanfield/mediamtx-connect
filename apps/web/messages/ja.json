@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "パス設定 · {name}",
       "pageSubHeader": "このストリームの設定。サーバーに保存されます。",
-      "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。"
+      "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。",
+      "notPublishing": {
+        "title": "このストリームは配信されていません",
+        "lead": "設定はワイルドカードのエントリから継承されており、MediaMTX はストリームの実行中しかどのエントリかを示しません。配信を開始するとこのパスを編集できます。すべてのストリームが継承する設定は今でも変更できます。",
+        "openPathDefaults": "パス既定値を開く"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {未保存の変更が # 件}}",

@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "路徑設定 · {name}",
       "pageSubHeader": "此串流的設定，儲存到伺服器。",
-      "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。"
+      "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。",
+      "notPublishing": {
+        "title": "此串流目前未推流",
+        "lead": "它的設定繼承自萬用字元項目，而 MediaMTX 只有在串流執行時才會指出是哪一項。開始推流後即可編輯此路徑，或者修改所有串流繼承的設定。",
+        "openPathDefaults": "開啟路徑預設值"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# 個未儲存的變更}}",

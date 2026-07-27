@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Config de ruta · {name}",
       "pageSubHeader": "Ajustes de esta transmisión, guardados en el servidor.",
-      "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado."
+      "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado.",
+      "notPublishing": {
+        "title": "Esta transmisión no está publicando",
+        "lead": "Sus ajustes se heredan de una entrada comodín, y MediaMTX solo indica cuál mientras la transmisión está en marcha. Empieza a publicar para editar esta ruta, o cambia lo que heredan todas las transmisiones.",
+        "openPathDefaults": "Abrir valores predeterminados de rutas"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# cambio sin guardar} other {# cambios sin guardar}}",

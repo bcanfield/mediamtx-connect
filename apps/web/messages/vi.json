@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Cấu hình đường dẫn · {name}",
       "pageSubHeader": "Cài đặt của luồng này, được lưu trên máy chủ.",
-      "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi."
+      "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi.",
+      "notPublishing": {
+        "title": "Luồng này không phát",
+        "lead": "Cài đặt của nó được kế thừa từ một mục ký tự đại diện, và MediaMTX chỉ cho biết mục nào khi luồng đang chạy. Hãy bắt đầu phát để chỉnh sửa đường dẫn này, hoặc thay đổi những gì mọi luồng kế thừa.",
+        "openPathDefaults": "Mở giá trị mặc định của đường dẫn"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",

@@ -10,6 +10,9 @@ const STREAM = 'stream1'
 // are independent of runtime paths, so this page renders its own entry.
 const HOOK_PATH = 'e2e-hooks'
 
+// A name with neither a runtime path nor a config entry — the dead-end case.
+const STOPPED_PATH = 'e2e-not-publishing'
+
 test.describe('MediaMTX Path Config Page', () => {
   // Every test here reads or writes stream1's one config entry, and
   // materializing it changes what the read tests see. fullyParallel would race
@@ -51,6 +54,17 @@ test.describe('MediaMTX Path Config Page', () => {
     // They're the only genuinely global hooks and stay on the global page.
     await expect(page.getByRole('textbox', { name: 'runOnConnect' })).toHaveCount(0)
     await expect(page.getByRole('textbox', { name: 'runOnDisconnect' })).toHaveCount(0)
+  })
+
+  test('should say a stopped wildcard-backed path isn\'t publishing', async ({ page }) => {
+    // Both lookups 404: MediaMTX won't name the wildcard entry this path would
+    // inherit from unless it's running. The honest state, not "Invalid Config".
+    await page.goto(`/config/mediamtx/paths/${STOPPED_PATH}`)
+
+    await expect(page.getByRole('heading', { name: 'This stream isn\'t publishing' })).toBeVisible()
+    await expect(page.getByText('Invalid Config')).toHaveCount(0)
+    await expect(page.getByRole('link', { name: 'Open Path Defaults' }))
+      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
   })
 
   test('should land on the hooks section only when deep-linked', async ({ page }) => {

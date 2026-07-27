@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Config du chemin · {name}",
       "pageSubHeader": "Paramètres de ce flux, enregistrés sur le serveur.",
-      "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié."
+      "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié.",
+      "notPublishing": {
+        "title": "Ce flux n'est pas diffusé",
+        "lead": "Ses paramètres sont hérités d'une entrée générique, et MediaMTX n'indique laquelle que lorsque le flux est actif. Démarrez la diffusion pour modifier ce chemin, ou changez ce que tous les flux héritent.",
+        "openPathDefaults": "Ouvrir les valeurs par défaut des chemins"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modification non enregistrée} other {# modifications non enregistrées}}",

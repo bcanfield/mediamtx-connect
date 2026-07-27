@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Yol yapılandırması · {name}",
       "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",
-      "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar."
+      "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar.",
+      "notPublishing": {
+        "title": "Bu yayın aktarım yapmıyor",
+        "lead": "Ayarları bir joker girdiden devralınır ve MediaMTX hangi girdi olduğunu yalnızca yayın çalışırken bildirir. Bu yolu düzenlemek için yayına başlayın veya tüm yayınların devraldığı ayarları değiştirin.",
+        "openPathDefaults": "Yol varsayılanlarını aç"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# kaydedilmemiş değişiklik}}",

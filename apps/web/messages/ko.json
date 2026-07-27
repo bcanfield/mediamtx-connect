@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "경로 설정 · {name}",
       "pageSubHeader": "이 스트림의 설정이며 서버에 저장됩니다.",
-      "inheritedSubHeader": "이 스트림의 설정으로, 현재 {confName}에서 상속됩니다. 저장하면 변경한 항목만 재정의됩니다."
+      "inheritedSubHeader": "이 스트림의 설정으로, 현재 {confName}에서 상속됩니다. 저장하면 변경한 항목만 재정의됩니다.",
+      "notPublishing": {
+        "title": "이 스트림은 송출 중이 아닙니다",
+        "lead": "설정은 와일드카드 항목에서 상속되며, MediaMTX는 스트림이 실행 중일 때만 어떤 항목인지 알려줍니다. 송출을 시작하면 이 경로를 편집할 수 있고, 모든 스트림이 상속하는 값은 지금도 변경할 수 있습니다.",
+        "openPathDefaults": "경로 기본값 열기"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {저장되지 않은 변경 사항 #개}}",

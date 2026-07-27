@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Konfiguracja ścieżki · {name}",
       "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",
-      "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono."
+      "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono.",
+      "notPublishing": {
+        "title": "Ten strumień nie nadaje",
+        "lead": "Jego ustawienia są dziedziczone z wpisu wieloznacznego, a MediaMTX wskazuje który to wpis tylko wtedy, gdy strumień działa. Rozpocznij nadawanie, aby edytować tę ścieżkę, albo zmień to, co dziedziczą wszystkie strumienie.",
+        "openPathDefaults": "Otwórz domyślne ustawienia ścieżek"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanej zmiany}}",

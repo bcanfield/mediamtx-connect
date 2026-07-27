@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Konfigurace cesty · {name}",
       "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",
-      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili."
+      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili.",
+      "notPublishing": {
+        "title": "Tento stream nevysílá",
+        "lead": "Jeho nastavení se dědí ze zástupné položky a MediaMTX prozradí, ze které, jen když stream běží. Spusťte vysílání, abyste mohli upravit tuto cestu, nebo změňte to, co dědí všechny streamy.",
+        "openPathDefaults": "Otevřít výchozí hodnoty cest"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# neuložená změna} few {# neuložené změny} many {# neuložené změny} other {# neuložených změn}}",

@@ -197,7 +197,12 @@
     "pathConfig": {
       "pageHeader": "Configuração do caminho · {name}",
       "pageSubHeader": "Configurações desta transmissão, salvas no servidor.",
-      "inheritedSubHeader": "Configurações desta transmissão, atualmente herdadas de {confName}. Ao salvar, apenas o que você alterou é substituído."
+      "inheritedSubHeader": "Configurações desta transmissão, atualmente herdadas de {confName}. Ao salvar, apenas o que você alterou é substituído.",
+      "notPublishing": {
+        "title": "Esta transmissão não está publicando",
+        "lead": "As configurações são herdadas de uma entrada curinga, e o MediaMTX só informa qual delas enquanto a transmissão está ativa. Comece a publicar para editar este caminho ou altere o que todas as transmissões herdam.",
+        "openPathDefaults": "Abrir padrões de caminhos"
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# alteração não salva} other {# alterações não salvas}}",
