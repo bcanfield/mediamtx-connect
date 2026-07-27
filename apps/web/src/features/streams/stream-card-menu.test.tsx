@@ -80,7 +80,8 @@ describe('stream actions menu', () => {
     await openMenu(false, [{ protocol: 'RTSP', prefix: 'rtsp://cam.lan:8554/' }])
 
     expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
-      .not.toHaveAttribute('aria-disabled')
+      .not
+      .toHaveAttribute('aria-disabled')
   })
 })
 
