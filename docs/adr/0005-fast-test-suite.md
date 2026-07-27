@@ -133,24 +133,76 @@ browsers — five to eight minutes and a Docker daemon. So the agent skips it,
 pushes, and learns about the failure seven minutes later in CI, having already
 moved on. ADR 0004 called this out and it remains true.
 
+### The 90-second budget, and why Vitest is not in it
+
+Sizing the proposed `verify` job matters, because the instinct is to tune the
+test runner and the measurement says the test runner is not the problem:
+
+| | measured | |
+|---|---|---|
+| job provisioning + checkout + pnpm + setup-node + install | ~12s | per job, with a warm pnpm store |
+| lint | 5s | |
+| typecheck | 7s | |
+| i18n:check | <1s | |
+| **unit tests (vitest)** | **1s** | |
+| build | 2s | |
+| | **~28s** | today's `build` job |
+
+**Vitest already runs in one second.** Tuning `pool`, `isolate`, or
+`fileParallelism` against a 1s suite recovers milliseconds. The ~90s estimate is
+28s of the above plus the new component layer, and essentially all of the
+headroom is in three places that have nothing to do with how fast Vitest
+executes a test:
+
+1. **The component layer's runner.** In a real browser this layer plausibly costs
+   30–45s and becomes the largest line item in `verify` — bigger than lint,
+   typecheck, unit tests and build combined. That is a design decision we get to
+   make, and change 1 above now makes it deliberately.
+2. **Nothing in CI is cached.** `.turbo` is gitignored and never persisted;
+   `cache: pnpm` caches only the pnpm store. ESLint runs without `--cache`.
+   **Every CI run recomputes lint, typecheck, test and build for every package
+   from cold, whether or not that package changed.**
+3. **CI has no path or affected filters.** `ci.yml` triggers on every push and PR
+   with no `paths` filter and no Turborepo affected-detection. The PR carrying
+   *this ADR* — two markdown files — runs the full 258-test E2E suite.
+
+Points 2 and 3 are why the answer to "can it go below 90s" is yes, and why the
+answer is not "tune Vitest."
+
 ## Decision
 
-Move each test to the cheapest layer that can still catch its regression, and let
-E2E keep only what genuinely requires a real MediaMTX. Five changes, each
-independently landable.
+Move each test to the cheapest layer that can still catch its regression, let
+E2E keep only what genuinely requires a real MediaMTX, and stop recomputing work
+that did not change. Eight changes, each independently landable.
 
-### 1. A component/route layer — Vitest 4 browser mode + Testing Library + MSW
+### 1. A component/route layer — Vitest `projects`, node-first, browser only where needed
 
 This is the deferred layer from ADR 0004, and it is the load-bearing change: it
-is what makes deleting UI E2E safe rather than reckless.
+is what makes deleting UI E2E safe rather than reckless. It is also the single
+largest new cost in `verify` (see "The 90-second budget"), so its runner choice
+is a performance decision, not just an ergonomics one.
 
-- **Runner: Vitest 4 browser mode, Playwright provider, headless Chromium.** The
-  catalog is already on Vitest `^4.1.10`, where browser mode is stable, and the
-  Playwright browsers are already a dependency. The alternative — jsdom — needs
-  hand-written `ResizeObserver`, `DOMRect`, `scrollIntoView`, and
-  `hasPointerCapture` shims before Radix menus and selects behave, and those
-  shims are exactly the kind of bespoke scaffolding `CLAUDE.md` bans. Browser
-  mode has no shims because it is a real browser.
+- **Runner: one `vitest` invocation, two `projects`.**
+  - `component` — happy-dom, the default for the layer. Covers everything whose
+    assertion is about *rendered output or form state*: card contents, codec
+    chips, viewer counts, snapshot-age pill, recordings totals and client-side
+    filter, RHF+Zod dirty-state and save-bar logic, locale switching. No pointer
+    physics involved, so no browser needed.
+  - `component-browser` — browser mode, Playwright provider, headless chromium.
+    Reserved for the specs that drive Radix overlays with real pointer events:
+    the stream actions menu, the config section rail, selects and dialogs. These
+    are the cases where happy-dom needs `hasPointerCapture` / `scrollIntoView` /
+    `ResizeObserver` shims to behave, and where a shimmed pass is not worth much.
+
+  The split matters because browser mode pays a per-context startup cost that a
+  node environment does not. Putting the whole layer in a browser buys realism we
+  only need for roughly a fifth of it, and pays for it on every run of `verify`.
+  Splitting keeps the realism exactly where the risk is.
+- **`experimental.fsModuleCache` on, its cache directory restored in CI.**
+  Vitest 4 can persist the transformed-module cache to disk. The docs call out
+  the win as largest "when rerunning a small number of tests that depend on a
+  large module graph" — which is precisely this layer: ~40 tests sitting on React
+  19 + Radix + Tailwind + TanStack.
 - **Network: MSW intercepting `POST /rpc/*`, backed by the real `RPCHandler`
   over a stub router.** Do not hand-write oRPC wire payloads. Build an
   `implement(contract)` stub whose handlers return fixture data, wrap it in the
@@ -217,8 +269,9 @@ Estimated remaining E2E: **~25 executions in one browser**, down from 258 in fiv
   two retries is buying flake tolerance we should no longer need — and it is
   what turns a 7-minute run into the 10-minute runs that prompted this ADR.
 
-Projected critical path: `verify` ~90s → `e2e-smoke` ~2m, against `image-smoke`
-~2m in parallel. **~3m 30s total, with the first real signal at ~90 seconds.**
+Projected critical path with changes 1–4 alone: `verify` ~90s → `e2e-smoke` ~2m,
+against `image-smoke` ~2m in parallel — **~3m 30s total**. Changes 6–8 take it
+further; see "Projected timings" below.
 
 ### 5. Make the conditional-assertion rule enforced, not advisory
 
@@ -233,13 +286,106 @@ component layer where it can be made deterministic.
 "Resilient E2E" convention are amended in the same change — they are the source
 of the pattern.
 
+### 6. Persist the Turborepo cache across CI runs
+
+The repo has Turborepo and gets no caching benefit from it in CI, because
+`.turbo` dies with the runner. Restore it and unchanged packages stop being
+recomputed:
+
+- Back Turborepo's remote cache with the GitHub Actions cache
+  ([`rharkor/caching-for-turbo`](https://github.com/rharkor/caching-for-turbo)),
+  which runs a local cache server backed by `@actions/cache` and needs no Vercel
+  account and no S3 bucket. A plain `actions/cache` on `.turbo` also works and is
+  one fewer dependency, but restores the whole directory rather than the specific
+  task hashes, so it degrades less gracefully.
+- Add `test` outputs and correct `inputs` to `turbo.json` so task hashes are
+  precise. Today `test` declares no outputs, so it is re-run unconditionally.
+- Cache the Vitest `fsModuleCache` directory (change 1) on the same key.
+- Add `--cache` to ESLint and cache `.eslintcache`.
+
+On a PR touching one package, lint/typecheck/test/build for every other package
+become cache hits. `packages/contract` is a JIT package with no build, so it is
+cheap regardless — the wins are `apps/api` and `apps/web` not paying for each
+other.
+
+### 7. Run only what the change can break
+
+Two filters, cheapest first:
+
+- **`paths-ignore` on the E2E and image-smoke jobs** for `**.md`, `docs/**`,
+  `LICENSE`. A markdown-only PR should not boot MediaMTX. This is a
+  hand-maintained list, which is why it stays deliberately tiny — docs only,
+  where the "can this break the app?" answer is unambiguous.
+- **Turborepo affected-detection for everything else** —
+  `turbo run test typecheck --filter=...[origin/main]`. This is the general
+  mechanism and needs no path list: turbo walks the dependency graph, so a
+  `packages/contract` change correctly fans out to both apps while an
+  `apps/web`-only change does not typecheck or test `apps/api`. Requires
+  `fetch-depth: 2` on checkout (or an explicit base fetch) so the comparison ref
+  exists.
+
+Note the interaction with ADR 0004's coverage floor: an affected-only run
+produces partial coverage. The floor must be computed on a full run — keep it on
+the `main`/`beta` push workflow, not the PR one, or the ratchet reads noise.
+
+### 8. Make the agent's inner loop sub-second, not sub-minute
+
+CI wall clock is the wrong target for an agent — the right one is the cost of
+checking a change it *just made*, where almost nothing needs re-running:
+
+- **`pnpm verify` for the full gate** (change 4) — mirrors CI exactly, for
+  pre-push confidence.
+- **`pnpm verify:quick` → `vitest --changed`** — Vitest resolves the module graph
+  and runs only tests reachable from uncommitted changes. On a typical
+  single-module edit this is 1–3 seconds. `--changed origin/main` scopes it to
+  the whole branch.
+- **`pnpm test:watch` already exists per-package**; surface it at the root so
+  watch mode is the default posture during a multi-step change rather than
+  something rediscovered each session.
+
+This is the change with the largest effect on whether tests are run at all
+before a push, and it costs three `package.json` lines.
+
+## Projected timings
+
+Estimates, not measurements — the point is the shape, and each is falsifiable by
+landing the stage that claims it.
+
+| Scenario | Today | Changes 1–5 | + changes 6–8 |
+|---|---|---|---|
+| Docs-only PR | 7m 16s | 7m 16s | **~20s** (E2E and image-smoke skipped) |
+| One-package change, warm cache | 7m 16s | ~3m 30s | **~2m 30s** (`verify` ~30s) |
+| Contract change (fans out everywhere), cold cache | 7m 16s | ~3m 30s | ~3m 15s |
+| Agent checking its own edit, locally | 5–8m (or skipped) | 30–45s | **1–3s** (`vitest --changed`) |
+
+Two honest floors bound this:
+
+- **~12–15s of every CI job is provisioning, checkout, toolchain setup, and
+  install**, even with a warm pnpm store. Below that needs larger runners or
+  self-hosted, which is a cost decision this ADR does not make.
+- **The four live-MediaMTX E2E specs need Docker up**, ~16s, plus MediaMTX
+  readiness. Any run that includes them has a ~1m floor no caching removes.
+
 ## Consequences
 
-- Projected CI wall clock **7m 16s → ~3m 30s**, and the first actionable signal
-  moves from ~7 minutes to ~90 seconds.
-- The local agent loop becomes `pnpm verify` — no Docker, no build, no browsers
-  the agent must remember to install — projected 30–45s. This is the change that
-  most affects whether tests get run at all before a push.
+- Projected CI wall clock **7m 16s → ~2m 30s** on the common case, and the first
+  actionable signal moves from ~7 minutes to ~30 seconds.
+- The local agent loop becomes `vitest --changed` at 1–3 seconds, with
+  `pnpm verify` as the pre-push gate. This is the change that most affects
+  whether tests get run at all before a push, and it is also the cheapest one in
+  the set.
+- **Caching introduces a new failure mode: a stale-cache green.** A wrong `inputs`
+  declaration in `turbo.json` means a task is skipped when it should have run,
+  and the failure is invisible — the job goes green. This is the same
+  silent-failure class the ADRs keep circling. Mitigation: the `main`/`beta` push
+  workflow runs unfiltered and uncached, so a bad hash surfaces on merge rather
+  than never.
+- **Affected-only runs produce partial coverage**, which interacts badly with ADR
+  0004's floor. The floor moves to the full run on push; PRs report coverage
+  without gating on it.
+- `paths-ignore` is a hand-maintained list and will eventually be wrong. Keeping
+  it to docs and markdown only bounds the damage: the failure mode is "we skipped
+  E2E for a README change," not "we skipped E2E for a code change."
 - **Coverage goes up, not down.** 19 tests that could pass with the feature
   broken are replaced by deterministic component tests that cannot. Range/206
   logic and the RHF forms — both currently listed as uncovered debt — get real
@@ -278,11 +424,26 @@ of the pattern.
   piece of bespoke fixture machinery whose failure modes we would then own. The
   component layer gets determinism for free, because a stub router *is* the
   known state.
-- **jsdom + Testing Library instead of browser mode.** Faster per test and no
-  Playwright coupling. Rejected: the UI is Radix-heavy (menus, selects, switches,
-  dialogs), and every one of those needs jsdom polyfills that are pure
-  scaffolding. Reconsider if browser-mode startup proves to dominate the
-  component layer's runtime.
+- **Browser mode for the whole component layer.** This was this ADR's original
+  recommendation, on the grounds that Radix needs real pointer events and jsdom
+  needs shims to fake them. Revised once speed became the governing constraint:
+  it makes the component layer the single largest line item in `verify`, and it
+  buys realism for the ~80% of the layer that only asserts on rendered output.
+  The `projects` split in change 1 keeps the realism where the risk actually is.
+  Reconsider if maintaining two environments proves more annoying than the
+  seconds it saves.
+- **Tune Vitest — `pool: 'threads'`, `isolate: false`, `fileParallelism`.** The
+  documented levers, and the obvious place to look. Rejected as a *primary*
+  lever by measurement, not by principle: the unit suite runs in **1 second**, so
+  the entire theoretical win is sub-second, and `isolate: false` would trade it
+  for cross-file state bleed in suites built on `vi.mock` factories — the exact
+  fragility `docs/TESTING.md` already warns about. Worth revisiting only if the
+  component layer grows large enough for isolation cost to be measurable, at
+  which point measure first.
+- **Shard `verify` across runners.** Buys wall clock with runner minutes. Rejected
+  at this size: with caching and affected-detection the job is ~30s, of which
+  half is fixed setup that every shard would pay again. Sharding a 30s job makes
+  it slower.
 - **Drop E2E entirely; rely on unit + component + image smoke.** Fastest
   possible. Rejected outright: `record-toggle` and `path-config` encode real
   MediaMTX inheritance semantics that no mock would have caught — the
