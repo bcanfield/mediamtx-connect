@@ -10,16 +10,33 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 |-------|------|-------|----------|
 | Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
 | API serving | Vitest + `app.request()` | HTTP behaviour of the Hono apps in-process against real fixtures: Range/206, content headers, traversal, health | `apps/api/src/media.serving.test.ts`, `health.test.ts` |
+| Component | Vitest (happy-dom) + Testing Library + MSW | Rendered output, form state, Radix menus, and the oRPC calls behind them — deterministic, so assertions are unconditional | `apps/web/src/**/*.test.tsx` |
 | E2E | Playwright | Full browser flows, locale switching, accessibility, live MediaMTX round-trips | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
 > **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), covering `jobs.ts` and `router.ts`, and for `apps/web`, covering `lib/whep.ts` + `lib/playback.ts` (see `docs/adr/0003-hand-rolled-whep-client.md`). Contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
 
-> **No component tests.** `apps/web`'s Vitest runs in the default node environment — there is no jsdom and no Testing Library. It is for logic a browser isn't needed to exercise (URL building, protocol negotiation against a fake `RTCPeerConnection`). Components are still covered through E2E.
+## Component tests
+
+`apps/web/vitest.config.ts` defines two projects, both run by `pnpm test`:
+
+- **`logic`** (node) — `src/**/*.test.ts`. URL building, protocol negotiation against a fake `RTCPeerConnection`. No DOM, so it pays for none.
+- **`component`** (happy-dom) — `src/**/*.test.tsx`. Renders real components through the app's own provider stack.
+
+`src/test/render.tsx` mirrors `main.tsx`: QueryClient, `IntlProvider` with the shipped English messages, a memory-history router, `ThemeProvider`, and the `Toaster`. It is **async** — TanStack Router renders nothing until the route resolves, and without `await router.load()` the DOM is empty and every `queryBy*` negative assertion passes vacuously.
+
+`src/test/rpc-server.ts` serves `/rpc/*` through MSW backed by the **real `RPCHandler`** over an `implement(contract)` stub router. Don't hand-write oRPC wire payloads. This is what makes a contract change break these tests at typecheck rather than leave them asserting a shape the API no longer returns.
+
+**Radix works in happy-dom.** Dropdown menus open under `userEvent.click` and expose their `menuitem` roles with no `hasPointerCapture` / `ResizeObserver` / `scrollIntoView` shims. Vitest browser mode was considered and isn't needed; reach for it when something specific actually fails, not preemptively.
+
+**Assert a positive anchor alongside every negative.** `expect(queryByText(x)).not.toBeInTheDocument()` passes on an empty DOM, so pair it with a `getBy*` that proves the component rendered at all. This bit during development of the very first component suite.
+
+**Type the assertion literal, not just the mock.** Vitest's `toHaveBeenCalledWith` is not strictly typed even against `vi.fn<(input: T) => void>()`. Use `satisfies RpcInputs[...]` on the expected object, or a contract change silently leaves the assertion compiling.
 
 ## Decision: which layer for a new feature?
 
 - Added or changed an HTTP response — status, headers, Range, content type → **API serving** (`app.request()` in-process; no server, no browser, no Docker).
+- Changed what a component renders, a form's state, or a menu action's payload → **Component**.
 - Added a route, navigation, or cross-page flow → **E2E**.
 - Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
 - Wrote api logic a browser can't observe — a cron, a spawned process, a timer, a filesystem fallback → **Unit**.

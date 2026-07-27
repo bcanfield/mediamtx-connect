@@ -195,16 +195,18 @@ is a performance decision, not just an ergonomics one.
     chips, viewer counts, snapshot-age pill, recordings totals and client-side
     filter, RHF+Zod dirty-state and save-bar logic, locale switching. No pointer
     physics involved, so no browser needed.
-  - `component-browser` — browser mode, Playwright provider, headless chromium.
-    Reserved for the specs that drive Radix overlays with real pointer events:
-    the stream actions menu, the config section rail, selects and dialogs. These
-    are the cases where happy-dom needs `hasPointerCapture` / `scrollIntoView` /
-    `ResizeObserver` shims to behave, and where a shimmed pass is not worth much.
+  - ~~`component-browser` — browser mode for the Radix overlays.~~ **Not built,
+    because the premise turned out to be false.** The assumption was that Radix
+    menus need real pointer events and that happy-dom would need
+    `hasPointerCapture` / `scrollIntoView` / `ResizeObserver` shims to fake them.
+    `stream-card-menu.test.tsx` opens the Radix dropdown with
+    `userEvent.click`, reads its `menuitem` roles, and fires the oRPC mutations
+    behind them — in happy-dom, with **no shims at all**. The whole component
+    layer runs in one node-side project in ~2.5s.
 
-  The split matters because browser mode pays a per-context startup cost that a
-  node environment does not. Putting the whole layer in a browser buys realism we
-  only need for roughly a fifth of it, and pays for it on every run of `verify`.
-  Splitting keeps the realism exactly where the risk is.
+  Add the browser project when something actually fails in happy-dom (a specific
+  overlay, a focus-trap, a scroll behaviour), not before. Two environments is a
+  cost worth paying for a real failure and not for a predicted one.
 - **`experimental.fsModuleCache` on, its cache directory restored in CI.**
   Vitest 4 can persist the transformed-module cache to disk. The docs call out
   the win as largest "when rerunning a small number of tests that depend on a
@@ -216,7 +218,16 @@ is a performance decision, not just an ergonomics one.
   same `RPCHandler` the server uses, and let the MSW handler pass the intercepted
   `Request` through it. The consequence is the point: **a contract change breaks
   the component tests at typecheck time**, so an agent editing
-  `packages/contract` cannot leave the UI layer silently stale.
+  `packages/contract` cannot leave the UI layer silently stale. Verified in both
+  directions — removing `recordings.listStreams` from the contract fails
+  `rpc-server.ts` to compile, and renaming `streams.snapshot`'s `name` input
+  fails the test's own assertion literal.
+
+  That second half needed work. Vitest's `toHaveBeenCalledWith` is not strictly
+  typed even against a `vi.fn<(input: T) => void>()`, so the first version of
+  these tests would have kept compiling against a renamed field. The assertions
+  carry an explicit `satisfies RpcInputs[...]` for that reason — without it the
+  coupling claim is half true, which is worse than not claiming it.
 - **Assertions are unconditional.** A stub router returns exactly what the test
   says it returns, so there is nothing to guard against. No `if` in a test body.
 
