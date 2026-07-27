@@ -9,9 +9,10 @@ this layout.
 ## Commands
 
 - `pnpm install` — install everything (workspace root only; never run npm/yarn)
-- `pnpm dev` — starts MediaMTX + fake streams (Docker), seeds sample data into
-  `.dev-data/`, and runs web on :5173 (proxies `/rpc`, `/media`, `/api` → :3000)
-  + api on :3000. Zero config — no `.env` needed. `pnpm dev:stop` stops Docker.
+- `pnpm dev` — seeds sample data into `.dev-data/`, starts MediaMTX + fake
+  streams (Docker), and runs web on :5173 (proxies `/rpc`, `/media`, `/api` →
+  :3000) + api on :3000. Zero config — no `.env` needed. `pnpm dev:stop` stops
+  Docker.
 - `pnpm build` — builds all packages via Turborepo (cached)
 - `pnpm typecheck` — `tsc --noEmit` per package
 - `pnpm lint` / `pnpm lint:fix` — ESLint (`@antfu/eslint-config`, handles

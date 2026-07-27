@@ -1,6 +1,11 @@
 # ##############################################
 # MediaMTX configuration for mediamtx-connect
 # ##############################################
+#
+# `mediamtx.dev.yml` (used by `pnpm dev`) duplicates the base settings below —
+# api, hls, webrtc, webrtcAdditionalHosts, pathDefaults, the `all_others`
+# catch-all — because MediaMTX has no include/merge mechanism. Change any of
+# them here and mirror the change there, or dev silently drifts from prod.
 
 # API settings
 api: yes

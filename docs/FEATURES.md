@@ -377,7 +377,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ### 15.3 Scripts (root `package.json`)
 | Script | Purpose |
 |--------|---------|
-| `pnpm dev` | Starts MediaMTX + fake streams (Docker), seeds sample data into `.dev-data/` (`predev`), then runs web (5173) + api (3000) via turbo. Zero config. |
+| `pnpm dev` | Seeds sample data into `.dev-data/`, starts MediaMTX + fake streams (Docker), then runs web (5173) + api (3000) via turbo. Zero config. The seed is the first link in the `&&` chain, not a `predev` hook, so it can't be skipped by a pnpm config that disables pre/post scripts. |
 | `pnpm dev:stop` | Stop the dev Docker stack (MediaMTX + fake streams). |
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
@@ -394,7 +394,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm release` | semantic-release. |
 
 ### 15.4 Helper scripts (`scripts/`)
-- **`seed-fixtures.mjs`** — cross-platform Node script (no deps, no ffmpeg) that copies the committed `tests/fixtures/{recordings,screenshots}` into a `--target` dir (default `<repo>/.dev-data`) if empty. Runs as `predev` for dev and via Playwright `globalSetup` for e2e. Idempotent — never clobbers a dir that already has content.
+- **`seed-fixtures.mjs`** — cross-platform Node script (no deps, no ffmpeg) that copies the committed `tests/fixtures/{recordings,screenshots}` into a `--target` dir (default `<repo>/.dev-data`) if empty. Runs as the first step of the `pnpm dev` chain and via Playwright `globalSetup` for e2e. Idempotent — never clobbers a dir that already has content.
 - **`wait-for-mediamtx.mjs`** — gates the E2E suites on the fixture fleet (`stream1..5` + `front-door`) being published **and** `ready`, not merely on the API answering. Shared by `ci.yml` and `e2e-nightly.yml`; replaces the old `mediamtx.spec.ts`, which asserted the same things as eight test failures instead of one named error.
 - **`i18n-check.mjs` / `readme-i18n-check.mjs`** — the two i18n CI guards.
 
