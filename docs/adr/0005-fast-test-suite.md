@@ -1,7 +1,14 @@
 # 0005 — Push coverage down the stack; shrink E2E to what needs a real server
 
 **Date:** 2026-07-27
-**Status:** Proposed
+**Status:** Partially implemented
+
+Changes **3, 4, 6, 7, 8** (CI restructuring, caching, chromium-only PRs, docs-only
+skip, `pnpm verify`) have landed. Changes **1, 2, 5** — the component layer,
+folding `api`/`mediamtx` into Vitest, and the conditional-assertion lint rule —
+have not, and **no E2E spec has been deleted**: their replacement does not exist
+yet, so removing them now would be a straight coverage loss. Strikethrough marks
+items withdrawn or revised by what implementation turned up.
 
 ## Context
 
@@ -258,13 +265,21 @@ Estimated remaining E2E: **~25 executions in one browser**, down from 258 in fiv
   build — as the PR gate. This is ADR 0004's `pnpm verify`, now with the
   component layer inside it, and it is the same command an agent runs locally.
   Projected ~90s.
-- **Upload the build as an artifact; stop rebuilding in the E2E job.**
+- ~~**Upload the build as an artifact; stop rebuilding in the E2E job.**~~
+  **Dropped during implementation.** The rebuild is only 3s; artifact upload plus
+  download costs more than that for a multi-MB SPA bundle. Change 6's Turborepo
+  cache makes the E2E job's `pnpm build` a cache replay instead, which is both
+  faster and one fewer moving part.
 - **Cache the Playwright browsers** (`actions/cache` on `~/.cache/ms-playwright`)
   and install chromium only: 45s → ~10s.
-- **Drop the `apt-get install ffmpeg` step** (23s) from the E2E job by having the
-  snapshot cron skip cleanly when the binary is absent, or by pinning a cached
-  binary. It exists only to silence spawn errors from a cron the suite does not
-  assert on.
+- ~~**Drop the `apt-get install ffmpeg` step** (23s).~~ **Withdrawn — the premise
+  was wrong.** The claim that ffmpeg "exists only to silence spawn errors from a
+  cron the suite does not assert on" does not survive reading the specs:
+  `streams.spec.ts:145` clicks "Take snapshot" and asserts the "Snapshot
+  captured" toast, which spawns ffmpeg against the RTSP feed. Its guard checks
+  for `online since`, which the fixture streams always have, so the test really
+  runs and would go red without the binary. The step stays, and its misleading
+  comment in `ci.yml` is corrected to say why.
 - **`retries: 1`** in CI. With live-MediaMTX assertions confined to four specs,
   two retries is buying flake tolerance we should no longer need — and it is
   what turns a 7-minute run into the 10-minute runs that prompted this ADR.
@@ -292,14 +307,18 @@ The repo has Turborepo and gets no caching benefit from it in CI, because
 `.turbo` dies with the runner. Restore it and unchanged packages stop being
 recomputed:
 
-- Back Turborepo's remote cache with the GitHub Actions cache
-  ([`rharkor/caching-for-turbo`](https://github.com/rharkor/caching-for-turbo)),
-  which runs a local cache server backed by `@actions/cache` and needs no Vercel
-  account and no S3 bucket. A plain `actions/cache` on `.turbo` also works and is
-  one fewer dependency, but restores the whole directory rather than the specific
-  task hashes, so it degrades less gracefully.
-- Add `test` outputs and correct `inputs` to `turbo.json` so task hashes are
-  precise. Today `test` declares no outputs, so it is re-run unconditionally.
+- **`actions/cache` on `.turbo`**, keyed per-commit with a prefix `restore-keys`
+  so each run starts from its newest ancestor's cache. Implementation chose this
+  over [`rharkor/caching-for-turbo`](https://github.com/rharkor/caching-for-turbo)
+  (a remote-cache server backed by `@actions/cache`): it is one fewer third-party
+  action to audit and pin, and "boring over clever" applies to CI too. Revisit if
+  whole-directory restore proves to degrade badly at scale.
+- ~~Add `test` outputs and correct `inputs` to `turbo.json`.~~ **Deliberately not
+  done.** Turborepo's default is to hash every file in the package, which is
+  exactly the conservative behaviour we want; hand-tuning `inputs` is how a task
+  gets skipped when it should have run, and this ADR already names stale-cache
+  greens as the risk caching introduces. The default already isolates `apps/api`
+  from `apps/web`, which is where the win is.
 - Cache the Vitest `fsModuleCache` directory (change 1) on the same key.
 - Add `--cache` to ESLint and cache `.eslintcache`.
 
@@ -316,13 +335,12 @@ Two filters, cheapest first:
   `LICENSE`. A markdown-only PR should not boot MediaMTX. This is a
   hand-maintained list, which is why it stays deliberately tiny — docs only,
   where the "can this break the app?" answer is unambiguous.
-- **Turborepo affected-detection for everything else** —
-  `turbo run test typecheck --filter=...[origin/main]`. This is the general
-  mechanism and needs no path list: turbo walks the dependency graph, so a
-  `packages/contract` change correctly fans out to both apps while an
-  `apps/web`-only change does not typecheck or test `apps/api`. Requires
-  `fetch-depth: 2` on checkout (or an explicit base fetch) so the comparison ref
-  exists.
+- ~~**Turborepo affected-detection**~~ (`--filter=...[origin/main]`) —
+  **deferred during implementation.** With change 6's cache in place an
+  unaffected package is already a replay costing tens of milliseconds
+  (`typecheck` measured at 12.2s cold, 28ms cached), so filtering saves close to
+  nothing while adding a second, independent way for a task to silently not run.
+  Reconsider if the cache hit rate turns out to be poor in practice.
 
 Note the interaction with ADR 0004's coverage floor: an affected-only run
 produces partial coverage. The floor must be computed on a full run — keep it on
@@ -346,7 +364,25 @@ checking a change it *just made*, where almost nothing needs re-running:
 This is the change with the largest effect on whether tests are run at all
 before a push, and it costs three `package.json` lines.
 
-## Projected timings
+## Timings
+
+### Measured after changes 3, 4, 6, 7, 8 landed
+
+Local, on the implementation branch:
+
+| | before | after |
+|---|---|---|
+| `pnpm verify` (lint + typecheck + i18n + unit), cold cache | — | **29.2s** |
+| `pnpm verify`, warm Turborepo cache | — | **8.5s** |
+| `pnpm test:changed` after editing one api module | — | **2.6s** (22 tests) |
+| `turbo typecheck` | 12.2s | **28ms** cached (`>>> FULL TURBO`) |
+| `playwright test --list` | 258 tests | **82 tests** (chromium only) |
+
+The 258 → 82 figure is Playwright's own count and matches the CI log
+(`Running 258 tests using 2 workers`) exactly, so the E2E run should fall by
+roughly the same ratio once `workers: '100%'` is also in play.
+
+### Projected
 
 Estimates, not measurements — the point is the shape, and each is falsifiable by
 landing the stage that claims it.

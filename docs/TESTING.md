@@ -2,7 +2,7 @@
 
 Reference for what to test, where it lives, and which tool runs it. Update this file when a layer or convention changes.
 
-> **Proposed change:** `docs/adr/0005-fast-test-suite.md` proposes restructuring these layers for speed — a component layer under Vitest browser mode, `api`/`mediamtx` specs folded into unit tests, and a chromium-only PR matrix. This file describes what ships today; the ADR describes where it is headed.
+> **In progress:** `docs/adr/0005-fast-test-suite.md` restructures these layers for speed. The CI half has landed (chromium-only PRs, cached Turborepo, docs-only skip — changes 3, 4, 6, 7). The layer half — a component layer under Vitest, `api`/`mediamtx` specs folded into unit tests, and the E2E specs they replace — has not. This file describes what ships today.
 
 ## Layers
 
@@ -26,11 +26,17 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 ## Commands
 
 ```bash
+pnpm verify            # lint + typecheck + i18n:check + test — the CI `build` gate, locally
 pnpm test              # vitest, all packages (turbo)
+pnpm test:changed      # vitest --changed — only tests reachable from your edits
+pnpm test:watch        # vitest watch mode across packages
 pnpm build             # e2e runs the built single-server (apps/api/dist)
-pnpm test:e2e          # playwright, headless
+pnpm test:e2e          # playwright, headless, chromium only
 pnpm test:e2e:dev      # playwright UI
+E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly runs)
 ```
+
+`pnpm verify` is the preflight: it reproduces the CI `build` job exactly and needs no Docker, no build, and no browsers. `pnpm test:changed` is the inner loop — Vitest resolves the module graph and runs only what your edit can reach.
 
 ## Conventions
 
@@ -47,13 +53,16 @@ pnpm test:e2e:dev      # playwright UI
 
 ## E2E projects
 
-`playwright.config.ts` runs:
+`playwright.config.ts` runs `chromium` only by default — 82 tests. It runs every spec, and this is what PRs and local runs get.
 
-- `chromium` — primary; runs every spec
-- `firefox`, `webkit` — catches HLS-native fallback regressions
+Setting `E2E_ALL_BROWSERS=1` adds four more projects, taking the run to 258 tests:
+
+- `firefox`, `webkit` — intended to catch HLS-native fallback regressions
 - `mobile-chrome` (Pixel 7), `mobile-safari` (iPhone 14) — covers the responsive grid
 
-`firefox` / `webkit` / `mobile-*` only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only — running them cross-browser doesn't change the outcome.
+Those four only run UI specs (`config`, `recordings`, `streams`, `a11y`) — 44 apiece. Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only; running them cross-browser doesn't change the outcome.
+
+**Only `.github/workflows/e2e-nightly.yml` sets that flag** (06:00 UTC daily, plus `workflow_dispatch`). The four extra projects tripled the PR suite for a regression class no current spec exercises — nothing in the cross-browser set drives HLS, `hls.js`, or WHEP. Moving them nightly keeps drift detection within a day. If a playback spec lands, cross-browser should be scoped to *that spec* rather than back to all of `uiSpecs`. See `docs/adr/0005-fast-test-suite.md`.
 
 `path-defaults`, `path-config`, `record-toggle` and `publish-urls` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. `publish-urls` patches the server-wide `rtmpAddress` to a non-default port and restores it (RTMP has no fixture publisher, so moving its port leaves the RTSP streams untouched). The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
 
@@ -69,10 +78,18 @@ PRs must pass, in order:
 
 1. `lint` + `typecheck` + `i18n:check`
 2. `build` (Turborepo, all packages)
-3. `test:e2e` against a real MediaMTX with fake streams
+3. `test:e2e` against a real MediaMTX with fake streams — chromium only
 4. **Docker image smoke** — runs in parallel with `test`. Builds the production image via Buildx (with GHA cache), runs the container, polls `/api/health` for up to 2 min, asserts `status: healthy`.
 
 Playwright traces, screenshots, and HTML report upload on failure only.
+
+**Caching.** The `build` and `test` jobs restore `.turbo` (and `.eslintcache`) via `actions/cache`, so a package that didn't change is a cache replay rather than a re-run — locally this takes `typecheck` from 12.2s to 28ms. The `test` job's `pnpm build` is normally a cache hit from the `build` job rather than a real rebuild. Playwright's browsers are cached on `~/.cache/ms-playwright`, keyed on the lockfile.
+
+> A stale cache is a *silent* green: a task that should have run is skipped and the job passes anyway. Turborepo's default input hashing (every file in the package) is what keeps this honest — don't hand-tune `inputs` in `turbo.json` without a reason, and note that pushes to `main`/`beta` run unfiltered so a bad hash surfaces on merge.
+
+**Docs-only changes skip E2E and image smoke.** A `changes` job diffs the PR against its base; if nothing outside `docs/`, `*.md`, or `LICENSE` changed, both expensive jobs are skipped. It fails open — an unknown base runs everything — and applies to `pull_request` only, so pushes to `main`/`beta` always run the full gate and `release` never depends on a skipped job. The gate is a job-level `if` rather than a top-level `paths-ignore` on purpose: a *skipped job* reports success to branch protection, whereas a skipped *workflow* never reports at all and would leave PRs waiting forever.
+
+> **Renaming a CI job breaks branch protection.** ADR 0004 makes required status checks on `main`/`beta` a precondition for the whole enforcement story, and those rules name jobs by their display name. `Build`, `E2E Tests`, and `Docker image smoke` keep their names for this reason. If you rename one, update the branch protection rule in the same change.
 
 ## What we explicitly don't test
 

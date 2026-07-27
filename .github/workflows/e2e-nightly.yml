@@ -1,0 +1,70 @@
+name: E2E cross-browser
+
+# PR runs are chromium-only (see docs/adr/0005-fast-test-suite.md). Firefox,
+# WebKit, and the two mobile emulations replay the same UI specs here instead,
+# so browser-specific drift surfaces within a day rather than on every push.
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  cross-browser:
+    name: E2E (all browsers)
+    runs-on: ubuntu-latest
+    env:
+      E2E_ALL_BROWSERS: '1'
+      DATA_DIR: ./test-results/e2e-data/data
+      MEDIAMTX_RECORDINGS_DIR: ./test-results/e2e-data/recordings
+      MEDIAMTX_SCREENSHOTS_DIR: ./test-results/e2e-data/screenshots
+      BACKEND_SERVER_MEDIAMTX_URL: http://127.0.0.1
+      REMOTE_MEDIAMTX_URL: http://localhost
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Seed test fixtures
+        run: node scripts/seed-fixtures.mjs --target ./test-results/e2e-data
+      - name: Start MediaMTX with fake streams
+        run: |
+          docker compose -f docker-compose.dev.yml up -d
+          echo "Waiting for MediaMTX API..."
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:9997/v3/paths/list > /dev/null; then
+              echo "MediaMTX API is ready"; break
+            fi
+            [ "$i" = "30" ] && { echo "MediaMTX did not become ready"; docker logs mediamtx 2>&1 | tail -20; exit 1; }
+            sleep 2
+          done
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Build application
+        run: pnpm build
+      - name: Run E2E tests
+        run: pnpm test:e2e
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== MediaMTX logs ==="
+          docker logs mediamtx 2>&1 | tail -50
+          echo "=== Fake streams logs ==="
+          docker logs fake-streams 2>&1 | tail -50
+      - name: Upload Playwright report on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-cross-browser
+          path: playwright-report/
+          retention-days: 7
+      - name: Cleanup
+        if: always()
+        run: docker compose -f docker-compose.dev.yml down
