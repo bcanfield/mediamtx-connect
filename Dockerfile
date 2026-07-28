@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:22-bookworm-slim AS base
+FROM node:24-bookworm-slim AS base
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 RUN corepack enable
@@ -28,7 +28,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter @connect/api dep
 # node:22-slim instead of distroless: the app shells out to ffmpeg for
 # recording thumbnails, and slim gives us a real distro package for it
 # (see MIGRATION.md §5 / docs/debt docker-runtime-choice).
-FROM node:22-bookworm-slim AS runner
+FROM node:24-bookworm-slim AS runner
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ffmpeg \
   && rm -rf /var/lib/apt/lists/*
