@@ -89,7 +89,8 @@ merges without a version bump, which is the right answer for docs, tests, and
 tooling.
 
 A mistyped title is not a style nit — it silently drops the change out of the
-next release. `.github/workflows/pr-title.yml` checks the format.
+next release. The `Conventional commit format` job in CI checks it, and CI
+re-runs on a retitle — so fixing the title is enough, no empty commit needed.
 
 ## Releases
 
