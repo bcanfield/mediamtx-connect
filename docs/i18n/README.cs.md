@@ -1,10 +1,22 @@
-<h1 align="center">
-  <br>
-  MediaMTX Connect
-  <br>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>MediaMTX Connect</h1>
+
+<p><strong>Webové rozhraní pro <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
+Sledujte živé streamy, procházejte nahrávky, upravte libovolný konfigurační klíč — přímo v prohlížeči.</p>
+
+<p>
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect?style=flat-square&label=release" alt="Release"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-amd64%20%7C%20arm64-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
+
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — mřížka živých streamů, prohlížeč nahrávek a editor konfigurace" width="860">
+
+<details>
+<summary>🌍 Číst ve 30 jazycích</summary>
+<p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
@@ -36,37 +48,32 @@
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
+</details>
 
-<h4 align="center">Webové rozhraní pro <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Sledujte streamy, procházejte záznamy a upravujte konfiguraci z prohlížeče.</h4>
+</div>
 
-<p align="center">
-  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-</p>
+## Co to je
 
-<p align="center">
-  <img src="../../.github/assets/demo.gif" alt="Ukázka MediaMTX Connect" width="720">
-</p>
+MediaMTX je vynikající streamovací server bez rozhraní. Connect je chybějící front-end: jeden kontejner, který mluví s API MediaMTX a promění ho v kamerovou stěnu, archiv nahrávek a editor konfigurace.
 
-## Jak to spustit
+Je to společník, ne náhrada. Každá obrazovka stojí na něčem, co MediaMTX už vystavuje: na path, endpointu API, hooku `runOn*`, protokolu, který nativně obsluhuje. Neukládá video, nepřeposílá média, nemá databázi.
 
-Image jsou publikovány pro `linux/amd64` i `linux/arm64` (Raspberry Pi, Apple Silicon atd.) — Docker si ten správný stáhne automaticky.
+## Rychlý start
 
-Už máte spuštěné MediaMTX? Postavte Connect vedle něj:
+Multiarchitekturní image (`linux/amd64`, `linux/arm64`) — Docker stáhne tu správnou.
+
+**MediaMTX už běží?** Postavte Connect vedle něj:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
-  -v /cesta/k/zaznamum:/recordings \
+  -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
 
-`BACKEND_SERVER_MEDIAMTX_URL` je adresa, na které Connect dosáhne na API MediaMTX *zevnitř* svého kontejneru. Výchozí hodnota je `http://mediamtx`, která se přeloží jen v síti přiloženého compose — pro samostatný `docker run` ji nastavte na svůj MediaMTX host (změnit ji můžete i později v **Config**).
-
-Ještě nemáte MediaMTX? Přiložený compose spustí oba:
+**Začínáte od nuly?** Přiložený compose zvedne oba:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -74,31 +81,85 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Otevřete http://localhost:3000, přejděte do **Config** a nasměrujte ho na vaše MediaMTX.
+Pak otevřete <http://localhost:3000>.
 
-> Connect potřebuje `api: yes` ve vašem `mediamtx.yml`. Funkční referenci najdete v [přiloženém souboru](../../mediamtx.yml).
+> [!IMPORTANT]
+> Connect potřebuje `api: yes` ve vašem `mediamtx.yml`. [Přiložená konfigurace](../../mediamtx.yml) funguje tak, jak je.
 
-### Konfigurace
+## Co dostanete
 
-Vše lze konfigurovat za běhu v **Config**. Tyto proměnné prostředí slouží jen k naplnění při prvním spuštění:
+### Živý pohled
 
-| Proměnná | Výchozí hodnota | Účel |
+Všechny path, které MediaMTX zná, v mřížce o 2 až 4 sloupcích.
+
+- **WebRTC nebo HLS, pro každou kartu.** `AUTO` tiše spadne na HLS, `LOW-LAT` trvá na WebRTC, `COMPAT` vynutí HLS — a každá karta hlásí transport, který opravdu dostala.
+- **Snímky i v nečinnosti.** Úloha na pozadí drží na každé kartě čerstvý snímek a na štítku jeho stáří.
+- **Živá telemetrie.** Kodeky, počet diváků a doba běhu, rovnou ze seznamu path.
+- **Poctivý stav nahrávání.** Karty ukazují, jestli stream *skutečně* nahrává; stav, který Connect nepřečetl, je neznámý, nikdy vypnutý.
+- **Publikační adresy do schránky.** RTSP, RTMP a SRT, složené z vlastních naslouchacích adres serveru.
+
+### Nahrávky
+
+- MP4 každého streamu, seskupené po dnech, s automatickými náhledy.
+- Přehrávač, který se rozbalí na místě, převíjitelný přes HTTP Range požadavky.
+- Streamované stahování s živým průběhem a zrušením.
+- Stiskněte `/` a filtrujte.
+
+### Konfigurace bez YAML
+
+- **Celá konfigurace serveru** — 65 typovaných a validovaných ovládacích prvků napříč Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC a SRT.
+- **Path defaults a overridy pro jednotlivé path**, v rozsazích, ze kterých je MediaMTX obsluhuje. Uložení streamu krytého zástupným znakem zapíše řídký záznam, takže nedotčené klíče dál dědí.
+- **Všech 15 hooků `runOn*`**, s varováním tam, kde uložení restartuje path.
+- **Řídké zápisy** — jen klíče, které jste změnili.
+
+### Provoz
+
+Jediný proces pro API, SPA i média · multiarchitektura · `GET /health` · strukturované logy · PWA · světlý i tmavý · 30 jazyků · žádná databáze.
+
+## Proměnné prostředí
+
+Naplní jen první start. Dál je vše měnitelné v **Config**.
+
+| Proměnná | Výchozí | K čemu je |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host API MediaMTX, dostupný z kontejneru Connectu |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Kde Connect dosáhne na API MediaMTX zevnitř svého kontejneru |
 | `MEDIAMTX_API_PORT` | `9997` | Port API MediaMTX |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Cesta na hostiteli připojená pro záznamy (jen compose; volitelné — bez nastavení se použije výchozí hodnota) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kam se ukládají vygenerované snímky obrazovky |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Cesta na hostiteli připojená pro nahrávky (jen compose) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kam se ukládají náhledy |
+
+`http://mediamtx` se přeloží jen v síti přiloženého compose — pro samostatný `docker run` nastavte vlastního hostitele.
+
+## Jak to funguje
+
+```
+Browser ──HLS / WebRTC (WHEP)──────────────────────────┐
+   │                                                   │
+   │ oRPC (typed)                                      ▼
+   ▼                                              ┌──────────┐
+┌─────────────────────┐    MediaMTX HTTP API      │ MediaMTX │
+│ mediamtx-connect    │ ────────────────────────▶ │  server  │
+│ Hono API + React SPA│                           └──────────┘
+└─────────────────────┘                                │
+   │ reads                                             │ writes
+   ▼                                                   ▼
+recordings/ + screenshots/  ◀────────────────────  MP4 segments
+```
+
+Přehrávání jde z prohlížeče do MediaMTX. Connect přenáší jen JSON a k tomu nahrávky a náhledy, které čte z disku.
 
 ## Dokumentace
 
-[Architektura](../../ARCHITECTURE.md) · [Funkce](../../docs/FEATURES.md) · [Přispívání](../../CONTRIBUTING.md)
+| | |
+|---|---|
+| [Funkce](../FEATURES.md) | Každá vydaná schopnost, routa a procedura |
+| [Architektura](../../ARCHITECTURE.md) | Jak do sebe díly zapadají |
+| [Přispívání](../../CONTRIBUTING.md) | Vývojové prostředí, skripty, proces PR |
+| [Příklady](../../examples/) | Kamera Raspberry Pi, falešné streamy pro testy |
 
-> Poznámka: dokumentace pro vývojáře je udržována pouze v angličtině. Uživatelské rozhraní aplikace je v češtině dostupné na `/cs`.
+## Přispívání
 
-## Kodex chování
-
-Tento projekt se řídí [Kodexem chování](../../CODE_OF_CONDUCT.md). Účastí se očekává, že jej budete dodržovat.
+Issues a PR jsou vítány. `pnpm install && pnpm dev` vám postaví celý stack i s testovacími daty — zbytek v [CONTRIBUTING.md](../../CONTRIBUTING.md), názvy PR jsou conventional commits. Řídíme se [Kodexem chování](../../CODE_OF_CONDUCT.md).
 
 ## Licence
 
-MIT
+[MIT](../../LICENSE)

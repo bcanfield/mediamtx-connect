@@ -6,7 +6,7 @@ App-level "nice to have" work that doesn't directly align with MediaMTX (our own
 
 ## Hard rule for every change
 
-If your change adds, removes, or modifies a user-visible feature, route, API endpoint, oRPC procedure, schema, cron, or integration, you **must** update `docs/FEATURES.md` in the same change. See its "Maintenance contract."
+If your change adds, removes, or modifies a user-visible feature, route, API endpoint, oRPC procedure, schema, cron, or integration, you **must** update `docs/FEATURES.md` in the same change. See its "Maintenance contract." Also - ensure that the higher-level features in `README.md` are still accurate.
 
 ## Stack
 

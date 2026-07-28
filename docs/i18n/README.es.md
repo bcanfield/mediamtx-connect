@@ -1,10 +1,22 @@
-<h1 align="center">
-  <br>
-  MediaMTX Connect
-  <br>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>MediaMTX Connect</h1>
+
+<p><strong>La interfaz web para <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
+Mira transmisiones en vivo, explora grabaciones y edita cualquier clave de configuración — desde tu navegador.</p>
+
+<p>
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect?style=flat-square&label=release" alt="Release"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-amd64%20%7C%20arm64-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
+
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — mosaico de transmisiones en vivo, explorador de grabaciones y editor de configuración" width="860">
+
+<details>
+<summary>🌍 Léelo en 30 idiomas</summary>
+<p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <strong>Español</strong> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
@@ -36,37 +48,32 @@
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
+</details>
 
-<h4 align="center">Una interfaz web para <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador.</h4>
+</div>
 
-<p align="center">
-  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-</p>
+## Qué es
 
-<p align="center">
-  <img src="../../.github/assets/demo.gif" alt="Demostración de MediaMTX Connect" width="720">
-</p>
+MediaMTX es un gran servidor de streaming sin interfaz. Connect es el front-end que le falta: un contenedor que habla con la API de MediaMTX y la convierte en un muro de cámaras, un archivo de grabaciones y un editor de configuración.
 
-## Cómo ejecutarlo
+Es un complemento, no un reemplazo. Cada pantalla se apoya en algo que MediaMTX ya expone: una ruta, un endpoint, un hook `runOn*`, un protocolo que sirve de forma nativa. No almacena vídeo, no hace de proxy, no usa base de datos.
 
-Se publican imágenes tanto para `linux/amd64` como para `linux/arm64` (Raspberry Pi, Apple Silicon, etc.) — Docker descarga la correcta automáticamente.
+## Inicio rápido
 
-¿Ya tienes MediaMTX en marcha? Añade Connect junto a él:
+Imágenes multiarquitectura (`linux/amd64`, `linux/arm64`) — Docker descarga la correcta.
+
+**¿Ya tienes MediaMTX?** Añade Connect junto a él:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
-  -v /ruta/a/grabaciones:/recordings \
+  -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
 
-`BACKEND_SERVER_MEDIAMTX_URL` es la dirección donde Connect alcanza la API de MediaMTX desde *dentro* de su contenedor. Su valor por defecto es `http://mediamtx`, que solo se resuelve en la red del compose incluido — para un `docker run` independiente, apúntalo a tu host de MediaMTX (también puedes cambiarlo más tarde en **Configuración**).
-
-¿Aún no tienes MediaMTX? El compose incluido inicia ambos:
+**¿Empiezas de cero?** El compose incluido levanta ambos:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -74,31 +81,85 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Abre http://localhost:3000, ve a **Configuración** y apúntalo a tu MediaMTX.
+Luego abre <http://localhost:3000>.
 
-> Connect necesita `api: yes` en tu `mediamtx.yml`. Consulta [el archivo incluido](../../mediamtx.yml) como referencia funcional.
+> [!IMPORTANT]
+> Connect necesita `api: yes` en tu `mediamtx.yml`. La [configuración incluida](../../mediamtx.yml) funciona tal cual.
 
-### Configuración
+## Qué obtienes
 
-Todo es configurable en tiempo de ejecución desde **Configuración**. Estas variables de entorno solo se usan en el primer arranque:
+### Vista en vivo
 
-| Variable | Valor por defecto | Propósito |
+Todas las rutas que MediaMTX conoce, en una rejilla de 2 a 4 columnas.
+
+- **WebRTC o HLS, por tarjeta.** `AUTO` cae a HLS en silencio, `LOW-LAT` exige WebRTC y `COMPAT` fuerza HLS — y cada tarjeta informa del transporte que realmente consiguió.
+- **Capturas mientras está inactiva.** Un trabajo en segundo plano mantiene un fotograma reciente en cada tarjeta, con su antigüedad en la etiqueta.
+- **Telemetría en vivo.** Códecs, espectadores y tiempo en línea, directos del listado de rutas.
+- **Estado de grabación honesto.** Las tarjetas muestran si una transmisión graba *de verdad*; un estado que Connect no pudo leer dice desconocido, nunca apagado.
+- **URLs de publicación al portapapeles.** RTSP, RTMP y SRT, construidas desde las direcciones de escucha del propio servidor.
+
+### Grabaciones
+
+- Los MP4 de cada transmisión, agrupados por día y con miniaturas automáticas.
+- Un reproductor que se despliega en su sitio, navegable mediante peticiones HTTP Range.
+- Descargas en streaming, con progreso en vivo y cancelación.
+- Pulsa `/` para filtrar.
+
+### Configuración, sin YAML
+
+- **Toda la configuración del servidor** — 65 controles tipados y validados en Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC y SRT.
+- **Valores por defecto y anulaciones por ruta**, en los ámbitos desde los que MediaMTX los sirve. Guardar una transmisión cubierta por un comodín escribe una entrada dispersa, así que las claves intactas siguen heredando.
+- **Los 15 hooks `runOn*`**, con aviso allí donde guardar reinicia la ruta.
+- **Escrituras dispersas** — solo las claves que cambiaste.
+
+### Operación
+
+Un proceso para API, SPA y medios · multiarquitectura · `GET /health` · logs estructurados · PWA · claro y oscuro · 30 idiomas · sin base de datos.
+
+## Variables de entorno
+
+Estas siembran el primer arranque. Todo sigue siendo editable en **Config**.
+
+| Variable | Por defecto | Para qué sirve |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host de la API de MediaMTX, accesible desde el contenedor de Connect |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Dónde alcanza Connect la API de MediaMTX desde dentro de su contenedor |
 | `MEDIAMTX_API_PORT` | `9997` | Puerto de la API de MediaMTX |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Ruta del host montada para las grabaciones (solo compose; opcional — usa el valor por defecto si no se define) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Dónde se almacenan las capturas generadas |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Ruta del host montada para grabaciones (solo compose) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Dónde se guardan las miniaturas |
+
+`http://mediamtx` solo resuelve en la red del compose incluido — para un `docker run` independiente, apúntalo a tu host.
+
+## Cómo funciona
+
+```
+Browser ──HLS / WebRTC (WHEP)──────────────────────────┐
+   │                                                   │
+   │ oRPC (typed)                                      ▼
+   ▼                                              ┌──────────┐
+┌─────────────────────┐    MediaMTX HTTP API      │ MediaMTX │
+│ mediamtx-connect    │ ────────────────────────▶ │  server  │
+│ Hono API + React SPA│                           └──────────┘
+└─────────────────────┘                                │
+   │ reads                                             │ writes
+   ▼                                                   ▼
+recordings/ + screenshots/  ◀────────────────────  MP4 segments
+```
+
+La reproducción va del navegador a MediaMTX. Connect solo mueve JSON, más las grabaciones y miniaturas que lee del disco.
 
 ## Documentación
 
-[Arquitectura](../../ARCHITECTURE.md) · [Funcionalidades](../../docs/FEATURES.md) · [Contribuir](../../CONTRIBUTING.md)
+| | |
+|---|---|
+| [Funcionalidades](../FEATURES.md) | Cada capacidad, ruta y procedimiento publicado |
+| [Arquitectura](../../ARCHITECTURE.md) | Cómo encajan las piezas |
+| [Contribuir](../../CONTRIBUTING.md) | Entorno de desarrollo, scripts, proceso de PR |
+| [Ejemplos](../../examples/) | Cámara de Raspberry Pi, transmisiones falsas para pruebas |
 
-> Nota: la documentación para desarrolladores se mantiene en inglés. La interfaz de la aplicación está disponible en español en `/es`.
+## Contribuir
 
-## Código de Conducta
-
-Este proyecto sigue un [Código de Conducta](../../CODE_OF_CONDUCT.md). Al participar, se espera que lo respetes.
+Issues y PR son bienvenidos. `pnpm install && pnpm dev` levanta el stack completo con datos de prueba — mira [CONTRIBUTING.md](../../CONTRIBUTING.md), y ten en cuenta que los títulos de PR son conventional commits. Seguimos un [Código de Conducta](../../CODE_OF_CONDUCT.md).
 
 ## Licencia
 
-MIT
+[MIT](../../LICENSE)
