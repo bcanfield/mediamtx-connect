@@ -115,8 +115,8 @@ catalogs:
       specifier: ^4.12.30
       version: 4.12.31
     lucide-react:
-      specifier: ^0.562.0
-      version: 0.562.0
+      specifier: ^1.0.0
+      version: 1.27.0
     msw:
       specifier: ^2.15.0
       version: 2.15.0
@@ -317,7 +317,7 @@ importers:
         version: 1.6.16
       lucide-react:
         specifier: 'catalog:'
-        version: 0.562.0(react@19.2.7)
+        version: 1.27.0(react@19.2.7)
       radix-ui:
         specifier: 'catalog:'
         version: 1.6.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -4339,8 +4339,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.562.0:
-    resolution: {integrity: sha512-82hOAu7y0dbVuFfmO4bYF1XEwYk/mEbM5E+b1jgci/udUBEE/R7LF5Ip0CCEmXe8AybRM8L+04eP+LGZeDvkiw==}
+  lucide-react@1.27.0:
+    resolution: {integrity: sha512-rJicGl/3Fly/E0rOH1YmPZ6e49JCnKknh1ox1vpHnkfjujAkKA6sqUZvH3MTAaXXjgexyUwgNwTJzTtYuAFYJw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -10270,7 +10270,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.562.0(react@19.2.7):
+  lucide-react@1.27.0(react@19.2.7):
     dependencies:
       react: 19.2.7
 

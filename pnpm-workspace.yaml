@@ -47,7 +47,7 @@ catalog:
   happy-dom: ^20.11.1
   hls.js: ^1.6.15
   hono: ^4.12.30
-  lucide-react: ^0.562.0
+  lucide-react: ^1.0.0
   msw: ^2.15.0
   node-cron: ^4.2.1
   pino: ^10.2.1
