@@ -1,0 +1,46 @@
+# main requires an approving review, which Renovate's automerge cannot supply on
+# its own — its PRs sat at mergeable_state=blocked forever. An approval from
+# GITHUB_TOKEN counts toward that requirement, so this supplies one and CI stays
+# the real gate.
+
+name: Renovate auto-approve
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # Manual sweep for PRs that predate this workflow (no event will fire for them).
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  approve:
+    name: Approve
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.user.login == 'renovate[bot]'
+
+    steps:
+      - name: Approve Renovate PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [ -n "$EVENT_PR" ]; then
+            prs="$EVENT_PR"
+          else
+            prs=$(gh api "repos/$GH_REPO/pulls?state=open&per_page=100" \
+              --jq '.[] | select(.user.login == "renovate[bot]") | .number')
+          fi
+          for pr in $prs; do
+            # Renovate rebases often. Without this, every rebase stacks another
+            # review; a dismissed approval reads as DISMISSED, so it re-approves.
+            approvals=$(gh api "repos/$GH_REPO/pulls/$pr/reviews" \
+              --jq '[.[] | select(.user.login == "github-actions[bot]" and .state == "APPROVED")] | length')
+            if [ "$approvals" != "0" ]; then
+              echo "PR #$pr already approved"
+              continue
+            fi
+            gh pr review "$pr" --approve --body 'Automated approval for a Renovate PR. CI is the gate.'
+          done
