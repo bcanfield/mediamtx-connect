@@ -51,15 +51,20 @@
 
 ## Cách chạy
 
+Image được phát hành cho cả `linux/amd64` và `linux/arm64` (Raspberry Pi, Apple Silicon, v.v.) — Docker tự động tải đúng bản.
+
 Đã chạy MediaMTX rồi? Thêm Connect bên cạnh nó:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /duong-dan/den/ban-ghi:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` là nơi Connect truy cập API của MediaMTX từ *bên trong* container của nó. Giá trị mặc định là `http://mediamtx`, chỉ phân giải được trên mạng compose đi kèm — với lệnh `docker run` độc lập, hãy đặt nó thành host MediaMTX của bạn (bạn cũng có thể đổi sau trong **Config**).
 
 Chưa có MediaMTX? Compose đi kèm khởi động cả hai:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Mở http://localhost:3000, vào **Config**, và trỏ nó đến MediaMTX của bạn.
 
 > Connect cần `api: yes` trong `mediamtx.yml` của bạn. Xem [tệp đi kèm](../../mediamtx.yml) làm tham chiếu hoạt động.
+
+### Cấu hình
+
+Mọi thứ đều có thể cấu hình khi đang chạy trong **Config**. Các biến môi trường này chỉ dùng để khởi tạo lần chạy đầu tiên:
+
+| Biến | Mặc định | Mục đích |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host API của MediaMTX, truy cập được từ container của Connect |
+| `MEDIAMTX_API_PORT` | `9997` | Cổng API của MediaMTX |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Đường dẫn trên host được gắn cho bản ghi (chỉ compose; tùy chọn — dùng mặc định nếu không đặt) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Nơi lưu các ảnh chụp màn hình được tạo |
 
 ## Tài liệu
 

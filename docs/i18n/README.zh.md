@@ -51,15 +51,20 @@
 
 ## 运行方法
 
+镜像同时发布了 `linux/amd64` 和 `linux/arm64` 版本（Raspberry Pi、Apple Silicon 等）——Docker 会自动拉取合适的那个。
+
 已经在运行 MediaMTX 了？把 Connect 部署在它旁边即可：
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` 是 Connect 从其容器*内部*访问 MediaMTX API 的地址。默认值为 `http://mediamtx`，它只能在随附的 compose 网络中解析——如果是独立的 `docker run`，请把它设置为你的 MediaMTX 主机（之后也可以在 **Config** 中修改）。
 
 还没有 MediaMTX？随附的 compose 会同时启动两者：
 
@@ -72,6 +77,17 @@ docker compose up -d
 打开 http://localhost:3000，进入 **Config**，将其指向你的 MediaMTX。
 
 > Connect 需要在 `mediamtx.yml` 中设置 `api: yes`。可参考[随附文件](../../mediamtx.yml)作为可用示例。
+
+### 配置
+
+所有配置都可以在运行时于 **Config** 中修改。这些环境变量仅用于首次启动时的初始化：
+
+| 变量 | 默认值 | 用途 |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API 主机，需可从 Connect 的容器访问 |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API 端口 |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | 为录像挂载的宿主机路径（仅限 compose；可选——未设置时使用默认值） |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 生成的截图的存放位置 |
 
 ## 文档
 

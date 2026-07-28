@@ -51,15 +51,20 @@
 
 ## Hogyan futtassa
 
+A képek `linux/amd64` és `linux/arm64` architektúrára egyaránt megjelennek (Raspberry Pi, Apple Silicon stb.) — a Docker automatikusan a megfelelőt tölti le.
+
 Már fut a MediaMTX? Helyezze a Connectet mellé:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /utvonal/felvetelekhez:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+A `BACKEND_SERVER_MEDIAMTX_URL` adja meg, hol éri el a Connect a MediaMTX API-ját a saját konténerén *belülről*. Alapértelmezése `http://mediamtx`, ami csak a mellékelt compose hálózatán oldható fel — önálló `docker run` esetén állítsa a saját MediaMTX-gazdagépére (később a **Config**-ban is módosíthatja).
 
 Nincs még MediaMTX? A mellékelt compose elindítja mindkettőt:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Nyissa meg a http://localhost:3000 címet, lépjen a **Config**-ra, és mutasson rá a MediaMTX-re.
 
 > A Connectnek `api: yes` szükséges a `mediamtx.yml` fájljában. Lásd [a mellékelt fájlt](../../mediamtx.yml) működő referenciaként.
+
+### Konfiguráció
+
+Futásidőben minden beállítható a **Config**-ban. Ezek a környezeti változók csak az első indítást töltik fel kezdőértékekkel:
+
+| Változó | Alapértelmezés | Cél |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | A MediaMTX API gazdagépe, amelyet a Connect konténere elér |
+| `MEDIAMTX_API_PORT` | `9997` | A MediaMTX API portja |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | A felvételekhez csatolt gazdagép-útvonal (csak compose; opcionális — ha nincs megadva, az alapértelmezés érvényes) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Ide kerülnek a generált képernyőképek |
 
 ## Dokumentáció
 
