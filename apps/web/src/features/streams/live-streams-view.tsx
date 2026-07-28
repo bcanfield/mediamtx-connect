@@ -115,7 +115,7 @@ export function LiveStreamsView({
             key={stream.name}
             streamName={stream.name}
             readyTime={stream.readyTime}
-            recording={stream.recording}
+            recordState={stream.recordState}
             codecs={stream.codecs}
             viewers={stream.viewers}
             snapshotMtime={stream.snapshotMtime}

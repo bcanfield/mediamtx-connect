@@ -14,7 +14,7 @@ const BASE: StreamCardProps = {
   remoteMediaMtxUrl: 'http://localhost',
   publishTargets: [],
   playbackMode: 'auto',
-  recording: false,
+  recordState: 'off',
 }
 
 async function renderCard(props: Partial<StreamCardProps> = {}, path = '/') {
@@ -111,17 +111,25 @@ describe('record state', () => {
   // The bug this exists to catch: a card reporting only the stream's own
   // (absent) override reads OFF while MediaMTX writes files to disk.
   it('badges a recording stream', async () => {
-    await renderCard({ recording: true })
+    await renderCard({ recordState: 'on' })
 
-    expect(screen.getByText(/REC/)).toBeInTheDocument()
+    expect(screen.getByText(/● REC$/)).toBeInTheDocument()
   })
 
   it('shows no REC badge when recording is off', async () => {
-    await renderCard({ recording: false })
+    await renderCard({ recordState: 'off' })
 
     // Anchor: proves the card rendered, so the negative below can't pass on an empty DOM.
     expect(screen.getByText('stream1')).toBeInTheDocument()
     expect(screen.queryByText(/REC/)).not.toBeInTheDocument()
+  })
+
+  // The lie this exists to catch: an unreadable config entry rendered as OFF
+  // while MediaMTX may be writing files to disk.
+  it('marks record state unknown rather than showing it as off', async () => {
+    await renderCard({ recordState: 'unknown' })
+
+    expect(screen.getByText(/REC\?$/)).toBeInTheDocument()
   })
 })
 
