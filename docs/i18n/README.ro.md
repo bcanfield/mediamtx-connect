@@ -51,15 +51,20 @@
 
 ## Cum se execută
 
+Imaginile sunt publicate atât pentru `linux/amd64`, cât și pentru `linux/arm64` (Raspberry Pi, Apple Silicon etc.) — Docker o descarcă automat pe cea potrivită.
+
 Aveți deja MediaMTX în execuție? Adăugați Connect alături:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /cale/catre/inregistrari:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` este adresa la care Connect ajunge la API-ul MediaMTX din *interiorul* containerului său. Valoarea implicită este `http://mediamtx`, care se rezolvă doar în rețeaua compose inclusă — pentru un `docker run` de sine stătător, setați-o către gazda dvs. MediaMTX (o puteți schimba și ulterior din **Config**).
 
 Încă nu aveți MediaMTX? Fișierul compose inclus le pornește pe ambele:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Deschideți http://localhost:3000, mergeți la **Config** și îndreptați-l către MediaMTX-ul dvs.
 
 > Connect are nevoie de `api: yes` în `mediamtx.yml`. Vedeți [fișierul inclus](../../mediamtx.yml) ca referință funcțională.
+
+### Configurare
+
+Totul se poate configura în timpul execuției din **Config**. Aceste variabile de mediu sunt folosite doar la prima pornire:
+
+| Variabilă | Implicit | Scop |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Gazda API-ului MediaMTX, accesibilă din containerul Connect |
+| `MEDIAMTX_API_PORT` | `9997` | Portul API-ului MediaMTX |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Calea de pe gazdă montată pentru înregistrări (doar compose; opțional — se folosește valoarea implicită dacă nu este setată) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Unde sunt stocate capturile de ecran generate |
 
 ## Documentație
 

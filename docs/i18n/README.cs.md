@@ -51,15 +51,20 @@
 
 ## Jak to spustit
 
+Image jsou publikovány pro `linux/amd64` i `linux/arm64` (Raspberry Pi, Apple Silicon atd.) — Docker si ten správný stáhne automaticky.
+
 Už máte spuštěné MediaMTX? Postavte Connect vedle něj:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /cesta/k/zaznamum:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` je adresa, na které Connect dosáhne na API MediaMTX *zevnitř* svého kontejneru. Výchozí hodnota je `http://mediamtx`, která se přeloží jen v síti přiloženého compose — pro samostatný `docker run` ji nastavte na svůj MediaMTX host (změnit ji můžete i později v **Config**).
 
 Ještě nemáte MediaMTX? Přiložený compose spustí oba:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Otevřete http://localhost:3000, přejděte do **Config** a nasměrujte ho na vaše MediaMTX.
 
 > Connect potřebuje `api: yes` ve vašem `mediamtx.yml`. Funkční referenci najdete v [přiloženém souboru](../../mediamtx.yml).
+
+### Konfigurace
+
+Vše lze konfigurovat za běhu v **Config**. Tyto proměnné prostředí slouží jen k naplnění při prvním spuštění:
+
+| Proměnná | Výchozí hodnota | Účel |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host API MediaMTX, dostupný z kontejneru Connectu |
+| `MEDIAMTX_API_PORT` | `9997` | Port API MediaMTX |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Cesta na hostiteli připojená pro záznamy (jen compose; volitelné — bez nastavení se použije výchozí hodnota) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kam se ukládají vygenerované snímky obrazovky |
 
 ## Dokumentace
 

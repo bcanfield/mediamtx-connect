@@ -51,15 +51,20 @@
 
 ## Paano patakbuhin
 
+Ang mga image ay inilalathala para sa `linux/amd64` at `linux/arm64` (Raspberry Pi, Apple Silicon, atbp.) — awtomatikong kinukuha ng Docker ang tama.
+
 May tumatakbo ka nang MediaMTX? Ilagay ang Connect sa tabi nito:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /landas/sa/mga-recording:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+Ang `BACKEND_SERVER_MEDIAMTX_URL` ay kung saan naaabot ng Connect ang API ng MediaMTX mula sa *loob* ng container nito. Ang default nito ay `http://mediamtx`, na nareresolba lamang sa kasamang compose network — para sa isang standalone na `docker run`, itakda ito sa host ng iyong MediaMTX (maaari mo rin itong baguhin mamaya sa ilalim ng **Config**).
 
 Wala pang MediaMTX? Ang kasamang compose ay nagsisimula ng pareho:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Buksan ang http://localhost:3000, pumunta sa **Config**, at ituro ito sa iyong MediaMTX.
 
 > Kailangan ng Connect ng `api: yes` sa iyong `mediamtx.yml`. Tingnan ang [kasamang file](../../mediamtx.yml) bilang gumaganang reference.
+
+### Konfigurasyon
+
+Lahat ay maaaring i-configure habang tumatakbo sa ilalim ng **Config**. Ang mga env var na ito ay naghahasik lamang sa unang boot:
+
+| Variable | Default | Layunin |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host ng MediaMTX API, naaabot mula sa container ng Connect |
+| `MEDIAMTX_API_PORT` | `9997` | Port ng MediaMTX API |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Landas sa host na naka-mount para sa mga recording (compose lamang; opsyonal — may default kung hindi nakatakda) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kung saan itinatago ang mga nabuong screenshot |
 
 ## Dokumentasyon
 

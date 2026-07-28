@@ -51,15 +51,20 @@
 
 ## Så här kör du det
 
+Avbildningar publiceras för både `linux/amd64` och `linux/arm64` (Raspberry Pi, Apple Silicon med flera) — Docker hämtar rätt avbildning automatiskt.
+
 Kör du redan MediaMTX? Lägg Connect bredvid den:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /sokvag/till/inspelningar:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` är adressen där Connect når MediaMTX API *inifrån* sin container. Standardvärdet är `http://mediamtx`, som bara går att slå upp i det medföljande compose-nätverket — för en fristående `docker run` pekar du den mot din MediaMTX-värd (du kan även ändra den senare under **Config**).
 
 Har du ingen MediaMTX än? Den medföljande compose-filen startar båda:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Öppna http://localhost:3000, gå till **Config** och peka det mot din MediaMTX.
 
 > Connect behöver `api: yes` i din `mediamtx.yml`. Se [den inkluderade filen](../../mediamtx.yml) som en fungerande referens.
+
+### Konfiguration
+
+Allt går att konfigurera under drift via **Config**. De här miljövariablerna används bara vid första starten:
+
+| Variabel | Standard | Syfte |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Värd för MediaMTX API, nåbar från Connects container |
+| `MEDIAMTX_API_PORT` | `9997` | Port för MediaMTX API |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Sökväg på värden som monteras för inspelningar (endast compose; valfri — standardvärde används om den inte anges) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Var genererade skärmbilder lagras |
 
 ## Dokumentation
 

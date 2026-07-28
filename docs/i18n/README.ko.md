@@ -51,15 +51,20 @@
 
 ## 실행 방법
 
+이미지는 `linux/amd64`와 `linux/arm64`(Raspberry Pi, Apple Silicon 등) 모두에 대해 배포되며, Docker가 알맞은 것을 자동으로 내려받습니다.
+
 이미 MediaMTX를 실행 중인가요? 그 옆에 Connect를 추가하세요:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /녹화/경로:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL`은 Connect가 컨테이너 *내부*에서 MediaMTX API에 접근하는 주소입니다. 기본값은 `http://mediamtx`이며, 함께 제공되는 compose 네트워크에서만 확인됩니다. 단독으로 `docker run`을 사용할 때는 사용 중인 MediaMTX 호스트로 설정하세요(나중에 **Config**에서 변경할 수도 있습니다).
 
 아직 MediaMTX가 없나요? 함께 제공되는 compose가 둘을 같이 시작합니다:
 
@@ -72,6 +77,17 @@ docker compose up -d
 http://localhost:3000을 열고 **Config**로 이동한 뒤, MediaMTX를 가리키도록 설정하세요.
 
 > Connect는 `mediamtx.yml`에 `api: yes`가 필요합니다. 동작 예시는 [포함된 파일](../../mediamtx.yml)을 참고하세요.
+
+### 설정
+
+모든 항목은 **Config**에서 실행 중에 설정할 수 있습니다. 아래 환경 변수는 최초 부팅 시 초기값을 지정할 뿐입니다:
+
+| 변수 | 기본값 | 용도 |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect 컨테이너에서 접근 가능한 MediaMTX API 호스트 |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API 포트 |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | 녹화를 위해 마운트하는 호스트 경로(compose 전용, 선택 사항 — 설정하지 않으면 기본값 사용) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 생성된 스크린샷이 저장되는 위치 |
 
 ## 문서
 

@@ -51,15 +51,20 @@
 
 ## কীভাবে চালাবেন
 
+ইমেজ `linux/amd64` এবং `linux/arm64` (Raspberry Pi, Apple Silicon, ইত্যাদি) উভয়ের জন্যই প্রকাশ করা হয় — Docker স্বয়ংক্রিয়ভাবে সঠিকটি টেনে নেয়।
+
 ইতিমধ্যে MediaMTX চালাচ্ছেন? Connect-কে তার পাশে রাখুন:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` হলো সেই ঠিকানা যেখান থেকে Connect তার কনটেইনারের *ভিতর* থেকে MediaMTX-এর API-তে পৌঁছায়। এর ডিফল্ট `http://mediamtx`, যা কেবল সঙ্গে দেওয়া compose নেটওয়ার্কেই সমাধান হয় — স্বতন্ত্র `docker run`-এর জন্য এটিকে আপনার MediaMTX হোস্টে সেট করুন (আপনি পরে **Config**-এও এটি পরিবর্তন করতে পারেন)।
 
 এখনও MediaMTX নেই? সঙ্গে দেওয়া compose উভয়ই শুরু করে:
 
@@ -72,6 +77,17 @@ docker compose up -d
 http://localhost:3000 খুলুন, **Config**-এ যান, এবং এটিকে আপনার MediaMTX-এর দিকে নির্দেশ করুন।
 
 > Connect-এর আপনার `mediamtx.yml`-এ `api: yes` প্রয়োজন। কর্মক্ষম রেফারেন্স হিসাবে [অন্তর্ভুক্ত ফাইল](../../mediamtx.yml) দেখুন।
+
+### কনফিগারেশন
+
+সবকিছুই **Config**-এ রানটাইমে কনফিগার করা যায়। এই env ভেরিয়েবলগুলো কেবল প্রথম বুটের প্রাথমিক মান দেয়:
+
+| ভেরিয়েবল | ডিফল্ট | উদ্দেশ্য |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API হোস্ট, যা Connect-এর কনটেইনার থেকে পৌঁছানো যায় |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API পোর্ট |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | রেকর্ডিংয়ের জন্য মাউন্ট করা হোস্ট পাথ (কেবল compose; ঐচ্ছিক — সেট না থাকলে ডিফল্ট প্রযোজ্য) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | তৈরি হওয়া স্ক্রিনশট যেখানে সংরক্ষিত হয় |
 
 ## ডকুমেন্টেশন
 

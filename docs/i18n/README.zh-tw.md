@@ -51,15 +51,20 @@
 
 ## 如何執行
 
+映像檔同時發佈 `linux/amd64` 與 `linux/arm64` 版本（Raspberry Pi、Apple Silicon 等）——Docker 會自動下載正確的版本。
+
 已經在執行 MediaMTX 嗎？將 Connect 部署在它旁邊：
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` 是 Connect 從其容器*內部*連線到 MediaMTX API 的位址。預設值為 `http://mediamtx`，只有在附帶的 compose 網路中才能解析——若是獨立執行 `docker run`，請將它設為您的 MediaMTX 主機（之後也可以在 **Config** 中變更）。
 
 還沒有 MediaMTX 嗎？附帶的 compose 會同時啟動兩者：
 
@@ -72,6 +77,17 @@ docker compose up -d
 開啟 http://localhost:3000，前往 **Config**，並將其指向您的 MediaMTX。
 
 > Connect 需要在 `mediamtx.yml` 中設定 `api: yes`。請參考 [附帶的檔案](../../mediamtx.yml) 作為可用的範例。
+
+### 設定
+
+所有項目都可以在執行期間於 **Config** 中設定。這些環境變數只會用於首次啟動的初始值：
+
+| 變數 | 預設值 | 用途 |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API 主機，需可從 Connect 的容器連線 |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API 連接埠 |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | 掛載給錄影檔的主機路徑（僅限 compose；選用——未設定時使用預設值） |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 產生的螢幕截圖儲存位置 |
 
 ## 文件
 
