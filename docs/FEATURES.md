@@ -413,7 +413,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **GitHub Actions CI** (`.github/workflows/ci.yml`) — lint, typecheck, i18n guards, build, Playwright E2E against a real MediaMTX with fake streams, Docker image smoke test.
 - **Docker publishing** (`.github/workflows/docker.yml`) — multi-arch `bcanfield/mediamtx-connect` + GHCR on release.
 - **`semantic-release`** — `release.config.js` automates semver, changelog, and GitHub releases. `CHANGELOG.md` is auto-maintained.
-- **Renovate** — `renovate.json` configured for automated dependency PRs.
+- **Renovate** — `renovate.json` batches dependency updates into one nightly PR. Branch creation is limited to a 00:00–06:00 `America/New_York` window; minor/patch/pin/digest updates group into a single "all non-major dependencies" PR that automerges once CI is green. Kept out of that group and left for review: 0.x minor bumps (semver-breaking) and majors, with GitHub Actions majors collapsed into one "github actions major" PR.
+- **Renovate auto-approve** (`.github/workflows/renovate-approve.yml`) — `main` requires an approving review, which Renovate cannot supply itself. This approves `renovate[bot]` PRs with `GITHUB_TOKEN` so automerge can proceed; CI remains the gate. Skips PRs that already carry a live `github-actions[bot]` approval, and `workflow_dispatch` sweeps open PRs that predate a given run.
 - **MIT licensed** — `LICENSE`.
 - **Contribution guide** — `CONTRIBUTING.md`.
 - **Architecture doc** — `ARCHITECTURE.md`; stack rationale in `docs/STACK.md`; migration record in `docs/MIGRATION.md`.
