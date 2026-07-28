@@ -1,10 +1,22 @@
-<h1 align="center">
-  <br>
-  MediaMTX Connect
-  <br>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>MediaMTX Connect</h1>
+
+<p><strong><a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> के लिए वेब UI।</strong><br>
+लाइव स्ट्रीम देखें, रिकॉर्डिंग टटोलें, कोई भी कॉन्फ़िग कुंजी बदलें — अपने ब्राउज़र से।</p>
+
+<p>
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect?style=flat-square&label=release" alt="Release"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-amd64%20%7C%20arm64-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
+
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — लाइव स्ट्रीम ग्रिड, रिकॉर्डिंग ब्राउज़र और कॉन्फ़िग संपादक" width="860">
+
+<details>
+<summary>🌍 30 भाषाओं में पढ़ें</summary>
+<p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
@@ -36,24 +48,21 @@
   🇮🇳 <strong>हिन्दी</strong> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
+</details>
 
-<h4 align="center"><a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a> के लिए वेब इंटरफ़ेस। अपने ब्राउज़र से स्ट्रीम देखें, रिकॉर्डिंग ब्राउज़ करें और कॉन्फ़िगरेशन संपादित करें।</h4>
+</div>
 
-<p align="center">
-  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-</p>
+## यह क्या है
 
-<p align="center">
-  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect डेमो" width="720">
-</p>
+MediaMTX एक बेहतरीन स्ट्रीमिंग सर्वर है, पर बिना किसी इंटरफ़ेस के। Connect वही छूटा हुआ फ्रंट-एंड है: एक कंटेनर जो MediaMTX के API से बात करता है और उसे कैमरा दीवार, रिकॉर्डिंग संग्रह और कॉन्फ़िग संपादक में बदल देता है।
 
-## कैसे चलाएँ
+यह साथी है, विकल्प नहीं। हर स्क्रीन उसी पर टिकी है जो MediaMTX पहले से खोलकर रखता है: कोई path, कोई API एंडपॉइंट, कोई `runOn*` हुक, कोई प्रोटोकॉल जिसे वह खुद परोसता है। न वीडियो रखता है, न मीडिया प्रॉक्सी करता है, न कोई डेटाबेस।
 
-इमेज `linux/amd64` और `linux/arm64` (Raspberry Pi, Apple Silicon, आदि) दोनों के लिए प्रकाशित की जाती हैं — Docker स्वचालित रूप से सही वाली खींच लेता है।
+## तेज़ शुरुआत
 
-क्या आप पहले से MediaMTX चला रहे हैं? Connect को उसके साथ जोड़ें:
+बहु-आर्किटेक्चर इमेज (`linux/amd64`, `linux/arm64`) — Docker सही वाली खुद खींच लेता है।
+
+**MediaMTX पहले से चल रहा है?** Connect को उसके बगल में रख दीजिए:
 
 ```bash
 docker run -d \
@@ -64,9 +73,7 @@ docker run -d \
   bcanfield/mediamtx-connect:latest
 ```
 
-`BACKEND_SERVER_MEDIAMTX_URL` वह पता है जहाँ Connect अपने कंटेनर के *अंदर* से MediaMTX का API पाता है। इसका डिफ़ॉल्ट `http://mediamtx` है, जो केवल साथ दिए गए compose नेटवर्क पर ही हल होता है — स्वतंत्र `docker run` के लिए इसे अपने MediaMTX होस्ट पर सेट करें (आप इसे बाद में **Config** के अंतर्गत भी बदल सकते हैं)।
-
-अभी तक MediaMTX नहीं है? साथ दिया गया compose दोनों को शुरू कर देता है:
+**शून्य से शुरू कर रहे हैं?** साथ आया compose दोनों खड़े कर देता है:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -74,31 +81,85 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-http://localhost:3000 खोलें, **Config** पर जाएँ, और इसे अपने MediaMTX की ओर इंगित करें।
+फिर <http://localhost:3000> खोलिए।
 
-> Connect को आपके `mediamtx.yml` में `api: yes` की आवश्यकता है। एक कार्यशील संदर्भ के लिए [शामिल फ़ाइल](../../mediamtx.yml) देखें।
+> [!IMPORTANT]
+> Connect को आपकी `mediamtx.yml` में `api: yes` चाहिए। [साथ दी गई कॉन्फ़िगरेशन](../../mediamtx.yml) जैसी है वैसी ही चलती है।
 
-### कॉन्फ़िगरेशन
+## आपको क्या मिलता है
 
-सब कुछ **Config** के अंतर्गत रनटाइम पर कॉन्फ़िगर किया जा सकता है। ये env वेरिएबल केवल पहले बूट के लिए शुरुआती मान देते हैं:
+### लाइव दृश्य
 
-| वेरिएबल | डिफ़ॉल्ट | उद्देश्य |
+MediaMTX जिन-जिन path को जानता है, 2 से 4 कॉलम की ग्रिड में।
+
+- **हर कार्ड के लिए अलग: WebRTC या HLS।** `AUTO` चुपचाप HLS पर उतर आता है, `LOW-LAT` WebRTC पर अड़ा रहता है, और `COMPAT` HLS थोप देता है — और हर कार्ड वही ट्रांसपोर्ट बताता है जो सचमुच मिला।
+- **खाली बैठे भी स्नैपशॉट।** एक पृष्ठभूमि काम हर कार्ड पर ताज़ा फ़्रेम बनाए रखता है, और उसकी उम्र लेबल पर रहती है।
+- **जीवंत टेलीमेट्री।** कोडेक, दर्शकों की संख्या और ऑनलाइन समय — सीधे path सूची से।
+- **ईमानदार रिकॉर्डिंग स्थिति।** कार्ड बताते हैं कि स्ट्रीम *वास्तव में* रिकॉर्ड हो रही है या नहीं; जो स्थिति Connect पढ़ न सका वह अज्ञात कहलाती है, बंद कभी नहीं।
+- **पब्लिश URL सीधे क्लिपबोर्ड में।** RTSP, RTMP और SRT, सर्वर के अपने लिसन पतों से बने।
+
+### रिकॉर्डिंग
+
+- हर स्ट्रीम की MP4 फ़ाइलें, दिन के हिसाब से समूहित, अपने आप बने थंबनेल के साथ।
+- वहीं खुल जाने वाला प्लेयर, HTTP Range अनुरोधों से आगे-पीछे सरकने वाला।
+- स्ट्रीम होते डाउनलोड, जीवंत प्रगति और रद्द करने के साथ।
+- छाँटने के लिए `/` दबाइए।
+
+### कॉन्फ़िगरेशन, बिना YAML
+
+- **पूरा सर्वर कॉन्फ़िगरेशन** — Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC और SRT में फैले 65 टाइप वाले, जाँचे हुए नियंत्रण।
+- **path defaults और हर path के अपने ओवरराइड**, उन्हीं दायरों पर जहाँ से MediaMTX उन्हें परोसता है। वाइल्डकार्ड से ढकी स्ट्रीम सहेजने पर एक विरल प्रविष्टि लिखी जाती है, इसलिए बिना छुई कुंजियाँ विरासत में मिलती रहती हैं।
+- **सभी 15 `runOn*` हुक**, और जहाँ सहेजने से path दोबारा शुरू होता है वहाँ चेतावनी।
+- **विरल लेखन** — सिर्फ़ वही कुंजियाँ जो आपने बदलीं।
+
+### संचालन
+
+API, SPA और मीडिया के लिए एक ही प्रक्रिया · बहु-आर्किटेक्चर · `GET /health` · संरचित लॉग · PWA · हल्की और गहरी · 30 भाषाएँ · कोई डेटाबेस नहीं।
+
+## एनवायरनमेंट वेरिएबल
+
+ये सिर्फ़ पहले बूट की नींव रखते हैं। बाकी सब **Config** में बदला जा सकता है।
+
+| वेरिएबल | डिफ़ॉल्ट | किसलिए |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API होस्ट, जो Connect के कंटेनर से पहुँच योग्य हो |
-| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API पोर्ट |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | रिकॉर्डिंग के लिए माउंट किया गया होस्ट पथ (केवल compose; वैकल्पिक — सेट न होने पर डिफ़ॉल्ट लागू होता है) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | जहाँ बनाए गए स्क्रीनशॉट संग्रहीत होते हैं |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect अपने कंटेनर के भीतर से MediaMTX API तक कहाँ पहुँचता है |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API का पोर्ट |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | रिकॉर्डिंग के लिए माउंट किया गया होस्ट पथ (सिर्फ़ compose) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | थंबनेल कहाँ रखे जाते हैं |
 
-## दस्तावेज़ीकरण
+`http://mediamtx` सिर्फ़ साथ आए compose के नेटवर्क पर हल होता है — अलग से `docker run` कर रहे हों तो इसे अपने होस्ट पर सेट कीजिए।
 
-[आर्किटेक्चर](../../ARCHITECTURE.md) · [विशेषताएँ](../../docs/FEATURES.md) · [योगदान](../../CONTRIBUTING.md)
+## यह काम कैसे करता है
 
-> ध्यान दें: डेवलपर दस्तावेज़ केवल अंग्रेज़ी में ही रखे जाते हैं। एप्लिकेशन UI `/hi` पर हिन्दी में उपलब्ध है।
+```
+Browser ──HLS / WebRTC (WHEP)──────────────────────────┐
+   │                                                   │
+   │ oRPC (typed)                                      ▼
+   ▼                                              ┌──────────┐
+┌─────────────────────┐    MediaMTX HTTP API      │ MediaMTX │
+│ mediamtx-connect    │ ────────────────────────▶ │  server  │
+│ Hono API + React SPA│                           └──────────┘
+└─────────────────────┘                                │
+   │ reads                                             │ writes
+   ▼                                                   ▼
+recordings/ + screenshots/  ◀────────────────────  MP4 segments
+```
 
-## आचार संहिता
+प्लेबैक ब्राउज़र से MediaMTX तक जाता है। Connect सिर्फ़ JSON ढोता है, और उसके साथ डिस्क से पढ़ी गई रिकॉर्डिंग व थंबनेल।
 
-यह प्रोजेक्ट एक [आचार संहिता](../../CODE_OF_CONDUCT.md) का पालन करता है। भाग लेकर, आपसे इसका पालन करने की अपेक्षा की जाती है।
+## दस्तावेज़
+
+| | |
+|---|---|
+| [विशेषताएँ](../FEATURES.md) | जारी हो चुकी हर क्षमता, रूट और प्रक्रिया |
+| [आर्किटेक्चर](../../ARCHITECTURE.md) | टुकड़े आपस में कैसे बैठते हैं |
+| [योगदान](../../CONTRIBUTING.md) | डेव सेटअप, स्क्रिप्ट, PR प्रक्रिया |
+| [उदाहरण](../../examples/) | Raspberry Pi कैमरा, परीक्षण के लिए नकली स्ट्रीम |
+
+## योगदान
+
+इशू और PR का स्वागत है। `pnpm install && pnpm dev` आपको नमूना डेटा समेत पूरा स्टैक दे देता है — बाकी के लिए [CONTRIBUTING.md](../../CONTRIBUTING.md) देखिए, और PR के शीर्षक conventional commits होते हैं। हम एक [आचार संहिता](../../CODE_OF_CONDUCT.md) का पालन करते हैं।
 
 ## लाइसेंस
 
-MIT
+[MIT](../../LICENSE)

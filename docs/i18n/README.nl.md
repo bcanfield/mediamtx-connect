@@ -1,10 +1,22 @@
-<h1 align="center">
-  <br>
-  MediaMTX Connect
-  <br>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>MediaMTX Connect</h1>
+
+<p><strong>De webinterface voor <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
+Bekijk livestreams, blader door opnames, bewerk elke configuratiesleutel — vanuit je browser.</p>
+
+<p>
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect?style=flat-square&label=release" alt="Release"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-amd64%20%7C%20arm64-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
+
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — raster met livestreams, opnamebrowser en configuratie-editor" width="860">
+
+<details>
+<summary>🌍 Lees dit in 30 talen</summary>
+<p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
@@ -36,37 +48,32 @@
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
+</details>
 
-<h4 align="center">Een webinterface voor <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a>. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser.</h4>
+</div>
 
-<p align="center">
-  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-</p>
+## Wat het is
 
-<p align="center">
-  <img src="../../.github/assets/demo.gif" alt="MediaMTX Connect demo" width="720">
-</p>
+MediaMTX is een uitstekende streamingserver zonder interface. Connect is de ontbrekende front-end: één container die met de MediaMTX-API praat en die omtovert tot een cameramuur, een opnamearchief en een configuratie-editor.
 
-## Hoe uitvoeren
+Het is een metgezel, geen vervanger. Elk scherm leunt op iets dat MediaMTX al blootlegt: een path, een API-endpoint, een `runOn*`-hook, een protocol dat het van huis uit serveert. Geen video bewaard, geen media geproxyd, geen database.
 
-Images worden gepubliceerd voor zowel `linux/amd64` als `linux/arm64` (Raspberry Pi, Apple Silicon, enz.) — Docker haalt automatisch de juiste op.
+## Snel starten
 
-Heb je MediaMTX al draaien? Zet Connect ernaast:
+Multi-arch images (`linux/amd64`, `linux/arm64`) — Docker haalt de juiste op.
+
+**Draait MediaMTX al?** Zet Connect ernaast:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
-  -v /pad/naar/opnames:/recordings \
+  -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
 
-`BACKEND_SERVER_MEDIAMTX_URL` is het adres waarop Connect de API van MediaMTX bereikt vanuit *binnen* zijn container. De standaardwaarde is `http://mediamtx`, die alleen te resolven is op het netwerk van de meegeleverde compose — stel hem voor een losse `docker run` in op je MediaMTX-host (je kunt hem later ook wijzigen onder **Config**).
-
-Nog geen MediaMTX? De meegeleverde compose start beide:
+**Begin je bij nul?** De meegeleverde compose start beide:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -74,31 +81,85 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Open http://localhost:3000, ga naar **Config** en richt het op je MediaMTX.
+Open daarna <http://localhost:3000>.
 
-> Connect heeft `api: yes` nodig in je `mediamtx.yml`. Zie [het meegeleverde bestand](../../mediamtx.yml) als werkende referentie.
+> [!IMPORTANT]
+> Connect heeft `api: yes` nodig in je `mediamtx.yml`. De [meegeleverde configuratie](../../mediamtx.yml) werkt meteen.
 
-### Configuratie
+## Wat je krijgt
 
-Alles is tijdens runtime instelbaar onder **Config**. Deze omgevingsvariabelen worden alleen bij de eerste start gebruikt:
+### Liveweergave
 
-| Variabele | Standaard | Doel |
+Elk path dat MediaMTX kent, in een raster van 2 tot 4 kolommen.
+
+- **WebRTC of HLS, per kaart.** `AUTO` valt stilletjes terug op HLS, `LOW-LAT` staat op WebRTC, `COMPAT` dwingt HLS af — en elke kaart meldt het transport dat hij echt kreeg.
+- **Snapshots bij stilstand.** Een achtergrondtaak houdt op elke kaart een recent beeld bij, met de leeftijd ervan op het label.
+- **Live telemetrie.** Codecs, aantal kijkers en uptime, rechtstreeks uit de path-lijst.
+- **Eerlijke opnamestatus.** Kaarten tonen of een stream *daadwerkelijk* opneemt; een status die Connect niet kon lezen heet onbekend, nooit uit.
+- **Publicatie-URL's op het klembord.** RTSP, RTMP en SRT, gebouwd uit de eigen luisteradressen van de server.
+
+### Opnames
+
+- De MP4's van elke stream, per dag gegroepeerd, met automatische thumbnails.
+- Een speler die ter plekke uitklapt, doorzoekbaar via HTTP Range-requests.
+- Downloads die streamen, met live voortgang en annuleren.
+- Druk op `/` om te filteren.
+
+### Configureren zonder YAML
+
+- **De volledige serverconfiguratie** — 65 getypeerde, gevalideerde besturingselementen over Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC en SRT.
+- **Path defaults en overrides per path**, op de scopes waar MediaMTX ze vandaan serveert. Een stream onder een wildcard opslaan schrijft een spaarzame entry, zodat onaangeroerde sleutels blijven erven.
+- **Alle 15 `runOn*`-hooks**, met een waarschuwing waar opslaan het path herstart.
+- **Spaarzame writes** — alleen de sleutels die je wijzigde.
+
+### Beheer
+
+Eén proces voor API, SPA en media · multi-arch · `GET /health` · gestructureerde logs · PWA · licht en donker · 30 talen · geen database.
+
+## Omgevingsvariabelen
+
+Ze vullen alleen de eerste start. Daarna blijft alles aanpasbaar onder **Config**.
+
+| Variabele | Standaard | Waarvoor |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API-host, bereikbaar vanuit de container van Connect |
-| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API-poort |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Hostpad dat wordt gemount voor opnames (alleen compose; optioneel — valt terug op de standaardwaarde als het niet is ingesteld) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Waar gegenereerde schermafbeeldingen worden opgeslagen |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Waar Connect de MediaMTX-API bereikt vanuit binnen zijn container |
+| `MEDIAMTX_API_PORT` | `9997` | Poort van de MediaMTX-API |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Hostpad dat voor opnames wordt gemount (alleen compose) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Waar thumbnails terechtkomen |
+
+`http://mediamtx` lost alleen op binnen het netwerk van de meegeleverde compose — voor een losse `docker run` wijs je hem naar je eigen host.
+
+## Hoe het werkt
+
+```
+Browser ──HLS / WebRTC (WHEP)──────────────────────────┐
+   │                                                   │
+   │ oRPC (typed)                                      ▼
+   ▼                                              ┌──────────┐
+┌─────────────────────┐    MediaMTX HTTP API      │ MediaMTX │
+│ mediamtx-connect    │ ────────────────────────▶ │  server  │
+│ Hono API + React SPA│                           └──────────┘
+└─────────────────────┘                                │
+   │ reads                                             │ writes
+   ▼                                                   ▼
+recordings/ + screenshots/  ◀────────────────────  MP4 segments
+```
+
+Afspelen gaat van browser naar MediaMTX. Connect verplaatst alleen JSON, plus de opnames en thumbnails die het van schijf leest.
 
 ## Documentatie
 
-[Architectuur](../../ARCHITECTURE.md) · [Functies](../../docs/FEATURES.md) · [Bijdragen](../../CONTRIBUTING.md)
+| | |
+|---|---|
+| [Functies](../FEATURES.md) | Elke opgeleverde mogelijkheid, route en procedure |
+| [Architectuur](../../ARCHITECTURE.md) | Hoe de onderdelen in elkaar passen |
+| [Bijdragen](../../CONTRIBUTING.md) | Dev-setup, scripts, PR-proces |
+| [Voorbeelden](../../examples/) | Raspberry Pi-camera, neppe streams om te testen |
 
-> Opmerking: ontwikkelaarsdocumentatie wordt alleen in het Engels onderhouden. De applicatie-UI is in het Nederlands beschikbaar op `/nl`.
+## Bijdragen
 
-## Gedragscode
-
-Dit project volgt een [Gedragscode](../../CODE_OF_CONDUCT.md). Door deel te nemen, wordt van je verwacht dat je je eraan houdt.
+Issues en PR's zijn welkom. `pnpm install && pnpm dev` geeft je de volledige stack met testdata — zie [CONTRIBUTING.md](../../CONTRIBUTING.md), en let op: PR-titels zijn conventional commits. We volgen een [Gedragscode](../../CODE_OF_CONDUCT.md).
 
 ## Licentie
 
-MIT
+[MIT](../../LICENSE)
