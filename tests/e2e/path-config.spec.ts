@@ -16,20 +16,8 @@ test.describe('MediaMTX Path Config Page', () => {
   // them against each other over that single shared entry.
   test.describe.configure({ mode: 'serial' })
 
-  // The round-trip materializes an entry in live MediaMTX. It deletes it
-  // through the API afterwards, so a mid-test failure can't leave stream1
-  // pinned to its own entry for the next spec.
-  let materialized = false
-
   test.beforeEach(async ({ page }) => {
     await page.goto(`/config/mediamtx/paths/${STREAM}`)
-  })
-
-  test.afterEach(async ({ request }) => {
-    if (!materialized)
-      return
-    await request.delete(`${API}/config/paths/delete/${STREAM}`)
-    materialized = false
   })
 
   test('should load the path config page for a stream', async ({ page }) => {
@@ -105,7 +93,6 @@ test.describe('MediaMTX Path Config Page', () => {
     const inherited = await field.inputValue()
     const target = inherited === '3d' ? '4d' : '3d'
 
-    materialized = true
     await field.fill(target)
     await field.blur()
     await page.getByTestId('save-bar').getByRole('button', { name: 'Save to server' }).click()
@@ -142,5 +129,22 @@ test.describe('MediaMTX Path Config Page', () => {
         data: { recordFormat: defaults.recordFormat },
       })
     }
+  })
+
+  // Runs on the entry the test above materialized (serial mode), and is what
+  // cleans it up: deleting it through the page is the only way back to pure
+  // inheritance, so this spec needs no raw config/paths/delete of its own.
+  test('should revert a materialized entry back to its wildcard', async ({ page, request }) => {
+    await page.getByRole('button', { name: 'Revert to inherited' }).click()
+    await page.getByRole('dialog').getByRole('button', { name: 'Revert', exact: true }).click()
+
+    await expect(page.getByText('currently inherited from all_others')).toBeVisible()
+
+    const after = await (await request.get(`${API}/paths/get/${STREAM}`)).json()
+    expect(after.confName).toBe('all_others')
+    // 404 is what "no entry of its own" looks like — the entry is gone, not
+    // emptied out.
+    const entry = await request.get(`${API}/config/paths/get/${STREAM}`)
+    expect(entry.status()).toBe(404)
   })
 })

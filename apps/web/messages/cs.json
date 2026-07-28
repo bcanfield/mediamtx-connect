@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Konfigurace cesty · {name}",
       "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",
-      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili."
+      "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili.",
+      "revert": {
+        "action": "Vrátit na dědění",
+        "confirmTitle": "Vrátit {name} na zděděná nastavení?",
+        "confirmDescription": "Smaže vlastní konfigurační záznam cesty. Každá přepsaná hodnota se vrátí k dědění a přepisy budou ztraceny.",
+        "cancel": "Zrušit",
+        "confirm": "Vrátit",
+        "toasts": {
+          "success": "Vráceno na zděděná nastavení",
+          "errorTitle": "Nepodařilo se vrátit zděděná nastavení",
+          "errorDescription": "Konfigurační záznam cesty tam pořád je. Zkuste to znovu."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# neuložená změna} few {# neuložené změny} many {# neuložené změny} other {# neuložených změn}}",

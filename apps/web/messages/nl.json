@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Padconfiguratie · {name}",
       "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",
-      "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd."
+      "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd.",
+      "revert": {
+        "action": "Terug naar overgenomen",
+        "confirmTitle": "{name} terugzetten naar overgenomen instellingen?",
+        "confirmDescription": "Hiermee wordt de eigen configuratie-invoer van het pad verwijderd. Elke waarde die het overschrijft wordt weer overgenomen en de overschrijvingen gaan verloren.",
+        "cancel": "Annuleren",
+        "confirm": "Terugzetten",
+        "toasts": {
+          "success": "Teruggezet naar overgenomen instellingen",
+          "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
+          "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# niet-opgeslagen wijziging} other {# niet-opgeslagen wijzigingen}}",

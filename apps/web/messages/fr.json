@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Config du chemin · {name}",
       "pageSubHeader": "Paramètres de ce flux, enregistrés sur le serveur.",
-      "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié."
+      "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié.",
+      "revert": {
+        "action": "Revenir à l'héritage",
+        "confirmTitle": "Revenir {name} aux paramètres hérités ?",
+        "confirmDescription": "Cela supprime l'entrée de configuration propre au chemin. Chaque valeur qu'elle remplace redevient héritée et les surcharges sont perdues.",
+        "cancel": "Annuler",
+        "confirm": "Revenir",
+        "toasts": {
+          "success": "Retour aux paramètres hérités",
+          "errorTitle": "Impossible de revenir aux paramètres hérités",
+          "errorDescription": "L'entrée de configuration du chemin est toujours là. Réessayez."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modification non enregistrée} other {# modifications non enregistrées}}",

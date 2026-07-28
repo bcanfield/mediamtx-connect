@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Pfad-Konfiguration · {name}",
       "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
-      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast."
+      "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast.",
+      "revert": {
+        "action": "Auf Vererbung zurücksetzen",
+        "confirmTitle": "{name} auf geerbte Einstellungen zurücksetzen?",
+        "confirmDescription": "Damit wird der eigene Konfigurationseintrag des Pfads gelöscht. Jeder überschriebene Wert wird wieder geerbt, die Überschreibungen gehen verloren.",
+        "cancel": "Abbrechen",
+        "confirm": "Zurücksetzen",
+        "toasts": {
+          "success": "Auf geerbte Einstellungen zurückgesetzt",
+          "errorTitle": "Zurücksetzen auf geerbte Einstellungen fehlgeschlagen",
+          "errorDescription": "Der Konfigurationseintrag des Pfads ist noch da. Versuch es erneut."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# nicht gespeicherte Änderung} other {# nicht gespeicherte Änderungen}}",
