@@ -135,9 +135,6 @@ catalogs:
     react-dom:
       specifier: ^19.2.7
       version: 19.2.7
-    react-hook-form:
-      specifier: ^7.71.1
-      version: 7.71.1
     semantic-release:
       specifier: ^25.0.2
       version: 25.0.8
@@ -284,7 +281,7 @@ importers:
         version: link:../../packages/contract
       '@hookform/resolvers':
         specifier: 'catalog:'
-        version: 5.4.0(react-hook-form@7.71.1(react@19.2.7))
+        version: 5.4.0(react-hook-form@7.83.0(react@19.2.7))
       '@orpc/client':
         specifier: 'catalog:'
         version: 1.14.8
@@ -329,7 +326,7 @@ importers:
         version: 19.2.7(react@19.2.7)
       react-hook-form:
         specifier: 'catalog:'
-        version: 7.71.1(react@19.2.7)
+        version: 7.83.0(react@19.2.7)
       sonner:
         specifier: 'catalog:'
         version: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -5170,8 +5167,8 @@ packages:
     peerDependencies:
       react: ^19.2.7
 
-  react-hook-form@7.71.1:
-    resolution: {integrity: sha512-9SUJKCGKo8HUSsCO+y0CtqkqI5nNuaDqTxyqPsZPqIwudpj4rCrAz/jZV+jn57bx5gtZKOh3neQu94DXMc+w5w==}
+  react-hook-form@7.83.0:
+    resolution: {integrity: sha512-AXt8cMCmx5a7u4uvpb2uRFVrWQhllI4pV+LSykxIac/hjt44TnQkmX9BKuQi2i+LDC62esmiLpilkav+kjVf/A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -6652,10 +6649,10 @@ snapshots:
     dependencies:
       hono: 4.12.31
 
-  '@hookform/resolvers@5.4.0(react-hook-form@7.71.1(react@19.2.7))':
+  '@hookform/resolvers@5.4.0(react-hook-form@7.83.0(react@19.2.7))':
     dependencies:
       '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.71.1(react@19.2.7)
+      react-hook-form: 7.83.0(react@19.2.7)
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -11167,7 +11164,7 @@ snapshots:
       react: 19.2.7
       scheduler: 0.27.0
 
-  react-hook-form@7.71.1(react@19.2.7):
+  react-hook-form@7.83.0(react@19.2.7):
     dependencies:
       react: 19.2.7
 
