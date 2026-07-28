@@ -1,0 +1,66 @@
+# Nightly release train. Merges land around the clock (agents overnight,
+# Renovate's grouped dep PR in its 00:00-06:00 window), so releasing per-push
+# would mint several versions a day and rebuild the multi-arch image for each.
+# One scheduled run rolls the whole night into a single version, changelog
+# entry, and image build. semantic-release publishes nothing on a quiet day.
+
+name: Release
+
+on:
+  schedule:
+    # ~07:00 America/New_York. GitHub cron is UTC and does not shift for DST,
+    # so this fires at 07:00 EST / 08:00 EDT — an hour after Renovate's window
+    # closes either way.
+    - cron: '0 12 * * *'
+  # Out-of-band release: security fix, or a bad night you want to skip past.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          # semantic-release reads tags to find the last release.
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Every push to main runs the full CI workflow; this asks whether the
+      # newest one passed. Deliberately "latest completed run on main" rather
+      # than "the run for HEAD" — @semantic-release/git pushes the changelog
+      # commit with [skip ci], so HEAD after a release has no run of its own.
+      - name: Require a green CI run on main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          conclusion=$(gh api \
+            "repos/$GH_REPO/actions/workflows/ci.yml/runs?branch=main&event=push&status=completed&per_page=1" \
+            --jq '.workflow_runs[0].conclusion // "none"')
+          if [ "$conclusion" != "success" ]; then
+            echo "Latest CI run on main is '$conclusion' — refusing to release."
+            exit 1
+          fi
+
+      - uses: pnpm/action-setup@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: pnpm release

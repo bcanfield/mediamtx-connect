@@ -40,12 +40,14 @@ pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), H
 - API shapes are defined once in `packages/contract`; never duplicate a schema or type on either side. A contract change updates contract, api handler, and web usage in the same commit.
 - JSON data (queries/mutations) goes through oRPC; binary/streaming responses (images, MP4s) are plain Hono routes in `apps/api/src/media.ts`.
 - E2E tests live under `tests/e2e/` (Playwright); feature tests may colocate.
+- **PR titles are conventional commits** — `main` is squash-merged, so the title is the commit subject semantic-release parses. `feat:`/`fix:`/`perf:` ship a release; anything else merges without a version bump. A non-conventional title silently drops the change out of the next release. See `CONTRIBUTING.md` § PR titles.
 
 ## Before finishing
 
 - [ ] Layout/naming per `docs/PROJECT-STRUCTURE.md` and `AGENTS.md`.
 - [ ] `docs/FEATURES.md` updated.
 - [ ] `pnpm typecheck`, `pnpm lint`, and `pnpm i18n:check` clean.
+- [ ] PR title is a conventional commit, with the type that reflects whether this should ship a release.
 
 ## Agent skills
 
