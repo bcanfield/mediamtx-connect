@@ -8,19 +8,26 @@
     "* 0-5 * * *"
   ],
   "prHourlyLimit": 0,
+  "semanticCommits": "enabled",
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "automerge": true
+      "automerge": true,
+      "semanticCommitType": "fix"
     },
     {
       "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "/^0/",
       "groupName": "0.x minor dependencies",
       "groupSlug": "zero-minor",
-      "automerge": false
+      "automerge": false,
+      "semanticCommitType": "fix"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "semanticCommitType": "fix"
     },
     {
       "matchManagers": ["github-actions"],
