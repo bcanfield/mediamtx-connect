@@ -4,7 +4,14 @@ import { EventEmitter } from 'node:events'
 import fs from 'node:fs'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
-import { __resetCaptureSlots, captureLiveSnapshots, captureSnapshot, MAX_CONCURRENT_CAPTURES } from './jobs'
+import {
+  __resetSpawnGates,
+  captureLiveSnapshots,
+  captureSnapshot,
+  generateScreenshots,
+  MAX_CONCURRENT_CAPTURES,
+  MAX_CONCURRENT_THUMBNAILS,
+} from './jobs'
 import { mediaMtxApi } from './mediamtx'
 
 // Factories (not automock) so the real modules never load — config-store pulls in
@@ -60,8 +67,8 @@ describe('captureLiveSnapshots', () => {
   beforeEach(() => {
     // Fake timers keep the job's real 15s kill timer from outliving the test run.
     vi.useFakeTimers()
-    // The concurrency gate is module-level state shared across cases.
-    __resetCaptureSlots()
+    // The concurrency gates are module-level state shared across cases.
+    __resetSpawnGates()
     proc = fakeProc()
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
     mockMediaMtx([{ name: 'stream1', ready: true }])
@@ -226,7 +233,7 @@ describe('captureSnapshot on demand', () => {
 
   beforeEach(() => {
     vi.useFakeTimers()
-    __resetCaptureSlots()
+    __resetSpawnGates()
     proc = fakeProc()
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
     mockMediaMtx([])
@@ -269,5 +276,117 @@ describe('captureSnapshot on demand', () => {
     await expect(done).rejects.toThrow()
     expect(fs.renameSync).not.toHaveBeenCalled()
     expect(fs.rmSync).toHaveBeenCalledWith('/shots/parking-lot/live.png.tmp', { force: true })
+  })
+})
+
+describe('generateScreenshots', () => {
+  let proc: FakeProc
+
+  /** One stream directory under /rec, with whichever thumbnails already exist. */
+  function mockRecordingsTree(recordings: string[], screenshots: string[] = []) {
+    const tree: Record<string, string[]> = {
+      '/rec': ['cam1'],
+      '/rec/cam1': recordings,
+      '/shots/cam1': screenshots,
+    }
+    vi.spyOn(fs, 'readdirSync').mockImplementation(dir => (tree[String(dir)] ?? []) as never)
+  }
+
+  /** `count` recordings, none of them thumbnailed yet. */
+  function backlogOf(count: number) {
+    mockRecordingsTree(Array.from({ length: count }, (_, i) => `r${i}.mp4`))
+  }
+
+  beforeEach(() => {
+    vi.useFakeTimers()
+    __resetSpawnGates()
+    proc = fakeProc()
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    mockMediaMtx([])
+    vi.spyOn(cp, 'spawn').mockReturnValue(proc as unknown as ChildProcess)
+    vi.spyOn(fs, 'statSync').mockReturnValue({ isDirectory: () => true } as never)
+    vi.spyOn(fs, 'existsSync').mockReturnValue(true)
+    vi.spyOn(fs, 'mkdirSync').mockReturnValue(undefined)
+    mockRecordingsTree([])
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.restoreAllMocks()
+  })
+
+  it('extracts a first frame only for recordings without a thumbnail', async () => {
+    mockRecordingsTree(['r0.mp4', 'r1.mp4'], ['r0.png'])
+
+    generateScreenshots().catch(() => {})
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledOnce()
+    expect(argvOf()).toEqual([
+      '-ss',
+      '00:00:00',
+      '-i',
+      '/rec/cam1/r1.mp4',
+      '-frames:v',
+      '1',
+      '/shots/cam1/r1.png',
+    ])
+  })
+
+  it('never runs more ffmpeg at once than the thumbnail cap', async () => {
+    backlogOf(MAX_CONCURRENT_THUMBNAILS + 1)
+
+    generateScreenshots().catch(() => {})
+    await flushMicrotasks()
+
+    // One more recording than the cap, so the last thumbnail waits for a slot.
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS)
+
+    // Free a slot; the queued thumbnail now spawns.
+    proc.emit('close', 0)
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS + 1)
+  })
+
+  it('releases only one slot when a spawn both errors and closes', async () => {
+    // Each thumbnail needs its own emitter, or one emit fans out to every
+    // spawn's handlers (same reason as the capture case above).
+    const procs: FakeProc[] = []
+    vi.mocked(cp.spawn).mockImplementation(() => {
+      const p = fakeProc()
+      procs.push(p)
+      return p as unknown as ChildProcess
+    })
+    backlogOf(MAX_CONCURRENT_THUMBNAILS + 2)
+
+    generateScreenshots().catch(() => {})
+    await flushMicrotasks()
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS)
+
+    // A failed spawn (e.g. ffmpeg missing) fires both; a double release would
+    // free two slots and spawn both queued thumbnails.
+    const first = procs[0] as FakeProc
+    first.emit('error', new Error('ENOENT'))
+    first.emit('close', null)
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS + 1)
+  })
+
+  it('does not queue a live capture behind a thumbnail backlog', async () => {
+    // Sibling gates, not a shared one: the recordings sweep is batch work, and
+    // making a user-triggered snapshot wait behind it would be a regression.
+    backlogOf(MAX_CONCURRENT_THUMBNAILS + 1)
+
+    generateScreenshots().catch(() => {})
+    await flushMicrotasks()
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS)
+
+    captureSnapshot('parking-lot').catch(() => {})
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS + 1)
+    expect(argvOf(MAX_CONCURRENT_THUMBNAILS)).toContain('rtsp://127.0.0.1:8554/parking-lot')
   })
 })
