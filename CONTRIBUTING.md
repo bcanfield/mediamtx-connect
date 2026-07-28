@@ -69,7 +69,36 @@ TypeScript, follow surrounding patterns, run `pnpm lint` before committing. Code
 1. Branch: `git checkout -b feature/my-feature`
 2. `pnpm typecheck && pnpm lint && pnpm i18n:check && pnpm build && pnpm test:e2e`
 3. Update `docs/FEATURES.md` if behavior changed (mandatory — see `CLAUDE.md`)
-4. PR with a clear description
+4. PR with a clear description, titled per the convention below
+
+### PR titles
+
+`main` is squash-merged, so **the PR title becomes the commit subject that
+semantic-release parses**. Title every PR `<type>[(scope)][!]: <description>`:
+
+```
+feat: add a WHEP playback fallback
+fix(recordings): stop blaming MediaMTX for filesystem faults
+feat!: drop the v1 config layout
+```
+
+Types: `feat`, `fix`, `perf`, `refactor`, `docs`, `style`, `test`, `build`,
+`ci`, `chore`, `revert`. Only `feat`, `fix`, `perf`, and `revert` cut a
+release; `!` (or a `BREAKING CHANGE:` footer) cuts a major. Everything else
+merges without a version bump, which is the right answer for docs, tests, and
+tooling.
+
+A mistyped title is not a style nit — it silently drops the change out of the
+next release. `.github/workflows/pr-title.yml` checks the format.
+
+## Releases
+
+`main` releases on a nightly train (`.github/workflows/release.yml`, ~07:00
+America/New_York) rather than per merge, so a night of dependency updates and
+merged features rolls into one version, one changelog entry, and one
+multi-arch image build. semantic-release publishes nothing on a night when no
+releasable commit landed. The train refuses to run if the latest CI run on
+`main` is not green, and `workflow_dispatch` triggers an out-of-band release.
 
 ## Questions
 

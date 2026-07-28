@@ -1,0 +1,41 @@
+# main is squash-merged, so the PR title becomes the commit subject that
+# semantic-release parses. A non-conventional title is not a style nit here:
+# it silently drops the change out of the next release.
+
+name: PR title
+
+on:
+  pull_request:
+    # `edited` so a retitle re-runs the check.
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  conventional:
+    name: Conventional commit format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          types='feat|fix|perf|refactor|docs|style|test|build|ci|chore|revert'
+          if printf '%s' "$TITLE" | grep -qE "^($types)(\([a-z0-9 ,._/-]+\))?!?: .+"; then
+            echo "OK: $TITLE"
+            exit 0
+          fi
+          cat <<EOF
+          Title: "$TITLE"
+
+          Expected <type>[(scope)][!]: <description>, where type is one of:
+          $types
+
+          Only feat, fix, perf and revert cut a release; ! or a
+          BREAKING CHANGE footer cuts a major. Everything else lands in main
+          without a version bump, which is usually what you want for docs,
+          tests, and tooling.
+          EOF
+          exit 1
