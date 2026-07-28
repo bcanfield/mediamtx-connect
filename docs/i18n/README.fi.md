@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong><a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>:n web-käyttöliittymä.</strong><br>
-Katso live-lähetyksiä, selaa tallenteita ja muokkaa mitä tahansa asetusavainta — suoraan selaimessa.</p>
+Katso live-lähetyksiä, selaa tallenteita, muokkaa mitä tahansa asetusavainta — suoraan selaimessa.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,6 +12,10 @@ Katso live-lähetyksiä, selaa tallenteita ja muokkaa mitä tahansa asetusavaint
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — live-lähetysten ruudukko, tallenneselain ja asetuseditori" width="860">
+
+<details>
+<summary>🌍 Lue 30 kielellä</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@ Katso live-lähetyksiä, selaa tallenteita ja muokkaa mitä tahansa asetusavaint
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — live-lähetysten ruudukko, tallenneselain ja asetuseditori" width="860">
+</details>
 
 </div>
 
 ## Mikä tämä on
 
-MediaMTX on erinomainen suoratoistopalvelin, ja se tulee ilman käyttöliittymää. Connect on siitä puuttuva käyttöliittymä: yksi kontti, joka juttelee MediaMTX:n API:n kanssa ja muuttaa sen kameraseinäksi, tallennearkistoksi ja asetuseditoriksi.
+MediaMTX on erinomainen suoratoistopalvelin ilman käyttöliittymää. Connect on se puuttuva käyttöliittymä: yksi kontti, joka juttelee MediaMTX:n API:n kanssa ja muuttaa sen kameraseinäksi, tallennearkistoksi ja asetuseditoriksi.
 
-Se on kumppani, ei korvaaja. Jokainen näkymä nojaa johonkin, minkä MediaMTX jo tarjoaa — path, API-päätepiste, `runOn*`-koukku, protokolla jota se itse jakaa. Connect ei säilö videota, ei välitä mediaa eikä pidä tietokantaa. Osoita se käynnissä olevaan palvelimeen, ja se toimii.
+Se on kumppani, ei korvaaja. Jokainen näkymä nojaa johonkin, minkä MediaMTX jo tarjoaa: path, API-päätepiste, `runOn*`-koukku, protokolla jota se itse jakaa. Ei säilö videota, ei välitä mediaa, ei tietokantaa.
 
 ## Pika-aloitus
 
-Imaget julkaistaan alustoille `linux/amd64` ja `linux/arm64` (Raspberry Pi, Apple Silicon ja kumppanit), joten Docker hakee oikean puolestasi.
+Moniarkkitehtuuri-imaget (`linux/amd64`, `linux/arm64`) — Docker hakee oikean.
 
 **Onko MediaMTX jo käynnissä?** Laita Connect sen viereen:
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Kummin tahansa: avaa <http://localhost:3000>.
+Avaa sitten <http://localhost:3000>.
 
 > [!IMPORTANT]
-> Connect tarvitsee `mediamtx.yml`-tiedostoosi rivin `api: yes` — kaikki luku ja kirjoitus kulkee sen API:n kautta. [Mukana tuleva asetustiedosto](../../mediamtx.yml) on toimiva malli.
+> Connect tarvitsee `mediamtx.yml`-tiedostoosi rivin `api: yes`. [Mukana tuleva asetustiedosto](../../mediamtx.yml) toimii sellaisenaan.
 
 ## Mitä saat
 
 ### Livenäkymä
 
-Ruudukko kaikista path-poluista, jotka MediaMTX tuntee — 2, 3 tai 4 saraketta.
+Kaikki path-polut, jotka MediaMTX tuntee, 2–4 sarakkeen ruudukossa.
 
-- **WebRTC tai HLS, korttikohtaisesti.** `AUTO` suosii WebRTC:tä ja putoaa hiljaa HLS:ään, `LOW-LAT` vaatii WebRTC:tä ja `COMPAT` pakottaa HLS:n. Jokainen kortti neuvottelee oman yhteytensä ja kertoo, minkä siirtotavan se todella sai — ei koskaan sitä, jota pyysit.
-- **Tilannekuvia myös levossa.** Taustatyö nappaa jokaisesta striimistä kuvan, joten toistamattomatkin kortit näyttävät näkymän, ja kuvan ikä lukee merkissä. «Ota tilannekuva» hakee sellaisen heti.
-- **Live-telemetria.** Koodekkimerkit, katsojamäärä ja käyntiaika suoraan path-listasta — ilman lisäkutsuja.
-- **Tallennustila, joka puhuu totta.** Kortit näyttävät, tallentaako striimi *tosiasiassa* (sen oma ohitus yhdistettynä path defaults -arvojen päälle, juuri niin kuin MediaMTX sen ratkaisee); tila jota ei saatu luettua näkyy tuntemattomana eikä poissa-tilana.
-- **Julkaisuosoitteet leikepöydälle.** RTSP-, RTMP- ja SRT-kohteet rakennetaan palvelimen omista kuunteluosoitteista, joten vaihdettu portti on yhä oikea portti.
+- **WebRTC tai HLS, korttikohtaisesti.** `AUTO` putoaa hiljaa HLS:ään, `LOW-LAT` vaatii WebRTC:tä ja `COMPAT` pakottaa HLS:n — ja jokainen kortti kertoo, minkä siirtotavan se todella sai.
+- **Tilannekuvia myös levossa.** Taustatyö pitää jokaisella kortilla tuoretta kuvaa, ja sen ikä lukee merkissä.
+- **Live-telemetria.** Koodekit, katsojamäärä ja käyntiaika suoraan path-listasta.
+- **Rehellinen tallennustila.** Kortit näyttävät, tallentaako striimi *tosiasiassa*; tila jota Connect ei saanut luettua on tuntematon, ei koskaan pois.
+- **Julkaisuosoitteet leikepöydälle.** RTSP, RTMP ja SRT rakennetaan palvelimen omista kuunteluosoitteista.
 
 ### Tallenteet
 
-- Jokaisen striimin MP4-tiedostot päivittäin ryhmiteltyinä, uusimmat ensin, automaattisesti luoduin pikkukuvin.
-- Soitin, joka avautuu paikallaan, ja aito kelauspalkki HTTP Range -pyyntöjen varassa.
-- Suoratoistavat lataukset: edistyminen reaaliajassa, nopeus ja peruutuspainike.
-- Paina `/` missä tahansa suodattaaksesi.
+- Jokaisen striimin MP4-tiedostot päivittäin ryhmiteltyinä, automaattisin pikkukuvin.
+- Soitin, joka avautuu paikallaan ja kelaa HTTP Range -pyynnöillä.
+- Suoratoistavat lataukset: edistyminen reaaliajassa ja peruutus.
+- Suodata painamalla `/`.
 
 ### Asetukset ilman YAML:ia
 
-- **Koko palvelinkonfiguraatio** — 65 säädintä osioissa Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC ja SRT, kukin tyypitettynä, validoituna ja omalla kielelläsi dokumentoituna.
-- **Path defaults ja polkukohtaiset ohitukset** niissä laajuuksissa, joista MediaMTX ne oikeasti tarjoaa. Jokerimerkin kattaman striimin tallentaminen luo harvan merkinnän, joten koskemattomat avaimet seuraavat yhä oletuksia — ja «palauta peritty» kumoaa sen.
-- **Kaikki 15 `runOn*`-polkukoukkua**, varoituksin siellä missä tallennus käynnistää polun uudelleen.
-- **Harvat kirjoitukset.** Connect PATCH-kutsuu vain muuttamasi avaimet; mitä se ei näytä, siihen se ei koske.
+- **Koko palvelinkonfiguraatio** — 65 tyypitettyä ja validoitua säädintä osioissa Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC ja SRT.
+- **Path defaults ja polkukohtaiset ohitukset** niissä laajuuksissa, joista MediaMTX ne tarjoaa. Jokerimerkin kattaman striimin tallentaminen kirjoittaa harvan merkinnän, joten koskemattomat avaimet periytyvät edelleen.
+- **Kaikki 15 `runOn*`-koukkua**, varoituksin siellä missä tallennus käynnistää polun uudelleen.
+- **Harvat kirjoitukset** — vain muuttamasi avaimet.
 
-### Tehty laatikolle, jonka unohtaa
+### Ylläpito
 
-Yksi prosessi tarjoaa API:n, SPA:n ja mediat · moniarkkitehtuuri-imaget · `GET /health` · rakenteiset lokit · asennettava PWA · vaalea ja tumma teema · 30 kieltä · ei tietokantaa.
+Yksi prosessi API:lle, SPA:lle ja medioille · moniarkkitehtuuri · `GET /health` · rakenteiset lokit · PWA · vaalea ja tumma · 30 kieltä · ei tietokantaa.
 
 ## Ympäristömuuttujat
 
-Kaikkea tätä voi muokata ajon aikana **Config**-näkymässä — muuttujat vain siementävät ensimmäisen käynnistyksen.
+Ne siementävät vain ensimmäisen käynnistyksen. Loppu on muokattavissa **Config**-näkymässä.
 
 | Muuttuja | Oletus | Tarkoitus |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Mistä Connect tavoittaa MediaMTX:n API:n konttinsa *sisältä* |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Mistä Connect tavoittaa MediaMTX:n API:n konttinsa sisältä |
 | `MEDIAMTX_API_PORT` | `9997` | MediaMTX:n API-portti |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Isäntäkoneen polku tallenteille (vain compose) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Minne luodut pikkukuvat tallennetaan |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Minne pikkukuvat tallennetaan |
 
-Oletus `http://mediamtx` ratkeaa vain mukana tulevan composen verkossa. Erilliselle `docker run` -ajolle aseta oma MediaMTX-isäntäsi — tai korjaa se myöhemmin **Config**-näkymässä ilman uudelleenkäynnistystä.
+`http://mediamtx` ratkeaa vain mukana tulevan composen verkossa — erilliselle `docker run` -ajolle osoita se omaan koneeseesi.
 
 ## Miten se toimii
 
@@ -142,7 +145,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Toisto kulkee selaimesta suoraan MediaMTX:ään. Connect siirtää vain JSONia sekä levyltä lukemansa tallenteet ja pikkukuvat.
+Toisto kulkee selaimesta MediaMTX:ään. Connect siirtää vain JSONia sekä levyltä lukemansa tallenteet ja pikkukuvat.
 
 ## Dokumentaatio
 
@@ -155,7 +158,7 @@ Toisto kulkee selaimesta suoraan MediaMTX:ään. Connect siirtää vain JSONia s
 
 ## Osallistuminen
 
-Issuet ja PR:t ovat tervetulleita. `pnpm install && pnpm dev` pystyttää koko pinon testidatoineen — loput löytyvät tiedostosta [CONTRIBUTING.md](../../CONTRIBUTING.md), ja huomaa että PR-otsikot ovat [conventional commits](../../CONTRIBUTING.md). Projekti noudattaa [käytössääntöjä](../../CODE_OF_CONDUCT.md).
+Issuet ja PR:t ovat tervetulleita. `pnpm install && pnpm dev` pystyttää koko pinon testidatoineen — loput tiedostossa [CONTRIBUTING.md](../../CONTRIBUTING.md), ja huomaa että PR-otsikot ovat conventional commits. Noudatamme [käytössääntöjä](../../CODE_OF_CONDUCT.md).
 
 ## Lisenssi
 

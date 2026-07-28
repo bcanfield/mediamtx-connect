@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>Webové rozhraní pro <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Sledujte živé streamy, procházejte nahrávky a upravte libovolný konfigurační klíč — přímo v prohlížeči.</p>
+Sledujte živé streamy, procházejte nahrávky, upravte libovolný konfigurační klíč — přímo v prohlížeči.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,6 +12,10 @@ Sledujte živé streamy, procházejte nahrávky a upravte libovolný konfigurač
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — mřížka živých streamů, prohlížeč nahrávek a editor konfigurace" width="860">
+
+<details>
+<summary>🌍 Číst ve 30 jazycích</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@ Sledujte živé streamy, procházejte nahrávky a upravte libovolný konfigurač
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — mřížka živých streamů, prohlížeč nahrávek a editor konfigurace" width="860">
+</details>
 
 </div>
 
 ## Co to je
 
-MediaMTX je vynikající streamovací server a přichází bez rozhraní. Connect je chybějící front-end: jeden kontejner, který mluví s API MediaMTX a promění ho v kamerovou stěnu, archiv nahrávek a editor konfigurace.
+MediaMTX je vynikající streamovací server bez rozhraní. Connect je chybějící front-end: jeden kontejner, který mluví s API MediaMTX a promění ho v kamerovou stěnu, archiv nahrávek a editor konfigurace.
 
-Je to společník, ne náhrada. Každá obrazovka stojí na něčem, co MediaMTX už vystavuje — na path, endpointu API, hooku `runOn*`, protokolu, který nativně obsluhuje. Connect neukládá video, nepřeposílá média a nemá databázi. Namiřte ho na běžící server a funguje.
+Je to společník, ne náhrada. Každá obrazovka stojí na něčem, co MediaMTX už vystavuje: na path, endpointu API, hooku `runOn*`, protokolu, který nativně obsluhuje. Neukládá video, nepřeposílá média, nemá databázi.
 
 ## Rychlý start
 
-Image vycházejí pro `linux/amd64` i `linux/arm64` (Raspberry Pi, Apple Silicon a spol.), takže Docker stáhne tu správnou za vás.
+Multiarchitekturní image (`linux/amd64`, `linux/arm64`) — Docker stáhne tu správnou.
 
 **MediaMTX už běží?** Postavte Connect vedle něj:
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Tak či tak otevřete <http://localhost:3000>.
+Pak otevřete <http://localhost:3000>.
 
 > [!IMPORTANT]
-> Connect potřebuje ve vašem `mediamtx.yml` hodnotu `api: yes` — přes to API čte i zapisuje všechno. [Přiložená konfigurace](../../mediamtx.yml) je funkční vzor.
+> Connect potřebuje `api: yes` ve vašem `mediamtx.yml`. [Přiložená konfigurace](../../mediamtx.yml) funguje tak, jak je.
 
 ## Co dostanete
 
 ### Živý pohled
 
-Mřížka všech path, které MediaMTX zná, ve 2, 3 nebo 4 sloupcích.
+Všechny path, které MediaMTX zná, v mřížce o 2 až 4 sloupcích.
 
-- **WebRTC nebo HLS, pro každou kartu zvlášť.** `AUTO` upřednostní WebRTC a tiše spadne na HLS, `LOW-LAT` trvá na WebRTC a `COMPAT` vynutí HLS. Každá karta si vyjedná vlastní spojení a hlásí transport, který opravdu dostala — nikdy ten vyžádaný.
-- **Snímky i v nečinnosti.** Úloha na pozadí sebere z každého streamu snímek, takže i nehrající karty ukazují scénu a na štítku je stáří snímku. «Pořídit snímek» ho vezme okamžitě.
-- **Živá telemetrie.** Štítky kodeků, počet diváků a doba běhu, rovnou ze seznamu path — bez dalších požadavků.
-- **Stav nahrávání, který mluví pravdu.** Karty ukazují, jestli stream *skutečně* nahrává (jeho vlastní override složený přes path defaults, přesně jak to řeší MediaMTX); stav, který se nepodařilo přečíst, se zobrazí jako neznámý, ne jako vypnutý.
-- **Publikační adresy do schránky.** Cíle RTSP, RTMP a SRT se skládají z vlastních naslouchacích adres serveru, takže změněný port zůstává tím správným portem.
+- **WebRTC nebo HLS, pro každou kartu.** `AUTO` tiše spadne na HLS, `LOW-LAT` trvá na WebRTC, `COMPAT` vynutí HLS — a každá karta hlásí transport, který opravdu dostala.
+- **Snímky i v nečinnosti.** Úloha na pozadí drží na každé kartě čerstvý snímek a na štítku jeho stáří.
+- **Živá telemetrie.** Kodeky, počet diváků a doba běhu, rovnou ze seznamu path.
+- **Poctivý stav nahrávání.** Karty ukazují, jestli stream *skutečně* nahrává; stav, který Connect nepřečetl, je neznámý, nikdy vypnutý.
+- **Publikační adresy do schránky.** RTSP, RTMP a SRT, složené z vlastních naslouchacích adres serveru.
 
 ### Nahrávky
 
-- MP4 každého streamu, seskupené po dnech, od nejnovějších, s automaticky generovanými náhledy.
-- Přehrávač, který se rozbalí na místě, s opravdovou posuvnou lištou postavenou na HTTP Range požadavcích.
-- Streamované stahování s živým průběhem, rychlostí a tlačítkem pro zrušení.
-- Kdekoli stiskněte `/` a filtrujte.
+- MP4 každého streamu, seskupené po dnech, s automatickými náhledy.
+- Přehrávač, který se rozbalí na místě, převíjitelný přes HTTP Range požadavky.
+- Streamované stahování s živým průběhem a zrušením.
+- Stiskněte `/` a filtrujte.
 
 ### Konfigurace bez YAML
 
-- **Celá konfigurace serveru** — 65 ovládacích prvků napříč sekcemi Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC a SRT, každý typovaný, validovaný a popsaný ve vašem jazyce.
-- **Path defaults a overridy pro jednotlivé path**, v rozsazích, ze kterých je MediaMTX skutečně obsluhuje. Uložení streamu krytého zástupným znakem vytvoří řídký záznam, takže nedotčené klíče dál sledují výchozí hodnoty — a «vrátit na zděděné» to zruší.
-- **Všech 15 path hooků `runOn*`**, s varováním tam, kde uložení restartuje path.
-- **Řídké zápisy.** Connect posílá PATCH jen se změněnými klíči; co nevystavuje, nechává být.
+- **Celá konfigurace serveru** — 65 typovaných a validovaných ovládacích prvků napříč Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC a SRT.
+- **Path defaults a overridy pro jednotlivé path**, v rozsazích, ze kterých je MediaMTX obsluhuje. Uložení streamu krytého zástupným znakem zapíše řídký záznam, takže nedotčené klíče dál dědí.
+- **Všech 15 hooků `runOn*`**, s varováním tam, kde uložení restartuje path.
+- **Řídké zápisy** — jen klíče, které jste změnili.
 
-### Pro krabičku, na kterou zapomenete
+### Provoz
 
-Jediný proces obsluhuje API, SPA i média · multiarchitekturní image · `GET /health` · strukturované logy · instalovatelná PWA · světlý i tmavý motiv · 30 jazyků · žádná databáze.
+Jediný proces pro API, SPA i média · multiarchitektura · `GET /health` · strukturované logy · PWA · světlý i tmavý · 30 jazyků · žádná databáze.
 
 ## Proměnné prostředí
 
-Všechno níže lze měnit za běhu v **Config** — tyto proměnné jen naplní první start.
+Naplní jen první start. Dál je vše měnitelné v **Config**.
 
 | Proměnná | Výchozí | K čemu je |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Kde Connect dosáhne na API MediaMTX *zevnitř* svého kontejneru |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Kde Connect dosáhne na API MediaMTX zevnitř svého kontejneru |
 | `MEDIAMTX_API_PORT` | `9997` | Port API MediaMTX |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Cesta na hostiteli připojená pro nahrávky (jen compose) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kam se ukládají vygenerované náhledy |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kam se ukládají náhledy |
 
-Výchozí `http://mediamtx` se přeloží jen v síti přiloženého compose. Pro samostatný `docker run` nastavte vlastního hostitele MediaMTX — nebo to opravte později v **Config**, restart není potřeba.
+`http://mediamtx` se přeloží jen v síti přiloženého compose — pro samostatný `docker run` nastavte vlastního hostitele.
 
 ## Jak to funguje
 
@@ -142,7 +145,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Přehrávání jde z prohlížeče přímo do MediaMTX. Connect přenáší jen JSON a k tomu nahrávky a náhledy, které čte z disku.
+Přehrávání jde z prohlížeče do MediaMTX. Connect přenáší jen JSON a k tomu nahrávky a náhledy, které čte z disku.
 
 ## Dokumentace
 
@@ -155,7 +158,7 @@ Přehrávání jde z prohlížeče přímo do MediaMTX. Connect přenáší jen 
 
 ## Přispívání
 
-Issues a PR jsou vítány. `pnpm install && pnpm dev` vám postaví celý stack i s testovacími daty — zbytek najdete v [CONTRIBUTING.md](../../CONTRIBUTING.md) a nezapomeňte, že názvy PR jsou [conventional commits](../../CONTRIBUTING.md). Projekt se řídí [Kodexem chování](../../CODE_OF_CONDUCT.md).
+Issues a PR jsou vítány. `pnpm install && pnpm dev` vám postaví celý stack i s testovacími daty — zbytek v [CONTRIBUTING.md](../../CONTRIBUTING.md), názvy PR jsou conventional commits. Řídíme se [Kodexem chování](../../CODE_OF_CONDUCT.md).
 
 ## Licence
 

@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>A <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> webes felülete.</strong><br>
-Nézz élő adásokat, böngéssz a felvételek között, és szerkeszd bármelyik konfigurációs kulcsot — a böngésződből.</p>
+Nézz élő adásokat, böngéssz a felvételek között, szerkeszd bármelyik konfigurációs kulcsot — a böngésződből.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,6 +12,10 @@ Nézz élő adásokat, böngéssz a felvételek között, és szerkeszd bármely
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — élő adások rácsa, felvételböngésző és konfigurációszerkesztő" width="860">
+
+<details>
+<summary>🌍 Olvasd el 30 nyelven</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@ Nézz élő adásokat, böngéssz a felvételek között, és szerkeszd bármely
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — élő adások rácsa, felvételböngésző és konfigurációszerkesztő" width="860">
+</details>
 
 </div>
 
 ## Mi ez
 
-A MediaMTX kiváló streamingszerver, és felület nélkül érkezik. A Connect a hiányzó front-end: egyetlen konténer, amely a MediaMTX API-jával beszélget, és kamerafallá, felvételtárrá és konfigurációszerkesztővé alakítja.
+A MediaMTX kiváló streamingszerver, felület nélkül. A Connect a hiányzó front-end: egyetlen konténer, amely a MediaMTX API-jával beszélget, és kamerafallá, felvételtárrá és konfigurációszerkesztővé alakítja.
 
-Társ, nem helyettesítő. Minden képernyő olyasmire épül, amit a MediaMTX már közzétesz — egy path, egy API-végpont, egy `runOn*` hook, egy natívan kiszolgált protokoll. A Connect nem tárol videót, nem proxyzik médiát, és adatbázist sem használ. Irányítsd egy futó szerverre, és működik.
+Társ, nem helyettesítő. Minden képernyő olyasmire épül, amit a MediaMTX már közzétesz: egy path, egy API-végpont, egy `runOn*` hook, egy natívan kiszolgált protokoll. Nem tárol videót, nem proxyzik médiát, nincs adatbázisa.
 
 ## Gyors indulás
 
-A képek `linux/amd64` és `linux/arm64` platformra jelennek meg (Raspberry Pi, Apple Silicon és társaik), így a Docker a megfelelőt tölti le helyetted.
+Többarchitektúrás képek (`linux/amd64`, `linux/arm64`) — a Docker a megfelelőt tölti le.
 
 **Már fut a MediaMTX?** Állítsd mellé a Connectet:
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Akárhogy is, nyisd meg a <http://localhost:3000> címet.
+Utána nyisd meg a <http://localhost:3000> címet.
 
 > [!IMPORTANT]
-> A Connectnek `api: yes` kell a `mediamtx.yml` fájlodban — mindent ezen az API-n keresztül olvas és ír. A [mellékelt konfiguráció](../../mediamtx.yml) működő minta.
+> A Connectnek `api: yes` kell a `mediamtx.yml` fájlodban. A [mellékelt konfiguráció](../../mediamtx.yml) így, ahogy van, működik.
 
 ## Mit kapsz
 
 ### Élő nézet
 
-Rács az összes path-ról, amiről a MediaMTX tud — 2, 3 vagy 4 oszlopban.
+Minden path, amiről a MediaMTX tud, 2–4 oszlopos rácsban.
 
-- **WebRTC vagy HLS, kártyánként.** Az `AUTO` a WebRTC-t részesíti előnyben, és csendben HLS-re vált, a `LOW-LAT` ragaszkodik a WebRTC-hez, a `COMPAT` pedig HLS-t kényszerít. Minden kártya saját kapcsolatot egyeztet, és azt a szállítást jelenti, amit ténylegesen kapott — sosem azt, amit kértél.
-- **Pillanatképek üresjáratban is.** Egy háttérfeladat minden streamből elkap egy képkockát, így a nem játszó kártyák is mutatják a helyszínt, a képkocka korával a címkén. A «Pillanatkép készítése» azonnal hoz egyet.
-- **Élő telemetria.** Kodekcímkék, nézőszám és üzemidő, egyenesen a path-listából — extra kérés nélkül.
-- **Felvételi állapot, ami igazat mond.** A kártyák azt mutatják, hogy egy stream *ténylegesen* rögzít-e (a saját felülbírálása a path defaults tetejére olvasztva, pontosan úgy, ahogy a MediaMTX feloldja); az olvashatatlan állapot ismeretlenként jelenik meg, nem kikapcsoltként.
-- **Közzétételi URL-ek a vágólapra.** Az RTSP-, RTMP- és SRT-célok a szerver saját figyelőcímeiből épülnek, így a megváltoztatott port továbbra is a helyes port.
+- **WebRTC vagy HLS, kártyánként.** Az `AUTO` csendben HLS-re vált, a `LOW-LAT` ragaszkodik a WebRTC-hez, a `COMPAT` HLS-t kényszerít — és minden kártya azt a szállítást jelenti, amit ténylegesen kapott.
+- **Pillanatképek üresjáratban.** Egy háttérfeladat friss képkockát tart minden kártyán, a képkocka korával a címkén.
+- **Élő telemetria.** Kodekek, nézőszám és üzemidő, egyenesen a path-listából.
+- **Őszinte felvételi állapot.** A kártyák azt mutatják, hogy egy stream *ténylegesen* rögzít-e; amit a Connect nem tudott kiolvasni, azt ismeretlennek hívja, sosem kikapcsoltnak.
+- **Közzétételi URL-ek a vágólapra.** RTSP, RTMP és SRT, a szerver saját figyelőcímeiből építve.
 
 ### Felvételek
 
-- Minden stream MP4-jei, napokra bontva, a legfrissebbtől, automatikusan generált bélyegképekkel.
-- Helyben kinyíló lejátszó, valódi tekerősávval, HTTP Range kérésekre építve.
-- Streamelő letöltések élő haladásjelzővel, sebességgel és Mégse gombbal.
-- Nyomj `/` billentyűt bárhol a szűréshez.
+- Minden stream MP4-jei, napokra bontva, automatikus bélyegképekkel.
+- Helyben kinyíló lejátszó, HTTP Range kérésekkel tekerhető.
+- Streamelő letöltések élő haladásjelzővel és megszakítással.
+- Szűréshez nyomj `/` billentyűt.
 
 ### Konfiguráció YAML nélkül
 
-- **A teljes szerverkonfiguráció** — 65 vezérlő a Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC és SRT szakaszokban, mindegyik típusos, validált és a te nyelveden dokumentált.
-- **Path defaults és path-onkénti felülbírálások** azokon a hatókörökön, ahonnan a MediaMTX ténylegesen kiszolgálja őket. Egy helyettesítő karakterrel lefedett stream mentése ritka bejegyzést hoz létre, így az érintetlen kulcsok továbbra is az alapértékeket követik — a «visszaállítás örököltre» pedig visszavonja.
-- **Mind a 15 `runOn*` path hook**, figyelmeztetéssel ott, ahol a mentés újraindítja a path-ot.
-- **Ritka írások.** A Connect csak a megváltoztatott kulcsokat PATCH-eli; amit nem mutat, ahhoz nem nyúl.
+- **A teljes szerverkonfiguráció** — 65 típusos, validált vezérlő a Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC és SRT szakaszokban.
+- **Path defaults és path-onkénti felülbírálások** azokon a hatókörökön, ahonnan a MediaMTX kiszolgálja őket. Egy helyettesítő karakterrel lefedett stream mentése ritka bejegyzést ír, így az érintetlen kulcsok tovább öröklődnek.
+- **Mind a 15 `runOn*` hook**, figyelmeztetéssel ott, ahol a mentés újraindítja a path-ot.
+- **Ritka írások** — csak a megváltoztatott kulcsok.
 
-### Olyan dobozra tervezve, amiről elfeledkezel
+### Üzemeltetés
 
-Egyetlen folyamat szolgálja ki az API-t, a SPA-t és a médiát · többarchitektúrás képek · `GET /health` · strukturált naplók · telepíthető PWA · világos és sötét téma · 30 nyelv · nincs adatbázis.
+Egyetlen folyamat az API-nak, a SPA-nak és a médiának · többarchitektúrás · `GET /health` · strukturált naplók · PWA · világos és sötét · 30 nyelv · nincs adatbázis.
 
 ## Környezeti változók
 
-Itt minden futás közben szerkeszthető a **Config** alatt — ezek a változók csak az első indulást vetik el.
+Csak az első indulást vetik el. A többi a **Config** alatt marad szerkeszthető.
 
 | Változó | Alapérték | Mire való |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Hol éri el a Connect a MediaMTX API-t a konténerén *belülről* |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Hol éri el a Connect a MediaMTX API-t a konténerén belülről |
 | `MEDIAMTX_API_PORT` | `9997` | A MediaMTX API portja |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | A felvételekhez csatolt hoszt-útvonal (csak compose) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Hová kerülnek a generált bélyegképek |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Hová kerülnek a bélyegképek |
 
-Az alapértelmezett `http://mediamtx` csak a mellékelt compose hálózatán oldódik fel. Önálló `docker run` esetén add meg a saját MediaMTX hosztodat — vagy javítsd később a **Config** alatt, újraindítás nélkül.
+A `http://mediamtx` csak a mellékelt compose hálózatán oldódik fel — önálló `docker run` esetén add meg a saját hosztodat.
 
 ## Hogyan működik
 
@@ -142,7 +145,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-A lejátszás a böngészőből közvetlenül a MediaMTX-hez megy. A Connect csak JSON-t mozgat, plusz a lemezről olvasott felvételeket és bélyegképeket.
+A lejátszás a böngészőből a MediaMTX-hez megy. A Connect csak JSON-t mozgat, plusz a lemezről olvasott felvételeket és bélyegképeket.
 
 ## Dokumentáció
 
@@ -155,7 +158,7 @@ A lejátszás a böngészőből közvetlenül a MediaMTX-hez megy. A Connect csa
 
 ## Közreműködés
 
-A hibajegyeket és PR-eket szívesen fogadjuk. A `pnpm install && pnpm dev` teljes stacket ad tesztadatokkal — a többit lásd a [CONTRIBUTING.md](../../CONTRIBUTING.md) fájlban, és vedd figyelembe, hogy a PR-címek [conventional commits](../../CONTRIBUTING.md) formátumúak. A projekt [magatartási kódexet](../../CODE_OF_CONDUCT.md) követ.
+A hibajegyeket és PR-eket szívesen fogadjuk. A `pnpm install && pnpm dev` teljes stacket ad tesztadatokkal — a többit lásd a [CONTRIBUTING.md](../../CONTRIBUTING.md) fájlban, és a PR-címek conventional commits formátumúak. [Magatartási kódexet](../../CODE_OF_CONDUCT.md) követünk.
 
 ## Licenc
 

@@ -12,6 +12,10 @@
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect —— 直播墙、录像浏览器与配置编辑器" width="860">
+
+<details>
+<summary>🌍 用 30 种语言阅读</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect —— 直播墙、录像浏览器与配置编辑器" width="860">
+</details>
 
 </div>
 
 ## 这是什么
 
-MediaMTX 是一款出色的流媒体服务器，但它不带界面。Connect 就是它缺的那个前端：一个容器，对接 MediaMTX API，把它变成一面监控墙、一个录像库和一个配置编辑器。
+MediaMTX 是出色的流媒体服务器，但没有界面。Connect 就是它缺的那个前端：一个容器，对接 MediaMTX API，把它变成监控墙、录像库和配置编辑器。
 
-它是伴侣，不是替代品。每个页面都对应 MediaMTX 本就暴露的东西 —— 一条 path、一个 API 端点、一个 `runOn*` 钩子、一种它原生提供的协议。Connect 不存视频、不代理媒体、不用数据库。指向一台正在运行的服务器即可使用。
+它是伴侣，不是替代品。每个页面都对应 MediaMTX 本就暴露的东西：一条 path、一个 API 端点、一个 `runOn*` 钩子、一种它原生提供的协议。不存视频，不代理媒体，不用数据库。
 
 ## 快速开始
 
-镜像同时发布 `linux/amd64` 与 `linux/arm64`（树莓派、Apple Silicon 等），Docker 会自动拉取正确的那个。
+多架构镜像（`linux/amd64`、`linux/arm64`）—— Docker 会拉取正确的那个。
 
 **已经在跑 MediaMTX？** 把 Connect 放在它旁边：
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-无论哪种方式，打开 <http://localhost:3000>。
+然后打开 <http://localhost:3000>。
 
 > [!IMPORTANT]
-> Connect 需要你的 `mediamtx.yml` 里有 `api: yes` —— 它的一切读写都走这个 API。[附带的配置](../../mediamtx.yml)是一份可用的参考。
+> Connect 需要你的 `mediamtx.yml` 里有 `api: yes`。[附带的配置](../../mediamtx.yml)开箱可用。
 
 ## 你能得到什么
 
 ### 实时画面
 
-MediaMTX 已知的每条 path 都在网格里，可切换 2、3、4 列。
+MediaMTX 已知的每条 path，2 到 4 列网格排布。
 
-- **逐卡片选择 WebRTC 或 HLS。** `AUTO` 优先 WebRTC 并静默回退到 HLS，`LOW-LAT` 坚持走 WebRTC，`COMPAT` 强制 HLS。每张卡片各自协商连接，并显示实际用上的传输方式 —— 而不是你请求的那种。
-- **空闲时也有快照。** 后台任务会为每条流抓取画面，因此未播放的卡片依然能看到现场，标签上还带着这一帧的时间。「立即截图」可随时抓一张。
-- **实时遥测。** 编解码标签、观看人数和在线时长，全部取自 path 列表 —— 不产生额外请求。
-- **如实反映的录制状态。** 卡片显示的是流*实际*是否在录制（它自己的覆盖项叠加在 path 默认值之上，与 MediaMTX 的解析方式一致）；读不到的状态显示为未知，而不是显示为关闭。
-- **推流地址一键复制。** RTSP、RTMP 与 SRT 地址由服务器自己的监听地址生成，所以改过的端口依然是对的端口。
+- **逐卡片选择 WebRTC 或 HLS。** `AUTO` 静默回退到 HLS，`LOW-LAT` 坚持走 WebRTC，`COMPAT` 强制 HLS —— 每张卡片显示的都是实际用上的传输方式。
+- **空闲时也有快照。** 后台任务为每张卡片保留一帧近照，并在标签上标出它的时间。
+- **实时遥测。** 编解码、观看人数和在线时长，直接取自 path 列表。
+- **如实的录制状态。** 卡片显示流是否*实际*在录制；读不到的状态显示为未知，绝不显示为关闭。
+- **推流地址一键复制。** RTSP、RTMP 与 SRT，由服务器自己的监听地址生成。
 
 ### 录像
 
-- 每条流的 MP4，按天分组、最新在前，并自动生成缩略图。
-- 就地展开的内嵌播放器，配一条真正可拖动的进度条，底层是 HTTP Range 请求。
-- 边下边显示进度、速度，并可随时取消的流式下载。
-- 在任意位置按 `/` 即可过滤。
+- 每条流的 MP4，按天分组，并自动生成缩略图。
+- 就地展开的内嵌播放器，基于 HTTP Range 请求可自由拖动。
+- 流式下载，带实时进度与取消。
+- 按 `/` 即可过滤。
 
 ### 配置，无需写 YAML
 
-- **完整的服务器配置** —— Logging、API、Hooks、RTSP、RTMP、HLS、WebRTC、SRT 共 65 个控件，每一个都有类型、有校验，并以你的语言给出说明。
-- **path 默认值与逐 path 覆盖**，都落在 MediaMTX 真正提供它们的作用域上。保存一条由通配符覆盖的流会生成一条稀疏条目，未改动的键继续跟随默认值 —— 「恢复为继承」可以撤销。
-- **全部 15 个 `runOn*` path 钩子**，凡是保存后会重启 path 的地方都有提示。
-- **稀疏写入。** Connect 只 PATCH 你改过的键；没有暴露的部分原样保留。
+- **完整的服务器配置** —— Logging、API、Hooks、RTSP、RTMP、HLS、WebRTC、SRT 共 65 个带类型、带校验的控件。
+- **path 默认值与逐 path 覆盖**，落在 MediaMTX 真正提供它们的作用域上。保存通配符覆盖的流会写入一条稀疏条目，未改动的键继续跟随默认值。
+- **全部 15 个 `runOn*` 钩子**，凡是保存后会重启 path 的地方都有提示。
+- **稀疏写入** —— 只提交你改过的键。
 
-### 为一台你可以忘掉的机器而设计
+### 运维
 
-单进程同时提供 API、SPA 与媒体 · 多架构镜像 · `GET /health` · 结构化日志 · 可安装 PWA · 明暗主题 · 30 种语言 · 无数据库。
+单进程提供 API、SPA 与媒体 · 多架构 · `GET /health` · 结构化日志 · PWA · 明暗主题 · 30 种语言 · 无数据库。
 
 ## 环境变量
 
-这些都能在 **Config** 里随时修改 —— 环境变量只用于首次启动的初始值。
+它们只用于首次启动。之后一切都能在 **Config** 里改。
 
 | 变量 | 默认值 | 用途 |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect 在其容器*内部*访问 MediaMTX API 的地址 |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect 在其容器内部访问 MediaMTX API 的地址 |
 | `MEDIAMTX_API_PORT` | `9997` | MediaMTX API 端口 |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | 挂载录像的宿主机路径（仅 compose） |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 生成的缩略图存放位置 |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 缩略图存放位置 |
 
-默认值 `http://mediamtx` 只在自带 compose 的网络里能解析。独立使用 `docker run` 时，请把它设成你的 MediaMTX 主机 —— 或之后在 **Config** 里改，无需重启。
+`http://mediamtx` 只在自带 compose 的网络里能解析 —— 独立使用 `docker run` 时，请指向你自己的主机。
 
 ## 工作原理
 
@@ -155,7 +158,7 @@ recordings/ + screenshots/  ◀────────────────�
 
 ## 参与贡献
 
-欢迎提 issue 和 PR。`pnpm install && pnpm dev` 会带起完整栈并预置示例数据 —— 其余内容见 [CONTRIBUTING.md](../../CONTRIBUTING.md)，另外 PR 标题需遵循 [conventional commits](../../CONTRIBUTING.md)。本项目遵守[行为准则](../../CODE_OF_CONDUCT.md)。
+欢迎提 issue 和 PR。`pnpm install && pnpm dev` 会带起完整栈并预置示例数据 —— 详见 [CONTRIBUTING.md](../../CONTRIBUTING.md)，另外 PR 标题需遵循 conventional commits。我们遵守[行为准则](../../CODE_OF_CONDUCT.md)。
 
 ## 许可证
 

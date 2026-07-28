@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong><a href="https://github.com/bluenviron/mediamtx">MediaMTX</a> için web arayüzü.</strong><br>
-Canlı yayınları izleyin, kayıtlara göz atın ve her yapılandırma anahtarını düzenleyin — tarayıcınızdan.</p>
+Canlı yayınları izleyin, kayıtlara göz atın, her yapılandırma anahtarını düzenleyin — tarayıcınızdan.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,6 +12,10 @@ Canlı yayınları izleyin, kayıtlara göz atın ve her yapılandırma anahtar�
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — canlı yayın ızgarası, kayıt tarayıcısı ve yapılandırma düzenleyici" width="860">
+
+<details>
+<summary>🌍 30 dilde okuyun</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@ Canlı yayınları izleyin, kayıtlara göz atın ve her yapılandırma anahtar�
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — canlı yayın ızgarası, kayıt tarayıcısı ve yapılandırma düzenleyici" width="860">
+</details>
 
 </div>
 
 ## Bu nedir
 
-MediaMTX mükemmel bir yayın sunucusudur ve arayüzsüz gelir. Connect onun eksik ön yüzü: MediaMTX API'siyle konuşan tek bir konteyner, onu bir kamera duvarına, bir kayıt arşivine ve bir yapılandırma düzenleyicisine dönüştürür.
+MediaMTX arayüzsüz gelen mükemmel bir yayın sunucusudur. Connect onun eksik ön yüzü: MediaMTX API'siyle konuşan tek bir konteyner, onu bir kamera duvarına, bir kayıt arşivine ve bir yapılandırma düzenleyicisine dönüştürür.
 
-Yerine geçen değil, yanında duran bir araç. Her ekran MediaMTX'in zaten sunduğu bir şeye oturur — bir path, bir API uç noktası, bir `runOn*` kancası, doğrudan servis ettiği bir protokol. Connect video saklamaz, medyayı vekillemez ve veritabanı tutmaz. Çalışan bir sunucuya yöneltin, iş görür.
+Yerine geçen değil, yanında duran bir araç. Her ekran MediaMTX'in zaten sunduğu bir şeye oturur: bir path, bir API uç noktası, bir `runOn*` kancası, doğrudan servis ettiği bir protokol. Video saklamaz, medyayı vekillemez, veritabanı tutmaz.
 
 ## Hızlı başlangıç
 
-İmajlar `linux/amd64` ve `linux/arm64` için yayınlanır (Raspberry Pi, Apple Silicon vb.), böylece Docker doğrusunu sizin için indirir.
+Çok mimarili imajlar (`linux/amd64`, `linux/arm64`) — Docker doğrusunu indirir.
 
 **MediaMTX zaten çalışıyor mu?** Connect'i yanına ekleyin:
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Her iki durumda da <http://localhost:3000> adresini açın.
+Ardından <http://localhost:3000> adresini açın.
 
 > [!IMPORTANT]
-> Connect'in `mediamtx.yml` dosyanızda `api: yes` olmasına ihtiyacı var — okuma ve yazmanın tamamı bu API üzerinden geçer. [Birlikte gelen yapılandırma](../../mediamtx.yml) çalışan bir örnektir.
+> Connect'in `mediamtx.yml` dosyanızda `api: yes` olmasına ihtiyacı var. [Birlikte gelen yapılandırma](../../mediamtx.yml) olduğu gibi çalışır.
 
 ## Neler elde edersiniz
 
 ### Canlı görünüm
 
-MediaMTX'in bildiği her path'in 2, 3 veya 4 sütunlu ızgarası.
+MediaMTX'in bildiği tüm path'ler, 2–4 sütunluk bir ızgarada.
 
-- **Kart başına WebRTC veya HLS.** `AUTO` WebRTC'yi tercih eder ve sessizce HLS'e düşer, `LOW-LAT` WebRTC'de ısrar eder, `COMPAT` HLS'i dayatır. Her kart kendi bağlantısını pazarlık eder ve gerçekten elde ettiği taşımayı bildirir — istediğinizi değil.
-- **Boştayken de anlık görüntü.** Bir arka plan işi her yayından kare yakalar; böylece oynatılmayan kartlar bile sahneyi gösterir, karenin yaşı da rozette yazar. «Anlık görüntü al» hemen bir kare çeker.
-- **Canlı telemetri.** Kodek rozetleri, izleyici sayısı ve çalışma süresi doğrudan path listesinden gelir — ek istek yok.
-- **Doğruyu söyleyen kayıt durumu.** Kartlar bir yayının *fiilen* kayıtta olup olmadığını gösterir (kendi geçersiz kılması path varsayılanlarının üzerine bindirilmiş hâliyle, MediaMTX nasıl çözüyorsa öyle); okunamayan bir durum kapalı değil, bilinmiyor olarak görünür.
-- **Yayınlama URL'leri panoya.** RTSP, RTMP ve SRT hedefleri sunucunun kendi dinleme adreslerinden üretilir; böylece değiştirilmiş bir port hâlâ doğru porttur.
+- **Kart başına WebRTC veya HLS.** `AUTO` sessizce HLS'e düşer, `LOW-LAT` WebRTC'de ısrar eder, `COMPAT` HLS'i dayatır — ve her kart gerçekten elde ettiği taşımayı bildirir.
+- **Boştayken de anlık görüntü.** Bir arka plan işi her kartta güncel bir kare tutar, karenin yaşı da rozette yazar.
+- **Canlı telemetri.** Kodekler, izleyici sayısı ve çalışma süresi, doğrudan path listesinden.
+- **Dürüst kayıt durumu.** Kartlar bir yayının *fiilen* kayıtta olup olmadığını gösterir; Connect'in okuyamadığı bir durum kapalı değil, bilinmiyor olarak görünür.
+- **Yayınlama URL'leri panoya.** RTSP, RTMP ve SRT, sunucunun kendi dinleme adreslerinden üretilir.
 
 ### Kayıtlar
 
-- Her yayının MP4'leri, güne göre gruplanmış, en yenisi başta, otomatik üretilen küçük resimlerle.
-- Yerinde açılan gömülü oynatıcı; HTTP Range istekleriyle desteklenen gerçek bir sarma çubuğu var.
-- Canlı ilerleme, hız ve iptal düğmesiyle akışlı indirmeler.
-- Filtrelemek için herhangi bir yerde `/` tuşuna basın.
+- Her yayının MP4'leri, güne göre gruplanmış, otomatik küçük resimlerle.
+- Yerinde açılan gömülü oynatıcı; HTTP Range istekleriyle sarılabilir.
+- Canlı ilerleme ve iptal içeren akışlı indirmeler.
+- Filtrelemek için `/` tuşuna basın.
 
 ### YAML olmadan yapılandırma
 
-- **Sunucu yapılandırmasının tamamı** — Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC ve SRT boyunca 65 denetim; her biri tipli, doğrulanmış ve kendi dilinizde belgelenmiş.
-- **Path varsayılanları ve path başına geçersiz kılmalar**, MediaMTX'in bunları gerçekten sunduğu kapsamlarda. Joker karakterle kapsanan bir yayını kaydetmek seyrek bir girdi oluşturur; dokunmadığınız anahtarlar varsayılanları izlemeye devam eder — «devralınana geri dön» bunu geri alır.
-- **15 `runOn*` path kancasının tamamı**, kaydetmenin path'i yeniden başlattığı yerlerde uyarıyla birlikte.
-- **Seyrek yazma.** Connect yalnızca değiştirdiğiniz anahtarları PATCH eder; göstermediği hiçbir şeye dokunmaz.
+- **Sunucu yapılandırmasının tamamı** — Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC ve SRT boyunca tipli ve doğrulanmış 65 denetim.
+- **Path varsayılanları ve path başına geçersiz kılmalar**, MediaMTX'in bunları sunduğu kapsamlarda. Joker karakterle kapsanan bir yayını kaydetmek seyrek bir girdi yazar; dokunmadığınız anahtarlar devralmayı sürdürür.
+- **15 `runOn*` kancasının tamamı**, kaydetmenin path'i yeniden başlattığı yerlerde uyarıyla.
+- **Seyrek yazma** — yalnızca değiştirdiğiniz anahtarlar.
 
-### Unutabileceğiniz bir kutu için
+### İşletim
 
-API, SPA ve medyayı sunan tek süreç · çok mimarili imajlar · `GET /health` · yapılandırılmış loglar · kurulabilir PWA · açık ve koyu tema · 30 dil · veritabanı yok.
+API, SPA ve medya için tek süreç · çok mimarili · `GET /health` · yapılandırılmış loglar · PWA · açık ve koyu · 30 dil · veritabanı yok.
 
 ## Ortam değişkenleri
 
-Buradaki her şey **Config** altında çalışırken düzenlenebilir — bu değişkenler yalnızca ilk açılışı tohumlar.
+Yalnızca ilk açılışı tohumlar. Gerisi **Config** altında düzenlenebilir kalır.
 
 | Değişken | Varsayılan | Amaç |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect'in kendi konteynerinin *içinden* MediaMTX API'sine ulaştığı yer |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect'in kendi konteynerinin içinden MediaMTX API'sine ulaştığı yer |
 | `MEDIAMTX_API_PORT` | `9997` | MediaMTX API portu |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Kayıtlar için bağlanan ana makine yolu (yalnızca compose) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Üretilen küçük resimlerin saklandığı yer |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Küçük resimlerin saklandığı yer |
 
-Varsayılan `http://mediamtx` yalnızca birlikte gelen compose ağında çözülür. Tek başına bir `docker run` için kendi MediaMTX makinenizi yazın — ya da sonradan **Config** altında düzeltin, yeniden başlatmaya gerek yok.
+`http://mediamtx` yalnızca birlikte gelen compose ağında çözülür — tek başına bir `docker run` için kendi makinenizi yazın.
 
 ## Nasıl çalışır
 
@@ -142,7 +145,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Oynatma tarayıcıdan doğrudan MediaMTX'e gider. Connect yalnızca JSON taşır, bir de diskten okuduğu kayıtlar ile küçük resimleri.
+Oynatma tarayıcıdan MediaMTX'e gider. Connect yalnızca JSON taşır, bir de diskten okuduğu kayıtlar ile küçük resimleri.
 
 ## Belgeler
 
@@ -155,7 +158,7 @@ Oynatma tarayıcıdan doğrudan MediaMTX'e gider. Connect yalnızca JSON taşır
 
 ## Katkıda bulunma
 
-Issue ve PR'lar memnuniyetle karşılanır. `pnpm install && pnpm dev` size örnek verilerle dolu tam bir yığın verir — gerisi için [CONTRIBUTING.md](../../CONTRIBUTING.md) dosyasına bakın; ayrıca PR başlıkları [conventional commits](../../CONTRIBUTING.md) biçimindedir. Bu proje bir [Davranış Kuralları](../../CODE_OF_CONDUCT.md) belgesine uyar.
+Issue ve PR'lar memnuniyetle karşılanır. `pnpm install && pnpm dev` size örnek verilerle dolu tam bir yığın verir — gerisi için [CONTRIBUTING.md](../../CONTRIBUTING.md); ayrıca PR başlıkları conventional commits biçimindedir. Bir [Davranış Kuralları](../../CODE_OF_CONDUCT.md) belgesine uyuyoruz.
 
 ## Lisans
 

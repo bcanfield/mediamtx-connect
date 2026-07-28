@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>Ang web UI para sa <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Manood ng live na stream, mag-browse ng mga recording, at i-edit ang kahit anong config key — mula sa browser mo.</p>
+Manood ng live na stream, mag-browse ng mga recording, i-edit ang kahit anong config key — mula sa browser mo.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,6 +12,10 @@ Manood ng live na stream, mag-browse ng mga recording, at i-edit ang kahit anong
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — grid ng live na stream, browser ng recording, at editor ng configuration" width="860">
+
+<details>
+<summary>🌍 Basahin sa 30 wika</summary>
 <p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
@@ -44,20 +48,19 @@ Manood ng live na stream, mag-browse ng mga recording, at i-edit ang kahit anong
   🇮🇳 <a href="./README.hi.md">हिन्दी</a> •
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
-
-<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — grid ng live na stream, browser ng recording, at editor ng configuration" width="860">
+</details>
 
 </div>
 
 ## Ano ito
 
-Napakagaling na streaming server ang MediaMTX, at wala itong kasamang interface. Ang Connect ang nawawalang front-end: isang container na kausap ang API ng MediaMTX at ginagawa itong pader ng kamera, imbakan ng recording, at editor ng configuration.
+Napakagaling na streaming server ang MediaMTX, pero walang kasamang interface. Ang Connect ang nawawalang front-end: isang container na kausap ang API ng MediaMTX at ginagawa itong pader ng kamera, imbakan ng recording, at editor ng configuration.
 
-Kasama ito, hindi kapalit. Bawat screen ay nakasandal sa isang bagay na inilalantad na ng MediaMTX — isang path, isang API endpoint, isang `runOn*` hook, isang protocol na siya mismo ang naghahain. Walang video na iniimbak ang Connect, walang media na pinoproxy, at walang database. Ituro mo lang sa isang tumatakbong server at gagana na.
+Kasama ito, hindi kapalit. Bawat screen ay nakasandal sa isang bagay na inilalantad na ng MediaMTX: isang path, isang API endpoint, isang `runOn*` hook, isang protocol na siya mismo ang naghahain. Walang iniimbak na video, walang pinoproxy na media, walang database.
 
 ## Mabilisang simula
 
-Nailalabas ang mga image para sa `linux/amd64` at `linux/arm64` (Raspberry Pi, Apple Silicon, at kauri), kaya ang Docker na ang bahalang kunin ang tama.
+Mga multi-arch na image (`linux/amd64`, `linux/arm64`) — ang Docker na ang kukuha ng tama.
 
 **Tumatakbo na ang MediaMTX?** Itabi mo lang ang Connect:
 
@@ -78,53 +81,53 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-Alinman doon, buksan ang <http://localhost:3000>.
+Pagkatapos ay buksan ang <http://localhost:3000>.
 
 > [!IMPORTANT]
-> Kailangan ng Connect ang `api: yes` sa `mediamtx.yml` mo — sa API na iyon dumadaan ang lahat ng pagbabasa at pagsulat. Gumaganang sanggunian ang [kasamang configuration](../../mediamtx.yml).
+> Kailangan ng Connect ang `api: yes` sa `mediamtx.yml` mo. Gumagana agad ang [kasamang configuration](../../mediamtx.yml).
 
 ## Ano ang makukuha mo
 
 ### Live na tanawin
 
-Isang grid ng bawat path na kilala ng MediaMTX, sa 2, 3, o 4 na hanay.
+Bawat path na kilala ng MediaMTX, sa grid na 2 hanggang 4 na hanay.
 
-- **WebRTC o HLS, bawat card.** Mas gusto ng `AUTO` ang WebRTC at tahimik itong babagsak sa HLS, ipinipilit ng `LOW-LAT` ang WebRTC, at pinipilit ng `COMPAT` ang HLS. Bawat card ay may sariling negosasyon ng koneksyon at iniuulat ang transport na talagang nakuha nito — hindi kailanman ang hiniling mo.
-- **May snapshot kahit tahimik.** May background job na kumukuha ng frame sa bawat stream, kaya kahit hindi nagpe-play ang card ay nakikita pa rin ang eksena, kasama ang edad ng frame sa pill. Agad namang kumukuha ng isa ang «Kumuha ng snapshot».
-- **Live na telemetry.** Mga chip ng codec, bilang ng manonood, at oras na nakaonline, diretso mula sa listahan ng path — walang dagdag na request.
-- **Katayuan ng recording na totoo.** Ipinapakita ng mga card kung *talagang* nagre-record ang isang stream (ang sarili nitong override na isinanib sa ibabaw ng path defaults, gaya ng pagreresolba ng MediaMTX); ang katayuang hindi nabasa ay lumalabas na hindi tiyak sa halip na naka-off.
-- **Mga publish URL sa clipboard.** Ang mga target na RTSP, RTMP, at SRT ay binubuo mula sa sariling listen address ng server, kaya kahit binago ang port ay tama pa rin ang port.
+- **WebRTC o HLS, bawat card.** Tahimik na bumabagsak sa HLS ang `AUTO`, ipinipilit ng `LOW-LAT` ang WebRTC, at pinipilit ng `COMPAT` ang HLS — at iniuulat ng bawat card ang transport na talagang nakuha nito.
+- **May snapshot kahit tahimik.** May background job na nagtatago ng sariwang frame sa bawat card, kasama ang edad nito sa pill.
+- **Live na telemetry.** Mga codec, bilang ng manonood, at oras na nakaonline, diretso mula sa listahan ng path.
+- **Tapat na katayuan ng recording.** Ipinapakita ng mga card kung *talagang* nagre-record ang isang stream; ang katayuang hindi nabasa ng Connect ay tinatawag na hindi tiyak, hindi kailanman naka-off.
+- **Mga publish URL sa clipboard.** RTSP, RTMP, at SRT, binuo mula sa sariling listen address ng server.
 
 ### Mga recording
 
-- Ang mga MP4 ng bawat stream, nakagrupo kada araw, pinakabago muna, may awtomatikong nabuong thumbnail.
-- Isang player na bumubukas sa mismong lugar nito, may tunay na seekbar na nakasandal sa mga HTTP Range request.
-- Mga download na dumadaloy, may live na progreso, bilis, at pindutang pangkansela.
-- Pindutin ang `/` kahit saan para mag-filter.
+- Ang mga MP4 ng bawat stream, nakagrupo kada araw, may awtomatikong thumbnail.
+- Isang player na bumubukas sa mismong lugar nito, masusundan gamit ang mga HTTP Range request.
+- Mga download na dumadaloy, may live na progreso at pagkansela.
+- Pindutin ang `/` para mag-filter.
 
 ### Configuration, walang YAML
 
-- **Ang buong configuration ng server** — 65 kontrol sa Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, at SRT, bawat isa ay may tipo, na-validate, at may paliwanag sa wika mo.
-- **Path defaults at override kada path**, sa mismong saklaw kung saan talaga ito inihahain ng MediaMTX. Ang pag-save ng stream na sakop ng wildcard ay lumilikha ng payak na entry, kaya ang mga key na hindi mo ginalaw ay patuloy na sumusunod sa default — at binabawi ito ng «ibalik sa minana».
-- **Lahat ng 15 `runOn*` path hook**, may babala kung saan nagre-restart ng path ang pag-save.
-- **Payak na pagsulat.** Ang mga key lang na binago mo ang ipina-PATCH ng Connect; hindi nito ginagalaw ang mga bagay na hindi nito inilalantad.
+- **Ang buong configuration ng server** — 65 kontrol na may tipo at na-validate sa Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, at SRT.
+- **Path defaults at override kada path**, sa mismong saklaw kung saan ito inihahain ng MediaMTX. Ang pag-save ng stream na sakop ng wildcard ay sumusulat ng payak na entry, kaya patuloy na nagmamana ang mga key na hindi mo ginalaw.
+- **Lahat ng 15 `runOn*` hook**, may babala kung saan nagre-restart ng path ang pag-save.
+- **Payak na pagsulat** — ang mga key lang na binago mo.
 
-### Ginawa para sa kahong nakakalimutan mo
+### Operasyon
 
-Iisang proseso ang naghahain ng API, SPA, at media · multi-arch na image · `GET /health` · nakabalangkas na log · nai-install na PWA · maliwanag at madilim na tema · 30 wika · walang database.
+Iisang proseso para sa API, SPA, at media · multi-arch · `GET /health` · nakabalangkas na log · PWA · maliwanag at madilim · 30 wika · walang database.
 
 ## Mga environment variable
 
-Lahat ng ito ay nababago habang tumatakbo sa ilalim ng **Config** — ito ay para lang sa unang boot.
+Para lang ito sa unang boot. Ang iba ay nananatiling nababago sa ilalim ng **Config**.
 
 | Variable | Default | Layunin |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Kung saan naaabot ng Connect ang MediaMTX API mula sa *loob* ng container nito |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Kung saan naaabot ng Connect ang MediaMTX API mula sa loob ng container nito |
 | `MEDIAMTX_API_PORT` | `9997` | Port ng MediaMTX API |
 | `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Path sa host na naka-mount para sa mga recording (compose lang) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kung saan itinatago ang mga nabuong thumbnail |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Kung saan itinatago ang mga thumbnail |
 
-Ang default na `http://mediamtx` ay nareresolba lang sa network ng kasamang compose. Para sa nag-iisang `docker run`, itakda ito sa sarili mong MediaMTX host — o ayusin mamaya sa ilalim ng **Config**, walang restart na kailangan.
+Ang `http://mediamtx` ay nareresolba lang sa network ng kasamang compose — para sa nag-iisang `docker run`, ituro ito sa sarili mong host.
 
 ## Paano ito gumagana
 
@@ -142,7 +145,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Diretso mula sa browser patungong MediaMTX ang playback. JSON lang ang inilillipat ng Connect, saka ang mga recording at thumbnail na binabasa nito sa disk.
+Mula sa browser patungong MediaMTX ang playback. JSON lang ang inililipat ng Connect, saka ang mga recording at thumbnail na binabasa nito sa disk.
 
 ## Dokumentasyon
 
@@ -155,7 +158,7 @@ Diretso mula sa browser patungong MediaMTX ang playback. JSON lang ang inilillip
 
 ## Pag-ambag
 
-Malugod na tinatanggap ang mga issue at PR. Ang `pnpm install && pnpm dev` ay nagbibigay ng buong stack na may seeded na datos — tingnan ang [CONTRIBUTING.md](../../CONTRIBUTING.md) para sa iba pa, at tandaan na ang mga pamagat ng PR ay [conventional commits](../../CONTRIBUTING.md). Sinusunod ng proyektong ito ang isang [Code of Conduct](../../CODE_OF_CONDUCT.md).
+Malugod na tinatanggap ang mga issue at PR. Ang `pnpm install && pnpm dev` ay nagbibigay ng buong stack na may seeded na datos — tingnan ang [CONTRIBUTING.md](../../CONTRIBUTING.md), at tandaan na ang mga pamagat ng PR ay conventional commits. Sinusunod namin ang isang [Code of Conduct](../../CODE_OF_CONDUCT.md).
 
 ## Lisensya
 

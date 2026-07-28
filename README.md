@@ -12,7 +12,7 @@ Watch live streams, browse recordings, edit any config key — from your browser
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
-<img src=".github/assets/demo.gif" alt="MediaMTX Connect — live stream grid, recording browser, and config editor" width="860">
+<img src=".github/assets/demo.png" alt="MediaMTX Connect — live stream grid, recording browser, and config editor" width="860">
 
 <details>
 <summary>🌍 Read this in 30 languages</summary>
