@@ -65,7 +65,7 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
                 }}
               />
             )
-          : <div className="text-[13px] text-muted-foreground">{t('invalidConfig')}</div>
+          : <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
       )}
     </PageLayout>
   )

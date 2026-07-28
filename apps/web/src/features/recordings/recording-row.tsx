@@ -109,7 +109,7 @@ export function RecordingRow({
         )}
 
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[13.5px] font-medium tabular-nums">{time}</p>
+          <p className="truncate text-body font-medium tabular-nums">{time}</p>
           {download.progress
             ? (
                 <div className="mt-1.5 flex max-w-md flex-col gap-1.5">
@@ -120,7 +120,7 @@ export function RecordingRow({
                     className="h-0.75"
                     indicatorClassName="bg-link"
                   />
-                  <span aria-live="polite" className="font-mono text-[10.5px] text-mute">
+                  <span aria-live="polite" className="font-mono text-label text-mute">
                     {t('downloading', {
                       received: formatBytes(download.progress.receivedBytes),
                       total: formatBytes(download.progress.totalBytes),
@@ -130,7 +130,7 @@ export function RecordingRow({
                 </div>
               )
             : (
-                <p className="truncate text-[11.5px] text-mute">
+                <p className="truncate text-meta text-mute">
                   {formatBytes(fileSize)}
                 </p>
               )}

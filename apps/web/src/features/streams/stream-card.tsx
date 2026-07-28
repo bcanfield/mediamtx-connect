@@ -58,7 +58,7 @@ export interface StreamCardProps {
   snapshotMtime?: Date | null
 }
 
-const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.07em]'
+const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-micro font-medium uppercase tracking-[0.07em]'
 const overlayPillLive = cn(overlayPill, 'gap-1.5 border-live/35 text-live-foreground')
 const overlayPillNeutral = cn(overlayPill, 'border-white/15 text-white/90')
 // The overlay always sits on black video, so these are fixed rather than themed.
@@ -210,7 +210,7 @@ export function StreamCard({
           : thumbnailError
             ? (
                 <div className="size-full bg-hatch">
-                  <span className="absolute inset-x-0 bottom-3 px-4 text-center font-mono text-[10.5px] text-faint">
+                  <span className="absolute inset-x-0 bottom-3 px-4 text-center font-mono text-label text-faint">
                     {t('noSnapshot')}
                   </span>
                 </div>
@@ -263,7 +263,7 @@ export function StreamCard({
             {codecs.map(codec => (
               <span
                 key={codec}
-                className="rounded-sm bg-white/10 px-1.5 py-0.5 font-mono text-[10px] uppercase text-white/80"
+                className="rounded-sm bg-white/10 px-1.5 py-0.5 font-mono text-micro uppercase text-white/80"
               >
                 {codec}
               </span>
@@ -273,7 +273,7 @@ export function StreamCard({
 
         {/* bottom-right: telemetry */}
         {telemetry && (
-          <span className="absolute bottom-2.5 right-2.5 font-mono text-[10.5px] text-white/70">
+          <span className="absolute bottom-2.5 right-2.5 font-mono text-label text-white/70">
             {telemetry}
           </span>
         )}
@@ -294,8 +294,8 @@ export function StreamCard({
 
       <div className="flex items-center justify-between gap-2 px-3 py-2.5">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[13.5px] font-medium">{streamName}</p>
-          <p className="truncate text-[11.5px] text-mute">
+          <p className="truncate text-body font-medium">{streamName}</p>
+          <p className="truncate text-meta text-mute">
             {readyTime
               ? t('onlineSince', {
                   time: format.dateTime(new Date(readyTime), { hour: '2-digit', minute: '2-digit' }),
@@ -348,7 +348,7 @@ export function StreamCard({
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={toggleRecord} disabled={recordState === 'unknown'}>
                 <span className="flex-1">{t('menu.record')}</span>
-                <span className="font-mono text-[10px] uppercase text-faint">
+                <span className="font-mono text-micro uppercase text-faint">
                   {recordLabel[recordState]}
                 </span>
               </DropdownMenuItem>

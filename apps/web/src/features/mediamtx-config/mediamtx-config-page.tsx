@@ -27,7 +27,7 @@ export function MediaMTXConfigPage() {
                 onSave={values => updateGlobalConfig.mutateAsync(values)}
               />
             )
-          : <div className="text-[13px] text-muted-foreground">{t('invalidConfig')}</div>
+          : <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
       )}
     </PageLayout>
   )
