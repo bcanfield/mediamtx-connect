@@ -148,13 +148,19 @@ export const EffectivePathConfigSchema = z.object({
 
 export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
 
+// Effective record state — the path's own override merged over path defaults,
+// as MediaMTX resolves it. Inherited `on` is the stock setup, so a card that
+// read only the path's own (absent) entry would claim it's off. `unknown` is
+// its own state rather than a default to `off`: a config entry we couldn't read
+// says nothing about whether MediaMTX is writing files.
+export const RecordStateSchema = z.enum(['on', 'off', 'unknown'])
+
+export type RecordState = z.infer<typeof RecordStateSchema>
+
 export const StreamSchema = z.object({
   name: z.string(),
   readyTime: z.string().nullable(),
-  // Effective record state — the path's own override merged over path defaults,
-  // as MediaMTX resolves it. Inherited `true` is the stock setup, so a card
-  // that read only the path's own (absent) entry would claim it's off.
-  recording: z.boolean(),
+  recordState: RecordStateSchema,
   // MediaMTX's per-track codec names, straight off the path list.
   codecs: z.array(z.string()),
   // MediaMTX counts a reader per consumer of the path, whatever protocol it
