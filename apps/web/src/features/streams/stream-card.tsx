@@ -1,3 +1,4 @@
+import type { RecordState } from '@connect/contract'
 import type { PlaybackMode, PlaybackProtocol } from '@/lib/playback'
 import type { PublishTarget } from '@/lib/publish'
 
@@ -47,8 +48,11 @@ export interface StreamCardProps {
   codecs?: string[]
   resolution?: string
   bitrate?: string
-  /** Effective record state: the stream's own override merged over path defaults. */
-  recording: boolean
+  /**
+   * Effective record state: the stream's own override merged over path
+   * defaults. `unknown` when the API couldn't read the config entry.
+   */
+  recordState: RecordState
   viewers?: number
   /** When the idle card's snapshot was captured. Null until the first capture. */
   snapshotMtime?: Date | null
@@ -80,7 +84,7 @@ export function StreamCard({
   codecs = [],
   resolution,
   bitrate,
-  recording,
+  recordState,
   viewers,
   snapshotMtime,
 }: StreamCardProps) {
@@ -129,9 +133,11 @@ export function StreamCard({
   // other place `record` lives, and writing them would start or stop recording
   // for every stream on the server (ADR 0002). A wildcard-backed stream has no
   // entry to patch, so the API materializes one; the live session survives it.
+  // Offered only when the current state is known — a flip off an unread entry
+  // would be a guess at what it's flipping.
   const toggleRecord = async () => {
     try {
-      await updatePathConfig.mutateAsync({ name: streamName, conf: { record: !recording } })
+      await updatePathConfig.mutateAsync({ name: streamName, conf: { record: recordState === 'off' } })
       await queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() })
     }
     catch {
@@ -174,6 +180,7 @@ export function StreamCard({
   }
 
   const protocolLabel = { webrtc: t('protocolWebrtc'), hls: t('protocolHls') }
+  const recordLabel = { on: t('menu.recordOn'), off: t('menu.recordOff'), unknown: t('menu.recordUnknown') }
   // LOW-LAT is an explicit ask for WebRTC. Landing on HLS anyway is a fine
   // outcome — a playing stream beats a black card — but it isn't what was
   // asked for, so say so rather than let the pill quietly read HLS. AUTO
@@ -295,10 +302,12 @@ export function StreamCard({
                   uptime: formatUptime(readyTime),
                 })
               : t('idle')}
-            {recording && (
-              <span className="whitespace-nowrap text-live-foreground">
+            {/* Unknown gets a hollow dot of its own: reading as OFF would claim
+                the stream isn't recording while MediaMTX may be writing files. */}
+            {recordState !== 'off' && (
+              <span className={cn('whitespace-nowrap', recordState === 'on' ? 'text-live-foreground' : 'text-warning')}>
                 {' '}
-                {t('recIndicator')}
+                {recordState === 'on' ? t('recIndicator') : t('recIndicatorUnknown')}
               </span>
             )}
           </p>
@@ -337,10 +346,10 @@ export function StreamCard({
                 {t('menu.takeSnapshot')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={toggleRecord}>
+              <DropdownMenuItem onClick={toggleRecord} disabled={recordState === 'unknown'}>
                 <span className="flex-1">{t('menu.record')}</span>
                 <span className="font-mono text-[10px] uppercase text-faint">
-                  {recording ? t('menu.recordOn') : t('menu.recordOff')}
+                  {recordLabel[recordState]}
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={copyPublishUrls} disabled={publishTargets.length === 0}>

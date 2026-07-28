@@ -1,3 +1,4 @@
+import type { RecordState } from '@connect/contract'
 import type { PublishTarget } from '@/lib/publish'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
 import { screen } from '@testing-library/react'
@@ -32,14 +33,14 @@ afterEach(() => {
 })
 afterAll(() => server.close())
 
-async function openMenu(recording = false, publishTargets: PublishTarget[] = []) {
+async function openMenu(recordState: RecordState = 'off', publishTargets: PublishTarget[] = []) {
   const view = await renderWithProviders(
     <StreamCard
       streamName="stream1"
       remoteMediaMtxUrl="http://localhost"
       publishTargets={publishTargets}
       playbackMode="auto"
-      recording={recording}
+      recordState={recordState}
     />,
   )
   await view.user.click(screen.getByRole('button', { name: 'Stream actions' }))
@@ -56,28 +57,37 @@ describe('stream actions menu', () => {
   })
 
   it('reports the current record state in the menu', async () => {
-    await openMenu(true)
+    await openMenu('on')
 
     expect(screen.getByRole('menuitem', { name: /Record.*ON/ })).toBeInTheDocument()
   })
 
   it('reports record OFF when the stream is not recording', async () => {
-    await openMenu(false)
+    await openMenu('off')
 
     expect(screen.getByRole('menuitem', { name: /Record.*OFF/ })).toBeInTheDocument()
+  })
+
+  // Flipping a state we couldn't read would be a guess at what it's flipping —
+  // and the guess that turns recording off is the expensive one.
+  it('says so and offers no flip when the record state is unknown', async () => {
+    await openMenu('unknown')
+
+    const item = screen.getByRole('menuitem', { name: /Record.*UNKNOWN/ })
+    expect(item).toHaveAttribute('aria-disabled', 'true')
   })
 
   // Every source protocol disabled leaves nothing to copy — offering the action
   // would put an empty clipboard behind a success toast.
   it('disables Copy publish URLs when the server serves no publish protocol', async () => {
-    await openMenu(false, [])
+    await openMenu('off', [])
 
     expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
       .toHaveAttribute('aria-disabled', 'true')
   })
 
   it('offers Copy publish URLs when the server serves one', async () => {
-    await openMenu(false, [{ protocol: 'RTSP', prefix: 'rtsp://cam.lan:8554/' }])
+    await openMenu('off', [{ protocol: 'RTSP', prefix: 'rtsp://cam.lan:8554/' }])
 
     expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
       .not
@@ -100,7 +110,7 @@ describe('menu actions reach the API', () => {
   // Writes this stream's own override and nothing else: patching path defaults
   // would start or stop recording for every stream on the server (ADR 0002).
   it('toggles record by writing only this stream\'s override', async () => {
-    const view = await openMenu(false)
+    const view = await openMenu('off')
 
     await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
 
@@ -110,7 +120,7 @@ describe('menu actions reach the API', () => {
   })
 
   it('turns record off from an on state', async () => {
-    const view = await openMenu(true)
+    const view = await openMenu('on')
 
     await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
 

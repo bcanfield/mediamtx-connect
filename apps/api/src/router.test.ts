@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
 import { mediaMtxApi } from './mediamtx'
+import { latestScreenshotMtimeFor } from './recordings-fs'
 import { router } from './router'
 
 // Factories (not automock) so the real modules never load — config-store pulls in
@@ -14,6 +15,12 @@ vi.mock('./logger', () => ({
 }))
 vi.mock('./mediamtx', () => ({ mediaMtxApi: vi.fn() }))
 vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
+// The real module, with the snapshot read swappable: one test needs it to fail
+// the way a disk fault would.
+vi.mock('./recordings-fs', async importActual => {
+  const actual = await importActual<typeof import('./recordings-fs')>()
+  return { ...actual, latestScreenshotMtimeFor: vi.fn(actual.latestScreenshotMtimeFor) }
+})
 
 const CONFIG = {
   mediaMtxUrl: 'http://127.0.0.1',
@@ -54,9 +61,9 @@ describe('streams.list record state', () => {
 
     const state = await call(router.streams.list, undefined as never)
 
-    expect(state.status === 'connected' && state.streams.map(s => ({ name: s.name, recording: s.recording }))).toEqual([
-      { name: 'stream1', recording: true },
-      { name: 'stream2', recording: true },
+    expect(state.status === 'connected' && state.streams.map(s => ({ name: s.name, recordState: s.recordState }))).toEqual([
+      { name: 'stream1', recordState: 'on' },
+      { name: 'stream2', recordState: 'on' },
     ])
   })
 
@@ -82,7 +89,52 @@ describe('streams.list record state', () => {
 
     const state = await call(router.streams.list, undefined as never)
 
-    expect(state.status === 'connected' && state.streams.map(s => s.recording)).toEqual([true, false])
+    expect(state.status === 'connected' && state.streams.map(s => s.recordState)).toEqual(['on', 'off'])
+  })
+
+  // "Couldn't read the entry" is not "not recording": the entry can 404 because
+  // it was deleted between the paths list and this read, while MediaMTX keeps
+  // writing files for the path.
+  it('reports record state as unknown when the config entry is gone', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1') })
+    api.configPathGet.mockResolvedValue(null)
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status === 'connected' && state.streams[0]?.recordState).toBe('unknown')
+  })
+
+  it('reports record state as unknown when the config read fails', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1') })
+    api.configPathGet.mockRejectedValue(new Error('MediaMTX GET /config/paths/get/all_others responded 500'))
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status === 'connected' && state.streams[0]?.recordState).toBe('unknown')
+  })
+
+  // One flaky config read used to blank the whole grid to "Can't reach
+  // MediaMTX" even though paths/list and the global conf both answered.
+  it('still lists the streams paths/list returned when a config read fails', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1', 'stream2') })
+    api.configPathGet.mockRejectedValue(new Error('MediaMTX GET /config/paths/get/all_others responded 500'))
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state.status).toBe('connected')
+    expect(state.status === 'connected' && state.streams.map(s => s.name)).toEqual(['stream1', 'stream2'])
+  })
+
+  it('reports an unreachable MediaMTX when the paths list itself fails', async () => {
+    api.pathsList.mockRejectedValue(new Error('fetch failed'))
+
+    const state = await call(router.streams.list, undefined as never)
+
+    expect(state).toEqual({
+      status: 'connection-error',
+      mediaMtxUrl: CONFIG.mediaMtxUrl,
+      mediaMtxApiPort: CONFIG.mediaMtxApiPort,
+    })
   })
 })
 
@@ -152,5 +204,18 @@ describe('streams.list card metadata', () => {
     const state = await call(router.streams.list, undefined as never)
 
     expect(state.status === 'connected' && state.streams[0]?.snapshotMtime).toBeNull()
+  })
+
+  // Snapshot mtimes come off our own disk. A screenshots directory that went
+  // unreadable is a local fault and has to surface as one — reporting it as
+  // "Can't reach MediaMTX" points the operator at a healthy server.
+  it('does not blame MediaMTX when reading a snapshot mtime fails', async () => {
+    api.pathsList.mockResolvedValue({ items: wildcardPaths('stream1') })
+    vi.mocked(latestScreenshotMtimeFor).mockImplementation(() => {
+      throw new Error('EIO: i/o error, stat')
+    })
+
+    // Rejects rather than resolving: `connection-error` is reserved for MediaMTX.
+    await expect(call(router.streams.list, undefined as never)).rejects.toThrow()
   })
 })
