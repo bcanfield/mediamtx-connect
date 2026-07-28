@@ -27,6 +27,7 @@ pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), H
 | API shapes (oRPC contract + Zod schemas — the only place they are defined) | `packages/contract/src/index.ts` |
 | App settings store (JSON file, no database) | `apps/api/src/config-store.ts` |
 | i18n policy and "add a language" workflow | `docs/I18N.md` |
+| Responsive breakpoint policy (supported viewport range, which Tailwind breakpoints are in use) | `docs/RESPONSIVE.md` |
 
 ## Code rules
 
