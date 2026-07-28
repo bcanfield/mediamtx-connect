@@ -8,10 +8,10 @@ export function RecordingsIndexEmpty() {
   return (
     <div className="mx-auto my-14 flex w-full max-w-md flex-col items-center gap-4 rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
       <div className="space-y-1.5">
-        <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+        <h2 className="text-section font-semibold tracking-title">
           {t('noRecordingsTitle')}
         </h2>
-        <p className="text-[12px] text-muted-foreground">{t('noRecordingsLead')}</p>
+        <p className="text-lead text-muted-foreground">{t('noRecordingsLead')}</p>
       </div>
       <Button asChild size="sm">
         <Link href="/config/mediamtx/path-defaults">{t('enableRecording')}</Link>

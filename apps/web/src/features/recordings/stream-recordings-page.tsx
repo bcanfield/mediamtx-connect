@@ -64,7 +64,7 @@ export function StreamRecordingsPage({
   return (
     <PageLayout width="reading">
       <Breadcrumb>
-        <BreadcrumbList className="text-[12px]">
+        <BreadcrumbList className="text-lead">
           <BreadcrumbItem>
             <BreadcrumbLink href="/recordings">{t('crumbRecordings')}</BreadcrumbLink>
           </BreadcrumbItem>
@@ -76,9 +76,9 @@ export function StreamRecordingsPage({
       </Breadcrumb>
 
       <header className="space-y-1">
-        <h1 className="text-xl font-semibold tracking-[-0.02em]">{streamName}</h1>
+        <h1 className="text-xl font-semibold tracking-title">{streamName}</h1>
         {recordingsQuery.isSuccess && (
-          <p className="text-[13px] text-muted-foreground">
+          <p className="text-control text-muted-foreground">
             {t('detail.totals', { count: totalCount })}
           </p>
         )}
@@ -98,7 +98,7 @@ export function StreamRecordingsPage({
             <>
               {groups.map(group => (
                 <section key={group.key} className="flex flex-col gap-2.5">
-                  <h2 className="border-b border-border-subtle pb-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.07em] text-faint">
+                  <h2 className="border-b border-border-subtle pb-2 font-mono text-label font-medium uppercase tracking-[0.07em] text-faint">
                     {group.label}
                   </h2>
                   <div className="flex flex-col gap-2.5">
@@ -194,7 +194,7 @@ function PaginationBar({
       aria-label={t('aria')}
       className="flex flex-wrap items-center justify-between gap-3 pt-1"
     >
-      <p className="font-mono text-[11px] text-mute">
+      <p className="font-mono text-status text-mute">
         {t('showing', { from, to, total: totalCount })}
       </p>
 
@@ -215,7 +215,7 @@ function PaginationBar({
           item === 'ellipsis'
             ? (
                 // eslint-disable-next-line react/no-array-index-key
-                <span key={`e${i}`} aria-hidden className="px-1 text-[12px] text-faint">
+                <span key={`e${i}`} aria-hidden className="px-1 text-lead text-faint">
                   …
                 </span>
               )
@@ -226,7 +226,7 @@ function PaginationBar({
                   aria-current={item === currentPage ? 'page' : undefined}
                   onClick={() => goTo(item)}
                   className={cn(
-                    'h-7 min-w-7 rounded-md px-1.5 text-[12.5px] tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+                    'h-7 min-w-7 rounded-md px-1.5 text-row tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
                     item === currentPage
                       ? 'bg-accent font-medium text-foreground'
                       : 'text-mute hover:text-foreground',

@@ -67,7 +67,7 @@ export function ServerUnreachablePanel({
         </div>
       )}
     >
-      <p aria-live="polite" className="font-mono text-[10.5px] text-faint">
+      <p aria-live="polite" className="font-mono text-label text-faint">
         {t('retryCountdown', { seconds })}
       </p>
     </StatusPanel>
@@ -80,15 +80,15 @@ export function ZeroStreamsPanel({ targets }: { targets: PublishTarget[] }) {
   return (
     <div className="mx-auto my-14 flex w-full max-w-lg flex-col items-center gap-5 rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
       <div className="space-y-1.5">
-        <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+        <h2 className="text-section font-semibold tracking-title">
           {t('noStreamsTitle')}
         </h2>
-        <p className="text-[12px] text-muted-foreground">{t('noStreamsLead')}</p>
+        <p className="text-lead text-muted-foreground">{t('noStreamsLead')}</p>
       </div>
       {/* A server with every source protocol disabled has no URL to hint at —
           show no well rather than an empty one. */}
       {targets.length > 0 && (
-        <div className="flex w-full flex-col gap-1.5 overflow-x-auto rounded-md border bg-card p-3.5 text-left font-mono text-[11.5px] text-muted-foreground">
+        <div className="flex w-full flex-col gap-1.5 overflow-x-auto rounded-md border bg-card p-3.5 text-left font-mono text-meta text-muted-foreground">
           {targets.map(target => (
             <span key={target.protocol} className="whitespace-nowrap">
               {target.prefix}

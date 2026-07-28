@@ -66,9 +66,9 @@ export function StatusPanel({
         <div className="flex min-w-0 items-center gap-3">
           <span aria-hidden className={dotVariants({ tone })} />
           <div className="min-w-0">
-            <p className="text-[13px] font-medium">{title}</p>
+            <p className="text-control font-medium">{title}</p>
             {description && (
-              <p className="truncate text-[11.5px] text-muted-foreground">{description}</p>
+              <p className="truncate text-meta text-muted-foreground">{description}</p>
             )}
           </div>
         </div>
@@ -82,9 +82,9 @@ export function StatusPanel({
     <div className={cn(statusPanelVariants({ tone, layout }), className)}>
       {icon && <span className={iconCircleVariants({ tone })}>{icon}</span>}
       <div className="space-y-1.5">
-        <h2 className="text-[15px] font-semibold tracking-[-0.02em]">{title}</h2>
+        <h2 className="text-section font-semibold tracking-title">{title}</h2>
         {description && (
-          <p className="text-[12px] text-muted-foreground">{description}</p>
+          <p className="text-lead text-muted-foreground">{description}</p>
         )}
       </div>
       {action}

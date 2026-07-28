@@ -32,14 +32,14 @@ export function SaveBar({
     >
       <div className="flex min-w-0 flex-wrap items-center gap-2">
         <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-warning" />
-        <span className="text-[13px] text-muted-foreground">{summary}</span>
+        <span className="text-control text-muted-foreground">{summary}</span>
         {chips.length > 0 && (
           <span className="flex flex-wrap items-center gap-1">
             {chips.map(chip => (
               <span
                 key={chip.key}
                 className={cn(
-                  'inline-flex items-center gap-1 rounded-full bg-accent px-2 py-0.5 font-mono text-[10.5px]',
+                  'inline-flex items-center gap-1 rounded-full bg-accent px-2 py-0.5 font-mono text-label',
                   chip.error ? 'text-live-foreground' : 'text-muted-foreground',
                 )}
               >
