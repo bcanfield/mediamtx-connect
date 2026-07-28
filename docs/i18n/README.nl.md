@@ -51,15 +51,20 @@
 
 ## Hoe uitvoeren
 
+Images worden gepubliceerd voor zowel `linux/amd64` als `linux/arm64` (Raspberry Pi, Apple Silicon, enz.) — Docker haalt automatisch de juiste op.
+
 Heb je MediaMTX al draaien? Zet Connect ernaast:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /pad/naar/opnames:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` is het adres waarop Connect de API van MediaMTX bereikt vanuit *binnen* zijn container. De standaardwaarde is `http://mediamtx`, die alleen te resolven is op het netwerk van de meegeleverde compose — stel hem voor een losse `docker run` in op je MediaMTX-host (je kunt hem later ook wijzigen onder **Config**).
 
 Nog geen MediaMTX? De meegeleverde compose start beide:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Open http://localhost:3000, ga naar **Config** en richt het op je MediaMTX.
 
 > Connect heeft `api: yes` nodig in je `mediamtx.yml`. Zie [het meegeleverde bestand](../../mediamtx.yml) als werkende referentie.
+
+### Configuratie
+
+Alles is tijdens runtime instelbaar onder **Config**. Deze omgevingsvariabelen worden alleen bij de eerste start gebruikt:
+
+| Variabele | Standaard | Doel |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX API-host, bereikbaar vanuit de container van Connect |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API-poort |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Hostpad dat wordt gemount voor opnames (alleen compose; optioneel — valt terug op de standaardwaarde als het niet is ingesteld) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Waar gegenereerde schermafbeeldingen worden opgeslagen |
 
 ## Documentatie
 

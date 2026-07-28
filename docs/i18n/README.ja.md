@@ -51,15 +51,20 @@
 
 ## 実行方法
 
+イメージは `linux/amd64` と `linux/arm64`(Raspberry Pi、Apple Silicon など)の両方で公開されています。Docker が適切なものを自動的に取得します。
+
 すでに MediaMTX を稼働させていますか?隣に Connect を立ち上げてください:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` は、Connect がコンテナの*内側*から MediaMTX の API に到達するためのアドレスです。既定値は `http://mediamtx` で、同梱の compose ネットワーク上でしか解決できません。単体の `docker run` の場合は、ご自身の MediaMTX ホストを指定してください(あとから **Config** で変更することもできます)。
 
 MediaMTX をまだ用意していない場合、同梱の compose で両方を起動できます:
 
@@ -72,6 +77,17 @@ docker compose up -d
 http://localhost:3000 を開き、**Config** で MediaMTX を指定してください。
 
 > Connect には `mediamtx.yml` の `api: yes` が必要です。動作するリファレンスとして[同梱ファイル](../../mediamtx.yml)を参照してください。
+
+### 設定
+
+すべて **Config** から実行時に設定できます。これらの環境変数は初回起動時の初期値を与えるだけです:
+
+| 変数 | 既定値 | 用途 |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Connect のコンテナから到達できる MediaMTX API のホスト |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX API のポート |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | 録画用にマウントするホスト側のパス(compose のみ。省略可 — 未設定なら既定値) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | 生成されたスクリーンショットの保存先 |
 
 ## ドキュメント
 

@@ -51,15 +51,20 @@
 
 ## Suoritustapa
 
+Kuvat julkaistaan sekä `linux/amd64`- että `linux/arm64`-arkkitehtuureille (Raspberry Pi, Apple Silicon jne.) — Docker hakee automaattisesti oikean.
+
 Onko MediaMTX jo käynnissä? Asenna Connect sen rinnalle:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /polku/tallenteisiin:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` kertoo, mistä Connect tavoittaa MediaMTX:n API:n konttinsa *sisältä*. Oletusarvo on `http://mediamtx`, joka toimii vain mukana toimitetussa compose-verkossa — erillisessä `docker run` -komennossa aseta siihen oman MediaMTX-koneesi osoite (voit vaihtaa sen myöhemmin myös **Config**issa).
 
 Eikö MediaMTX:ää vielä ole? Mukana toimitettu compose käynnistää molemmat:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Avaa http://localhost:3000, mene **Config**iin ja osoita se MediaMTX:ään.
 
 > Connect tarvitsee `api: yes` -asetuksen `mediamtx.yml`-tiedostossasi. Katso [mukana toimitettu tiedosto](../../mediamtx.yml) toimivana viitteenä.
+
+### Asetukset
+
+Kaikki on määritettävissä ajonaikaisesti **Config**issa. Nämä ympäristömuuttujat vain alustavat ensimmäisen käynnistyksen:
+
+| Muuttuja | Oletus | Tarkoitus |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | MediaMTX:n API-isäntä, tavoitettavissa Connectin kontista |
+| `MEDIAMTX_API_PORT` | `9997` | MediaMTX:n API-portti |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Isäntäkoneen polku, joka liitetään tallenteita varten (vain compose; valinnainen — käytetään oletusta, jos ei asetettu) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Minne luodut kuvakaappaukset tallennetaan |
 
 ## Dokumentaatio
 

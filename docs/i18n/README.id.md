@@ -51,15 +51,20 @@
 
 ## Cara menjalankan
 
+Image diterbitkan untuk `linux/amd64` maupun `linux/arm64` (Raspberry Pi, Apple Silicon, dll.) — Docker mengunduh yang sesuai secara otomatis.
+
 Sudah menjalankan MediaMTX? Tambahkan Connect di sampingnya:
 
 ```bash
 docker run -d \
   -p 3000:3000 \
+  -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
   -v /jalur/ke/rekaman:/recordings \
   -v mediamtx-connect-data:/data \
   bcanfield/mediamtx-connect:latest
 ```
+
+`BACKEND_SERVER_MEDIAMTX_URL` adalah alamat tempat Connect menjangkau API MediaMTX dari *dalam* kontainernya. Nilai bawaannya `http://mediamtx`, yang hanya bisa diselesaikan di jaringan compose bawaan — untuk `docker run` mandiri, arahkan ke host MediaMTX Anda (Anda juga bisa mengubahnya nanti di **Config**).
 
 Belum punya MediaMTX? Compose yang disertakan menjalankan keduanya:
 
@@ -72,6 +77,17 @@ docker compose up -d
 Buka http://localhost:3000, ke **Config**, dan arahkan ke MediaMTX Anda.
 
 > Connect membutuhkan `api: yes` di `mediamtx.yml` Anda. Lihat [file yang disertakan](../../mediamtx.yml) sebagai referensi yang berfungsi.
+
+### Konfigurasi
+
+Semuanya dapat dikonfigurasi saat aplikasi berjalan di **Config**. Variabel lingkungan ini hanya dipakai pada boot pertama:
+
+| Variabel | Bawaan | Kegunaan |
+|----------|---------|---------|
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Host API MediaMTX, yang dapat dijangkau dari kontainer Connect |
+| `MEDIAMTX_API_PORT` | `9997` | Port API MediaMTX |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Jalur host yang di-mount untuk rekaman (hanya compose; opsional — memakai nilai bawaan jika tidak diatur) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Tempat penyimpanan tangkapan layar yang dihasilkan |
 
 ## Dokumentasi
 
