@@ -72,3 +72,7 @@ this layout.
 - A contract change is a breaking change for both apps at once — update
   contract, api handler, and web usage in the same commit. Typecheck enforces
   this.
+- PR titles are conventional commits (`fix(streams): ...`) — `main` is
+  squash-merged, so the title is the commit subject semantic-release reads. A
+  non-conventional title drops the change out of the next release; CI checks
+  the format. Details in `CONTRIBUTING.md`.
