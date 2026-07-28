@@ -17,7 +17,7 @@ vi.mock('./mediamtx', () => ({ mediaMtxApi: vi.fn() }))
 vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
 // The real module, with the snapshot read swappable: one test needs it to fail
 // the way a disk fault would.
-vi.mock('./recordings-fs', async importActual => {
+vi.mock('./recordings-fs', async (importActual) => {
   const actual = await importActual<typeof import('./recordings-fs')>()
   return { ...actual, latestScreenshotMtimeFor: vi.fn(actual.latestScreenshotMtimeFor) }
 })
