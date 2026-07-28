@@ -27,7 +27,8 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "semanticCommitType": "fix"
+      "semanticCommitType": "fix",
+      "dependencyDashboardApproval": true
     },
     {
       "matchManagers": ["github-actions"],
