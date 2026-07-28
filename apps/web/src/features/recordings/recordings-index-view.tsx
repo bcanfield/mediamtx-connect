@@ -40,7 +40,7 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[13px] text-muted-foreground">
+        <p className="text-control text-muted-foreground">
           {t('toolbar.summary', { streams: streams.length, recordings: totalRecordings })}
         </p>
 
@@ -57,7 +57,7 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
           />
           <kbd
             aria-hidden
-            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border bg-muted px-1.5 font-mono text-[10px] text-mute"
+            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border bg-muted px-1.5 font-mono text-micro text-mute"
           >
             /
           </kbd>
@@ -67,10 +67,10 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
       {filtered.length === 0
         ? (
             <div className="mx-auto my-14 w-full max-w-md rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
-              <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+              <h2 className="text-section font-semibold tracking-title">
                 {t('empty.noMatchingTitle')}
               </h2>
-              <p className="mt-1.5 text-[12px] text-muted-foreground">
+              <p className="mt-1.5 text-lead text-muted-foreground">
                 {t('empty.noMatchingDescription', { query })}
               </p>
             </div>
@@ -117,7 +117,7 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
             )}
 
         {stream.latestMtime && (
-          <span className="absolute right-2.5 top-2.5 rounded-full bg-black/75 px-2 py-0.5 font-mono text-[10px] text-white/80">
+          <span className="absolute right-2.5 top-2.5 rounded-full bg-black/75 px-2 py-0.5 font-mono text-micro text-white/80">
             {format.dateTime(stream.latestMtime, {
               hour: '2-digit',
               minute: '2-digit',
@@ -126,16 +126,16 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
           </span>
         )}
 
-        <span className="absolute bottom-2.5 left-2.5 rounded-sm bg-white/10 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.06em] text-white/80">
+        <span className="absolute bottom-2.5 left-2.5 rounded-sm bg-white/10 px-1.5 py-0.5 font-mono text-micro uppercase tracking-[0.06em] text-white/80">
           {t('recordingsChip', { count: stream.count })}
         </span>
       </AspectRatio>
 
       <div className="flex items-center justify-between gap-2 px-3 py-2.5">
         <div className="min-w-0">
-          <p className="truncate text-[13.5px] font-medium">{stream.name}</p>
+          <p className="truncate text-body font-medium">{stream.name}</p>
           {stream.latestMtime && (
-            <p className="truncate text-[11.5px] text-mute">
+            <p className="truncate text-meta text-mute">
               {t('latest', { time: format.relativeTime(stream.latestMtime, now) })}
             </p>
           )}

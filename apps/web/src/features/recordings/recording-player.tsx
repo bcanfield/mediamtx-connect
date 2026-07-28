@@ -66,7 +66,7 @@ export function RecordingPlayer({ src }: { src: string }) {
             ? <Pause aria-hidden className="size-3.5 fill-current" />
             : <Play aria-hidden className="size-3.5 fill-current" />}
         </Button>
-        <span className="font-mono text-[10.5px] tabular-nums text-white/70">
+        <span className="font-mono text-label tabular-nums text-white/70">
           {formatClock(currentTime)}
         </span>
         <Slider.Root
@@ -82,7 +82,7 @@ export function RecordingPlayer({ src }: { src: string }) {
           </Slider.Track>
           <Slider.Thumb className="block size-3 rounded-full bg-white shadow focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" />
         </Slider.Root>
-        <span className="font-mono text-[10.5px] tabular-nums text-white/70">
+        <span className="font-mono text-label tabular-nums text-white/70">
           {formatClock(duration)}
         </span>
       </div>

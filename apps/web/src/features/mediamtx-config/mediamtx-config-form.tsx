@@ -175,7 +175,7 @@ function SectionRail<T extends FieldValues>({
             type="button"
             onClick={() => scrollTo(`mtx-${section.id}`)}
             className={cn(
-              'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-[12px] transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+              'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-lead transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
               activeId === `mtx-${section.id}`
                 ? 'border-transparent bg-accent font-medium text-foreground'
                 : 'text-mute hover:text-foreground',
@@ -192,7 +192,7 @@ function SectionRail<T extends FieldValues>({
 
   return (
     <aside className="sticky top-28 hidden w-50 shrink-0 self-start lg:block">
-      <p className="mb-2 px-2.5 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-faint">
+      <p className="mb-2 px-2.5 font-mono text-micro font-medium uppercase tracking-[0.08em] text-faint">
         {t('rail.onThisPage')}
       </p>
       <nav aria-label={t('rail.aria')} className="flex flex-col gap-0.5">
@@ -202,7 +202,7 @@ function SectionRail<T extends FieldValues>({
             type="button"
             onClick={() => scrollTo(`mtx-${section.id}`)}
             className={cn(
-              'flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5 text-left text-[12.5px] transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+              'flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5 text-left text-row transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
               activeId === `mtx-${section.id}`
                 ? 'bg-accent font-medium text-foreground'
                 : 'text-mute hover:text-foreground',
@@ -221,7 +221,7 @@ function SectionRail<T extends FieldValues>({
 
 function RailErrorBadge({ count }: { count: number }) {
   return (
-    <span className="rounded-full bg-destructive px-1.5 py-px font-mono text-[10px] font-medium text-destructive-foreground">
+    <span className="rounded-full bg-destructive px-1.5 py-px font-mono text-micro font-medium text-destructive-foreground">
       {count}
     </span>
   )
@@ -230,7 +230,7 @@ function RailErrorBadge({ count }: { count: number }) {
 function RailOffLabel() {
   const t = useTranslations('Config.mediamtxForm')
   return (
-    <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-faint">
+    <span className="font-mono text-micro uppercase tracking-[0.06em] text-faint">
       {t('off')}
     </span>
   )
@@ -256,10 +256,10 @@ function ConfigSection<T extends FieldValues>({
         )}
       >
         <div className="min-w-0">
-          <h2 className="text-[15px] font-semibold tracking-[-0.02em]">
+          <h2 className="text-section font-semibold tracking-title">
             {t(`sectionTitles.${section.id}`)}
           </h2>
-          <p className="mt-0.5 text-[11.5px] text-muted-foreground">
+          <p className="mt-0.5 text-meta text-muted-foreground">
             {t(`sectionDescriptions.${section.id}`)}
           </p>
         </div>
@@ -270,7 +270,7 @@ function ConfigSection<T extends FieldValues>({
       </header>
 
       {section.warnsOnSave && (
-        <p className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-[11.5px] text-muted-foreground">
+        <p className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
           <TriangleAlertIcon aria-hidden className="mt-px size-3.5 shrink-0 text-warning" />
           {t(`sectionWarnings.${section.id}`)}
         </p>
@@ -278,7 +278,7 @@ function ConfigSection<T extends FieldValues>({
 
       {isOff
         ? (
-            <p className="py-3.5 font-mono text-[11px] text-faint">
+            <p className="py-3.5 font-mono text-status text-faint">
               {t('hiddenWhileOff', { count: section.fields.length + (section.hasIceServers ? 1 : 0) })}
             </p>
           )
@@ -325,7 +325,7 @@ function SectionEnableSwitch<T extends FieldValues>({
         <span className="flex shrink-0 items-center gap-2.5">
           <span
             className={cn(
-              'font-mono text-[10px] font-medium uppercase tracking-[0.07em]',
+              'font-mono text-micro font-medium uppercase tracking-[0.07em]',
               field.value === false ? 'text-faint' : 'text-link',
             )}
           >

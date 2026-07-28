@@ -13,7 +13,7 @@ export function ConnectionStatus() {
   return (
     <span
       aria-live="polite"
-      className="hidden items-center gap-2 font-mono text-[11px] text-mute sm:inline-flex"
+      className="hidden items-center gap-2 font-mono text-status text-mute sm:inline-flex"
     >
       <span
         aria-hidden

@@ -25,7 +25,7 @@ const monoInput = 'h-9.5 font-mono'
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="border-b border-border-subtle pb-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.07em] text-faint">
+    <h2 className="border-b border-border-subtle pb-2 font-mono text-label font-medium uppercase tracking-[0.07em] text-faint">
       {children}
     </h2>
   )
@@ -117,7 +117,7 @@ export function ClientConfigForm({
 
           {/* Hero field (board 2d): required for live playback, amber callout. */}
           <div className="flex flex-col gap-3.5 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.05] to-transparent p-4">
-            <span className="self-start rounded-full border border-warning/40 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.07em] text-warning">
+            <span className="self-start rounded-full border border-warning/40 px-2 py-0.5 font-mono text-micro font-medium uppercase tracking-[0.07em] text-warning">
               {t('playbackBadge')}
             </span>
             <FormField
