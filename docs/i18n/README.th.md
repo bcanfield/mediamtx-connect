@@ -1,10 +1,18 @@
-<h1 align="center">
-  <br>
-  MediaMTX Connect
-  <br>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>MediaMTX Connect</h1>
+
+<p><strong>เว็บ UI สำหรับ <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a></strong><br>
+ดูสตรีมสด เปิดดูไฟล์บันทึก และแก้ค่าคอนฟิกได้ทุกคีย์ — จากเบราว์เซอร์ของคุณ</p>
+
+<p>
+  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect?style=flat-square&label=release" alt="Release"></a>
+  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-amd64%20%7C%20arm64-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
+
+<p>
   🇺🇸 <a href="../../README.md">English</a> •
   🇪🇸 <a href="./README.es.md">Español</a> •
   🇨🇳 <a href="./README.zh.md">中文</a> •
@@ -37,23 +45,21 @@
   🇧🇩 <a href="./README.bn.md">বাংলা</a>
 </p>
 
-<h4 align="center">เว็บอินเทอร์เฟซสำหรับ <a href="https://github.com/bluenviron/mediamtx" target="_blank">MediaMTX</a> ดูสตรีม เรียกดูการบันทึก และแก้ไขการตั้งค่าจากเบราว์เซอร์ของคุณ</h4>
+<img src="../../.github/assets/demo.gif" alt="MediaMTX Connect — ตารางสตรีมสด ตัวเปิดดูไฟล์บันทึก และตัวแก้ไขคอนฟิก" width="860">
 
-<p align="center">
-  <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?label=CI" alt="CI"></a>
-  <a href="https://hub.docker.com/r/bcanfield/mediamtx-connect"><img src="https://img.shields.io/badge/docker-bcanfield/mediamtx--connect-blue" alt="Docker Hub"></a>
-  <a href="https://github.com/bcanfield/mediamtx-connect/releases"><img src="https://img.shields.io/github/v/release/bcanfield/mediamtx-connect" alt="Release"></a>
-</p>
+</div>
 
-<p align="center">
-  <img src="../../.github/assets/demo.gif" alt="เดโม MediaMTX Connect" width="720">
-</p>
+## นี่คืออะไร
 
-## วิธีรัน
+MediaMTX เป็นสตรีมมิงเซิร์ฟเวอร์ที่ยอดเยี่ยม และมันมาโดยไม่มีหน้าจอใช้งาน Connect คือส่วนหน้าที่ขาดหายไปนั้น: คอนเทนเนอร์เดียวที่คุยกับ API ของ MediaMTX แล้วเปลี่ยนมันให้เป็นกำแพงกล้อง คลังไฟล์บันทึก และตัวแก้ไขคอนฟิก
 
-อิมเมจถูกเผยแพร่ทั้งสำหรับ `linux/amd64` และ `linux/arm64` (Raspberry Pi, Apple Silicon ฯลฯ) — Docker จะดึงตัวที่ถูกต้องให้อัตโนมัติ
+มันเป็นเพื่อนร่วมทาง ไม่ใช่ตัวแทน ทุกหน้าจอวางอยู่บนสิ่งที่ MediaMTX เปิดให้อยู่แล้ว — path หนึ่ง เอนด์พอยต์ API หนึ่ง ฮุก `runOn*` หนึ่ง หรือโปรโตคอลที่มันให้บริการเองอยู่แล้ว Connect ไม่เก็บวิดีโอ ไม่พร็อกซีสื่อ และไม่ใช้ฐานข้อมูล ชี้ไปที่เซิร์ฟเวอร์ที่กำลังทำงานอยู่ก็ใช้ได้เลย
 
-กำลังรัน MediaMTX อยู่แล้วใช่ไหม วาง Connect ไว้ข้าง ๆ:
+## เริ่มใช้อย่างรวดเร็ว
+
+อิมเมจถูกเผยแพร่ทั้งสำหรับ `linux/amd64` และ `linux/arm64` (Raspberry Pi, Apple Silicon และรุ่นใกล้เคียง) Docker จึงดึงตัวที่ถูกต้องให้เอง
+
+**รัน MediaMTX อยู่แล้วใช่ไหม** วาง Connect ไว้ข้าง ๆ ได้เลย:
 
 ```bash
 docker run -d \
@@ -64,9 +70,7 @@ docker run -d \
   bcanfield/mediamtx-connect:latest
 ```
 
-`BACKEND_SERVER_MEDIAMTX_URL` คือที่ที่ Connect ใช้เข้าถึง API ของ MediaMTX จาก*ภายใน*คอนเทนเนอร์ของตัวเอง ค่าเริ่มต้นคือ `http://mediamtx` ซึ่งจะแปลงชื่อได้เฉพาะบนเครือข่าย compose ที่มาด้วยเท่านั้น — สำหรับ `docker run` แบบเดี่ยว ให้ตั้งค่าเป็นโฮสต์ MediaMTX ของคุณ (คุณเปลี่ยนภายหลังได้ที่ **Config** เช่นกัน)
-
-ยังไม่มี MediaMTX? compose ที่มาด้วยจะเริ่มทั้งสองพร้อมกัน:
+**เริ่มจากศูนย์ใช่ไหม** ไฟล์ compose ที่แถมมาจะยกทั้งสองตัวขึ้นให้:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -74,31 +78,85 @@ cd mediamtx-connect
 docker compose up -d
 ```
 
-เปิด http://localhost:3000 ไปที่ **Config** และชี้ไปยัง MediaMTX ของคุณ
+ไม่ว่าทางไหน ให้เปิด <http://localhost:3000>
 
-> Connect ต้องการ `api: yes` ใน `mediamtx.yml` ของคุณ ดู [ไฟล์ที่มาด้วย](../../mediamtx.yml) เป็นข้อมูลอ้างอิงที่ใช้งานได้
+> [!IMPORTANT]
+> Connect ต้องการ `api: yes` ใน `mediamtx.yml` ของคุณ — การอ่านและเขียนทั้งหมดวิ่งผ่าน API ตัวนั้น [คอนฟิกที่แถมมา](../../mediamtx.yml) เป็นตัวอย่างที่ใช้งานได้จริง
 
-### การตั้งค่า
+## คุณจะได้อะไร
 
-ทุกอย่างปรับได้ขณะรันที่ **Config** ตัวแปรสภาพแวดล้อมเหล่านี้ใช้กำหนดค่าเริ่มต้นตอนบูตครั้งแรกเท่านั้น:
+### มุมมองสด
 
-| ตัวแปร | ค่าเริ่มต้น | วัตถุประสงค์ |
+ตารางแสดงทุก path ที่ MediaMTX รู้จัก เลือกได้ 2, 3 หรือ 4 คอลัมน์
+
+- **เลือก WebRTC หรือ HLS ได้ทีละการ์ด** `AUTO` เลือก WebRTC ก่อนแล้วถอยไป HLS เงียบ ๆ `LOW-LAT` ยืนยันใช้ WebRTC ส่วน `COMPAT` บังคับ HLS แต่ละการ์ดต่อรองการเชื่อมต่อของตัวเองและรายงานวิธีขนส่งที่ได้มาจริง — ไม่ใช่ตัวที่คุณขอ
+- **มีภาพนิ่งแม้ตอนไม่ได้เล่น** งานเบื้องหลังจะดึงเฟรมจากทุกสตรีม การ์ดที่ไม่ได้เล่นจึงยังเห็นภาพเหตุการณ์ พร้อมอายุของเฟรมบนป้าย ส่วน «ถ่ายภาพนิ่ง» จะดึงให้ทันที
+- **ค่าวัดแบบสด** ป้ายโคเดก จำนวนผู้ชม และเวลาออนไลน์ มาจากรายการ path ตรง ๆ — ไม่มีคำขอเพิ่ม
+- **สถานะการบันทึกที่บอกความจริง** การ์ดจะบอกว่าสตรีมกำลังบันทึก*จริง*หรือไม่ (ค่าทับของตัวมันเองรวมเข้ากับ path defaults ตามที่ MediaMTX ตีความ) และสถานะที่อ่านไม่ได้จะแสดงว่าไม่ทราบ แทนที่จะแสดงว่าปิด
+- **คัดลอก URL สำหรับส่งสตรีม** ปลายทาง RTSP, RTMP และ SRT สร้างจากที่อยู่รับฟังของเซิร์ฟเวอร์เอง พอร์ตที่ถูกเปลี่ยนจึงยังเป็นพอร์ตที่ถูกต้อง
+
+### ไฟล์บันทึก
+
+- ไฟล์ MP4 ของแต่ละสตรีม จัดกลุ่มตามวัน ใหม่สุดก่อน พร้อมภาพย่อที่สร้างอัตโนมัติ
+- ตัวเล่นที่กางออกในตำแหน่งเดิม พร้อมแถบเลื่อนของจริงที่ทำงานบนคำขอ HTTP Range
+- ดาวน์โหลดแบบสตรีม พร้อมความคืบหน้าแบบสด ความเร็ว และปุ่มยกเลิก
+- กด `/` ที่ไหนก็ได้เพื่อกรอง
+
+### ตั้งค่าโดยไม่ต้องเขียน YAML
+
+- **คอนฟิกเซิร์ฟเวอร์ทั้งชุด** — 65 ตัวควบคุมกระจายอยู่ใน Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC และ SRT ทุกตัวมีชนิดข้อมูล มีการตรวจสอบ และมีคำอธิบายในภาษาของคุณ
+- **path defaults และค่าทับรายตัวของแต่ละ path** อยู่บนขอบเขตที่ MediaMTX ให้บริการจริง การบันทึกสตรีมที่ถูกครอบด้วยไวลด์การ์ดจะสร้างรายการแบบเบาบางขึ้นมา คีย์ที่ไม่ได้แตะจึงยังตามค่าเริ่มต้นต่อไป — และ «คืนค่าเป็นสืบทอด» จะย้อนกลับให้
+- **ฮุก path `runOn*` ครบทั้ง 15 ตัว** พร้อมคำเตือนตรงจุดที่การบันทึกจะรีสตาร์ต path
+- **เขียนแบบเบาบาง** Connect ส่ง PATCH เฉพาะคีย์ที่คุณแก้ ส่วนที่มันไม่ได้แสดงจะไม่ถูกแตะต้อง
+
+### ทำมาเพื่อกล่องที่คุณลืมไปได้เลย
+
+โปรเซสเดียวให้บริการทั้ง API, SPA และสื่อ · อิมเมจหลายสถาปัตยกรรม · `GET /health` · ล็อกแบบมีโครงสร้าง · PWA ที่ติดตั้งได้ · ธีมสว่างและมืด · 30 ภาษา · ไม่ต้องใช้ฐานข้อมูล
+
+## ตัวแปรสภาพแวดล้อม
+
+ทุกอย่างตรงนี้แก้ได้ระหว่างทำงานที่ **Config** — ตัวแปรเหล่านี้ใช้ตั้งค่าเริ่มต้นตอนบูตครั้งแรกเท่านั้น
+
+| ตัวแปร | ค่าเริ่มต้น | ใช้ทำอะไร |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | โฮสต์ API ของ MediaMTX ที่เข้าถึงได้จากคอนเทนเนอร์ของ Connect |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | จุดที่ Connect ติดต่อ API ของ MediaMTX จาก*ภายใน*คอนเทนเนอร์ของตัวเอง |
 | `MEDIAMTX_API_PORT` | `9997` | พอร์ต API ของ MediaMTX |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | พาธบนโฮสต์ที่เมานต์ไว้สำหรับการบันทึก (เฉพาะ compose; ไม่บังคับ — ใช้ค่าเริ่มต้นหากไม่ได้ตั้ง) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | ที่จัดเก็บภาพหน้าจอที่สร้างขึ้น |
+| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | พาธบนโฮสต์ที่เมานต์ไว้สำหรับไฟล์บันทึก (เฉพาะ compose) |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | ที่เก็บภาพย่อที่ถูกสร้างขึ้น |
+
+ค่าเริ่มต้น `http://mediamtx` จะแปลงชื่อได้เฉพาะในเครือข่ายของ compose ที่แถมมา หากใช้ `docker run` เดี่ยว ๆ ให้ตั้งเป็นโฮสต์ MediaMTX ของคุณ — หรือแก้ทีหลังที่ **Config** โดยไม่ต้องรีสตาร์ต
+
+## ทำงานอย่างไร
+
+```
+Browser ──HLS / WebRTC (WHEP)──────────────────────────┐
+   │                                                   │
+   │ oRPC (typed)                                      ▼
+   ▼                                              ┌──────────┐
+┌─────────────────────┐    MediaMTX HTTP API      │ MediaMTX │
+│ mediamtx-connect    │ ────────────────────────▶ │  server  │
+│ Hono API + React SPA│                           └──────────┘
+└─────────────────────┘                                │
+   │ reads                                             │ writes
+   ▼                                                   ▼
+recordings/ + screenshots/  ◀────────────────────  MP4 segments
+```
+
+การเล่นวิ่งจากเบราว์เซอร์ไปยัง MediaMTX โดยตรง Connect ขนแค่ JSON บวกกับไฟล์บันทึกและภาพย่อที่มันอ่านจากดิสก์
 
 ## เอกสาร
 
-[สถาปัตยกรรม](../../ARCHITECTURE.md) · [ฟีเจอร์](../../docs/FEATURES.md) · [การมีส่วนร่วม](../../CONTRIBUTING.md)
+| | |
+|---|---|
+| [ความสามารถ](../FEATURES.md) | ทุกความสามารถ เส้นทาง และโพรซีเยอร์ที่ปล่อยแล้ว |
+| [สถาปัตยกรรม](../../ARCHITECTURE.md) | ชิ้นส่วนต่าง ๆ ประกอบกันอย่างไร |
+| [ร่วมพัฒนา](../../CONTRIBUTING.md) | การตั้งค่าเครื่องพัฒนา สคริปต์ และขั้นตอน PR |
+| [ตัวอย่าง](../../examples/) | กล้อง Raspberry Pi และสตรีมจำลองสำหรับทดสอบ |
 
-> หมายเหตุ: เอกสารสำหรับนักพัฒนาจะดูแลเป็นภาษาอังกฤษเท่านั้น UI ของแอปพลิเคชันมีให้บริการเป็นภาษาไทยที่ `/th`
+## ร่วมพัฒนา
 
-## จรรยาบรรณ
+ยินดีรับทั้ง issue และ PR คำสั่ง `pnpm install && pnpm dev` จะยกสแตกทั้งชุดพร้อมข้อมูลตัวอย่างให้ — อ่านรายละเอียดที่เหลือได้ใน [CONTRIBUTING.md](../../CONTRIBUTING.md) และโปรดทราบว่าหัวข้อ PR ใช้รูปแบบ [conventional commits](../../CONTRIBUTING.md) โครงการนี้ยึดถือ[หลักปฏิบัติของชุมชน](../../CODE_OF_CONDUCT.md)
 
-โปรเจกต์นี้ปฏิบัติตาม[จรรยาบรรณ](../../CODE_OF_CONDUCT.md) การเข้าร่วมหมายถึงคุณต้องปฏิบัติตามนี้
+## สัญญาอนุญาต
 
-## ใบอนุญาต
-
-MIT
+[MIT](../../LICENSE)
