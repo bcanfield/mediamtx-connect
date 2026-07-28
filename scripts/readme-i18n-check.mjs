@@ -30,7 +30,8 @@ function skeleton(markdown) {
       if (openBlock) {
         codeBlocks.push(`${openBlock.lang}:${openBlock.lines}`)
         openBlock = null
-      } else {
+      }
+      else {
         openBlock = { lang: line.slice(3).trim(), lines: 0 }
       }
       continue
@@ -40,7 +41,8 @@ function skeleton(markdown) {
       continue
     }
     const heading = /^(#{1,6}) /.exec(line)
-    if (heading) headings.push('#'.repeat(heading[1].length))
+    if (heading)
+      headings.push('#'.repeat(heading[1].length))
     for (const [, literal] of line.matchAll(/`([^`]+)`/g)) literals.add(literal)
   }
 
