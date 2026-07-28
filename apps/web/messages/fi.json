@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Polun asetukset · {name}",
       "pageSubHeader": "Tämän lähetyksen asetukset, tallennetaan palvelimelle.",
-      "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat."
+      "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat.",
+      "revert": {
+        "action": "Palauta perittyihin",
+        "confirmTitle": "Palautetaanko {name} perittyihin asetuksiin?",
+        "confirmDescription": "Tämä poistaa polun oman asetusmerkinnän. Jokainen sen ohittama arvo periytyy taas, ja ohitukset menetetään.",
+        "cancel": "Peruuta",
+        "confirm": "Palauta",
+        "toasts": {
+          "success": "Palautettiin perittyihin asetuksiin",
+          "errorTitle": "Perittyihin asetuksiin ei voitu palata",
+          "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# tallentamaton muutos} other {# tallentamatonta muutosta}}",

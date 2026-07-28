@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Config de ruta · {name}",
       "pageSubHeader": "Ajustes de esta transmisión, guardados en el servidor.",
-      "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado."
+      "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado.",
+      "revert": {
+        "action": "Volver a heredado",
+        "confirmTitle": "¿Volver {name} a los ajustes heredados?",
+        "confirmDescription": "Esto elimina la entrada de configuración propia de la ruta. Cada valor que sobrescribe vuelve a heredarse y las anulaciones se pierden.",
+        "cancel": "Cancelar",
+        "confirm": "Revertir",
+        "toasts": {
+          "success": "Se volvió a los ajustes heredados",
+          "errorTitle": "No se pudo volver a los ajustes heredados",
+          "errorDescription": "La entrada de configuración de la ruta sigue ahí. Inténtalo de nuevo."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# cambio sin guardar} other {# cambios sin guardar}}",

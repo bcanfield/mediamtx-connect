@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Konfiguracja ścieżki · {name}",
       "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",
-      "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono."
+      "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono.",
+      "revert": {
+        "action": "Przywróć dziedziczenie",
+        "confirmTitle": "Przywrócić dla {name} dziedziczone ustawienia?",
+        "confirmDescription": "Spowoduje to usunięcie własnego wpisu konfiguracji ścieżki. Każda nadpisana wartość wróci do dziedziczenia, a nadpisania zostaną utracone.",
+        "cancel": "Anuluj",
+        "confirm": "Przywróć",
+        "toasts": {
+          "success": "Przywrócono dziedziczone ustawienia",
+          "errorTitle": "Nie udało się przywrócić dziedziczonych ustawień",
+          "errorDescription": "Wpis konfiguracji ścieżki nadal istnieje. Spróbuj ponownie."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# niezapisana zmiana} few {# niezapisane zmiany} many {# niezapisanych zmian} other {# niezapisanej zmiany}}",

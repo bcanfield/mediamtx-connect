@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Útvonal-konfiguráció · {name}",
       "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",
-      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül."
+      "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül.",
+      "revert": {
+        "action": "Vissza az örökölthöz",
+        "confirmTitle": "Visszaállítod a(z) {name} elemet az örökölt beállításokra?",
+        "confirmDescription": "Ez törli az útvonal saját konfigurációs bejegyzését. Minden felülírt érték újra öröklődik, a felülírások elvesznek.",
+        "cancel": "Mégse",
+        "confirm": "Visszaállítás",
+        "toasts": {
+          "success": "Visszaállítva az örökölt beállításokra",
+          "errorTitle": "Nem sikerült visszaállni az örökölt beállításokra",
+          "errorDescription": "Az útvonal konfigurációs bejegyzése továbbra is megvan. Próbáld újra."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# mentetlen módosítás} other {# mentetlen módosítás}}",

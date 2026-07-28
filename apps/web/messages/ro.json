@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Configurare cale · {name}",
       "pageSubHeader": "Setările acestui flux, salvate pe server.",
-      "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat."
+      "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat.",
+      "revert": {
+        "action": "Revino la moștenire",
+        "confirmTitle": "Revii {name} la setările moștenite?",
+        "confirmDescription": "Aceasta șterge intrarea de configurare proprie a căii. Fiecare valoare pe care o suprascrie revine la moștenire, iar suprascrierile se pierd.",
+        "cancel": "Anulează",
+        "confirm": "Revino",
+        "toasts": {
+          "success": "S-a revenit la setările moștenite",
+          "errorTitle": "Nu s-a putut reveni la setările moștenite",
+          "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modificare nesalvată} few {# modificări nesalvate} other {# de modificări nesalvate}}",
