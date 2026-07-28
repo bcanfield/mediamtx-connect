@@ -35,7 +35,7 @@ export function AppHeader() {
         <Link href="/" className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden
-            className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-foreground font-mono text-[13px] font-semibold text-background"
+            className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-foreground font-mono text-control font-semibold text-background"
           >
             {t('logoMark')}
           </span>
@@ -68,7 +68,7 @@ export function AppHeader() {
                 href={tab.href}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'flex h-11 items-center gap-1.5 whitespace-nowrap border-b-2 px-0.5 text-[13px] transition-colors',
+                  'flex h-11 items-center gap-1.5 whitespace-nowrap border-b-2 px-0.5 text-control transition-colors',
                   active
                     ? 'border-foreground font-medium text-foreground'
                     : 'border-transparent font-normal text-mute hover:text-foreground',

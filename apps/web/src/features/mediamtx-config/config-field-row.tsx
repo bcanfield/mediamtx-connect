@@ -41,11 +41,11 @@ export function RowShell({
   return (
     <div className="grid grid-cols-1 items-start gap-x-6 gap-y-2 border-b border-border-row py-3.5 last:border-0 sm:grid-cols-[280px_minmax(0,1fr)]">
       <div className="min-w-0">
-        <span className="flex items-center gap-1.5 font-mono text-[13px] font-medium">
+        <span className="flex items-center gap-1.5 font-mono text-control font-medium">
           <span className="truncate">{name}</span>
           {dirty && <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-warning" />}
         </span>
-        {help && <p className="mt-1 text-[11.5px] leading-relaxed text-muted-foreground">{help}</p>}
+        {help && <p className="mt-1 text-meta leading-relaxed text-muted-foreground">{help}</p>}
       </div>
       <div className={cn('flex flex-col gap-1.5', alignEnd && 'items-end')}>{children}</div>
     </div>
@@ -142,7 +142,7 @@ export function ListFieldRow<T extends FieldValues>({
               <Textarea
                 {...field}
                 aria-label={name}
-                className="min-h-16 font-mono text-[13px]"
+                className="min-h-16 font-mono text-control"
                 value={toTextarea(field.value as string[] | undefined)}
                 onChange={e => field.onChange(fromTextarea(e))}
               />

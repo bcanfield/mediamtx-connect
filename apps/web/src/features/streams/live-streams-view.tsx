@@ -24,7 +24,7 @@ const densityClass: Record<Density, string> = {
 
 const segmentedGroup = 'gap-0.5 rounded-md border border-input p-0.5'
 const segmentedItem
-  = 'h-6 min-w-7 rounded-sm px-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.06em] text-mute first:rounded-l-sm last:rounded-r-sm hover:text-foreground data-[state=on]:bg-accent data-[state=on]:text-foreground'
+  = 'h-6 min-w-7 rounded-sm px-2 font-mono text-label font-medium uppercase tracking-[0.06em] text-mute first:rounded-l-sm last:rounded-r-sm hover:text-foreground data-[state=on]:bg-accent data-[state=on]:text-foreground'
 
 export function LiveStreamsView({
   streams,
@@ -70,7 +70,7 @@ export function LiveStreamsView({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[13px] text-muted-foreground">
+        <p className="text-control text-muted-foreground">
           {t('summary', { count: streams.length, live: liveCount })}
         </p>
 

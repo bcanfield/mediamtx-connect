@@ -78,6 +78,19 @@
   --color-border-hover: var(--border-hover);
   --color-surface-raised: var(--surface-raised);
   --shadow-overlay: 0 8px 30px var(--shadow-overlay-color);
+  /* Geist type ramp. Sizes only — no paired --*--line-height, so these keep
+     inheriting line-height exactly like the arbitrary values they replace.
+     Tailwind's own scale (text-sm/lg/xl) is untouched and still in use. */
+  --text-section: 15px; /* section + empty-state headings */
+  --text-body: 13.5px; /* body default; card and row titles */
+  --text-control: 13px; /* buttons, inputs, tabs, supporting prose */
+  --text-row: 12.5px; /* dense rows: section rail, pagination */
+  --text-lead: 12px; /* lead paragraphs, breadcrumbs, chip nav */
+  --text-meta: 11.5px; /* help text, form descriptions, row metadata */
+  --text-status: 11px; /* mono status lines */
+  --text-label: 10.5px; /* uppercase mono eyebrows, timecodes, dirty chips */
+  --text-micro: 10px; /* overlay pills and badges */
+  --tracking-title: -0.02em; /* every heading in the ramp */
   --radius-sm: calc(var(--radius) - 4px);
   /* 10px — status panels, callouts, save bar */
   --radius-panel: calc(var(--radius) + 2px);
@@ -211,9 +224,8 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-body;
     font-variant-numeric: tabular-nums;
-    font-size: 13.5px;
   }
   ::selection {
     background-color: color-mix(in oklch, var(--link) 25%, transparent);
