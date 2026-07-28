@@ -9,7 +9,8 @@ on:
 jobs:
   # Docs-only PRs don't need MediaMTX, Docker, or a browser. Gates only the
   # expensive jobs (E2E, image smoke), and only on pull_request — pushes to
-  # main/beta always run everything so `release` never depends on a skipped job.
+  # main/beta always run everything, because release.yml treats this workflow's
+  # conclusion on main as the "is main shippable" signal.
   # A skipped required check reports success to branch protection; a skipped
   # *workflow* would never report at all, which is why this is a job-level `if`
   # rather than a top-level `paths-ignore`.
@@ -213,30 +214,3 @@ jobs:
       - name: Cleanup
         if: always()
         run: docker rm -f mediamtx-connect-smoke || true
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    needs: [build, test, image-smoke]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    permissions:
-      packages: write
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: pnpm/action-setup@v4
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: pnpm
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: pnpm release
