@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Path Config · {name}",
       "pageSubHeader": "Settings for this stream, saved to the server.",
-      "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed."
+      "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed.",
+      "revert": {
+        "action": "Revert to inherited",
+        "confirmTitle": "Revert {name} to inherited settings?",
+        "confirmDescription": "This deletes the path's own config entry. Every value it overrides goes back to being inherited, and the overrides are lost.",
+        "cancel": "Cancel",
+        "confirm": "Revert",
+        "toasts": {
+          "success": "Reverted to inherited settings",
+          "errorTitle": "Couldn't revert to inherited settings",
+          "errorDescription": "The path config entry is still there. Try again."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",

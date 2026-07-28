@@ -215,6 +215,20 @@ export const router = os.router({
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path config' })
         }
       }),
+
+      // The way back from a materialize: delete the path's own entry and it
+      // tracks its wildcard again. Only offered once the path has one.
+      deletePathConfig: os.config.mediamtx.deletePathConfig.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        logger.info({ path: input.name }, 'Deleting path config entry')
+        try {
+          await mediaMtxApi(config).configPathDelete(input.name)
+        }
+        catch (error) {
+          logger.error({ err: error }, 'Failed to delete path config')
+          throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to delete path config' })
+        }
+      }),
     },
   },
 })

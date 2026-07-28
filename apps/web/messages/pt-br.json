@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Configuração do caminho · {name}",
       "pageSubHeader": "Configurações desta transmissão, salvas no servidor.",
-      "inheritedSubHeader": "Configurações desta transmissão, atualmente herdadas de {confName}. Ao salvar, apenas o que você alterou é substituído."
+      "inheritedSubHeader": "Configurações desta transmissão, atualmente herdadas de {confName}. Ao salvar, apenas o que você alterou é substituído.",
+      "revert": {
+        "action": "Voltar a herdar",
+        "confirmTitle": "Voltar {name} às configurações herdadas?",
+        "confirmDescription": "Isso exclui a entrada de configuração própria do caminho. Cada valor que ela substitui volta a ser herdado, e as substituições são perdidas.",
+        "cancel": "Cancelar",
+        "confirm": "Reverter",
+        "toasts": {
+          "success": "Voltou às configurações herdadas",
+          "errorTitle": "Não foi possível voltar às configurações herdadas",
+          "errorDescription": "A entrada de configuração do caminho ainda está lá. Tente de novo."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# alteração não salva} other {# alterações não salvas}}",

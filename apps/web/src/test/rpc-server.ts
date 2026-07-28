@@ -33,6 +33,9 @@ export interface StubApi {
   streamsList: () => unknown
   snapshot?: (input: Inputs['streams']['snapshot']) => void
   updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void
+  /** The effective config a path resolves to — `{confName, conf}`, or null. */
+  pathConfig?: () => unknown
+  deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
 }
 
 /**
@@ -65,9 +68,14 @@ export function createRpcServer(stub: StubApi) {
         updateGlobal: os.config.mediamtx.updateGlobal.handler(() => {}),
         getPathDefaults: os.config.mediamtx.getPathDefaults.handler(() => null),
         updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(() => {}),
-        getPathConfig: os.config.mediamtx.getPathConfig.handler(() => null),
+        getPathConfig: os.config.mediamtx.getPathConfig.handler(
+          () => (stub.pathConfig?.() ?? null) as never,
+        ),
         updatePathConfig: os.config.mediamtx.updatePathConfig.handler(({ input }) => {
           stub.updatePathConfig?.(input)
+        }),
+        deletePathConfig: os.config.mediamtx.deletePathConfig.handler(({ input }) => {
+          stub.deletePathConfig?.(input)
         }),
       },
     },

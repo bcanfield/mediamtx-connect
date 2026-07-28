@@ -248,6 +248,11 @@ export const contract = {
       updatePathConfig: oc
         .input(z.object({ name: z.string().min(1), conf: PathConfigSchema }))
         .output(z.void()),
+      // Undoes a materialize: with its own entry gone, the path tracks whatever
+      // wildcard entry covers it again.
+      deletePathConfig: oc
+        .input(z.object({ name: z.string().min(1) }))
+        .output(z.void()),
     },
   },
 }

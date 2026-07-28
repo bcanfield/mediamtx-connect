@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Konfigurasi jalur · {name}",
       "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",
-      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah."
+      "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah.",
+      "revert": {
+        "action": "Kembalikan ke warisan",
+        "confirmTitle": "Kembalikan {name} ke pengaturan warisan?",
+        "confirmDescription": "Ini menghapus entri konfigurasi milik jalur itu sendiri. Setiap nilai yang ditimpanya kembali diwarisi, dan penimpaan hilang.",
+        "cancel": "Batal",
+        "confirm": "Kembalikan",
+        "toasts": {
+          "success": "Dikembalikan ke pengaturan warisan",
+          "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
+          "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# perubahan belum disimpan}}",

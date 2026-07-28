@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "パス設定 · {name}",
       "pageSubHeader": "このストリームの設定。サーバーに保存されます。",
-      "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。"
+      "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。",
+      "revert": {
+        "action": "継承に戻す",
+        "confirmTitle": "{name} を継承した設定に戻しますか？",
+        "confirmDescription": "パス自身の設定エントリを削除します。上書きしていた値はすべて継承に戻り、上書き内容は失われます。",
+        "cancel": "キャンセル",
+        "confirm": "戻す",
+        "toasts": {
+          "success": "継承した設定に戻しました",
+          "errorTitle": "継承した設定に戻せませんでした",
+          "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {未保存の変更が # 件}}",

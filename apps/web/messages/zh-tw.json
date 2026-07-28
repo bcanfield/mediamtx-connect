@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "路徑設定 · {name}",
       "pageSubHeader": "此串流的設定，儲存到伺服器。",
-      "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。"
+      "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。",
+      "revert": {
+        "action": "還原為繼承",
+        "confirmTitle": "要將 {name} 還原為繼承的設定嗎？",
+        "confirmDescription": "這會刪除該路徑自己的設定項目。它覆寫的每個值都會回到繼承狀態，覆寫內容將遺失。",
+        "cancel": "取消",
+        "confirm": "還原",
+        "toasts": {
+          "success": "已還原為繼承的設定",
+          "errorTitle": "無法還原為繼承的設定",
+          "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# 個未儲存的變更}}",
