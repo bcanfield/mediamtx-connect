@@ -1,5 +1,6 @@
 import cp from 'node:child_process'
 import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import cron from 'node-cron'
 import { getAppConfig } from './config-store'
@@ -18,12 +19,104 @@ function getFileNamesWithoutExtension(directoryPath: string): string[] {
     .map(file => path.parse(file).name)
 }
 
+// A permit gate over ffmpeg spawns: acquire before spawning, release on exit.
+function createSpawnGate(limit: number) {
+  let active = 0
+  const waiters: Array<() => void> = []
+
+  return {
+    acquire(): Promise<void> {
+      if (active < limit) {
+        active++
+        return Promise.resolve()
+      }
+      return new Promise<void>((resolve) => {
+        waiters.push(resolve)
+      })
+    },
+    release() {
+      // Hand the permit straight to the next waiter rather than decrement then
+      // re-increment, so the count never dips and lets an extra spawn in.
+      const next = waiters.shift()
+      if (next) {
+        next()
+        return
+      }
+      active--
+    },
+    reset() {
+      active = 0
+      waiters.length = 0
+    },
+  }
+}
+
+// One ffmpeg per core, with a floor so a single-core host still overlaps two and
+// a ceiling because anything past 8 at once is reasoned, not measured. A 4-core
+// box — what the old flat 4 assumed — still gets 4
+// (docs/debt/20260717153914-snapshot-cap-untuned.md).
+const maxSpawnsPerJob = Math.min(8, Math.max(2, os.availableParallelism()))
+
+// Snapshot capture: both the 30s cron and the on-demand mutation acquire here,
+// so the cap counts them together — the cron spawns one process per ready stream
+// and a user-triggered capture stacks on top, so a bound covering only one
+// source would not bound the server (ticket 08).
+export const MAX_CONCURRENT_CAPTURES = maxSpawnsPerJob
+const captureGate = createSpawnGate(MAX_CONCURRENT_CAPTURES)
+
+// Recording thumbnails get a sibling gate rather than sharing the capture one: a
+// backlog of hundreds of MP4s is batch work, and queueing it ahead of the live
+// cron and the on-demand snapshot would starve the latency-sensitive spawns.
+export const MAX_CONCURRENT_THUMBNAILS = maxSpawnsPerJob
+const thumbnailGate = createSpawnGate(MAX_CONCURRENT_THUMBNAILS)
+
+// Test-only: the gates are module-level shared state, so a suite that spawns
+// without driving each process to close must reset them between cases.
+export function __resetSpawnGates() {
+  captureGate.reset()
+  thumbnailGate.reset()
+}
+
+// Grab a first-frame thumbnail off one recording. Acquires a permit first and
+// releases it when ffmpeg exits. Never rejects — a failed thumbnail is nothing
+// the caller can act on beyond the log.
+async function generateScreenshot(inputFile: string, outputFile: string): Promise<void> {
+  await thumbnailGate.acquire()
+
+  return new Promise((resolve) => {
+    const proc = cp.spawn('ffmpeg', ['-ss', '00:00:00', '-i', inputFile, '-frames:v', '1', outputFile])
+
+    // A failed spawn fires both 'error' and 'close', so release the permit
+    // exactly once — a double release would over-count the gate and let an extra
+    // ffmpeg past the cap.
+    let settled = false
+    const finish = () => {
+      if (settled)
+        return
+      settled = true
+      thumbnailGate.release()
+      resolve()
+    }
+
+    proc.on('error', (err) => {
+      logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
+      finish()
+    })
+    proc.on('close', () => {
+      logger.info(`Finished generating screenshot ${outputFile}`)
+      finish()
+    })
+  })
+}
+
 // Scan the recordings tree for MP4s without a sibling PNG and spawn ffmpeg to
-// grab a first-frame thumbnail. Non-blocking, parallel.
-async function generateScreenshots() {
+// grab a first-frame thumbnail. Parallel, bounded by the thumbnail gate, so a
+// large backlog runs in waves instead of spawning every ffmpeg at once.
+export async function generateScreenshots() {
   logger.info('Scanning new recordings to generate new screenshots')
   const config = await getAppConfig()
   const streamRecordingDirectories = getSubdirectories(config.recordingsDirectory)
+  const pending: Promise<void>[] = []
 
   for (const subdirectory of streamRecordingDirectories) {
     const streamScreenshotDirectory = path.join(config.screenshotsDirectory, subdirectory)
@@ -41,53 +134,11 @@ async function generateScreenshots() {
     for (const recording of missing) {
       const inputFile = path.join(config.recordingsDirectory, subdirectory, `${recording}.mp4`)
       const outputFile = path.join(streamScreenshotDirectory, `${recording}.png`)
-      const proc = cp.spawn('ffmpeg', ['-ss', '00:00:00', '-i', inputFile, '-frames:v', '1', outputFile])
-      proc.on('error', (err) => {
-        logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
-      })
-      proc.on('close', () => {
-        logger.info(`Finished generating screenshot ${outputFile}`)
-      })
+      pending.push(generateScreenshot(inputFile, outputFile))
     }
   }
-}
 
-// A shared permit gate over ffmpeg snapshot captures. Both the 30s cron and the
-// on-demand mutation acquire here, so the cap counts them together: the cron
-// already spawns one process per ready stream with no cap, and a user-triggered
-// capture stacks on top of that (ticket 08). A bound covering only one source
-// would not bound the server.
-export const MAX_CONCURRENT_CAPTURES = 4
-
-let activeCaptures = 0
-const captureWaiters: Array<() => void> = []
-
-function acquireCaptureSlot(): Promise<void> {
-  if (activeCaptures < MAX_CONCURRENT_CAPTURES) {
-    activeCaptures++
-    return Promise.resolve()
-  }
-  return new Promise((resolve) => {
-    captureWaiters.push(resolve)
-  })
-}
-
-function releaseCaptureSlot() {
-  // Hand the permit straight to the next waiter rather than decrement then
-  // re-increment, so the count never dips and lets an extra capture in.
-  const next = captureWaiters.shift()
-  if (next) {
-    next()
-    return
-  }
-  activeCaptures--
-}
-
-// Test-only: the gate is module-level shared state, so a suite that spawns
-// without driving each capture to close must reset it between cases.
-export function __resetCaptureSlots() {
-  activeCaptures = 0
-  captureWaiters.length = 0
+  await Promise.all(pending)
 }
 
 function rtspUrlFor(mediaMtxUrl: string, rtspAddress: string | undefined, streamName: string): string {
@@ -102,7 +153,7 @@ function rtspUrlFor(mediaMtxUrl: string, rtspAddress: string | undefined, stream
 // Acquires a shared permit first and releases it when ffmpeg exits, so no caller
 // exceeds the concurrency cap. Resolves on success, rejects on failure.
 async function captureFrame(streamName: string, rtspUrl: string, screenshotsDirectory: string): Promise<void> {
-  await acquireCaptureSlot()
+  await captureGate.acquire()
 
   const dir = path.join(screenshotsDirectory, streamName)
   fs.mkdirSync(dir, { recursive: true })
@@ -141,7 +192,7 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
         return
       settled = true
       clearTimeout(killTimer)
-      releaseCaptureSlot()
+      captureGate.release()
       done()
     }
 
