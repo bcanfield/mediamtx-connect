@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Bane-konfigurasjon · {name}",
       "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",
-      "inheritedSubHeader": "Innstillinger for denne strømmen, arves for øyeblikket fra {confName}. Lagring overstyrer bare det du har endret."
+      "inheritedSubHeader": "Innstillinger for denne strømmen, arves for øyeblikket fra {confName}. Lagring overstyrer bare det du har endret.",
+      "revert": {
+        "action": "Tilbake til arvet",
+        "confirmTitle": "Sette {name} tilbake til arvede innstillinger?",
+        "confirmDescription": "Dette sletter banens egen konfigurasjonsoppføring. Hver verdi den overstyrer blir arvet igjen, og overstyringene går tapt.",
+        "cancel": "Avbryt",
+        "confirm": "Tilbakestill",
+        "toasts": {
+          "success": "Tilbake til arvede innstillinger",
+          "errorTitle": "Kunne ikke gå tilbake til arvede innstillinger",
+          "errorDescription": "Banens konfigurasjonsoppføring er der fortsatt. Prøv igjen."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# ulagret endring} other {# ulagrede endringer}}",

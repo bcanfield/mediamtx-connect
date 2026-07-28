@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Cấu hình đường dẫn · {name}",
       "pageSubHeader": "Cài đặt của luồng này, được lưu trên máy chủ.",
-      "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi."
+      "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi.",
+      "revert": {
+        "action": "Trở lại kế thừa",
+        "confirmTitle": "Đưa {name} về các cài đặt kế thừa?",
+        "confirmDescription": "Thao tác này xóa mục cấu hình riêng của đường dẫn. Mọi giá trị nó ghi đè sẽ trở lại kế thừa và các ghi đè sẽ mất.",
+        "cancel": "Hủy",
+        "confirm": "Khôi phục",
+        "toasts": {
+          "success": "Đã trở lại các cài đặt kế thừa",
+          "errorTitle": "Không thể trở lại các cài đặt kế thừa",
+          "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# thay đổi chưa lưu}}",

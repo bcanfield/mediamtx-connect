@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "路径配置 · {name}",
       "pageSubHeader": "该流的设置，保存到服务器。",
-      "inheritedSubHeader": "该流的设置，当前继承自 {confName}。保存时仅覆盖你更改过的项。"
+      "inheritedSubHeader": "该流的设置，当前继承自 {confName}。保存时仅覆盖你更改过的项。",
+      "revert": {
+        "action": "恢复为继承",
+        "confirmTitle": "将 {name} 恢复为继承的设置？",
+        "confirmDescription": "这会删除该路径自己的配置条目。它覆盖的每个值都将恢复为继承，覆盖项会丢失。",
+        "cancel": "取消",
+        "confirm": "恢复",
+        "toasts": {
+          "success": "已恢复为继承的设置",
+          "errorTitle": "无法恢复为继承的设置",
+          "errorDescription": "该路径的配置条目仍然存在。请重试。"
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# 项未保存的更改}}",

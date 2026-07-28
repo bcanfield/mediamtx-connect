@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Config del percorso · {name}",
       "pageSubHeader": "Impostazioni di questo stream, salvate sul server.",
-      "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato."
+      "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato.",
+      "revert": {
+        "action": "Ripristina l'ereditarietà",
+        "confirmTitle": "Ripristinare {name} alle impostazioni ereditate?",
+        "confirmDescription": "Questo elimina la voce di configurazione propria del percorso. Ogni valore che sovrascrive torna a essere ereditato e le sovrascritture vanno perse.",
+        "cancel": "Annulla",
+        "confirm": "Ripristina",
+        "toasts": {
+          "success": "Impostazioni ereditate ripristinate",
+          "errorTitle": "Impossibile ripristinare le impostazioni ereditate",
+          "errorDescription": "La voce di configurazione del percorso è ancora presente. Riprova."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# modifica non salvata} other {# modifiche non salvate}}",

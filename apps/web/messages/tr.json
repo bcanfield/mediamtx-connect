@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Yol yapılandırması · {name}",
       "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",
-      "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar."
+      "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar.",
+      "revert": {
+        "action": "Devralınana geri dön",
+        "confirmTitle": "{name} devralınan ayarlara geri döndürülsün mü?",
+        "confirmDescription": "Bu, yolun kendi yapılandırma girdisini siler. Geçersiz kıldığı her değer yeniden devralınır ve geçersiz kılmalar kaybolur.",
+        "cancel": "İptal",
+        "confirm": "Geri dön",
+        "toasts": {
+          "success": "Devralınan ayarlara geri dönüldü",
+          "errorTitle": "Devralınan ayarlara geri dönülemedi",
+          "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, other {# kaydedilmemiş değişiklik}}",

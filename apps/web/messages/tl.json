@@ -197,7 +197,19 @@
     "pathConfig": {
       "pageHeader": "Config ng path · {name}",
       "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",
-      "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override."
+      "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override.",
+      "revert": {
+        "action": "Ibalik sa minana",
+        "confirmTitle": "Ibalik ang {name} sa minanang mga setting?",
+        "confirmDescription": "Buburahin nito ang sariling config entry ng path. Bawat halagang ino-override nito ay babalik sa pagmamana, at mawawala ang mga override.",
+        "cancel": "Kanselahin",
+        "confirm": "Ibalik",
+        "toasts": {
+          "success": "Naibalik sa minanang mga setting",
+          "errorTitle": "Hindi maibalik sa minanang mga setting",
+          "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
+        }
+      }
     },
     "saveBar": {
       "unsaved": "{count, plural, one {# hindi pa naka-save na pagbabago} other {# na hindi pa naka-save na pagbabago}}",

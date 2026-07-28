@@ -30,7 +30,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     const res = await fetch(`${base}${route}`, init)
     if (!res.ok)
       throw new Error(`MediaMTX ${init?.method ?? 'GET'} ${route} responded ${res.status}`)
-    if (res.status === 204 || init?.method === 'PATCH')
+    if (res.status === 204 || init?.method === 'PATCH' || init?.method === 'DELETE')
       return undefined as T
     return await res.json() as T
   }
@@ -85,5 +85,9 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
         headers: jsonHeaders,
         body: JSON.stringify(conf),
       }),
+    // Removes the entry entirely; the path falls back to the wildcard that
+    // covers it. 404 when there is no entry under this name.
+    configPathDelete: (name: string) =>
+      request<void>(`/config/paths/delete/${encodeURIComponent(name)}`, { method: 'DELETE' }),
   }
 }
