@@ -5,8 +5,48 @@ on:
     branches: [main, beta]
   pull_request:
     branches: [main, beta]
+    # `edited` is here for the pr-title job, so a retitle re-checks without a
+    # new commit. Listing types at all overrides the default three, hence the
+    # explicit list. The expensive jobs opt out of `edited` individually.
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
+  # Lives in CI rather than its own workflow on purpose: the smallhours agent
+  # loop gates on this workflow by name (.smallhours.yml `ci_workflow: CI`,
+  # agent-loop.yml `workflow_run: workflows: [CI]`). A title check outside CI
+  # is invisible to it — the loop would read CI green, think the PR is ready,
+  # and never fire auto-fix on a title it can't see. Here, a bad title fails
+  # CI, which is a signal the loop already knows how to repair.
+  pr-title:
+    name: Conventional commit format
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Check title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          types='feat|fix|perf|refactor|docs|style|test|build|ci|chore|revert'
+          if printf '%s' "$TITLE" | grep -qE "^($types)(\([a-z0-9 ,._/-]+\))?!?: .+"; then
+            echo "OK: $TITLE"
+            exit 0
+          fi
+          cat <<EOF
+          Title: "$TITLE"
+
+          main is squash-merged, so this title becomes the commit subject
+          semantic-release parses. Retitle the PR as
+          <type>[(scope)][!]: <description>, where type is one of:
+          $types
+
+          Only feat, fix, perf and revert cut a release; ! or a
+          BREAKING CHANGE footer cuts a major. Everything else lands in main
+          without a version bump, which is usually what you want for docs,
+          tests, and tooling.
+          EOF
+          exit 1
+
   # Docs-only PRs don't need MediaMTX, Docker, or a browser. Gates only the
   # expensive jobs (E2E, image smoke), and only on pull_request — pushes to
   # main/beta always run everything, because release.yml treats this workflow's
@@ -44,6 +84,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    # A retitle changes no code, so don't rebuild for it. `test` needs this job
+    # and skips with it; `image-smoke` carries its own copy of the guard.
+    # Empty on push, where this is always true.
+    if: github.event.action != 'edited'
 
     steps:
       - uses: actions/checkout@v4
@@ -168,7 +212,7 @@ jobs:
     name: Docker image smoke
     runs-on: ubuntu-latest
     needs: changes
-    if: github.event_name == 'push' || needs.changes.outputs.code == 'true'
+    if: (github.event_name == 'push' || needs.changes.outputs.code == 'true') && github.event.action != 'edited'
 
     steps:
       - uses: actions/checkout@v4
