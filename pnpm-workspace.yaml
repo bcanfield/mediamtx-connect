@@ -2,6 +2,14 @@ shellEmulator: true
 
 trustPolicy: no-downgrade
 
+# semver 5.7.2/6.3.1 (2023 maintenance-line republishes, pulled in transitively
+# via @babel/core) predate provenance; the later 7.x line has it, so pnpm's
+# no-downgrade check flags them. Not a takeover — scoped exception, not a
+# blanket policy relaxation.
+trustPolicyExclude:
+  - semver@5.7.2
+  - semver@6.3.1
+
 packages:
   - apps/*
   - packages/*
@@ -71,5 +79,6 @@ catalog:
   vitest: ^4.1.10
   zod: ^4.4.3
 
-onlyBuiltDependencies:
-  - esbuild
+allowBuilds:
+  esbuild: true
+  msw: false
