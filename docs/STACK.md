@@ -20,7 +20,7 @@ inventory.
 ├── docs/MIGRATION.md          how the old Next.js app mapped onto this stack
 ├── turbo.json                 task graph: build / typecheck / dev
 ├── eslint.config.mjs          @antfu/eslint-config (lint + format, one tool)
-├── Dockerfile                 turbo prune → slim build → node:22-slim + ffmpeg
+├── Dockerfile                 turbo prune → slim build → node:24-slim + ffmpeg
 ├── docker-compose.yml         MediaMTX + this app, one network
 ├── apps/
 │   ├── web/                   Vite SPA; dev proxies /rpc, /media, /api → api
@@ -71,7 +71,7 @@ docker run -p 3000:3000 mediamtx-connect
 The Dockerfile follows the reference pattern: `turbo prune --docker` for
 cache-friendly layering, `pnpm install` with a BuildKit store cache mount,
 `pnpm deploy --legacy --prod` for a self-contained output. The runtime is
-`node:22-bookworm-slim` + ffmpeg (the thumbnail generator) rather than
+`node:24-bookworm-slim` + ffmpeg (the thumbnail generator) rather than
 distroless — see `docs/MIGRATION.md` §5.
 
 ## How the type safety works
