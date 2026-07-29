@@ -45,7 +45,13 @@ catalog:
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1
   cmdk: ^1.1.1
-  conventional-changelog-conventionalcommits: ^10.0.0
+  # Held at 9.x. v10 moved to the conventional-changelog-writer 9 preset shape
+  # (`writer.template` instead of `writer.mainTemplate`); semantic-release 25
+  # still bundles writer 8, which ignores the unknown key and renders the header
+  # with no commit sections. Release 2.1.5 shipped with empty notes that way —
+  # nothing errors, the body just comes out blank. Bump only once
+  # semantic-release ships writer 9.
+  conventional-changelog-conventionalcommits: ^9.3.1
   dayjs: ^1.11.19
   eslint: ^10.7.0
   eslint-plugin-react-hooks: ^7.1.1

@@ -35,6 +35,11 @@
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["major"],
       "groupName": "github actions major"
+    },
+    {
+      "description": "v10 needs conventional-changelog-writer 9; semantic-release 25 bundles 8 and silently renders empty release notes. See pnpm-workspace.yaml.",
+      "matchPackageNames": ["conventional-changelog-conventionalcommits"],
+      "allowedVersions": "<10"
     }
   ]
 }
