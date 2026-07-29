@@ -317,7 +317,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ### 13.1 Production image (`Dockerfile`)
 - **Turborepo-pruned multi-stage build** — `turbo prune --docker` → pnpm install with BuildKit store cache → `turbo build` → `pnpm deploy --legacy --prod` for a self-contained output.
 - **Single process serves everything** — Hono serves the SPA build from `/app/public`, the oRPC API, and media streaming on port 3000.
-- **Runtime: `node:22-bookworm-slim` + ffmpeg** — ffmpeg is required for thumbnail generation; see `docs/MIGRATION.md` §5 for the distroless trade-off.
+- **Runtime: `node:24-bookworm-slim` + ffmpeg** — ffmpeg is required for thumbnail generation; see `docs/MIGRATION.md` §5 for the distroless trade-off.
 - **Pre-created mount points** — `/recordings`, `/screenshots`, `/data` (config.json), owned by the non-root `node` user.
 - **Production-shaped env defaults** — bootstrap env vars (`BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `REMOTE_MEDIAMTX_URL=http://localhost`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots`) come from the Zod schema in `apps/api/src/env.ts`, so `docker run` with no env produces a valid first-boot seed. Override at `docker run` time to skip the in-app `/config` step.
 - **Non-root `node` user**.

@@ -73,7 +73,7 @@ export function TextFieldRow<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <RowShell name={name} help={help} dirty={Boolean(dirtyFields[name as keyof typeof dirtyFields])}>
+        <RowShell name={name} help={help} dirty={Boolean((dirtyFields as Record<string, unknown>)[name])}>
           <FormItem className="w-full space-y-1.5">
             <FormControl {...field}>
               <Input type={kind} className="font-mono" aria-label={name} />
@@ -100,7 +100,7 @@ export function SwitchFieldRow<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <RowShell name={name} help={help} dirty={Boolean(dirtyFields[name as keyof typeof dirtyFields])} alignEnd>
+        <RowShell name={name} help={help} dirty={Boolean((dirtyFields as Record<string, unknown>)[name])} alignEnd>
           <FormItem className="space-y-1.5">
             <FormControl>
               <Switch
@@ -135,7 +135,7 @@ export function ListFieldRow<T extends FieldValues>({
         <RowShell
           name={name}
           help={help ? `${help} ${t('oneValuePerLine')}` : t('oneValuePerLine')}
-          dirty={Boolean(dirtyFields[name as keyof typeof dirtyFields])}
+          dirty={Boolean((dirtyFields as Record<string, unknown>)[name])}
         >
           <FormItem className="w-full space-y-1.5">
             <FormControl>
