@@ -330,11 +330,11 @@ don't spend the 30-file churn twice.
 
 Both of those are rejected *as demo-only code*. They stop being demo-only once a second
 audience wants them — a team or household hosting Connect for members who should watch
-but not edit. [`docs/ideas/06-access-tiers.md`](./ideas/06-access-tiers.md) works that
-through: the banner becomes free (operator-supplied text needs no translation), read-only
-becomes a product feature with its own users, and "restore baseline" replaces the hourly
-cron in §5 with something that doesn't drop viewers. **This plan still ships first** —
-it's infrastructure only and doesn't wait on any of that.
+but not edit. [`docs/ideas/06-shared-instances.md`](./ideas/06-shared-instances.md)
+catalogues that overlap: the banner becomes an announcements feature both audiences want,
+read-only becomes a product capability with its own users, and "baseline and restore"
+would replace the hourly cron in §5 with something that doesn't drop viewers. **This plan
+still ships first** — it's infrastructure only and doesn't wait on any of that.
 - **A "try it locally" Codespaces/devcontainer button.** Complementary and nearly free
   (one `devcontainer.json` running the existing `docker compose up`), but it needs a
   GitHub account and forwarded-port WebRTC won't work. Worth its own small proposal.

@@ -24,9 +24,9 @@ To stay exhaustive without drowning in one giant document, the surface area was 
 
 | # | File | What it covers |
 |---|------|----------------|
-| 06 | [`06-access-tiers.md`](./06-access-tiers.md) | Viewer vs admin tiers serving both the public demo and a shared (team/household) install: enforcement spine, read-only UX, per-path scoping from MediaMTX ACLs, audit + restore. Design-shaped rather than generated — written against the two audiences, not against a MediaMTX config section. |
+| 06 | [`06-shared-instances.md`](./06-shared-instances.md) | Instances with more than one kind of person on them — a public demo, or a team/household install: viewer capabilities, per-path visibility, announcements and instance presentation, share-outs, and the safety rails that make anonymous exposure survivable. Written against two audiences rather than against a MediaMTX config section. |
 
-Domain `06` is the one the "Auth gating" row of the triage rubric points at in practice: the public viewer route, embed builder, kiosk mode, and the hosted demo ([`docs/HOSTED-DEMO.md`](../HOSTED-DEMO.md)) are all blocked on it.
+Domain `06` is the one the "Auth gating" row of the triage rubric points at in practice: the public viewer route, embed builder, kiosk mode, and the hosted demo ([`docs/HOSTED-DEMO.md`](../HOSTED-DEMO.md)) all depend on it.
 
 ## How to use this catalog
 
