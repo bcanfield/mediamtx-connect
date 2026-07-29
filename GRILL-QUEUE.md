@@ -27,19 +27,57 @@ That is **most of Phase 0 and Phase 1's small correctness debt**. Three conseque
 3. **Phase 0's gate never landed.** #214 is still open and was *reclaimed by the watchdog on
    2026-07-28* after sitting `agent-working` 60m with no PR.
 
-### ⚠️ Item 0 — diagnose the loop before re-labeling anything
+### ✅ Item 0 — ANSWERED 2026-07-29: it's a wall-clock timeout
 
-**Eight issues failed identically**: #175, #177–#183, #202, #209 all carry
-`🛑 smallhours could not implement this issue … the agent run failed before producing a result
-(see workflow logs)`. They lost both `ready-for-agent` and `agent-working` and are now sitting
-**unlabeled** — invisible to both the loop and any triage filter.
+Re-running #175 and #177 settled it. Both `implement` jobs were **cancelled at exactly 40
+minutes** (01:55:31 → 02:35:47 and → 02:36:11). The cap lives upstream in
+`bcanfield/smallhours/.github/workflows/agent-loop.yml@v1`; `.smallhours.yml` documents every
+consumer knob and **has no timeout key**, so it isn't tunable from this repo today.
 
-I can't tell from the issue thread whether that's a harness failure (run died) or a spec failure
-(ticket too big to plan). **The two have opposite fixes**, and every "add detail so an agent can
-implement it" decision below depends on the answer. Read the workflow logs for one of these runs
-first. My read: #202 (schema sync) and #209 (a two-file error-state change) are small and
-well-specified — them failing the same way as #175 (three features in one ticket) points at
-harness, not spec. But #175 needs splitting regardless.
+Three consequences, in order of how much they cost:
+
+1. **A timeout leaves ZERO artifact.** The implement job is a single step —
+   *"Implement, open draft PR, report usage"* — so the draft PR is opened at the **end**. Cancel
+   it mid-work and there is no branch on `origin`, no PR, and no notes. Confirmed: no
+   `agent/issue-175` or `agent/issue-177` ref exists. 40 minutes of Opus, nothing to resume from.
+2. **You don't even get diagnostics.** The next step, *"Upload give-up diagnostics,"* was
+   **skipped** — a job cancellation skips it, which is precisely when you'd most want it.
+3. **`max_turns` was never the binding constraint.** `implement: 100` (bumped 50 → 75 → 100 over
+   three commits) doesn't bite, because these runs are limited by wall clock, not turns. Those
+   bumps addressed the wrong variable.
+
+**Correction to my earlier read:** I guessed harness-over-spec. Half right. The big slate items
+(#175, #177, and by inference #178–#183) are genuinely **too big for one 40m run**. But #214 is
+a different failure — its last run died at **~15m 34s** with `failure`, not a timeout. Don't
+lump it in; grill it on its own evidence.
+
+**Do not re-run any of #175, #177, #178, #180, #181, #182, #185, #186, #187, #188 as written.**
+They're all the same size class and will burn 40 minutes identically.
+
+For calibration, what *does* fit in 40m is the class that shipped: #204, #207, #208, #213, #217,
+#220 — single-concern debt items touching a handful of files. "Catalog + wizard + detail" is 3–4×
+that budget.
+
+#### Recommended fixes, in order
+
+**F1 — Make a timeout leave something behind** (upstream, `bcanfield/smallhours`). Highest
+leverage: independent of ticket size, and it makes every future failure diagnosable.
+- Give the Claude step a **soft budget below the job cap** (e.g. `timeout 32m claude …` under a
+  40m `timeout-minutes`) so it *fails* instead of being *cancelled* — then the existing
+  `if: failure()` diagnostics upload actually runs.
+- **Open the draft PR early**, right after the first commit, instead of at the end. A timeout
+  then leaves a resumable branch rather than nothing.
+
+**F2 — Split #175** (Tier C, item 7 below). Four 40m-shaped tickets.
+
+**F3 — Re-grill #177, don't split it.** Simulcast is a `runOnReady` FFmpeg command generator —
+plausibly a *recipe* inside #178's hooks library rather than a standalone feature. Decide that
+before spending another 40 minutes on it. (Same question already flagged at item 30.)
+
+**F4 — Add a `timeout` knob to `.smallhours.yml`,** but don't lead with it. A bigger number on an
+unsplit ticket just costs more per failure. Worth having for per-repo tuning after F1/F2.
+
+**F5 — Housekeeping:** `origin/agent/issue-209` is stale, left over from closed PR #267.
 
 ---
 
