@@ -1,3 +1,5 @@
+## [2.1.5](https://github.com/bcanfield/mediamtx-connect/compare/2.1.4...2.1.5) (2026-07-29)
+
 ## [2.1.4](https://github.com/bcanfield/mediamtx-connect/compare/2.1.3...2.1.4) (2026-07-18)
 
 ### Bug Fixes
