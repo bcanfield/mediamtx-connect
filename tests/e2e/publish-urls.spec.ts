@@ -1,6 +1,28 @@
+import type { APIRequestContext } from '@playwright/test'
 import { expect, test } from '@playwright/test'
 
 const API = 'http://localhost:9997/v3'
+
+// MediaMTX restarts its HTTP API server on any config write: in core.go's
+// closeResources, closeAPI is ORed with closePathManager and closeRTMPServer,
+// so both our rtmpAddress patch and the path writes other specs make will tear
+// down the API listener. That drops every open connection, and Playwright pools
+// them — so a request can reuse a socket MediaMTX has already closed and die
+// with "socket hang up" before it even leaves the client. Under fullyParallel
+// that lands on whichever call is unlucky, which is why this only fails in a
+// full run and passes when the spec runs alone. Retrying gets a fresh socket;
+// polling also rides out the moment the listener is down mid-restart. The patch
+// is idempotent, so re-sending it is safe.
+async function patchGlobal(request: APIRequestContext, data: Record<string, unknown>) {
+  await expect.poll(async () => {
+    try {
+      return (await request.patch(`${API}/config/global/patch`, { data })).ok()
+    }
+    catch {
+      return false
+    }
+  }).toBe(true)
+}
 
 // Any ready stream — copying a card's publish URLs reads nothing from the
 // stream itself, only the server's listen addresses, so the choice is free.
@@ -20,7 +42,7 @@ test.describe('Copy publish URLs', () => {
     const before = await (await request.get(`${API}/config/global/get`)).json()
 
     await context.grantPermissions(['clipboard-read', 'clipboard-write'])
-    await request.patch(`${API}/config/global/patch`, { data: { rtmpAddress: `:${RTMP_PORT}` } })
+    await patchGlobal(request, { rtmpAddress: `:${RTMP_PORT}` })
     try {
       await page.goto('/')
       const card = page.locator('[data-testid="stream-card"]').filter({ hasText: STREAM })
@@ -39,9 +61,7 @@ test.describe('Copy publish URLs', () => {
       expect(clipboard).not.toContain(':1935/')
     }
     finally {
-      await request.patch(`${API}/config/global/patch`, {
-        data: { rtmpAddress: before.rtmpAddress ?? ':1935' },
-      })
+      await patchGlobal(request, { rtmpAddress: before.rtmpAddress ?? ':1935' })
     }
   })
 })
