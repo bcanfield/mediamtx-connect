@@ -20,6 +20,14 @@ To stay exhaustive without drowning in one giant document, the surface area was 
 
 **Rough total: ~450 distinct feature ideas** across the five files.
 
+### Added later
+
+| # | File | What it covers |
+|---|------|----------------|
+| 06 | [`06-access-tiers.md`](./06-access-tiers.md) | Viewer vs admin tiers serving both the public demo and a shared (team/household) install: enforcement spine, read-only UX, per-path scoping from MediaMTX ACLs, audit + restore. Design-shaped rather than generated — written against the two audiences, not against a MediaMTX config section. |
+
+Domain `06` is the one the "Auth gating" row of the triage rubric points at in practice: the public viewer route, embed builder, kiosk mode, and the hosted demo ([`docs/HOSTED-DEMO.md`](../HOSTED-DEMO.md)) are all blocked on it.
+
 ## How to use this catalog
 
 1. **Pick a domain** the team wants to invest in next.
