@@ -260,7 +260,7 @@ These are the features that best fit MediaMTX's native shape — its full protoc
 - **Connect session list with kick** — admins revoke a colleague's browser session.
 - **Connect API token management** — generate scoped tokens for external automation, stored hashed.
 - **Brute-force lockout on Connect login** — N failed logins in M minutes triggers a temporary IP block.
-- **Connect roles: admin / operator / viewer** — admin edits global config, operator manages paths, viewer is read-only. Narrowed to two tiers and designed end-to-end (enforcement spine, read-only UX, per-path scoping from MediaMTX ACLs, audit + restore) in [`06-access-tiers.md`](./06-access-tiers.md), which serves both the public demo and a shared team/household install.
+- **Connect roles: admin / operator / viewer** — admin edits global config, operator manages paths, viewer is read-only. Catalogued as two tiers with the surrounding feature set — viewer capabilities, per-path visibility, announcements, share-outs, safety rails — in [`06-shared-instances.md`](./06-shared-instances.md), covering both the public demo and a shared team/household install.
 - **Per-page route guard on Connect** — config admin-only, live streams open to viewers, recordings operator+.
 - **"Acting as" mode** — admin temporarily downgrades to verify a role's UX.
 - **Path ownership** — assign paths to Connect users; only owners and admins edit hooks/recording.
