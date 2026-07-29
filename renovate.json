@@ -9,6 +9,7 @@
   ],
   "prHourlyLimit": 0,
   "semanticCommits": "enabled",
+  "minimumReleaseAge": "3 days",
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
