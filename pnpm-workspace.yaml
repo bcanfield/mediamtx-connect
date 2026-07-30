@@ -83,7 +83,7 @@ catalog:
   # alone. If the wait ever gets painful, `@typescript/typescript6` (bin `tsc6`,
   # re-exports the 6.0 API) is the supported side-by-side path — but it means
   # linting and typechecking against two different type systems.
-  typescript: ^6.0.3
+  typescript: ^7.0.0
   use-intl: ^4.11.1
   vite: ^8.1.4
   vitest: ^4.1.10
