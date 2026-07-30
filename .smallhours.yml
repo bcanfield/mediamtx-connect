@@ -18,7 +18,7 @@ models:
 max_turns:
   implement: 100
   address_review: 30
-  auto_fix: 25
+  auto_fix: 40
   resolve_conflict: 20
 
 # Consecutive CI auto-fix attempts before giving up (0 disables auto-fix:
