@@ -1,3 +1,9 @@
+## [2.1.6](https://github.com/bcanfield/mediamtx-connect/compare/2.1.5...2.1.6) (2026-07-30)
+
+### Bug Fixes
+
+* hold conventionalcommits preset at 9.x so release notes render ([#298](https://github.com/bcanfield/mediamtx-connect/issues/298)) ([3807101](https://github.com/bcanfield/mediamtx-connect/commit/380710110923ba678032c3ec761c5f7c1c102bb1))
+
 ## [2.1.5](https://github.com/bcanfield/mediamtx-connect/compare/2.1.4...2.1.5) (2026-07-29)
 
 ## [2.1.4](https://github.com/bcanfield/mediamtx-connect/compare/2.1.3...2.1.4) (2026-07-18)
