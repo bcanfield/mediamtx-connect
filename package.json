@@ -18,7 +18,8 @@
     "test": "turbo test",
     "test:watch": "turbo test:watch",
     "test:changed": "turbo test --force -- --changed",
-    "verify": "pnpm lint && pnpm typecheck && pnpm i18n:check && pnpm test",
+    "check": "node scripts/check.mjs",
+    "verify": "pnpm lint && pnpm typecheck && pnpm i18n:check && pnpm test && pnpm build",
     "test:e2e": "playwright test",
     "test:e2e:dev": "playwright test --ui",
     "release": "semantic-release"

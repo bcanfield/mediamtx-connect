@@ -1,7 +1,6 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { serve } from '@hono/node-server'
-import { serveStatic } from '@hono/node-server/serve-static'
 import { RPCHandler } from '@orpc/server/fetch'
 import { Hono } from 'hono'
 import { bootstrapConfig } from './config-store'
@@ -11,6 +10,7 @@ import { startJobs } from './jobs'
 import { logger } from './logger'
 import { media } from './media'
 import { router } from './router'
+import { mountSpa } from './spa'
 
 const app = new Hono()
 
@@ -31,13 +31,7 @@ app.route('/media', media)
 
 // resolves to apps/api/public in dev (tsx) and /app/public in the image —
 // both are dist|src/../public, independent of CWD
-const staticRoot = fileURLToPath(new URL('../public', import.meta.url))
-app.use('*', serveStatic({ root: staticRoot }))
-// SPA fallback: unknown paths get index.html so client-side routes resolve
-app.get(
-  '*',
-  serveStatic({ root: staticRoot, rewriteRequestPath: () => '/index.html' }),
-)
+mountSpa(app, fileURLToPath(new URL('../public', import.meta.url)))
 
 async function main() {
   await bootstrapConfig()

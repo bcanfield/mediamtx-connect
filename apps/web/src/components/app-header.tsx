@@ -3,6 +3,7 @@ import { useTranslations } from 'use-intl'
 import { ConnectionStatus } from '@/components/connection-status'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import { ModeToggle } from '@/components/mode-toggle'
+import { isActiveRoute } from '@/components/nav-active'
 import { useConnectionState } from '@/hooks/use-connection-state'
 import { Link, usePathname } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
@@ -13,16 +14,6 @@ const tabs = [
   { key: 'appConfig', href: '/config' },
   { key: 'mediamtxConfig', href: '/config/mediamtx/global' },
 ] as const
-
-function isActiveRoute(pathname: string | null, href: string) {
-  if (!pathname)
-    return false
-  if (href === '/')
-    return pathname === '/'
-  if (href === '/config')
-    return pathname === '/config'
-  return pathname.startsWith(href)
-}
 
 export function AppHeader() {
   const t = useTranslations('Nav')
