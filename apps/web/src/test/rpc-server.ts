@@ -32,7 +32,8 @@ const APP_CONFIG = {
 export interface StubApi {
   streamsList: () => unknown
   snapshot?: (input: Inputs['streams']['snapshot']) => void
-  updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void
+  /** Returning a promise holds the write open, so a test can assert in-flight state. */
+  updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>
   /** The effective config a path resolves to — `{confName, conf}`, or null. */
   pathConfig?: () => unknown
   deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
@@ -95,8 +96,8 @@ export function createRpcServer(stub: StubApi) {
         getPathConfig: os.config.mediamtx.getPathConfig.handler(
           () => (stub.pathConfig?.() ?? null) as never,
         ),
-        updatePathConfig: os.config.mediamtx.updatePathConfig.handler(({ input }) => {
-          stub.updatePathConfig?.(input)
+        updatePathConfig: os.config.mediamtx.updatePathConfig.handler(async ({ input }) => {
+          await stub.updatePathConfig?.(input)
         }),
         deletePathConfig: os.config.mediamtx.deletePathConfig.handler(({ input }) => {
           stub.deletePathConfig?.(input)
