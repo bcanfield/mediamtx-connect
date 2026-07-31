@@ -10,6 +10,10 @@ export default antfu(
       'apps/api/public',
       // standalone demo-capture rig with throwaway scripts
       'demo/**',
+      // agent-harness tooling checked out alongside the repo, not part of it —
+      // git-ignored locally (.git/info/exclude), which eslint's own gitignore
+      // integration doesn't read since that file is never committed
+      '.smallhours-toolkit/**',
     ],
   },
   {

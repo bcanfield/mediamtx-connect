@@ -1,7 +1,7 @@
 import type { RecordState } from '@connect/contract'
 import type { PublishTarget } from '@/lib/publish'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -16,7 +16,7 @@ import { StreamCard } from './stream-card'
 // checked against the real procedure inputs — rename a field in
 // packages/contract and these assertions stop compiling.
 const snapshot = vi.fn<(input: RpcInputs['streams']['snapshot']) => void>()
-const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void>()
+const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>>()
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
@@ -161,5 +161,70 @@ describe('menu actions reach the API', () => {
     expect(updatePathConfig).toHaveBeenCalledWith(
       { name: 'stream1', conf: { record: false } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
     )
+  })
+})
+
+// The `recordState` prop is the settled `streams.list` query. Nothing here
+// changes it, so it stays OFF for the whole test — which is the point: what the
+// card shows mid-flight can only be coming from the mutation.
+describe('the record toggle while the write is in flight', () => {
+  /** Holds the stub's write open so the assertions run before the server answers. */
+  function heldWrite() {
+    let settle!: { resolve: () => void, reject: (error: Error) => void }
+    const held = new Promise<void>((resolve, reject) => {
+      settle = { resolve, reject }
+    })
+    updatePathConfig.mockImplementationOnce(() => held)
+    return settle
+  }
+
+  async function reopenMenu(view: Awaited<ReturnType<typeof openMenu>>) {
+    // Radix leaves `pointer-events: none` on the body until the menu is gone,
+    // and userEvent refuses to click through it.
+    await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument())
+    await view.user.click(screen.getByRole('button', { name: 'Stream actions' }))
+  }
+
+  it('shows the state it asked for before the server answers', async () => {
+    const write = heldWrite()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+
+    expect(await screen.findByText(/● REC/)).toBeInTheDocument()
+    await reopenMenu(view)
+    expect(screen.getByRole('menuitem', { name: /Record.*ON/ })).toBeInTheDocument()
+
+    write.resolve()
+  })
+
+  it('offers no second flip until the first one lands', async () => {
+    const write = heldWrite()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+    await reopenMenu(view)
+
+    // Reopening inside the round trip is the only way to double-click this, and
+    // a second write computed from the stale OFF would race the first to the
+    // opposite value.
+    expect(screen.getByRole('menuitem', { name: /Record/ })).toHaveAttribute('aria-disabled', 'true')
+
+    write.resolve()
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: /Record/ })).not.toHaveAttribute('aria-disabled'))
+    expect(updatePathConfig).toHaveBeenCalledTimes(1)
+  })
+
+  it('snaps back to the settled state when the write is rejected', async () => {
+    const write = heldWrite()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+    expect(await screen.findByText(/● REC/)).toBeInTheDocument()
+
+    write.reject(new Error('MediaMTX rejected the write'))
+
+    expect(await screen.findByText('Couldn\'t change recording')).toBeInTheDocument()
+    expect(screen.queryByText(/● REC/)).not.toBeInTheDocument()
   })
 })
