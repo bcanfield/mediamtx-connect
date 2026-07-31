@@ -1,7 +1,7 @@
 import type { RecordState } from '@connect/contract'
 import type { PublishTarget } from '@/lib/publish'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -16,7 +16,7 @@ import { StreamCard } from './stream-card'
 // checked against the real procedure inputs — rename a field in
 // packages/contract and these assertions stop compiling.
 const snapshot = vi.fn<(input: RpcInputs['streams']['snapshot']) => void>()
-const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void>()
+const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>>()
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
@@ -161,5 +161,66 @@ describe('menu actions reach the API', () => {
     expect(updatePathConfig).toHaveBeenCalledWith(
       { name: 'stream1', conf: { record: false } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
     )
+  })
+})
+
+// The whole defect lives in the window between the click and the server
+// answering, so these tests hold the write open to make that window assertable.
+// `recordState` stays 'off' throughout — it is the settled query, and the point
+// is that the card stops rendering it while it knows better.
+function holdWriteOpen() {
+  const settle = {} as { resolve: () => void, reject: () => void }
+  updatePathConfig.mockReturnValueOnce(new Promise<void>((resolve, reject) => {
+    settle.resolve = resolve
+    settle.reject = () => reject(new Error('MediaMTX rejected the write'))
+  }))
+  return settle
+}
+
+describe('record toggle while the write is in flight', () => {
+  it('shows the state we asked for before the server answers', async () => {
+    const write = holdWriteOpen()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+
+    expect(await screen.findByText('· ● REC')).toBeInTheDocument()
+
+    write.resolve()
+    // isPending covers the invalidation too, so the indicator only drops once
+    // the refetch has settled — back onto the same 'off' prop this test passes.
+    await waitFor(() => expect(screen.queryByText('· ● REC')).not.toBeInTheDocument())
+  })
+
+  it('offers no second flip until the first one lands', async () => {
+    const write = holdWriteOpen()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+    // The click closes the menu; deliberately reopening it inside the round-trip
+    // window is exactly how two writes to opposing values used to get fired.
+    await view.user.click(screen.getByRole('button', { name: 'Stream actions' }))
+
+    const item = await screen.findByRole('menuitem', { name: /Record/ })
+    expect(item).toHaveAttribute('aria-disabled', 'true')
+    // The label the reopened menu reports is the one we asked for, so the flip
+    // target it would compute is no longer the stale value.
+    expect(item).toHaveTextContent('ON')
+
+    write.resolve()
+    await waitFor(() => expect(screen.queryByText('· ● REC')).not.toBeInTheDocument())
+  })
+
+  it('snaps back to the settled state when the write is rejected', async () => {
+    const write = holdWriteOpen()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+    expect(await screen.findByText('· ● REC')).toBeInTheDocument()
+
+    write.reject()
+
+    expect(await screen.findByText('Couldn\'t change recording')).toBeInTheDocument()
+    expect(screen.queryByText('· ● REC')).not.toBeInTheDocument()
   })
 })

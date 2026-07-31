@@ -106,8 +106,19 @@ export function StreamCard({
   // attempt that lost to a firewall is playing HLS regardless of what was asked.
   const [protocol, setProtocol] = useState<PlaybackProtocol | null>(null)
   const queryClient = useQueryClient()
-  const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
+  const updatePathConfig = useMutation({
+    ...orpc.config.mediamtx.updatePathConfig.mutationOptions(),
+    // Awaited before the success dispatch, so `isPending` covers the refetch too
+    // and there is no gap where the write has landed but `recordState` is stale.
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() }),
+  })
   const takeSnapshot = useMutation(orpc.streams.snapshot.mutationOptions())
+
+  // What we asked for wins until the server answers: `recordState` is the settled
+  // query, so rendering it mid-write makes a slow write read as a no-op — and a
+  // flip target computed from it would race a second click to the opposite value.
+  const requested = updatePathConfig.isPending ? updatePathConfig.variables?.conf.record : undefined
+  const shownRecordState: RecordState = requested === undefined ? recordState : requested ? 'on' : 'off'
 
   const playing = search.play?.split(',').filter(Boolean) ?? []
   const isLive = playing.includes(streamName)
@@ -137,8 +148,7 @@ export function StreamCard({
   // would be a guess at what it's flipping.
   const toggleRecord = async () => {
     try {
-      await updatePathConfig.mutateAsync({ name: streamName, conf: { record: recordState === 'off' } })
-      await queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() })
+      await updatePathConfig.mutateAsync({ name: streamName, conf: { record: shownRecordState === 'off' } })
     }
     catch {
       toast.error(t('recordError.title'), { description: t('recordError.description') })
@@ -304,10 +314,10 @@ export function StreamCard({
               : t('idle')}
             {/* Unknown gets a hollow dot of its own: reading as OFF would claim
                 the stream isn't recording while MediaMTX may be writing files. */}
-            {recordState !== 'off' && (
-              <span className={cn('whitespace-nowrap', recordState === 'on' ? 'text-live-foreground' : 'text-warning')}>
+            {shownRecordState !== 'off' && (
+              <span className={cn('whitespace-nowrap', shownRecordState === 'on' ? 'text-live-foreground' : 'text-warning')}>
                 {' '}
-                {recordState === 'on' ? t('recIndicator') : t('recIndicatorUnknown')}
+                {shownRecordState === 'on' ? t('recIndicator') : t('recIndicatorUnknown')}
               </span>
             )}
           </p>
@@ -346,10 +356,10 @@ export function StreamCard({
                 {t('menu.takeSnapshot')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={toggleRecord} disabled={recordState === 'unknown'}>
+              <DropdownMenuItem onClick={toggleRecord} disabled={recordState === 'unknown' || updatePathConfig.isPending}>
                 <span className="flex-1">{t('menu.record')}</span>
                 <span className="font-mono text-micro uppercase text-faint">
-                  {recordLabel[recordState]}
+                  {recordLabel[shownRecordState]}
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={copyPublishUrls} disabled={publishTargets.length === 0}>
