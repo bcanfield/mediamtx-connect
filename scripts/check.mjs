@@ -26,11 +26,14 @@
 // thing that mirrors CI's Build job rather than merely resembling it.
 import { execFileSync, spawn } from 'node:child_process'
 import process from 'node:process'
+import { parseArgs } from './check-args.mjs'
 
-const args = process.argv.slice(2)
-const sinceIdx = args.indexOf('--since')
-const since = sinceIdx === -1 ? null : args[sinceIdx + 1]
-const explicit = args.filter((a, i) => a !== '--since' && i !== sinceIdx + 1)
+const { since, explicit, error } = parseArgs(process.argv.slice(2))
+
+if (error) {
+  process.stderr.write(`check: ${error}\n`)
+  process.exit(1)
+}
 
 function git(...a) {
   return execFileSync('git', a, { encoding: 'utf8' })
