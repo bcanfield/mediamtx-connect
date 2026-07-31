@@ -89,5 +89,13 @@ sandbox:
 # E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
 # and ffmpeg, none of which exist there, and its web server binds a local port the
 # sandbox forbids. CI owns that. See docs/TESTING.md.
-verify: pnpm verify
+# `npx pnpm@<pinned>` rather than a bare `pnpm`: the gate runs in a fresh
+# non-login `bash -c` on the runner, which does NOT inherit the PATH the agent
+# bootstrapped pnpm onto inside its own session. Issue #300's canary run proved
+# it — the agent installed, tested and edited happily, then the gate came back
+# `exited 127 / bash: line 1: pnpm: command not found` and burned a re-entry
+# trying to fix a repo that was never broken. `npx` ships with node, which the
+# runner always has, and the version is pinned to `packageManager` so the gate
+# and the developer run the same pnpm.
+verify: npx --yes pnpm@11.17.0 run verify
 verify_reentries: 2
