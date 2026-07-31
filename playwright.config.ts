@@ -1,16 +1,22 @@
 import process from 'node:process'
 import { defineConfig, devices } from '@playwright/test'
 
-// Tests that exercise pure HTTP behavior (no UI rendering) only need to run
-// once; cross-browser execution doesn't change their outcome.
-// Anchored on the path separator: unanchored, this also matched any spec
+// The specs the extra browsers replay. After ADR 0005's change 1, `config`,
+// `recordings`, `i18n` and `spa-fallback` are gone — everything they asserted is
+// now Vitest — so what is left worth running cross-browser is the accessibility
+// sweep over the rendered document.
+//
+// Anchored on the path separator: unanchored, this also matched any spec merely
 // *ending* in one of these names (path-config.spec.ts), opting it into five
 // browsers that would then race each other writing the same MediaMTX key.
-const uiSpecs = /\/(?:config|recordings|streams|a11y)\.spec\.ts/
+//
+// `streams.spec.ts` is deliberately NOT here any more. Its one remaining test
+// spawns ffmpeg, and running that five times concurrently against one MediaMTX
+// buys nothing.
+const uiSpecs = /\/a11y\.spec\.ts/
 
-// The four extra browsers replay the same 44 UI tests, taking the run from 82
-// executions to 258. They stay opt-in: the nightly workflow sets this, PRs and
-// local runs get chromium only. See docs/adr/0005-fast-test-suite.md.
+// Opt-in: the nightly workflow sets this, PRs and local runs get chromium only.
+// See docs/adr/0005-fast-test-suite.md.
 const allBrowsers = !!process.env.E2E_ALL_BROWSERS
 
 export default defineConfig({

@@ -9,6 +9,11 @@ this layout.
 ## Commands
 
 - `pnpm install` — install everything (workspace root only; never run npm/yarn)
+- **`pnpm check`** — the inner loop, ~4s. Lints the changed files, typechecks the
+  affected packages, runs the tests your edit can reach. Run it after every edit.
+  `pnpm check --since main` scopes it to the whole branch.
+- **`pnpm verify`** — the gate, ~11s warm. lint + typecheck + i18n:check + all
+  tests + build, which is exactly what CI's Build job runs. Run before pushing.
 - `pnpm dev` — seeds sample data into `.dev-data/`, starts MediaMTX + fake
   streams (Docker), and runs web on :5173 (proxies `/rpc`, `/media`, `/api` →
   :3000) + api on :3000. Zero config — no `.env` needed. `pnpm dev:stop` stops
@@ -18,7 +23,32 @@ this layout.
 - `pnpm lint` / `pnpm lint:fix` — ESLint (`@antfu/eslint-config`, handles
   formatting too; there is no separate formatter)
 - `pnpm i18n:check` — verify message-key parity across `apps/web/messages/*.json`
+- `pnpm test:e2e` — Playwright. **Needs `pnpm build` plus Docker MediaMTX and
+  ffmpeg**; see the environment note below before reaching for it.
 - `docker build -t mediamtx-connect .` — single production image
+
+## If you are an agent running in CI
+
+Nothing is installed for you. **Run `pnpm install` first** — it takes ~21s cold —
+or `pnpm check` and `pnpm verify` will both fail on a missing binary rather than
+on anything you wrote.
+
+Your environment has **no Docker, no Playwright browsers and no ffmpeg**, and it
+cannot bind a local port. So:
+
+- `pnpm check` and `pnpm verify` are runnable and are what your work is judged on.
+  `pnpm verify` runs automatically after you stop, and you are sent back to fix it
+  if it fails (`verify` / `verify_reentries` in `.smallhours.yml`), so running it
+  yourself first is strictly faster.
+- `pnpm test:e2e` is **not** runnable here. CI owns it. Do not try to start
+  MediaMTX, install browsers, or work around the sandbox.
+- If an install or a check fails because a host or a write path was blocked, say
+  which one in your summary. That is a gap in `.smallhours.yml`'s `sandbox:` block,
+  not something to route around.
+
+When you add a test, break the line it covers and watch it fail before moving on.
+A test you have not seen fail is not a test — this repo has shipped two green-but-
+vacuous suites already (`docs/adr/0005-fast-test-suite.md`).
 
 ## Structure
 

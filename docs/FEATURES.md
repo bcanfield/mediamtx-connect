@@ -353,6 +353,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`router.test.ts`** — `streams.list` record state: an inherited `true` surfaces as recording when only path defaults enable it (the stock setup), a stream with its own entry reports that entry's state, and the whole grid costs one `configPathGet` per distinct `confName` rather than one per stream. `streams.snapshot` delegates to `captureSnapshot` for the named stream and surfaces a capture failure as an error. `apps/api/src/router.test.ts`
 - **`media.serving.test.ts`** — recording/screenshot serving in-process against the real `tests/fixtures` files: whole-file 200 with `video/mp4` + `Accept-Ranges` + `Content-Length`, closed (`bytes=0-99`), open-ended (`bytes=100-`) and suffix (`bytes=-100`) ranges as 206 with the right `Content-Range` and byte counts, 416 past EOF, `?download` attachment disposition, screenshot `no-store`, and two traversal rejections that escape to files which actually exist (verified to return 200 with `safeJoin`'s guard removed). `apps/api/src/media.serving.test.ts`
 - **`health.test.ts`** — the Docker HEALTHCHECK endpoint: healthy + parseable timestamp when the config store reads, 503 `unhealthy` carrying the error message when it throws. `apps/api/src/health.test.ts`
+- **`spa.test.ts`** — the SPA static root and fallback (`mountSpa`, extracted from `server.ts` so it is importable without starting a listener): `index.html` for `/`, for an unknown route and for a deep client route; a built asset and a root-level static file still served as themselves; a missing asset path falling through to the shell; and a POST to an unknown path 404ing rather than answering with HTML. The asset assertions are the load-bearing ones — with the two handlers in the wrong order every request returns `index.html` with a 200 and the app boots blank. `apps/api/src/spa.test.ts`
 - **Scope** — `apps/api` and `apps/web`; `packages/contract` has no unit runner yet (`docs/debt/`). Rationale and alternatives: `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`. Layer-choice guidance: `docs/TESTING.md`.
 
 ### 15.0.1 Vitest component tests (`apps/web/src/**/*.test.tsx`)
@@ -360,20 +361,22 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`stream-card-menu.test.tsx`** — the Radix actions menu and the oRPC mutations behind it: the menu's items, the record state it reports, `Take snapshot` calling `streams.snapshot` and surfacing the success toast, and the record toggle writing only this stream's own override (`{ name, conf: { record } }`) in both directions. `apps/web/src/features/streams/stream-card-menu.test.tsx`
 - **`mediamtx-config-form.test.tsx`** — the hooks restart warning (§3.4): rendered on both path scopes, absent from Recording and from the global Hooks section, which are safe to save. `apps/web/src/features/mediamtx-config/mediamtx-config-form.test.tsx`
 - **`path-config-page.test.tsx`** — revert to inherited (§3.4): no affordance while the path tracks a wildcard entry, one once it has its own, `config.mediamtx.deletePathConfig` called with the path name only after the confirm, and nothing sent when the dialog is cancelled. `apps/web/src/features/mediamtx-config/path-config-page.test.tsx`
-- **Harness** — `src/test/render.tsx` mirrors `main.tsx`'s provider stack (QueryClient, `IntlProvider` with shipped English messages, memory-history router, `ThemeProvider`, `Toaster`) and awaits `router.load()`; `src/test/rpc-server.ts` serves `/rpc/*` through MSW backed by the **real `RPCHandler`** over an `implement(contract)` stub router, so a contract change fails these at typecheck. Two Vitest projects (`logic` = node, `component` = happy-dom) in `apps/web/vitest.config.ts`. `docs/adr/0005-fast-test-suite.md`
+- **`live-streams-view.test.tsx`** — the grid and toolbar around the cards: one card per stream, the empty fleet, the fleet summary counting streams and the `?play` list, singular/plural forms, and the density control persisting to and reading from `localStorage` (including a nonsense stored value falling back to the default). `apps/web/src/features/streams/live-streams-view.test.tsx`
+- **`recordings-index-view.test.tsx`** — the recordings index: a card per stream, its detail-page href, the recordings-count chip, thumbnail vs placeholder, the totals summary with plural forms, the client-side filter (substring, case-insensitive, empty-result heading, cleared), and the `/` shortcut focusing the filter — plus the case where the filter already has focus and `/` must be typed as a literal. `apps/web/src/features/recordings/recordings-index-view.test.tsx`
+- **`stream-recordings-page.test.tsx`** — the detail page over a stubbed page of recordings: breadcrumb link and trailing crumb, a stream with no recordings at all, a row per recording with its Play button, and day grouping — two recordings on one day under one heading and a third on another day under its own, which the E2E version could only assert as "a heading exists". Plus the read-failure panel. `apps/web/src/features/recordings/stream-recordings-page.test.tsx`
+- **`client-config-form.test.tsx`** — the App Config form: a field per key seeded from the server, section headings, the hero playback badge, field descriptions, editability, and the save bar (hidden while pristine, dirty count, Reset restoring values, validation count) plus the save round trip asserting the exact `config.app.update` input. `apps/web/src/features/client-config/client-config-form.test.tsx`
+- **`app-header.test.tsx`** — the primary nav and locale switching against the app's **real** `I18nProvider` (`realI18n` in the harness): the tab inventory, the brand, English by default, switching to Spanish updating `<html lang>` and the nav labels, persistence to `localStorage`, starting in a stored locale, an unsupported stored value falling back, and the current route surviving a switch. `apps/web/src/components/app-header.test.tsx`
+- **`app-header.tab-state.test.ts`** — `isActiveRoute` (`nav-active.ts`) as a pure function in the `logic` project: `/config` matches exactly so the App Config and MediaMTX Config tabs never light together, MediaMTX Config stays active across its sub-routes, recordings matches its detail pages, and a null pathname activates nothing. Its own module because asserting this through a rendered header tests TanStack Link's prefix-matched `aria-current` instead. `apps/web/src/components/app-header.tab-state.test.ts`
+- **Harness** — `src/test/render.tsx` mirrors `main.tsx`'s provider stack (QueryClient, `IntlProvider` with shipped English messages, memory-history router, `ThemeProvider`, `Toaster`) and awaits `router.load()`; `src/test/rpc-server.ts` serves `/rpc/*` through MSW backed by the **real `RPCHandler`** over an `implement(contract)` stub router, so a contract change fails these at typecheck. `renderWithProviders` also takes `realI18n` to swap the fixed English `IntlProvider` for the app's own `I18nProvider`, for the suites that are *about* locale switching. Two Vitest projects (`logic` = node, `component` = happy-dom) in `apps/web/vitest.config.ts`. **202 tests total.** `docs/adr/0005-fast-test-suite.md`
 
 ### 15.1 Playwright E2E (`tests/e2e/`)
-- **`streams.spec.ts`** — top-nav tabs + active state, a card per fixture stream, toolbar summary, the path-config and hooks deep-links, and an on-demand snapshot that spawns a real ffmpeg against the RTSP feed. Card *contents* (codecs, viewers, snapshot age, the actions menu and its mutations) moved to §15.0.1.
-- **`recordings.spec.ts`** — a card per stream with recordings, totals summary + `/`-shortcut filter, client-side filtering, card navigation, day-grouped rows, inline player open/close with URL tracking, breadcrumb navigation. Unguarded: the fixtures are seeded before boot.
-- **`config.spec.ts`** — App Config form fields + hero badge, save-bar mount/dirty gating, edit + save round-trip with reload-and-verify, MediaMTX page verbatim keys, pending-changes chips, section rail.
-- **`spa-fallback.spec.ts`** — unknown client routes serve the SPA shell from the built static root.
-- **`i18n.spec.ts`** — default English, locale switcher round-trip, persistence across reloads, translated nav.
-- **`a11y.spec.ts`** — axe-core accessibility smoke.
+- **`streams.spec.ts`** — one test: an on-demand snapshot that spawns a real ffmpeg against the RTSP feed. Everything else this spec held — top-nav tabs and active state, a card per fixture stream, the toolbar summary, the two deep-links, and all card contents — moved to §15.0.1, where the props are the fixture and an assertion cannot pass on an empty page.
+- **`a11y.spec.ts`** — axe-core accessibility smoke over six routes. The only spec still opted into the cross-browser projects.
 - **`path-defaults.spec.ts`** — the path-defaults page: Recording + Path Hooks sections, edit + save round-trip against live MediaMTX, restoring what it wrote.
 - **`path-config.spec.ts`** — the per-path page: effective config inherited from the wildcard entry, path-scoped hooks only, `?section=pathHooks` deep link, a hook write, a save that materializes a sparse entry without restarting the session, and a revert through the page that deletes that entry again — which is also how the spec cleans up, so it holds no raw `config/paths/delete` of its own.
 - **`record-toggle.spec.ts`** — the card's record toggle: a card reports state inherited from path defaults (the stock setup); stopping one stream materializes its own override while path defaults, the wildcard entry, other cards, and the live session all stay put; starting one that already has an entry patches it in place.
 - **`playback.spec.ts`** — the only test that opens a real peer connection: in LOW-LAT, playing `stream3` negotiates WHEP against live MediaMTX until ICE completes, the card's pill reads `WEBRTC`, and the `<video>` is driven by a `MediaStream` rather than a `src`. With the WHEP POST aborted (a blocked WebRTC port, from the browser's side), the same card falls back to HLS and admits it with the `WEBRTC UNAVAILABLE` pill. Pays off `docs/debt/20260717100437-whep-playback-not-e2e-covered.md`.
-- **Runner config** (`playwright.config.ts`) — Chromium only by default (61 tests); `E2E_ALL_BROWSERS=1` adds Firefox/WebKit/mobile for UI specs and is set only by the nightly `e2e-nightly.yml`. 1280×720, `workers: '100%'` in CI, 1 retry, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The three specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`) stay out of the UI-spec pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
+- **Runner config** (`playwright.config.ts`) — Chromium only by default (**23 tests in 7 files**, down from 56 in 11 before ADR 0005's change 1 was finished); `E2E_ALL_BROWSERS=1` adds Firefox/WebKit/mobile and now matches **only `a11y.spec.ts`**, since the rest of the old UI-spec set is Vitest and `streams.spec.ts`'s remaining test spawns ffmpeg. Set only by the nightly `e2e-nightly.yml`. 1280×720, `workers: '100%'` in CI, 1 retry, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The four specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`, `publish-urls`) stay out of that pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
 
 ### 15.2 Linting & types
 - **ESLint 10 + `@antfu/eslint-config`** (lint + format in one tool) with custom rules:
@@ -395,7 +398,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm i18n:check:messages` | Message-key parity only (`scripts/i18n-check.mjs`). |
 | `pnpm i18n:check:readme` | README translation staleness only (`scripts/readme-i18n-check.mjs`). |
 | `pnpm test` | Vitest unit + component suites across packages (turbo). |
-| `pnpm verify` | The CI `build` gate locally: lint + typecheck + i18n:check + test. No Docker, no build, no browsers. |
+| `pnpm check` | **The inner loop (~4s).** Lints only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue or README moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `scripts/check.mjs` |
+| `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + typecheck + i18n:check + test + **build**. No Docker, no browsers. Also what smallhours runs against an agent's work before opening its PR. |
 | `pnpm test:changed` | Only tests reachable from your edits (`vitest --changed`); bypasses the turbo cache since git state isn't hashed. |
 | `pnpm test:watch` | Vitest watch mode across packages. |
 | `pnpm test:e2e` | Playwright suite (needs a prior build). |
@@ -406,6 +410,33 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`seed-fixtures.mjs`** — cross-platform Node script (no deps, no ffmpeg) that copies the committed `tests/fixtures/{recordings,screenshots}` into a `--target` dir (default `<repo>/.dev-data`) if empty. Runs as the first step of the `pnpm dev` chain and via Playwright `globalSetup` for e2e. Idempotent — never clobbers a dir that already has content.
 - **`wait-for-mediamtx.mjs`** — gates the E2E suites on the fixture fleet (`stream1..5` + `front-door`) being published **and** `ready`, not merely on the API answering. Shared by `ci.yml` and `e2e-nightly.yml`; replaces the old `mediamtx.spec.ts`, which asserted the same things as eight test failures instead of one named error.
 - **`i18n-check.mjs` / `readme-i18n-check.mjs`** — the two i18n CI guards.
+- **`check.mjs`** — the inner-loop runner behind `pnpm check` (see §15.3).
+
+### 15.5 Agent environment (`.smallhours.yml`)
+
+The smallhours loop implements issues in a sandboxed CI job where **nothing is
+installed**, so without configuration an agent writes code it cannot compile or
+test and CI is the first thing that ever runs its work. Three keys close that:
+
+- **`npm_allowed: true`** — the agent's sandbox may reach `registry.npmjs.org`, so
+  it can `pnpm install` and can resolve a library an issue calls for. Install
+  lifecycle scripts stay disabled, which costs nothing here: pnpm 11 denies build
+  scripts by default and `pnpm-workspace.yaml` has no `allowBuilds` map.
+- **`sandbox.filesystem.allowWrite`** — the package store and caches
+  (`~/.local/share/pnpm`, `~/.local/state/pnpm`, `~/.cache`, `~/.npm`). Registry
+  egress alone is not enough: the sandbox permits writes to the working directory
+  and `$TMPDIR` only, so without this an install resolves and then fails to write.
+  More paths than one machine uses, since pnpm's store location varies by platform
+  and volume and corepack needs its own cache.
+- **`verify: pnpm verify`** with **`verify_reentries: 2`** — run after the agent
+  stops and before its PR opens; a failure re-enters the agent with the output, so
+  a lint or type error costs ~11s instead of a full CI round trip plus one of
+  `attempt_cap`'s auto-fix attempts. A gate still red after its re-entries pushes
+  anyway and says so on the PR, leaving CI the backstop it already was.
+
+E2E is deliberately **not** in the gate: the agent phase has no Docker MediaMTX, no
+Playwright browsers and no ffmpeg, and cannot bind a local port. `AGENTS.md` tells
+the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 
 ---
 

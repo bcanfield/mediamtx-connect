@@ -3,7 +3,10 @@
 **Date:** 2026-07-27
 **Status:** Implemented
 
-All eight changes have landed. Strikethrough marks items withdrawn or revised by
+All eight changes have landed. **Change 1 was completed on 2026-07-29** — see
+"Change 1, finished" below; the layer shipped in the original pass but the E2E
+tests it was meant to absorb were not deleted until then, so for two days the repo
+carried both. Strikethrough marks items withdrawn or revised by
 what implementation turned up — three of them, listed under "What implementation
 disproved" below.
 
@@ -408,6 +411,46 @@ Local, on the implementation branch:
 The 258 → 82 figure is Playwright's own count and matches the CI log
 (`Running 258 tests using 2 workers`) exactly, so the E2E run should fall by
 roughly the same ratio once `workers: '100%'` is also in play.
+
+### Change 1, finished (2026-07-29)
+
+The component layer shipped with the original pass, but the 36 E2E tests it was
+supposed to absorb stayed where they were. Two days of running both is what that
+cost, and while it lasted `recordings` and `i18n` had **no** fast-layer coverage —
+so an agent editing the recordings page or the locale switcher could only validate
+it through a 2.5-minute Playwright run needing Docker, which is exactly the
+behaviour this ADR set out to fix.
+
+Migrated, each verified red against a deliberately mutated source before its E2E
+counterpart was deleted:
+
+| moved from | to | tests |
+|---|---|---|
+| `recordings.spec.ts` (index) | `recordings-index-view.test.tsx` | 13 |
+| `recordings.spec.ts` (detail) | `stream-recordings-page.test.tsx` | 8 |
+| `config.spec.ts` (App Config) | `client-config-form.test.tsx` | 12 |
+| `i18n.spec.ts` + `streams.spec.ts` nav | `app-header.test.tsx` + `app-header.tab-state.test.ts` | 18 |
+| `streams.spec.ts` grid/toolbar/deep-links | `live-streams-view.test.tsx` + `stream-card-menu.test.tsx` | 12 |
+| `spa-fallback.spec.ts` | `apps/api/src/spa.test.ts` | 7 |
+
+| | before change 1 finished | after |
+|---|---|---|
+| Playwright tests | 56 in 11 files | **23 in 7 files** |
+| Vitest tests | 133 | **202** |
+| `pnpm verify` | 8.5s (no build) | **~11s warm** (build included) |
+
+Three things the migration turned up that the E2E versions could not have:
+
+1. **The SPA fallback had no ordering test.** `spa.test.ts` asserts a real asset is
+   still served as itself, not just that an unknown route returns HTML. With the
+   handlers swapped, `/assets/app.js` returns `index.html` with a 200 and the app
+   boots blank behind a wall of successes — the old spec passed either way.
+2. **`isActiveRoute` was being tested through TanStack Link.** Link sets its own
+   prefix-matched `aria-current`, so a rendered-header assertion tests Link rather
+   than our exact-match rule for `/config`. The rule moved to `nav-active.ts` with
+   a `logic`-project test.
+3. **`pnpm verify` did not include `pnpm build`**, while `docs/TESTING.md` claimed
+   it "reproduces the CI `build` job exactly". Both are now true.
 
 ### Final shape, after all eight changes
 

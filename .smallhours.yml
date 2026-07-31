@@ -53,4 +53,41 @@ egress_extra_domains: []
 # When true, the sandbox reaches registry.npmjs.org AND install lifecycle
 # scripts are disabled (NPM_CONFIG_IGNORE_SCRIPTS=true). When false (default),
 # npm has no network egress.
-npm_allowed: false
+#
+# On for this repo because the agent installs its own dependencies — nothing is
+# installed for it — and because an issue that adds a library has to be able to
+# resolve one. IGNORE_SCRIPTS costs us nothing here: pnpm 11 denies build scripts
+# by default anyway (there is no `allowBuilds` map in pnpm-workspace.yaml).
+npm_allowed: true
+
+# Widen the sandbox so `pnpm install` can actually write. Egress alone is not
+# enough: the sandbox permits writes to the working directory and $TMPDIR only,
+# and the store is outside both — without this, resolution succeeds and the store
+# write is denied, which surfaces as a baffling install failure.
+#
+# More paths than any one machine uses, deliberately. pnpm picks the store by
+# platform and by which volume the project sits on (XDG on a Linux runner, a
+# project-local .pnpm-store when home is on another volume), and corepack has to
+# fetch the pinned pnpm 11.17.0 into a cache of its own. An allowWrite entry that
+# goes unused costs nothing; a missing one costs a whole run.
+#
+# Lists only — smallhours owns the profile's booleans (its ADR 0008).
+sandbox:
+  filesystem:
+    allowWrite:
+      - ~/.local/share/pnpm
+      - ~/.local/state/pnpm
+      - ~/.cache
+      - ~/.npm
+
+# Run after the agent stops and before the PR opens; a failure re-enters the agent
+# with the output (verify_reentries), so a lint or type error costs ~10s instead of
+# a 3m18s CI round trip plus one of attempt_cap's auto-fix attempts.
+#
+# `pnpm verify` is lint + typecheck + i18n:check + unit/component tests + build —
+# the same set CI's Build job runs, and all of it executable in the agent phase.
+# E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
+# and ffmpeg, none of which exist there, and its web server binds a local port the
+# sandbox forbids. CI owns that. See docs/TESTING.md.
+verify: pnpm verify
+verify_reentries: 2

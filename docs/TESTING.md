@@ -11,10 +11,10 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
 | API serving | Vitest + `app.request()` | HTTP behaviour of the Hono apps in-process against real fixtures: Range/206, content headers, traversal, health | `apps/api/src/media.serving.test.ts`, `health.test.ts` |
 | Component | Vitest (happy-dom) + Testing Library + MSW | Rendered output, form state, Radix menus, and the oRPC calls behind them — deterministic, so assertions are unconditional | `apps/web/src/**/*.test.tsx` |
-| E2E | Playwright | Full browser flows, locale switching, accessibility, live MediaMTX round-trips, WHEP playback over a real peer connection | `tests/e2e/*.spec.ts` |
+| E2E | Playwright | Only what needs a real server: live MediaMTX round-trips, WHEP over a real peer connection, an ffmpeg snapshot, accessibility of the rendered document | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-> **Note:** the Next.js → Vite/Hono migration (see `docs/MIGRATION.md`) did not carry over the old Vitest unit/component/integration layers — those tests were written against Prisma, server actions, and `instrumentation.ts`, none of which exist anymore. Vitest is back for `apps/api` (see `docs/adr/0001-reintroduce-vitest-for-api-unit-tests.md`), covering `jobs.ts` and `router.ts`, and for `apps/web`, covering `lib/whep.ts` + `lib/playback.ts` (see `docs/adr/0003-hand-rolled-whep-client.md`). Contract schemas, `recordings-fs.ts`, `config-store.ts`, `media.ts` range logic, and the RHF forms are still uncovered and tracked in `docs/debt/`.
+**202 Vitest tests, 23 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
 
 ## Component tests
 
@@ -37,15 +37,18 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 
 - Added or changed an HTTP response — status, headers, Range, content type → **API serving** (`app.request()` in-process; no server, no browser, no Docker).
 - Changed what a component renders, a form's state, or a menu action's payload → **Component**.
-- Added a route, navigation, or cross-page flow → **E2E**.
+- Added a route or changed navigation → **Component**. Nav hrefs, active-tab state and locale switching are all rendered output; `app-header.test.tsx` and `app-header.tab-state.test.ts` are the pattern. Reach for E2E only if the thing you changed needs a real server to exist.
 - Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
 - Wrote api logic a browser can't observe — a cron, a spawned process, a timer, a filesystem fallback → **Unit**.
-- Everything else → cover it through the closest E2E flow for now (see the note above).
+- Changed the static/SPA-fallback wiring → **API serving** (`spa.test.ts` mounts it against a fixture root).
+- Needs a live MediaMTX write, a real peer connection, or a real ffmpeg → **E2E**, and say in a comment which of those it is. That sentence is the entry fee: if you cannot name one, the test belongs a layer down.
 
 ## Commands
 
 ```bash
-pnpm verify            # lint + typecheck + i18n:check + test — the CI `build` gate, locally
+pnpm check             # THE INNER LOOP (~4s) — changed files only; run after every edit
+pnpm check --since main # same, scoped to the whole branch
+pnpm verify            # THE GATE (~11s warm) — lint + typecheck + i18n:check + test + build
 pnpm test              # vitest, all packages (turbo)
 pnpm test:changed      # vitest --changed — only tests reachable from your edits
 pnpm test:watch        # vitest watch mode across packages
@@ -55,7 +58,11 @@ pnpm test:e2e:dev      # playwright UI
 E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly runs)
 ```
 
-`pnpm verify` is the preflight: it reproduces the CI `build` job exactly and needs no Docker, no build, and no browsers. `pnpm test:changed` is the inner loop — Vitest resolves the module graph and runs only what your edit can reach.
+`pnpm verify` reproduces the CI `build` job exactly — including `pnpm build`, which is why a Vite or tsdown config error cannot pass here and then fail there. It needs no Docker and no browsers.
+
+`pnpm check` is the inner loop. It lints only the changed files, typechecks the affected packages, runs only the tests your edit can reach, and skips `i18n:check` unless a message catalogue or a README moved. It runs its steps concurrently, because each carries a fixed startup cost that dominates its real work: ESLint takes ~2s to resolve its flat config whether it checks one file or four hundred.
+
+Both are runnable by an agent in CI, which is the point — see `AGENTS.md`. Neither needs the E2E stack.
 
 ## Conventions
 
@@ -65,7 +72,10 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 - **A test you haven't seen fail isn't a test.** Break the line it covers and confirm it goes red before moving on.
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
-- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `save-bar`).
+- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `recording-row`, `save-bar`).
+- **Scope an assertion when the same string appears twice.** A card's "7 recordings" chip and the toolbar's "7 recordings" summary both match a bare `getByText`, and the unscoped version passes on the toolbar alone while the chip is missing. Use `within()` or `toHaveTextContent` on the element you mean.
+- **Don't assert on a library's behaviour and call it ours.** TanStack Link sets its own prefix-matched `aria-current`, so asserting the current tab through a rendered header tests Link, not `isActiveRoute`. Pure routing rules live in their own module with a `logic`-project test — that is why `nav-active.ts` exists apart from `app-header.tsx`.
+- **A `.test.ts` under `apps/web/src` runs in the `logic` project, in node.** Importing a `.tsx` module from one drags React, the router and the orpc client into a node environment, and the failure is a wall of `socket hang up`. Extract the pure function instead.
 - **No conditionals in a `test()` body — lint-enforced.** `if (await card.count() > 0) { ...assert... }` is green whether or not the feature works; 19 such tests had accumulated, and three of them ran in five browsers. The fixtures make unconditional assertions safe: `globalSetup` seeds the recordings, and `scripts/wait-for-mediamtx.mjs` gates the suite on the stream fleet being published *and* ready. If state genuinely varies, the test belongs in the component layer. Cleanup guards in `afterEach` (`if (!materialized) return`) are fine and not flagged.
 - **This supersedes the old "assert state A or state B" guidance.** That rule was a rational response to asserting against live data, and it is what produced the guarded tests. `toHaveCount(n)` against the *fixtures* is now correct — they are deterministic.
 - **No `console.*`** in tests (lint-banned project-wide). Use `expect` to assert; failures speak for themselves.
@@ -74,14 +84,14 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 
 ## E2E projects
 
-`playwright.config.ts` runs `chromium` only by default — 60 tests. It runs every spec, and this is what PRs and local runs get.
+`playwright.config.ts` runs `chromium` only by default — **23 tests in 7 files**, down from 56 in 11 before ADR 0005's change 1 landed. It runs every spec, and this is what PRs and local runs get.
 
 Setting `E2E_ALL_BROWSERS=1` adds four more projects:
 
 - `firefox`, `webkit` — intended to catch HLS-native fallback regressions
 - `mobile-chrome` (Pixel 7), `mobile-safari` (iPhone 14) — covers the responsive grid
 
-Those four only run UI specs (`config`, `recordings`, `streams`, `a11y`). Pure-HTTP specs (`api`, `mediamtx`, `i18n`) run in `chromium` only; running them cross-browser doesn't change the outcome.
+Those four now run **only `a11y.spec.ts`**. The rest of what `uiSpecs` used to match — `config`, `recordings`, `i18n`, and the navigation and grid tests from `streams` — no longer exists as E2E at all; it is Vitest. `streams.spec.ts` was dropped from the pattern too: its one remaining test spawns ffmpeg, and running that five times concurrently against one MediaMTX buys nothing.
 
 **Only `.github/workflows/e2e-nightly.yml` sets that flag** (06:00 UTC daily, plus `workflow_dispatch`). The four extra projects tripled the PR suite for a regression class no current spec exercises — nothing in the cross-browser set drives HLS, `hls.js`, or WHEP. Moving them nightly keeps drift detection within a day. If a playback spec lands, cross-browser should be scoped to *that spec* rather than back to all of `uiSpecs`. See `docs/adr/0005-fast-test-suite.md`.
 

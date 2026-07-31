@@ -56,6 +56,40 @@ describe('stream actions menu', () => {
     expect(screen.getByRole('menuitem', { name: /Edit path config/ })).toBeInTheDocument()
   })
 
+  // Replaces the two streams.spec.ts deep-link tests, which clicked the item and
+  // then asserted the URL a real navigation landed on. The href IS the behaviour;
+  // navigating to prove it needed a browser and a live MediaMTX to render the
+  // destination page.
+  it('deep-links to the stream\'s own path config', async () => {
+    await openMenu()
+
+    expect(screen.getByRole('menuitem', { name: /Edit path config/ })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/paths/stream1',
+    )
+  })
+
+  it('deep-links straight to the hooks section', async () => {
+    await openMenu()
+
+    // The `section` search param is what scrolls the long config page to hooks;
+    // without it the item lands at the top and the action is indistinguishable
+    // from "Edit path config".
+    expect(screen.getByRole('menuitem', { name: /Edit hooks/ })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/paths/stream1?section=pathHooks',
+    )
+  })
+
+  it('deep-links to the stream\'s recordings', async () => {
+    await openMenu()
+
+    expect(screen.getByRole('menuitem', { name: /View recordings/ })).toHaveAttribute(
+      'href',
+      '/recordings/stream1',
+    )
+  })
+
   it('reports the current record state in the menu', async () => {
     await openMenu('on')
 
