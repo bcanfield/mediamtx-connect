@@ -99,3 +99,27 @@ sandbox:
 # and the developer run the same pnpm.
 verify: npx --yes pnpm@11.17.0 run verify
 verify_reentries: 2
+
+# Prefix agent PR titles with a conventional-commit type derived from the
+# issue's labels. `main` is squash-merged, so the PR title IS the subject
+# semantic-release parses — an unprefixed one fails the repo's own
+# `Conventional commit format` check and, before smallhours#30, cost a whole
+# auto-fix attempt to correct on a PR whose code was already green.
+#
+# Presence is the opt-in; absent, titles pass through verbatim.
+#
+# `tech-debt: fix` deliberately, not `refactor`. Debt issues here are routinely
+# real user-visible fixes — #206 (record toggle showed a stale state through the
+# whole write) is one, and its body says "Ships as `fix:`". `refactor` cuts no
+# release, and CLAUDE.md is explicit that silently dropping a change out of the
+# next release is the failure worth avoiding. An extra patch on a nightly
+# release train is cheap by comparison.
+#
+# This buys a title that PASSES, not a title that is good: the map cannot know
+# that #206 is better described as "show pending state on record toggle" than by
+# its own problem-statement title. Retitling a PR by hand stays worthwhile.
+conventional_title_types:
+  bug: fix
+  tech-debt: fix
+  enhancement: feat
+  documentation: docs

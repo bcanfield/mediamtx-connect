@@ -284,7 +284,7 @@ migration guide the honest answer?
 
 ### Tier H — Cheap decision grills (~10 min each, run any time)
 
-**32. #206 — Record toggle has no pending state** — needs a design call on the pending
+**32. #206 (GRILLED ALREADY) — Record toggle has no pending state** — needs a design call on the pending
 affordance. Grill: is a spinner really "undesigned surface," or is disabled-while-pending the
 obvious boring answer? (Suspect the latter — this may be agent-ready.)
 
