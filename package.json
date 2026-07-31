@@ -15,7 +15,8 @@
     "i18n:check": "pnpm run i18n:check:messages && pnpm run i18n:check:readme",
     "i18n:check:messages": "node scripts/i18n-check.mjs",
     "i18n:check:readme": "node scripts/readme-i18n-check.mjs",
-    "test": "turbo test",
+    "test": "turbo test && pnpm test:scripts",
+    "test:scripts": "vitest run --dir scripts",
     "test:watch": "turbo test:watch",
     "test:changed": "turbo test --force -- --changed",
     "check": "node scripts/check.mjs",
@@ -39,6 +40,7 @@
     "eslint-plugin-react-refresh": "catalog:",
     "semantic-release": "catalog:",
     "turbo": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

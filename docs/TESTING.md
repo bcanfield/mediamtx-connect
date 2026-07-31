@@ -11,10 +11,11 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | Unit | Vitest | Logic E2E can't reach: api process spawning, timers, filesystem edge cases; web protocol/URL logic that needs no DOM | `apps/api/src/*.test.ts`, `apps/web/src/**/*.test.ts` (colocated) |
 | API serving | Vitest + `app.request()` | HTTP behaviour of the Hono apps in-process against real fixtures: Range/206, content headers, traversal, health | `apps/api/src/media.serving.test.ts`, `health.test.ts` |
 | Component | Vitest (happy-dom) + Testing Library + MSW | Rendered output, form state, Radix menus, and the oRPC calls behind them — deterministic, so assertions are unconditional | `apps/web/src/**/*.test.tsx` |
+| Scripts | Vitest (root, `--dir scripts`) | Repo tooling under `scripts/` — argument parsing and other logic that isn't in a workspace package, so `turbo test` can't reach it | `scripts/*.test.mjs` |
 | E2E | Playwright | Only what needs a real server: live MediaMTX round-trips, WHEP over a real peer connection, an ffmpeg snapshot, accessibility of the rendered document | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-**202 Vitest tests, 23 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
+**208 Vitest tests (70 api + 132 web + 6 scripts), 23 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
 
 ## Component tests
 
@@ -40,6 +41,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 - Added a route or changed navigation → **Component**. Nav hrefs, active-tab state and locale switching are all rendered output; `app-header.test.tsx` and `app-header.tab-state.test.ts` are the pattern. Reach for E2E only if the thing you changed needs a real server to exist.
 - Changed `Dockerfile`, boot order, or the health endpoint → ensure **image smoke** still passes.
 - Wrote api logic a browser can't observe — a cron, a spawned process, a timer, a filesystem fallback → **Unit**.
+- Changed a script under `scripts/` → **Scripts**. `scripts/` is not a workspace package, `pnpm test:scripts` covers it (`vitest run --dir scripts`) and `pnpm test` runs it after `turbo test`. There is deliberately **no root `vitest.config.ts`** — `apps/api` has no config of its own and would inherit one, which turns its suite into "No test files found". `pnpm check` does **not** run these — `test:changed` is a turbo task and turbo only sees workspace packages — so run `pnpm test:scripts` (or `pnpm verify`) when you edit one. Export the logic from its own module (`check-args.mjs`) rather than testing it by running the script — `check.mjs` shells out to lint, typecheck and Vitest, so importing it means running the whole inner loop.
 - Changed the static/SPA-fallback wiring → **API serving** (`spa.test.ts` mounts it against a fixture root).
 - Needs a live MediaMTX write, a real peer connection, or a real ffmpeg → **E2E**, and say in a comment which of those it is. That sentence is the entry fee: if you cannot name one, the test belongs a layer down.
 
@@ -49,7 +51,8 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 pnpm check             # THE INNER LOOP (~4s) — changed files only; run after every edit
 pnpm check --since main # same, scoped to the whole branch
 pnpm verify            # THE GATE (~11s warm) — lint + typecheck + i18n:check + test + build
-pnpm test              # vitest, all packages (turbo)
+pnpm test              # vitest, all packages (turbo) + the scripts/ project
+pnpm test:scripts      # vitest over scripts/ only — repo tooling turbo can't see
 pnpm test:changed      # vitest --changed — only tests reachable from your edits
 pnpm test:watch        # vitest watch mode across packages
 pnpm build             # e2e runs the built single-server (apps/api/dist)
