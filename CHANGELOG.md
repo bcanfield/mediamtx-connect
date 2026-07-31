@@ -1,3 +1,9 @@
+## [2.1.7](https://github.com/bcanfield/mediamtx-connect/compare/2.1.6...2.1.7) (2026-07-31)
+
+### Bug Fixes
+
+* make the verify gate work without pnpm on its PATH ([#303](https://github.com/bcanfield/mediamtx-connect/issues/303)) ([4e11703](https://github.com/bcanfield/mediamtx-connect/commit/4e11703c8a1943d52972671bea2a581b56bcd0a2)), closes [#300](https://github.com/bcanfield/mediamtx-connect/issues/300)
+
 ## [2.1.6](https://github.com/bcanfield/mediamtx-connect/compare/2.1.5...2.1.6) (2026-07-30)
 
 ### Bug Fixes
