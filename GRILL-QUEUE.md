@@ -63,6 +63,9 @@ Nothing on the old queue was closed. Every item below is still open.
 - **Deliberately left bare:** #292–#296 and #216. They are not awaiting a grill, so
   `needs-triage` would misdescribe them — they are awaiting *authorization*, and this repo's
   vocabulary has no label for that. The authorization queue below is that state.
+- **From the #214 grill (same day):** `docs/adr/0004` amended in place (uncommitted at time of
+  writing); #214 converted to a parent spec; **#304 / #305 / #306 filed**; #201 re-scoped and
+  retitled, losing `recordings-fs.ts` to #304.
 - **Not filed:** the non-RTSP source kinds #296 defers (rpiCamera, WHEP-redirect, `publisher`,
   always-available file). Hold until #296 actually ships rather than file four speculative tickets.
 
@@ -76,11 +79,19 @@ smallhours immediately, so promote **one at a time, in this order**:
 | Order | Issue | Why it's ready | Gated on |
 |-------|-------|----------------|----------|
 | 1 | **#291** Paths catalog | Failed only on the old 100-turn cap; cap is now 200 | — |
-| 2 | **#216** Light-mode contrast AA | Clear source, clear task; lost its labels in a loop failure | — |
-| 3 | #292 Per-path detail | Specced out of #175 | #291 |
-| 4 | #296 RTSP add-camera wizard | Specced out of #175 | #291 |
-| 5 | #293 / #294 / #295 | Specced out of #175 | #292 |
-| 6 | #301 Path rename | Not yet grilled — see Tier C | #294, #295 |
+| 2 | **#304** api baseline tests | Grilled 2026-07-30; two small modules, no dependencies | — |
+| 3 | **#306** FEATURES.md gate | Grilled 2026-07-30; independent of the coverage pair | — |
+| 4 | **#216** Light-mode contrast AA | Clear source, clear task; lost its labels in a loop failure | — |
+| 5 | #305 Coverage floor | Grilled 2026-07-30 | #304 |
+| 6 | #292 Per-path detail | Specced out of #175 | #291 |
+| 7 | #296 RTSP add-camera wizard | Specced out of #175 | #291 |
+| 8 | #293 / #294 / #295 | Specced out of #175 | #292 |
+| 9 | #301 Path rename | Not yet grilled — see Tier C | #294, #295 |
+
+**One item on this list needs you, not the loop:** after #306's rename merges, add the renamed
+`pr-title` job to the `protect-release-branches` ruleset. Until then the gate blocks smallhours
+but not a human merge — the advisory state ADR 0004 exists to escape. Rename first, require
+second: the required-context string *is* the job's `name`.
 
 #291 first is also the cheapest experiment on the board: it tells you whether the
 decomposition + the 200-turn cap + the 60m job cap actually close the loop, before any further
@@ -94,24 +105,33 @@ Rank · issue · why here · **what the grill must resolve** → *tickets it sho
 
 ### Tier A — Unblock the machine (small, mostly decisions)
 
-**1. #214 — Implement ADR 0004: coverage floor, `pnpm verify`, FEATURES.md gate**
-Highest leverage on the board: every agent-executed issue below is safer once it lands, and it
-has now failed the loop twice. ADR is `Accepted`; only the mechanisms are missing. #300 is a
-live instance of the exact failure mode ADR 0004 exists to prevent.
-→ Grill: is this one ticket or three? The coverage floor (pick a baseline number), `pnpm verify`
-(a script), and the FEATURES.md CI gate are independent and each is ~30 min. Splitting them is
-probably why it keeps dying — and the #175 split is the precedent that it works. Also: does ADR
-0005's restructure change the baseline the floor should be set from? *Produces: 3 tickets.*
+**1. ~~#214 — Implement ADR 0004~~ — GRILLED 2026-07-30. Done.**
+Now a parent spec, cut into three: **#304** api baseline tests (`mediamtx.ts` +
+`recordings-fs.ts`, no dependencies) → **#305** coverage floor (blocked by #304) · **#306**
+`FEATURES.md` gate (independent). ADR 0004 amended in place first, following ADR 0005's
+strikethrough precedent, because five of its premises were stale enough that an agent reading
+it would have built a bypassable gate.
 
-**2. #201 — Remaining test layers** — **re-scope, don't implement as written**
-Its premise is stale: it claims "`apps/web` has no test runner at all," but there are now 8 web
-tests (`apps/web/src/lib/*.test.ts` ×4, `features/**/*.test.tsx` ×4) and ADR 0005 is
-`Implemented`. Real remainder is narrower: `packages/contract` schemas and
-`apps/api/src/recordings-fs.ts` (`media.serving.test.ts` appears to cover Range).
-→ Grill: what's actually uncovered now, and does ADR 0005 already close part of it?
-*Produces: 1–2 narrow tickets and a body rewrite. Possibly closes as mostly-done.*
+What the grill found, in descending order of how much it would have cost:
 
-**3. #212 — `webrtcAdditionalHosts` hardcodes 127.0.0.1**
+- **The doc gate could not live in `build`.** `build` skips on `edited`, GitHub counts a
+  skipped required check as passed, so open-as-`chore:` → green → retitle-to-`feat:` → merge
+  was an open bypass. It goes in `pr-title`, the only job that re-runs on retitle.
+- **`pr-title` isn't a required check**, so it must be added to `protect-release-branches` —
+  **a maintainer action; an agent can't do it, and #306 is advisory until you do.**
+- **Mechanism 2 was already shipped.** `pnpm verify` + `pnpm check` exist. One-third of the
+  ticket was work that didn't exist.
+- **Coverage must not ride on `test`.** `pnpm check` runs `vitest --changed` through
+  `turbo test`; thresholds there would make the 4s inner loop permanently red.
+- **The gate keys on the PR title**, not commits — `main` is squash-merged.
+
+**2. ~~#201 — Remaining test layers~~ — RE-SCOPED 2026-07-30.**
+Half of it was already done (ADR 0005 landed the web runner; 14 web test files now exist), and
+`recordings-fs.ts` was double-owned with #214 — it moved to #304. Remaining: `packages/contract`
+schemas (264 lines, zero tests) and confirming whether `media.serving.test.ts` already covers
+the Range/206 logic. Title and body rewritten; may collapse to a single suite.
+
+**3. #212 — `webrtcAdditionalHosts` hardcodes 127.0.0.1** — **next grill**
 A silent correctness bug on the **shipped flagship path**: WHEP is the default player (#174), and
 any non-localhost deployment loses it, falls back to HLS, and shows the operator working video
 with no signal.
@@ -310,12 +330,11 @@ budget is derived; worth it for per-repo tuning.
 
 ## Proposed next session
 
-**Grill #214 first** (item 1). Unchanged from the last revision, and now better motivated: it has
-failed the loop twice, its grill question is a decomposition — the same shape that just worked on
-#175 — and #300 is a live specimen of the silent-success failure ADR 0004 exists to stop.
+Items 1 and 2 are done — #214 grilled into #304/#305/#306, #201 re-scoped. **Next grill is #212**
+(item 3): push on why the fix isn't both halves — derive the host from `REMOTE_MEDIAMTX_URL`
+*and* detect ICE failure in the player. It's the only shipped-path correctness bug on the board.
 
-Then items **2 and 3** (#201 re-scope, #212 both-halves), which restore the safety rails and fix a
-live bug on the flagship path before new feature work enters the loop.
+After that, Tier B (#202 → #203) is the next thing that unblocks a queue rather than a ticket.
 
 Separately from grilling, the authorization queue above is ready whenever you want to dispatch —
 **#291 is the highest-information single label on the board**, since it tests the decomposition
