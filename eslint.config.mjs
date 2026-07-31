@@ -10,6 +10,9 @@ export default antfu(
       'apps/api/public',
       // standalone demo-capture rig with throwaway scripts
       'demo/**',
+      // the agent-harness's own nested checkout, dropped into the working tree
+      // by tooling outside this repo; never committed (see .git/info/exclude)
+      '.smallhours-toolkit/**',
     ],
   },
   {

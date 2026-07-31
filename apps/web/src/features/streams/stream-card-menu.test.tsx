@@ -1,7 +1,7 @@
 import type { RecordState } from '@connect/contract'
 import type { PublishTarget } from '@/lib/publish'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, waitForElementToBeRemoved } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -16,7 +16,7 @@ import { StreamCard } from './stream-card'
 // checked against the real procedure inputs — rename a field in
 // packages/contract and these assertions stop compiling.
 const snapshot = vi.fn<(input: RpcInputs['streams']['snapshot']) => void>()
-const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void>()
+const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>>()
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
@@ -161,5 +161,60 @@ describe('menu actions reach the API', () => {
     expect(updatePathConfig).toHaveBeenCalledWith(
       { name: 'stream1', conf: { record: false } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
     )
+  })
+})
+
+// The card renders the settled `streams.list` value, so without a pending state
+// a slow write reads as a no-op — and a second click computed from that same
+// stale value can race the first to the opposite state.
+describe('record toggle while the write is in flight', () => {
+  /** Holds the next write open until the returned settler is called. */
+  function holdWrite() {
+    let settle!: { answer: () => void, fail: () => void }
+    const held = new Promise<void>((resolve, reject) => {
+      settle = { answer: resolve, fail: () => reject(new Error('MediaMTX rejected the patch')) }
+    })
+    updatePathConfig.mockImplementationOnce(() => held)
+    return settle
+  }
+
+  it('shows the state we asked for before the server answers', async () => {
+    const write = holdWrite()
+    const view = await openMenu('off')
+
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+
+    expect(await screen.findByText('· ● REC')).toBeInTheDocument()
+
+    // Once the write lands the settled prop wins again — here still `off`,
+    // since nothing re-renders the card with a fresh `streams.list`.
+    write.answer()
+    await waitForElementToBeRemoved(() => screen.queryByText('· ● REC'))
+  })
+
+  it('disables a second flip until the first one settles', async () => {
+    const write = holdWrite()
+    const view = await openMenu('off')
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+
+    await view.user.click(screen.getByRole('button', { name: 'Stream actions' }))
+
+    expect(await screen.findByRole('menuitem', { name: /Record.*ON/ })).toHaveAttribute('aria-disabled', 'true')
+
+    write.answer()
+    expect(await screen.findByRole('menuitem', { name: /Record.*OFF/ })).not.toHaveAttribute('aria-disabled')
+  })
+
+  // Nothing rolls back: `isPending` going false is the rollback.
+  it('snaps back to the settled state when the write is rejected', async () => {
+    const write = holdWrite()
+    const view = await openMenu('off')
+    await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
+    expect(await screen.findByText('· ● REC')).toBeInTheDocument()
+
+    write.fail()
+
+    expect(await screen.findByText('Couldn\'t change recording')).toBeInTheDocument()
+    expect(screen.queryByText('· ● REC')).not.toBeInTheDocument()
   })
 })
