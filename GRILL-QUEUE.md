@@ -7,6 +7,8 @@
 > merged 01:20Z**. 5/5 CI green including E2E; the diff matched the spec on every point.
 > The caps question is answered: **200 turns / 60m closed the loop** on a five-layer ticket
 > (26min, 179 bash calls, 47 files, 3 subagents). #291 is clear to promote.
+> **#212 also grilled this revision** — re-spec'd in place and split (new: **#312**). Both left
+> **parked with no state label**; nothing dispatched. #212 is the natural next dispatch.
 >
 > Ordering principle (per `CLAUDE.md` § Project goal): **leverage** (does it unblock other
 > work) → **MediaMTX-native fit** (does it consume a config key / endpoint / hook / protocol)
@@ -104,6 +106,26 @@ Nothing on the old queue was closed. Every item below is still open.
 - **Still not deleted:** `origin/agent/issue-209` (`bad885b`). See F5 — and note the live run may
   now push a *new* branch of that name, so delete it only after the run settles.
 
+**From the #212 grill (same day):**
+
+- **#212 body rewritten** clean-room: the `REMOTE_MEDIAMTX_HOST` decision, why the env var must
+  be the exclusive owner, per-file scope, two documented-not-fixed consequences, an explicit
+  rejected list, and acceptance criteria keyed on `playback.spec.ts`.
+- **#212 labels:** `needs-triage` removed, `tech-debt` kept. **No state label** — grilled and
+  specified, awaiting authorization, which this repo's vocabulary still has no word for (same
+  bare state as #292–#296).
+- **#312 filed** — the live-view loopback banner, split out of #212's UI half. `enhancement`
+  only, no state label. Not blocked by #212; disjoint files, either order works.
+- **Nothing dispatched.** Both parked at your instruction. #212 is the smaller and better-fenced
+  of the two (no app code, no i18n, and a real-peer-connection e2e that fails loudly on bad
+  plumbing) — it is the natural next dispatch.
+- **Split rather than bundled** because `main` is squash-merged and the PR title is what
+  semantic-release parses: one half is a `fix:`, the other a `feat:`, and a bundled title has to
+  mislabel one of them out of the release. They share no files but `docs/FEATURES.md`.
+- **Left undone, needs you:** `docs/ideas/01-protocols-and-sources.md:155` still carries a
+  "`webrtcAdditionalHosts` builder — detect the server's public IP, one-click add" idea. #212 +
+  #312 cover the trap it was aimed at; the auto-detect flourish is all that's left of it.
+
 ## Bookkeeping applied in the 07-30 revision
 
 - `needs-triage` added to the eleven queue items that carried a category label but no state
@@ -183,18 +205,46 @@ Half of it was already done (ADR 0005 landed the web runner; 14 web test files n
 schemas (264 lines, zero tests) and confirming whether `media.serving.test.ts` already covers
 the Range/206 logic. Title and body rewritten; may collapse to a single suite.
 
-**3. #212 — `webrtcAdditionalHosts` hardcodes 127.0.0.1** — **next grill**
-A silent correctness bug on the **shipped flagship path**: WHEP is the default player (#174), and
-any non-localhost deployment loses it, falls back to HLS, and shows the operator working video
-with no signal.
-→ Grill: the issue frames it as either/or — derive the host from `REMOTE_MEDIAMTX_URL` at boot,
-*or* surface "WebRTC unreachable" in the UI. **Push on why not both**: derive it (fixes the
-common case) *and* detect ICE failure in the player (honest when derivation is wrong). The
-detection half is also a doctor check → feeds #187. *Produces: 1–2 tickets.*
+**3. ~~#212 — `webrtcAdditionalHosts` hardcodes 127.0.0.1~~ — GRILLED 2026-07-31.
+Re-spec'd in place + split; both parked, nothing dispatched.**
+"Why not both" held, but neither half survived in the shape the issue proposed. Now: **#212**
+(`fix:`, deployment knob, no app code) + **#312** (`feat:`, live-view banner).
+
+What the grill found, in descending order of how much it would have cost:
+
+- **The knob was already in the UI.** `webrtcAdditionalHosts` is an editable list field at
+  `/config/mediamtx/global` (`sections.ts:122`). The gap was never capability — it was that
+  nothing tells the operator to go there.
+- **…and editing it there doesn't survive a restart.** `docker-compose.yml:9` mounts
+  `mediamtx.yml` `:ro`, and `publish-urls.spec.ts:19` patches global config against that stack
+  successfully — so MediaMTX applies `config/global/patch` in memory only. Any UI-set value is
+  gone on the next mediamtx restart. A UI-only fix was never viable.
+- **MediaMTX has a native lever neither option used.** `MTX_WEBRTCADDITIONALHOSTS` — every
+  config key is env-overridable as `MTX_PARAMNAME`, arrays comma-separated. Compose sets it
+  with zero app code and it survives restarts. This is what #212 became.
+- **"Derive from `REMOTE_MEDIAMTX_URL` at boot" was rejected outright.** Cross-boundary config
+  magic: the app overwriting a key the operator can also edit in our own UI, no record of who
+  won, reverts whenever mediamtx restarts without us, and wrong whenever the URL is a DNS name
+  behind a proxy terminating elsewhere than the host serving ICE.
+- **The naive one-knob version creates a worse bug than it fixes.** Env var *and* a live yml
+  key means the env silently wins — the operator edits the sample config, restarts, and is
+  overridden by a compose default they never saw. Hence: commented out in both ymls, env var is
+  the exclusive owner. (`${VAR:-}` doesn't rescue it — compose still passes an empty string and
+  MediaMTX reads that as an empty list.)
+- **Half the UI half had already shipped.** `stream-card.tsx:198` renders `WEBRTC UNAVAILABLE`
+  — but only in LOW-LAT, and `:196` exempts AUTO deliberately. AUTO stays silent: this is a
+  once-per-deployment *config* fact, not a per-stream playback fact, so it belongs in a banner
+  that names the cause, not a pill that reports a symptom the operator often can't act on.
+- **The banner costs almost nothing.** `live-view-page.tsx:38-43` already fetches the full
+  global config, and `webrtcAdditionalHosts` is already in the contract — so #312 is a pure
+  function plus a `PlaybackUrlBanner` sibling. No oRPC procedure, no contract change, no extra
+  request. An API check procedure for #187 was rejected as speculative surface for an unbuilt page.
+- **#212's own body mis-cites its sibling debt.** `20260715151742` is about
+  `BACKEND_SERVER_MEDIAMTX_URL`, not `REMOTE_MEDIAMTX_URL`. That doc stays open.
 
 ### Tier B — Foundation the feature work sits on
 
-**4. #202 — Sync MediaMTX schema + client v1.11.3 → v1.19.2**
+**4. #202 — Sync MediaMTX schema + client v1.11.3 → v1.19.2** — **next grill**
 Gates #203, #199, #226, and version-pins #184's compatibility matrix. Failed the loop.
 → Grill: is it mechanical regeneration or does it carry breaking contract changes? What's the
 diff size? Should it be split by scope (global / pathDefaults / paths)? *Produces: 1–3 tickets.*
