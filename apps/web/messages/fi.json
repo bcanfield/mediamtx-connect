@@ -200,6 +200,11 @@
       "pageHeader": "Polun asetukset · {name}",
       "pageSubHeader": "Tämän lähetyksen asetukset, tallennetaan palvelimelle.",
       "inheritedSubHeader": "Tämän lähetyksen asetukset, peritään tällä hetkellä kohteesta {confName}. Tallennus korvaa vain muuttamasi kohdat.",
+      "unresolved": {
+        "title": "Ei näytettäviä asetuksia kohteelle ”{name}”",
+        "lead": "MediaMTX:llä ei ole tämännimistä käynnissä olevaa polkua eikä omaa asetusmerkintää. Jos striimi on vain pysäytetty, sen asetukset periytyvät — ja MediaMTX voi kertoa mistä vasta, kun striimi on käynnissä.",
+        "openPathDefaults": "Avaa polkujen oletusarvot"
+      },
       "revert": {
         "action": "Palauta perittyihin",
         "confirmTitle": "Palautetaanko {name} perittyihin asetuksiin?",

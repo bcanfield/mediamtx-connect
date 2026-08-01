@@ -200,6 +200,11 @@
       "pageHeader": "Bane-konfigurasjon · {name}",
       "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",
       "inheritedSubHeader": "Innstillinger for denne strømmen, arves for øyeblikket fra {confName}. Lagring overstyrer bare det du har endret.",
+      "unresolved": {
+        "title": "Ingen konfigurasjon å vise for «{name}»",
+        "lead": "MediaMTX har ingen kjørende bane med dette navnet og ingen egen konfigurasjonsoppføring. Hvis strømmen bare er stoppet, arves innstillingene — og MediaMTX kan bare si hvor fra mens strømmen kjører.",
+        "openPathDefaults": "Åpne standardverdier for stier"
+      },
       "revert": {
         "action": "Tilbake til arvet",
         "confirmTitle": "Sette {name} tilbake til arvede innstillinger?",

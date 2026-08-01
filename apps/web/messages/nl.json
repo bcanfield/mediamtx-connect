@@ -200,6 +200,11 @@
       "pageHeader": "Padconfiguratie · {name}",
       "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",
       "inheritedSubHeader": "Instellingen van deze stream, momenteel overgenomen van {confName}. Opslaan overschrijft alleen wat je hebt gewijzigd.",
+      "unresolved": {
+        "title": "Geen configuratie om te tonen voor „{name}”",
+        "lead": "MediaMTX heeft geen draaiend pad met deze naam en er is ook geen eigen configuratie-invoer. Als de stream gewoon gestopt is, worden de instellingen overgenomen — en MediaMTX kan alleen vertellen waarvandaan zolang de stream draait.",
+        "openPathDefaults": "Padstandaarden openen"
+      },
       "revert": {
         "action": "Terug naar overgenomen",
         "confirmTitle": "{name} terugzetten naar overgenomen instellingen?",

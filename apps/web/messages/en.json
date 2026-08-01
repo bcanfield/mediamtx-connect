@@ -200,6 +200,11 @@
       "pageHeader": "Path Config · {name}",
       "pageSubHeader": "Settings for this stream, saved to the server.",
       "inheritedSubHeader": "Settings for this stream, currently inherited from {confName}. Saving overrides only what you changed.",
+      "unresolved": {
+        "title": "No config to show for “{name}”",
+        "lead": "MediaMTX has no running path by this name and no config entry of its own. If the stream is simply stopped, its settings are inherited — and MediaMTX can only tell us where from while the stream is running.",
+        "openPathDefaults": "Open path defaults"
+      },
       "revert": {
         "action": "Revert to inherited",
         "confirmTitle": "Revert {name} to inherited settings?",

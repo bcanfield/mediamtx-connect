@@ -34,7 +34,7 @@ export interface StubApi {
   snapshot?: (input: Inputs['streams']['snapshot']) => void
   /** Returning a promise holds the write open, so a test can assert in-flight state. */
   updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>
-  /** The effective config a path resolves to — `{confName, conf}`, or null. */
+  /** What a path resolves to — `{status: 'resolved', confName, conf}`, `{status: 'unresolved'}`, or null. */
   pathConfig?: () => unknown
   deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
   /** One summary per stream that has recordings. Defaults to none. */

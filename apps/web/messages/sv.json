@@ -200,6 +200,11 @@
       "pageHeader": "Sökvägskonfiguration · {name}",
       "pageSubHeader": "Inställningar för den här strömmen, sparas på servern.",
       "inheritedSubHeader": "Inställningar för den här strömmen, ärvs för närvarande från {confName}. Sparande skriver bara över det du ändrat.",
+      "unresolved": {
+        "title": "Ingen konfiguration att visa för ”{name}”",
+        "lead": "MediaMTX har ingen körande sökväg med det här namnet och ingen egen konfigurationspost. Om strömmen bara är stoppad ärvs dess inställningar — och MediaMTX kan bara berätta varifrån medan strömmen körs.",
+        "openPathDefaults": "Öppna standardvärden för sökvägar"
+      },
       "revert": {
         "action": "Återgå till ärvda",
         "confirmTitle": "Återgå {name} till ärvda inställningar?",

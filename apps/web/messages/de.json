@@ -200,6 +200,11 @@
       "pageHeader": "Pfad-Konfiguration · {name}",
       "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
       "inheritedSubHeader": "Einstellungen dieses Streams, derzeit von {confName} geerbt. Beim Speichern wird nur überschrieben, was du geändert hast.",
+      "unresolved": {
+        "title": "Keine Konfiguration für „{name}“ anzuzeigen",
+        "lead": "MediaMTX hat keinen laufenden Pfad mit diesem Namen und keinen eigenen Konfigurationseintrag dafür. Wenn der Stream einfach nur gestoppt ist, werden seine Einstellungen vererbt — und woher, kann MediaMTX uns nur sagen, solange der Stream läuft.",
+        "openPathDefaults": "Pfad-Standardwerte öffnen"
+      },
       "revert": {
         "action": "Auf Vererbung zurücksetzen",
         "confirmTitle": "{name} auf geerbte Einstellungen zurücksetzen?",

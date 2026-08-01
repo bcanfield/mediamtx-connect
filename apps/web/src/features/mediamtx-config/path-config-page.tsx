@@ -1,3 +1,4 @@
+import type { PathConfigResult } from '@connect/contract'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -15,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
 
 import { MediaMTXConfigForm } from './mediamtx-config-form'
@@ -27,18 +29,24 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
   const pathConfig = useQuery(options)
   const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
 
-  const effective = pathConfig.data
+  // Annotated because the union `useQuery` infers doesn't narrow on `status`.
+  const result: PathConfigResult | null | undefined = pathConfig.data
+  const effective = result?.status === 'resolved' ? result : null
   // Values come from a wildcard entry until this path has one of its own.
   const inheritedFrom = effective && effective.confName !== name ? effective.confName : null
+  const unresolved = result?.status === 'unresolved'
 
   return (
     <PageLayout
       width="wide"
       header={t('pathConfig.pageHeader', { name })}
       subHeader={
-        inheritedFrom
-          ? t('pathConfig.inheritedSubHeader', { confName: inheritedFrom })
-          : t('pathConfig.pageSubHeader')
+        // Nothing is shown below, so "Settings for this stream" would be a lie.
+        unresolved
+          ? null
+          : inheritedFrom
+            ? t('pathConfig.inheritedSubHeader', { confName: inheritedFrom })
+            : t('pathConfig.pageSubHeader')
       }
       actions={
         // Nothing to revert while the path is still tracking a wildcard entry.
@@ -47,27 +55,46 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
           : null
       }
     >
-      {pathConfig.isSuccess && (
-        effective
-          ? (
-              <MediaMTXConfigForm
-                // Reverting swaps every value for the inherited one, and the
-                // form only reads `conf` when it mounts.
-                key={effective.confName}
-                scope={PATH_CONFIG_SCOPE}
-                conf={effective.conf}
-                initialSection={section}
-                onSave={async (_values, changed) => {
-                  await updatePathConfig.mutateAsync({ name, conf: changed })
-                  // The first save materializes an entry, so confName and the
-                  // subheader that reports it are stale until this settles.
-                  await queryClient.invalidateQueries({ queryKey: options.queryKey })
-                }}
-              />
-            )
-          : <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
+      {effective && (
+        <MediaMTXConfigForm
+          // Reverting swaps every value for the inherited one, and the
+          // form only reads `conf` when it mounts.
+          key={effective.confName}
+          scope={PATH_CONFIG_SCOPE}
+          conf={effective.conf}
+          initialSection={section}
+          onSave={async (_values, changed) => {
+            await updatePathConfig.mutateAsync({ name, conf: changed })
+            // The first save materializes an entry, so confName and the
+            // subheader that reports it are stale until this settles.
+            await queryClient.invalidateQueries({ queryKey: options.queryKey })
+          }}
+        />
+      )}
+      {unresolved && <UnresolvedPathConfig name={name} />}
+      {pathConfig.isSuccess && result === null && (
+        <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
       )}
     </PageLayout>
+  )
+}
+
+// Read-only on purpose. Both routes here — a stream that stopped publishing and
+// a name that was never a path — look identical to MediaMTX, so the copy can't
+// claim either, and there is no effective config to offer editing of.
+function UnresolvedPathConfig({ name }: { name: string }) {
+  const t = useTranslations('Config.pathConfig.unresolved')
+
+  return (
+    <div className="mx-auto my-14 flex w-full max-w-lg flex-col items-center gap-5 rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
+      <div className="space-y-1.5">
+        <h2 className="text-section font-semibold tracking-title">{t('title', { name })}</h2>
+        <p className="text-lead text-muted-foreground">{t('lead')}</p>
+      </div>
+      <Button asChild variant="outline">
+        <Link href="/config/mediamtx/path-defaults">{t('openPathDefaults')}</Link>
+      </Button>
+    </div>
   )
 }
 

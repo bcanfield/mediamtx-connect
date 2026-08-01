@@ -200,6 +200,11 @@
       "pageHeader": "Útvonal-konfiguráció · {name}",
       "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",
       "inheritedSubHeader": "Ennek a streamnek a beállításai, jelenleg a(z) {confName} elemtől öröklődnek. A mentés csak a módosított értékeket írja felül.",
+      "unresolved": {
+        "title": "Nincs megjeleníthető konfiguráció ehhez: „{name}”",
+        "lead": "A MediaMTX-nek nincs ilyen nevű futó útvonala, és saját konfigurációs bejegyzése sincs. Ha a stream csak le van állítva, a beállításai öröklődnek — de a MediaMTX csak futó stream esetén tudja megmondani, honnan.",
+        "openPathDefaults": "Útvonalak alapértékeinek megnyitása"
+      },
       "revert": {
         "action": "Vissza az örökölthöz",
         "confirmTitle": "Visszaállítod a(z) {name} elemet az örökölt beállításokra?",

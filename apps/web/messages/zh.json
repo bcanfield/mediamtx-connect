@@ -200,6 +200,11 @@
       "pageHeader": "路径配置 · {name}",
       "pageSubHeader": "该流的设置，保存到服务器。",
       "inheritedSubHeader": "该流的设置，当前继承自 {confName}。保存时仅覆盖你更改过的项。",
+      "unresolved": {
+        "title": "没有可显示的“{name}”配置",
+        "lead": "MediaMTX 中没有以此名称运行的路径，也没有它自己的配置条目。如果该流只是已停止，它的设置就是继承而来的 — 而只有在流运行时，MediaMTX 才能告诉我们继承自哪里。",
+        "openPathDefaults": "打开路径默认设置"
+      },
       "revert": {
         "action": "恢复为继承",
         "confirmTitle": "将 {name} 恢复为继承的设置？",

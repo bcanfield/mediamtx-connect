@@ -200,6 +200,11 @@
       "pageHeader": "Konfiguracja ścieżki · {name}",
       "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",
       "inheritedSubHeader": "Ustawienia tego strumienia, obecnie dziedziczone z {confName}. Zapis nadpisuje tylko to, co zmieniono.",
+      "unresolved": {
+        "title": "Brak konfiguracji do wyświetlenia dla „{name}”",
+        "lead": "MediaMTX nie ma działającej ścieżki o tej nazwie ani własnego wpisu konfiguracji. Jeśli strumień jest po prostu zatrzymany, jego ustawienia są dziedziczone — a MediaMTX może powiedzieć, skąd, tylko wtedy, gdy strumień działa.",
+        "openPathDefaults": "Otwórz domyślne ustawienia ścieżek"
+      },
       "revert": {
         "action": "Przywróć dziedziczenie",
         "confirmTitle": "Przywrócić dla {name} dziedziczone ustawienia?",

@@ -200,6 +200,11 @@
       "pageHeader": "Config du chemin · {name}",
       "pageSubHeader": "Paramètres de ce flux, enregistrés sur le serveur.",
       "inheritedSubHeader": "Paramètres de ce flux, actuellement hérités de {confName}. L'enregistrement ne remplace que ce que vous avez modifié.",
+      "unresolved": {
+        "title": "Aucune configuration à afficher pour « {name} »",
+        "lead": "MediaMTX n'a aucun chemin en cours d'exécution portant ce nom, ni d'entrée de configuration propre. Si le flux est simplement arrêté, ses paramètres sont hérités — et MediaMTX ne peut nous dire d'où que tant que le flux est en cours d'exécution.",
+        "openPathDefaults": "Ouvrir les valeurs par défaut des chemins"
+      },
       "revert": {
         "action": "Revenir à l'héritage",
         "confirmTitle": "Revenir {name} aux paramètres hérités ?",

@@ -200,6 +200,11 @@
       "pageHeader": "Yol yapılandırması · {name}",
       "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",
       "inheritedSubHeader": "Bu yayının ayarları, şu anda {confName} kaynağından devralınıyor. Kaydetmek yalnızca değiştirdiklerinizi geçersiz kılar.",
+      "unresolved": {
+        "title": "“{name}” için gösterilecek yapılandırma yok",
+        "lead": "MediaMTX'te bu adla çalışan bir yol yok ve bu ada ait kendi yapılandırma girdisi de yok. Akış yalnızca durdurulmuşsa ayarları devralınıyordur — ve MediaMTX ayarların nereden devralındığını yalnızca akış çalışırken söyleyebilir.",
+        "openPathDefaults": "Yol varsayılanlarını aç"
+      },
       "revert": {
         "action": "Devralınana geri dön",
         "confirmTitle": "{name} devralınan ayarlara geri döndürülsün mü?",

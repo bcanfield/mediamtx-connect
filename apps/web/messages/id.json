@@ -200,6 +200,11 @@
       "pageHeader": "Konfigurasi jalur · {name}",
       "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",
       "inheritedSubHeader": "Pengaturan stream ini, saat ini diwarisi dari {confName}. Menyimpan hanya menimpa apa yang Anda ubah.",
+      "unresolved": {
+        "title": "Tidak ada konfigurasi untuk ditampilkan bagi “{name}”",
+        "lead": "MediaMTX tidak punya jalur berjalan dengan nama ini dan tidak ada entri konfigurasi miliknya sendiri. Jika aliran hanya sedang berhenti, pengaturannya diwarisi — dan MediaMTX hanya bisa memberi tahu asalnya selama aliran berjalan.",
+        "openPathDefaults": "Buka default jalur"
+      },
       "revert": {
         "action": "Kembalikan ke warisan",
         "confirmTitle": "Kembalikan {name} ke pengaturan warisan?",
