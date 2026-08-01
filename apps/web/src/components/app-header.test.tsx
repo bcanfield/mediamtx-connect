@@ -53,6 +53,7 @@ describe('primary navigation', () => {
       '/recordings',
       '/config',
       '/config/mediamtx/global',
+      '/config/mediamtx/paths',
     ])
   })
 
@@ -67,6 +68,7 @@ describe('primary navigation', () => {
       'Recordings',
       'App Config',
       'MediaMTX Config',
+      'Paths',
     ])
   })
 

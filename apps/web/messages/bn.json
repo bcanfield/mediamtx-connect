@@ -41,7 +41,8 @@
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
       "appConfig": "অ্যাপ কনফিগ",
-      "mediamtxConfig": "MediaMTX কনফিগ"
+      "mediamtxConfig": "MediaMTX কনফিগ",
+      "paths": "পাথ"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "পাথের ডিফল্ট",
       "pageSubHeader": "প্রতিটি স্ট্রিম যে সেটিংস উত্তরাধিকারসূত্রে পায়, সার্ভারে সংরক্ষিত।"
+    },
+    "pathsCatalog": {
+      "pageHeader": "পাথ",
+      "pageSubHeader": "MediaMTX যে প্রতিটি পাথের জন্য কনফিগ এন্ট্রি রাখে।",
+      "summary": "{count, plural, one {#টি কনফিগার করা পাথ} other {#টি কনফিগার করা পাথ}}",
+      "columnName": "পাথ",
+      "columnSource": "সোর্স",
+      "columnState": "অবস্থা",
+      "regexBadge": "REGEX",
+      "regexTitle": "একটি রেগুলার এক্সপ্রেশন — এই এন্ট্রিটি এর সাথে মেলে এমন প্রতিটি পাথ নামের জন্য কাজ করে।",
+      "stateActive": "LIVE",
+      "stateIdle": "নিষ্ক্রিয়",
+      "sourceUnset": "সেট করা নেই",
+      "empty": {
+        "title": "কোনো পাথ কনফিগার করা নেই",
+        "lead": "MediaMTX-এ কোনো পাথ কনফিগ এন্ট্রি নেই। একটিও না থাকা পর্যন্ত প্রতিটি স্ট্রিম কেবল পাথের ডিফল্ট দিয়েই চলে।",
+        "openPathDefaults": "পাথের ডিফল্ট খুলুন"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX-এ পৌঁছানো যাচ্ছে না",
+        "unreachableLead": "এই ঠিকানায় MediaMTX API থেকে কোনো সাড়া নেই:",
+        "openAppConfig": "অ্যাপ কনফিগ খুলুন"
+      }
     },
     "pathConfig": {
       "pageHeader": "পাথ কনফিগ · {name}",

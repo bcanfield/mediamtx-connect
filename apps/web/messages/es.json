@@ -41,7 +41,8 @@
       "live": "En vivo",
       "recordings": "Grabaciones",
       "appConfig": "Configuración de la app",
-      "mediamtxConfig": "Configuración de MediaMTX"
+      "mediamtxConfig": "Configuración de MediaMTX",
+      "paths": "Rutas"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Valores predeterminados de rutas",
       "pageSubHeader": "Ajustes que hereda cada transmisión, guardados en el servidor."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Rutas",
+      "pageSubHeader": "Cada ruta para la que MediaMTX tiene una entrada de configuración.",
+      "summary": "{count, plural, one {# ruta configurada} other {# rutas configuradas}}",
+      "columnName": "Ruta",
+      "columnSource": "Origen",
+      "columnState": "Estado",
+      "regexBadge": "REGEX",
+      "regexTitle": "Una expresión regular — esta entrada respalda todos los nombres de ruta que coincidan con ella.",
+      "stateActive": "LIVE",
+      "stateIdle": "inactiva",
+      "sourceUnset": "sin definir",
+      "empty": {
+        "title": "No hay rutas configuradas",
+        "lead": "MediaMTX no tiene entradas de configuración de rutas. Hasta que exista una, cada transmisión se ejecuta solo con los valores predeterminados de rutas.",
+        "openPathDefaults": "Abrir valores predeterminados de rutas"
+      },
+      "errors": {
+        "unreachableTitle": "No se puede acceder a MediaMTX",
+        "unreachableLead": "Sin respuesta de la API de MediaMTX en",
+        "openAppConfig": "Abrir configuración de la app"
+      }
     },
     "pathConfig": {
       "pageHeader": "Config de ruta · {name}",

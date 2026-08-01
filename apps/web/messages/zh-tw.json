@@ -41,7 +41,8 @@
       "live": "直播",
       "recordings": "錄影",
       "appConfig": "應用程式設定",
-      "mediamtxConfig": "MediaMTX 設定"
+      "mediamtxConfig": "MediaMTX 設定",
+      "paths": "路徑"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "路徑預設值",
       "pageSubHeader": "每個串流都會繼承的設定，儲存至伺服器。"
+    },
+    "pathsCatalog": {
+      "pageHeader": "路徑",
+      "pageSubHeader": "MediaMTX 中擁有設定項目的所有路徑。",
+      "summary": "{count, plural, other {# 個已設定的路徑}}",
+      "columnName": "路徑",
+      "columnSource": "來源",
+      "columnState": "狀態",
+      "regexBadge": "REGEX",
+      "regexTitle": "正規表示式 — 此項目適用於所有與之相符的路徑名稱。",
+      "stateActive": "LIVE",
+      "stateIdle": "閒置",
+      "sourceUnset": "未設定",
+      "empty": {
+        "title": "尚未設定任何路徑",
+        "lead": "MediaMTX 中沒有任何路徑設定項目。在建立之前，每個串流都僅使用路徑預設值執行。",
+        "openPathDefaults": "開啟路徑預設值"
+      },
+      "errors": {
+        "unreachableTitle": "無法連線 MediaMTX",
+        "unreachableLead": "MediaMTX API 無回應，位址：",
+        "openAppConfig": "開啟應用程式設定"
+      }
     },
     "pathConfig": {
       "pageHeader": "路徑設定 · {name}",

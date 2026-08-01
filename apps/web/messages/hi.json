@@ -41,7 +41,8 @@
       "live": "लाइव",
       "recordings": "रिकॉर्डिंग",
       "appConfig": "ऐप कॉन्फ़िगरेशन",
-      "mediamtxConfig": "MediaMTX कॉन्फ़िगरेशन"
+      "mediamtxConfig": "MediaMTX कॉन्फ़िगरेशन",
+      "paths": "पथ"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "पथ डिफ़ॉल्ट",
       "pageSubHeader": "हर स्ट्रीम को विरासत में मिलने वाली सेटिंग्स, सर्वर पर सहेजी जाती हैं।"
+    },
+    "pathsCatalog": {
+      "pageHeader": "पथ",
+      "pageSubHeader": "हर वह पथ जिसके लिए MediaMTX के पास कॉन्फ़िग प्रविष्टि है।",
+      "summary": "{count, plural, one {# कॉन्फ़िगर किया गया पथ} other {# कॉन्फ़िगर किए गए पथ}}",
+      "columnName": "पथ",
+      "columnSource": "स्रोत",
+      "columnState": "स्थिति",
+      "regexBadge": "REGEX",
+      "regexTitle": "एक रेगुलर एक्सप्रेशन — यह प्रविष्टि उन सभी पथ नामों के लिए काम करती है जिनसे यह मेल खाती है।",
+      "stateActive": "LIVE",
+      "stateIdle": "निष्क्रिय",
+      "sourceUnset": "सेट नहीं",
+      "empty": {
+        "title": "कोई पथ कॉन्फ़िगर नहीं है",
+        "lead": "MediaMTX के पास कोई पथ कॉन्फ़िग प्रविष्टि नहीं है। जब तक एक भी मौजूद नहीं होती, हर स्ट्रीम केवल पथ डिफ़ॉल्ट पर चलती है।",
+        "openPathDefaults": "पथ डिफ़ॉल्ट खोलें"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX तक नहीं पहुँचा जा सकता",
+        "unreachableLead": "इस पते पर MediaMTX API से कोई प्रतिक्रिया नहीं:",
+        "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें"
+      }
     },
     "pathConfig": {
       "pageHeader": "पथ कॉन्फ़िग · {name}",

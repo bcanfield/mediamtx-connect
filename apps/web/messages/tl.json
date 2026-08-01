@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Mga recording",
       "appConfig": "App Config",
-      "mediamtxConfig": "MediaMTX Config"
+      "mediamtxConfig": "MediaMTX Config",
+      "paths": "Mga path"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Mga default ng path",
       "pageSubHeader": "Mga setting na minamana ng bawat stream, nakaimbak sa server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Mga path",
+      "pageSubHeader": "Bawat path na may hawak na config entry ang MediaMTX.",
+      "summary": "{count, plural, one {# path na naka-configure} other {# na path na naka-configure}}",
+      "columnName": "Path",
+      "columnSource": "Source",
+      "columnState": "Estado",
+      "regexBadge": "REGEX",
+      "regexTitle": "Isang regular expression — ang entry na ito ang gumagana para sa bawat pangalan ng path na tumutugma rito.",
+      "stateActive": "LIVE",
+      "stateIdle": "walang ginagawa",
+      "sourceUnset": "hindi nakatakda",
+      "empty": {
+        "title": "Walang naka-configure na path",
+        "lead": "Walang hawak na path config entry ang MediaMTX. Hangga't wala pa nito, ang bawat stream ay tumatakbo sa mga default ng path lamang.",
+        "openPathDefaults": "Buksan ang mga default ng path"
+      },
+      "errors": {
+        "unreachableTitle": "Hindi maabot ang MediaMTX",
+        "unreachableLead": "Walang tugon mula sa MediaMTX API sa",
+        "openAppConfig": "Buksan ang App Config"
+      }
     },
     "pathConfig": {
       "pageHeader": "Config ng path · {name}",

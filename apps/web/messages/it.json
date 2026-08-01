@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Registrazioni",
       "appConfig": "Config dell'app",
-      "mediamtxConfig": "Config MediaMTX"
+      "mediamtxConfig": "Config MediaMTX",
+      "paths": "Percorsi"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Valori predefiniti dei percorsi",
       "pageSubHeader": "Impostazioni ereditate da ogni flusso, salvate sul server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Percorsi",
+      "pageSubHeader": "Ogni percorso per cui MediaMTX ha una voce di configurazione.",
+      "summary": "{count, plural, one {# percorso configurato} other {# percorsi configurati}}",
+      "columnName": "Percorso",
+      "columnSource": "Sorgente",
+      "columnState": "Stato",
+      "regexBadge": "REGEX",
+      "regexTitle": "Un'espressione regolare — questa voce vale per ogni nome di percorso a cui corrisponde.",
+      "stateActive": "LIVE",
+      "stateIdle": "inattivo",
+      "sourceUnset": "non impostata",
+      "empty": {
+        "title": "Nessun percorso configurato",
+        "lead": "MediaMTX non ha voci di configurazione dei percorsi. Finché non ne esiste una, ogni flusso funziona solo con i valori predefiniti dei percorsi.",
+        "openPathDefaults": "Apri i valori predefiniti dei percorsi"
+      },
+      "errors": {
+        "unreachableTitle": "Impossibile raggiungere MediaMTX",
+        "unreachableLead": "Nessuna risposta dall'API di MediaMTX su",
+        "openAppConfig": "Apri la config dell'app"
+      }
     },
     "pathConfig": {
       "pageHeader": "Config del percorso · {name}",

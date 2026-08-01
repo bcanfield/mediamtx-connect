@@ -41,7 +41,8 @@
       "live": "直播",
       "recordings": "录像",
       "appConfig": "应用配置",
-      "mediamtxConfig": "MediaMTX 配置"
+      "mediamtxConfig": "MediaMTX 配置",
+      "paths": "路径"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "路径默认设置",
       "pageSubHeader": "每个流都会继承的设置，保存到服务器。"
+    },
+    "pathsCatalog": {
+      "pageHeader": "路径",
+      "pageSubHeader": "MediaMTX 中拥有配置条目的所有路径。",
+      "summary": "{count, plural, other {# 个已配置的路径}}",
+      "columnName": "路径",
+      "columnSource": "来源",
+      "columnState": "状态",
+      "regexBadge": "REGEX",
+      "regexTitle": "正则表达式 — 此条目适用于所有与之匹配的路径名称。",
+      "stateActive": "LIVE",
+      "stateIdle": "空闲",
+      "sourceUnset": "未设置",
+      "empty": {
+        "title": "尚未配置任何路径",
+        "lead": "MediaMTX 中没有任何路径配置条目。在创建之前，每个流都仅使用路径默认设置运行。",
+        "openPathDefaults": "打开路径默认设置"
+      },
+      "errors": {
+        "unreachableTitle": "无法连接 MediaMTX",
+        "unreachableLead": "MediaMTX API 无响应，地址：",
+        "openAppConfig": "打开应用配置"
+      }
     },
     "pathConfig": {
       "pageHeader": "路径配置 · {name}",

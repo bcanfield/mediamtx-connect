@@ -34,6 +34,7 @@ const api = {
   pathsList: vi.fn(),
   pathsGet: vi.fn(),
   configGlobalGet: vi.fn(),
+  configPathsList: vi.fn(),
   configPathGet: vi.fn(),
 }
 
@@ -218,6 +219,84 @@ describe('streams.list card metadata', () => {
 
     // Rejects rather than resolving: `connection-error` is reserved for MediaMTX.
     await expect(call(router.streams.list, undefined as never)).rejects.toThrow()
+  })
+})
+
+describe('config.mediamtx.listPaths', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('lists every config entry with its source, flagging the regex ones', async () => {
+    api.configPathsList.mockResolvedValue({
+      items: [
+        { name: 'front-door', source: 'rtsp://cam.lan/stream' },
+        { name: '~^cam[0-9]+$', source: 'publisher' },
+      ],
+    })
+    api.pathsList.mockResolvedValue({ items: [] })
+
+    const state = await call(router.config.mediamtx.listPaths, undefined as never)
+
+    expect(state.status === 'connected' && state.paths).toEqual([
+      { name: 'front-door', source: 'rtsp://cam.lan/stream', isRegex: false, active: false },
+      { name: '~^cam[0-9]+$', source: 'publisher', isRegex: true, active: false },
+    ])
+  })
+
+  // Every static entry has a runtime path whether or not anything is publishing
+  // to it, so "has a runtime path" would mark all of them active.
+  it('calls an entry active only while a path it backs is ready', async () => {
+    api.configPathsList.mockResolvedValue({
+      items: [{ name: 'front-door' }, { name: 'garage' }],
+    })
+    api.pathsList.mockResolvedValue({
+      items: [
+        { name: 'front-door', confName: 'front-door', ready: true },
+        { name: 'garage', confName: 'garage', ready: false },
+      ],
+    })
+
+    const state = await call(router.config.mediamtx.listPaths, undefined as never)
+
+    expect(state.status === 'connected' && state.paths.map(p => [p.name, p.active])).toEqual([
+      ['front-door', true],
+      ['garage', false],
+    ])
+  })
+
+  // A regex entry is never a runtime path itself — the paths it covers name it
+  // as their confName, so that is the only way it can read as active.
+  it('calls a regex entry active when one of the paths it backs is ready', async () => {
+    api.configPathsList.mockResolvedValue({ items: [{ name: '~^cam[0-9]+$' }] })
+    api.pathsList.mockResolvedValue({
+      items: [
+        { name: 'cam1', confName: '~^cam[0-9]+$', ready: false },
+        { name: 'cam2', confName: '~^cam[0-9]+$', ready: true },
+      ],
+    })
+
+    const state = await call(router.config.mediamtx.listPaths, undefined as never)
+
+    expect(state.status === 'connected' && state.paths[0]?.active).toBe(true)
+  })
+
+  it('reports an unreachable server rather than an empty catalog', async () => {
+    api.configPathsList.mockRejectedValue(new Error('fetch failed'))
+    api.pathsList.mockResolvedValue({ items: [] })
+
+    const state = await call(router.config.mediamtx.listPaths, undefined as never)
+
+    expect(state).toEqual({
+      status: 'connection-error',
+      mediaMtxUrl: CONFIG.mediaMtxUrl,
+      mediaMtxApiPort: CONFIG.mediaMtxApiPort,
+    })
   })
 })
 

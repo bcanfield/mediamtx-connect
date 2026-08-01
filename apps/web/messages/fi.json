@@ -41,7 +41,8 @@
       "live": "Suora",
       "recordings": "Tallenteet",
       "appConfig": "Sovelluksen asetukset",
-      "mediamtxConfig": "MediaMTX-asetukset"
+      "mediamtxConfig": "MediaMTX-asetukset",
+      "paths": "Polut"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Polkujen oletusarvot",
       "pageSubHeader": "Asetukset, jotka jokainen striimi perii, tallennetaan palvelimelle."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Polut",
+      "pageSubHeader": "Jokainen polku, jolle MediaMTX:llä on asetusmerkintä.",
+      "summary": "{count, plural, one {# määritetty polku} other {# määritettyä polkua}}",
+      "columnName": "Polku",
+      "columnSource": "Lähde",
+      "columnState": "Tila",
+      "regexBadge": "REGEX",
+      "regexTitle": "Säännöllinen lauseke — tämä merkintä kattaa jokaisen polun nimen, johon se täsmää.",
+      "stateActive": "LIVE",
+      "stateIdle": "käyttämättä",
+      "sourceUnset": "ei asetettu",
+      "empty": {
+        "title": "Yhtään polkua ei ole määritetty",
+        "lead": "MediaMTX:llä ei ole yhtään polun asetusmerkintää. Ennen kuin sellainen on olemassa, jokainen striimi toimii pelkillä polkujen oletusarvoilla.",
+        "openPathDefaults": "Avaa polkujen oletusarvot"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX:ää ei tavoiteta",
+        "unreachableLead": "Ei vastausta MediaMTX-API:lta osoitteessa",
+        "openAppConfig": "Avaa sovelluksen asetukset"
+      }
     },
     "pathConfig": {
       "pageHeader": "Polun asetukset · {name}",
