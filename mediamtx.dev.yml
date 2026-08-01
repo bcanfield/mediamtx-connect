@@ -46,7 +46,10 @@ hlsAddress: :8888
 # WebRTC settings (WHEP playback)
 webrtc: yes
 webrtcAddress: :8889
-webrtcAdditionalHosts: [127.0.0.1]
+# Owned by docker-compose.dev.yml via MTX_WEBRTCADDITIONALHOSTS
+# (${REMOTE_MEDIAMTX_HOST:-127.0.0.1}) — see mediamtx.yml for why this stays
+# commented out rather than living here.
+# webrtcAdditionalHosts: [127.0.0.1]
 
 # Recording is on by default; individual paths below override it to exercise
 # the effective-vs-inherited record indicator.

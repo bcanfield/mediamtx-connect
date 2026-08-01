@@ -20,6 +20,11 @@ services:
       # env.ts anchors its dev dirs to the repo root too, so both agree — this is
       # what fixes the old "MediaMTX records where nothing reads" mismatch.
       - ./.dev-data/recordings:/recordings
+    environment:
+      # Owns webrtcAdditionalHosts (commented out in mediamtx.dev.yml). Only the
+      # mediamtx service gets it here: in dev the app runs on the host under
+      # `pnpm dev` and never sees compose env.
+      MTX_WEBRTCADDITIONALHOSTS: ${REMOTE_MEDIAMTX_HOST:-127.0.0.1}
     ports:
       - '8554:8554' # RTSP
       - '1935:1935' # RTMP
