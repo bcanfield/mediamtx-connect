@@ -6,9 +6,15 @@
 > **One dispatch this revision: #209** — dispatched `2026-08-01T00:42Z`, **shipped as #311,
 > merged 01:20Z**. 5/5 CI green including E2E; the diff matched the spec on every point.
 > The caps question is answered: **200 turns / 60m closed the loop** on a five-layer ticket
-> (26min, 179 bash calls, 47 files, 3 subagents). #291 is clear to promote.
-> **#212 also grilled this revision** — re-spec'd in place and split (new: **#312**). Both left
-> **parked with no state label**; nothing dispatched. #212 is the natural next dispatch.
+> (26min, 179 bash calls, 47 files, 3 subagents).
+> **#212 also grilled this revision** — re-spec'd in place and split (new: **#312**).
+>
+> **Then two more dispatches, both clean:** **#291 → #313, merged** (44 files, +1177, verify
+> gate green on the first pass) and **#212 → #314** (7 files, pure infra, gate green). Three
+> consecutive unattended runs, 5/5 CI green each.
+> **#202 also grilled this revision** — re-spec'd in place against a live 1.19.3 container, not
+> docs, and **dispatched**. It is the largest ticket the loop has been given; see item 4.
+> **Next dispatch after it settles: #304. Next grill: #210.**
 >
 > Ordering principle (per `CLAUDE.md` § Project goal): **leverage** (does it unblock other
 > work) → **MediaMTX-native fit** (does it consume a config key / endpoint / hook / protocol)
@@ -97,6 +103,23 @@ Nothing on the old queue was closed. Every item below is still open.
 
 ## Bookkeeping applied in this revision (07-31)
 
+**From the #202 grill (latest):**
+
+- **#202 retitled** `feat: sync MediaMTX config schema from v1.11.3 to v1.19.3` — fixes the wrong
+  target version *and* buys the conventional prefix outright, since the label map would otherwise
+  resolve `tech-debt` → `fix:` (see item 42).
+- **#202 body rewritten** clean-room, spec'd out per file: the 8 renames, the 54 additions with
+  their field kinds, the 3 `pathDefaults` renames, the drift check, the i18n contract, and an
+  explicit out-of-scope list (`authInternalUsers`, pathDefaults widening, the client's own types).
+- **#202 labels:** `ready-for-human` → `ready-for-agent`. `tech-debt` kept; `enhancement`
+  deliberately **not** added — it would not have changed the prefix, and the title already does.
+- **#199 re-scoped** to the pre-existing 79 help strings; the #202 dependency dropped.
+- **#226 / #225 / #177 annotated** with what the grill invalidated in each.
+- **Left undone, needs you:** whether to reorder `conventional_title_types` repo-wide (item 42).
+  #221 ships as `fix:` until you do.
+
+**From the #209 grill:**
+
 - **#209 body rewritten** clean-room from the grill: contract / api / web / strings / tests /
   docs broken out per file, with the exact English copy and an explicit out-of-scope list.
 - **#209 labels:** `ready-for-human` → `ready-for-agent` (by hand) → `agent-working` (loop, 22s
@@ -152,7 +175,7 @@ smallhours immediately, so promote **one at a time, in this order**:
 
 | Order | Issue | Why it's ready | Gated on |
 |-------|-------|----------------|----------|
-| 1 | **#291** Paths catalog | Failed only on the old 100-turn cap; cap is now 200 | — |
+| ~~1~~ | ~~**#291** Paths catalog~~ | **SHIPPED** as #313, merged 08-01. 44 files, +1177, verify gate green first pass | — |
 | 2 | **#304** api baseline tests | Grilled 2026-07-30; two small modules, no dependencies | — |
 | 3 | **#306** FEATURES.md gate | Grilled 2026-07-30; independent of the coverage pair | — |
 | 4 | **#216** Light-mode contrast AA | Clear source, clear task; lost its labels in a loop failure | — |
@@ -244,20 +267,70 @@ What the grill found, in descending order of how much it would have cost:
 
 ### Tier B — Foundation the feature work sits on
 
-**4. #202 — Sync MediaMTX schema + client v1.11.3 → v1.19.2** — **next grill**
-Gates #203, #199, #226, and version-pins #184's compatibility matrix. Failed the loop.
-→ Grill: is it mechanical regeneration or does it carry breaking contract changes? What's the
-diff size? Should it be split by scope (global / pathDefaults / paths)? *Produces: 1–3 tickets.*
+**4. ~~#202 — Sync MediaMTX schema + client v1.11.3 → v1.19.2~~ — GRILLED 2026-07-31.
+Re-spec'd in place, kept as one ticket, dispatched.** Produced no new tickets; re-scoped #199
+and unblocked #203/#226.
+
+Every number below came from a live `bluenviron/mediamtx:1.19.3` container and a scratch render
+of the real form, not from docs — that is what changed the answers.
+
+- **The target version in the title was wrong.** Both compose files ship **1.19.3**, not 1.19.2,
+  and 1.19.3 is the current upstream latest (released 07-23). Renovate **automerges minor/patch**,
+  which is exactly how eight minors accumulated unnoticed.
+- **"Sync the API client" is near-empty work.** `mediamtx.ts` is 93 lines and its own types are
+  `MediaMtxPath`/`MediaMtxPathList` — 8 fields. Every config type is imported from the contract.
+  Same shape as #214's "mechanism 2 was already shipped" finding: a third of the issue body
+  described work that doesn't exist.
+- **Nothing is broken today, and the issue implies otherwise.** 8 of our 65 global keys are
+  deprecated aliases stale even at 1.11.3 (`externalAuthenticationURL`, `protocols`,
+  `encryption`, `serverKey`, `serverCert`, `authMethods`, `hlsAllowOrigin`, `webrtcAllowOrigin`).
+  They still *function* via aliasing — `webrtcAllowOrigin` verifiably writes through to
+  `webrtcAllowOrigins`. GET omits them when empty, and a scratch render proved the form submits
+  them as `undefined`, which `JSON.stringify` drops. **One real edge survives:** typing a value
+  into `encryption` or `externalAuthenticationURL` and clearing it back to empty sends `""`,
+  which 400s the entire save behind a generic toast.
+- **The real diff is smaller than 62.** Global is 119 keys upstream against our 65, but 8 of the
+  62 "missing" are just those renames' new names → **54 genuinely new**, ~30 of which are one
+  repeated AllowOrigins/TrustedProxies/Encryption/ServerCert/ServerKey family across seven servers.
+- **The cost is i18n, not schema — and it is a choice, not a constraint.** 30 locales, help text
+  genuinely translated, parity CI-enforced, and **no translation tooling** (`i18n-check.mjs` only
+  checks). `useFieldHelp` is `t.has(name) ? t(name) : undefined`, so help is *optional per field* —
+  but all 78 rendered fields have it, so the shipped standard is 100%. Held it: **~1,620 strings.**
+- **`authInternalUsers` is carved out to #225.** It is a list of objects with nested permission
+  arrays; the only comparable key, `webrtcICEServers2`, already needed a bespoke
+  `ice-servers-rows.tsx`. It is also #225's entire subject.
+- **pathDefaults is stale the same way** — we ship `runOnReady`/`runOnReadyRestart`/
+  `runOnNotReady`, renamed upstream to `runOnOnline`/`runOnOnlineRestart`/`runOnOffline`. #202
+  takes the three renames; widening stays #203.
+- **A drift check ships with it**, in `tests/e2e/` against the live server, failing on any
+  unmodeled global key minus an allowlist (which is where the `authInternalUsers` carve-out is
+  recorded). Verified it will actually fire: `ci.yml`'s `changes` filter only excludes
+  `docs/`/`*.md`/`LICENSE`, so a Renovate image bump runs E2E. Global scope only — a pathDefaults
+  check would fail on day one at 21/89. This is the ADR 0004 line again: the debt entry's payoff
+  trigger was literally "next MediaMTX image bump", and nothing was watching it.
+- **Dispatched knowing it may not fit.** ~1,620 strings across 30 files is the largest ticket the
+  loop has been handed, and **F1's second half is still unlanded — a 60m timeout leaves no branch
+  and no PR.** Taken deliberately as the cheapest way to find the ceiling. If it times out, that
+  is the answer to item 38, not a surprise.
 
 **5. #203 — Widen path scopes beyond `record*`/`runOn*` (~80 missing `pathDefaults` keys)**
 Gates #226 (resilience editors), #178 (hooks UI), #182 (recording mgmt), and widens what #294
-can edit. After #202.
-→ Grill: all 80 at once, or the subset that unblocks a named downstream feature? Does the form
-need new field *types* (arrays, nested) or is it more of the same? *Produces: 2–4 tickets.*
+can edit. After #202. **The #202 grill measured it: 21 of 89 keys modeled, so it is 68 keys,
+not ~80** — and #202 takes the three `runOn*` renames off the top.
+→ Grill: all 68 at once, or the subset that unblocks a named downstream feature? Does the form
+need new field *types* (arrays, nested) or is it more of the same? **#202 answers half of that
+already** — `authInternalUsers` proved the existing `text | number | switch | list` kinds cannot
+render a list of objects, and `alwaysAvailableTracks` / `rpiCameraSecondary` are the same shape.
+*Produces: 2–4 tickets.*
 
-**6. #199 — Verify `Config.mediamtxForm.help.*` against MediaMTX docs** — rides #202's version.
-→ Grill: is this verifiable mechanically against the upstream schema descriptions, or does it
-need a human read? Determines whether it's agent work at all.
+**6. #199 — Verify `Config.mediamtxForm.help.*` against MediaMTX docs** — **RE-SCOPED by the
+#202 grill; no longer blocked.**
+Our help text is house-voice paraphrase, not upstream verbatim: of 79 keys, **4 match exactly,
+6 are substrings, 58 differ** — and some of ours are *better* (`writeQueueSize` notes the
+power-of-two requirement; the upstream yml comment doesn't). #202 authors its 54 new strings
+from 1.19.3 comments at writing time, so those are verified by construction.
+→ What's left: audit only the **pre-existing 79** against upstream. Mechanical enough to
+diff, but the judgement of "paraphrase that is still accurate" is a human read.
 
 ### Tier C — The per-path spine (decomposed; residual grills only)
 
@@ -266,10 +339,15 @@ Filed from #294's out-of-scope note. It is create-then-delete with no atomicity 
 → Grill: what happens on a partial failure, and is rename worth shipping at all versus telling
 the operator to recreate? Regex-backed paths make it worse (§ ADR 0002). *Produces: 1 ticket or a close.*
 
-**8. #210 — Nav entry for the three config scopes** — now a one-sentence decision, not a session.
-#291's catalog route *is* the missing nav destination.
-→ Grill: does #291's route close this outright, or is a scope switcher still wanted for
-global / `pathDefaults` / per-path? Answer it when #291 lands, not before.
+**8. #210 — Nav entry for the three config scopes** — **#291 landed; here is the answer.**
+It did *not* close this outright. #291 added a fourth top-level tab
+(`{ key: 'paths', href: '/config/mediamtx/paths' }` in `app-header.tsx`), so global and
+per-path now each have a nav destination — **`pathDefaults` is the only config scope with
+none.** It is reachable by URL, or from the link #209 added to the unresolved empty state.
+→ Grill, now narrower and sharper than before: the header carries five tabs, two of which are
+MediaMTX config (`mediamtxConfig` → `/global`, `paths`). Does `pathDefaults` become a sixth
+tab, or does that pressure finally justify the scope switcher this issue originally proposed —
+folding global / pathDefaults / paths behind one entry? *Produces: 1 ticket.*
 
 **9. ~~#209 — Path config dead-ends for idle wildcard-backed streams~~ — SHIPPED as #311,
 merged 2026-08-01.**
@@ -348,11 +426,20 @@ footer. Each needs a real three-lens grill before it can become tickets.
 **20. #226 — Path resilience: `alwaysAvailable` + `sourceOnDemand` controls** — highest native
 fit of the nine (pure per-path config keys), but **blocked on #203**. Grill it right after #203
 so it rides the same form work — and after #294, so it rides the same editor.
+**Correction from the #202 grill: it was blocked on #202 too, and nobody knew.**
+`alwaysAvailable` does not exist in 1.11.3 — it is one of 23 keys *added* to `pathDefaults`
+between 1.11.3 and 1.19.3, along with `alwaysAvailableFile` and `alwaysAvailableTracks`. The
+issue was specced against a key the shipped schema could not have modeled.
 
 **21. #225 — Auth management: internal users CRUD + hardening checklist**
 MediaMTX's main security surface, currently hand-written YAML. High value, high blast radius.
 → Grill hard on edges: lockout-safe save, password handling (never render plaintext), and
 whether the `any:any` default warning ships before the CRUD grid.
+**#202 deliberately carves `authInternalUsers` out and leaves it to this ticket** — it is a list
+of objects with nested permission arrays, which the form's `text | number | switch | list` kinds
+cannot render. Budget a bespoke editor on the `ice-servers-rows.tsx` pattern. #202 also brings
+in the 10 flat `auth*` keys around it (`authHTTPAddress`, the JWT set), so this ticket starts
+with everything *except* the users grid already modeled.
 
 **22. #223 — Live metrics dashboard via in-app `/metrics` scraper** — consumes an endpoint
 MediaMTX ships and the UI ignores entirely. → Grill: parser dependency? cardinality guard? Where
@@ -392,6 +479,10 @@ editor"? That would be small.
 **30. #177 — Multi-destination simulcast manager (`runOnReady` FFmpeg fan-out)** — powerful, but
 it's a hook-command generator; grill whether it's a #178 recipe rather than its own feature
 before spending another run on it.
+**The #202 grill invalidated its central primitive: `runOnReady` no longer exists upstream** —
+renamed to `runOnOnline` at some point before 1.19.3, along with `runOnReadyRestart` →
+`runOnOnlineRestart` and `runOnNotReady` → `runOnOffline`. The title and body both name the dead
+key. #202 fixes the schema; this issue's own text still needs rewriting before it is specced.
 
 **31. #186 — go2rtc / Frigate config import** — lowest confidence (their formats aren't stable
 contracts). → Grill: is a best-effort importer worth the maintenance, or is a documented
@@ -426,14 +517,34 @@ gracefully, but a timeout still leaves no branch and no PR to resume from.
 **39. F4 — a `timeout` knob in `.smallhours.yml`.** Lower priority now that the cap is 60 and the
 budget is derived; worth it for per-repo tuning.
 
-**40. F5 — delete `origin/agent/issue-209`** (`bad885b`). Now safe: the live run minted
-`agent/issue-209-r2` instead, which auto-deleted on merge. `bad885b` is dead PR #267's branch.
+**40. ~~F5 — delete `origin/agent/issue-209`~~ — DONE 08-01.** Deleted `agent/issue-209`
+(`bad885b`, dead PR #267) plus `agent/issue-206` and `-r2` (the duplicate-dispatch leftovers
+from #307/#308). `agent/*` is now empty of stale refs, so `sweep_next_attempt` starts fresh —
+#291 and #212 both got clean `agent/issue-N` names with no `-rK` suffix.
 
 **41. NEW — don't push to `main` while a run is in flight.** Two `.smallhours.yml` commits
 landed mid-#209 and left #311 at `mergeStateStatus: BEHIND`. smallhours correctly refuses to
 promote a non-promotable PR (`success + BEHIND -> leave draft, the sweep re-evals`), so it
 stalled until `gh pr update-branch`. Costs a CI re-run and a sweep. Land repo housekeeping
 *before* labelling the next `ready-for-agent`.
+
+**42. NEW — `conventional_title_types` is first-match-in-config-order, so `tech-debt` beats
+`enhancement`.** Found during the #202 grill by reading `config_pr_title` in
+`bcanfield/smallhours@scripts/lib/config.sh`: it walks the map in the order the keys appear in
+`.smallhours.yml` and returns on the first label the issue carries. Ours lists `bug`,
+`tech-debt`, `enhancement`, `documentation` — so **any issue carrying both `tech-debt` and
+`enhancement` ships as `fix:`**, cutting a patch release for what may be a feature. The note
+under "three consecutive runs established… the map works on both arms" is true but untested on
+this case: #212 and #291 each carried only one of the two.
+
+**#221 is already exposed** — it carries `enhancement`, `needs-triage` *and* `tech-debt`, so its
+three split tickets would each ship as `fix:` unless something changes.
+
+The per-issue escape hatch needs no config change: `config_pr_title` returns the title verbatim
+when it already starts with a real conventional type, so **prefixing the issue title with
+`feat: ` wins outright.** That is what #202 does. The repo-wide alternative — reordering the map
+so `enhancement` precedes `tech-debt` — is one line, but it flips every future dual-labelled
+issue at once and deserves its own decision.
 
 ---
 
@@ -451,23 +562,36 @@ stalled until `gh pr update-branch`. Costs a CI re-run and a sweep. Land repo ho
 
 ## Proposed next session
 
-Items 1, 2 and 9 are done — #214 cut into #304/#305/#306, #201 re-scoped, #209 re-specced and
-dispatched. **Next grill is #212** (item 3), unchanged and now the top ungrilled item: push on
-why the fix isn't both halves — derive the host from `REMOTE_MEDIAMTX_URL` *and* detect ICE
-failure in the player. It is still the only correctness bug on the board that sits on a
-**shipped flagship path**: WHEP is the default player, and any non-localhost deployment silently
-loses it, falls back to HLS, and shows the operator working video with no signal that anything
-degraded. The detection half doubles as a doctor check, so it feeds #187.
+Items 1, 2, 3 and 9 are all done — #214 cut into #304/#305/#306, #201 re-scoped, #209 and #212
+re-specced, and all three of #209 / #291 / #212 shipped or in flight.
 
-After that, Tier B (#202 → #203) is the next thing that unblocks a queue rather than a ticket.
+**#202 was grilled and dispatched after that was written**, so Tier B's first half is spent.
+**Next grill is #210** (item 8), and #291 landing turned it from a deferred question into a
+concrete one: `pathDefaults` is now the *only* config scope with no nav entry, against a header
+that already carries five tabs. Sixth tab or scope switcher — that is the whole session, and it
+is short.
 
-Two cheap alternatives if #212 feels too big for the session: item 7 (**#301** path rename —
-partial-failure semantics, and genuinely might close) or item 37 (**#100** RTL — the cheapest
-close on the board).
+Then **#203**, which #202 leaves cleanly teed up: 68 pathDefaults keys, three renames already
+taken, and one open question #202 answered in advance — the form's four field kinds cannot
+render a list of objects, and `pathDefaults` has three such keys waiting.
 
-Separately from grilling: **#209's run landed** (#311, merged 08-01), so the precondition on
-promoting #291 is met — the raised caps do close the loop. The authorization queue above is
-unchanged and **#291 is next**, needing only a label. Land any repo housekeeping first (item
-41).
+Cheap alternatives if there's time: item 7 (**#301** path rename — partial-failure semantics,
+and genuinely might close) or item 37 (**#100** RTL — the cheapest close on the board).
+
+**#202 is in flight** — dispatched from its grill, and the largest ticket the loop has been
+given (~1,620 translated strings across 30 locale files). **Let it settle before promoting
+anything else**, both because item 41 says so and because its outcome is the real experiment:
+whether 200 turns / 60m survives a ticket whose bulk is breadth rather than depth. A timeout
+answers item 38 rather than surprising anyone.
+
+**Next dispatch after that is #304** — authorization queue item 2, needing only a label. #312
+(the live-view loopback banner, split from #212) is also specified and unparked whenever you
+want it.
+
+**What three consecutive runs established**, worth not re-litigating: the 200-turn / 60m caps
+close the loop; the verify gate is green-first-pass through the npx wrapper and cannot run
+without it; the label→title map works on both arms (`fix:` and `feat:`); and the grill is what
+moves the needle — #209 failed this same board twice ungrilled and landed first try after a
+spec-out-by-file rewrite.
 
 **Reminder:** applying `ready-for-agent` fires smallhours immediately. Promote one at a time.
