@@ -101,7 +101,7 @@ sandbox:
 # the runner always has, and the version tracks `packageManager` by hand — a
 # Renovate bump there must be copied here, or the gate silently runs the old pnpm
 # against a lockfile the new one resolved.
-verify: npx --yes pnpm@11.17.0 run verify
+verify: pnpm verify
 verify_reentries: 2
 
 # Prefix agent PR titles with a conventional-commit type derived from the
