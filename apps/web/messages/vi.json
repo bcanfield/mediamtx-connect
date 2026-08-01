@@ -41,7 +41,8 @@
       "live": "Trực tiếp",
       "recordings": "Bản ghi",
       "appConfig": "Cấu hình ứng dụng",
-      "mediamtxConfig": "Cấu hình MediaMTX"
+      "mediamtxConfig": "Cấu hình MediaMTX",
+      "paths": "Đường dẫn"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Giá trị mặc định của đường dẫn",
       "pageSubHeader": "Các thiết lập mà mọi luồng đều kế thừa, được lưu trên máy chủ."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Đường dẫn",
+      "pageSubHeader": "Mọi đường dẫn mà MediaMTX đang giữ một mục cấu hình.",
+      "summary": "{count, plural, other {# đường dẫn đã cấu hình}}",
+      "columnName": "Đường dẫn",
+      "columnSource": "Nguồn",
+      "columnState": "Trạng thái",
+      "regexBadge": "REGEX",
+      "regexTitle": "Một biểu thức chính quy — mục này áp dụng cho mọi tên đường dẫn khớp với nó.",
+      "stateActive": "LIVE",
+      "stateIdle": "không hoạt động",
+      "sourceUnset": "chưa đặt",
+      "empty": {
+        "title": "Chưa có đường dẫn nào được cấu hình",
+        "lead": "MediaMTX không có mục cấu hình đường dẫn nào. Cho đến khi có một mục, mọi luồng chỉ chạy theo giá trị mặc định của đường dẫn.",
+        "openPathDefaults": "Mở giá trị mặc định của đường dẫn"
+      },
+      "errors": {
+        "unreachableTitle": "Không thể kết nối MediaMTX",
+        "unreachableLead": "Không có phản hồi từ API MediaMTX tại",
+        "openAppConfig": "Mở Cấu hình ứng dụng"
+      }
     },
     "pathConfig": {
       "pageHeader": "Cấu hình đường dẫn · {name}",

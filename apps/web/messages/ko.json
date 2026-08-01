@@ -41,7 +41,8 @@
       "live": "실시간",
       "recordings": "녹화",
       "appConfig": "앱 설정",
-      "mediamtxConfig": "MediaMTX 설정"
+      "mediamtxConfig": "MediaMTX 설정",
+      "paths": "경로"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "경로 기본값",
       "pageSubHeader": "모든 스트림이 상속하는 설정으로, 서버에 저장됩니다."
+    },
+    "pathsCatalog": {
+      "pageHeader": "경로",
+      "pageSubHeader": "MediaMTX가 설정 항목을 보관하고 있는 모든 경로입니다.",
+      "summary": "{count, plural, other {설정된 경로 #개}}",
+      "columnName": "경로",
+      "columnSource": "소스",
+      "columnState": "상태",
+      "regexBadge": "REGEX",
+      "regexTitle": "정규 표현식 — 이 항목은 일치하는 모든 경로 이름의 설정이 됩니다.",
+      "stateActive": "LIVE",
+      "stateIdle": "유휴",
+      "sourceUnset": "설정 안 됨",
+      "empty": {
+        "title": "설정된 경로가 없습니다",
+        "lead": "MediaMTX에 경로 설정 항목이 없습니다. 하나라도 생기기 전까지는 모든 스트림이 경로 기본값만으로 실행됩니다.",
+        "openPathDefaults": "경로 기본값 열기"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX에 연결할 수 없습니다",
+        "unreachableLead": "다음 주소의 MediaMTX API에서 응답이 없습니다:",
+        "openAppConfig": "앱 설정 열기"
+      }
     },
     "pathConfig": {
       "pageHeader": "경로 설정 · {name}",

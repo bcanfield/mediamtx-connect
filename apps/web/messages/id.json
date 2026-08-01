@@ -41,7 +41,8 @@
       "live": "Langsung",
       "recordings": "Rekaman",
       "appConfig": "Konfigurasi aplikasi",
-      "mediamtxConfig": "Konfigurasi MediaMTX"
+      "mediamtxConfig": "Konfigurasi MediaMTX",
+      "paths": "Jalur"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Default jalur",
       "pageSubHeader": "Pengaturan yang diwarisi setiap aliran, disimpan di server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Jalur",
+      "pageSubHeader": "Setiap jalur yang entri konfigurasinya disimpan MediaMTX.",
+      "summary": "{count, plural, other {# jalur terkonfigurasi}}",
+      "columnName": "Jalur",
+      "columnSource": "Sumber",
+      "columnState": "Status",
+      "regexBadge": "REGEX",
+      "regexTitle": "Ekspresi reguler — entri ini berlaku untuk setiap nama jalur yang cocok dengannya.",
+      "stateActive": "LIVE",
+      "stateIdle": "tidak aktif",
+      "sourceUnset": "tidak diatur",
+      "empty": {
+        "title": "Tidak ada jalur yang dikonfigurasi",
+        "lead": "MediaMTX tidak menyimpan entri konfigurasi jalur. Selama belum ada satu pun, setiap aliran berjalan hanya dengan default jalur.",
+        "openPathDefaults": "Buka default jalur"
+      },
+      "errors": {
+        "unreachableTitle": "Tidak dapat menjangkau MediaMTX",
+        "unreachableLead": "Tidak ada respons dari API MediaMTX di",
+        "openAppConfig": "Buka konfigurasi aplikasi"
+      }
     },
     "pathConfig": {
       "pageHeader": "Konfigurasi jalur · {name}",

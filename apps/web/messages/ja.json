@@ -41,7 +41,8 @@
       "live": "ライブ",
       "recordings": "録画",
       "appConfig": "アプリ設定",
-      "mediamtxConfig": "MediaMTX 設定"
+      "mediamtxConfig": "MediaMTX 設定",
+      "paths": "パス"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "パス既定値",
       "pageSubHeader": "すべてのストリームが継承する設定。サーバーに保存されます。"
+    },
+    "pathsCatalog": {
+      "pageHeader": "パス",
+      "pageSubHeader": "MediaMTX が設定エントリを保持しているすべてのパス。",
+      "summary": "{count, plural, other {設定済みのパス # 件}}",
+      "columnName": "パス",
+      "columnSource": "ソース",
+      "columnState": "状態",
+      "regexBadge": "REGEX",
+      "regexTitle": "正規表現 — このエントリは、一致するすべてのパス名の設定になります。",
+      "stateActive": "LIVE",
+      "stateIdle": "アイドル",
+      "sourceUnset": "未設定",
+      "empty": {
+        "title": "設定済みのパスはありません",
+        "lead": "MediaMTX にはパスの設定エントリがありません。1 つも存在しない間は、すべてのストリームがパス既定値だけで動作します。",
+        "openPathDefaults": "パス既定値を開く"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX に接続できません",
+        "unreachableLead": "次のアドレスの MediaMTX API から応答がありません:",
+        "openAppConfig": "アプリ設定を開く"
+      }
     },
     "pathConfig": {
       "pageHeader": "パス設定 · {name}",

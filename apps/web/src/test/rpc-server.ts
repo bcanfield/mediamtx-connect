@@ -36,6 +36,8 @@ export interface StubApi {
   updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>
   /** What a path resolves to — `{status: 'resolved', confName, conf}`, `{status: 'unresolved'}`, or null. */
   pathConfig?: () => unknown
+  /** The paths catalog — `{status: 'connected', paths}` or `{status: 'connection-error', …}`. */
+  pathsCatalog?: () => unknown
   deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
   /** One summary per stream that has recordings. Defaults to none. */
   recordingStreams?: () => unknown
@@ -93,6 +95,9 @@ export function createRpcServer(stub: StubApi) {
         updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(({ input }) => {
           stub.updatePathDefaults?.(input)
         }),
+        listPaths: os.config.mediamtx.listPaths.handler(
+          () => (stub.pathsCatalog?.() ?? { status: 'connected', paths: [] }) as never,
+        ),
         getPathConfig: os.config.mediamtx.getPathConfig.handler(
           () => (stub.pathConfig?.() ?? null) as never,
         ),

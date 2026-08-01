@@ -17,6 +17,7 @@ import { ClientConfigPage } from '@/features/client-config/client-config-page'
 import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
 import { PathConfigPage } from '@/features/mediamtx-config/path-config-page'
 import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
+import { PathsCatalogPage } from '@/features/mediamtx-config/paths-catalog-page'
 import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
 import { LiveViewPage } from '@/features/streams/live-view-page'
@@ -93,6 +94,12 @@ const pathDefaultsRoute = createRoute({
   component: PathDefaultsPage,
 })
 
+const pathsCatalogRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/mediamtx/paths',
+  component: PathsCatalogPage,
+})
+
 // `section` lands the page on one group of keys rather than at the top.
 const pathConfigRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -115,6 +122,7 @@ const router = createRouter({
     configRoute,
     mediamtxConfigRoute,
     pathDefaultsRoute,
+    pathsCatalogRoute,
     pathConfigRoute,
   ]),
 })

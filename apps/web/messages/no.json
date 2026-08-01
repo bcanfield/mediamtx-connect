@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Opptak",
       "appConfig": "Appkonfigurasjon",
-      "mediamtxConfig": "MediaMTX-konfigurasjon"
+      "mediamtxConfig": "MediaMTX-konfigurasjon",
+      "paths": "Baner"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Standardverdier for stier",
       "pageSubHeader": "Innstillinger som hver strøm arver, lagret på serveren."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Baner",
+      "pageSubHeader": "Hver bane MediaMTX har en konfigurasjonsoppføring for.",
+      "summary": "{count, plural, one {# konfigurert bane} other {# konfigurerte baner}}",
+      "columnName": "Bane",
+      "columnSource": "Kilde",
+      "columnState": "Status",
+      "regexBadge": "REGEX",
+      "regexTitle": "Et regulært uttrykk — denne oppføringen gjelder for alle banenavn den matcher.",
+      "stateActive": "LIVE",
+      "stateIdle": "inaktiv",
+      "sourceUnset": "ikke satt",
+      "empty": {
+        "title": "Ingen baner er konfigurert",
+        "lead": "MediaMTX har ingen konfigurasjonsoppføringer for baner. Så lenge ingen finnes, kjører hver strøm bare på standardverdiene for stier.",
+        "openPathDefaults": "Åpne standardverdier for stier"
+      },
+      "errors": {
+        "unreachableTitle": "Kan ikke nå MediaMTX",
+        "unreachableLead": "Ingen respons fra MediaMTX-API-et på",
+        "openAppConfig": "Åpne appkonfigurasjon"
+      }
     },
     "pathConfig": {
       "pageHeader": "Bane-konfigurasjon · {name}",

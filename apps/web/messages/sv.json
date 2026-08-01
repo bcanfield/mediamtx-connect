@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Inspelningar",
       "appConfig": "Appkonfiguration",
-      "mediamtxConfig": "MediaMTX-konfiguration"
+      "mediamtxConfig": "MediaMTX-konfiguration",
+      "paths": "Sökvägar"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Standardvärden för sökvägar",
       "pageSubHeader": "Inställningar som varje ström ärver, sparade på servern."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Sökvägar",
+      "pageSubHeader": "Varje sökväg som MediaMTX har en konfigurationspost för.",
+      "summary": "{count, plural, one {# konfigurerad sökväg} other {# konfigurerade sökvägar}}",
+      "columnName": "Sökväg",
+      "columnSource": "Källa",
+      "columnState": "Status",
+      "regexBadge": "REGEX",
+      "regexTitle": "Ett reguljärt uttryck — den här posten ligger bakom varje sökvägsnamn som matchar det.",
+      "stateActive": "LIVE",
+      "stateIdle": "inaktiv",
+      "sourceUnset": "ej angiven",
+      "empty": {
+        "title": "Inga sökvägar är konfigurerade",
+        "lead": "MediaMTX har inga konfigurationsposter för sökvägar. Tills det finns en körs varje ström enbart på standardvärden för sökvägar.",
+        "openPathDefaults": "Öppna standardvärden för sökvägar"
+      },
+      "errors": {
+        "unreachableTitle": "Kan inte nå MediaMTX",
+        "unreachableLead": "Inget svar från MediaMTX-API:et på",
+        "openAppConfig": "Öppna appkonfiguration"
+      }
     },
     "pathConfig": {
       "pageHeader": "Sökvägskonfiguration · {name}",

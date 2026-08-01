@@ -41,7 +41,8 @@
       "live": "Ζωντανά",
       "recordings": "Εγγραφές",
       "appConfig": "Ρυθμίσεις εφαρμογής",
-      "mediamtxConfig": "Ρυθμίσεις MediaMTX"
+      "mediamtxConfig": "Ρυθμίσεις MediaMTX",
+      "paths": "Διαδρομές"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Προεπιλογές διαδρομών",
       "pageSubHeader": "Ρυθμίσεις που κληρονομεί κάθε ροή, αποθηκευμένες στον διακομιστή."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Διαδρομές",
+      "pageSubHeader": "Κάθε διαδρομή για την οποία το MediaMTX διατηρεί καταχώριση ρυθμίσεων.",
+      "summary": "{count, plural, one {# ρυθμισμένη διαδρομή} other {# ρυθμισμένες διαδρομές}}",
+      "columnName": "Διαδρομή",
+      "columnSource": "Πηγή",
+      "columnState": "Κατάσταση",
+      "regexBadge": "REGEX",
+      "regexTitle": "Μια κανονική έκφραση — αυτή η καταχώριση καλύπτει κάθε όνομα διαδρομής που της ταιριάζει.",
+      "stateActive": "LIVE",
+      "stateIdle": "αδρανής",
+      "sourceUnset": "δεν έχει οριστεί",
+      "empty": {
+        "title": "Δεν έχει ρυθμιστεί καμία διαδρομή",
+        "lead": "Το MediaMTX δεν διατηρεί καμία καταχώριση ρυθμίσεων διαδρομής. Μέχρι να υπάρξει μία, κάθε ροή εκτελείται μόνο με τις προεπιλογές διαδρομών.",
+        "openPathDefaults": "Άνοιγμα προεπιλογών διαδρομών"
+      },
+      "errors": {
+        "unreachableTitle": "Δεν είναι δυνατή η πρόσβαση στο MediaMTX",
+        "unreachableLead": "Καμία απόκριση από το API του MediaMTX στο",
+        "openAppConfig": "Άνοιγμα ρυθμίσεων εφαρμογής"
+      }
     },
     "pathConfig": {
       "pageHeader": "Ρύθμιση διαδρομής · {name}",
