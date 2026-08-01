@@ -210,9 +210,12 @@ export const router = os.router({
           const runtime = await api.pathsGet(input.name)
           const confName = runtime?.confName ?? input.name
           const conf = await api.configPathGet(confName)
+          // Neither lookup landed: no runtime path to read a confName off, and
+          // no entry under the path's own name. Nothing to resolve — MediaMTX
+          // won't say which wildcard entry would cover a name it isn't running.
           if (!conf)
-            return null
-          return { confName, conf }
+            return { status: 'unresolved' as const }
+          return { status: 'resolved' as const, confName, conf }
         }
         catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)

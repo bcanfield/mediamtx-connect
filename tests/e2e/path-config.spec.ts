@@ -10,6 +10,10 @@ const STREAM = 'stream1'
 // are independent of runtime paths, so this page renders its own entry.
 const HOOK_PATH = 'e2e-hooks'
 
+// Neither running nor configured — the state the page can't resolve. Unique to
+// its test so it can't touch stream1's shared entry.
+const UNRESOLVED_PATH = 'e2e-unresolved'
+
 test.describe('MediaMTX Path Config Page', () => {
   // Every test here reads or writes stream1's one config entry, and
   // materializing it changes what the read tests see. fullyParallel would race
@@ -146,5 +150,19 @@ test.describe('MediaMTX Path Config Page', () => {
     // emptied out.
     const entry = await request.get(`${API}/config/paths/get/${STREAM}`)
     expect(entry.status()).toBe(404)
+  })
+
+  // No fixture setup: an unused name is in this state already. Both lookups
+  // 404, so there is no confName to resolve and nothing to render.
+  test('should report an honest empty state for a name it cannot resolve', async ({ page }) => {
+    await page.goto(`/config/mediamtx/paths/${UNRESOLVED_PATH}`)
+
+    await expect(
+      page.getByRole('heading', { name: `No config to show for “${UNRESOLVED_PATH}”` }),
+    ).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Open path defaults' }))
+      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
+    // The dead-end this replaces: "Invalid Config" read as a broken app.
+    await expect(page.getByText('Invalid Config')).toHaveCount(0)
   })
 })

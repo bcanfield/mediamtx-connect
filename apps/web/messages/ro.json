@@ -200,6 +200,11 @@
       "pageHeader": "Configurare cale · {name}",
       "pageSubHeader": "Setările acestui flux, salvate pe server.",
       "inheritedSubHeader": "Setările acestui flux, moștenite momentan de la {confName}. Salvarea suprascrie doar ce ai modificat.",
+      "unresolved": {
+        "title": "Nicio configurație de afișat pentru „{name}”",
+        "lead": "MediaMTX nu are nicio cale activă cu acest nume și nicio intrare de configurare proprie. Dacă fluxul este doar oprit, setările lui sunt moștenite — iar MediaMTX poate spune de unde doar cât timp fluxul rulează.",
+        "openPathDefaults": "Deschide valorile implicite pentru căi"
+      },
       "revert": {
         "action": "Revino la moștenire",
         "confirmTitle": "Revii {name} la setările moștenite?",

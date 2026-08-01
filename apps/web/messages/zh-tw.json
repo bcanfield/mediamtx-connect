@@ -200,6 +200,11 @@
       "pageHeader": "路徑設定 · {name}",
       "pageSubHeader": "此串流的設定，儲存到伺服器。",
       "inheritedSubHeader": "此串流的設定，目前繼承自 {confName}。儲存時僅覆寫你變更過的項目。",
+      "unresolved": {
+        "title": "沒有可顯示的「{name}」設定",
+        "lead": "MediaMTX 中沒有以此名稱執行中的路徑，也沒有它自己的設定項目。如果該串流只是已停止，它的設定就是繼承而來的 — 而只有在串流執行時，MediaMTX 才能告訴我們繼承自哪裡。",
+        "openPathDefaults": "開啟路徑預設值"
+      },
       "revert": {
         "action": "還原為繼承",
         "confirmTitle": "要將 {name} 還原為繼承的設定嗎？",

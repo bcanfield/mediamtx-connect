@@ -200,6 +200,11 @@
       "pageHeader": "Cấu hình đường dẫn · {name}",
       "pageSubHeader": "Cài đặt của luồng này, được lưu trên máy chủ.",
       "inheritedSubHeader": "Cài đặt của luồng này, hiện được kế thừa từ {confName}. Khi lưu chỉ ghi đè những gì bạn đã thay đổi.",
+      "unresolved": {
+        "title": "Không có cấu hình nào để hiển thị cho “{name}”",
+        "lead": "MediaMTX không có đường dẫn nào đang chạy với tên này và cũng không có mục cấu hình riêng. Nếu luồng chỉ đơn giản là đã dừng, các cài đặt của nó được kế thừa — và MediaMTX chỉ có thể cho biết kế thừa từ đâu khi luồng đang chạy.",
+        "openPathDefaults": "Mở giá trị mặc định của đường dẫn"
+      },
       "revert": {
         "action": "Trở lại kế thừa",
         "confirmTitle": "Đưa {name} về các cài đặt kế thừa?",

@@ -200,6 +200,11 @@
       "pageHeader": "Sti-konfiguration · {name}",
       "pageSubHeader": "Indstillinger for dette stream, gemmes på serveren.",
       "inheritedSubHeader": "Indstillinger for dette stream, arves i øjeblikket fra {confName}. Gem overskriver kun det, du har ændret.",
+      "unresolved": {
+        "title": "Ingen konfiguration at vise for »{name}«",
+        "lead": "MediaMTX har ingen kørende sti med dette navn og ingen konfigurationspost af sin egen. Hvis streamet blot er stoppet, arves dets indstillinger — og MediaMTX kan kun fortælle hvorfra, mens streamet kører.",
+        "openPathDefaults": "Åbn standardværdier for stier"
+      },
       "revert": {
         "action": "Vend tilbage til nedarvet",
         "confirmTitle": "Vend {name} tilbage til nedarvede indstillinger?",
