@@ -89,19 +89,21 @@ sandbox:
 # E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
 # and ffmpeg, none of which exist there, and its web server binds a local port the
 # sandbox forbids. CI owns that. See docs/TESTING.md.
-# `npx pnpm@<pinned>` rather than a bare `pnpm`. The gate runs in a shell of its
-# own, and this repo's pnpm never reaches it. smallhours v0.5.11 (its ADR 0011)
-# made that shell interactive and login and sourced ~/.bashrc, which fixes the
-# case where an installer appended to an rc file; issue #209's run proved it does
-# NOT fix ours. Claude Code's Bash tool keeps one persistent shell per session,
-# so whatever the agent does to PATH lives in that process and is written to no
-# file any other shell can read. Nothing the gate sources can see it.
+# `corepack pnpm` rather than a bare `pnpm`. The gate's shell is the RUNNER's,
+# not the agent's (smallhours ADR 0012), so the verify command has to resolve its
+# own entry point. This repo's pnpm does not: issue #306's run had the gate search
+# the disk and name the mechanism —
 #
-# So the gate gets a pnpm that needs no PATH at all. `npx` ships with node, which
-# the runner always has, and the version tracks `packageManager` by hand — a
-# Renovate bump there must be copied here, or the gate silently runs the old pnpm
-# against a lockfile the new one resolved.
-verify: pnpm verify
+#   on disk (0s): /home/runner/.npm/_npx/acaf29b40d536b0e/node_modules/.bin/pnpm
+#
+# — the agent reaches pnpm through `npx pnpm`, which downloads it into a
+# hash-keyed npm cache and runs it from there. Nothing is installed and nothing
+# lands on PATH, not even the agent's own, so no shell trick could have found it.
+#
+# corepack ships with node, which the runner always has, and takes the version
+# from `packageManager` — so unlike the `npx pnpm@11.17.0` this replaces, there is
+# no hand-copied version for Renovate to drift out from under us.
+verify: corepack pnpm run verify
 verify_reentries: 2
 
 # Prefix agent PR titles with a conventional-commit type derived from the
