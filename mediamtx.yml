@@ -32,10 +32,13 @@ webrtc: yes
 webrtcAddress: :8889
 # In Docker, MediaMTX gathers ICE candidates from its own container interfaces,
 # which are addresses the browser can't route to — WHEP negotiates and then never
-# connects. This advertises the published host port instead. Same caveat as
-# REMOTE_MEDIAMTX_URL: `localhost` is right only when the browser and the stack
-# share a host. Reaching this from another machine? Put that host's address here.
-webrtcAdditionalHosts: [127.0.0.1]
+# connects. Advertising the host the browser actually uses fixes that, and our
+# docker-compose.yml owns that value: it passes REMOTE_MEDIAMTX_HOST (default
+# 127.0.0.1) as MTX_WEBRTCADDITIONALHOSTS. Deliberately commented out — an env
+# var beats a config key, so a value set here would be silently overridden by a
+# compose default nobody saw. Running this config WITHOUT our compose? Uncomment
+# it and put the browser-reachable host there.
+# webrtcAdditionalHosts: [127.0.0.1]
 
 # Path defaults (recording settings)
 pathDefaults:
