@@ -200,6 +200,11 @@
       "pageHeader": "Config de ruta · {name}",
       "pageSubHeader": "Ajustes de esta transmisión, guardados en el servidor.",
       "inheritedSubHeader": "Ajustes de esta transmisión, heredados actualmente de {confName}. Al guardar solo se sobrescribe lo que hayas cambiado.",
+      "unresolved": {
+        "title": "No hay configuración que mostrar para «{name}»",
+        "lead": "MediaMTX no tiene ninguna ruta en ejecución con este nombre ni una entrada de configuración propia. Si la transmisión solo está detenida, sus ajustes se heredan — y MediaMTX solo puede decirnos de dónde mientras la transmisión está en ejecución.",
+        "openPathDefaults": "Abrir valores predeterminados de rutas"
+      },
       "revert": {
         "action": "Volver a heredado",
         "confirmTitle": "¿Volver {name} a los ajustes heredados?",

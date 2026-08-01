@@ -10,13 +10,14 @@ import { PathConfigPage } from './path-config-page'
 // up only for a path that has an entry of its own, and only the confirm deletes.
 const deletePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['deletePathConfig']) => void>()
 
-// The effective config the page reads: `confName` is the entry the values come
-// from — a wildcard until the path is materialized, its own name after.
-let effective = { confName: 'all_others', conf: { record: true } }
+// What the page reads: `resolved` carries the entry the values come from — a
+// wildcard until the path is materialized, its own name after — and
+// `unresolved` is a name MediaMTX neither runs nor holds an entry for.
+let result: unknown = { status: 'resolved', confName: 'all_others', conf: { record: true } }
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
-  pathConfig: () => effective,
+  pathConfig: () => result,
   deletePathConfig,
 }
 
@@ -30,7 +31,7 @@ afterEach(() => {
 afterAll(() => server.close())
 
 async function renderPage(confName: string) {
-  effective = { confName, conf: { record: true } }
+  result = { status: 'resolved', confName, conf: { record: true } }
   const view = await renderWithProviders(<PathConfigPage name="stream1" />)
   await screen.findByRole('heading', { name: 'Path Config · stream1' })
   return view
@@ -73,5 +74,21 @@ describe('revert to inherited', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(deletePathConfig).not.toHaveBeenCalled()
+  })
+})
+
+describe('a name with nothing to resolve', () => {
+  it('reports the empty state instead of the invalid-config error', async () => {
+    result = { status: 'unresolved' }
+    await renderWithProviders(<PathConfigPage name="ghost" />)
+
+    expect(await screen.findByText(/No config to show for/)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open path defaults' }))
+      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
+    expect(screen.queryByText('Invalid Config')).not.toBeInTheDocument()
+    // Nothing is shown, so neither the "settings for this stream" promise nor
+    // an offer to undo overrides would be true.
+    expect(screen.queryByText(/Settings for this stream/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Revert to inherited' })).not.toBeInTheDocument()
   })
 })

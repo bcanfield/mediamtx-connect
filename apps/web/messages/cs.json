@@ -200,6 +200,11 @@
       "pageHeader": "Konfigurace cesty · {name}",
       "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",
       "inheritedSubHeader": "Nastavení tohoto streamu, aktuálně zděděná z {confName}. Uložení přepíše jen to, co jste změnili.",
+      "unresolved": {
+        "title": "Žádná konfigurace k zobrazení pro „{name}“",
+        "lead": "MediaMTX nemá běžící cestu s tímto názvem ani vlastní konfigurační záznam. Pokud je stream jen zastavený, jeho nastavení se dědí — a MediaMTX může říct odkud jen tehdy, když stream běží.",
+        "openPathDefaults": "Otevřít výchozí hodnoty cest"
+      },
       "revert": {
         "action": "Vrátit na dědění",
         "confirmTitle": "Vrátit {name} na zděděná nastavení?",

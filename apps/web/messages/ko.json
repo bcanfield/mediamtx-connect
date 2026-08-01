@@ -200,6 +200,11 @@
       "pageHeader": "경로 설정 · {name}",
       "pageSubHeader": "이 스트림의 설정이며 서버에 저장됩니다.",
       "inheritedSubHeader": "이 스트림의 설정으로, 현재 {confName}에서 상속됩니다. 저장하면 변경한 항목만 재정의됩니다.",
+      "unresolved": {
+        "title": "“{name}”에 대해 표시할 설정이 없습니다",
+        "lead": "MediaMTX에 이 이름으로 실행 중인 경로가 없고, 이 이름의 설정 항목도 없습니다. 스트림이 단순히 중지된 것이라면 설정은 상속되고 있겠지만, MediaMTX는 스트림이 실행 중일 때만 어디에서 상속되는지 알려줄 수 있습니다.",
+        "openPathDefaults": "경로 기본값 열기"
+      },
       "revert": {
         "action": "상속으로 되돌리기",
         "confirmTitle": "{name}을(를) 상속된 설정으로 되돌릴까요?",

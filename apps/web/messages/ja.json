@@ -200,6 +200,11 @@
       "pageHeader": "パス設定 · {name}",
       "pageSubHeader": "このストリームの設定。サーバーに保存されます。",
       "inheritedSubHeader": "このストリームの設定。現在は {confName} から継承しています。保存すると変更した項目のみが上書きされます。",
+      "unresolved": {
+        "title": "「{name}」に表示できる設定はありません",
+        "lead": "MediaMTX にはこの名前で実行中のパスがなく、パス自身の設定エントリもありません。ストリームが単に停止しているだけであれば、その設定は継承されています — ただし継承元は、ストリームの実行中しか MediaMTX から確認できません。",
+        "openPathDefaults": "パス既定値を開く"
+      },
       "revert": {
         "action": "継承に戻す",
         "confirmTitle": "{name} を継承した設定に戻しますか？",

@@ -148,6 +148,17 @@ export const EffectivePathConfigSchema = z.object({
 
 export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
 
+// `unresolved` is its own state rather than a null: a name with no runtime path
+// and no entry of its own has nothing to resolve — MediaMTX won't say which
+// wildcard entry would cover it — and that is a different situation from a
+// MediaMTX we couldn't reach, which stays `null` as it is on the other scopes.
+export const PathConfigResultSchema = z.discriminatedUnion('status', [
+  EffectivePathConfigSchema.extend({ status: z.literal('resolved') }),
+  z.object({ status: z.literal('unresolved') }),
+])
+
+export type PathConfigResult = z.infer<typeof PathConfigResultSchema>
+
 // Effective record state — the path's own override merged over path defaults,
 // as MediaMTX resolves it. Inherited `on` is the stock setup, so a card that
 // read only the path's own (absent) entry would claim it's off. `unknown` is
@@ -248,7 +259,7 @@ export const contract = {
       updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
       getPathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
-        .output(EffectivePathConfigSchema.nullable()),
+        .output(PathConfigResultSchema.nullable()),
       // `conf` carries only the keys the operator changed: MediaMTX stores it
       // as a sparse override, so everything omitted keeps tracking defaults.
       updatePathConfig: oc

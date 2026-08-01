@@ -32,6 +32,7 @@ const CONFIG = {
 
 const api = {
   pathsList: vi.fn(),
+  pathsGet: vi.fn(),
   configGlobalGet: vi.fn(),
   configPathGet: vi.fn(),
 }
@@ -217,5 +218,46 @@ describe('streams.list card metadata', () => {
 
     // Rejects rather than resolving: `connection-error` is reserved for MediaMTX.
     await expect(call(router.streams.list, undefined as never)).rejects.toThrow()
+  })
+})
+
+describe('config.mediamtx.getPathConfig', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('resolves a publishing path through the confName its runtime path reports', async () => {
+    api.pathsGet.mockResolvedValue(wildcardPaths('stream1')[0])
+    api.configPathGet.mockResolvedValue({ record: true })
+
+    const result = await call(router.config.mediamtx.getPathConfig, { name: 'stream1' })
+
+    expect(result).toEqual({ status: 'resolved', confName: 'all_others', conf: { record: true } })
+    // Not `stream1` — a wildcard-backed path has no entry under its own name.
+    expect(api.configPathGet).toHaveBeenCalledWith('all_others')
+  })
+
+  it('reports unresolved when there is no runtime path and no entry of its own', async () => {
+    // Both 404 — `requestOrNull` turns that into null rather than throwing.
+    api.pathsGet.mockResolvedValue(null)
+    api.configPathGet.mockResolvedValue(null)
+
+    const result = await call(router.config.mediamtx.getPathConfig, { name: 'stopped' })
+
+    // Distinct from null: MediaMTX answered, it just has nothing to resolve.
+    expect(result).toEqual({ status: 'unresolved' })
+  })
+
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.pathsGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.config.mediamtx.getPathConfig, { name: 'stream1' })
+
+    expect(result).toBeNull()
   })
 })

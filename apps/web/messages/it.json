@@ -200,6 +200,11 @@
       "pageHeader": "Config del percorso · {name}",
       "pageSubHeader": "Impostazioni di questo stream, salvate sul server.",
       "inheritedSubHeader": "Impostazioni di questo stream, attualmente ereditate da {confName}. Il salvataggio sovrascrive solo ciò che hai modificato.",
+      "unresolved": {
+        "title": "Nessuna configurazione da mostrare per «{name}»",
+        "lead": "MediaMTX non ha alcun percorso in esecuzione con questo nome né una voce di configurazione propria. Se lo stream è semplicemente fermo, le sue impostazioni sono ereditate — e MediaMTX può dirci da dove solo mentre lo stream è in esecuzione.",
+        "openPathDefaults": "Apri i valori predefiniti dei percorsi"
+      },
       "revert": {
         "action": "Ripristina l'ereditarietà",
         "confirmTitle": "Ripristinare {name} alle impostazioni ereditate?",

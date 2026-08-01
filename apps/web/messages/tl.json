@@ -200,6 +200,11 @@
       "pageHeader": "Config ng path · {name}",
       "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",
       "inheritedSubHeader": "Mga setting ng stream na ito, kasalukuyang minana mula sa {confName}. Kapag nag-save, ang binago mo lang ang mao-override.",
+      "unresolved": {
+        "title": "Walang config na maipapakita para sa “{name}”",
+        "lead": "Walang tumatakbong path ang MediaMTX na ganito ang pangalan, at wala rin itong sariling config entry. Kung nakahinto lang ang stream, minamana ang mga setting nito — at masasabi lang ng MediaMTX kung saan galing habang tumatakbo ang stream.",
+        "openPathDefaults": "Buksan ang mga default ng path"
+      },
       "revert": {
         "action": "Ibalik sa minana",
         "confirmTitle": "Ibalik ang {name} sa minanang mga setting?",
