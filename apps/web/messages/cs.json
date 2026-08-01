@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "nečinný",
       "sourceUnset": "nenastaveno",
+      "addPath": "Přidat cestu RTSP",
       "empty": {
         "title": "Není nakonfigurována žádná cesta",
         "lead": "MediaMTX nemá žádné konfigurační záznamy cest. Dokud žádný neexistuje, běží každý stream jen na výchozích hodnotách cest.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX není dostupné",
         "unreachableLead": "Žádná odpověď od API MediaMTX na",
         "openAppConfig": "Otevřít konfiguraci aplikace"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Přidat cestu RTSP",
+      "pageSubHeader": "Nasměrujte MediaMTX na kameru. Zdrojová adresa URL se skládá z níže uvedených částí, takže žádnou nemusíte psát ručně.",
+      "sections": {
+        "path": "Cesta",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Název cesty",
+          "description": "Jak MediaMTX tento stream nazývá a pod jakým názvem se přehrává."
+        },
+        "host": {
+          "label": "Hostitel",
+          "description": "Adresa kamery v síti — název hostitele nebo IP adresa."
+        },
+        "port": {
+          "label": "Port",
+          "description": "RTSP port kamery. 554, pokud nebyl změněn."
+        },
+        "streamPath": {
+          "label": "Cesta streamu",
+          "description": "Část adresy URL za hostitelem. Uvedena je v manuálu kamery — obvykle jde o kanál nebo profil."
+        },
+        "username": {
+          "label": "Uživatelské jméno"
+        },
+        "password": {
+          "label": "Heslo",
+          "description": "Vloží se do zdrojové adresy URL, escapované tak, aby fungovalo i heslo s interpunkcí. Po uložení se znovu nezobrazí."
+        },
+        "transport": {
+          "label": "Přenos",
+          "description": "Jak MediaMTX stream stahuje. Ponechte automatic, pokud kamera nevyžaduje jinak — tcp obvykle pomůže u zdroje, který ztrácí snímky."
+        }
+      },
+      "preview": {
+        "label": "Zdrojová adresa URL",
+        "description": "Co se zapíše do zdroje cesty. Heslo je zde skryté."
+      },
+      "submit": "Přidat cestu",
+      "cancel": "Zrušit",
+      "errors": {
+        "rejectedTitle": "MediaMTX to odmítlo",
+        "unreachable": "Žádná odpověď od MediaMTX."
       }
     },
     "pathConfig": {

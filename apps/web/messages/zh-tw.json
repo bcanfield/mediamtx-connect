@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "閒置",
       "sourceUnset": "未設定",
+      "addPath": "新增 RTSP 路徑",
       "empty": {
         "title": "尚未設定任何路徑",
         "lead": "MediaMTX 中沒有任何路徑設定項目。在建立之前，每個串流都僅使用路徑預設值執行。",
@@ -218,6 +219,53 @@
         "unreachableTitle": "無法連線 MediaMTX",
         "unreachableLead": "MediaMTX API 無回應，位址：",
         "openAppConfig": "開啟應用程式設定"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "新增 RTSP 路徑",
+      "pageSubHeader": "將 MediaMTX 指向一台攝影機。來源 URL 會由下方欄位組成，因此不需要手動輸入。",
+      "sections": {
+        "path": "路徑",
+        "camera": "攝影機"
+      },
+      "fields": {
+        "name": {
+          "label": "路徑名稱",
+          "description": "MediaMTX 對此串流的稱呼，也是播放時使用的名稱。"
+        },
+        "host": {
+          "label": "主機",
+          "description": "攝影機在網路上的位址 — 主機名稱或 IP。"
+        },
+        "port": {
+          "label": "連接埠",
+          "description": "攝影機的 RTSP 連接埠。除非已變更，否則為 554。"
+        },
+        "streamPath": {
+          "label": "串流路徑",
+          "description": "主機後方的 URL 部分。攝影機說明書中會列出 — 通常是頻道或設定檔。"
+        },
+        "username": {
+          "label": "使用者名稱"
+        },
+        "password": {
+          "label": "密碼",
+          "description": "會寫入來源 URL，並經過逸出處理，讓含有標點符號的密碼仍可正常運作。儲存後不會再次顯示。"
+        },
+        "transport": {
+          "label": "傳輸方式",
+          "description": "MediaMTX 擷取串流的方式。除非攝影機另有需求，否則請保留 automatic — 對於容易掉幀的畫面，tcp 通常是常見的解法。"
+        }
+      },
+      "preview": {
+        "label": "來源 URL",
+        "description": "寫入該路徑來源的內容。密碼在此會被隱藏。"
+      },
+      "submit": "新增路徑",
+      "cancel": "取消",
+      "errors": {
+        "rejectedTitle": "MediaMTX 拒絕了此變更",
+        "unreachable": "MediaMTX 沒有回應。"
       }
     },
     "pathConfig": {

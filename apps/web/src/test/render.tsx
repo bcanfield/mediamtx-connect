@@ -76,5 +76,6 @@ export async function renderWithProviders(
     </QueryClientProvider>,
   )
 
-  return { ...result, user: userEvent.setup(), queryClient }
+  // The router comes back so a test can assert where a component navigated to.
+  return { ...result, user: userEvent.setup(), queryClient, router }
 }

@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inaktiv",
       "sourceUnset": "ikke angivet",
+      "addPath": "Tilføj RTSP-sti",
       "empty": {
         "title": "Ingen stier er konfigureret",
         "lead": "MediaMTX har ingen konfigurationsposter for stier. Indtil der findes én, kører hvert stream udelukkende på standardværdier for stier.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Kan ikke nå MediaMTX",
         "unreachableLead": "Intet svar fra MediaMTX-API'et på",
         "openAppConfig": "Åbn appkonfiguration"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Tilføj en RTSP-sti",
+      "pageSubHeader": "Peg MediaMTX på et kamera. Kilde-URL'en sammensættes af delene nedenfor, så der er ingen at skrive i hånden.",
+      "sections": {
+        "path": "Sti",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Stinavn",
+          "description": "Hvad MediaMTX kalder dette stream, og navnet det afspilles under."
+        },
+        "host": {
+          "label": "Vært",
+          "description": "Kameraets adresse på netværket — et værtsnavn eller en IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Kameraets RTSP-port. 554 medmindre den er ændret."
+        },
+        "streamPath": {
+          "label": "Streamsti",
+          "description": "Den del af URL'en, der kommer efter værten. Kameraets manual angiver den — normalt en kanal eller en profil."
+        },
+        "username": {
+          "label": "Brugernavn"
+        },
+        "password": {
+          "label": "Adgangskode",
+          "description": "Indgår i kilde-URL'en, escaped så en adgangskode med tegnsætning stadig fungerer. Vises ikke igen efter gemning."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Hvordan MediaMTX henter streamet. Lad den stå på automatic, medmindre kameraet kræver andet — tcp er den sædvanlige løsning for et feed, der taber billeder."
+        }
+      },
+      "preview": {
+        "label": "Kilde-URL",
+        "description": "Det, der skrives til stiens kilde. Adgangskoden er skjult her."
+      },
+      "submit": "Tilføj sti",
+      "cancel": "Annuller",
+      "errors": {
+        "rejectedTitle": "MediaMTX afviste dette",
+        "unreachable": "Intet svar fra MediaMTX."
       }
     },
     "pathConfig": {

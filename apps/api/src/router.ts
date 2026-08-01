@@ -8,7 +8,7 @@ import { implement, ORPCError } from '@orpc/server'
 import { getAppConfig, updateAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
 import { logger } from './logger'
-import { mediaMtxApi } from './mediamtx'
+import { mediaMtxApi, MediaMtxError } from './mediamtx'
 import {
   latestScreenshotMtimeFor,
   latestScreenshotUrlFor,
@@ -232,6 +232,28 @@ export const router = os.router({
             mediaMtxUrl: config.mediaMtxUrl,
             mediaMtxApiPort: config.mediaMtxApiPort,
           }
+        }
+      }),
+
+      // Creates an entry for a name that has none — `add`, never the
+      // materialize-or-patch `updatePathConfig` does: a name already in use has
+      // to fail here rather than quietly overwrite the path behind it.
+      addPath: os.config.mediamtx.addPath.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        logger.info({ path: input.name }, 'Adding path config entry')
+        try {
+          await mediaMtxApi(config).configPathAdd(input.name, {
+            source: input.source,
+            rtspTransport: input.rtspTransport,
+          })
+        }
+        catch (error) {
+          logger.error({ err: error }, 'Failed to add path')
+          // A rejected create is the user's to fix, and only MediaMTX knows
+          // which part it disliked — pass its own words through.
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
+          throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to add path' })
         }
       }),
 

@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "空闲",
       "sourceUnset": "未设置",
+      "addPath": "添加 RTSP 路径",
       "empty": {
         "title": "尚未配置任何路径",
         "lead": "MediaMTX 中没有任何路径配置条目。在创建之前，每个流都仅使用路径默认设置运行。",
@@ -218,6 +219,53 @@
         "unreachableTitle": "无法连接 MediaMTX",
         "unreachableLead": "MediaMTX API 无响应，地址：",
         "openAppConfig": "打开应用配置"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "添加 RTSP 路径",
+      "pageSubHeader": "将 MediaMTX 指向一台摄像头。来源 URL 由下方各部分组成，因此无需手动填写。",
+      "sections": {
+        "path": "路径",
+        "camera": "摄像头"
+      },
+      "fields": {
+        "name": {
+          "label": "路径名称",
+          "description": "MediaMTX 对该流的称呼，也是它播放时使用的名称。"
+        },
+        "host": {
+          "label": "主机",
+          "description": "摄像头在网络中的地址 — 主机名或 IP。"
+        },
+        "port": {
+          "label": "端口",
+          "description": "摄像头的 RTSP 端口。除非已更改，否则为 554。"
+        },
+        "streamPath": {
+          "label": "流路径",
+          "description": "主机之后的 URL 部分。摄像头说明书中会列出 — 通常是通道或配置文件。"
+        },
+        "username": {
+          "label": "用户名"
+        },
+        "password": {
+          "label": "密码",
+          "description": "会写入来源 URL，并经过转义，因此包含标点符号的密码仍然有效。保存后不会再次显示。"
+        },
+        "transport": {
+          "label": "传输方式",
+          "description": "MediaMTX 拉取该流的方式。除非摄像头有特殊要求，否则保持 automatic — 画面丢帧时，tcp 通常能解决问题。"
+        }
+      },
+      "preview": {
+        "label": "来源 URL",
+        "description": "将写入该路径来源的内容。此处密码已隐藏。"
+      },
+      "submit": "添加路径",
+      "cancel": "取消",
+      "errors": {
+        "rejectedTitle": "MediaMTX 拒绝了此操作",
+        "unreachable": "MediaMTX 无响应。"
       }
     },
     "pathConfig": {

@@ -14,6 +14,7 @@ import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { ClientConfigPage } from '@/features/client-config/client-config-page'
+import { AddRtspPathPage } from '@/features/mediamtx-config/add-rtsp-path-page'
 import { MediaMTXConfigPage } from '@/features/mediamtx-config/mediamtx-config-page'
 import { PathConfigPage } from '@/features/mediamtx-config/path-config-page'
 import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
@@ -100,6 +101,14 @@ const pathsCatalogRoute = createRoute({
   component: PathsCatalogPage,
 })
 
+// A sibling of the catalog, not `paths/new` — that would reserve `new` as a
+// path name and shadow a real MediaMTX path so named (ADR 0002).
+const addRtspPathRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/mediamtx/add-path',
+  component: AddRtspPathPage,
+})
+
 // `section` lands the page on one group of keys rather than at the top.
 const pathConfigRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -123,6 +132,7 @@ const router = createRouter({
     mediamtxConfigRoute,
     pathDefaultsRoute,
     pathsCatalogRoute,
+    addRtspPathRoute,
     pathConfigRoute,
   ]),
 })

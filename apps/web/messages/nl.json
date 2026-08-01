@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inactief",
       "sourceUnset": "niet ingesteld",
+      "addPath": "RTSP-pad toevoegen",
       "empty": {
         "title": "Er zijn geen paden geconfigureerd",
         "lead": "MediaMTX heeft geen configuratie-invoer voor een pad. Zolang die er niet is, draait elke stream alleen op de padstandaarden.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Kan MediaMTX niet bereiken",
         "unreachableLead": "Geen reactie van de MediaMTX API op",
         "openAppConfig": "App-configuratie openen"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "RTSP-pad toevoegen",
+      "pageSubHeader": "Wijs MediaMTX naar een camera. De bron-URL wordt samengesteld uit de onderstaande onderdelen, dus je hoeft er niets van met de hand te schrijven.",
+      "sections": {
+        "path": "Pad",
+        "camera": "Camera"
+      },
+      "fields": {
+        "name": {
+          "label": "Padnaam",
+          "description": "Hoe MediaMTX deze stream noemt, en de naam waaronder hij wordt afgespeeld."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Het netwerkadres van de camera — een hostnaam of een IP-adres."
+        },
+        "port": {
+          "label": "Poort",
+          "description": "De RTSP-poort van de camera. 554, tenzij gewijzigd."
+        },
+        "streamPath": {
+          "label": "Streampad",
+          "description": "Het deel van de URL na de host. Staat in de handleiding van de camera — meestal een kanaal of profiel."
+        },
+        "username": {
+          "label": "Gebruikersnaam"
+        },
+        "password": {
+          "label": "Wachtwoord",
+          "description": "Komt in de bron-URL terecht, ge-escaped zodat een wachtwoord met leestekens nog steeds werkt. Wordt na het opslaan niet opnieuw getoond."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Hoe MediaMTX de stream ophaalt. Laat dit op automatic staan tenzij de camera iets anders nodig heeft — tcp is meestal de oplossing voor een feed die frames verliest."
+        }
+      },
+      "preview": {
+        "label": "Bron-URL",
+        "description": "Wat naar de bron van het pad wordt geschreven. Het wachtwoord is hier verborgen."
+      },
+      "submit": "Pad toevoegen",
+      "cancel": "Annuleren",
+      "errors": {
+        "rejectedTitle": "MediaMTX heeft dit geweigerd",
+        "unreachable": "Geen reactie van MediaMTX."
       }
     },
     "pathConfig": {
