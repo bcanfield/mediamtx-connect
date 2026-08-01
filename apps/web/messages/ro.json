@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Înregistrări",
       "appConfig": "Configurare aplicație",
-      "mediamtxConfig": "Configurare MediaMTX"
+      "mediamtxConfig": "Configurare MediaMTX",
+      "paths": "Căi"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Valori implicite pentru căi",
       "pageSubHeader": "Setări moștenite de fiecare flux, salvate pe server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Căi",
+      "pageSubHeader": "Fiecare cale pentru care MediaMTX are o intrare de configurare.",
+      "summary": "{count, plural, one {# cale configurată} few {# căi configurate} other {# de căi configurate}}",
+      "columnName": "Cale",
+      "columnSource": "Sursă",
+      "columnState": "Stare",
+      "regexBadge": "REGEX",
+      "regexTitle": "O expresie regulată — această intrare acoperă fiecare nume de cale care se potrivește.",
+      "stateActive": "LIVE",
+      "stateIdle": "inactiv",
+      "sourceUnset": "nesetată",
+      "empty": {
+        "title": "Nicio cale nu este configurată",
+        "lead": "MediaMTX nu are nicio intrare de configurare pentru căi. Până când există una, fiecare flux rulează doar pe valorile implicite pentru căi.",
+        "openPathDefaults": "Deschide valorile implicite pentru căi"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX nu poate fi accesat",
+        "unreachableLead": "Niciun răspuns de la API-ul MediaMTX la",
+        "openAppConfig": "Deschide configurarea aplicației"
+      }
     },
     "pathConfig": {
       "pageHeader": "Configurare cale · {name}",

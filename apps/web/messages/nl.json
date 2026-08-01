@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Opnames",
       "appConfig": "App-configuratie",
-      "mediamtxConfig": "MediaMTX-configuratie"
+      "mediamtxConfig": "MediaMTX-configuratie",
+      "paths": "Paden"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Padstandaarden",
       "pageSubHeader": "Instellingen die elke stream overneemt, opgeslagen op de server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Paden",
+      "pageSubHeader": "Elk pad waarvoor MediaMTX een configuratie-invoer heeft.",
+      "summary": "{count, plural, one {# geconfigureerd pad} other {# geconfigureerde paden}}",
+      "columnName": "Pad",
+      "columnSource": "Bron",
+      "columnState": "Status",
+      "regexBadge": "REGEX",
+      "regexTitle": "Een reguliere expressie — deze configuratie-invoer geldt voor elke padnaam die eraan voldoet.",
+      "stateActive": "LIVE",
+      "stateIdle": "inactief",
+      "sourceUnset": "niet ingesteld",
+      "empty": {
+        "title": "Er zijn geen paden geconfigureerd",
+        "lead": "MediaMTX heeft geen configuratie-invoer voor een pad. Zolang die er niet is, draait elke stream alleen op de padstandaarden.",
+        "openPathDefaults": "Padstandaarden openen"
+      },
+      "errors": {
+        "unreachableTitle": "Kan MediaMTX niet bereiken",
+        "unreachableLead": "Geen reactie van de MediaMTX API op",
+        "openAppConfig": "App-configuratie openen"
+      }
     },
     "pathConfig": {
       "pageHeader": "Padconfiguratie · {name}",

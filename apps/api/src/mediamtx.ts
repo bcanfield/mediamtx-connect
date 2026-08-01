@@ -23,6 +23,18 @@ export interface MediaMtxPathList {
   items?: MediaMtxPath[]
 }
 
+// A config entry as the list endpoint serves it: the sparse override plus the
+// name it is filed under. `PathConfig` carries neither, so it can't be reused.
+export interface MediaMtxPathConf {
+  name?: string
+  source?: string
+}
+
+export interface MediaMtxPathConfList {
+  pageCount?: number
+  items?: MediaMtxPathConf[]
+}
+
 export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApiPort'>) {
   const base = `${config.mediaMtxUrl}:${config.mediaMtxApiPort}/v3`
 
@@ -67,6 +79,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
         body: JSON.stringify(conf),
       }),
 
+    configPathsList: () => request<MediaMtxPathConfList>('/config/paths/list'),
     // Returns the entry with path defaults already resolved into it — this is
     // effective config, not the raw override set. Null when no entry exists.
     configPathGet: (name: string) =>

@@ -41,7 +41,8 @@
       "live": "Élő",
       "recordings": "Felvételek",
       "appConfig": "Alkalmazás konfiguráció",
-      "mediamtxConfig": "MediaMTX konfiguráció"
+      "mediamtxConfig": "MediaMTX konfiguráció",
+      "paths": "Útvonalak"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Útvonalak alapértékei",
       "pageSubHeader": "Minden stream által örökölt beállítások, a kiszolgálóra mentve."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Útvonalak",
+      "pageSubHeader": "Minden útvonal, amelyhez a MediaMTX konfigurációs bejegyzést tárol.",
+      "summary": "{count, plural, one {# konfigurált útvonal} other {# konfigurált útvonal}}",
+      "columnName": "Útvonal",
+      "columnSource": "Forrás",
+      "columnState": "Állapot",
+      "regexBadge": "REGEX",
+      "regexTitle": "Reguláris kifejezés — ez a bejegyzés minden olyan útvonalnevet kiszolgál, amelyre illeszkedik.",
+      "stateActive": "LIVE",
+      "stateIdle": "inaktív",
+      "sourceUnset": "nincs beállítva",
+      "empty": {
+        "title": "Nincs konfigurált útvonal",
+        "lead": "A MediaMTX nem tárol útvonal-konfigurációs bejegyzést. Amíg egy sem létezik, minden stream kizárólag az útvonalak alapértékeivel fut.",
+        "openPathDefaults": "Útvonalak alapértékeinek megnyitása"
+      },
+      "errors": {
+        "unreachableTitle": "A MediaMTX nem érhető el",
+        "unreachableLead": "Nincs válasz a MediaMTX API-tól a következő címen:",
+        "openAppConfig": "Alkalmazás konfiguráció megnyitása"
+      }
     },
     "pathConfig": {
       "pageHeader": "Útvonal-konfiguráció · {name}",

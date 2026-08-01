@@ -13,6 +13,7 @@ const tabs = [
   { key: 'recordings', href: '/recordings' },
   { key: 'appConfig', href: '/config' },
   { key: 'mediamtxConfig', href: '/config/mediamtx/global' },
+  { key: 'paths', href: '/config/mediamtx/paths' },
 ] as const
 
 export function AppHeader() {

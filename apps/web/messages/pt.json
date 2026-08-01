@@ -41,7 +41,8 @@
       "live": "Em direto",
       "recordings": "Gravações",
       "appConfig": "Configuração da app",
-      "mediamtxConfig": "Configuração do MediaMTX"
+      "mediamtxConfig": "Configuração do MediaMTX",
+      "paths": "Caminhos"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Predefinições de caminhos",
       "pageSubHeader": "Definições herdadas por cada transmissão, guardadas no servidor."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Caminhos",
+      "pageSubHeader": "Cada caminho para o qual o MediaMTX tem uma entrada de configuração.",
+      "summary": "{count, plural, one {# caminho configurado} other {# caminhos configurados}}",
+      "columnName": "Caminho",
+      "columnSource": "Origem",
+      "columnState": "Estado",
+      "regexBadge": "REGEX",
+      "regexTitle": "Uma expressão regular — esta entrada serve todos os nomes de caminho que lhe correspondem.",
+      "stateActive": "LIVE",
+      "stateIdle": "inativa",
+      "sourceUnset": "não definida",
+      "empty": {
+        "title": "Não há caminhos configurados",
+        "lead": "O MediaMTX não tem entradas de configuração de caminhos. Enquanto não existir nenhuma, cada transmissão funciona apenas com as predefinições de caminhos.",
+        "openPathDefaults": "Abrir predefinições de caminhos"
+      },
+      "errors": {
+        "unreachableTitle": "Não é possível alcançar o MediaMTX",
+        "unreachableLead": "Sem resposta da API do MediaMTX em",
+        "openAppConfig": "Abrir configuração da app"
+      }
     },
     "pathConfig": {
       "pageHeader": "Configuração do caminho · {name}",

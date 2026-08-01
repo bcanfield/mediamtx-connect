@@ -41,7 +41,8 @@
       "live": "Эфир",
       "recordings": "Записи",
       "appConfig": "Настройки приложения",
-      "mediamtxConfig": "Конфигурация MediaMTX"
+      "mediamtxConfig": "Конфигурация MediaMTX",
+      "paths": "Пути"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Значения по умолчанию для путей",
       "pageSubHeader": "Настройки, наследуемые каждым потоком, сохраняются на сервере."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Пути",
+      "pageSubHeader": "Все пути, для которых в MediaMTX есть запись конфигурации.",
+      "summary": "{count, plural, one {# настроенный путь} few {# настроенных пути} many {# настроенных путей} other {# настроенного пути}}",
+      "columnName": "Путь",
+      "columnSource": "Источник",
+      "columnState": "Состояние",
+      "regexBadge": "REGEX",
+      "regexTitle": "Регулярное выражение — эта запись действует для всех подходящих имён путей.",
+      "stateActive": "LIVE",
+      "stateIdle": "простой",
+      "sourceUnset": "не задан",
+      "empty": {
+        "title": "Ни один путь не настроен",
+        "lead": "В MediaMTX нет записей конфигурации путей. Пока такой записи нет, каждый поток работает только на значениях по умолчанию для путей.",
+        "openPathDefaults": "Открыть значения по умолчанию для путей"
+      },
+      "errors": {
+        "unreachableTitle": "Не удаётся подключиться к MediaMTX",
+        "unreachableLead": "Нет ответа от API MediaMTX по адресу",
+        "openAppConfig": "Открыть настройки приложения"
+      }
     },
     "pathConfig": {
       "pageHeader": "Конфигурация пути · {name}",

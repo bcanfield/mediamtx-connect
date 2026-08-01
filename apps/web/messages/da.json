@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Optagelser",
       "appConfig": "Appkonfiguration",
-      "mediamtxConfig": "MediaMTX-konfiguration"
+      "mediamtxConfig": "MediaMTX-konfiguration",
+      "paths": "Stier"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Standardværdier for stier",
       "pageSubHeader": "Indstillinger som hver stream arver, gemt på serveren."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Stier",
+      "pageSubHeader": "Hver sti, som MediaMTX har en konfigurationspost for.",
+      "summary": "{count, plural, one {# konfigureret sti} other {# konfigurerede stier}}",
+      "columnName": "Sti",
+      "columnSource": "Kilde",
+      "columnState": "Tilstand",
+      "regexBadge": "REGEX",
+      "regexTitle": "Et regulært udtryk — denne post dækker hvert stinavn, den matcher.",
+      "stateActive": "LIVE",
+      "stateIdle": "inaktiv",
+      "sourceUnset": "ikke angivet",
+      "empty": {
+        "title": "Ingen stier er konfigureret",
+        "lead": "MediaMTX har ingen konfigurationsposter for stier. Indtil der findes én, kører hvert stream udelukkende på standardværdier for stier.",
+        "openPathDefaults": "Åbn standardværdier for stier"
+      },
+      "errors": {
+        "unreachableTitle": "Kan ikke nå MediaMTX",
+        "unreachableLead": "Intet svar fra MediaMTX-API'et på",
+        "openAppConfig": "Åbn appkonfiguration"
+      }
     },
     "pathConfig": {
       "pageHeader": "Sti-konfiguration · {name}",

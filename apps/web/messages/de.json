@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Aufzeichnungen",
       "appConfig": "App-Konfiguration",
-      "mediamtxConfig": "MediaMTX-Konfiguration"
+      "mediamtxConfig": "MediaMTX-Konfiguration",
+      "paths": "Pfade"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Pfad-Standardwerte",
       "pageSubHeader": "Einstellungen, die jeder Stream erbt, gespeichert auf dem Server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Pfade",
+      "pageSubHeader": "Jeder Pfad, für den MediaMTX einen Konfigurationseintrag hat.",
+      "summary": "{count, plural, one {# konfigurierter Pfad} other {# konfigurierte Pfade}}",
+      "columnName": "Pfad",
+      "columnSource": "Quelle",
+      "columnState": "Status",
+      "regexBadge": "REGEX",
+      "regexTitle": "Ein regulärer Ausdruck — dieser Eintrag gilt für jeden Pfadnamen, auf den er passt.",
+      "stateActive": "LIVE",
+      "stateIdle": "inaktiv",
+      "sourceUnset": "nicht gesetzt",
+      "empty": {
+        "title": "Keine Pfade konfiguriert",
+        "lead": "MediaMTX hat keine Pfad-Konfigurationseinträge. Solange keiner existiert, läuft jeder Stream allein auf den Pfad-Standardwerten.",
+        "openPathDefaults": "Pfad-Standardwerte öffnen"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX nicht erreichbar",
+        "unreachableLead": "Keine Antwort von der MediaMTX-API unter",
+        "openAppConfig": "App-Konfiguration öffnen"
+      }
     },
     "pathConfig": {
       "pageHeader": "Pfad-Konfiguration · {name}",

@@ -41,7 +41,8 @@
       "live": "สด",
       "recordings": "การบันทึก",
       "appConfig": "การตั้งค่าแอป",
-      "mediamtxConfig": "การตั้งค่า MediaMTX"
+      "mediamtxConfig": "การตั้งค่า MediaMTX",
+      "paths": "พาธ"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "ค่าเริ่มต้นของพาธ",
       "pageSubHeader": "การตั้งค่าที่ทุกสตรีมสืบทอด บันทึกไว้ที่เซิร์ฟเวอร์"
+    },
+    "pathsCatalog": {
+      "pageHeader": "พาธ",
+      "pageSubHeader": "ทุกพาธที่ MediaMTX มีรายการการตั้งค่าไว้",
+      "summary": "{count, plural, other {# พาธที่ตั้งค่าไว้}}",
+      "columnName": "พาธ",
+      "columnSource": "แหล่งที่มา",
+      "columnState": "สถานะ",
+      "regexBadge": "REGEX",
+      "regexTitle": "นิพจน์ทั่วไป — รายการนี้ใช้กับทุกชื่อพาธที่ตรงกับนิพจน์นี้",
+      "stateActive": "LIVE",
+      "stateIdle": "ว่าง",
+      "sourceUnset": "ไม่ได้ตั้งค่า",
+      "empty": {
+        "title": "ไม่มีพาธที่ตั้งค่าไว้",
+        "lead": "MediaMTX ไม่มีรายการการตั้งค่าพาธเลย จนกว่าจะมีสักรายการ ทุกสตรีมจะทำงานด้วยค่าเริ่มต้นของพาธเพียงอย่างเดียว",
+        "openPathDefaults": "เปิดค่าเริ่มต้นของพาธ"
+      },
+      "errors": {
+        "unreachableTitle": "ไม่สามารถเข้าถึง MediaMTX",
+        "unreachableLead": "ไม่มีการตอบสนองจาก MediaMTX API ที่",
+        "openAppConfig": "เปิดการตั้งค่าแอป"
+      }
     },
     "pathConfig": {
       "pageHeader": "การตั้งค่าพาธ · {name}",

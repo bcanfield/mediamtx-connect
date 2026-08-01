@@ -41,7 +41,8 @@
       "live": "Živě",
       "recordings": "Záznamy",
       "appConfig": "Konfigurace aplikace",
-      "mediamtxConfig": "Konfigurace MediaMTX"
+      "mediamtxConfig": "Konfigurace MediaMTX",
+      "paths": "Cesty"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Výchozí hodnoty cest",
       "pageSubHeader": "Nastavení, která dědí každý stream, uložená na serveru."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Cesty",
+      "pageSubHeader": "Každá cesta, pro kterou má MediaMTX konfigurační záznam.",
+      "summary": "{count, plural, one {# nakonfigurovaná cesta} few {# nakonfigurované cesty} many {# nakonfigurované cesty} other {# nakonfigurovaných cest}}",
+      "columnName": "Cesta",
+      "columnSource": "Zdroj",
+      "columnState": "Stav",
+      "regexBadge": "REGEX",
+      "regexTitle": "Regulární výraz — tento záznam platí pro každý název cesty, který mu odpovídá.",
+      "stateActive": "LIVE",
+      "stateIdle": "nečinný",
+      "sourceUnset": "nenastaveno",
+      "empty": {
+        "title": "Není nakonfigurována žádná cesta",
+        "lead": "MediaMTX nemá žádné konfigurační záznamy cest. Dokud žádný neexistuje, běží každý stream jen na výchozích hodnotách cest.",
+        "openPathDefaults": "Otevřít výchozí hodnoty cest"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX není dostupné",
+        "unreachableLead": "Žádná odpověď od API MediaMTX na",
+        "openAppConfig": "Otevřít konfiguraci aplikace"
+      }
     },
     "pathConfig": {
       "pageHeader": "Konfigurace cesty · {name}",

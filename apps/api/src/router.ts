@@ -199,6 +199,42 @@ export const router = os.router({
         }
       }),
 
+      // The catalog of config entries, joined against the runtime paths so each
+      // row can say whether it is live. Both reads are the same failure domain:
+      // without either half a row would be missing or would claim idle.
+      listPaths: os.config.mediamtx.listPaths.handler(async () => {
+        const config = await getAppConfig()
+        const api = mediaMtxApi(config)
+        try {
+          const [entries, runtime] = await Promise.all([api.configPathsList(), api.pathsList()])
+          // A runtime path names the entry backing it, so a regex entry is live
+          // whenever any of the paths it covers is (ADR 0002).
+          const readyConfNames = new Set(
+            (runtime.items ?? []).filter(p => p.ready).map(p => p.confName ?? ''),
+          )
+          return {
+            status: 'connected' as const,
+            paths: (entries.items ?? []).map((entry) => {
+              const name = entry.name ?? ''
+              return {
+                name,
+                source: entry.source ?? null,
+                isRegex: name.startsWith('~'),
+                active: readyConfNames.has(name),
+              }
+            }),
+          }
+        }
+        catch (error) {
+          logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
+          return {
+            status: 'connection-error' as const,
+            mediaMtxUrl: config.mediaMtxUrl,
+            mediaMtxApiPort: config.mediaMtxApiPort,
+          }
+        }
+      }),
+
       // A wildcard-backed path has no entry under its own name, so its config
       // is reached through the runtime path's confName (ADR 0002). MediaMTX
       // resolves defaults into whichever entry we read, so this is already

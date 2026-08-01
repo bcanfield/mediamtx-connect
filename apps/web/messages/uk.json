@@ -41,7 +41,8 @@
       "live": "Наживо",
       "recordings": "Записи",
       "appConfig": "Налаштування застосунку",
-      "mediamtxConfig": "Конфігурація MediaMTX"
+      "mediamtxConfig": "Конфігурація MediaMTX",
+      "paths": "Шляхи"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Типові значення шляхів",
       "pageSubHeader": "Налаштування, які успадковує кожен потік, зберігаються на сервері."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Шляхи",
+      "pageSubHeader": "Кожен шлях, для якого MediaMTX має запис конфігурації.",
+      "summary": "{count, plural, one {# налаштований шлях} few {# налаштовані шляхи} many {# налаштованих шляхів} other {# налаштованого шляху}}",
+      "columnName": "Шлях",
+      "columnSource": "Джерело",
+      "columnState": "Стан",
+      "regexBadge": "REGEX",
+      "regexTitle": "Регулярний вираз — цей запис обслуговує кожну назву шляху, що йому відповідає.",
+      "stateActive": "LIVE",
+      "stateIdle": "простій",
+      "sourceUnset": "не задано",
+      "empty": {
+        "title": "Немає налаштованих шляхів",
+        "lead": "MediaMTX не має жодного запису конфігурації шляху. Доки такого немає, кожен потік працює лише на типових значеннях шляхів.",
+        "openPathDefaults": "Відкрити типові значення шляхів"
+      },
+      "errors": {
+        "unreachableTitle": "Не вдається зв'язатися з MediaMTX",
+        "unreachableLead": "Немає відповіді від API MediaMTX за адресою",
+        "openAppConfig": "Відкрити налаштування застосунку"
+      }
     },
     "pathConfig": {
       "pageHeader": "Конфігурація шляху · {name}",

@@ -41,7 +41,8 @@
       "live": "Canlı",
       "recordings": "Kayıtlar",
       "appConfig": "Uygulama yapılandırması",
-      "mediamtxConfig": "MediaMTX yapılandırması"
+      "mediamtxConfig": "MediaMTX yapılandırması",
+      "paths": "Yollar"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Yol varsayılanları",
       "pageSubHeader": "Her akışın devraldığı ayarlar, sunucuya kaydedilir."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Yollar",
+      "pageSubHeader": "MediaMTX'in yapılandırma girdisi tuttuğu her yol.",
+      "summary": "{count, plural, other {# yapılandırılmış yol}}",
+      "columnName": "Yol",
+      "columnSource": "Kaynak",
+      "columnState": "Durum",
+      "regexBadge": "REGEX",
+      "regexTitle": "Bir düzenli ifade — bu girdi, eşleştiği her yol adının arkasında yer alır.",
+      "stateActive": "LIVE",
+      "stateIdle": "boşta",
+      "sourceUnset": "ayarlanmamış",
+      "empty": {
+        "title": "Yapılandırılmış yol yok",
+        "lead": "MediaMTX'te hiç yol yapılandırma girdisi yok. Bir tane oluşana kadar her akış yalnızca yol varsayılanlarıyla çalışır.",
+        "openPathDefaults": "Yol varsayılanlarını aç"
+      },
+      "errors": {
+        "unreachableTitle": "MediaMTX'e ulaşılamıyor",
+        "unreachableLead": "MediaMTX API'sinden yanıt alınamadı:",
+        "openAppConfig": "Uygulama yapılandırmasını aç"
+      }
     },
     "pathConfig": {
       "pageHeader": "Yol yapılandırması · {name}",

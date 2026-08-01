@@ -41,7 +41,8 @@
       "live": "Live",
       "recordings": "Recordings",
       "appConfig": "App Config",
-      "mediamtxConfig": "MediaMTX Config"
+      "mediamtxConfig": "MediaMTX Config",
+      "paths": "Paths"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Path Defaults",
       "pageSubHeader": "Settings inherited by every stream, saved to the server."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Paths",
+      "pageSubHeader": "Every path MediaMTX holds a config entry for.",
+      "summary": "{count, plural, one {# configured path} other {# configured paths}}",
+      "columnName": "Path",
+      "columnSource": "Source",
+      "columnState": "State",
+      "regexBadge": "REGEX",
+      "regexTitle": "A regular expression — this entry backs every path name it matches.",
+      "stateActive": "LIVE",
+      "stateIdle": "idle",
+      "sourceUnset": "not set",
+      "empty": {
+        "title": "No paths are configured",
+        "lead": "MediaMTX holds no path config entries. Until one exists, every stream runs on path defaults alone.",
+        "openPathDefaults": "Open path defaults"
+      },
+      "errors": {
+        "unreachableTitle": "Can't reach MediaMTX",
+        "unreachableLead": "No response from the MediaMTX API at",
+        "openAppConfig": "Open App Config"
+      }
     },
     "pathConfig": {
       "pageHeader": "Path Config · {name}",

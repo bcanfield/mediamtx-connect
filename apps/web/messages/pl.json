@@ -41,7 +41,8 @@
       "live": "Na żywo",
       "recordings": "Nagrania",
       "appConfig": "Konfiguracja aplikacji",
-      "mediamtxConfig": "Konfiguracja MediaMTX"
+      "mediamtxConfig": "Konfiguracja MediaMTX",
+      "paths": "Ścieżki"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Domyślne ustawienia ścieżek",
       "pageSubHeader": "Ustawienia dziedziczone przez każdy strumień, zapisywane na serwerze."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Ścieżki",
+      "pageSubHeader": "Każda ścieżka, dla której MediaMTX ma wpis konfiguracji.",
+      "summary": "{count, plural, one {# skonfigurowana ścieżka} few {# skonfigurowane ścieżki} many {# skonfigurowanych ścieżek} other {# skonfigurowanej ścieżki}}",
+      "columnName": "Ścieżka",
+      "columnSource": "Źródło",
+      "columnState": "Stan",
+      "regexBadge": "REGEX",
+      "regexTitle": "Wyrażenie regularne — ten wpis obsługuje każdą pasującą do niego nazwę ścieżki.",
+      "stateActive": "LIVE",
+      "stateIdle": "bezczynna",
+      "sourceUnset": "nie ustawiono",
+      "empty": {
+        "title": "Nie skonfigurowano żadnych ścieżek",
+        "lead": "MediaMTX nie ma żadnych wpisów konfiguracji ścieżek. Dopóki żaden nie istnieje, każdy strumień działa wyłącznie na domyślnych ustawieniach ścieżek.",
+        "openPathDefaults": "Otwórz domyślne ustawienia ścieżek"
+      },
+      "errors": {
+        "unreachableTitle": "Brak połączenia z MediaMTX",
+        "unreachableLead": "Brak odpowiedzi od API MediaMTX pod adresem",
+        "openAppConfig": "Otwórz konfigurację aplikacji"
+      }
     },
     "pathConfig": {
       "pageHeader": "Konfiguracja ścieżki · {name}",

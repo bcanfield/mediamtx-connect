@@ -41,7 +41,8 @@
       "live": "Direct",
       "recordings": "Enregistrements",
       "appConfig": "Config de l'app",
-      "mediamtxConfig": "Config MediaMTX"
+      "mediamtxConfig": "Config MediaMTX",
+      "paths": "Chemins"
     }
   },
   "Streams": {
@@ -195,6 +196,29 @@
     "pathDefaults": {
       "pageHeader": "Valeurs par défaut des chemins",
       "pageSubHeader": "Paramètres hérités par chaque flux, enregistrés sur le serveur."
+    },
+    "pathsCatalog": {
+      "pageHeader": "Chemins",
+      "pageSubHeader": "Tous les chemins pour lesquels MediaMTX conserve une entrée de configuration.",
+      "summary": "{count, plural, one {# chemin configuré} other {# chemins configurés}}",
+      "columnName": "Chemin",
+      "columnSource": "Source",
+      "columnState": "État",
+      "regexBadge": "REGEX",
+      "regexTitle": "Une expression régulière — cette entrée fournit la configuration de tous les noms de chemin auxquels elle correspond.",
+      "stateActive": "LIVE",
+      "stateIdle": "inactif",
+      "sourceUnset": "non définie",
+      "empty": {
+        "title": "Aucun chemin configuré",
+        "lead": "MediaMTX ne conserve aucune entrée de configuration de chemin. Tant qu'il n'en existe aucune, chaque flux fonctionne uniquement avec les valeurs par défaut des chemins.",
+        "openPathDefaults": "Ouvrir les valeurs par défaut des chemins"
+      },
+      "errors": {
+        "unreachableTitle": "Impossible d'atteindre MediaMTX",
+        "unreachableLead": "Aucune réponse de l'API MediaMTX à",
+        "openAppConfig": "Ouvrir la config de l'app"
+      }
     },
     "pathConfig": {
       "pageHeader": "Config du chemin · {name}",

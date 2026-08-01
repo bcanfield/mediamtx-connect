@@ -159,6 +159,40 @@ export const PathConfigResultSchema = z.discriminatedUnion('status', [
 
 export type PathConfigResult = z.infer<typeof PathConfigResultSchema>
 
+// One row of the paths catalog: a *config entry*, not a runtime path. A regex
+// entry backs many runtime paths and a wildcard-backed path has no entry at
+// all, so this list and the live stream grid are different populations.
+export const PathCatalogEntrySchema = z.object({
+  name: z.string(),
+  // MediaMTX's `source` for the entry — `publisher` when something pushes to
+  // it, an RTSP/RTMP/SRT URL when MediaMTX pulls. Null when the entry omits it.
+  source: z.string().nullable(),
+  // A `~`-prefixed name is a regular expression matching many path names.
+  isRegex: z.boolean(),
+  // Whether MediaMTX is running a ready path off this entry right now. Every
+  // static entry always has a runtime path, idle or not, so "has a runtime
+  // path" would be true for all of them and say nothing.
+  active: z.boolean(),
+})
+
+export type PathCatalogEntry = z.infer<typeof PathCatalogEntrySchema>
+
+// Same tri-state shape as the live view: an unreachable server is its own
+// answer, not an empty catalog.
+export const PathCatalogStateSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('connection-error'),
+    mediaMtxUrl: z.string(),
+    mediaMtxApiPort: z.number(),
+  }),
+  z.object({
+    status: z.literal('connected'),
+    paths: z.array(PathCatalogEntrySchema),
+  }),
+])
+
+export type PathCatalogState = z.infer<typeof PathCatalogStateSchema>
+
 // Effective record state — the path's own override merged over path defaults,
 // as MediaMTX resolves it. Inherited `on` is the stock setup, so a card that
 // read only the path's own (absent) entry would claim it's off. `unknown` is
@@ -257,6 +291,8 @@ export const contract = {
       updateGlobal: oc.input(GlobalConfigSchema).output(z.void()),
       getPathDefaults: oc.output(PathDefaultsSchema.nullable()),
       updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
+      // Every configured path, with the live server's view of which are up.
+      listPaths: oc.output(PathCatalogStateSchema),
       getPathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
         .output(PathConfigResultSchema.nullable()),
