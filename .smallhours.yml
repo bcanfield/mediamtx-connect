@@ -89,16 +89,19 @@ sandbox:
 # E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
 # and ffmpeg, none of which exist there, and its web server binds a local port the
 # sandbox forbids. CI owns that. See docs/TESTING.md.
-# A bare `pnpm`, resolved from the agent's own PATH. This used to be
-# `npx --yes pnpm@11.17.0 run verify`, because the gate ran in a non-login
-# `bash -c` that saw none of the PATH the agent bootstrapped pnpm onto — #300's
-# canary came back `exited 127 / bash: line 1: pnpm: command not found` and
-# burned a re-entry on a repo that was never broken. smallhours v0.5.11 fixed
-# that (its ADR 0011): the gate now runs `bash -lic` and sources ~/.bashrc, so
-# it sees the agent's toolchain. Dropping the wrapper also drops a second copy
-# of the pnpm version that Renovate would never have kept in step with
-# `packageManager`.
-verify: pnpm verify
+# `npx pnpm@<pinned>` rather than a bare `pnpm`. The gate runs in a shell of its
+# own, and this repo's pnpm never reaches it. smallhours v0.5.11 (its ADR 0011)
+# made that shell interactive and login and sourced ~/.bashrc, which fixes the
+# case where an installer appended to an rc file; issue #209's run proved it does
+# NOT fix ours. Claude Code's Bash tool keeps one persistent shell per session,
+# so whatever the agent does to PATH lives in that process and is written to no
+# file any other shell can read. Nothing the gate sources can see it.
+#
+# So the gate gets a pnpm that needs no PATH at all. `npx` ships with node, which
+# the runner always has, and the version tracks `packageManager` by hand — a
+# Renovate bump there must be copied here, or the gate silently runs the old pnpm
+# against a lockfile the new one resolved.
+verify: npx --yes pnpm@11.17.0 run verify
 verify_reentries: 2
 
 # Prefix agent PR titles with a conventional-commit type derived from the
