@@ -89,21 +89,22 @@ sandbox:
 # E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
 # and ffmpeg, none of which exist there, and its web server binds a local port the
 # sandbox forbids. CI owns that. See docs/TESTING.md.
-# `corepack pnpm` rather than a bare `pnpm`. The gate's shell is the RUNNER's,
-# not the agent's (smallhours ADR 0012), so the verify command has to resolve its
-# own entry point. This repo's pnpm does not: issue #306's run had the gate search
-# the disk and name the mechanism —
+# A bare `pnpm`, which needs smallhours >= v0.6.0. Everything on the runner's
+# PATH is read-only to the agent inside its sandbox, so it could never install
+# pnpm anywhere a later shell would find it — issue #306's run caught it reaching
+# pnpm through `npx pnpm`, out of a hash-keyed cache at
+# ~/.npm/_npx/<hash>/node_modules/.bin, which nothing puts on PATH.
 #
-#   on disk (0s): /home/runner/.npm/_npx/acaf29b40d536b0e/node_modules/.bin/pnpm
+# smallhours ADR 0014 gives the agent one writable directory that IS on the
+# gate's PATH, and its prompts point at it, so an installed pnpm is visible to
+# the gate by bare name. That also fixes the trap this line fell into twice: the
+# `verify` script below re-invokes `pnpm`, and a launcher that runs pnpm without
+# exporting PATH (`corepack pnpm`) leaves that child with nothing — which is why
+# `corepack pnpm run verify` failed where `npx --yes pnpm@x` had worked.
 #
-# — the agent reaches pnpm through `npx pnpm`, which downloads it into a
-# hash-keyed npm cache and runs it from there. Nothing is installed and nothing
-# lands on PATH, not even the agent's own, so no shell trick could have found it.
-#
-# corepack ships with node, which the runner always has, and takes the version
-# from `packageManager` — so unlike the `npx pnpm@11.17.0` this replaces, there is
-# no hand-copied version for Renovate to drift out from under us.
-verify: corepack pnpm run verify
+# No version pinned here on purpose: the agent installs whatever `packageManager`
+# names, so there is no second copy for Renovate to drift out from under us.
+verify: pnpm verify
 verify_reentries: 2
 
 # Prefix agent PR titles with a conventional-commit type derived from the
