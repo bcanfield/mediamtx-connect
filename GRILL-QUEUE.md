@@ -1,13 +1,52 @@
 # Grill Queue — ordered (temp working doc)
 
-> Snapshot: **2026-07-30**, verified against the live board. Supersedes the 2026-07-28
-> revision of this file, which in turn superseded the roadmap half of `TRIAGE-PLAN.md`.
+> Snapshot: **2026-07-31**, verified against the live board. Supersedes the 2026-07-30
+> revision, which superseded 2026-07-28, which superseded the roadmap half of `TRIAGE-PLAN.md`.
 > **Board mutations made in this revision are listed under "Bookkeeping applied" below.**
-> Nothing was dispatched — no `ready-for-agent` label was applied.
+> **One dispatch this revision: #209**, labelled `ready-for-agent` by hand at `2026-08-01T00:42Z`
+> and claimed by the loop 22 seconds later. It is `agent-working` as of this snapshot.
 >
 > Ordering principle (per `CLAUDE.md` § Project goal): **leverage** (does it unblock other
 > work) → **MediaMTX-native fit** (does it consume a config key / endpoint / hook / protocol)
 > → **agent-implementability** (can the loop actually finish it).
+
+---
+
+## What changed since the 07-30 revision
+
+**1. #209 grilled and dispatched — Tier C item 9 is done.** The grill's own question ("why did
+#267 get closed?") has a dull answer: the Build job failed with three `TS2339` narrowing errors
+in `path-config-page.tsx` over a zod `discriminatedUnion` built from
+`EffectivePathConfigSchema.extend()`, auto-fix failed too, and it was closed by hand. **The
+approach was never judged — only the typecheck was.** So this was a re-spec, not a redesign.
+
+Four decisions changed the target behaviour versus what #267 built:
+
+- **The status is `unresolved`, not `not-publishing`.** The state is reached two ways MediaMTX
+  cannot tell apart — a stopped stream and a name that was never a path — and with a wildcard
+  entry present, *every* name is potentially valid, so there is no "does not exist" signal.
+  Asserting "this stream isn't publishing" replaces one wrong message with a subtler one. The
+  typo case is also the *likelier* one, since idle paths have no card and this URL is only
+  reachable by hand.
+- **Neutral dashed block, not `StatusPanel`.** `StatusPanel`'s only tones are `error` and
+  `warning`; the repo's genuinely-neutral empty state (`ZeroStreamsPanel`,
+  `live-view-states.tsx:81`) deliberately does not use it. #267 shipped this amber.
+- **`null` keeps meaning "MediaMTX didn't answer"** — a two-state union plus nullable, matching
+  `getGlobal`/`getPathDefaults`, rather than folding unreachability into the union.
+- **The subheader is suppressed** in that state instead of gaining a third variant. Zero new
+  strings beyond `Config.pathConfig.unresolved.*`.
+
+**It is not subsumed by #292.** #292 is a different route; this is the `paths/$name` config
+page's empty state. The debt entry stays open with a narrowed trigger — an operator wanting to
+*author* config for a path that has never published, which still needs either wildcard matching
+or a create-from-defaults flow. Body rewritten clean-room (no reference to #267, so the run is
+an honest test of the spec).
+
+**2. #206 is closed — Tier H item 32 retires.** Shipped as #310, merged 07-31. The suspicion in
+that entry was right: it was the boring answer, not a design call.
+
+**3. #300 is merged** (#302, commit `5fe3c92`) and leaves the "do not touch" list. It stands as
+the evidence it always was for #306: a check that cannot fail gets trusted anyway.
 
 ---
 
@@ -52,7 +91,18 @@ Nothing on the old queue was closed. Every item below is still open.
 
 ---
 
-## Bookkeeping applied in this revision
+## Bookkeeping applied in this revision (07-31)
+
+- **#209 body rewritten** clean-room from the grill: contract / api / web / strings / tests /
+  docs broken out per file, with the exact English copy and an explicit out-of-scope list.
+- **#209 labels:** `ready-for-human` → `ready-for-agent` (by hand) → `agent-working` (loop, 22s
+  later). Nothing else was dispatched.
+- **Left undone, needs you:** the #209 title still says "for idle wildcard-backed streams",
+  narrower than the state actually being fixed — a typo'd name hits it too.
+- **Still not deleted:** `origin/agent/issue-209` (`bad885b`). See F5 — and note the live run may
+  now push a *new* branch of that name, so delete it only after the run settles.
+
+## Bookkeeping applied in the 07-30 revision
 
 - `needs-triage` added to the eleven queue items that carried a category label but no state
   label: #178 #179 #180 #181 #182 #183 #184 #188 #199 #203 #221. All of them are "→ Grill:"
@@ -169,12 +219,16 @@ the operator to recreate? Regex-backed paths make it worse (§ ADR 0002). *Produ
 → Grill: does #291's route close this outright, or is a scope switcher still wanted for
 global / `pathDefaults` / per-path? Answer it when #291 lands, not before.
 
-**9. #209 — Path config dead-ends for idle wildcard-backed streams**
-`bug` + `ready-for-human` after PR #267 was closed unmerged *and* a later run failed. Same
-surface as the #29x chain, well-specified (render an honest empty state, don't reimplement
-regex matching).
-→ Grill: short — why did #267 get closed? If the spec is right this just needs a re-run, and it
-may be subsumed by #292's inherited-vs-overridden rendering. *Also: delete the stale branch.*
+**9. ~~#209 — Path config dead-ends for idle wildcard-backed streams~~ — GRILLED 2026-07-31.
+Dispatched; `agent-working`.**
+Produced no new tickets — it was a re-spec in place. #267 died on a typecheck, not on its
+approach, so the grill went to the *behaviour* instead: the state is now `unresolved` rather
+than `not-publishing` (a typo'd name is indistinguishable from a stopped stream, and is the
+likelier way to land there), rendered as a neutral dashed block rather than an amber
+`StatusPanel`, with `null` still reserved for "MediaMTX didn't answer". Not subsumed by #292 —
+different route. Full reasoning under "What changed since the 07-30 revision".
+**Watch this run:** it is the first dispatch since the 200-turn and 60m caps, on a ticket
+smaller than #291.
 
 ### Tier D — Cheap native wins the loop can actually finish
 
@@ -284,9 +338,8 @@ migration guide the honest answer?
 
 ### Tier H — Cheap decision grills (~10 min each, run any time)
 
-**32. #206 (GRILLED ALREADY) — Record toggle has no pending state** — needs a design call on the pending
-affordance. Grill: is a spinner really "undesigned surface," or is disabled-while-pending the
-obvious boring answer? (Suspect the latter — this may be agent-ready.)
+**32. ~~#206 — Record toggle has no pending state~~ — CLOSED 07-31, shipped as #310.**
+The suspicion held: disabled-while-pending was the boring answer, no design call needed.
 
 **33. #189 — Snapshot capture from live view** — server-side snapshot already shipped (§1.2.4).
 Grill: is the remaining canvas/clipboard/gallery scope still wanted, or does it close?
@@ -312,7 +365,9 @@ gracefully, but a timeout still leaves no branch and no PR to resume from.
 **39. F4 — a `timeout` knob in `.smallhours.yml`.** Lower priority now that the cap is 60 and the
 budget is derived; worth it for per-repo tuning.
 
-**40. F5 — delete `origin/agent/issue-209`** (`bad885b`). One command. Do it with #9.
+**40. F5 — delete `origin/agent/issue-209`** (still `bad885b` as of this snapshot). One command,
+but **not right now**: #209 is `agent-working` and the live run will want that branch name.
+Delete it only if the run leaves it stale again.
 
 ---
 
@@ -324,20 +379,29 @@ budget is derived; worth it for per-repo tuning.
 | #190 | Epic; sequencing stays with the maintainer (this doc is its sequencing) |
 | #198 | Native-speaker translation review — inherently human, not grillable |
 | #175 | Parent spec, not a unit of work — never label `ready-for-agent` |
-| #300 | In flight (`agent-working`) — do not touch |
+| #209 | In flight (`agent-working` since 08-01T00:42Z) — do not touch |
 
 ---
 
 ## Proposed next session
 
-Items 1 and 2 are done — #214 grilled into #304/#305/#306, #201 re-scoped. **Next grill is #212**
-(item 3): push on why the fix isn't both halves — derive the host from `REMOTE_MEDIAMTX_URL`
-*and* detect ICE failure in the player. It's the only shipped-path correctness bug on the board.
+Items 1, 2 and 9 are done — #214 cut into #304/#305/#306, #201 re-scoped, #209 re-specced and
+dispatched. **Next grill is #212** (item 3), unchanged and now the top ungrilled item: push on
+why the fix isn't both halves — derive the host from `REMOTE_MEDIAMTX_URL` *and* detect ICE
+failure in the player. It is still the only correctness bug on the board that sits on a
+**shipped flagship path**: WHEP is the default player, and any non-localhost deployment silently
+loses it, falls back to HLS, and shows the operator working video with no signal that anything
+degraded. The detection half doubles as a doctor check, so it feeds #187.
 
 After that, Tier B (#202 → #203) is the next thing that unblocks a queue rather than a ticket.
 
-Separately from grilling, the authorization queue above is ready whenever you want to dispatch —
-**#291 is the highest-information single label on the board**, since it tests the decomposition
-and both raised caps at once.
+Two cheap alternatives if #212 feels too big for the session: item 7 (**#301** path rename —
+partial-failure semantics, and genuinely might close) or item 37 (**#100** RTL — the cheapest
+close on the board).
+
+Separately from grilling: **#209's run is the live experiment** — first dispatch under the
+200-turn and 60m caps, on a ticket smaller than #291. Read its outcome before promoting #291,
+since it answers the same question (do the raised caps close the loop?) for free. If it lands,
+the authorization queue above is unchanged and #291 is still next.
 
 **Reminder:** applying `ready-for-agent` fires smallhours immediately. Promote one at a time.
