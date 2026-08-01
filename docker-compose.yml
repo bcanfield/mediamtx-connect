@@ -8,6 +8,13 @@ services:
     volumes:
       - ./mediamtx.yml:/mediamtx.yml:ro
       - ${MEDIAMTX_RECORDINGS_DIR:-./recordings}:/recordings
+    environment:
+      # The host browsers use to reach this stack. MediaMTX otherwise gathers
+      # ICE candidates from its own container interfaces, which no browser can
+      # route to — WHEP negotiates and then never connects. MTX_* is MediaMTX's
+      # own env override for any config key, so this owns webrtcAdditionalHosts
+      # (commented out in mediamtx.yml — env always wins over the file).
+      MTX_WEBRTCADDITIONALHOSTS: ${REMOTE_MEDIAMTX_HOST:-127.0.0.1}
     networks:
       - mtx
     ports:
@@ -32,6 +39,11 @@ services:
       - mtx
     environment:
       BACKEND_SERVER_MEDIAMTX_URL: http://mediamtx
+      # Same knob as the mediamtx service above: the playback URL and the
+      # advertised WebRTC host are the same "the browser isn't on this machine"
+      # trap, so they move together. Seeds the first boot only — after
+      # config.json exists the /config UI owns this value.
+      REMOTE_MEDIAMTX_URL: http://${REMOTE_MEDIAMTX_HOST:-127.0.0.1}
       MEDIAMTX_API_PORT: '9997'
       MEDIAMTX_RECORDINGS_DIR: /recordings
       MEDIAMTX_SCREENSHOTS_DIR: /screenshots
