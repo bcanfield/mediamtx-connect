@@ -89,15 +89,16 @@ sandbox:
 # E2E is deliberately NOT here: it needs a MediaMTX container, Playwright browsers
 # and ffmpeg, none of which exist there, and its web server binds a local port the
 # sandbox forbids. CI owns that. See docs/TESTING.md.
-# `npx pnpm@<pinned>` rather than a bare `pnpm`: the gate runs in a fresh
-# non-login `bash -c` on the runner, which does NOT inherit the PATH the agent
-# bootstrapped pnpm onto inside its own session. Issue #300's canary run proved
-# it — the agent installed, tested and edited happily, then the gate came back
-# `exited 127 / bash: line 1: pnpm: command not found` and burned a re-entry
-# trying to fix a repo that was never broken. `npx` ships with node, which the
-# runner always has, and the version is pinned to `packageManager` so the gate
-# and the developer run the same pnpm.
-verify: npx --yes pnpm@11.17.0 run verify
+# A bare `pnpm`, resolved from the agent's own PATH. This used to be
+# `npx --yes pnpm@11.17.0 run verify`, because the gate ran in a non-login
+# `bash -c` that saw none of the PATH the agent bootstrapped pnpm onto — #300's
+# canary came back `exited 127 / bash: line 1: pnpm: command not found` and
+# burned a re-entry on a repo that was never broken. smallhours v0.5.11 fixed
+# that (its ADR 0011): the gate now runs `bash -lic` and sources ~/.bashrc, so
+# it sees the agent's toolchain. Dropping the wrapper also drops a second copy
+# of the pnpm version that Renovate would never have kept in step with
+# `packageManager`.
+verify: pnpm verify
 verify_reentries: 2
 
 # Prefix agent PR titles with a conventional-commit type derived from the
