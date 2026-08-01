@@ -1,3 +1,16 @@
+## [2.2.0](https://github.com/bcanfield/mediamtx-connect/compare/2.1.7...2.2.0) (2026-08-01)
+
+### Features
+
+* Paths catalog page ([#313](https://github.com/bcanfield/mediamtx-connect/issues/313)) ([713ef6f](https://github.com/bcanfield/mediamtx-connect/commit/713ef6f974afea5c1f52ff5896f2bbc6321cc997)), closes [#291](https://github.com/bcanfield/mediamtx-connect/issues/291)
+
+### Bug Fixes
+
+* `pnpm check --since` with no ref silently checks the working tree instead ([#302](https://github.com/bcanfield/mediamtx-connect/issues/302)) ([5fe3c92](https://github.com/bcanfield/mediamtx-connect/commit/5fe3c9242966a4f71fca0f584f6437c13ea14875)), closes [#300](https://github.com/bcanfield/mediamtx-connect/issues/300)
+* Path config page dead-ends for idle wildcard-backed streams ([#311](https://github.com/bcanfield/mediamtx-connect/issues/311)) ([8c4c627](https://github.com/bcanfield/mediamtx-connect/commit/8c4c62749c50dbbc19febc3f1cd331bb4e470918)), closes [#209](https://github.com/bcanfield/mediamtx-connect/issues/209)
+* Record toggle has no pending/optimistic state ([#310](https://github.com/bcanfield/mediamtx-connect/issues/310)) ([5c90761](https://github.com/bcanfield/mediamtx-connect/commit/5c90761bfd73ed835a62da67faecdb39a2442e6e)), closes [#206](https://github.com/bcanfield/mediamtx-connect/issues/206)
+* webrtcAdditionalHosts hardcodes 127.0.0.1 — remote deployments silently lose WebRTC ([#314](https://github.com/bcanfield/mediamtx-connect/issues/314)) ([4e28f7a](https://github.com/bcanfield/mediamtx-connect/commit/4e28f7a3983f0851ea2a2789050a39f8b4c8efc7)), closes [#212](https://github.com/bcanfield/mediamtx-connect/issues/212)
+
 ## [2.1.7](https://github.com/bcanfield/mediamtx-connect/compare/2.1.6...2.1.7) (2026-07-31)
 
 ### Bug Fixes
