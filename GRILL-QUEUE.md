@@ -3,8 +3,10 @@
 > Snapshot: **2026-07-31**, verified against the live board. Supersedes the 2026-07-30
 > revision, which superseded 2026-07-28, which superseded the roadmap half of `TRIAGE-PLAN.md`.
 > **Board mutations made in this revision are listed under "Bookkeeping applied" below.**
-> **One dispatch this revision: #209**, labelled `ready-for-agent` by hand at `2026-08-01T00:42Z`
-> and claimed by the loop 22 seconds later. It is `agent-working` as of this snapshot.
+> **One dispatch this revision: #209** — dispatched `2026-08-01T00:42Z`, **shipped as #311,
+> merged 01:20Z**. 5/5 CI green including E2E; the diff matched the spec on every point.
+> The caps question is answered: **200 turns / 60m closed the loop** on a five-layer ticket
+> (26min, 179 bash calls, 47 files, 3 subagents). #291 is clear to promote.
 >
 > Ordering principle (per `CLAUDE.md` § Project goal): **leverage** (does it unblock other
 > work) → **MediaMTX-native fit** (does it consume a config key / endpoint / hook / protocol)
@@ -219,16 +221,25 @@ the operator to recreate? Regex-backed paths make it worse (§ ADR 0002). *Produ
 → Grill: does #291's route close this outright, or is a scope switcher still wanted for
 global / `pathDefaults` / per-path? Answer it when #291 lands, not before.
 
-**9. ~~#209 — Path config dead-ends for idle wildcard-backed streams~~ — GRILLED 2026-07-31.
-Dispatched; `agent-working`.**
+**9. ~~#209 — Path config dead-ends for idle wildcard-backed streams~~ — SHIPPED as #311,
+merged 2026-08-01.**
 Produced no new tickets — it was a re-spec in place. #267 died on a typecheck, not on its
 approach, so the grill went to the *behaviour* instead: the state is now `unresolved` rather
 than `not-publishing` (a typo'd name is indistinguishable from a stopped stream, and is the
 likelier way to land there), rendered as a neutral dashed block rather than an amber
 `StatusPanel`, with `null` still reserved for "MediaMTX didn't answer". Not subsumed by #292 —
 different route. Full reasoning under "What changed since the 07-30 revision".
-**Watch this run:** it is the first dispatch since the 200-turn and 60m caps, on a ticket
-smaller than #291.
+**The run answered its question.** First dispatch under the 200-turn / 60m caps, and it closed
+the loop unattended: 26min, 179 bash calls, 47 files touched, 3 subagents, 5/5 CI green
+including the E2E spec the agent wrote blind. The grill is what changed the outcome — #267 had
+failed the same ticket ungrilled — so the spec-out-by-file format is worth repeating.
+
+**One caveat on that run, and it isn't the loop's:** the verify gate reported
+`could not run — pnpm is not on PATH` and pushed unchecked, so CI was the only thing that
+read the diff. smallhours v0.5.11's shell fix only reaches toolchains recorded in an rc file;
+ours isn't one. `.smallhours.yml` is back to `npx --yes pnpm@11.17.0 run verify` (which needs
+no PATH) and `bcanfield/smallhours#29` is reopened with the evidence. Do not retry a bare
+`pnpm verify`.
 
 ### Tier D — Cheap native wins the loop can actually finish
 
@@ -365,9 +376,14 @@ gracefully, but a timeout still leaves no branch and no PR to resume from.
 **39. F4 — a `timeout` knob in `.smallhours.yml`.** Lower priority now that the cap is 60 and the
 budget is derived; worth it for per-repo tuning.
 
-**40. F5 — delete `origin/agent/issue-209`** (still `bad885b` as of this snapshot). One command,
-but **not right now**: #209 is `agent-working` and the live run will want that branch name.
-Delete it only if the run leaves it stale again.
+**40. F5 — delete `origin/agent/issue-209`** (`bad885b`). Now safe: the live run minted
+`agent/issue-209-r2` instead, which auto-deleted on merge. `bad885b` is dead PR #267's branch.
+
+**41. NEW — don't push to `main` while a run is in flight.** Two `.smallhours.yml` commits
+landed mid-#209 and left #311 at `mergeStateStatus: BEHIND`. smallhours correctly refuses to
+promote a non-promotable PR (`success + BEHIND -> leave draft, the sweep re-evals`), so it
+stalled until `gh pr update-branch`. Costs a CI re-run and a sweep. Land repo housekeeping
+*before* labelling the next `ready-for-agent`.
 
 ---
 
@@ -379,7 +395,7 @@ Delete it only if the run leaves it stale again.
 | #190 | Epic; sequencing stays with the maintainer (this doc is its sequencing) |
 | #198 | Native-speaker translation review — inherently human, not grillable |
 | #175 | Parent spec, not a unit of work — never label `ready-for-agent` |
-| #209 | In flight (`agent-working` since 08-01T00:42Z) — do not touch |
+| #209 | Closed — shipped as #311, merged 08-01T01:20Z |
 
 ---
 
@@ -399,9 +415,9 @@ Two cheap alternatives if #212 feels too big for the session: item 7 (**#301** p
 partial-failure semantics, and genuinely might close) or item 37 (**#100** RTL — the cheapest
 close on the board).
 
-Separately from grilling: **#209's run is the live experiment** — first dispatch under the
-200-turn and 60m caps, on a ticket smaller than #291. Read its outcome before promoting #291,
-since it answers the same question (do the raised caps close the loop?) for free. If it lands,
-the authorization queue above is unchanged and #291 is still next.
+Separately from grilling: **#209's run landed** (#311, merged 08-01), so the precondition on
+promoting #291 is met — the raised caps do close the loop. The authorization queue above is
+unchanged and **#291 is next**, needing only a label. Land any repo housekeeping first (item
+41).
 
 **Reminder:** applying `ready-for-agent` fires smallhours immediately. Promote one at a time.
