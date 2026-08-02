@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inattivo",
       "sourceUnset": "non impostata",
+      "addPath": "Aggiungi percorso RTSP",
       "empty": {
         "title": "Nessun percorso configurato",
         "lead": "MediaMTX non ha voci di configurazione dei percorsi. Finché non ne esiste una, ogni flusso funziona solo con i valori predefiniti dei percorsi.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Impossibile raggiungere MediaMTX",
         "unreachableLead": "Nessuna risposta dall'API di MediaMTX su",
         "openAppConfig": "Apri la config dell'app"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Aggiungi un percorso RTSP",
+      "pageSubHeader": "Punta MediaMTX verso una telecamera. L'URL sorgente viene composto dalle parti sottostanti, quindi non c'è nulla da scrivere a mano.",
+      "sections": {
+        "path": "Percorso",
+        "camera": "Telecamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Nome del percorso",
+          "description": "Come MediaMTX chiama questo flusso, e il nome con cui viene riprodotto."
+        },
+        "host": {
+          "label": "Host",
+          "description": "L'indirizzo della telecamera sulla rete — un hostname o un IP."
+        },
+        "port": {
+          "label": "Porta",
+          "description": "La porta RTSP della telecamera. 554 a meno che non sia stata cambiata."
+        },
+        "streamPath": {
+          "label": "Percorso dello stream",
+          "description": "La parte dell'URL dopo l'host. Il manuale della telecamera la indica — di solito un canale o un profilo."
+        },
+        "username": {
+          "label": "Nome utente"
+        },
+        "password": {
+          "label": "Password",
+          "description": "Viene inserita nell'URL sorgente, con escape in modo che una password con punteggiatura funzioni comunque. Non viene più mostrata dopo il salvataggio."
+        },
+        "transport": {
+          "label": "Trasporto",
+          "description": "Come MediaMTX preleva il flusso. Lascialo su automatic a meno che la telecamera non richieda altro — tcp è di solito la soluzione per un flusso che perde fotogrammi."
+        }
+      },
+      "preview": {
+        "label": "URL sorgente",
+        "description": "Ciò che viene scritto nella sorgente del percorso. La password qui è nascosta."
+      },
+      "submit": "Aggiungi percorso",
+      "cancel": "Annulla",
+      "errors": {
+        "rejectedTitle": "MediaMTX ha rifiutato questa modifica",
+        "unreachable": "Nessuna risposta da MediaMTX."
       }
     },
     "pathConfig": {

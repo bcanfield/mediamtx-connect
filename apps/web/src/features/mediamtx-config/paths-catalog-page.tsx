@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
 
+import { maskSourceCredentials } from './rtsp-source'
+
 export function PathsCatalogPage() {
   const t = useTranslations('Config.pathsCatalog')
   const paths = useQuery(orpc.config.mediamtx.listPaths.queryOptions())
@@ -17,7 +19,16 @@ export function PathsCatalogPage() {
   const state: PathCatalogState | undefined = paths.data
 
   return (
-    <PageLayout width="wide" header={t('pageHeader')} subHeader={t('pageSubHeader')}>
+    <PageLayout
+      width="wide"
+      header={t('pageHeader')}
+      subHeader={t('pageSubHeader')}
+      actions={(
+        <Button asChild>
+          <Link href="/config/mediamtx/add-path">{t('addPath')}</Link>
+        </Button>
+      )}
+    >
       {state?.status === 'connection-error' && (
         <UnreachablePanel
           mediaMtxUrl={state.mediaMtxUrl}
@@ -65,8 +76,10 @@ function PathsTable({ paths }: { paths: PathCatalogEntry[] }) {
                   )}
                 </div>
               </td>
+              {/* Masked: a source composed by the guided add carries the
+                  camera's password, and a table is the last place to print it. */}
               <td className="px-4 py-2.5 font-mono text-muted-foreground">
-                {path.source ?? t('sourceUnset')}
+                {path.source ? maskSourceCredentials(path.source) : t('sourceUnset')}
               </td>
               <td className="px-4 py-2.5">
                 {path.active

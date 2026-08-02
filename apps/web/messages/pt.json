@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inativa",
       "sourceUnset": "não definida",
+      "addPath": "Adicionar caminho RTSP",
       "empty": {
         "title": "Não há caminhos configurados",
         "lead": "O MediaMTX não tem entradas de configuração de caminhos. Enquanto não existir nenhuma, cada transmissão funciona apenas com as predefinições de caminhos.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Não é possível alcançar o MediaMTX",
         "unreachableLead": "Sem resposta da API do MediaMTX em",
         "openAppConfig": "Abrir configuração da app"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Adicionar um caminho RTSP",
+      "pageSubHeader": "Aponta o MediaMTX para uma câmara. O URL de origem é composto a partir das partes abaixo, por isso não há nenhum para escrever à mão.",
+      "sections": {
+        "path": "Caminho",
+        "camera": "Câmara"
+      },
+      "fields": {
+        "name": {
+          "label": "Nome do caminho",
+          "description": "Como o MediaMTX chama esta transmissão, e o nome sob o qual é reproduzida."
+        },
+        "host": {
+          "label": "Host",
+          "description": "O endereço da câmara na rede — um nome de host ou um IP."
+        },
+        "port": {
+          "label": "Porta",
+          "description": "A porta RTSP da câmara. 554, a menos que tenha sido alterada."
+        },
+        "streamPath": {
+          "label": "Caminho do stream",
+          "description": "A parte do URL depois do host. O manual da câmara indica-a — normalmente um canal ou um perfil."
+        },
+        "username": {
+          "label": "Nome de utilizador"
+        },
+        "password": {
+          "label": "Palavra-passe",
+          "description": "É incluída no URL de origem, com escape para que uma palavra-passe com pontuação continue a funcionar. Não volta a ser mostrada depois de guardar."
+        },
+        "transport": {
+          "label": "Transporte",
+          "description": "Como o MediaMTX obtém a transmissão. Deixa em automatic a menos que a câmara precise de outra coisa — tcp costuma resolver quando um feed perde fotogramas."
+        }
+      },
+      "preview": {
+        "label": "URL de origem",
+        "description": "O que é escrito na origem do caminho. A palavra-passe está oculta aqui."
+      },
+      "submit": "Adicionar caminho",
+      "cancel": "Cancelar",
+      "errors": {
+        "rejectedTitle": "O MediaMTX rejeitou isto",
+        "unreachable": "Sem resposta do MediaMTX."
       }
     },
     "pathConfig": {

@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "アイドル",
       "sourceUnset": "未設定",
+      "addPath": "RTSP パスを追加",
       "empty": {
         "title": "設定済みのパスはありません",
         "lead": "MediaMTX にはパスの設定エントリがありません。1 つも存在しない間は、すべてのストリームがパス既定値だけで動作します。",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX に接続できません",
         "unreachableLead": "次のアドレスの MediaMTX API から応答がありません:",
         "openAppConfig": "アプリ設定を開く"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "RTSP パスを追加",
+      "pageSubHeader": "MediaMTX をカメラに向けます。ソース URL は以下の項目から自動的に組み立てられるため、手入力する必要はありません。",
+      "sections": {
+        "path": "パス",
+        "camera": "カメラ"
+      },
+      "fields": {
+        "name": {
+          "label": "パス名",
+          "description": "MediaMTX がこのストリームを呼ぶ名前であり、再生時に使われる名前です。"
+        },
+        "host": {
+          "label": "ホスト",
+          "description": "ネットワーク上のカメラのアドレス — ホスト名または IP です。"
+        },
+        "port": {
+          "label": "ポート",
+          "description": "カメラの RTSP ポートです。変更していなければ 554 です。"
+        },
+        "streamPath": {
+          "label": "ストリームパス",
+          "description": "ホストより後ろの URL 部分です。カメラのマニュアルに記載されています — 通常はチャンネルやプロファイルです。"
+        },
+        "username": {
+          "label": "ユーザー名"
+        },
+        "password": {
+          "label": "パスワード",
+          "description": "ソース URL に組み込まれ、記号を含むパスワードでも機能するようにエスケープされます。保存後は再表示されません。"
+        },
+        "transport": {
+          "label": "トランスポート",
+          "description": "MediaMTX がストリームを取得する方法です。カメラ側で特に必要がない限り automatic のままにしてください — フレーム落ちする映像には通常 tcp が有効です。"
+        }
+      },
+      "preview": {
+        "label": "ソース URL",
+        "description": "パスのソースに書き込まれる内容です。ここではパスワードが非表示になります。"
+      },
+      "submit": "パスを追加",
+      "cancel": "キャンセル",
+      "errors": {
+        "rejectedTitle": "MediaMTX に拒否されました",
+        "unreachable": "MediaMTX から応答がありません。"
       }
     },
     "pathConfig": {

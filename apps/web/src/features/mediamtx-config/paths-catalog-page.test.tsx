@@ -55,6 +55,27 @@ describe('paths catalog', () => {
     expect(within(row).getByText('LIVE')).toBeInTheDocument()
   })
 
+  // A source composed by the guided add carries the camera's password, and a
+  // table nobody had to open is the last place to print it.
+  it('masks the password in a source that carries credentials', async () => {
+    catalog = {
+      status: 'connected',
+      paths: [entry({ source: 'rtsp://admin:hunter2@cam.lan:554/live' })],
+    }
+    await renderWithProviders(<PathsCatalogPage />)
+
+    expect(await screen.findByText('rtsp://admin:••••••••@cam.lan:554/live')).toBeInTheDocument()
+    expect(screen.queryByText(/hunter2/)).not.toBeInTheDocument()
+  })
+
+  it('offers the guided add from the header', async () => {
+    catalog = { status: 'connected', paths: [entry({})] }
+    await renderWithProviders(<PathsCatalogPage />)
+
+    expect(await screen.findByRole('link', { name: 'Add RTSP path' }))
+      .toHaveAttribute('href', '/config/mediamtx/add-path')
+  })
+
   it('leaves the regex badge off a plain entry', async () => {
     catalog = { status: 'connected', paths: [entry({})] }
     await renderWithProviders(<PathsCatalogPage />)
