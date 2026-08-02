@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL pemutaran belum diatur",
       "playbackUrlLead": "Atur URL MediaMTX yang dapat diakses peramban di konfigurasi aplikasi untuk mengaktifkan pemutaran langsung.",
-      "openAppConfig": "Buka konfigurasi aplikasi"
+      "openAppConfig": "Buka konfigurasi aplikasi",
+      "webrtcHostsTitle": "Host WebRTC hanya loopback",
+      "webrtcHostsLead": "MediaMTX hanya mengumumkan 127.0.0.1 untuk WebRTC, yang tidak dapat dijangkau peramban di mesin lain. Pemutaran latensi rendah akan beralih ke HLS.",
+      "openWebrtcConfig": "Buka konfigurasi WebRTC"
     },
     "card": {
       "live": "LIVE",

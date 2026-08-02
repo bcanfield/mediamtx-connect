@@ -7,7 +7,7 @@ import { orpc } from '@/orpc'
 import { MediaMTXConfigForm } from './mediamtx-config-form'
 import { GLOBAL_SCOPE } from './sections'
 
-export function MediaMTXConfigPage() {
+export function MediaMTXConfigPage({ section }: { section?: string }) {
   const t = useTranslations('Config')
   const globalConf = useQuery(orpc.config.mediamtx.getGlobal.queryOptions())
   const updateGlobalConfig = useMutation(orpc.config.mediamtx.updateGlobal.mutationOptions())
@@ -24,6 +24,7 @@ export function MediaMTXConfigPage() {
               <MediaMTXConfigForm
                 scope={GLOBAL_SCOPE}
                 conf={globalConf.data}
+                initialSection={section}
                 onSave={values => updateGlobalConfig.mutateAsync(values)}
               />
             )

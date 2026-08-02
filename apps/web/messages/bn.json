@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "প্লেব্যাক URL সেট করা নেই",
       "playbackUrlLead": "লাইভ প্লেব্যাক চালু করতে অ্যাপ কনফিগে ব্রাউজার-মুখী MediaMTX URL সেট করুন।",
-      "openAppConfig": "অ্যাপ কনফিগ খুলুন"
+      "openAppConfig": "অ্যাপ কনফিগ খুলুন",
+      "webrtcHostsTitle": "WebRTC হোস্ট কেবল লুপব্যাক",
+      "webrtcHostsLead": "MediaMTX WebRTC-র জন্য কেবল 127.0.0.1 ঘোষণা করছে, যেখানে অন্য মেশিনের ব্রাউজার পৌঁছাতে পারে না। কম-বিলম্বের প্লেব্যাক HLS-এ ফিরে যাবে।",
+      "openWebrtcConfig": "WebRTC কনফিগ খুলুন"
     },
     "card": {
       "live": "LIVE",

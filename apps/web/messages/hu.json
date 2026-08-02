@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "A lejátszási URL nincs beállítva",
       "playbackUrlLead": "Állítsa be a böngésző felé néző MediaMTX URL-t az alkalmazás konfigurációban az élő lejátszás engedélyezéséhez.",
-      "openAppConfig": "Alkalmazás konfiguráció megnyitása"
+      "openAppConfig": "Alkalmazás konfiguráció megnyitása",
+      "webrtcHostsTitle": "A WebRTC-gazdagépek csak loopback címek",
+      "webrtcHostsLead": "A MediaMTX csak a 127.0.0.1 címet hirdeti a WebRTC-hez, amelyet a többi gépen futó böngészők nem érnek el. Az alacsony késleltetésű lejátszás HLS-re vált vissza.",
+      "openWebrtcConfig": "WebRTC konfiguráció megnyitása"
     },
     "card": {
       "live": "LIVE",
