@@ -35,13 +35,42 @@ export interface MediaMtxPathConfList {
   items?: MediaMtxPathConf[]
 }
 
+// The create body carries `source`, which `PathConfig` doesn't: that schema is
+// the per-path override of path defaults, and `source` is not one of them.
+export type MediaMtxPathCreate = PathConfig & {
+  source?: string
+  rtspTransport?: string
+}
+
+// MediaMTX answers a rejected write with `{"error": "..."}`. That reason — a
+// name already in use, a source it can't parse — is the only thing that says
+// what to change, so it rides along on the throw instead of being flattened
+// into a status code.
+export class MediaMtxError extends Error {
+  constructor(readonly status: number, readonly reason: string | null, request: string) {
+    super(`MediaMTX ${request} responded ${status}${reason ? `: ${reason}` : ''}`)
+  }
+}
+
+async function errorReason(res: Response): Promise<string | null> {
+  // Anything between us and MediaMTX can answer with something that isn't its
+  // error envelope — a proxy's HTML 502, say.
+  try {
+    const body = await res.json() as { error?: string }
+    return body.error ?? null
+  }
+  catch {
+    return null
+  }
+}
+
 export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApiPort'>) {
   const base = `${config.mediaMtxUrl}:${config.mediaMtxApiPort}/v3`
 
   async function request<T>(route: string, init?: RequestInit): Promise<T> {
     const res = await fetch(`${base}${route}`, init)
     if (!res.ok)
-      throw new Error(`MediaMTX ${init?.method ?? 'GET'} ${route} responded ${res.status}`)
+      throw new MediaMtxError(res.status, await errorReason(res), `${init?.method ?? 'GET'} ${route}`)
     if (res.status === 204 || init?.method === 'PATCH' || init?.method === 'DELETE')
       return undefined as T
     return await res.json() as T
@@ -54,7 +83,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     if (res.status === 404)
       return null
     if (!res.ok)
-      throw new Error(`MediaMTX GET ${route} responded ${res.status}`)
+      throw new MediaMtxError(res.status, await errorReason(res), `GET ${route}`)
     return await res.json() as T
   }
 
@@ -86,7 +115,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
       requestOrNull<PathConfig>(`/config/paths/get/${encodeURIComponent(name)}`),
     // Creates an entry for a path that had none. The body is a sparse override:
     // omitted keys keep tracking path defaults, and live sessions are untouched.
-    configPathAdd: (name: string, conf: PathConfig) =>
+    configPathAdd: (name: string, conf: MediaMtxPathCreate) =>
       request<void>(`/config/paths/add/${encodeURIComponent(name)}`, {
         method: 'POST',
         headers: jsonHeaders,

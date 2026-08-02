@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inaktív",
       "sourceUnset": "nincs beállítva",
+      "addPath": "RTSP-útvonal hozzáadása",
       "empty": {
         "title": "Nincs konfigurált útvonal",
         "lead": "A MediaMTX nem tárol útvonal-konfigurációs bejegyzést. Amíg egy sem létezik, minden stream kizárólag az útvonalak alapértékeivel fut.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "A MediaMTX nem érhető el",
         "unreachableLead": "Nincs válasz a MediaMTX API-tól a következő címen:",
         "openAppConfig": "Alkalmazás konfiguráció megnyitása"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "RTSP-útvonal hozzáadása",
+      "pageSubHeader": "Irányítsa a MediaMTX-et egy kamerára. A forrás URL az alábbi részekből áll össze, így nincs olyan, amit kézzel kellene beírni.",
+      "sections": {
+        "path": "Útvonal",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Útvonal neve",
+          "description": "Így nevezi el a MediaMTX ezt a folyamot, és ezen a néven játssza le."
+        },
+        "host": {
+          "label": "Hoszt",
+          "description": "A kamera hálózati címe — egy hosztnév vagy egy IP-cím."
+        },
+        "port": {
+          "label": "Port",
+          "description": "A kamera RTSP portja. 554, hacsak nem módosították."
+        },
+        "streamPath": {
+          "label": "Folyam útvonala",
+          "description": "Az URL hoszt utáni része. A kamera kézikönyve tartalmazza — általában egy csatorna vagy egy profil."
+        },
+        "username": {
+          "label": "Felhasználónév"
+        },
+        "password": {
+          "label": "Jelszó",
+          "description": "Bekerül a forrás URL-be, escape-elve, hogy az írásjeleket tartalmazó jelszó is működjön. Mentés után nem jelenik meg újra."
+        },
+        "transport": {
+          "label": "Átvitel",
+          "description": "Hogyan húzza le a MediaMTX a folyamot. Hagyja automatic értéken, hacsak a kamerának nincs szüksége másra — a tcp a szokásos megoldás a képkockákat eldobó adatfolyamokra."
+        }
+      },
+      "preview": {
+        "label": "Forrás URL",
+        "description": "Ez kerül az útvonal forrásába. A jelszó itt el van rejtve."
+      },
+      "submit": "Útvonal hozzáadása",
+      "cancel": "Mégse",
+      "errors": {
+        "rejectedTitle": "A MediaMTX ezt elutasította",
+        "unreachable": "Nincs válasz a MediaMTX-től."
       }
     },
     "pathConfig": {

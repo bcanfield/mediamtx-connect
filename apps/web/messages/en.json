@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "idle",
       "sourceUnset": "not set",
+      "addPath": "Add RTSP path",
       "empty": {
         "title": "No paths are configured",
         "lead": "MediaMTX holds no path config entries. Until one exists, every stream runs on path defaults alone.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Can't reach MediaMTX",
         "unreachableLead": "No response from the MediaMTX API at",
         "openAppConfig": "Open App Config"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Add an RTSP path",
+      "pageSubHeader": "Point MediaMTX at a camera. The source URL is composed from the parts below, so there is none to write by hand.",
+      "sections": {
+        "path": "Path",
+        "camera": "Camera"
+      },
+      "fields": {
+        "name": {
+          "label": "Path name",
+          "description": "What MediaMTX calls this stream, and the name it plays under."
+        },
+        "host": {
+          "label": "Host",
+          "description": "The camera's address on the network — a hostname or an IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "The camera's RTSP port. 554 unless it was changed."
+        },
+        "streamPath": {
+          "label": "Stream path",
+          "description": "The part of the URL after the host. The camera's manual lists it — usually a channel or a profile."
+        },
+        "username": {
+          "label": "Username"
+        },
+        "password": {
+          "label": "Password",
+          "description": "Goes into the source URL, escaped so that a password with punctuation in it still works. Not shown again after saving."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "How MediaMTX pulls the stream. Leave it automatic unless the camera needs otherwise — tcp is the usual fix for a feed that drops frames."
+        }
+      },
+      "preview": {
+        "label": "Source URL",
+        "description": "What gets written to the path's source. The password is hidden here."
+      },
+      "submit": "Add path",
+      "cancel": "Cancel",
+      "errors": {
+        "rejectedTitle": "MediaMTX turned this down",
+        "unreachable": "No response from MediaMTX."
       }
     },
     "pathConfig": {

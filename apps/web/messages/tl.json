@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "walang ginagawa",
       "sourceUnset": "hindi nakatakda",
+      "addPath": "Magdagdag ng RTSP path",
       "empty": {
         "title": "Walang naka-configure na path",
         "lead": "Walang hawak na path config entry ang MediaMTX. Hangga't wala pa nito, ang bawat stream ay tumatakbo sa mga default ng path lamang.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Hindi maabot ang MediaMTX",
         "unreachableLead": "Walang tugon mula sa MediaMTX API sa",
         "openAppConfig": "Buksan ang App Config"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Magdagdag ng RTSP path",
+      "pageSubHeader": "Ituro ang MediaMTX sa isang camera. Ang source URL ay binubuo mula sa mga bahaging nasa ibaba, kaya wala nang isusulat nang manu-mano.",
+      "sections": {
+        "path": "Path",
+        "camera": "Camera"
+      },
+      "fields": {
+        "name": {
+          "label": "Pangalan ng path",
+          "description": "Ang tawag ng MediaMTX sa stream na ito, at ang pangalang ginagamit nito kapag ito'y pinapatugtog."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Ang address ng camera sa network — isang hostname o isang IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Ang RTSP port ng camera. 554 maliban kung binago."
+        },
+        "streamPath": {
+          "label": "Stream path",
+          "description": "Ang bahagi ng URL pagkatapos ng host. Nakalista ito sa manual ng camera — kadalasan isang channel o isang profile."
+        },
+        "username": {
+          "label": "Username"
+        },
+        "password": {
+          "label": "Password",
+          "description": "Napupunta ito sa source URL, na naka-escape para gumana pa rin ang password na may bantas. Hindi na ito ipapakita ulit pagkatapos i-save."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Kung paano kinukuha ng MediaMTX ang stream. Iwanang automatic maliban kung kailangan ng camera ng iba — ang tcp ang karaniwang solusyon para sa feed na nawawalan ng frame."
+        }
+      },
+      "preview": {
+        "label": "Source URL",
+        "description": "Ang isusulat sa source ng path. Nakatago dito ang password."
+      },
+      "submit": "Magdagdag ng path",
+      "cancel": "Kanselahin",
+      "errors": {
+        "rejectedTitle": "Tinanggihan ito ng MediaMTX",
+        "unreachable": "Walang tugon mula sa MediaMTX."
       }
     },
     "pathConfig": {
