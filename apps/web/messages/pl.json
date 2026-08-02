@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "bezczynna",
       "sourceUnset": "nie ustawiono",
+      "addPath": "Dodaj ścieżkę RTSP",
       "empty": {
         "title": "Nie skonfigurowano żadnych ścieżek",
         "lead": "MediaMTX nie ma żadnych wpisów konfiguracji ścieżek. Dopóki żaden nie istnieje, każdy strumień działa wyłącznie na domyślnych ustawieniach ścieżek.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Brak połączenia z MediaMTX",
         "unreachableLead": "Brak odpowiedzi od API MediaMTX pod adresem",
         "openAppConfig": "Otwórz konfigurację aplikacji"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Dodaj ścieżkę RTSP",
+      "pageSubHeader": "Wskaż MediaMTX na kamerę. Adres URL źródła jest tworzony z poniższych elementów, więc nie trzeba go wpisywać ręcznie.",
+      "sections": {
+        "path": "Ścieżka",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Nazwa ścieżki",
+          "description": "Jak MediaMTX nazywa ten strumień i pod jaką nazwą jest odtwarzany."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Adres kamery w sieci — nazwa hosta lub adres IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Port RTSP kamery. 554, chyba że został zmieniony."
+        },
+        "streamPath": {
+          "label": "Ścieżka strumienia",
+          "description": "Część adresu URL po hoście. Znajduje się w instrukcji kamery — zwykle to kanał lub profil."
+        },
+        "username": {
+          "label": "Nazwa użytkownika"
+        },
+        "password": {
+          "label": "Hasło",
+          "description": "Trafia do adresu URL źródła, odpowiednio zakodowane, więc hasło ze znakami interpunkcyjnymi nadal działa. Nie jest ponownie wyświetlane po zapisaniu."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Sposób, w jaki MediaMTX pobiera strumień. Pozostaw automatic, chyba że kamera wymaga inaczej — tcp to zwykle rozwiązanie dla obrazu, który gubi klatki."
+        }
+      },
+      "preview": {
+        "label": "Adres URL źródła",
+        "description": "To, co zostaje zapisane jako źródło ścieżki. Hasło jest tu ukryte."
+      },
+      "submit": "Dodaj ścieżkę",
+      "cancel": "Anuluj",
+      "errors": {
+        "rejectedTitle": "MediaMTX odrzucił tę zmianę",
+        "unreachable": "Brak odpowiedzi od MediaMTX."
       }
     },
     "pathConfig": {

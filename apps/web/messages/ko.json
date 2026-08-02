@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "유휴",
       "sourceUnset": "설정 안 됨",
+      "addPath": "RTSP 경로 추가",
       "empty": {
         "title": "설정된 경로가 없습니다",
         "lead": "MediaMTX에 경로 설정 항목이 없습니다. 하나라도 생기기 전까지는 모든 스트림이 경로 기본값만으로 실행됩니다.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX에 연결할 수 없습니다",
         "unreachableLead": "다음 주소의 MediaMTX API에서 응답이 없습니다:",
         "openAppConfig": "앱 설정 열기"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "RTSP 경로 추가",
+      "pageSubHeader": "MediaMTX가 카메라를 가리키도록 설정합니다. 소스 URL은 아래 항목들로 구성되므로 직접 입력할 필요가 없습니다.",
+      "sections": {
+        "path": "경로",
+        "camera": "카메라"
+      },
+      "fields": {
+        "name": {
+          "label": "경로 이름",
+          "description": "MediaMTX가 이 스트림을 부르는 이름이자 재생될 때 사용되는 이름입니다."
+        },
+        "host": {
+          "label": "호스트",
+          "description": "네트워크상의 카메라 주소 — 호스트명 또는 IP입니다."
+        },
+        "port": {
+          "label": "포트",
+          "description": "카메라의 RTSP 포트입니다. 변경하지 않았다면 554입니다."
+        },
+        "streamPath": {
+          "label": "스트림 경로",
+          "description": "호스트 뒤에 오는 URL 부분입니다. 카메라 설명서에 나와 있으며 보통 채널이나 프로필입니다."
+        },
+        "username": {
+          "label": "사용자 이름"
+        },
+        "password": {
+          "label": "비밀번호",
+          "description": "소스 URL에 포함되며, 특수 문자가 있는 비밀번호도 문제없이 동작하도록 이스케이프됩니다. 저장 후에는 다시 표시되지 않습니다."
+        },
+        "transport": {
+          "label": "전송 방식",
+          "description": "MediaMTX가 스트림을 가져오는 방식입니다. 카메라에서 별도로 요구하지 않는 한 automatic으로 두세요 — 프레임이 끊기는 피드에는 보통 tcp가 해결책입니다."
+        }
+      },
+      "preview": {
+        "label": "소스 URL",
+        "description": "경로의 소스에 기록되는 내용입니다. 여기서는 비밀번호가 숨겨집니다."
+      },
+      "submit": "경로 추가",
+      "cancel": "취소",
+      "errors": {
+        "rejectedTitle": "MediaMTX가 이 요청을 거부했습니다",
+        "unreachable": "MediaMTX에서 응답이 없습니다."
       }
     },
     "pathConfig": {

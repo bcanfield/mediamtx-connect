@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "käyttämättä",
       "sourceUnset": "ei asetettu",
+      "addPath": "Lisää RTSP-polku",
       "empty": {
         "title": "Yhtään polkua ei ole määritetty",
         "lead": "MediaMTX:llä ei ole yhtään polun asetusmerkintää. Ennen kuin sellainen on olemassa, jokainen striimi toimii pelkillä polkujen oletusarvoilla.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX:ää ei tavoiteta",
         "unreachableLead": "Ei vastausta MediaMTX-API:lta osoitteessa",
         "openAppConfig": "Avaa sovelluksen asetukset"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Lisää RTSP-polku",
+      "pageSubHeader": "Osoita MediaMTX kameraan. Lähde-URL kootaan alla olevista osista, joten sitä ei tarvitse kirjoittaa käsin.",
+      "sections": {
+        "path": "Polku",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Polun nimi",
+          "description": "Mitä MediaMTX kutsuu tätä striimiä, ja nimi jolla se toistetaan."
+        },
+        "host": {
+          "label": "Isäntä",
+          "description": "Kameran osoite verkossa — isäntänimi tai IP."
+        },
+        "port": {
+          "label": "Portti",
+          "description": "Kameran RTSP-portti. 554, ellei sitä ole muutettu."
+        },
+        "streamPath": {
+          "label": "Striimin polku",
+          "description": "URL:n osa isännän jälkeen. Kameran käyttöohje kertoo sen — yleensä kanava tai profiili."
+        },
+        "username": {
+          "label": "Käyttäjätunnus"
+        },
+        "password": {
+          "label": "Salasana",
+          "description": "Sisältyy lähde-URL:iin koodattuna niin, että välimerkkejä sisältävä salasana toimii silti. Ei näytetä enää tallennuksen jälkeen."
+        },
+        "transport": {
+          "label": "Kuljetus",
+          "description": "Miten MediaMTX hakee striimin. Jätä se automatic-tilaan, ellei kamera tarvitse muuta — tcp on tavallinen korjaus striimille, joka pudottaa kuvia."
+        }
+      },
+      "preview": {
+        "label": "Lähde-URL",
+        "description": "Se, mikä kirjoitetaan polun lähteeseen. Salasana on piilotettu tässä."
+      },
+      "submit": "Lisää polku",
+      "cancel": "Peruuta",
+      "errors": {
+        "rejectedTitle": "MediaMTX hylkäsi tämän",
+        "unreachable": "Ei vastausta MediaMTX:ltä."
       }
     },
     "pathConfig": {

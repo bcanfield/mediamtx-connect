@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inaktiv",
       "sourceUnset": "ikke satt",
+      "addPath": "Legg til RTSP-bane",
       "empty": {
         "title": "Ingen baner er konfigurert",
         "lead": "MediaMTX har ingen konfigurasjonsoppføringer for baner. Så lenge ingen finnes, kjører hver strøm bare på standardverdiene for stier.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Kan ikke nå MediaMTX",
         "unreachableLead": "Ingen respons fra MediaMTX-API-et på",
         "openAppConfig": "Åpne appkonfigurasjon"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Legg til en RTSP-bane",
+      "pageSubHeader": "Pek MediaMTX mot et kamera. Kilde-URL-en settes sammen av delene nedenfor, så det er ingen å skrive for hånd.",
+      "sections": {
+        "path": "Bane",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Banenavn",
+          "description": "Hva MediaMTX kaller denne strømmen, og navnet den spilles av under."
+        },
+        "host": {
+          "label": "Vert",
+          "description": "Kameraets adresse på nettverket — et vertsnavn eller en IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Kameraets RTSP-port. 554 med mindre den er endret."
+        },
+        "streamPath": {
+          "label": "Strømbane",
+          "description": "Delen av URL-en etter verten. Kameraets manual lister den — vanligvis en kanal eller en profil."
+        },
+        "username": {
+          "label": "Brukernavn"
+        },
+        "password": {
+          "label": "Passord",
+          "description": "Går inn i kilde-URL-en, escaped slik at et passord med tegnsetting fortsatt fungerer. Vises ikke igjen etter lagring."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Hvordan MediaMTX henter strømmen. La den stå på automatic med mindre kameraet trenger noe annet — tcp er den vanlige løsningen for en strøm som mister bilder."
+        }
+      },
+      "preview": {
+        "label": "Kilde-URL",
+        "description": "Det som skrives til banens kilde. Passordet er skjult her."
+      },
+      "submit": "Legg til bane",
+      "cancel": "Avbryt",
+      "errors": {
+        "rejectedTitle": "MediaMTX avviste dette",
+        "unreachable": "Ingen respons fra MediaMTX."
       }
     },
     "pathConfig": {

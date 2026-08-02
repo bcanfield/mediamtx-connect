@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inactiv",
       "sourceUnset": "nesetată",
+      "addPath": "Adaugă cale RTSP",
       "empty": {
         "title": "Nicio cale nu este configurată",
         "lead": "MediaMTX nu are nicio intrare de configurare pentru căi. Până când există una, fiecare flux rulează doar pe valorile implicite pentru căi.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX nu poate fi accesat",
         "unreachableLead": "Niciun răspuns de la API-ul MediaMTX la",
         "openAppConfig": "Deschide configurarea aplicației"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Adaugă o cale RTSP",
+      "pageSubHeader": "Direcționează MediaMTX către o cameră. URL-ul sursă este alcătuit din elementele de mai jos, așa că nu ai niciunul de scris manual.",
+      "sections": {
+        "path": "Cale",
+        "camera": "Cameră"
+      },
+      "fields": {
+        "name": {
+          "label": "Nume cale",
+          "description": "Cum numește MediaMTX acest flux și numele sub care este redat."
+        },
+        "host": {
+          "label": "Gazdă",
+          "description": "Adresa camerei în rețea — un nume de gazdă sau un IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Portul RTSP al camerei. 554, dacă nu a fost schimbat."
+        },
+        "streamPath": {
+          "label": "Cale flux",
+          "description": "Partea din URL de după gazdă. Manualul camerei o menționează — de obicei un canal sau un profil."
+        },
+        "username": {
+          "label": "Nume utilizator"
+        },
+        "password": {
+          "label": "Parolă",
+          "description": "Intră în URL-ul sursă, cu caracterele speciale escapate, astfel încât o parolă cu punctuație să funcționeze în continuare. Nu mai este afișată după salvare."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Modul în care MediaMTX preia fluxul. Lasă-l pe automatic, cu excepția cazului în care camera are nevoie de altceva — tcp este soluția obișnuită pentru un flux care pierde cadre."
+        }
+      },
+      "preview": {
+        "label": "URL sursă",
+        "description": "Ce se scrie în sursa căii. Parola este ascunsă aici."
+      },
+      "submit": "Adaugă calea",
+      "cancel": "Anulează",
+      "errors": {
+        "rejectedTitle": "MediaMTX a refuzat",
+        "unreachable": "Niciun răspuns de la MediaMTX."
       }
     },
     "pathConfig": {

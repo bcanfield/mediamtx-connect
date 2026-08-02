@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inaktiv",
       "sourceUnset": "nicht gesetzt",
+      "addPath": "RTSP-Pfad hinzufügen",
       "empty": {
         "title": "Keine Pfade konfiguriert",
         "lead": "MediaMTX hat keine Pfad-Konfigurationseinträge. Solange keiner existiert, läuft jeder Stream allein auf den Pfad-Standardwerten.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX nicht erreichbar",
         "unreachableLead": "Keine Antwort von der MediaMTX-API unter",
         "openAppConfig": "App-Konfiguration öffnen"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Einen RTSP-Pfad hinzufügen",
+      "pageSubHeader": "Richte MediaMTX auf eine Kamera. Die Quell-URL wird aus den folgenden Teilen zusammengesetzt, es gibt also keine, die du von Hand eingeben musst.",
+      "sections": {
+        "path": "Pfad",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Pfadname",
+          "description": "Wie MediaMTX diesen Stream nennt, und der Name, unter dem er wiedergegeben wird."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Die Adresse der Kamera im Netzwerk — ein Hostname oder eine IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Der RTSP-Port der Kamera. 554, sofern er nicht geändert wurde."
+        },
+        "streamPath": {
+          "label": "Stream-Pfad",
+          "description": "Der Teil der URL nach dem Host. Im Handbuch der Kamera steht er — meist ein Kanal oder ein Profil."
+        },
+        "username": {
+          "label": "Benutzername"
+        },
+        "password": {
+          "label": "Passwort",
+          "description": "Wird in die Quell-URL eingefügt, escaped, damit ein Passwort mit Sonderzeichen trotzdem funktioniert. Wird nach dem Speichern nicht erneut angezeigt."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Wie MediaMTX den Stream abruft. Lass es auf automatic, außer die Kamera braucht etwas anderes — tcp ist meist die Lösung bei einem Feed, der Frames verliert."
+        }
+      },
+      "preview": {
+        "label": "Quell-URL",
+        "description": "Was in die Quelle des Pfads geschrieben wird. Das Passwort ist hier ausgeblendet."
+      },
+      "submit": "Pfad hinzufügen",
+      "cancel": "Abbrechen",
+      "errors": {
+        "rejectedTitle": "MediaMTX hat das abgelehnt",
+        "unreachable": "Keine Antwort von MediaMTX."
       }
     },
     "pathConfig": {

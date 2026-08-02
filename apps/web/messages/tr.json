@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "boşta",
       "sourceUnset": "ayarlanmamış",
+      "addPath": "RTSP yolu ekle",
       "empty": {
         "title": "Yapılandırılmış yol yok",
         "lead": "MediaMTX'te hiç yol yapılandırma girdisi yok. Bir tane oluşana kadar her akış yalnızca yol varsayılanlarıyla çalışır.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "MediaMTX'e ulaşılamıyor",
         "unreachableLead": "MediaMTX API'sinden yanıt alınamadı:",
         "openAppConfig": "Uygulama yapılandırmasını aç"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "RTSP yolu ekle",
+      "pageSubHeader": "MediaMTX'i bir kameraya yönlendirin. Kaynak URL'si aşağıdaki parçalardan oluşturulur, bu yüzden elle yazılacak bir şey yoktur.",
+      "sections": {
+        "path": "Yol",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Yol adı",
+          "description": "MediaMTX'in bu akışa verdiği ad ve akışın oynatıldığı ad."
+        },
+        "host": {
+          "label": "Ana bilgisayar",
+          "description": "Kameranın ağdaki adresi — bir ana bilgisayar adı ya da IP."
+        },
+        "port": {
+          "label": "Bağlantı noktası",
+          "description": "Kameranın RTSP bağlantı noktası. Değiştirilmediyse 554."
+        },
+        "streamPath": {
+          "label": "Akış yolu",
+          "description": "URL'nin ana bilgisayardan sonraki kısmı. Kameranın kılavuzunda listelenir — genellikle bir kanal veya profildir."
+        },
+        "username": {
+          "label": "Kullanıcı adı"
+        },
+        "password": {
+          "label": "Parola",
+          "description": "Kaynak URL'sine eklenir; noktalama içeren bir parolanın da çalışması için kaçış karakterleriyle işlenir. Kaydedildikten sonra tekrar gösterilmez."
+        },
+        "transport": {
+          "label": "Taşıma",
+          "description": "MediaMTX'in akışı çekme biçimi. Kamera aksini gerektirmedikçe automatic olarak bırakın — kare kaybeden bir yayın için genellikle tcp çözüm olur."
+        }
+      },
+      "preview": {
+        "label": "Kaynak URL'si",
+        "description": "Yolun kaynağına yazılan şey. Parola burada gizlidir."
+      },
+      "submit": "Yolu ekle",
+      "cancel": "İptal",
+      "errors": {
+        "rejectedTitle": "MediaMTX bunu reddetti",
+        "unreachable": "MediaMTX'ten yanıt alınamadı."
       }
     },
     "pathConfig": {

@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inaktiv",
       "sourceUnset": "ej angiven",
+      "addPath": "Lägg till RTSP-sökväg",
       "empty": {
         "title": "Inga sökvägar är konfigurerade",
         "lead": "MediaMTX har inga konfigurationsposter för sökvägar. Tills det finns en körs varje ström enbart på standardvärden för sökvägar.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Kan inte nå MediaMTX",
         "unreachableLead": "Inget svar från MediaMTX-API:et på",
         "openAppConfig": "Öppna appkonfiguration"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Lägg till en RTSP-sökväg",
+      "pageSubHeader": "Rikta MediaMTX mot en kamera. Käll-URL:en sätts samman av delarna nedan, så det finns ingen att skriva för hand.",
+      "sections": {
+        "path": "Sökväg",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Sökvägsnamn",
+          "description": "Vad MediaMTX kallar den här strömmen, och namnet den spelas upp under."
+        },
+        "host": {
+          "label": "Värd",
+          "description": "Kamerans adress i nätverket — ett värdnamn eller en IP-adress."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Kamerans RTSP-port. 554 om den inte ändrats."
+        },
+        "streamPath": {
+          "label": "Strömsökväg",
+          "description": "Delen av URL:en efter värden. Kamerans manual anger den — oftast en kanal eller en profil."
+        },
+        "username": {
+          "label": "Användarnamn"
+        },
+        "password": {
+          "label": "Lösenord",
+          "description": "Går in i käll-URL:en, escapad så att ett lösenord med skiljetecken ändå fungerar. Visas inte igen efter att det sparats."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Hur MediaMTX hämtar strömmen. Lämna den på automatic om inte kameran behöver något annat — tcp är den vanliga lösningen för en ström som tappar bildrutor."
+        }
+      },
+      "preview": {
+        "label": "Käll-URL",
+        "description": "Det som skrivs till sökvägens källa. Lösenordet är dolt här."
+      },
+      "submit": "Lägg till sökväg",
+      "cancel": "Avbryt",
+      "errors": {
+        "rejectedTitle": "MediaMTX avvisade detta",
+        "unreachable": "Inget svar från MediaMTX."
       }
     },
     "pathConfig": {

@@ -193,6 +193,25 @@ export const PathCatalogStateSchema = z.discriminatedUnion('status', [
 
 export type PathCatalogState = z.infer<typeof PathCatalogStateSchema>
 
+// MediaMTX's `rtspTransport`, the transport it pulls an RTSP source over.
+export const RTSP_TRANSPORTS = ['automatic', 'udp', 'multicast', 'tcp'] as const
+
+export type RtspTransport = (typeof RTSP_TRANSPORTS)[number]
+
+// Creating a path is a narrower surface than editing one: the guided add
+// composes `source` from its parts and sends the finished URL, and `source` is
+// not a path-defaults key, so `PathConfigSchema` — which is exactly the
+// per-path override of path defaults (ADR 0002) — can't carry it.
+export const AddPathInputSchema = z.object({
+  name: z.string().min(1),
+  source: z.string().min(1),
+  // Left off rather than sent as `automatic`: that is what an entry without the
+  // key already does, and an entry stays a sparse override.
+  rtspTransport: z.enum(RTSP_TRANSPORTS).optional(),
+})
+
+export type AddPathInput = z.infer<typeof AddPathInputSchema>
+
 // Effective record state — the path's own override merged over path defaults,
 // as MediaMTX resolves it. Inherited `on` is the stock setup, so a card that
 // read only the path's own (absent) entry would claim it's off. `unknown` is
@@ -293,6 +312,7 @@ export const contract = {
       updatePathDefaults: oc.input(PathDefaultsSchema).output(z.void()),
       // Every configured path, with the live server's view of which are up.
       listPaths: oc.output(PathCatalogStateSchema),
+      addPath: oc.input(AddPathInputSchema).output(z.void()),
       getPathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
         .output(PathConfigResultSchema.nullable()),

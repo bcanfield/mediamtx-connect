@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inativa",
       "sourceUnset": "não definida",
+      "addPath": "Adicionar caminho RTSP",
       "empty": {
         "title": "Nenhum caminho está configurado",
         "lead": "O MediaMTX não tem entradas de configuração de caminhos. Enquanto nenhuma existir, cada transmissão funciona apenas com os padrões de caminhos.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Não é possível alcançar o MediaMTX",
         "unreachableLead": "Sem resposta da API do MediaMTX em",
         "openAppConfig": "Abrir configuração do app"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Adicionar um caminho RTSP",
+      "pageSubHeader": "Aponte o MediaMTX para uma câmera. A URL de origem é composta a partir das partes abaixo, então não há nada para digitar manualmente.",
+      "sections": {
+        "path": "Caminho",
+        "camera": "Câmera"
+      },
+      "fields": {
+        "name": {
+          "label": "Nome do caminho",
+          "description": "Como o MediaMTX chama esta transmissão, e o nome sob o qual ela é reproduzida."
+        },
+        "host": {
+          "label": "Host",
+          "description": "O endereço da câmera na rede — um hostname ou um IP."
+        },
+        "port": {
+          "label": "Porta",
+          "description": "A porta RTSP da câmera. 554, a menos que tenha sido alterada."
+        },
+        "streamPath": {
+          "label": "Caminho da transmissão",
+          "description": "A parte da URL depois do host. O manual da câmera lista isso — geralmente um canal ou um perfil."
+        },
+        "username": {
+          "label": "Nome de usuário"
+        },
+        "password": {
+          "label": "Senha",
+          "description": "Entra na URL de origem, com escape para que uma senha com pontuação continue funcionando. Não é mostrada novamente depois de salva."
+        },
+        "transport": {
+          "label": "Transporte",
+          "description": "Como o MediaMTX capta a transmissão. Deixe como automatic a menos que a câmera precise de outra coisa — tcp costuma resolver um feed que perde quadros."
+        }
+      },
+      "preview": {
+        "label": "URL de origem",
+        "description": "O que é gravado na origem do caminho. A senha fica oculta aqui."
+      },
+      "submit": "Adicionar caminho",
+      "cancel": "Cancelar",
+      "errors": {
+        "rejectedTitle": "O MediaMTX recusou isso",
+        "unreachable": "Sem resposta do MediaMTX."
       }
     },
     "pathConfig": {

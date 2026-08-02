@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inactiva",
       "sourceUnset": "sin definir",
+      "addPath": "Agregar ruta RTSP",
       "empty": {
         "title": "No hay rutas configuradas",
         "lead": "MediaMTX no tiene entradas de configuración de rutas. Hasta que exista una, cada transmisión se ejecuta solo con los valores predeterminados de rutas.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "No se puede acceder a MediaMTX",
         "unreachableLead": "Sin respuesta de la API de MediaMTX en",
         "openAppConfig": "Abrir configuración de la app"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Agregar una ruta RTSP",
+      "pageSubHeader": "Apunta MediaMTX a una cámara. La URL de origen se compone a partir de las partes de abajo, así que no hay ninguna que escribir a mano.",
+      "sections": {
+        "path": "Ruta",
+        "camera": "Cámara"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre de la ruta",
+          "description": "Cómo llama MediaMTX a esta transmisión, y el nombre bajo el que se reproduce."
+        },
+        "host": {
+          "label": "Host",
+          "description": "La dirección de la cámara en la red — un nombre de host o una IP."
+        },
+        "port": {
+          "label": "Puerto",
+          "description": "El puerto RTSP de la cámara. 554 a menos que se haya cambiado."
+        },
+        "streamPath": {
+          "label": "Ruta del stream",
+          "description": "La parte de la URL después del host. El manual de la cámara la indica — normalmente un canal o un perfil."
+        },
+        "username": {
+          "label": "Usuario"
+        },
+        "password": {
+          "label": "Contraseña",
+          "description": "Se incluye en la URL de origen, con caracteres especiales escapados para que una contraseña con puntuación siga funcionando. No se vuelve a mostrar después de guardar."
+        },
+        "transport": {
+          "label": "Transporte",
+          "description": "Cómo MediaMTX obtiene la transmisión. Déjalo en automatic a menos que la cámara necesite otra cosa — tcp suele ser la solución cuando una señal pierde fotogramas."
+        }
+      },
+      "preview": {
+        "label": "URL de origen",
+        "description": "Lo que se escribe en el origen de la ruta. La contraseña se oculta aquí."
+      },
+      "submit": "Agregar ruta",
+      "cancel": "Cancelar",
+      "errors": {
+        "rejectedTitle": "MediaMTX rechazó esto",
+        "unreachable": "Sin respuesta de MediaMTX."
       }
     },
     "pathConfig": {

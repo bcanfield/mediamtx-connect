@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "không hoạt động",
       "sourceUnset": "chưa đặt",
+      "addPath": "Thêm đường dẫn RTSP",
       "empty": {
         "title": "Chưa có đường dẫn nào được cấu hình",
         "lead": "MediaMTX không có mục cấu hình đường dẫn nào. Cho đến khi có một mục, mọi luồng chỉ chạy theo giá trị mặc định của đường dẫn.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Không thể kết nối MediaMTX",
         "unreachableLead": "Không có phản hồi từ API MediaMTX tại",
         "openAppConfig": "Mở Cấu hình ứng dụng"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Thêm đường dẫn RTSP",
+      "pageSubHeader": "Trỏ MediaMTX đến một camera. URL nguồn được ghép từ các phần bên dưới, nên không có gì phải viết tay.",
+      "sections": {
+        "path": "Đường dẫn",
+        "camera": "Camera"
+      },
+      "fields": {
+        "name": {
+          "label": "Tên đường dẫn",
+          "description": "Tên mà MediaMTX gọi luồng này, và cũng là tên nó phát dưới đó."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Địa chỉ của camera trên mạng — một hostname hoặc một địa chỉ IP."
+        },
+        "port": {
+          "label": "Cổng",
+          "description": "Cổng RTSP của camera. Mặc định là 554 trừ khi đã bị thay đổi."
+        },
+        "streamPath": {
+          "label": "Đường dẫn luồng",
+          "description": "Phần của URL nằm sau host. Tài liệu hướng dẫn của camera có ghi — thường là một kênh hoặc một hồ sơ."
+        },
+        "username": {
+          "label": "Tên người dùng"
+        },
+        "password": {
+          "label": "Mật khẩu",
+          "description": "Được đưa vào URL nguồn, đã được thoát ký tự đặc biệt để mật khẩu có dấu câu vẫn hoạt động đúng. Không hiển thị lại sau khi lưu."
+        },
+        "transport": {
+          "label": "Giao thức truyền tải",
+          "description": "Cách MediaMTX kéo luồng về. Để automatic trừ khi camera cần khác — tcp thường là cách khắc phục cho luồng bị rớt khung hình."
+        }
+      },
+      "preview": {
+        "label": "URL nguồn",
+        "description": "Nội dung sẽ được ghi vào nguồn của đường dẫn. Mật khẩu được ẩn ở đây."
+      },
+      "submit": "Thêm đường dẫn",
+      "cancel": "Hủy",
+      "errors": {
+        "rejectedTitle": "MediaMTX đã từ chối",
+        "unreachable": "Không có phản hồi từ MediaMTX."
       }
     },
     "pathConfig": {

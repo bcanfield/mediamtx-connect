@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "inactif",
       "sourceUnset": "non définie",
+      "addPath": "Ajouter un chemin RTSP",
       "empty": {
         "title": "Aucun chemin configuré",
         "lead": "MediaMTX ne conserve aucune entrée de configuration de chemin. Tant qu'il n'en existe aucune, chaque flux fonctionne uniquement avec les valeurs par défaut des chemins.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Impossible d'atteindre MediaMTX",
         "unreachableLead": "Aucune réponse de l'API MediaMTX à",
         "openAppConfig": "Ouvrir la config de l'app"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Ajouter un chemin RTSP",
+      "pageSubHeader": "Pointez MediaMTX vers une caméra. L'URL source est composée à partir des éléments ci-dessous, il n'y en a donc aucune à écrire à la main.",
+      "sections": {
+        "path": "Chemin",
+        "camera": "Caméra"
+      },
+      "fields": {
+        "name": {
+          "label": "Nom du chemin",
+          "description": "Comment MediaMTX appelle ce flux, et le nom sous lequel il est lu."
+        },
+        "host": {
+          "label": "Hôte",
+          "description": "L'adresse de la caméra sur le réseau — un nom d'hôte ou une IP."
+        },
+        "port": {
+          "label": "Port",
+          "description": "Le port RTSP de la caméra. 554, sauf s'il a été modifié."
+        },
+        "streamPath": {
+          "label": "Chemin du flux",
+          "description": "La partie de l'URL après l'hôte. Le manuel de la caméra l'indique — généralement un canal ou un profil."
+        },
+        "username": {
+          "label": "Nom d'utilisateur"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "description": "Inclus dans l'URL source, avec échappement pour qu'un mot de passe contenant de la ponctuation fonctionne quand même. N'est plus affiché après l'enregistrement."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Comment MediaMTX récupère le flux. Laissez sur automatic sauf si la caméra a besoin d'autre chose — tcp est généralement la solution pour un flux qui perd des images."
+        }
+      },
+      "preview": {
+        "label": "URL source",
+        "description": "Ce qui est écrit dans la source du chemin. Le mot de passe est masqué ici."
+      },
+      "submit": "Ajouter le chemin",
+      "cancel": "Annuler",
+      "errors": {
+        "rejectedTitle": "MediaMTX a refusé cela",
+        "unreachable": "Aucune réponse de MediaMTX."
       }
     },
     "pathConfig": {

@@ -3,7 +3,7 @@ import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
-import { mediaMtxApi } from './mediamtx'
+import { mediaMtxApi, MediaMtxError } from './mediamtx'
 import { latestScreenshotMtimeFor } from './recordings-fs'
 import { router } from './router'
 
@@ -13,7 +13,13 @@ vi.mock('./config-store', () => ({ getAppConfig: vi.fn(), updateAppConfig: vi.fn
 vi.mock('./logger', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }))
-vi.mock('./mediamtx', () => ({ mediaMtxApi: vi.fn() }))
+// The real MediaMtxError, so the add handler's `instanceof` narrowing is the
+// one that ships. `mediamtx.ts` imports nothing but types, so loading it here
+// costs nothing.
+vi.mock('./mediamtx', async (importActual) => {
+  const actual = await importActual<typeof import('./mediamtx')>()
+  return { mediaMtxApi: vi.fn(), MediaMtxError: actual.MediaMtxError }
+})
 vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
 // The real module, with the snapshot read swappable: one test needs it to fail
 // the way a disk fault would.
@@ -36,6 +42,7 @@ const api = {
   configGlobalGet: vi.fn(),
   configPathsList: vi.fn(),
   configPathGet: vi.fn(),
+  configPathAdd: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -297,6 +304,66 @@ describe('config.mediamtx.listPaths', () => {
       mediaMtxUrl: CONFIG.mediaMtxUrl,
       mediaMtxApiPort: CONFIG.mediaMtxApiPort,
     })
+  })
+})
+
+describe('config.mediamtx.addPath', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('creates the entry with the composed source and the chosen transport', async () => {
+    await call(router.config.mediamtx.addPath, {
+      name: 'front-door',
+      source: 'rtsp://admin:hunter2@cam.lan:554/live',
+      rtspTransport: 'tcp',
+    })
+
+    expect(api.configPathAdd).toHaveBeenCalledWith('front-door', {
+      source: 'rtsp://admin:hunter2@cam.lan:554/live',
+      rtspTransport: 'tcp',
+    })
+  })
+
+  // `automatic` is what an entry without the key already does, so writing it
+  // would pin a value the path would otherwise keep inheriting.
+  it('leaves rtspTransport off when the wizard sent none', async () => {
+    await call(router.config.mediamtx.addPath, {
+      name: 'front-door',
+      source: 'rtsp://cam.lan:554/live',
+    })
+
+    expect(api.configPathAdd).toHaveBeenCalledWith('front-door', {
+      source: 'rtsp://cam.lan:554/live',
+      rtspTransport: undefined,
+    })
+  })
+
+  // A rejected create is the user's to fix, and only MediaMTX knows which part
+  // it disliked — a generic "failed" leaves them guessing at a duplicate name.
+  it('passes MediaMTX\'s own reason through on a rejected create', async () => {
+    api.configPathAdd.mockRejectedValue(
+      new MediaMtxError(400, 'path already exists', 'POST /config/paths/add/front-door'),
+    )
+
+    await expect(call(router.config.mediamtx.addPath, {
+      name: 'front-door',
+      source: 'rtsp://cam.lan:554/live',
+    })).rejects.toThrow('path already exists')
+  })
+
+  it('does not claim a reason when the server gave none', async () => {
+    api.configPathAdd.mockRejectedValue(new Error('fetch failed'))
+
+    await expect(call(router.config.mediamtx.addPath, {
+      name: 'front-door',
+      source: 'rtsp://cam.lan:554/live',
+    })).rejects.toThrow('Failed to add path')
   })
 })
 

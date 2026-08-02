@@ -209,6 +209,7 @@
       "stateActive": "LIVE",
       "stateIdle": "tidak aktif",
       "sourceUnset": "tidak diatur",
+      "addPath": "Tambah jalur RTSP",
       "empty": {
         "title": "Tidak ada jalur yang dikonfigurasi",
         "lead": "MediaMTX tidak menyimpan entri konfigurasi jalur. Selama belum ada satu pun, setiap aliran berjalan hanya dengan default jalur.",
@@ -218,6 +219,53 @@
         "unreachableTitle": "Tidak dapat menjangkau MediaMTX",
         "unreachableLead": "Tidak ada respons dari API MediaMTX di",
         "openAppConfig": "Buka konfigurasi aplikasi"
+      }
+    },
+    "addRtspPath": {
+      "pageHeader": "Tambah jalur RTSP",
+      "pageSubHeader": "Arahkan MediaMTX ke kamera. URL sumber disusun dari bagian-bagian di bawah, jadi tidak ada yang perlu ditulis manual.",
+      "sections": {
+        "path": "Jalur",
+        "camera": "Kamera"
+      },
+      "fields": {
+        "name": {
+          "label": "Nama jalur",
+          "description": "Nama yang dipakai MediaMTX untuk aliran ini, sekaligus nama saat diputar."
+        },
+        "host": {
+          "label": "Host",
+          "description": "Alamat kamera di jaringan — hostname atau IP."
+        },
+        "port": {
+          "label": "Porta",
+          "description": "Porta RTSP kamera. 554 kecuali sudah diubah."
+        },
+        "streamPath": {
+          "label": "Jalur aliran",
+          "description": "Bagian URL setelah host. Tercantum di manual kamera — biasanya berupa kanal atau profil."
+        },
+        "username": {
+          "label": "Nama pengguna"
+        },
+        "password": {
+          "label": "Kata sandi",
+          "description": "Masuk ke URL sumber, di-escape agar kata sandi dengan tanda baca tetap berfungsi. Tidak ditampilkan lagi setelah disimpan."
+        },
+        "transport": {
+          "label": "Transport",
+          "description": "Cara MediaMTX menarik aliran. Biarkan automatic kecuali kamera memerlukan yang lain — tcp biasanya solusi untuk feed yang kehilangan frame."
+        }
+      },
+      "preview": {
+        "label": "URL sumber",
+        "description": "Yang ditulis ke sumber jalur. Kata sandi disembunyikan di sini."
+      },
+      "submit": "Tambah jalur",
+      "cancel": "Batal",
+      "errors": {
+        "rejectedTitle": "MediaMTX menolak ini",
+        "unreachable": "Tidak ada respons dari MediaMTX."
       }
     },
     "pathConfig": {
