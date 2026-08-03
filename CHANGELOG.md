@@ -1,3 +1,14 @@
+## [2.3.0](https://github.com/bcanfield/mediamtx-connect/compare/2.2.0...2.3.0) (2026-08-03)
+
+### Features
+
+* Guided RTSP add-camera wizard ([#317](https://github.com/bcanfield/mediamtx-connect/issues/317)) ([b78f97c](https://github.com/bcanfield/mediamtx-connect/commit/b78f97c4ec5581b0dea5e6930619aa295103b8f3))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#315](https://github.com/bcanfield/mediamtx-connect/issues/315)) ([fb75494](https://github.com/bcanfield/mediamtx-connect/commit/fb75494f422069fb8f6e05bfa725269c1f9f0dda))
+* **deps:** update all non-major dependencies ([#318](https://github.com/bcanfield/mediamtx-connect/issues/318)) ([44fa6a4](https://github.com/bcanfield/mediamtx-connect/commit/44fa6a442733432c0485b872ca9bb9c9c8da31d5))
+
 ## [2.2.0](https://github.com/bcanfield/mediamtx-connect/compare/2.1.7...2.2.0) (2026-08-01)
 
 ### Features
