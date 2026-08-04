@@ -291,6 +291,21 @@
           "errorTitle": "Zurücksetzen auf geerbte Einstellungen fehlgeschlagen",
           "errorDescription": "Der Konfigurationseintrag des Pfads ist noch da. Versuch es erneut."
         }
+      },
+      "compat": {
+        "title": "Codec-Kompatibilität",
+        "note": "MediaMTX kodiert nie neu — eine Spur, die ein Protokoll nicht transportieren kann, wird verworfen statt konvertiert. Die Tabelle unten ist die dokumentierte Unterstützung von MediaMTX {version}; Low-Latency-HLS nutzt denselben Muxer wie HLS und transportiert dieselben Codecs.",
+        "noTracks": "Derzeit veröffentlicht nichts auf diesem Pfad, es gibt also keine Spuren zu prüfen.",
+        "columnProtocol": "Protokoll",
+        "columnWhy": "Warum",
+        "plays": "Spielt",
+        "partial": "Teilweise",
+        "blocked": "Spielt nicht",
+        "carried": "{protocol} transportiert {codec}",
+        "dropped": "{protocol} verwirft {codec}",
+        "reasonPartial": "{protocol}-Leser erhalten diesen Stream ohne {codecs}.",
+        "reasonBlocked": "{protocol} transportiert keine dieser Spuren und hat damit nichts auszuliefern.",
+        "transcode": "Quelle mit FFmpeg neu kodieren"
       }
     },
     "saveBar": {

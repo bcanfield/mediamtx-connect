@@ -291,6 +291,21 @@
           "errorTitle": "Nu s-a putut reveni la setările moștenite",
           "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
         }
+      },
+      "compat": {
+        "title": "Compatibilitate codecuri",
+        "note": "MediaMTX nu recodează niciodată, așa că o pistă pe care un protocol nu o poate transporta este eliminată, nu convertită. Tabelul de mai jos este suportul documentat al MediaMTX {version}; HLS cu latență redusă folosește același muxer ca HLS și transportă aceleași codecuri.",
+        "noTracks": "Nimic nu publică pe această cale acum, deci nu există piste de verificat.",
+        "columnProtocol": "Protocol",
+        "columnWhy": "De ce",
+        "plays": "Redă",
+        "partial": "Parțial",
+        "blocked": "Nu redă",
+        "carried": "{protocol} transportă {codec}",
+        "dropped": "{protocol} elimină {codec}",
+        "reasonPartial": "Cititorii {protocol} primesc acest flux fără {codecs}.",
+        "reasonBlocked": "{protocol} nu transportă niciuna dintre aceste piste, deci nu are ce servi.",
+        "transcode": "Recodează sursa cu FFmpeg"
       }
     },
     "saveBar": {

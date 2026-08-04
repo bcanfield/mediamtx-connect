@@ -291,6 +291,21 @@
           "errorTitle": "Impossibile ripristinare le impostazioni ereditate",
           "errorDescription": "La voce di configurazione del percorso è ancora presente. Riprova."
         }
+      },
+      "compat": {
+        "title": "Compatibilità codec",
+        "note": "MediaMTX non ricodifica mai, quindi una traccia che un protocollo non può trasportare viene scartata anziché convertita. La tabella sotto è il supporto documentato di MediaMTX {version}; l'HLS a bassa latenza usa lo stesso muxer di HLS e trasporta gli stessi codec.",
+        "noTracks": "Al momento nessuno sta pubblicando su questo path, quindi non ci sono tracce da verificare.",
+        "columnProtocol": "Protocollo",
+        "columnWhy": "Perché",
+        "plays": "Riproduce",
+        "partial": "Parziale",
+        "blocked": "Non riproduce",
+        "carried": "{protocol} trasporta {codec}",
+        "dropped": "{protocol} scarta {codec}",
+        "reasonPartial": "I lettori {protocol} ricevono questo stream senza {codecs}.",
+        "reasonBlocked": "{protocol} non trasporta nessuna di queste tracce, quindi non ha nulla da servire.",
+        "transcode": "Ricodifica la sorgente con FFmpeg"
       }
     },
     "saveBar": {

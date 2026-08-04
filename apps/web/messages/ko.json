@@ -291,6 +291,21 @@
           "errorTitle": "상속된 설정으로 되돌리지 못했습니다",
           "errorDescription": "경로 설정 항목이 그대로 남아 있습니다. 다시 시도하세요."
         }
+      },
+      "compat": {
+        "title": "코덱 호환성",
+        "note": "MediaMTX는 재인코딩을 하지 않으므로, 프로토콜이 실어 나를 수 없는 트랙은 변환되지 않고 버려집니다. 아래 표는 MediaMTX {version} 문서에 명시된 지원 범위이며, 저지연 HLS는 HLS와 같은 muxer를 써서 같은 코덱을 실어 나릅니다.",
+        "noTracks": "지금 이 경로로 송출 중인 것이 없어 확인할 트랙이 없습니다.",
+        "columnProtocol": "프로토콜",
+        "columnWhy": "이유",
+        "plays": "재생됨",
+        "partial": "부분",
+        "blocked": "재생 안 됨",
+        "carried": "{protocol}은(는) {codec}을(를) 전달합니다",
+        "dropped": "{protocol}은(는) {codec}을(를) 버립니다",
+        "reasonPartial": "{protocol} 시청자는 {codecs} 없이 이 스트림을 받습니다.",
+        "reasonBlocked": "{protocol}은(는) 이 트랙을 하나도 전달하지 못해 제공할 것이 없습니다.",
+        "transcode": "FFmpeg로 소스 재인코딩하기"
       }
     },
     "saveBar": {

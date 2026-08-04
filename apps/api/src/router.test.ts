@@ -383,9 +383,38 @@ describe('config.mediamtx.getPathConfig', () => {
 
     const result = await call(router.config.mediamtx.getPathConfig, { name: 'stream1' })
 
-    expect(result).toEqual({ status: 'resolved', confName: 'all_others', conf: { record: true } })
+    expect(result).toEqual({
+      status: 'resolved',
+      confName: 'all_others',
+      conf: { record: true },
+      codecs: [],
+    })
     // Not `stream1` — a wildcard-backed path has no entry under its own name.
     expect(api.configPathGet).toHaveBeenCalledWith('all_others')
+  })
+
+  // The codec matrix needs the path's tracks, and `paths/get` is already being
+  // called for the confName — carrying them out costs no extra request.
+  it('carries the tracks the runtime path is publishing', async () => {
+    api.pathsGet.mockResolvedValue({ ...wildcardPaths('stream1')[0], tracks: ['H264', 'MPEG-4 Audio'] })
+    api.configPathGet.mockResolvedValue({ record: true })
+
+    const result = await call(router.config.mediamtx.getPathConfig, { name: 'stream1' })
+
+    expect(result).toMatchObject({ codecs: ['H264', 'MPEG-4 Audio'] })
+    expect(api.pathsGet).toHaveBeenCalledTimes(1)
+  })
+
+  // A path with an entry but nothing publishing resolves off `configPathGet`
+  // alone. MediaMTX knows no codecs then, and an omitted `codecs` would leave
+  // the page rendering the previous path's matrix.
+  it('reports no codecs for a path nothing is publishing to', async () => {
+    api.pathsGet.mockResolvedValue(null)
+    api.configPathGet.mockResolvedValue({ record: true })
+
+    const result = await call(router.config.mediamtx.getPathConfig, { name: 'stopped' })
+
+    expect(result).toMatchObject({ status: 'resolved', codecs: [] })
   })
 
   it('reports unresolved when there is no runtime path and no entry of its own', async () => {

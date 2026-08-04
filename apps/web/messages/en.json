@@ -291,6 +291,21 @@
           "errorTitle": "Couldn't revert to inherited settings",
           "errorDescription": "The path config entry is still there. Try again."
         }
+      },
+      "compat": {
+        "title": "Codec compatibility",
+        "note": "MediaMTX never re-encodes, so a track a protocol can't carry is dropped rather than converted. The table below is MediaMTX {version}'s documented support; Low-Latency HLS uses the same muxer as HLS and carries the same codecs.",
+        "noTracks": "Nothing is publishing to this path right now, so it has no tracks to check.",
+        "columnProtocol": "Protocol",
+        "columnWhy": "Why",
+        "plays": "Plays",
+        "partial": "Partial",
+        "blocked": "Won't play",
+        "carried": "{protocol} carries {codec}",
+        "dropped": "{protocol} drops {codec}",
+        "reasonPartial": "{protocol} readers get this stream without {codecs}.",
+        "reasonBlocked": "{protocol} carries none of these tracks, so it has nothing to serve.",
+        "transcode": "Re-encode the source with FFmpeg"
       }
     },
     "saveBar": {

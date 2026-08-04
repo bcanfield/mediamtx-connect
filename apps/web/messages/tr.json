@@ -291,6 +291,21 @@
           "errorTitle": "Devralınan ayarlara geri dönülemedi",
           "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
         }
+      },
+      "compat": {
+        "title": "Codec uyumluluğu",
+        "note": "MediaMTX asla yeniden kodlamaz; bir protokolün taşıyamadığı iz dönüştürülmek yerine düşürülür. Aşağıdaki tablo MediaMTX {version} belgelerindeki destektir; düşük gecikmeli HLS, HLS ile aynı muxer'ı kullanır ve aynı codec'leri taşır.",
+        "noTracks": "Şu anda bu yola yayın yapan yok, dolayısıyla denetlenecek iz yok.",
+        "columnProtocol": "Protokol",
+        "columnWhy": "Neden",
+        "plays": "Oynatır",
+        "partial": "Kısmi",
+        "blocked": "Oynatmaz",
+        "carried": "{protocol} {codec} taşır",
+        "dropped": "{protocol} {codec} izini düşürür",
+        "reasonPartial": "{protocol} izleyicileri bu yayını {codecs} olmadan alır.",
+        "reasonBlocked": "{protocol} bu izlerin hiçbirini taşımaz, sunacak bir şeyi yoktur.",
+        "transcode": "Kaynağı FFmpeg ile yeniden kodla"
       }
     },
     "saveBar": {

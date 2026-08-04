@@ -273,7 +273,7 @@ export const router = os.router({
           // won't say which wildcard entry would cover a name it isn't running.
           if (!conf)
             return { status: 'unresolved' as const }
-          return { status: 'resolved' as const, confName, conf }
+          return { status: 'resolved' as const, confName, conf, codecs: runtime?.tracks ?? [] }
         }
         catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)

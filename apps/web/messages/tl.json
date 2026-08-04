@@ -291,6 +291,21 @@
           "errorTitle": "Hindi maibalik sa minanang mga setting",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
         }
+      },
+      "compat": {
+        "title": "Pagkakatugma ng codec",
+        "note": "Hindi kailanman nag-re-encode ang MediaMTX, kaya ang track na hindi kayang dalhin ng isang protocol ay binabagsak sa halip na i-convert. Ang talahanayan sa ibaba ay ang nakadokumentong suporta ng MediaMTX {version}; ang low-latency na HLS ay gumagamit ng parehong muxer ng HLS at nagdadala ng parehong mga codec.",
+        "noTracks": "Wala pang nagpa-publish sa path na ito ngayon, kaya walang track na masusuri.",
+        "columnProtocol": "Protocol",
+        "columnWhy": "Bakit",
+        "plays": "Napapatugtog",
+        "partial": "Bahagya",
+        "blocked": "Hindi napapatugtog",
+        "carried": "Dinadala ng {protocol} ang {codec}",
+        "dropped": "Ibinabagsak ng {protocol} ang {codec}",
+        "reasonPartial": "Natatanggap ng mga {protocol} reader ang stream na ito nang walang {codecs}.",
+        "reasonBlocked": "Wala sa mga track na ito ang kayang dalhin ng {protocol}, kaya wala itong maihahain.",
+        "transcode": "I-re-encode ang pinagmulan gamit ang FFmpeg"
       }
     },
     "saveBar": {

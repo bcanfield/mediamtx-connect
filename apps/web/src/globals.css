@@ -68,6 +68,7 @@
   --color-card: var(--card);
   /* Geist extensions */
   --color-link: var(--link);
+  --color-success: var(--success);
   --color-warning: var(--warning);
   --color-live: var(--live);
   --color-live-foreground: var(--live-foreground);
@@ -143,6 +144,8 @@
   --chart-5: #e5484d;
 
   --link: #0070f3;
+  /* Geist green, darkened like --warning is so small text clears 4.5:1 here */
+  --success: #0f7b32;
   --warning: #a35200;
   --live: #e5484d;
   --live-foreground: #ca2b30;
@@ -195,6 +198,7 @@
   /* #0070f3 misses WCAG AA for small text on #0a0a0a (4.34:1) — text/fill
      blue is lightened; the focus ring and status dot keep the vivid blue. */
   --link: #4da2ff;
+  --success: #62c073;
   --warning: #f5a623;
   --live: #ff4d4d;
   --live-foreground: #ff6b6b;

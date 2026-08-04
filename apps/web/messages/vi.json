@@ -291,6 +291,21 @@
           "errorTitle": "Không thể trở lại các cài đặt kế thừa",
           "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
         }
+      },
+      "compat": {
+        "title": "Tương thích codec",
+        "note": "MediaMTX không bao giờ mã hoá lại, nên track mà một giao thức không mang được sẽ bị loại bỏ thay vì chuyển đổi. Bảng dưới đây là mức hỗ trợ được ghi trong tài liệu của MediaMTX {version}; HLS độ trễ thấp dùng cùng muxer với HLS và mang cùng các codec.",
+        "noTracks": "Hiện không có gì phát lên path này nên không có track để kiểm tra.",
+        "columnProtocol": "Giao thức",
+        "columnWhy": "Lý do",
+        "plays": "Phát được",
+        "partial": "Một phần",
+        "blocked": "Không phát được",
+        "carried": "{protocol} mang được {codec}",
+        "dropped": "{protocol} loại bỏ {codec}",
+        "reasonPartial": "Người đọc {protocol} nhận luồng này mà không có {codecs}.",
+        "reasonBlocked": "{protocol} không mang được track nào trong số này nên không có gì để phục vụ.",
+        "transcode": "Mã hoá lại nguồn bằng FFmpeg"
       }
     },
     "saveBar": {

@@ -291,6 +291,21 @@
           "errorTitle": "Kunde inte återgå till ärvda inställningar",
           "errorDescription": "Sökvägens konfigurationspost finns kvar. Försök igen."
         }
+      },
+      "compat": {
+        "title": "Codec-kompatibilitet",
+        "note": "MediaMTX omkodar aldrig, så ett spår som ett protokoll inte kan bära släpps i stället för att konverteras. Tabellen nedan är MediaMTX {version}:s dokumenterade stöd; HLS med låg latens använder samma muxer som HLS och bär samma codecar.",
+        "noTracks": "Inget publicerar till den här sökvägen just nu, så det finns inga spår att kontrollera.",
+        "columnProtocol": "Protokoll",
+        "columnWhy": "Varför",
+        "plays": "Spelar",
+        "partial": "Delvis",
+        "blocked": "Spelar inte",
+        "carried": "{protocol} bär {codec}",
+        "dropped": "{protocol} släpper {codec}",
+        "reasonPartial": "{protocol}-läsare får den här strömmen utan {codecs}.",
+        "reasonBlocked": "{protocol} bär inget av dessa spår och har därför inget att leverera.",
+        "transcode": "Omkoda källan med FFmpeg"
       }
     },
     "saveBar": {

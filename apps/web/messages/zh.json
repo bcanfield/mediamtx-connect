@@ -291,6 +291,21 @@
           "errorTitle": "无法恢复为继承的设置",
           "errorDescription": "该路径的配置条目仍然存在。请重试。"
         }
+      },
+      "compat": {
+        "title": "编解码器兼容性",
+        "note": "MediaMTX 从不重新编码，因此协议无法承载的轨道会被丢弃而不是转换。下表是 MediaMTX {version} 记录的支持情况；低延迟 HLS 使用与 HLS 相同的封装器，承载相同的编解码器。",
+        "noTracks": "目前没有内容推送到该路径，因此没有可检查的轨道。",
+        "columnProtocol": "协议",
+        "columnWhy": "原因",
+        "plays": "可播放",
+        "partial": "部分",
+        "blocked": "无法播放",
+        "carried": "{protocol} 承载 {codec}",
+        "dropped": "{protocol} 丢弃 {codec}",
+        "reasonPartial": "{protocol} 的读取端收到的流不含 {codecs}。",
+        "reasonBlocked": "{protocol} 无法承载这些轨道中的任何一个，因此没有内容可提供。",
+        "transcode": "用 FFmpeg 重新编码源"
       }
     },
     "saveBar": {

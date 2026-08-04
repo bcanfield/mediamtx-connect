@@ -291,6 +291,21 @@
           "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
           "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
         }
+      },
+      "compat": {
+        "title": "Kompatibilitas codec",
+        "note": "MediaMTX tidak pernah meng-encode ulang, jadi track yang tidak bisa dibawa sebuah protokol akan dibuang, bukan dikonversi. Tabel di bawah adalah dukungan yang didokumentasikan MediaMTX {version}; HLS latensi rendah memakai muxer yang sama dengan HLS dan membawa codec yang sama.",
+        "noTracks": "Saat ini tidak ada yang menyiarkan ke path ini, jadi tidak ada track untuk diperiksa.",
+        "columnProtocol": "Protokol",
+        "columnWhy": "Alasan",
+        "plays": "Bisa diputar",
+        "partial": "Sebagian",
+        "blocked": "Tidak bisa diputar",
+        "carried": "{protocol} membawa {codec}",
+        "dropped": "{protocol} membuang {codec}",
+        "reasonPartial": "Pembaca {protocol} menerima stream ini tanpa {codecs}.",
+        "reasonBlocked": "{protocol} tidak membawa satu pun track ini, jadi tidak ada yang bisa disajikan.",
+        "transcode": "Encode ulang sumber dengan FFmpeg"
       }
     },
     "saveBar": {

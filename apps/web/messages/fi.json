@@ -291,6 +291,21 @@
           "errorTitle": "Perittyihin asetuksiin ei voitu palata",
           "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
         }
+      },
+      "compat": {
+        "title": "Koodekkien yhteensopivuus",
+        "note": "MediaMTX ei koskaan koodaa uudelleen, joten raita jota protokolla ei voi kuljettaa pudotetaan eikä muunneta. Alla oleva taulukko on MediaMTX {version}:n dokumentoitu tuki; matalan viiveen HLS käyttää samaa mukseria kuin HLS ja kuljettaa samat koodekit.",
+        "noTracks": "Tähän polkuun ei julkaista juuri nyt mitään, joten tarkistettavia raitoja ei ole.",
+        "columnProtocol": "Protokolla",
+        "columnWhy": "Miksi",
+        "plays": "Toistuu",
+        "partial": "Osittain",
+        "blocked": "Ei toistu",
+        "carried": "{protocol} kuljettaa koodekin {codec}",
+        "dropped": "{protocol} pudottaa koodekin {codec}",
+        "reasonPartial": "{protocol}-lukijat saavat tämän lähetyksen ilman raitoja {codecs}.",
+        "reasonBlocked": "{protocol} ei kuljeta yhtäkään näistä raidoista, joten sillä ei ole mitään tarjottavaa.",
+        "transcode": "Koodaa lähde uudelleen FFmpegillä"
       }
     },
     "saveBar": {

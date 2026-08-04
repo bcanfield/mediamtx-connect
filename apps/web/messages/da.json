@@ -291,6 +291,21 @@
           "errorTitle": "Kunne ikke vende tilbage til nedarvede indstillinger",
           "errorDescription": "Stiens konfigurationspost er der stadig. Prøv igen."
         }
+      },
+      "compat": {
+        "title": "Codec-kompatibilitet",
+        "note": "MediaMTX omkoder aldrig, så et spor, som en protokol ikke kan bære, droppes i stedet for at blive konverteret. Tabellen nedenfor er MediaMTX {version}s dokumenterede understøttelse; HLS med lav latens bruger samme muxer som HLS og bærer de samme codecs.",
+        "noTracks": "Der publiceres ikke til denne sti lige nu, så der er ingen spor at tjekke.",
+        "columnProtocol": "Protokol",
+        "columnWhy": "Hvorfor",
+        "plays": "Afspiller",
+        "partial": "Delvis",
+        "blocked": "Afspiller ikke",
+        "carried": "{protocol} bærer {codec}",
+        "dropped": "{protocol} dropper {codec}",
+        "reasonPartial": "{protocol}-læsere får dette stream uden {codecs}.",
+        "reasonBlocked": "{protocol} bærer ingen af disse spor og har derfor intet at levere.",
+        "transcode": "Omkod kilden med FFmpeg"
       }
     },
     "saveBar": {

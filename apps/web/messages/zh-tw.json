@@ -291,6 +291,21 @@
           "errorTitle": "無法還原為繼承的設定",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
         }
+      },
+      "compat": {
+        "title": "編解碼器相容性",
+        "note": "MediaMTX 從不重新編碼，因此協定無法承載的軌道會被丟棄而不是轉換。下表是 MediaMTX {version} 文件記載的支援情形；低延遲 HLS 使用與 HLS 相同的封裝器，承載相同的編解碼器。",
+        "noTracks": "目前沒有內容推送到這個路徑，因此沒有可檢查的軌道。",
+        "columnProtocol": "協定",
+        "columnWhy": "原因",
+        "plays": "可播放",
+        "partial": "部分",
+        "blocked": "無法播放",
+        "carried": "{protocol} 承載 {codec}",
+        "dropped": "{protocol} 丟棄 {codec}",
+        "reasonPartial": "{protocol} 的讀取端收到的串流不含 {codecs}。",
+        "reasonBlocked": "{protocol} 無法承載其中任何一條軌道，因此沒有內容可提供。",
+        "transcode": "用 FFmpeg 重新編碼來源"
       }
     },
     "saveBar": {

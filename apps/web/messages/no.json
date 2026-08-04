@@ -291,6 +291,21 @@
           "errorTitle": "Kunne ikke gå tilbake til arvede innstillinger",
           "errorDescription": "Banens konfigurasjonsoppføring er der fortsatt. Prøv igjen."
         }
+      },
+      "compat": {
+        "title": "Kodek-kompatibilitet",
+        "note": "MediaMTX omkoder aldri, så et spor en protokoll ikke kan bære blir droppet i stedet for konvertert. Tabellen under er den dokumenterte støtten i MediaMTX {version}; HLS med lav latens bruker samme mukser som HLS og bærer de samme kodekene.",
+        "noTracks": "Ingenting publiserer til denne stien nå, så det finnes ingen spor å sjekke.",
+        "columnProtocol": "Protokoll",
+        "columnWhy": "Hvorfor",
+        "plays": "Spiller",
+        "partial": "Delvis",
+        "blocked": "Spiller ikke",
+        "carried": "{protocol} bærer {codec}",
+        "dropped": "{protocol} dropper {codec}",
+        "reasonPartial": "{protocol}-lesere får denne strømmen uten {codecs}.",
+        "reasonBlocked": "{protocol} bærer ingen av disse sporene og har dermed ingenting å levere.",
+        "transcode": "Omkod kilden med FFmpeg"
       }
     },
     "saveBar": {
