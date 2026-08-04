@@ -291,6 +291,21 @@
           "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
           "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
         }
+      },
+      "compat": {
+        "title": "Codeccompatibiliteit",
+        "note": "MediaMTX hercodeert nooit, dus een track die een protocol niet kan vervoeren wordt weggelaten in plaats van omgezet. De tabel hieronder is de gedocumenteerde ondersteuning van MediaMTX {version}; low-latency HLS gebruikt dezelfde muxer als HLS en vervoert dezelfde codecs.",
+        "noTracks": "Er publiceert op dit moment niets naar dit pad, dus er zijn geen tracks om te controleren.",
+        "columnProtocol": "Protocol",
+        "columnWhy": "Waarom",
+        "plays": "Speelt",
+        "partial": "Gedeeltelijk",
+        "blocked": "Speelt niet",
+        "carried": "{protocol} vervoert {codec}",
+        "dropped": "{protocol} laat {codec} weg",
+        "reasonPartial": "{protocol}-lezers krijgen deze stream zonder {codecs}.",
+        "reasonBlocked": "{protocol} vervoert geen van deze tracks en heeft dus niets om te leveren.",
+        "transcode": "Hercodeer de bron met FFmpeg"
       }
     },
     "saveBar": {

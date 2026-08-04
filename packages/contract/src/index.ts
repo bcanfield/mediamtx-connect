@@ -153,7 +153,13 @@ export type EffectivePathConfig = z.infer<typeof EffectivePathConfigSchema>
 // wildcard entry would cover it — and that is a different situation from a
 // MediaMTX we couldn't reach, which stays `null` as it is on the other scopes.
 export const PathConfigResultSchema = z.discriminatedUnion('status', [
-  EffectivePathConfigSchema.extend({ status: z.literal('resolved') }),
+  EffectivePathConfigSchema.extend({
+    status: z.literal('resolved'),
+    // The runtime path's current tracks, off the same `paths/get` the confName
+    // is read from. Empty whenever nothing is publishing: MediaMTX only knows
+    // a path's codecs while a source is connected.
+    codecs: z.array(z.string()),
+  }),
   z.object({ status: z.literal('unresolved') }),
 ])
 

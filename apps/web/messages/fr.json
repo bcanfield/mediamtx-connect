@@ -291,6 +291,21 @@
           "errorTitle": "Impossible de revenir aux paramètres hérités",
           "errorDescription": "L'entrée de configuration du chemin est toujours là. Réessayez."
         }
+      },
+      "compat": {
+        "title": "Compatibilité des codecs",
+        "note": "MediaMTX ne réencode jamais : une piste qu'un protocole ne peut pas transporter est abandonnée plutôt que convertie. Le tableau ci-dessous correspond à la prise en charge documentée de MediaMTX {version} ; le HLS basse latence utilise le même muxer que HLS et transporte les mêmes codecs.",
+        "noTracks": "Rien ne publie sur ce chemin pour le moment, il n'y a donc aucune piste à vérifier.",
+        "columnProtocol": "Protocole",
+        "columnWhy": "Pourquoi",
+        "plays": "Lit",
+        "partial": "Partiel",
+        "blocked": "Ne lit pas",
+        "carried": "{protocol} transporte {codec}",
+        "dropped": "{protocol} abandonne {codec}",
+        "reasonPartial": "Les lecteurs {protocol} reçoivent ce flux sans {codecs}.",
+        "reasonBlocked": "{protocol} ne transporte aucune de ces pistes, il n'a donc rien à servir.",
+        "transcode": "Réencoder la source avec FFmpeg"
       }
     },
     "saveBar": {

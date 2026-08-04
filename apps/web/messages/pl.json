@@ -291,6 +291,21 @@
           "errorTitle": "Nie udało się przywrócić dziedziczonych ustawień",
           "errorDescription": "Wpis konfiguracji ścieżki nadal istnieje. Spróbuj ponownie."
         }
+      },
+      "compat": {
+        "title": "Zgodność kodeków",
+        "note": "MediaMTX nigdy nie przekodowuje, więc ścieżka, której protokół nie potrafi przenieść, jest odrzucana, a nie konwertowana. Tabela poniżej to udokumentowane wsparcie MediaMTX {version}; HLS o niskim opóźnieniu używa tego samego muksera co HLS i przenosi te same kodeki.",
+        "noTracks": "Nic teraz nie publikuje do tej ścieżki, więc nie ma czego sprawdzać.",
+        "columnProtocol": "Protokół",
+        "columnWhy": "Dlaczego",
+        "plays": "Odtwarza",
+        "partial": "Częściowo",
+        "blocked": "Nie odtwarza",
+        "carried": "{protocol} przenosi {codec}",
+        "dropped": "{protocol} odrzuca {codec}",
+        "reasonPartial": "Odbiorcy {protocol} dostają ten strumień bez {codecs}.",
+        "reasonBlocked": "{protocol} nie przenosi żadnej z tych ścieżek, więc nie ma czego podać.",
+        "transcode": "Przekoduj źródło za pomocą FFmpeg"
       }
     },
     "saveBar": {

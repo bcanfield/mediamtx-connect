@@ -291,6 +291,21 @@
           "errorTitle": "Nepodařilo se vrátit zděděná nastavení",
           "errorDescription": "Konfigurační záznam cesty tam pořád je. Zkuste to znovu."
         }
+      },
+      "compat": {
+        "title": "Kompatibilita kodeků",
+        "note": "MediaMTX nikdy nepřekódovává, takže stopa, kterou protokol neunese, se zahodí místo převodu. Tabulka níže je dokumentovaná podpora MediaMTX {version}; HLS s nízkou latencí používá stejný muxer jako HLS a nese stejné kodeky.",
+        "noTracks": "Do této cesty teď nic nevysílá, takže není co kontrolovat.",
+        "columnProtocol": "Protokol",
+        "columnWhy": "Proč",
+        "plays": "Přehraje",
+        "partial": "Částečně",
+        "blocked": "Nepřehraje",
+        "carried": "{protocol} nese {codec}",
+        "dropped": "{protocol} zahazuje {codec}",
+        "reasonPartial": "Čtenáři {protocol} dostanou tento stream bez {codecs}.",
+        "reasonBlocked": "{protocol} nenese ani jednu z těchto stop, takže nemá co nabídnout.",
+        "transcode": "Překódovat zdroj pomocí FFmpeg"
       }
     },
     "saveBar": {

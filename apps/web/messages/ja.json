@@ -291,6 +291,21 @@
           "errorTitle": "継承した設定に戻せませんでした",
           "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
         }
+      },
+      "compat": {
+        "title": "コーデック互換性",
+        "note": "MediaMTX は再エンコードしないため、プロトコルが扱えないトラックは変換されず破棄されます。下の表は MediaMTX {version} のドキュメント上のサポート範囲です。低遅延 HLS は HLS と同じ muxer を使い、同じコーデックを扱います。",
+        "noTracks": "現在このパスへ配信しているものがないため、確認できるトラックがありません。",
+        "columnProtocol": "プロトコル",
+        "columnWhy": "理由",
+        "plays": "再生可",
+        "partial": "一部",
+        "blocked": "再生不可",
+        "carried": "{protocol} は {codec} を扱えます",
+        "dropped": "{protocol} は {codec} を破棄します",
+        "reasonPartial": "{protocol} の視聴側には {codecs} を除いたストリームが届きます。",
+        "reasonBlocked": "{protocol} はこれらのトラックをどれも扱えないため、配信できるものがありません。",
+        "transcode": "FFmpeg でソースを再エンコードする"
       }
     },
     "saveBar": {

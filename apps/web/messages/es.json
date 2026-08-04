@@ -291,6 +291,21 @@
           "errorTitle": "No se pudo volver a los ajustes heredados",
           "errorDescription": "La entrada de configuración de la ruta sigue ahí. Inténtalo de nuevo."
         }
+      },
+      "compat": {
+        "title": "Compatibilidad de códecs",
+        "note": "MediaMTX nunca recodifica, así que una pista que un protocolo no puede transportar se descarta en lugar de convertirse. La tabla siguiente es el soporte documentado de MediaMTX {version}; HLS de baja latencia usa el mismo muxer que HLS y transporta los mismos códecs.",
+        "noTracks": "Ahora mismo nada publica en esta ruta, así que no hay pistas que comprobar.",
+        "columnProtocol": "Protocolo",
+        "columnWhy": "Por qué",
+        "plays": "Se reproduce",
+        "partial": "Parcial",
+        "blocked": "No se reproduce",
+        "carried": "{protocol} transporta {codec}",
+        "dropped": "{protocol} descarta {codec}",
+        "reasonPartial": "Los lectores de {protocol} reciben este stream sin {codecs}.",
+        "reasonBlocked": "{protocol} no transporta ninguna de estas pistas, así que no tiene nada que servir.",
+        "transcode": "Recodificar la fuente con FFmpeg"
       }
     },
     "saveBar": {

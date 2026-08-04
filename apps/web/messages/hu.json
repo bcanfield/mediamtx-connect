@@ -291,6 +291,21 @@
           "errorTitle": "Nem sikerült visszaállni az örökölt beállításokra",
           "errorDescription": "Az útvonal konfigurációs bejegyzése továbbra is megvan. Próbáld újra."
         }
+      },
+      "compat": {
+        "title": "Kodek-kompatibilitás",
+        "note": "A MediaMTX soha nem kódol újra, ezért azt a sávot, amelyet egy protokoll nem tud vinni, eldobja ahelyett, hogy átalakítaná. Az alábbi táblázat a MediaMTX {version} dokumentált támogatása; a kis késleltetésű HLS ugyanazt a muxert használja, mint a HLS, és ugyanazokat a kodekeket viszi.",
+        "noTracks": "Jelenleg semmi sem publikál erre az útvonalra, így nincs ellenőrizhető sáv.",
+        "columnProtocol": "Protokoll",
+        "columnWhy": "Miért",
+        "plays": "Lejátszható",
+        "partial": "Részleges",
+        "blocked": "Nem játszható le",
+        "carried": "A {protocol} viszi a következőt: {codec}",
+        "dropped": "A {protocol} eldobja a következőt: {codec}",
+        "reasonPartial": "A {protocol} olvasói e nélkül kapják meg a streamet: {codecs}.",
+        "reasonBlocked": "A {protocol} egyik sávot sem viszi, így nincs mit kiszolgálnia.",
+        "transcode": "A forrás újrakódolása FFmpeggel"
       }
     },
     "saveBar": {

@@ -291,6 +291,21 @@
           "errorTitle": "Não foi possível voltar às configurações herdadas",
           "errorDescription": "A entrada de configuração do caminho ainda está lá. Tente de novo."
         }
+      },
+      "compat": {
+        "title": "Compatibilidade de codecs",
+        "note": "O MediaMTX nunca recodifica, então uma faixa que um protocolo não consegue carregar é descartada em vez de convertida. A tabela abaixo é o suporte documentado do MediaMTX {version}; o HLS de baixa latência usa o mesmo muxer do HLS e carrega os mesmos codecs.",
+        "noTracks": "Nada está publicando neste caminho agora, então não há faixas para verificar.",
+        "columnProtocol": "Protocolo",
+        "columnWhy": "Por quê",
+        "plays": "Reproduz",
+        "partial": "Parcial",
+        "blocked": "Não reproduz",
+        "carried": "{protocol} carrega {codec}",
+        "dropped": "{protocol} descarta {codec}",
+        "reasonPartial": "Os leitores {protocol} recebem esta transmissão sem {codecs}.",
+        "reasonBlocked": "{protocol} não carrega nenhuma dessas faixas, então não tem nada para servir.",
+        "transcode": "Recodificar a origem com FFmpeg"
       }
     },
     "saveBar": {
