@@ -280,6 +280,26 @@
         "lead": "MediaMTX không có đường dẫn nào đang chạy với tên này và cũng không có mục cấu hình riêng. Nếu luồng chỉ đơn giản là đã dừng, các cài đặt của nó được kế thừa — và MediaMTX chỉ có thể cho biết kế thừa từ đâu khi luồng đang chạy.",
         "openPathDefaults": "Mở giá trị mặc định của đường dẫn"
       },
+      "delete": {
+        "action": "Xóa đường dẫn",
+        "confirmTitle": "Xóa {name}?",
+        "confirmDescription": "Thao tác này xóa mục cấu hình của đường dẫn khỏi MediaMTX. Trừ khi vẫn còn một mục ký tự đại diện bao phủ tên này, đường dẫn sẽ rời khỏi danh mục và ngừng được phục vụ.",
+        "checking": "Đang kiểm tra những gì đang kết nối…",
+        "checkFailed": "Không liên hệ được MediaMTX để kiểm tra những gì đang kết nối.",
+        "active": {
+          "title": "Đường dẫn này đang được sử dụng",
+          "publisher": "Đang phát qua {type}",
+          "readers": "{count, plural, other {# trình đọc đang kết nối qua {types}}}",
+          "lead": "Xóa đường dẫn sẽ ngắt kết nối của chúng ngay lập tức."
+        },
+        "cancel": "Hủy",
+        "confirm": "Xóa",
+        "toasts": {
+          "success": "Đã xóa {name}",
+          "errorTitle": "Không thể xóa đường dẫn",
+          "errorDescription": "Đường dẫn vẫn còn đó. Hãy thử lại."
+        }
+      },
       "revert": {
         "action": "Trở lại kế thừa",
         "confirmTitle": "Đưa {name} về các cài đặt kế thừa?",

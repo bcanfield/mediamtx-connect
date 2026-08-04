@@ -280,6 +280,26 @@
         "lead": "MediaMTX nemá běžící cestu s tímto názvem ani vlastní konfigurační záznam. Pokud je stream jen zastavený, jeho nastavení se dědí — a MediaMTX může říct odkud jen tehdy, když stream běží.",
         "openPathDefaults": "Otevřít výchozí hodnoty cest"
       },
+      "delete": {
+        "action": "Smazat cestu",
+        "confirmTitle": "Smazat {name}?",
+        "confirmDescription": "Tímto se z MediaMTX smaže konfigurační záznam cesty. Pokud název nepokrývá zástupný záznam, cesta zmizí z katalogu a přestane být poskytována.",
+        "checking": "Zjišťujeme, co je připojeno…",
+        "checkFailed": "MediaMTX nebyl dostupný, nešlo zjistit, co je připojeno.",
+        "active": {
+          "title": "Tato cesta se právě používá",
+          "publisher": "Právě se publikuje přes {type}",
+          "readers": "{count, plural, one {# čtenář připojen přes {types}} few {# čtenáři připojeni přes {types}} many {# čtenáře připojeno přes {types}} other {# čtenářů připojeno přes {types}}}",
+          "lead": "Smazání cesty je okamžitě odpojí."
+        },
+        "cancel": "Zrušit",
+        "confirm": "Smazat",
+        "toasts": {
+          "success": "{name} smazána",
+          "errorTitle": "Cestu se nepodařilo smazat",
+          "errorDescription": "Cesta tam pořád je. Zkuste to znovu."
+        }
+      },
       "revert": {
         "action": "Vrátit na dědění",
         "confirmTitle": "Vrátit {name} na zděděná nastavení?",
