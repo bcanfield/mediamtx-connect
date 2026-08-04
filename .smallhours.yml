@@ -17,9 +17,9 @@ models:
 # resolve_conflict is Phase 2 (M7).
 max_turns:
   implement: 200
-  address_review: 30
-  auto_fix: 40
-  resolve_conflict: 20
+  address_review: 200
+  auto_fix: 200
+  resolve_conflict: 200
 
 # Consecutive CI auto-fix attempts before giving up (0 disables auto-fix:
 # the first red hands straight off to a human). Default: 3.
