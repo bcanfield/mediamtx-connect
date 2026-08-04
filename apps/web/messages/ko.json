@@ -369,6 +369,12 @@
       "enabled": "활성화됨",
       "off": "꺼짐",
       "hiddenWhileOff": "{count, plural, other {꺼져 있는 동안 숨겨진 옵션 #개}}",
+      "inheritance": {
+        "inherited": "상속됨",
+        "overridden": "재정의됨",
+        "inheritedTitle": "이 값은 경로 기본값에서 가져온 것입니다.",
+        "overriddenTitle": "이 경로가 경로 기본값을 재정의합니다."
+      },
       "rail": {
         "onThisPage": "이 페이지에서",
         "aria": "설정 섹션"

@@ -369,6 +369,12 @@
       "enabled": "Naka-enable",
       "off": "Naka-off",
       "hiddenWhileOff": "{count, plural, one {# opsyon ang nakatago habang naka-off} other {# na opsyon ang nakatago habang naka-off}}",
+      "inheritance": {
+        "inherited": "Minana",
+        "overridden": "Na-override",
+        "inheritedTitle": "Nanggaling ang halagang ito sa mga default ng path.",
+        "overriddenTitle": "Ino-override ng path na ito ang default na halaga ng path."
+      },
       "rail": {
         "onThisPage": "Sa pahinang ito",
         "aria": "Mga seksyon ng config"

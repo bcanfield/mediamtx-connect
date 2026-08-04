@@ -369,6 +369,12 @@
       "enabled": "सक्षम",
       "off": "बंद",
       "hiddenWhileOff": "{count, plural, one {बंद रहते हुए # विकल्प छिपा है} other {बंद रहते हुए # विकल्प छिपे हैं}}",
+      "inheritance": {
+        "inherited": "विरासत में मिला",
+        "overridden": "ओवरराइड किया गया",
+        "inheritedTitle": "यह मान पाथ डिफ़ॉल्ट से आता है।",
+        "overriddenTitle": "यह पाथ, पाथ डिफ़ॉल्ट के मान को ओवरराइड करता है।"
+      },
       "rail": {
         "onThisPage": "इस पृष्ठ पर",
         "aria": "कॉन्फ़िगरेशन अनुभाग"

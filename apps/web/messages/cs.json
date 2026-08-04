@@ -369,6 +369,12 @@
       "enabled": "Zapnuto",
       "off": "Vypnuto",
       "hiddenWhileOff": "{count, plural, one {# možnost je skryta, když je vypnuto} few {# možnosti jsou skryty, když je vypnuto} many {# možnosti je skryto, když je vypnuto} other {# možností je skryto, když je vypnuto}}",
+      "inheritance": {
+        "inherited": "Zděděno",
+        "overridden": "Přepsáno",
+        "inheritedTitle": "Tato hodnota pochází z výchozích hodnot cest.",
+        "overriddenTitle": "Tato cesta přepisuje hodnotu z výchozích hodnot cest."
+      },
       "rail": {
         "onThisPage": "Na této stránce",
         "aria": "Sekce konfigurace"

@@ -369,6 +369,12 @@
       "enabled": "已启用",
       "off": "关闭",
       "hiddenWhileOff": "{count, plural, other {关闭时隐藏 # 个选项}}",
+      "inheritance": {
+        "inherited": "继承",
+        "overridden": "已覆盖",
+        "inheritedTitle": "该值来自路径默认设置。",
+        "overriddenTitle": "此路径覆盖了路径默认设置中的值。"
+      },
       "rail": {
         "onThisPage": "本页内容",
         "aria": "配置章节"

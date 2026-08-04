@@ -369,6 +369,12 @@
       "enabled": "Activat",
       "off": "Dezactivat",
       "hiddenWhileOff": "{count, plural, one {# opțiune ascunsă cât timp e dezactivat} few {# opțiuni ascunse cât timp e dezactivat} other {# de opțiuni ascunse cât timp e dezactivat}}",
+      "inheritance": {
+        "inherited": "Moștenit",
+        "overridden": "Suprascris",
+        "inheritedTitle": "Această valoare provine din valorile implicite ale căilor.",
+        "overriddenTitle": "Această cale suprascrie valoarea implicită a căilor."
+      },
       "rail": {
         "onThisPage": "Pe această pagină",
         "aria": "Secțiuni de configurare"

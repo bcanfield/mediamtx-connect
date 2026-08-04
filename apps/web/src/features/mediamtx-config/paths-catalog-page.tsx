@@ -70,7 +70,12 @@ function PathsTable({ paths }: { paths: PathCatalogEntry[] }) {
             <tr key={path.name} className="border-b last:border-b-0">
               <td className="px-4 py-2.5">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono">{path.name}</span>
+                  <Link
+                    href={`/config/mediamtx/paths/${encodeURIComponent(path.name)}`}
+                    className="font-mono text-link hover:underline"
+                  >
+                    {path.name}
+                  </Link>
                   {path.isRegex && (
                     <Badge variant="secondary" title={t('regexTitle')}>{t('regexBadge')}</Badge>
                   )}

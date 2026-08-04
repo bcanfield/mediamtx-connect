@@ -369,6 +369,12 @@
       "enabled": "Etkin",
       "off": "Kapalı",
       "hiddenWhileOff": "{count, plural, other {# seçenek kapalıyken gizli}}",
+      "inheritance": {
+        "inherited": "Devralındı",
+        "overridden": "Geçersiz kılındı",
+        "inheritedTitle": "Bu değer yol varsayılanlarından geliyor.",
+        "overriddenTitle": "Bu yol, yol varsayılanlarındaki değeri geçersiz kılıyor."
+      },
       "rail": {
         "onThisPage": "Bu sayfada",
         "aria": "Yapılandırma bölümleri"

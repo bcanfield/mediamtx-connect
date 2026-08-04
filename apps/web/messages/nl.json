@@ -369,6 +369,12 @@
       "enabled": "Ingeschakeld",
       "off": "Uit",
       "hiddenWhileOff": "{count, plural, one {# optie verborgen zolang uitgeschakeld} other {# opties verborgen zolang uitgeschakeld}}",
+      "inheritance": {
+        "inherited": "Overgenomen",
+        "overridden": "Overschreven",
+        "inheritedTitle": "Deze waarde komt uit de padstandaarden.",
+        "overriddenTitle": "Dit pad overschrijft de waarde uit de padstandaarden."
+      },
       "rail": {
         "onThisPage": "Op deze pagina",
         "aria": "Configuratiesecties"

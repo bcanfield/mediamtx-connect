@@ -369,6 +369,12 @@
       "enabled": "Włączone",
       "off": "Wyłączone",
       "hiddenWhileOff": "{count, plural, one {# opcja ukryta, gdy wyłączone} few {# opcje ukryte, gdy wyłączone} many {# opcji ukrytych, gdy wyłączone} other {# opcji ukrytej, gdy wyłączone}}",
+      "inheritance": {
+        "inherited": "Dziedziczone",
+        "overridden": "Nadpisane",
+        "inheritedTitle": "Ta wartość pochodzi z domyślnych ustawień ścieżek.",
+        "overriddenTitle": "Ta ścieżka nadpisuje wartość z domyślnych ustawień ścieżek."
+      },
       "rail": {
         "onThisPage": "Na tej stronie",
         "aria": "Sekcje konfiguracji"
