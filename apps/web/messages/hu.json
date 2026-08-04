@@ -369,6 +369,12 @@
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",
       "hiddenWhileOff": "{count, plural, one {# beállítás rejtve kikapcsolt állapotban} other {# beállítás rejtve kikapcsolt állapotban}}",
+      "inheritance": {
+        "inherited": "Örökölt",
+        "overridden": "Felülírva",
+        "inheritedTitle": "Ez az érték az útvonal-alapértelmezésekből származik.",
+        "overriddenTitle": "Ez az útvonal felülírja az útvonal-alapértelmezett értéket."
+      },
       "rail": {
         "onThisPage": "Ezen az oldalon",
         "aria": "Konfigurációs szakaszok"

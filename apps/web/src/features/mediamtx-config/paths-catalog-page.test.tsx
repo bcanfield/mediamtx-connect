@@ -68,6 +68,16 @@ describe('paths catalog', () => {
     expect(screen.queryByText(/hunter2/)).not.toBeInTheDocument()
   })
 
+  // The catalog is the only way into a path's detail page, so a row that
+  // doesn't link there leaves the page unreachable.
+  it('opens a path detail page from its row', async () => {
+    catalog = { status: 'connected', paths: [entry({ name: 'front-door' })] }
+    await renderWithProviders(<PathsCatalogPage />)
+
+    expect(await screen.findByRole('link', { name: 'front-door' }))
+      .toHaveAttribute('href', '/config/mediamtx/paths/front-door')
+  })
+
   it('offers the guided add from the header', async () => {
     catalog = { status: 'connected', paths: [entry({})] }
     await renderWithProviders(<PathsCatalogPage />)

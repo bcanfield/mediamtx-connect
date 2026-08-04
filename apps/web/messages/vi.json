@@ -369,6 +369,12 @@
       "enabled": "Đã bật",
       "off": "Tắt",
       "hiddenWhileOff": "{count, plural, other {# tùy chọn bị ẩn khi tắt}}",
+      "inheritance": {
+        "inherited": "Kế thừa",
+        "overridden": "Ghi đè",
+        "inheritedTitle": "Giá trị này đến từ giá trị mặc định của path.",
+        "overriddenTitle": "Path này ghi đè giá trị mặc định của path."
+      },
       "rail": {
         "onThisPage": "Trên trang này",
         "aria": "Các mục cấu hình"

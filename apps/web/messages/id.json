@@ -369,6 +369,12 @@
       "enabled": "Aktif",
       "off": "Nonaktif",
       "hiddenWhileOff": "{count, plural, other {# opsi disembunyikan saat nonaktif}}",
+      "inheritance": {
+        "inherited": "Diwarisi",
+        "overridden": "Ditimpa",
+        "inheritedTitle": "Nilai ini berasal dari nilai default path.",
+        "overriddenTitle": "Path ini menimpa nilai default path."
+      },
       "rail": {
         "onThisPage": "Di halaman ini",
         "aria": "Bagian konfigurasi"

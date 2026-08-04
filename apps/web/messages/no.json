@@ -369,6 +369,12 @@
       "enabled": "Aktivert",
       "off": "Av",
       "hiddenWhileOff": "{count, plural, one {# alternativ skjult mens avslått} other {# alternativer skjult mens avslått}}",
+      "inheritance": {
+        "inherited": "Arvet",
+        "overridden": "Overstyrt",
+        "inheritedTitle": "Denne verdien kommer fra sti-standardene.",
+        "overriddenTitle": "Denne stien overstyrer verdien fra sti-standardene."
+      },
       "rail": {
         "onThisPage": "På denne siden",
         "aria": "Konfigurasjonsseksjoner"

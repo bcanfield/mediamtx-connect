@@ -369,6 +369,12 @@
       "enabled": "Aktiviert",
       "off": "Aus",
       "hiddenWhileOff": "{count, plural, one {# Option ausgeblendet, solange deaktiviert} other {# Optionen ausgeblendet, solange deaktiviert}}",
+      "inheritance": {
+        "inherited": "Vererbt",
+        "overridden": "Überschrieben",
+        "inheritedTitle": "Dieser Wert stammt aus den Pfad-Standardwerten.",
+        "overriddenTitle": "Dieser Pfad überschreibt den Wert aus den Pfad-Standardwerten."
+      },
       "rail": {
         "onThisPage": "Auf dieser Seite",
         "aria": "Konfigurationsabschnitte"

@@ -369,6 +369,12 @@
       "enabled": "Aktiveret",
       "off": "Fra",
       "hiddenWhileOff": "{count, plural, one {# indstilling skjult mens slået fra} other {# indstillinger skjult mens slået fra}}",
+      "inheritance": {
+        "inherited": "Nedarvet",
+        "overridden": "Tilsidesat",
+        "inheritedTitle": "Denne værdi kommer fra sti-standardværdierne.",
+        "overriddenTitle": "Denne sti tilsidesætter værdien fra sti-standardværdierne."
+      },
       "rail": {
         "onThisPage": "På denne side",
         "aria": "Konfigurationssektioner"

@@ -369,6 +369,12 @@
       "enabled": "เปิดใช้งาน",
       "off": "ปิด",
       "hiddenWhileOff": "{count, plural, other {ซ่อน # ตัวเลือกขณะปิดอยู่}}",
+      "inheritance": {
+        "inherited": "สืบทอด",
+        "overridden": "แทนที่แล้ว",
+        "inheritedTitle": "ค่านี้มาจากค่าเริ่มต้นของพาธ",
+        "overriddenTitle": "พาธนี้แทนที่ค่าเริ่มต้นของพาธ"
+      },
       "rail": {
         "onThisPage": "ในหน้านี้",
         "aria": "ส่วนการตั้งค่า"

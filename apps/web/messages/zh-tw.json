@@ -369,6 +369,12 @@
       "enabled": "已啟用",
       "off": "關閉",
       "hiddenWhileOff": "{count, plural, other {關閉時隱藏 # 個選項}}",
+      "inheritance": {
+        "inherited": "繼承",
+        "overridden": "已覆寫",
+        "inheritedTitle": "此值來自路徑預設值。",
+        "overriddenTitle": "此路徑覆寫了路徑預設值。"
+      },
       "rail": {
         "onThisPage": "本頁內容",
         "aria": "設定區段"

@@ -369,6 +369,12 @@
       "enabled": "Ativado",
       "off": "Desligado",
       "hiddenWhileOff": "{count, plural, one {# opção oculta enquanto desligado} other {# opções ocultas enquanto desligado}}",
+      "inheritance": {
+        "inherited": "Herdado",
+        "overridden": "Substituído",
+        "inheritedTitle": "Este valor vem dos padrões de caminhos.",
+        "overriddenTitle": "Este caminho substitui o valor dos padrões de caminhos."
+      },
       "rail": {
         "onThisPage": "Nesta página",
         "aria": "Secções de configuração"
