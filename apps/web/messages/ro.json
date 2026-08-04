@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL-ul de redare nu este setat",
       "playbackUrlLead": "Setați URL-ul MediaMTX accesibil din browser în configurarea aplicației pentru a activa redarea live.",
-      "openAppConfig": "Deschide configurarea aplicației"
+      "openAppConfig": "Deschide configurarea aplicației",
+      "webrtcHostsTitle": "Gazdele WebRTC sunt doar loopback",
+      "webrtcHostsLead": "MediaMTX anunță doar 127.0.0.1 pentru WebRTC, adresă la care browserele de pe alte mașini nu pot ajunge. Redarea cu latență redusă va reveni la HLS.",
+      "openWebrtcConfig": "Deschide configurarea WebRTC"
     },
     "card": {
       "live": "LIVE",

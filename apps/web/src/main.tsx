@@ -81,10 +81,17 @@ const configRoute = createRoute({
   component: ClientConfigPage,
 })
 
+// `section` lands the page on one group of keys rather than at the top.
 const mediamtxConfigRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/config/mediamtx/global',
-  component: MediaMTXConfigPage,
+  component: function MediaMTXConfigRoute() {
+    const { section } = mediamtxConfigRoute.useSearch()
+    return <MediaMTXConfigPage section={section} />
+  },
+  validateSearch: (search: Record<string, unknown>) => ({
+    section: typeof search.section === 'string' ? search.section : undefined,
+  }),
 })
 
 // Sibling of the per-path route, not `paths/defaults` — that would reserve

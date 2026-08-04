@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Wiedergabe-URL nicht gesetzt",
       "playbackUrlLead": "Lege die browserseitige MediaMTX-URL in der App-Konfiguration fest, um die Live-Wiedergabe zu aktivieren.",
-      "openAppConfig": "App-Konfiguration öffnen"
+      "openAppConfig": "App-Konfiguration öffnen",
+      "webrtcHostsTitle": "WebRTC-Hosts sind nur Loopback",
+      "webrtcHostsLead": "MediaMTX kündigt für WebRTC nur 127.0.0.1 an, was Browser auf anderen Rechnern nicht erreichen können. Die Wiedergabe mit geringer Latenz fällt auf HLS zurück.",
+      "openWebrtcConfig": "WebRTC-Konfiguration öffnen"
     },
     "card": {
       "live": "LIVE",

@@ -118,3 +118,26 @@ export function PlaybackUrlBanner() {
     />
   )
 }
+
+// Claims the config is wrong, not that playback is broken: bare-metal MediaMTX
+// can still reach the browser over an interface IP that `webrtcIPsFromInterfaces`
+// supplied, and we can't see that from here.
+export function WebrtcHostBanner() {
+  const t = useTranslations('Streams.banner')
+
+  return (
+    <StatusPanel
+      tone="warning"
+      layout="banner"
+      title={t('webrtcHostsTitle')}
+      description={t('webrtcHostsLead')}
+      action={(
+        <Button asChild size="sm" variant="outline" className="shrink-0">
+          <Link href="/config/mediamtx/global" search={{ section: 'webrtc' }}>
+            {t('openWebrtcConfig')}
+          </Link>
+        </Button>
+      )}
+    />
+  )
+}

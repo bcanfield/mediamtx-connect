@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Nie ustawiono adresu URL odtwarzania",
       "playbackUrlLead": "Ustaw widoczny dla przeglądarki adres URL MediaMTX w konfiguracji aplikacji, aby włączyć odtwarzanie na żywo.",
-      "openAppConfig": "Otwórz konfigurację aplikacji"
+      "openAppConfig": "Otwórz konfigurację aplikacji",
+      "webrtcHostsTitle": "Hosty WebRTC to wyłącznie loopback",
+      "webrtcHostsLead": "MediaMTX rozgłasza dla WebRTC tylko 127.0.0.1, do którego przeglądarki na innych maszynach nie mają dostępu. Odtwarzanie o niskim opóźnieniu przejdzie na HLS.",
+      "openWebrtcConfig": "Otwórz konfigurację WebRTC"
     },
     "card": {
       "live": "LIVE",

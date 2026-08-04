@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "ยังไม่ได้ตั้งค่า URL สำหรับการเล่น",
       "playbackUrlLead": "ตั้งค่า URL ของ MediaMTX ที่เบราว์เซอร์เข้าถึงได้ในการตั้งค่าแอป เพื่อเปิดใช้การเล่นสด",
-      "openAppConfig": "เปิดการตั้งค่าแอป"
+      "openAppConfig": "เปิดการตั้งค่าแอป",
+      "webrtcHostsTitle": "โฮสต์ WebRTC เป็น loopback เท่านั้น",
+      "webrtcHostsLead": "MediaMTX ประกาศเฉพาะ 127.0.0.1 สำหรับ WebRTC ซึ่งเบราว์เซอร์บนเครื่องอื่นเข้าถึงไม่ได้ การเล่นแบบหน่วงต่ำจะย้อนกลับไปใช้ HLS",
+      "openWebrtcConfig": "เปิดการตั้งค่า WebRTC"
     },
     "card": {
       "live": "LIVE",

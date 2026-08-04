@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "재생 URL이 설정되지 않았습니다",
       "playbackUrlLead": "실시간 재생을 사용하려면 앱 설정에서 브라우저용 MediaMTX URL을 설정하세요.",
-      "openAppConfig": "앱 설정 열기"
+      "openAppConfig": "앱 설정 열기",
+      "webrtcHostsTitle": "WebRTC 호스트가 루프백뿐입니다",
+      "webrtcHostsLead": "MediaMTX가 WebRTC에 127.0.0.1만 알리고 있어 다른 컴퓨터의 브라우저는 접근할 수 없습니다. 저지연 재생은 HLS로 대체됩니다.",
+      "openWebrtcConfig": "WebRTC 설정 열기"
     },
     "card": {
       "live": "LIVE",

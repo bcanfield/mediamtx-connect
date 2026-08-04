@@ -37,6 +37,31 @@ export function whepUrlFor(
   return `${remoteMediaMtxUrl}${webrtcAddress}/${encodeURIComponent(streamName)}/whep`
 }
 
+const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '::1'])
+
+// `window.location.hostname` brackets an IPv6 literal (`[::1]`); a config value
+// doesn't, so strip them before comparing.
+function isLoopback(host: string): boolean {
+  return LOOPBACK_HOSTS.has(host.trim().toLowerCase().replace(/^\[|\]$/g, ''))
+}
+
+/**
+ * MediaMTX advertising nothing but loopback for WebRTC while the browser sits
+ * on another machine: the ICE candidate is by definition unroutable, so WHEP
+ * negotiates and then times out into HLS with nothing said about it.
+ *
+ * An empty list makes no claim — bare-metal MediaMTX riding
+ * `webrtcIPsFromInterfaces` works fine with one — so it never trips.
+ */
+export function advertisesOnlyLoopback(
+  additionalHosts: string[] | undefined,
+  browserHostname: string,
+): boolean {
+  if (!additionalHosts?.length)
+    return false
+  return additionalHosts.every(isLoopback) && !isLoopback(browserHostname)
+}
+
 /** Which transport to try first. Failing over to HLS afterwards is the player's job. */
 export function resolveTransport(mode: PlaybackMode, whepUrl: string | null): PlaybackProtocol {
   if (mode === 'compat' || !whepUrl)

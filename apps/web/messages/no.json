@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Avspillings-URL er ikke satt",
       "playbackUrlLead": "Angi den nettleservendte MediaMTX-URL-en i appkonfigurasjonen for å aktivere liveavspilling.",
-      "openAppConfig": "Åpne appkonfigurasjon"
+      "openAppConfig": "Åpne appkonfigurasjon",
+      "webrtcHostsTitle": "WebRTC-verter er bare loopback",
+      "webrtcHostsLead": "MediaMTX annonserer bare 127.0.0.1 for WebRTC, som nettlesere på andre maskiner ikke kan nå. Avspilling med lav latens faller tilbake til HLS.",
+      "openWebrtcConfig": "Åpne WebRTC-konfigurasjon"
     },
     "card": {
       "live": "LIVE",

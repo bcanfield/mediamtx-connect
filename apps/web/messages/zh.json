@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "未设置播放 URL",
       "playbackUrlLead": "在应用配置中设置面向浏览器的 MediaMTX URL 以启用直播播放。",
-      "openAppConfig": "打开应用配置"
+      "openAppConfig": "打开应用配置",
+      "webrtcHostsTitle": "WebRTC 主机仅为回环地址",
+      "webrtcHostsLead": "MediaMTX 仅为 WebRTC 通告 127.0.0.1，其他机器上的浏览器无法访问。低延迟播放将回退到 HLS。",
+      "openWebrtcConfig": "打开 WebRTC 配置"
     },
     "card": {
       "live": "LIVE",

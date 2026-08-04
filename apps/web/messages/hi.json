@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "प्लेबैक URL सेट नहीं है",
       "playbackUrlLead": "लाइव प्लेबैक सक्षम करने के लिए ऐप कॉन्फ़िगरेशन में ब्राउज़र की ओर वाला MediaMTX URL सेट करें।",
-      "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें"
+      "openAppConfig": "ऐप कॉन्फ़िगरेशन खोलें",
+      "webrtcHostsTitle": "WebRTC होस्ट केवल लूपबैक हैं",
+      "webrtcHostsLead": "MediaMTX WebRTC के लिए केवल 127.0.0.1 विज्ञापित कर रहा है, जिस तक दूसरी मशीनों के ब्राउज़र नहीं पहुँच सकते। कम-विलंब प्लेबैक HLS पर वापस चला जाएगा।",
+      "openWebrtcConfig": "WebRTC कॉन्फ़िगरेशन खोलें"
     },
     "card": {
       "live": "LIVE",

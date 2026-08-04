@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Chưa đặt URL phát",
       "playbackUrlLead": "Đặt URL MediaMTX dành cho trình duyệt trong Cấu hình ứng dụng để bật phát trực tiếp.",
-      "openAppConfig": "Mở Cấu hình ứng dụng"
+      "openAppConfig": "Mở Cấu hình ứng dụng",
+      "webrtcHostsTitle": "Máy chủ WebRTC chỉ là loopback",
+      "webrtcHostsLead": "MediaMTX chỉ quảng bá 127.0.0.1 cho WebRTC, trình duyệt trên máy khác không thể kết nối tới. Phát độ trễ thấp sẽ chuyển về HLS.",
+      "openWebrtcConfig": "Mở cấu hình WebRTC"
     },
     "card": {
       "live": "LIVE",

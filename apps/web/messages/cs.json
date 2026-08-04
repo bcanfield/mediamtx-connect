@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL přehrávání není nastavena",
       "playbackUrlLead": "Nastavte v konfiguraci aplikace URL MediaMTX viditelnou z prohlížeče, abyste povolili živé přehrávání.",
-      "openAppConfig": "Otevřít konfiguraci aplikace"
+      "openAppConfig": "Otevřít konfiguraci aplikace",
+      "webrtcHostsTitle": "Hostitelé WebRTC jsou jen loopback",
+      "webrtcHostsLead": "MediaMTX pro WebRTC oznamuje pouze 127.0.0.1, kam se prohlížeče na jiných počítačích nedostanou. Přehrávání s nízkou latencí přejde na HLS.",
+      "openWebrtcConfig": "Otevřít konfiguraci WebRTC"
     },
     "card": {
       "live": "LIVE",
