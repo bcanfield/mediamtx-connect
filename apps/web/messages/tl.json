@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Hindi pa nakatakda ang playback URL",
       "playbackUrlLead": "Itakda ang browser-facing na MediaMTX URL sa App Config para paganahin ang live playback.",
-      "openAppConfig": "Buksan ang App Config"
+      "openAppConfig": "Buksan ang App Config",
+      "webrtcHostsTitle": "Loopback lang ang mga WebRTC host",
+      "webrtcHostsLead": "127.0.0.1 lang ang ina-advertise ng MediaMTX para sa WebRTC, na hindi maaabot ng mga browser sa ibang makina. Babalik sa HLS ang low-latency na playback.",
+      "openWebrtcConfig": "Buksan ang WebRTC Config"
     },
     "card": {
       "live": "LIVE",

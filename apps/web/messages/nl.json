@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Afspeel-URL niet ingesteld",
       "playbackUrlLead": "Stel de browsergerichte MediaMTX-URL in bij App-configuratie om live afspelen mogelijk te maken.",
-      "openAppConfig": "App-configuratie openen"
+      "openAppConfig": "App-configuratie openen",
+      "webrtcHostsTitle": "WebRTC-hosts zijn alleen loopback",
+      "webrtcHostsLead": "MediaMTX adverteert alleen 127.0.0.1 voor WebRTC, wat browsers op andere machines niet kunnen bereiken. Afspelen met lage latentie valt terug op HLS.",
+      "openWebrtcConfig": "WebRTC-configuratie openen"
     },
     "card": {
       "live": "LIVE",

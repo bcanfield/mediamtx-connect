@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL de reprodução não definido",
       "playbackUrlLead": "Define o URL do MediaMTX acessível pelo navegador na configuração da app para ativar a reprodução em direto.",
-      "openAppConfig": "Abrir configuração da app"
+      "openAppConfig": "Abrir configuração da app",
+      "webrtcHostsTitle": "Hosts WebRTC apenas em loopback",
+      "webrtcHostsLead": "O MediaMTX anuncia apenas 127.0.0.1 para WebRTC, que os navegadores noutras máquinas não conseguem alcançar. A reprodução de baixa latência recorrerá a HLS.",
+      "openWebrtcConfig": "Abrir configuração WebRTC"
     },
     "card": {
       "live": "LIVE",

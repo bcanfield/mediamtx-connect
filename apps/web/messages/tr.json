@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Oynatma URL'si ayarlanmamış",
       "playbackUrlLead": "Canlı oynatmayı etkinleştirmek için tarayıcıya dönük MediaMTX URL'sini uygulama yapılandırmasında ayarlayın.",
-      "openAppConfig": "Uygulama yapılandırmasını aç"
+      "openAppConfig": "Uygulama yapılandırmasını aç",
+      "webrtcHostsTitle": "WebRTC ana makineleri yalnızca loopback",
+      "webrtcHostsLead": "MediaMTX, WebRTC için yalnızca 127.0.0.1 duyuruyor; başka makinelerdeki tarayıcılar buraya erişemez. Düşük gecikmeli oynatma HLS'e geri düşecek.",
+      "openWebrtcConfig": "WebRTC yapılandırmasını aç"
     },
     "card": {
       "live": "LIVE",

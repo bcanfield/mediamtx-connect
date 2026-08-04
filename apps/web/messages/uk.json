@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL відтворення не задано",
       "playbackUrlLead": "Вкажіть доступний із браузера URL MediaMTX у налаштуваннях застосунку, щоб увімкнути живе відтворення.",
-      "openAppConfig": "Відкрити налаштування застосунку"
+      "openAppConfig": "Відкрити налаштування застосунку",
+      "webrtcHostsTitle": "Для WebRTC оголошено лише loopback",
+      "webrtcHostsLead": "MediaMTX оголошує для WebRTC лише 127.0.0.1, до якого браузери на інших машинах не мають доступу. Відтворення з низькою затримкою перейде на HLS.",
+      "openWebrtcConfig": "Відкрити налаштування WebRTC"
     },
     "card": {
       "live": "LIVE",

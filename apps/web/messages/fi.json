@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "Toisto-URL:ää ei ole asetettu",
       "playbackUrlLead": "Aseta selaimelle näkyvä MediaMTX-URL sovelluksen asetuksissa ottaaksesi suoratoiston käyttöön.",
-      "openAppConfig": "Avaa sovelluksen asetukset"
+      "openAppConfig": "Avaa sovelluksen asetukset",
+      "webrtcHostsTitle": "WebRTC-isännät ovat vain loopback",
+      "webrtcHostsLead": "MediaMTX ilmoittaa WebRTC:lle vain osoitteen 127.0.0.1, johon muiden koneiden selaimet eivät pääse. Matalan viiveen toisto siirtyy HLS:ään.",
+      "openWebrtcConfig": "Avaa WebRTC-asetukset"
     },
     "card": {
       "live": "LIVE",

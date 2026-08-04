@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "再生 URL が未設定です",
       "playbackUrlLead": "ライブ再生を有効にするには、アプリ設定でブラウザ向けの MediaMTX URL を設定してください。",
-      "openAppConfig": "アプリ設定を開く"
+      "openAppConfig": "アプリ設定を開く",
+      "webrtcHostsTitle": "WebRTC のホストがループバックのみです",
+      "webrtcHostsLead": "MediaMTX は WebRTC に 127.0.0.1 のみを通知しており、他のマシンのブラウザからは到達できません。低遅延再生は HLS にフォールバックします。",
+      "openWebrtcConfig": "WebRTC 設定を開く"
     },
     "card": {
       "live": "LIVE",

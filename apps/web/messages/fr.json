@@ -69,7 +69,10 @@
     "banner": {
       "playbackUrlTitle": "URL de lecture non définie",
       "playbackUrlLead": "Définissez l'URL MediaMTX accessible depuis le navigateur dans la config de l'app pour activer la lecture en direct.",
-      "openAppConfig": "Ouvrir la config de l'app"
+      "openAppConfig": "Ouvrir la config de l'app",
+      "webrtcHostsTitle": "Hôtes WebRTC uniquement en loopback",
+      "webrtcHostsLead": "MediaMTX n'annonce que 127.0.0.1 pour WebRTC, que les navigateurs des autres machines ne peuvent pas joindre. La lecture à faible latence basculera sur HLS.",
+      "openWebrtcConfig": "Ouvrir la config WebRTC"
     },
     "card": {
       "live": "LIVE",
