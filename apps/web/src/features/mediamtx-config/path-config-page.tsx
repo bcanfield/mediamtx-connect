@@ -27,6 +27,10 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
   const queryClient = useQueryClient()
   const options = orpc.config.mediamtx.getPathConfig.queryOptions({ input: { name } })
   const pathConfig = useQuery(options)
+  // What the values below are measured against: a key still equal to its
+  // default is inherited, one that differs is overridden on the path (ADR
+  // 0002). Null while MediaMTX is unreachable, and then nothing is marked.
+  const pathDefaults = useQuery(orpc.config.mediamtx.getPathDefaults.queryOptions())
   const updatePathConfig = useMutation(orpc.config.mediamtx.updatePathConfig.mutationOptions())
 
   // Annotated because the union `useQuery` infers doesn't narrow on `status`.
@@ -63,6 +67,7 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
           scope={PATH_CONFIG_SCOPE}
           conf={effective.conf}
           initialSection={section}
+          inheritedValues={pathDefaults.data ?? undefined}
           onSave={async (_values, changed) => {
             await updatePathConfig.mutateAsync({ name, conf: changed })
             // The first save materializes an entry, so confName and the

@@ -14,7 +14,7 @@ import { Switch } from '@/components/ui/switch'
 import { useScrollSpy } from '@/hooks/use-scroll-spy'
 import { cn } from '@/lib/utils'
 
-import { ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
+import { InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
 import { IceServersRows } from './ice-servers-rows'
 import { countErrorsForSection } from './sections'
 
@@ -25,6 +25,7 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   conf,
   onSave,
   initialSection,
+  inheritedValues,
 }: {
   scope: ConfigScope<T>
   conf: T
@@ -34,6 +35,10 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   onSave: (values: T, changed: Partial<T>) => Promise<unknown>
   // Section to land on, for deep links that mean one group of keys.
   initialSection?: string
+  // What this scope inherits from — path defaults, for a path's own config.
+  // Each field is then marked inherited or overridden against it. Left off by
+  // the scopes that inherit from nothing.
+  inheritedValues?: Partial<T>
 }) {
   const t = useTranslations('Config.mediamtxForm')
   const tSaveBar = useTranslations('Config.saveBar')
@@ -94,6 +99,7 @@ export function MediaMTXConfigForm<T extends FieldValues>({
                 section={section}
                 control={form.control}
                 isOff={offById[section.id] ?? false}
+                inheritedValues={inheritedValues as Record<string, unknown> | undefined}
               />
             ))}
           </div>
@@ -240,10 +246,12 @@ function ConfigSection<T extends FieldValues>({
   section,
   control,
   isOff,
+  inheritedValues,
 }: {
   section: SectionDef<T>
   control: Control<T>
   isOff: boolean
+  inheritedValues?: Record<string, unknown>
 }) {
   const t = useTranslations('Config.mediamtxForm')
 
@@ -265,7 +273,11 @@ function ConfigSection<T extends FieldValues>({
         </div>
 
         {section.enableField && (
-          <SectionEnableSwitch control={control} section={section} />
+          <SectionEnableSwitch
+            control={control}
+            section={section}
+            inheritedValues={inheritedValues}
+          />
         )}
       </header>
 
@@ -286,15 +298,30 @@ function ConfigSection<T extends FieldValues>({
             <div className="flex flex-col">
               {section.fields.map(field =>
                 field.kind === 'switch'
-                  ? <SwitchFieldRow key={field.name} control={control} name={field.name} />
+                  ? (
+                      <SwitchFieldRow
+                        key={field.name}
+                        control={control}
+                        name={field.name}
+                        inheritedValues={inheritedValues}
+                      />
+                    )
                   : field.kind === 'list'
-                    ? <ListFieldRow key={field.name} control={control} name={field.name} />
+                    ? (
+                        <ListFieldRow
+                          key={field.name}
+                          control={control}
+                          name={field.name}
+                          inheritedValues={inheritedValues}
+                        />
+                      )
                     : (
                         <TextFieldRow
                           key={field.name}
                           control={control}
                           name={field.name}
                           kind={field.kind === 'number' ? 'number' : 'text'}
+                          inheritedValues={inheritedValues}
                         />
                       ),
               )}
@@ -311,9 +338,11 @@ function ConfigSection<T extends FieldValues>({
 function SectionEnableSwitch<T extends FieldValues>({
   section,
   control,
+  inheritedValues,
 }: {
   section: SectionDef<T>
   control: Control<T>
+  inheritedValues?: Record<string, unknown>
 }) {
   const t = useTranslations('Config.mediamtxForm')
 
@@ -323,6 +352,13 @@ function SectionEnableSwitch<T extends FieldValues>({
       name={section.enableField!}
       render={({ field }) => (
         <span className="flex shrink-0 items-center gap-2.5">
+          {/* `record` lives in the header rather than in a row, so it would
+              otherwise be the one path key with no inheritance marker. */}
+          <InheritanceMarker
+            inheritedValues={inheritedValues}
+            name={section.enableField!}
+            value={field.value}
+          />
           <span
             className={cn(
               'font-mono text-micro font-medium uppercase tracking-[0.07em]',

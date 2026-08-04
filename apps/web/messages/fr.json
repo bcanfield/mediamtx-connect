@@ -369,6 +369,12 @@
       "enabled": "Activé",
       "off": "Désactivé",
       "hiddenWhileOff": "{count, plural, one {# option masquée tant que désactivé} other {# options masquées tant que désactivé}}",
+      "inheritance": {
+        "inherited": "Hérité",
+        "overridden": "Remplacé",
+        "inheritedTitle": "Cette valeur provient des valeurs par défaut des chemins.",
+        "overriddenTitle": "Ce chemin remplace la valeur par défaut des chemins."
+      },
       "rail": {
         "onThisPage": "Sur cette page",
         "aria": "Sections de configuration"

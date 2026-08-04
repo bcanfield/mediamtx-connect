@@ -369,6 +369,12 @@
       "enabled": "Enabled",
       "off": "Off",
       "hiddenWhileOff": "{count, plural, one {# option hidden while off} other {# options hidden while off}}",
+      "inheritance": {
+        "inherited": "Inherited",
+        "overridden": "Overridden",
+        "inheritedTitle": "This value comes from path defaults.",
+        "overriddenTitle": "This path overrides the value from path defaults."
+      },
       "rail": {
         "onThisPage": "On this page",
         "aria": "Config sections"
