@@ -280,15 +280,20 @@
         "lead": "MediaMTX has no running path by this name and no config entry of its own. If the stream is simply stopped, its settings are inherited — and MediaMTX can only tell us where from while the stream is running.",
         "openPathDefaults": "Open path defaults"
       },
-      "revert": {
-        "action": "Revert to inherited",
-        "confirmTitle": "Revert {name} to inherited settings?",
-        "confirmDescription": "This deletes the path's own config entry. Every value it overrides goes back to being inherited, and the overrides are lost.",
+      "delete": {
+        "action": "Delete path",
+        "confirmTitle": "Delete “{name}”?",
+        "confirmDescription": "This deletes the path's own config entry, and every value it overrides is lost. If a wildcard entry covers the name, the path goes back to inheriting from it; otherwise MediaMTX stops serving the path.",
+        "checking": "Checking what is connected…",
+        "unreadable": "MediaMTX didn't say what is connected to this path, so this may cut off a live stream.",
+        "activeTitle": "Deleting this cuts off what is connected right now",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, one {# reader} other {# readers}} · {types}",
         "cancel": "Cancel",
-        "confirm": "Revert",
+        "confirm": "Delete path",
         "toasts": {
-          "success": "Reverted to inherited settings",
-          "errorTitle": "Couldn't revert to inherited settings",
+          "success": "Deleted “{name}”",
+          "errorTitle": "Couldn't delete “{name}”",
           "errorDescription": "The path config entry is still there. Try again."
         }
       }

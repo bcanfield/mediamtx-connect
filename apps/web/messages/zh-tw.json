@@ -280,15 +280,20 @@
         "lead": "MediaMTX 中沒有以此名稱執行中的路徑，也沒有它自己的設定項目。如果該串流只是已停止，它的設定就是繼承而來的 — 而只有在串流執行時，MediaMTX 才能告訴我們繼承自哪裡。",
         "openPathDefaults": "開啟路徑預設值"
       },
-      "revert": {
-        "action": "還原為繼承",
-        "confirmTitle": "要將 {name} 還原為繼承的設定嗎？",
-        "confirmDescription": "這會刪除該路徑自己的設定項目。它覆寫的每個值都會回到繼承狀態，覆寫內容將遺失。",
+      "delete": {
+        "action": "刪除路徑",
+        "confirmTitle": "要刪除「{name}」嗎？",
+        "confirmDescription": "這會刪除該路徑自己的設定項目，它覆寫的每個值都會遺失。如果有萬用字元項目涵蓋這個名稱，該路徑會回到繼承該項目；否則 MediaMTX 將停止提供這個路徑。",
+        "checking": "正在檢查目前有什麼連線…",
+        "unreadable": "MediaMTX 沒有說明有什麼連線到這個路徑，因此這可能會中斷正在進行的串流。",
+        "activeTitle": "刪除會中斷目前正在連線的內容",
+        "publisher": "發布端 · {type}",
+        "readers": "{count, plural, other {# 個讀取端}} · {types}",
         "cancel": "取消",
-        "confirm": "還原",
+        "confirm": "刪除路徑",
         "toasts": {
-          "success": "已還原為繼承的設定",
-          "errorTitle": "無法還原為繼承的設定",
+          "success": "已刪除「{name}」",
+          "errorTitle": "無法刪除「{name}」",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
         }
       }

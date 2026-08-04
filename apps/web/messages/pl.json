@@ -280,15 +280,20 @@
         "lead": "MediaMTX nie ma działającej ścieżki o tej nazwie ani własnego wpisu konfiguracji. Jeśli strumień jest po prostu zatrzymany, jego ustawienia są dziedziczone — a MediaMTX może powiedzieć, skąd, tylko wtedy, gdy strumień działa.",
         "openPathDefaults": "Otwórz domyślne ustawienia ścieżek"
       },
-      "revert": {
-        "action": "Przywróć dziedziczenie",
-        "confirmTitle": "Przywrócić dla {name} dziedziczone ustawienia?",
-        "confirmDescription": "Spowoduje to usunięcie własnego wpisu konfiguracji ścieżki. Każda nadpisana wartość wróci do dziedziczenia, a nadpisania zostaną utracone.",
+      "delete": {
+        "action": "Usuń ścieżkę",
+        "confirmTitle": "Usunąć „{name}”?",
+        "confirmDescription": "Spowoduje to usunięcie własnego wpisu konfiguracji ścieżki, a każda nadpisana przez niego wartość zostanie utracona. Jeśli nazwę obejmuje wpis z symbolem wieloznacznym, ścieżka wróci do dziedziczenia z niego; w przeciwnym razie MediaMTX przestanie obsługiwać tę ścieżkę.",
+        "checking": "Sprawdzanie, co jest połączone…",
+        "unreadable": "MediaMTX nie podał, co jest połączone z tą ścieżką, więc może to przerwać transmisję na żywo.",
+        "activeTitle": "Usunięcie przerwie to, co jest teraz połączone",
+        "publisher": "Źródło publikujące · {type}",
+        "readers": "{count, plural, one {# odbiorca} few {# odbiorcy} many {# odbiorców} other {# odbiorcy}} · {types}",
         "cancel": "Anuluj",
-        "confirm": "Przywróć",
+        "confirm": "Usuń ścieżkę",
         "toasts": {
-          "success": "Przywrócono dziedziczone ustawienia",
-          "errorTitle": "Nie udało się przywrócić dziedziczonych ustawień",
+          "success": "Usunięto „{name}”",
+          "errorTitle": "Nie udało się usunąć „{name}”",
           "errorDescription": "Wpis konfiguracji ścieżki nadal istnieje. Spróbuj ponownie."
         }
       }

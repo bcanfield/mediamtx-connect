@@ -280,15 +280,20 @@
         "lead": "MediaMTX에 이 이름으로 실행 중인 경로가 없고, 이 이름의 설정 항목도 없습니다. 스트림이 단순히 중지된 것이라면 설정은 상속되고 있겠지만, MediaMTX는 스트림이 실행 중일 때만 어디에서 상속되는지 알려줄 수 있습니다.",
         "openPathDefaults": "경로 기본값 열기"
       },
-      "revert": {
-        "action": "상속으로 되돌리기",
-        "confirmTitle": "{name}을(를) 상속된 설정으로 되돌릴까요?",
-        "confirmDescription": "경로 자체의 설정 항목이 삭제됩니다. 재정의하던 값은 모두 상속으로 돌아가고 재정의 내용은 사라집니다.",
+      "delete": {
+        "action": "경로 삭제",
+        "confirmTitle": "“{name}”을(를) 삭제할까요?",
+        "confirmDescription": "경로 자체의 설정 항목이 삭제되며, 이 항목이 재정의하던 값은 모두 사라집니다. 와일드카드 항목이 이 이름을 포함하면 경로는 다시 그 항목에서 상속받고, 그렇지 않으면 MediaMTX는 이 경로 제공을 중단합니다.",
+        "checking": "무엇이 연결되어 있는지 확인하는 중…",
+        "unreadable": "MediaMTX가 이 경로에 무엇이 연결되어 있는지 알려주지 않았습니다. 따라서 이 작업으로 라이브 스트림이 끊길 수 있습니다.",
+        "activeTitle": "삭제하면 지금 연결되어 있는 것이 끊깁니다",
+        "publisher": "퍼블리셔 · {type}",
+        "readers": "{count, plural, other {시청자 #명}} · {types}",
         "cancel": "취소",
-        "confirm": "되돌리기",
+        "confirm": "경로 삭제",
         "toasts": {
-          "success": "상속된 설정으로 되돌렸습니다",
-          "errorTitle": "상속된 설정으로 되돌리지 못했습니다",
+          "success": "“{name}”을(를) 삭제했습니다",
+          "errorTitle": "“{name}”을(를) 삭제하지 못했습니다",
           "errorDescription": "경로 설정 항목이 그대로 남아 있습니다. 다시 시도하세요."
         }
       }

@@ -280,15 +280,20 @@
         "lead": "MediaMTX nu are nicio cale activă cu acest nume și nicio intrare de configurare proprie. Dacă fluxul este doar oprit, setările lui sunt moștenite — iar MediaMTX poate spune de unde doar cât timp fluxul rulează.",
         "openPathDefaults": "Deschide valorile implicite pentru căi"
       },
-      "revert": {
-        "action": "Revino la moștenire",
-        "confirmTitle": "Revii {name} la setările moștenite?",
-        "confirmDescription": "Aceasta șterge intrarea de configurare proprie a căii. Fiecare valoare pe care o suprascrie revine la moștenire, iar suprascrierile se pierd.",
+      "delete": {
+        "action": "Șterge calea",
+        "confirmTitle": "Ștergi „{name}”?",
+        "confirmDescription": "Aceasta șterge intrarea de configurare proprie a căii, iar fiecare valoare pe care o suprascrie se pierde. Dacă o intrare cu wildcard acoperă numele, calea revine la moștenirea de la ea; altfel, MediaMTX nu mai servește calea.",
+        "checking": "Se verifică ce este conectat…",
+        "unreadable": "MediaMTX nu a spus ce este conectat la această cale, așa că acest lucru poate întrerupe un flux live.",
+        "activeTitle": "Ștergerea întrerupe ce este conectat chiar acum",
+        "publisher": "Publicator · {type}",
+        "readers": "{count, plural, one {# cititor} few {# cititori} other {# de cititori}} · {types}",
         "cancel": "Anulează",
-        "confirm": "Revino",
+        "confirm": "Șterge calea",
         "toasts": {
-          "success": "S-a revenit la setările moștenite",
-          "errorTitle": "Nu s-a putut reveni la setările moștenite",
+          "success": "S-a șters „{name}”",
+          "errorTitle": "Nu s-a putut șterge „{name}”",
           "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
         }
       }

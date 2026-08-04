@@ -159,6 +159,26 @@ export const PathConfigResultSchema = z.discriminatedUnion('status', [
 
 export type PathConfigResult = z.infer<typeof PathConfigResultSchema>
 
+// What deleting a path would cut off, read off the runtime path rather than off
+// config. `unreadable` is its own state rather than an empty pair: a server that
+// didn't say what is connected must not render as a path with nothing connected,
+// because that is the confirmation an operator clicks straight through.
+export const PathConnectionsSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('read'),
+    // MediaMTX's kind for whatever is publishing — `rtspSession`, `rtmpConn`,
+    // `rtspSource`. Null while the path is idle, and for a name it isn't
+    // running at all.
+    publisher: z.string().nullable(),
+    // One entry per reader, by kind. Two readers of a kind appear twice: what
+    // the confirmation leads with is how many get cut off, not how many kinds.
+    readers: z.array(z.string()),
+  }),
+  z.object({ status: z.literal('unreadable') }),
+])
+
+export type PathConnections = z.infer<typeof PathConnectionsSchema>
+
 // One row of the paths catalog: a *config entry*, not a runtime path. A regex
 // entry backs many runtime paths and a wildcard-backed path has no entry at
 // all, so this list and the live stream grid are different populations.
@@ -326,6 +346,11 @@ export const contract = {
       deletePathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
         .output(z.void()),
+      // What the delete confirmation names before it cuts anything off. Live
+      // state, not config — a path can be publishing on settings it inherits.
+      getPathConnections: oc
+        .input(z.object({ name: z.string().min(1) }))
+        .output(PathConnectionsSchema),
     },
   },
 }

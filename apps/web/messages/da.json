@@ -280,15 +280,20 @@
         "lead": "MediaMTX har ingen kørende sti med dette navn og ingen konfigurationspost af sin egen. Hvis streamet blot er stoppet, arves dets indstillinger — og MediaMTX kan kun fortælle hvorfra, mens streamet kører.",
         "openPathDefaults": "Åbn standardværdier for stier"
       },
-      "revert": {
-        "action": "Vend tilbage til nedarvet",
-        "confirmTitle": "Vend {name} tilbage til nedarvede indstillinger?",
-        "confirmDescription": "Dette sletter stiens egen konfigurationspost. Hver værdi, den tilsidesætter, bliver nedarvet igen, og tilsidesættelserne går tabt.",
+      "delete": {
+        "action": "Slet sti",
+        "confirmTitle": "Slet »{name}«?",
+        "confirmDescription": "Dette sletter stiens egen konfigurationspost, og hver værdi, den tilsidesætter, går tabt. Hvis en wildcard-post dækker navnet, går stien tilbage til at arve fra den; ellers holder MediaMTX op med at betjene stien.",
+        "checking": "Undersøger hvad der er forbundet…",
+        "unreadable": "MediaMTX oplyste ikke, hvad der er forbundet til denne sti, så dette kan afbryde en live stream.",
+        "activeTitle": "Sletning afbryder det, der er forbundet lige nu",
+        "publisher": "Udgiver · {type}",
+        "readers": "{count, plural, one {# læser} other {# læsere}} · {types}",
         "cancel": "Annuller",
-        "confirm": "Vend tilbage",
+        "confirm": "Slet sti",
         "toasts": {
-          "success": "Vendt tilbage til nedarvede indstillinger",
-          "errorTitle": "Kunne ikke vende tilbage til nedarvede indstillinger",
+          "success": "Slettede »{name}«",
+          "errorTitle": "Kunne ikke slette »{name}«",
           "errorDescription": "Stiens konfigurationspost er der stadig. Prøv igen."
         }
       }

@@ -280,15 +280,20 @@
         "lead": "O MediaMTX não tem nenhum caminho em execução com este nome nem uma entrada de configuração própria. Se a transmissão estiver apenas parada, as configurações dela são herdadas — e o MediaMTX só consegue dizer de onde enquanto a transmissão estiver em execução.",
         "openPathDefaults": "Abrir padrões de caminhos"
       },
-      "revert": {
-        "action": "Voltar a herdar",
-        "confirmTitle": "Voltar {name} às configurações herdadas?",
-        "confirmDescription": "Isso exclui a entrada de configuração própria do caminho. Cada valor que ela substitui volta a ser herdado, e as substituições são perdidas.",
+      "delete": {
+        "action": "Excluir caminho",
+        "confirmTitle": "Excluir «{name}»?",
+        "confirmDescription": "Isso exclui a entrada de configuração própria do caminho, e todo valor que ela substitui é perdido. Se uma entrada curinga cobrir o nome, o caminho volta a herdar dela; caso contrário, o MediaMTX deixa de servir o caminho.",
+        "checking": "Verificando o que está conectado…",
+        "unreadable": "O MediaMTX não informou o que está conectado a este caminho, então isso pode cortar uma transmissão ao vivo.",
+        "activeTitle": "Excluir isso corta o que está conectado agora",
+        "publisher": "Emissor · {type}",
+        "readers": "{count, plural, one {# leitor} other {# leitores}} · {types}",
         "cancel": "Cancelar",
-        "confirm": "Reverter",
+        "confirm": "Excluir caminho",
         "toasts": {
-          "success": "Voltou às configurações herdadas",
-          "errorTitle": "Não foi possível voltar às configurações herdadas",
+          "success": "«{name}» excluído",
+          "errorTitle": "Não foi possível excluir «{name}»",
           "errorDescription": "A entrada de configuração do caminho ainda está lá. Tente de novo."
         }
       }

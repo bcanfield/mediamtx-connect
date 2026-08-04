@@ -280,15 +280,20 @@
         "lead": "A MediaMTX-nek nincs ilyen nevű futó útvonala, és saját konfigurációs bejegyzése sincs. Ha a stream csak le van állítva, a beállításai öröklődnek — de a MediaMTX csak futó stream esetén tudja megmondani, honnan.",
         "openPathDefaults": "Útvonalak alapértékeinek megnyitása"
       },
-      "revert": {
-        "action": "Vissza az örökölthöz",
-        "confirmTitle": "Visszaállítod a(z) {name} elemet az örökölt beállításokra?",
-        "confirmDescription": "Ez törli az útvonal saját konfigurációs bejegyzését. Minden felülírt érték újra öröklődik, a felülírások elvesznek.",
+      "delete": {
+        "action": "Útvonal törlése",
+        "confirmTitle": "Törlöd a(z) „{name}” útvonalat?",
+        "confirmDescription": "Ez törli az útvonal saját konfigurációs bejegyzését, és minden általa felülírt érték elvész. Ha egy helyettesítő karaktert használó bejegyzés lefedi a nevet, az útvonal újra attól örököl; egyébként a MediaMTX nem szolgálja ki tovább az útvonalat.",
+        "checking": "Csatlakozások ellenőrzése…",
+        "unreadable": "A MediaMTX nem árulta el, mi csatlakozik ehhez az útvonalhoz, így ez megszakíthat egy élő streamet.",
+        "activeTitle": "A törlés megszakítja azt, ami éppen most csatlakozik",
+        "publisher": "Közzétevő · {type}",
+        "readers": "{count, plural, one {# olvasó} other {# olvasó}} · {types}",
         "cancel": "Mégse",
-        "confirm": "Visszaállítás",
+        "confirm": "Útvonal törlése",
         "toasts": {
-          "success": "Visszaállítva az örökölt beállításokra",
-          "errorTitle": "Nem sikerült visszaállni az örökölt beállításokra",
+          "success": "„{name}” törölve",
+          "errorTitle": "Nem sikerült törölni: „{name}”",
           "errorDescription": "Az útvonal konfigurációs bejegyzése továbbra is megvan. Próbáld újra."
         }
       }

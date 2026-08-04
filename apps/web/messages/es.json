@@ -280,15 +280,20 @@
         "lead": "MediaMTX no tiene ninguna ruta en ejecución con este nombre ni una entrada de configuración propia. Si la transmisión solo está detenida, sus ajustes se heredan — y MediaMTX solo puede decirnos de dónde mientras la transmisión está en ejecución.",
         "openPathDefaults": "Abrir valores predeterminados de rutas"
       },
-      "revert": {
-        "action": "Volver a heredado",
-        "confirmTitle": "¿Volver {name} a los ajustes heredados?",
-        "confirmDescription": "Esto elimina la entrada de configuración propia de la ruta. Cada valor que sobrescribe vuelve a heredarse y las anulaciones se pierden.",
+      "delete": {
+        "action": "Eliminar ruta",
+        "confirmTitle": "¿Eliminar «{name}»?",
+        "confirmDescription": "Esto elimina la entrada de configuración propia de la ruta, y cada valor que sobrescribe se pierde. Si una entrada comodín cubre el nombre, la ruta vuelve a heredar de ella; si no, MediaMTX deja de servir la ruta.",
+        "checking": "Comprobando qué hay conectado…",
+        "unreadable": "MediaMTX no ha dicho qué hay conectado a esta ruta, así que esto podría cortar una transmisión en directo.",
+        "activeTitle": "Eliminar esto corta lo que hay conectado ahora mismo",
+        "publisher": "Publicador · {type}",
+        "readers": "{count, plural, one {# lector} other {# lectores}} · {types}",
         "cancel": "Cancelar",
-        "confirm": "Revertir",
+        "confirm": "Eliminar ruta",
         "toasts": {
-          "success": "Se volvió a los ajustes heredados",
-          "errorTitle": "No se pudo volver a los ajustes heredados",
+          "success": "Se eliminó «{name}»",
+          "errorTitle": "No se pudo eliminar «{name}»",
           "errorDescription": "La entrada de configuración de la ruta sigue ahí. Inténtalo de nuevo."
         }
       }

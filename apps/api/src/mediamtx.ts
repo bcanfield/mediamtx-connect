@@ -2,9 +2,11 @@ import type { AppConfig, GlobalConfig, PathConfig, PathDefaults } from '@connect
 
 // Minimal hand-rolled client for the handful of MediaMTX endpoints this app
 // uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
-export interface MediaMtxPathReader {
-  type?: string
-  id?: string
+// MediaMTX describes the publisher and every reader the same way: a kind
+// (`rtspSession`, `hlsMuxer`, `webRTCSession`) and an opaque id.
+export interface MediaMtxPathConnection {
+  type: string
+  id: string
 }
 
 export interface MediaMtxPath {
@@ -13,7 +15,9 @@ export interface MediaMtxPath {
   ready?: boolean
   readyTime?: string | null
   tracks?: string[]
-  readers?: MediaMtxPathReader[]
+  // Whatever is publishing to the path. Null while nothing is.
+  source?: MediaMtxPathConnection | null
+  readers?: MediaMtxPathConnection[]
   bytesReceived?: number
   bytesSent?: number
 }

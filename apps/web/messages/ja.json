@@ -280,15 +280,20 @@
         "lead": "MediaMTX にはこの名前で実行中のパスがなく、パス自身の設定エントリもありません。ストリームが単に停止しているだけであれば、その設定は継承されています — ただし継承元は、ストリームの実行中しか MediaMTX から確認できません。",
         "openPathDefaults": "パス既定値を開く"
       },
-      "revert": {
-        "action": "継承に戻す",
-        "confirmTitle": "{name} を継承した設定に戻しますか？",
-        "confirmDescription": "パス自身の設定エントリを削除します。上書きしていた値はすべて継承に戻り、上書き内容は失われます。",
+      "delete": {
+        "action": "パスを削除",
+        "confirmTitle": "「{name}」を削除しますか？",
+        "confirmDescription": "パス自身の設定エントリを削除します。上書きしていた値はすべて失われます。ワイルドカードのエントリがこの名前を含む場合、パスはそこからの継承に戻ります。そうでない場合、MediaMTX はこのパスの配信を停止します。",
+        "checking": "接続中のものを確認しています…",
+        "unreadable": "このパスに何が接続されているか MediaMTX から得られなかったため、ライブ配信を切断してしまう可能性があります。",
+        "activeTitle": "削除すると、現在接続中のものが切断されます",
+        "publisher": "パブリッシャー · {type}",
+        "readers": "{count, plural, other {視聴者 # 人}} · {types}",
         "cancel": "キャンセル",
-        "confirm": "戻す",
+        "confirm": "パスを削除",
         "toasts": {
-          "success": "継承した設定に戻しました",
-          "errorTitle": "継承した設定に戻せませんでした",
+          "success": "「{name}」を削除しました",
+          "errorTitle": "「{name}」を削除できませんでした",
           "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
         }
       }

@@ -280,15 +280,20 @@
         "lead": "MediaMTX nemá běžící cestu s tímto názvem ani vlastní konfigurační záznam. Pokud je stream jen zastavený, jeho nastavení se dědí — a MediaMTX může říct odkud jen tehdy, když stream běží.",
         "openPathDefaults": "Otevřít výchozí hodnoty cest"
       },
-      "revert": {
-        "action": "Vrátit na dědění",
-        "confirmTitle": "Vrátit {name} na zděděná nastavení?",
-        "confirmDescription": "Smaže vlastní konfigurační záznam cesty. Každá přepsaná hodnota se vrátí k dědění a přepisy budou ztraceny.",
+      "delete": {
+        "action": "Smazat cestu",
+        "confirmTitle": "Smazat „{name}“?",
+        "confirmDescription": "Smaže vlastní konfigurační záznam cesty a každá hodnota, kterou přepisuje, bude ztracena. Pokud tento název pokrývá zástupný záznam, cesta se vrátí k dědění z něj; jinak ji MediaMTX přestane obsluhovat.",
+        "checking": "Zjišťuje se, co je připojeno…",
+        "unreadable": "MediaMTX neuvedl, co je k této cestě připojeno, takže tím může být přerušen živý stream.",
+        "activeTitle": "Smazáním přerušíte to, co je právě připojeno",
+        "publisher": "Vysílač · {type}",
+        "readers": "{count, plural, one {# čtenář} few {# čtenáři} many {# čtenáře} other {# čtenářů}} · {types}",
         "cancel": "Zrušit",
-        "confirm": "Vrátit",
+        "confirm": "Smazat cestu",
         "toasts": {
-          "success": "Vráceno na zděděná nastavení",
-          "errorTitle": "Nepodařilo se vrátit zděděná nastavení",
+          "success": "Smazáno „{name}“",
+          "errorTitle": "Nepodařilo se smazat „{name}“",
           "errorDescription": "Konfigurační záznam cesty tam pořád je. Zkuste to znovu."
         }
       }

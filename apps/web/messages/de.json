@@ -280,15 +280,20 @@
         "lead": "MediaMTX hat keinen laufenden Pfad mit diesem Namen und keinen eigenen Konfigurationseintrag dafür. Wenn der Stream einfach nur gestoppt ist, werden seine Einstellungen vererbt — und woher, kann MediaMTX uns nur sagen, solange der Stream läuft.",
         "openPathDefaults": "Pfad-Standardwerte öffnen"
       },
-      "revert": {
-        "action": "Auf Vererbung zurücksetzen",
-        "confirmTitle": "{name} auf geerbte Einstellungen zurücksetzen?",
-        "confirmDescription": "Damit wird der eigene Konfigurationseintrag des Pfads gelöscht. Jeder überschriebene Wert wird wieder geerbt, die Überschreibungen gehen verloren.",
+      "delete": {
+        "action": "Pfad löschen",
+        "confirmTitle": "„{name}“ löschen?",
+        "confirmDescription": "Damit wird der eigene Konfigurationseintrag des Pfads gelöscht, und jeder Wert, den er überschreibt, geht verloren. Deckt ein Platzhalter-Eintrag den Namen ab, erbt der Pfad wieder von diesem; andernfalls stellt MediaMTX den Pfad nicht mehr bereit.",
+        "checking": "Wird geprüft, was verbunden ist…",
+        "unreadable": "MediaMTX hat nicht gemeldet, was mit diesem Pfad verbunden ist — das kann also einen laufenden Stream abbrechen.",
+        "activeTitle": "Das Löschen trennt, was gerade verbunden ist",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, one {# Reader} other {# Reader}} · {types}",
         "cancel": "Abbrechen",
-        "confirm": "Zurücksetzen",
+        "confirm": "Pfad löschen",
         "toasts": {
-          "success": "Auf geerbte Einstellungen zurückgesetzt",
-          "errorTitle": "Zurücksetzen auf geerbte Einstellungen fehlgeschlagen",
+          "success": "„{name}“ gelöscht",
+          "errorTitle": "„{name}“ konnte nicht gelöscht werden",
           "errorDescription": "Der Konfigurationseintrag des Pfads ist noch da. Versuch es erneut."
         }
       }

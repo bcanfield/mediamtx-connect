@@ -280,15 +280,20 @@
         "lead": "MediaMTX:llä ei ole tämännimistä käynnissä olevaa polkua eikä omaa asetusmerkintää. Jos striimi on vain pysäytetty, sen asetukset periytyvät — ja MediaMTX voi kertoa mistä vasta, kun striimi on käynnissä.",
         "openPathDefaults": "Avaa polkujen oletusarvot"
       },
-      "revert": {
-        "action": "Palauta perittyihin",
-        "confirmTitle": "Palautetaanko {name} perittyihin asetuksiin?",
-        "confirmDescription": "Tämä poistaa polun oman asetusmerkinnän. Jokainen sen ohittama arvo periytyy taas, ja ohitukset menetetään.",
+      "delete": {
+        "action": "Poista polku",
+        "confirmTitle": "Poistetaanko ”{name}”?",
+        "confirmDescription": "Tämä poistaa polun oman asetusmerkinnän, ja jokainen sen ohittama arvo menetetään. Jos jokerimerkkiä käyttävä merkintä kattaa nimen, polku palaa perimään siltä; muuten MediaMTX lakkaa tarjoamasta polkua.",
+        "checking": "Tarkistetaan, mitä on yhdistettynä…",
+        "unreadable": "MediaMTX ei kertonut, mitä tähän polkuun on yhdistettynä, joten tämä voi katkaista käynnissä olevan striimin.",
+        "activeTitle": "Poistaminen katkaisee sen, mikä on juuri nyt yhdistettynä",
+        "publisher": "Julkaisija · {type}",
+        "readers": "{count, plural, one {# lukija} other {# lukijaa}} · {types}",
         "cancel": "Peruuta",
-        "confirm": "Palauta",
+        "confirm": "Poista polku",
         "toasts": {
-          "success": "Palautettiin perittyihin asetuksiin",
-          "errorTitle": "Perittyihin asetuksiin ei voitu palata",
+          "success": "Poistettiin ”{name}”",
+          "errorTitle": "Kohteen ”{name}” poistaminen epäonnistui",
           "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
         }
       }

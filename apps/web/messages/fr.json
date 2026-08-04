@@ -280,15 +280,20 @@
         "lead": "MediaMTX n'a aucun chemin en cours d'exécution portant ce nom, ni d'entrée de configuration propre. Si le flux est simplement arrêté, ses paramètres sont hérités — et MediaMTX ne peut nous dire d'où que tant que le flux est en cours d'exécution.",
         "openPathDefaults": "Ouvrir les valeurs par défaut des chemins"
       },
-      "revert": {
-        "action": "Revenir à l'héritage",
-        "confirmTitle": "Revenir {name} aux paramètres hérités ?",
-        "confirmDescription": "Cela supprime l'entrée de configuration propre au chemin. Chaque valeur qu'elle remplace redevient héritée et les surcharges sont perdues.",
+      "delete": {
+        "action": "Supprimer le chemin",
+        "confirmTitle": "Supprimer « {name} » ?",
+        "confirmDescription": "Cela supprime l'entrée de configuration propre au chemin, et chaque valeur qu'elle remplace est perdue. Si une entrée générique couvre ce nom, le chemin en hérite de nouveau ; sinon MediaMTX cesse de servir le chemin.",
+        "checking": "Vérification de ce qui est connecté…",
+        "unreadable": "MediaMTX n'a pas indiqué ce qui est connecté à ce chemin, cela risque donc d'interrompre un flux en direct.",
+        "activeTitle": "Supprimer cela interrompt ce qui est connecté en ce moment",
+        "publisher": "Émetteur · {type}",
+        "readers": "{count, plural, one {# lecteur} other {# lecteurs}} · {types}",
         "cancel": "Annuler",
-        "confirm": "Revenir",
+        "confirm": "Supprimer le chemin",
         "toasts": {
-          "success": "Retour aux paramètres hérités",
-          "errorTitle": "Impossible de revenir aux paramètres hérités",
+          "success": "« {name} » supprimé",
+          "errorTitle": "Impossible de supprimer « {name} »",
           "errorDescription": "L'entrée de configuration du chemin est toujours là. Réessayez."
         }
       }
