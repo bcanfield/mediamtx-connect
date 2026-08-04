@@ -280,15 +280,20 @@
         "lead": "MediaMTX har ingen körande sökväg med det här namnet och ingen egen konfigurationspost. Om strömmen bara är stoppad ärvs dess inställningar — och MediaMTX kan bara berätta varifrån medan strömmen körs.",
         "openPathDefaults": "Öppna standardvärden för sökvägar"
       },
-      "revert": {
-        "action": "Återgå till ärvda",
-        "confirmTitle": "Återgå {name} till ärvda inställningar?",
-        "confirmDescription": "Detta tar bort sökvägens egen konfigurationspost. Varje värde den åsidosätter ärvs igen och åsidosättningarna går förlorade.",
+      "delete": {
+        "action": "Ta bort sökväg",
+        "confirmTitle": "Ta bort ”{name}”?",
+        "confirmDescription": "Detta tar bort sökvägens egen konfigurationspost, och varje värde den åsidosätter går förlorat. Om en post med jokertecken täcker namnet återgår sökvägen till att ärva från den, annars slutar MediaMTX att betjäna sökvägen.",
+        "checking": "Kontrollerar vad som är anslutet…",
+        "unreadable": "MediaMTX berättade inte vad som är anslutet till den här sökvägen, så det här kan bryta en pågående ström.",
+        "activeTitle": "Att ta bort den bryter det som är anslutet just nu",
+        "publisher": "Utgivare · {type}",
+        "readers": "{count, plural, one {# läsare} other {# läsare}} · {types}",
         "cancel": "Avbryt",
-        "confirm": "Återgå",
+        "confirm": "Ta bort sökväg",
         "toasts": {
-          "success": "Återgick till ärvda inställningar",
-          "errorTitle": "Kunde inte återgå till ärvda inställningar",
+          "success": "Tog bort ”{name}”",
+          "errorTitle": "Kunde inte ta bort ”{name}”",
           "errorDescription": "Sökvägens konfigurationspost finns kvar. Försök igen."
         }
       }

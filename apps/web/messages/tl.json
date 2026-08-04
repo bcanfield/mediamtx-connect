@@ -280,15 +280,20 @@
         "lead": "Walang tumatakbong path ang MediaMTX na ganito ang pangalan, at wala rin itong sariling config entry. Kung nakahinto lang ang stream, minamana ang mga setting nito — at masasabi lang ng MediaMTX kung saan galing habang tumatakbo ang stream.",
         "openPathDefaults": "Buksan ang mga default ng path"
       },
-      "revert": {
-        "action": "Ibalik sa minana",
-        "confirmTitle": "Ibalik ang {name} sa minanang mga setting?",
-        "confirmDescription": "Buburahin nito ang sariling config entry ng path. Bawat halagang ino-override nito ay babalik sa pagmamana, at mawawala ang mga override.",
+      "delete": {
+        "action": "Burahin ang path",
+        "confirmTitle": "Burahin ang “{name}”?",
+        "confirmDescription": "Buburahin nito ang sariling config entry ng path, at mawawala ang bawat halagang ino-override nito. Kung may wildcard entry na sumasaklaw sa pangalan, babalik ang path sa pagmamana mula rito; kung wala, hihinto ang MediaMTX sa paghahain ng path.",
+        "checking": "Tinitingnan kung ano ang nakakonekta…",
+        "unreadable": "Hindi sinabi ng MediaMTX kung ano ang nakakonekta sa path na ito, kaya maaari nitong maputol ang isang live na stream.",
+        "activeTitle": "Puputulin ng pagbura nito ang kasalukuyang nakakonekta",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, one {# reader} other {# na reader}} · {types}",
         "cancel": "Kanselahin",
-        "confirm": "Ibalik",
+        "confirm": "Burahin ang path",
         "toasts": {
-          "success": "Naibalik sa minanang mga setting",
-          "errorTitle": "Hindi maibalik sa minanang mga setting",
+          "success": "Nabura ang “{name}”",
+          "errorTitle": "Hindi mabura ang “{name}”",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
         }
       }

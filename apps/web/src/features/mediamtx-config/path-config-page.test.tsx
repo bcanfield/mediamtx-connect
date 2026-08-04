@@ -5,9 +5,10 @@ import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
 import { PathConfigPage } from './path-config-page'
 
-// Materializing is one-way from the app's side unless the page can delete the
-// entry again, so what this suite covers is the way back: the affordance shows
-// up only for a path that has an entry of its own, and only the confirm deletes.
+// Deleting a path is one call MediaMTX will run against a live stream without
+// complaint, so what this suite covers is the guard around it: the affordance
+// shows up only for a path that has an entry of its own, only the confirm
+// deletes, and the confirm names whatever the delete would cut off.
 const deletePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['deletePathConfig']) => void>()
 
 // What the page reads: `resolved` carries the entry the values come from — a
@@ -18,10 +19,14 @@ let result: unknown = { status: 'resolved', confName: 'all_others', conf: { reco
 // What every value on the page is measured against.
 let defaults: unknown = null
 
+// What is attached to the runtime path when the confirm asks. Idle by default.
+let connections: unknown = { status: 'read', publisher: null, readers: [] }
+
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
   pathConfig: () => result,
   pathDefaults: () => defaults,
+  pathConnections: () => connections,
   deletePathConfig,
 }
 
@@ -31,6 +36,7 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 afterEach(() => {
   server.resetHandlers()
   defaults = null
+  connections = { status: 'read', publisher: null, readers: [] }
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
@@ -42,43 +48,89 @@ async function renderPage(confName: string) {
   return view
 }
 
-describe('revert to inherited', () => {
-  it('offers nothing to revert while the path tracks a wildcard entry', async () => {
+const ACTIVE_WARNING = 'Deleting this cuts off what is connected right now'
+
+// The confirm button and the trigger share their label, so every click on the
+// confirm has to be scoped to the dialog.
+function confirmButton() {
+  return within(screen.getByRole('dialog')).getByRole('button', { name: 'Delete path' })
+}
+
+describe('path deletion', () => {
+  it('offers nothing to delete while the path tracks a wildcard entry', async () => {
     await renderPage('all_others')
 
     expect(await screen.findByText(/currently inherited from all_others/)).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Revert to inherited' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Delete path' })).not.toBeInTheDocument()
   })
 
-  it('offers the revert once the path has an entry of its own', async () => {
+  it('offers the delete once the path has an entry of its own', async () => {
     await renderPage('stream1')
 
-    expect(await screen.findByRole('button', { name: 'Revert to inherited' })).toBeInTheDocument()
+    expect(await screen.findByRole('button', { name: 'Delete path' })).toBeInTheDocument()
   })
 
-  it('deletes the entry only after the confirm', async () => {
+  it('deletes the entry only after the confirm, then lands on the catalog', async () => {
     const view = await renderPage('stream1')
 
-    await view.user.click(await screen.findByRole('button', { name: 'Revert to inherited' }))
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(deletePathConfig).not.toHaveBeenCalled()
 
-    await view.user.click(screen.getByRole('button', { name: 'Revert' }))
+    // The confirm stays disabled until the connection check lands — clicking
+    // through before it would skip the guard entirely.
+    await vi.waitFor(() => expect(confirmButton()).toBeEnabled())
+    await view.user.click(confirmButton())
 
-    expect(await screen.findByText('Reverted to inherited settings')).toBeInTheDocument()
+    expect(await screen.findByText('Deleted “stream1”')).toBeInTheDocument()
     expect(deletePathConfig).toHaveBeenCalledWith(
       { name: 'stream1' } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'],
     )
+    await vi.waitFor(() =>
+      expect(view.router.state.location.pathname).toBe('/config/mediamtx/paths'))
   })
 
-  it('leaves the entry alone when the confirm is cancelled', async () => {
+  it('leaves the path alone when the confirm is cancelled', async () => {
     const view = await renderPage('stream1')
 
-    await view.user.click(await screen.findByRole('button', { name: 'Revert to inherited' }))
-    await view.user.click(screen.getByRole('button', { name: 'Cancel' }))
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+    await view.user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' }))
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(deletePathConfig).not.toHaveBeenCalled()
+    expect(view.router.state.location.pathname).toBe('/')
+  })
+
+  it('names the publisher and the readers a delete would cut off', async () => {
+    connections = { status: 'read', publisher: 'rtspSource', readers: ['webRTCSession', 'hlsMuxer'] }
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+
+    expect(await screen.findByText(ACTIVE_WARNING)).toBeInTheDocument()
+    expect(screen.getByText('Publisher · rtspSource')).toBeInTheDocument()
+    expect(screen.getByText('2 readers · webRTCSession, hlsMuxer')).toBeInTheDocument()
+  })
+
+  it('warns rather than claiming nothing is connected when MediaMTX won\'t say', async () => {
+    connections = { status: 'unreadable' }
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+
+    expect(await screen.findByText(/may cut off a live stream/)).toBeInTheDocument()
+    expect(screen.queryByText(ACTIVE_WARNING)).not.toBeInTheDocument()
+  })
+
+  it('says nothing about connections for an idle path', async () => {
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+    await vi.waitFor(() =>
+      expect(screen.queryByText('Checking what is connected…')).not.toBeInTheDocument())
+
+    expect(screen.queryByText(ACTIVE_WARNING)).not.toBeInTheDocument()
+    expect(screen.queryByText(/may cut off a live stream/)).not.toBeInTheDocument()
   })
 })
 
@@ -155,8 +207,8 @@ describe('a name with nothing to resolve', () => {
       .toHaveAttribute('href', '/config/mediamtx/path-defaults')
     expect(screen.queryByText('Invalid Config')).not.toBeInTheDocument()
     // Nothing is shown, so neither the "settings for this stream" promise nor
-    // an offer to undo overrides would be true.
+    // an offer to delete an entry there is no sign of would be true.
     expect(screen.queryByText(/Settings for this stream/)).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Revert to inherited' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Delete path' })).not.toBeInTheDocument()
   })
 })

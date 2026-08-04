@@ -316,6 +316,25 @@ export const router = os.router({
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to delete path config' })
         }
       }),
+
+      // Read straight before a delete, so the confirmation can name what the
+      // delete would cut off. A name MediaMTX isn't running 404s to null, which
+      // is a path with nothing attached — not a read that failed.
+      getPathConnections: os.config.mediamtx.getPathConnections.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        try {
+          const runtime = await mediaMtxApi(config).pathsGet(input.name)
+          return {
+            status: 'read' as const,
+            publisher: runtime?.source?.type ?? null,
+            readers: runtime?.readers?.map(reader => reader.type) ?? [],
+          }
+        }
+        catch (error) {
+          logger.error({ err: error }, `Failed to read connections for path ${input.name}`)
+          return { status: 'unreadable' as const }
+        }
+      }),
     },
   },
 })

@@ -280,15 +280,20 @@
         "lead": "MediaMTX heeft geen draaiend pad met deze naam en er is ook geen eigen configuratie-invoer. Als de stream gewoon gestopt is, worden de instellingen overgenomen — en MediaMTX kan alleen vertellen waarvandaan zolang de stream draait.",
         "openPathDefaults": "Padstandaarden openen"
       },
-      "revert": {
-        "action": "Terug naar overgenomen",
-        "confirmTitle": "{name} terugzetten naar overgenomen instellingen?",
-        "confirmDescription": "Hiermee wordt de eigen configuratie-invoer van het pad verwijderd. Elke waarde die het overschrijft wordt weer overgenomen en de overschrijvingen gaan verloren.",
+      "delete": {
+        "action": "Pad verwijderen",
+        "confirmTitle": "„{name}” verwijderen?",
+        "confirmDescription": "Hiermee wordt de eigen configuratie-invoer van het pad verwijderd en gaat elke waarde die het overschrijft verloren. Als een wildcard-invoer de naam dekt, neemt het pad zijn instellingen weer daarvan over; anders stopt MediaMTX met het aanbieden van het pad.",
+        "checking": "Controleren wat er verbonden is…",
+        "unreadable": "MediaMTX gaf niet door wat er met dit pad verbonden is, dus dit kan een live stream afbreken.",
+        "activeTitle": "Dit verwijderen verbreekt wat er nu verbonden is",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, one {# lezer} other {# lezers}} · {types}",
         "cancel": "Annuleren",
-        "confirm": "Terugzetten",
+        "confirm": "Pad verwijderen",
         "toasts": {
-          "success": "Teruggezet naar overgenomen instellingen",
-          "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
+          "success": "„{name}” verwijderd",
+          "errorTitle": "Kan „{name}” niet verwijderen",
           "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
         }
       }

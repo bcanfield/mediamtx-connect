@@ -280,15 +280,20 @@
         "lead": "MediaMTX non ha alcun percorso in esecuzione con questo nome né una voce di configurazione propria. Se lo stream è semplicemente fermo, le sue impostazioni sono ereditate — e MediaMTX può dirci da dove solo mentre lo stream è in esecuzione.",
         "openPathDefaults": "Apri i valori predefiniti dei percorsi"
       },
-      "revert": {
-        "action": "Ripristina l'ereditarietà",
-        "confirmTitle": "Ripristinare {name} alle impostazioni ereditate?",
-        "confirmDescription": "Questo elimina la voce di configurazione propria del percorso. Ogni valore che sovrascrive torna a essere ereditato e le sovrascritture vanno perse.",
+      "delete": {
+        "action": "Elimina percorso",
+        "confirmTitle": "Eliminare «{name}»?",
+        "confirmDescription": "Questo elimina la voce di configurazione propria del percorso, e ogni valore che sovrascrive va perso. Se una voce con caratteri jolly copre il nome, il percorso torna a ereditare da quella; altrimenti MediaMTX smette di servire il percorso.",
+        "checking": "Verifica di cosa è connesso…",
+        "unreadable": "MediaMTX non ha indicato cosa è connesso a questo percorso, quindi l'operazione potrebbe interrompere uno stream dal vivo.",
+        "activeTitle": "Eliminarlo interrompe ciò che è connesso in questo momento",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, one {# lettore} other {# lettori}} · {types}",
         "cancel": "Annulla",
-        "confirm": "Ripristina",
+        "confirm": "Elimina percorso",
         "toasts": {
-          "success": "Impostazioni ereditate ripristinate",
-          "errorTitle": "Impossibile ripristinare le impostazioni ereditate",
+          "success": "«{name}» eliminato",
+          "errorTitle": "Impossibile eliminare «{name}»",
           "errorDescription": "La voce di configurazione del percorso è ancora presente. Riprova."
         }
       }

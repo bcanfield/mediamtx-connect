@@ -280,15 +280,20 @@
         "lead": "MediaMTX tidak punya jalur berjalan dengan nama ini dan tidak ada entri konfigurasi miliknya sendiri. Jika aliran hanya sedang berhenti, pengaturannya diwarisi — dan MediaMTX hanya bisa memberi tahu asalnya selama aliran berjalan.",
         "openPathDefaults": "Buka default jalur"
       },
-      "revert": {
-        "action": "Kembalikan ke warisan",
-        "confirmTitle": "Kembalikan {name} ke pengaturan warisan?",
-        "confirmDescription": "Ini menghapus entri konfigurasi milik jalur itu sendiri. Setiap nilai yang ditimpanya kembali diwarisi, dan penimpaan hilang.",
+      "delete": {
+        "action": "Hapus jalur",
+        "confirmTitle": "Hapus “{name}”?",
+        "confirmDescription": "Ini menghapus entri konfigurasi milik jalur itu sendiri, dan setiap nilai yang ditimpanya akan hilang. Jika ada entri wildcard yang mencakup nama itu, jalur kembali mewarisi darinya; jika tidak, MediaMTX berhenti melayani jalur tersebut.",
+        "checking": "Memeriksa apa yang sedang terhubung…",
+        "unreadable": "MediaMTX tidak memberi tahu apa yang terhubung ke jalur ini, jadi tindakan ini bisa memutus aliran langsung.",
+        "activeTitle": "Menghapus ini memutus apa yang sedang terhubung saat ini",
+        "publisher": "Publisher · {type}",
+        "readers": "{count, plural, other {# pembaca}} · {types}",
         "cancel": "Batal",
-        "confirm": "Kembalikan",
+        "confirm": "Hapus jalur",
         "toasts": {
-          "success": "Dikembalikan ke pengaturan warisan",
-          "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
+          "success": "“{name}” dihapus",
+          "errorTitle": "Tidak bisa menghapus “{name}”",
           "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
         }
       }

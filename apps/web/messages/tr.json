@@ -280,15 +280,20 @@
         "lead": "MediaMTX'te bu adla çalışan bir yol yok ve bu ada ait kendi yapılandırma girdisi de yok. Akış yalnızca durdurulmuşsa ayarları devralınıyordur — ve MediaMTX ayarların nereden devralındığını yalnızca akış çalışırken söyleyebilir.",
         "openPathDefaults": "Yol varsayılanlarını aç"
       },
-      "revert": {
-        "action": "Devralınana geri dön",
-        "confirmTitle": "{name} devralınan ayarlara geri döndürülsün mü?",
-        "confirmDescription": "Bu, yolun kendi yapılandırma girdisini siler. Geçersiz kıldığı her değer yeniden devralınır ve geçersiz kılmalar kaybolur.",
+      "delete": {
+        "action": "Yolu sil",
+        "confirmTitle": "“{name}” silinsin mi?",
+        "confirmDescription": "Bu, yolun kendi yapılandırma girdisini siler ve geçersiz kıldığı her değer kaybolur. Bu adı kapsayan bir joker karakter girdisi varsa yol yeniden ondan devralmaya başlar; yoksa MediaMTX bu yolu sunmayı bırakır.",
+        "checking": "Neyin bağlı olduğu kontrol ediliyor…",
+        "unreadable": "MediaMTX bu yola neyin bağlı olduğunu bildirmedi, bu yüzden bu işlem canlı bir akışı kesebilir.",
+        "activeTitle": "Bunu silmek şu anda bağlı olanların bağlantısını keser",
+        "publisher": "Yayıncı · {type}",
+        "readers": "{count, plural, other {# okuyucu}} · {types}",
         "cancel": "İptal",
-        "confirm": "Geri dön",
+        "confirm": "Yolu sil",
         "toasts": {
-          "success": "Devralınan ayarlara geri dönüldü",
-          "errorTitle": "Devralınan ayarlara geri dönülemedi",
+          "success": "“{name}” silindi",
+          "errorTitle": "“{name}” silinemedi",
           "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
         }
       }

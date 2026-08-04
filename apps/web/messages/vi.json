@@ -280,15 +280,20 @@
         "lead": "MediaMTX không có đường dẫn nào đang chạy với tên này và cũng không có mục cấu hình riêng. Nếu luồng chỉ đơn giản là đã dừng, các cài đặt của nó được kế thừa — và MediaMTX chỉ có thể cho biết kế thừa từ đâu khi luồng đang chạy.",
         "openPathDefaults": "Mở giá trị mặc định của đường dẫn"
       },
-      "revert": {
-        "action": "Trở lại kế thừa",
-        "confirmTitle": "Đưa {name} về các cài đặt kế thừa?",
-        "confirmDescription": "Thao tác này xóa mục cấu hình riêng của đường dẫn. Mọi giá trị nó ghi đè sẽ trở lại kế thừa và các ghi đè sẽ mất.",
+      "delete": {
+        "action": "Xóa đường dẫn",
+        "confirmTitle": "Xóa “{name}”?",
+        "confirmDescription": "Thao tác này xóa mục cấu hình riêng của đường dẫn, và mọi giá trị nó ghi đè sẽ mất. Nếu có một mục ký tự đại diện bao trùm tên này, đường dẫn sẽ quay lại kế thừa từ mục đó; nếu không, MediaMTX sẽ ngừng phục vụ đường dẫn.",
+        "checking": "Đang kiểm tra những gì đang kết nối…",
+        "unreadable": "MediaMTX không cho biết những gì đang kết nối tới đường dẫn này, nên thao tác này có thể cắt đứt một luồng đang phát trực tiếp.",
+        "activeTitle": "Xóa sẽ cắt đứt những gì đang kết nối ngay lúc này",
+        "publisher": "Trình đẩy luồng · {type}",
+        "readers": "{count, plural, other {# trình đọc}} · {types}",
         "cancel": "Hủy",
-        "confirm": "Khôi phục",
+        "confirm": "Xóa đường dẫn",
         "toasts": {
-          "success": "Đã trở lại các cài đặt kế thừa",
-          "errorTitle": "Không thể trở lại các cài đặt kế thừa",
+          "success": "Đã xóa “{name}”",
+          "errorTitle": "Không thể xóa “{name}”",
           "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
         }
       }

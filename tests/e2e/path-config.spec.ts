@@ -138,11 +138,19 @@ test.describe('MediaMTX Path Config Page', () => {
   // Runs on the entry the test above materialized (serial mode), and is what
   // cleans it up: deleting it through the page is the only way back to pure
   // inheritance, so this spec needs no raw config/paths/delete of its own.
-  test('should revert a materialized entry back to its wildcard', async ({ page, request }) => {
-    await page.getByRole('button', { name: 'Revert to inherited' }).click()
-    await page.getByRole('dialog').getByRole('button', { name: 'Revert', exact: true }).click()
+  // stream1 is published by ffmpeg-test.sh, so this is also the live case: the
+  // confirmation has to name the publisher before it lets the delete through.
+  test('should delete a materialized entry after naming what is connected', async ({ page, request }) => {
+    await page.getByRole('button', { name: 'Delete path' }).click()
 
-    await expect(page.getByText('currently inherited from all_others')).toBeVisible()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog.getByText('Deleting this cuts off what is connected right now')).toBeVisible()
+    await expect(dialog.getByText(/^Publisher · /)).toBeVisible()
+
+    await dialog.getByRole('button', { name: 'Delete path' }).click()
+
+    // The catalog, not the page the entry was deleted from.
+    await expect(page).toHaveURL(/\/config\/mediamtx\/paths$/)
 
     const after = await (await request.get(`${API}/paths/get/${STREAM}`)).json()
     expect(after.confName).toBe('all_others')

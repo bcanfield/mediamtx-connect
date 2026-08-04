@@ -1,5 +1,6 @@
-import type { PathConfigResult } from '@connect/contract'
+import type { PathConfigResult, PathConnections } from '@connect/contract'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
@@ -53,16 +54,14 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
             : t('pathConfig.pageSubHeader')
       }
       actions={
-        // Nothing to revert while the path is still tracking a wildcard entry.
-        effective && !inheritedFrom
-          ? <RevertToInherited name={name} queryKey={options.queryKey} />
-          : null
+        // Nothing to delete while the path is still tracking a wildcard entry.
+        effective && !inheritedFrom ? <DeletePath name={name} /> : null
       }
     >
       {effective && (
         <MediaMTXConfigForm
-          // Reverting swaps every value for the inherited one, and the
-          // form only reads `conf` when it mounts.
+          // Materializing swaps the entry the values come from, and the form
+          // only reads `conf` when it mounts.
           key={effective.confName}
           scope={PATH_CONFIG_SCOPE}
           conf={effective.conf}
@@ -103,24 +102,42 @@ function UnresolvedPathConfig({ name }: { name: string }) {
   )
 }
 
-// Deleting the path's own entry is the only way back to pure inheritance, and
-// it drops every override in one click — hence the confirm.
-function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonly unknown[] }) {
-  const t = useTranslations('Config.pathConfig.revert')
+// Deleting the path's own entry drops every override in one click, and MediaMTX
+// will happily cut off a publisher doing it — hence the confirm, and hence the
+// live read behind it.
+function DeletePath({ name }: { name: string }) {
+  const t = useTranslations('Config.pathConfig.delete')
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const deletePathConfig = useMutation(orpc.config.mediamtx.deletePathConfig.mutationOptions())
   const [open, setOpen] = useState(false)
+  // Read when the dialog opens rather than with the page: what it names has to
+  // be what is connected at the moment the operator is deciding.
+  const connections = useQuery({
+    ...orpc.config.mediamtx.getPathConnections.queryOptions({ input: { name } }),
+    enabled: open,
+    staleTime: 0,
+  })
 
-  const revert = async () => {
+  // Annotated because the union `useQuery` infers doesn't narrow on `status`.
+  const result: PathConnections | undefined = connections.data
+  const read = result?.status === 'read' ? result : null
+  const active = read && (read.publisher !== null || read.readers.length > 0)
+  // Reopening the dialog serves the last answer while it refetches, and a
+  // connection list from a minute ago is exactly what this guard can't show.
+  const checking = connections.isPending || connections.isFetching
+
+  const remove = async () => {
     try {
       await deletePathConfig.mutateAsync({ name })
       setOpen(false)
-      toast.success(t('toasts.success'))
-      // Every value on the page came from the entry that just went away.
-      await queryClient.invalidateQueries({ queryKey })
+      toast.success(t('toasts.success', { name }))
+      // The catalog lists config entries, and one of them just went away.
+      await queryClient.invalidateQueries()
+      await navigate({ to: '/config/mediamtx/paths' })
     }
     catch {
-      toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
+      toast.error(t('toasts.errorTitle', { name }), { description: t('toasts.errorDescription') })
     }
   }
 
@@ -134,6 +151,29 @@ function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonl
           <DialogTitle>{t('confirmTitle', { name })}</DialogTitle>
           <DialogDescription>{t('confirmDescription')}</DialogDescription>
         </DialogHeader>
+        {checking && (
+          <p className="text-meta text-muted-foreground">{t('checking')}</p>
+        )}
+        {!checking && result?.status === 'unreadable' && (
+          <p className="rounded-panel border border-warning/30 bg-warning/[0.06] px-4 py-3 text-control">
+            {t('unreadable')}
+          </p>
+        )}
+        {!checking && active && (
+          <div className="flex flex-col gap-1.5 rounded-panel border border-warning/30 bg-warning/[0.06] px-4 py-3">
+            <p className="text-control font-medium">{t('activeTitle')}</p>
+            {read.publisher && (
+              <p className="text-meta text-muted-foreground">
+                {t('publisher', { type: read.publisher })}
+              </p>
+            )}
+            {read.readers.length > 0 && (
+              <p className="text-meta text-muted-foreground">
+                {t('readers', { count: read.readers.length, types: read.readers.join(', ') })}
+              </p>
+            )}
+          </div>
+        )}
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" variant="ghost">{t('cancel')}</Button>
@@ -141,8 +181,9 @@ function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonl
           <Button
             type="button"
             variant="destructive"
-            onClick={revert}
-            disabled={deletePathConfig.isPending}
+            onClick={remove}
+            // Confirming before the read lands would skip the whole guard.
+            disabled={deletePathConfig.isPending || checking}
           >
             {t('confirm')}
           </Button>

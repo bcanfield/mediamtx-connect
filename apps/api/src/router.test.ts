@@ -407,3 +407,64 @@ describe('config.mediamtx.getPathConfig', () => {
     expect(result).toBeNull()
   })
 })
+
+// What the delete confirmation names before it cuts anything off. Every answer
+// here has to be distinguishable from "nothing is connected", which is the one
+// an operator clicks straight through.
+describe('config.mediamtx.getPathConnections', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('names the publisher and every reader attached to the path', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      source: { type: 'rtspSource', id: 'a' },
+      readers: [{ type: 'webRTCSession', id: 'b' }, { type: 'hlsMuxer', id: 'c' }],
+    })
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toEqual({
+      status: 'read',
+      publisher: 'rtspSource',
+      readers: ['webRTCSession', 'hlsMuxer'],
+    })
+  })
+
+  // Two readers of a kind are two connections to cut off, not one.
+  it('keeps a reader per connection rather than per kind', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      source: null,
+      readers: [{ type: 'hlsMuxer', id: 'b' }, { type: 'hlsMuxer', id: 'c' }],
+    })
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toEqual({ status: 'read', publisher: null, readers: ['hlsMuxer', 'hlsMuxer'] })
+  })
+
+  // 404 — a config entry with no runtime path behind it. Nothing is attached,
+  // which is a real answer and not a failed read.
+  it('reads a name MediaMTX runs no path for as nothing connected', async () => {
+    api.pathsGet.mockResolvedValue(null)
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'idle' })
+
+    expect(result).toEqual({ status: 'read', publisher: null, readers: [] })
+  })
+
+  it('reports unreadable when MediaMTX is unreachable', async () => {
+    api.pathsGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toEqual({ status: 'unreadable' })
+  })
+})
