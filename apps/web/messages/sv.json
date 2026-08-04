@@ -369,6 +369,12 @@
       "enabled": "Aktiverad",
       "off": "Av",
       "hiddenWhileOff": "{count, plural, one {# alternativ dolt när avstängt} other {# alternativ dolda när avstängt}}",
+      "inheritance": {
+        "inherited": "Ärvd",
+        "overridden": "Åsidosatt",
+        "inheritedTitle": "Det här värdet kommer från sökvägsstandarderna.",
+        "overriddenTitle": "Den här sökvägen åsidosätter värdet från sökvägsstandarderna."
+      },
       "rail": {
         "onThisPage": "På den här sidan",
         "aria": "Konfigurationsavsnitt"

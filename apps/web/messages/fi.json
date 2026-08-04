@@ -369,6 +369,12 @@
       "enabled": "Käytössä",
       "off": "Pois",
       "hiddenWhileOff": "{count, plural, one {# valinta piilotettu, kun pois päältä} other {# valintaa piilotettu, kun pois päältä}}",
+      "inheritance": {
+        "inherited": "Peritty",
+        "overridden": "Ohitettu",
+        "inheritedTitle": "Tämä arvo tulee polkujen oletusarvoista.",
+        "overriddenTitle": "Tämä polku ohittaa polkujen oletusarvon."
+      },
       "rail": {
         "onThisPage": "Tällä sivulla",
         "aria": "Asetusosiot"

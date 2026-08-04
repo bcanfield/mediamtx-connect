@@ -369,6 +369,12 @@
       "enabled": "Abilitato",
       "off": "Disattivato",
       "hiddenWhileOff": "{count, plural, one {# opzione nascosta finché disattivato} other {# opzioni nascoste finché disattivato}}",
+      "inheritance": {
+        "inherited": "Ereditato",
+        "overridden": "Sovrascritto",
+        "inheritedTitle": "Questo valore proviene dai valori predefiniti dei percorsi.",
+        "overriddenTitle": "Questo percorso sovrascrive il valore dei valori predefiniti dei percorsi."
+      },
       "rail": {
         "onThisPage": "In questa pagina",
         "aria": "Sezioni di configurazione"

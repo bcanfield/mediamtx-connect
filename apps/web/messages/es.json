@@ -369,6 +369,12 @@
       "enabled": "Habilitado",
       "off": "Desactivado",
       "hiddenWhileOff": "{count, plural, one {# opción oculta mientras está desactivado} other {# opciones ocultas mientras está desactivado}}",
+      "inheritance": {
+        "inherited": "Heredado",
+        "overridden": "Anulado",
+        "inheritedTitle": "Este valor procede de los valores predeterminados de rutas.",
+        "overriddenTitle": "Esta ruta anula el valor de los valores predeterminados de rutas."
+      },
       "rail": {
         "onThisPage": "En esta página",
         "aria": "Secciones de configuración"

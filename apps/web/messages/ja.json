@@ -369,6 +369,12 @@
       "enabled": "有効",
       "off": "オフ",
       "hiddenWhileOff": "{count, plural, other {オフの間 # 個のオプションが非表示}}",
+      "inheritance": {
+        "inherited": "継承",
+        "overridden": "上書き",
+        "inheritedTitle": "この値はパス既定値から来ています。",
+        "overriddenTitle": "このパスはパス既定値を上書きしています。"
+      },
       "rail": {
         "onThisPage": "このページ内",
         "aria": "設定セクション"

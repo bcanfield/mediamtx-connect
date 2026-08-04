@@ -1,5 +1,5 @@
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -15,9 +15,13 @@ const deletePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['deletePa
 // `unresolved` is a name MediaMTX neither runs nor holds an entry for.
 let result: unknown = { status: 'resolved', confName: 'all_others', conf: { record: true } }
 
+// What every value on the page is measured against.
+let defaults: unknown = null
+
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
   pathConfig: () => result,
+  pathDefaults: () => defaults,
   deletePathConfig,
 }
 
@@ -26,6 +30,7 @@ const server = createRpcServer(stub)
 beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 afterEach(() => {
   server.resetHandlers()
+  defaults = null
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
@@ -74,6 +79,69 @@ describe('revert to inherited', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(deletePathConfig).not.toHaveBeenCalled()
+  })
+})
+
+// Every key MediaMTX serves for a path comes back filled in, so the only thing
+// that separates a value the path set from one it still tracks is whether it
+// matches the default. That comparison is what the page renders.
+describe('inherited vs overridden', () => {
+  // Scoped to the row rather than to the key's text: an edited key also shows
+  // up as a save-bar chip, and that would match twice.
+  function markerFor(key: string) {
+    return within(screen.getByTestId(`field-${key}`)).getByText(/Inherited|Overridden/).textContent
+  }
+
+  async function renderAgainstDefaults(conf: Record<string, unknown>, pathDefaults: unknown) {
+    defaults = pathDefaults
+    result = { status: 'resolved', confName: 'stream1', conf }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  it('separates a value the path overrides from one it still tracks', async () => {
+    await renderAgainstDefaults(
+      { record: true, recordPath: './recordings/%path/%Y', recordFormat: 'mpegts' },
+      { record: true, recordPath: './recordings/%path/%Y', recordFormat: 'fmp4' },
+    )
+
+    expect(await screen.findByLabelText('recordFormat')).toBeInTheDocument()
+    expect(markerFor('recordPath')).toBe('Inherited')
+    expect(markerFor('recordFormat')).toBe('Overridden')
+  })
+
+  // `record` is the recording section's header switch rather than a row, so it
+  // is the one path key that would otherwise carry no marker.
+  it('marks the section switch too', async () => {
+    await renderAgainstDefaults({ record: true }, { record: false })
+
+    const header = (await screen.findByRole('switch', { name: 'Recording' })).parentElement!
+    expect(within(header).getByText(/Inherited|Overridden/).textContent).toBe('Overridden')
+  })
+
+  it('flips a field to overridden while it is being edited', async () => {
+    const view = await renderAgainstDefaults(
+      { record: true, recordPath: './recordings/%path/%Y' },
+      { record: true, recordPath: './recordings/%path/%Y' },
+    )
+
+    expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
+    expect(markerFor('recordPath')).toBe('Inherited')
+
+    await view.user.type(screen.getByLabelText('recordPath'), '-alt')
+
+    expect(markerFor('recordPath')).toBe('Overridden')
+  })
+
+  // Nothing to compare against is not the same as nothing overridden, so an
+  // unreadable path-defaults scope marks no field either way.
+  it('marks nothing when path defaults can\'t be read', async () => {
+    await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
+
+    expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
+    expect(screen.queryByText('Inherited')).not.toBeInTheDocument()
+    expect(screen.queryByText('Overridden')).not.toBeInTheDocument()
   })
 })
 
