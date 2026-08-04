@@ -280,6 +280,26 @@
         "lead": "MediaMTX nie ma działającej ścieżki o tej nazwie ani własnego wpisu konfiguracji. Jeśli strumień jest po prostu zatrzymany, jego ustawienia są dziedziczone — a MediaMTX może powiedzieć, skąd, tylko wtedy, gdy strumień działa.",
         "openPathDefaults": "Otwórz domyślne ustawienia ścieżek"
       },
+      "delete": {
+        "action": "Usuń ścieżkę",
+        "confirmTitle": "Usunąć {name}?",
+        "confirmDescription": "To usuwa wpis konfiguracji ścieżki z MediaMTX. Jeśli nazwy nie obejmuje już wpis z symbolem wieloznacznym, ścieżka znika z katalogu i przestaje być udostępniana.",
+        "checking": "Sprawdzanie, co jest podłączone…",
+        "checkFailed": "Nie udało się połączyć z MediaMTX, aby sprawdzić, co jest podłączone.",
+        "active": {
+          "title": "Ta ścieżka jest teraz używana",
+          "publisher": "Trwa publikowanie przez {type}",
+          "readers": "{count, plural, one {# odbiorca podłączony przez {types}} few {# odbiorcy podłączeni przez {types}} many {# odbiorców podłączonych przez {types}} other {# odbiorcy podłączonego przez {types}}}",
+          "lead": "Usunięcie ścieżki natychmiast ich rozłączy."
+        },
+        "cancel": "Anuluj",
+        "confirm": "Usuń",
+        "toasts": {
+          "success": "Usunięto {name}",
+          "errorTitle": "Nie udało się usunąć ścieżki",
+          "errorDescription": "Ścieżka nadal istnieje. Spróbuj ponownie."
+        }
+      },
       "revert": {
         "action": "Przywróć dziedziczenie",
         "confirmTitle": "Przywrócić dla {name} dziedziczone ustawienia?",

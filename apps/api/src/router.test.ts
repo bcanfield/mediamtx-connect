@@ -407,3 +407,46 @@ describe('config.mediamtx.getPathConfig', () => {
     expect(result).toBeNull()
   })
 })
+
+describe('config.mediamtx.getPathConnections', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('names the publisher and every reader by session type', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      source: { type: 'rtspSession', id: 'a' },
+      readers: [{ type: 'webRTCSession', id: 'b' }, { type: 'hlsMuxer', id: 'c' }],
+    })
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toEqual({ publisher: 'rtspSession', readers: ['webRTCSession', 'hlsMuxer'] })
+  })
+
+  // A configured path that nothing is publishing to has no runtime path at all,
+  // and that is an idle path rather than an unanswerable question.
+  it('reports an idle path for a name MediaMTX is not running', async () => {
+    api.pathsGet.mockResolvedValue(null)
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stopped' })
+
+    expect(result).toEqual({ publisher: null, readers: [] })
+  })
+
+  // Distinct from idle: a warning we couldn't build is not a path with nothing
+  // on it, and the confirm says so rather than implying the delete is safe.
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.pathsGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toBeNull()
+  })
+})

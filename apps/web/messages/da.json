@@ -280,6 +280,26 @@
         "lead": "MediaMTX har ingen kørende sti med dette navn og ingen konfigurationspost af sin egen. Hvis streamet blot er stoppet, arves dets indstillinger — og MediaMTX kan kun fortælle hvorfra, mens streamet kører.",
         "openPathDefaults": "Åbn standardværdier for stier"
       },
+      "delete": {
+        "action": "Slet sti",
+        "confirmTitle": "Slet {name}?",
+        "confirmDescription": "Dette sletter stiens konfigurationspost i MediaMTX. Medmindre en jokerpost stadig dækker navnet, forsvinder stien fra kataloget og leveres ikke længere.",
+        "checking": "Undersøger hvad der er forbundet…",
+        "checkFailed": "Kunne ikke nå MediaMTX for at undersøge hvad der er forbundet.",
+        "active": {
+          "title": "Denne sti er i brug lige nu",
+          "publisher": "Publicerer via {type}",
+          "readers": "{count, plural, one {# læser forbundet via {types}} other {# læsere forbundet via {types}}}",
+          "lead": "Sletning af stien afbryder dem med det samme."
+        },
+        "cancel": "Annuller",
+        "confirm": "Slet",
+        "toasts": {
+          "success": "{name} slettet",
+          "errorTitle": "Kunne ikke slette stien",
+          "errorDescription": "Stien er der stadig. Prøv igen."
+        }
+      },
       "revert": {
         "action": "Vend tilbage til nedarvet",
         "confirmTitle": "Vend {name} tilbage til nedarvede indstillinger?",

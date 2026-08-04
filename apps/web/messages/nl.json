@@ -280,6 +280,26 @@
         "lead": "MediaMTX heeft geen draaiend pad met deze naam en er is ook geen eigen configuratie-invoer. Als de stream gewoon gestopt is, worden de instellingen overgenomen — en MediaMTX kan alleen vertellen waarvandaan zolang de stream draait.",
         "openPathDefaults": "Padstandaarden openen"
       },
+      "delete": {
+        "action": "Pad verwijderen",
+        "confirmTitle": "{name} verwijderen?",
+        "confirmDescription": "Dit verwijdert de configuratie-invoer van het pad uit MediaMTX. Tenzij een jokerinvoer de naam nog dekt, verdwijnt het pad uit de catalogus en wordt het niet meer geserveerd.",
+        "checking": "Controleren wat er verbonden is…",
+        "checkFailed": "MediaMTX was niet bereikbaar om te controleren wat er verbonden is.",
+        "active": {
+          "title": "Dit pad is op dit moment in gebruik",
+          "publisher": "Publiceert nu via {type}",
+          "readers": "{count, plural, one {# lezer verbonden via {types}} other {# lezers verbonden via {types}}}",
+          "lead": "Het pad verwijderen verbreekt hun verbinding onmiddellijk."
+        },
+        "cancel": "Annuleren",
+        "confirm": "Verwijderen",
+        "toasts": {
+          "success": "{name} verwijderd",
+          "errorTitle": "Pad kon niet worden verwijderd",
+          "errorDescription": "Het pad is er nog. Probeer het opnieuw."
+        }
+      },
       "revert": {
         "action": "Terug naar overgenomen",
         "confirmTitle": "{name} terugzetten naar overgenomen instellingen?",

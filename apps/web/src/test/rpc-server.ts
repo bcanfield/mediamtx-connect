@@ -40,6 +40,8 @@ export interface StubApi {
   pathsCatalog?: () => unknown
   /** Rejecting with an `ORPCError` is how a test drives a create MediaMTX turned down. */
   addPath?: (input: Inputs['config']['mediamtx']['addPath']) => void | Promise<void>
+  /** What is attached to a path — `{publisher, readers}`, or null when unreachable. Defaults to idle. */
+  pathConnections?: () => unknown
   deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
   /** One summary per stream that has recordings. Defaults to none. */
   recordingStreams?: () => unknown
@@ -109,6 +111,9 @@ export function createRpcServer(stub: StubApi) {
         updatePathConfig: os.config.mediamtx.updatePathConfig.handler(async ({ input }) => {
           await stub.updatePathConfig?.(input)
         }),
+        getPathConnections: os.config.mediamtx.getPathConnections.handler(
+          () => (stub.pathConnections?.() ?? { publisher: null, readers: [] }) as never,
+        ),
         deletePathConfig: os.config.mediamtx.deletePathConfig.handler(({ input }) => {
           stub.deletePathConfig?.(input)
         }),

@@ -10,6 +10,8 @@ export interface MediaMtxPathReader {
 export interface MediaMtxPath {
   name?: string
   confName?: string
+  // Whatever is publishing right now, by session type. Null while nothing is.
+  source?: { type?: string, id?: string } | null
   ready?: boolean
   readyTime?: string | null
   tracks?: string[]

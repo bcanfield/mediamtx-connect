@@ -280,6 +280,26 @@
         "lead": "MediaMTX nu are nicio cale activă cu acest nume și nicio intrare de configurare proprie. Dacă fluxul este doar oprit, setările lui sunt moștenite — iar MediaMTX poate spune de unde doar cât timp fluxul rulează.",
         "openPathDefaults": "Deschide valorile implicite pentru căi"
       },
+      "delete": {
+        "action": "Șterge calea",
+        "confirmTitle": "Ștergi {name}?",
+        "confirmDescription": "Aceasta șterge intrarea de configurare a căii din MediaMTX. Dacă numele nu mai este acoperit de o intrare cu metacaractere, calea dispare din catalog și nu mai este servită.",
+        "checking": "Se verifică ce este conectat…",
+        "checkFailed": "MediaMTX nu a putut fi contactat pentru a verifica ce este conectat.",
+        "active": {
+          "title": "Această cale este folosită chiar acum",
+          "publisher": "Se publică prin {type}",
+          "readers": "{count, plural, one {# cititor conectat prin {types}} few {# cititori conectați prin {types}} other {# de cititori conectați prin {types}}}",
+          "lead": "Ștergerea căii îi deconectează imediat."
+        },
+        "cancel": "Anulează",
+        "confirm": "Șterge",
+        "toasts": {
+          "success": "{name} a fost ștearsă",
+          "errorTitle": "Calea nu a putut fi ștearsă",
+          "errorDescription": "Calea este tot acolo. Încearcă din nou."
+        }
+      },
       "revert": {
         "action": "Revino la moștenire",
         "confirmTitle": "Revii {name} la setările moștenite?",

@@ -280,6 +280,26 @@
         "lead": "MediaMTX has no running path by this name and no config entry of its own. If the stream is simply stopped, its settings are inherited — and MediaMTX can only tell us where from while the stream is running.",
         "openPathDefaults": "Open path defaults"
       },
+      "delete": {
+        "action": "Delete path",
+        "confirmTitle": "Delete {name}?",
+        "confirmDescription": "This deletes the path's config entry from MediaMTX. Unless a wildcard entry still covers the name, the path leaves the catalog and stops being served.",
+        "checking": "Checking what is connected…",
+        "checkFailed": "Couldn't reach MediaMTX to check what is connected.",
+        "active": {
+          "title": "This path is in use right now",
+          "publisher": "Publishing over {type}",
+          "readers": "{count, plural, one {# reader connected over {types}} other {# readers connected over {types}}}",
+          "lead": "Deleting the path disconnects them immediately."
+        },
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "toasts": {
+          "success": "Deleted {name}",
+          "errorTitle": "Couldn't delete the path",
+          "errorDescription": "The path is still there. Try again."
+        }
+      },
       "revert": {
         "action": "Revert to inherited",
         "confirmTitle": "Revert {name} to inherited settings?",

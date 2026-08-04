@@ -280,6 +280,26 @@
         "lead": "MediaMTX:llä ei ole tämännimistä käynnissä olevaa polkua eikä omaa asetusmerkintää. Jos striimi on vain pysäytetty, sen asetukset periytyvät — ja MediaMTX voi kertoa mistä vasta, kun striimi on käynnissä.",
         "openPathDefaults": "Avaa polkujen oletusarvot"
       },
+      "delete": {
+        "action": "Poista polku",
+        "confirmTitle": "Poistetaanko {name}?",
+        "confirmDescription": "Tämä poistaa polun asetusmerkinnän MediaMTX:stä. Ellei jokerimerkintä enää kata nimeä, polku katoaa luettelosta eikä sitä enää tarjota.",
+        "checking": "Tarkistetaan, mitä on yhdistettynä…",
+        "checkFailed": "MediaMTX:ää ei tavoitettu, joten yhteyksiä ei voitu tarkistaa.",
+        "active": {
+          "title": "Tämä polku on juuri nyt käytössä",
+          "publisher": "Julkaisee parhaillaan yhteydellä {type}",
+          "readers": "{count, plural, one {# lukija yhdistettynä yhteydellä {types}} other {# lukijaa yhdistettynä yhteydellä {types}}}",
+          "lead": "Polun poistaminen katkaisee ne heti."
+        },
+        "cancel": "Peruuta",
+        "confirm": "Poista",
+        "toasts": {
+          "success": "{name} poistettu",
+          "errorTitle": "Polun poistaminen epäonnistui",
+          "errorDescription": "Polku on yhä paikallaan. Yritä uudelleen."
+        }
+      },
       "revert": {
         "action": "Palauta perittyihin",
         "confirmTitle": "Palautetaanko {name} perittyihin asetuksiin?",

@@ -1,5 +1,7 @@
 import type { PathConfigResult } from '@connect/contract'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import { TriangleAlertIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
@@ -53,9 +55,15 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
             : t('pathConfig.pageSubHeader')
       }
       actions={
-        // Nothing to revert while the path is still tracking a wildcard entry.
+        // Both act on the path's own entry, and there is none to act on while
+        // the path is still tracking a wildcard one.
         effective && !inheritedFrom
-          ? <RevertToInherited name={name} queryKey={options.queryKey} />
+          ? (
+              <div className="flex items-center gap-2">
+                <RevertToInherited name={name} queryKey={options.queryKey} />
+                <DeletePath name={name} />
+              </div>
+            )
           : null
       }
     >
@@ -100,6 +108,91 @@ function UnresolvedPathConfig({ name }: { name: string }) {
         <Link href="/config/mediamtx/path-defaults">{t('openPathDefaults')}</Link>
       </Button>
     </div>
+  )
+}
+
+// The same `config/paths/delete` the revert runs, for the other intent: getting
+// rid of the path rather than of its overrides. MediaMTX will happily drop an
+// entry with a publisher and readers on it and say nothing, so the confirm reads
+// the runtime path first and names what the delete would cut off.
+function DeletePath({ name }: { name: string }) {
+  const t = useTranslations('Config.pathConfig.delete')
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const deletePathConfig = useMutation(orpc.config.mediamtx.deletePathConfig.mutationOptions())
+  const [open, setOpen] = useState(false)
+
+  const connections = useQuery({
+    ...orpc.config.mediamtx.getPathConnections.queryOptions({ input: { name } }),
+    // A session that connected after the page loaded is exactly the one worth
+    // warning about, so this is read when the dialog opens, not before.
+    enabled: open,
+  })
+  // Confirming before the answer lands would skip the warning entirely.
+  const checking = connections.isPending || connections.isFetching
+  const attached = connections.data
+  const readerTypes = [...new Set(attached?.readers)].join(', ')
+
+  const remove = async () => {
+    try {
+      await deletePathConfig.mutateAsync({ name })
+      setOpen(false)
+      toast.success(t('toasts.success', { name }))
+      // The catalog we are about to land on is now one row shorter.
+      await queryClient.invalidateQueries()
+      await navigate({ to: '/config/mediamtx/paths' })
+    }
+    catch {
+      toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button type="button" variant="destructive">{t('action')}</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t('confirmTitle', { name })}</DialogTitle>
+          <DialogDescription>{t('confirmDescription')}</DialogDescription>
+        </DialogHeader>
+        {checking && (
+          <p className="text-meta text-muted-foreground">{t('checking')}</p>
+        )}
+        {!checking && attached === null && (
+          <p className="text-meta text-muted-foreground">{t('checkFailed')}</p>
+        )}
+        {!checking && attached && (attached.publisher || attached.readers.length > 0) && (
+          <div className="flex flex-col gap-1.5 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
+            <span className="flex items-center gap-2 font-medium text-foreground">
+              <TriangleAlertIcon aria-hidden className="size-3.5 shrink-0 text-warning" />
+              {t('active.title')}
+            </span>
+            {attached.publisher && (
+              <span>{t('active.publisher', { type: attached.publisher })}</span>
+            )}
+            {attached.readers.length > 0 && (
+              <span>{t('active.readers', { count: attached.readers.length, types: readerTypes })}</span>
+            )}
+            <span>{t('active.lead')}</span>
+          </div>
+        )}
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="ghost">{t('cancel')}</Button>
+          </DialogClose>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={remove}
+            disabled={checking || deletePathConfig.isPending}
+          >
+            {t('confirm')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 

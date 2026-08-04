@@ -280,6 +280,26 @@
         "lead": "MediaMTX n'a aucun chemin en cours d'exécution portant ce nom, ni d'entrée de configuration propre. Si le flux est simplement arrêté, ses paramètres sont hérités — et MediaMTX ne peut nous dire d'où que tant que le flux est en cours d'exécution.",
         "openPathDefaults": "Ouvrir les valeurs par défaut des chemins"
       },
+      "delete": {
+        "action": "Supprimer le chemin",
+        "confirmTitle": "Supprimer {name} ?",
+        "confirmDescription": "Cela supprime l'entrée de configuration du chemin dans MediaMTX. À moins qu'une entrée générique ne couvre encore le nom, le chemin quitte le catalogue et n'est plus servi.",
+        "checking": "Vérification de ce qui est connecté…",
+        "checkFailed": "Impossible de joindre MediaMTX pour vérifier ce qui est connecté.",
+        "active": {
+          "title": "Ce chemin est utilisé en ce moment",
+          "publisher": "Publication en cours via {type}",
+          "readers": "{count, plural, one {# lecteur connecté via {types}} other {# lecteurs connectés via {types}}}",
+          "lead": "Supprimer le chemin les déconnecte immédiatement."
+        },
+        "cancel": "Annuler",
+        "confirm": "Supprimer",
+        "toasts": {
+          "success": "{name} supprimé",
+          "errorTitle": "Impossible de supprimer le chemin",
+          "errorDescription": "Le chemin est toujours là. Réessayez."
+        }
+      },
       "revert": {
         "action": "Revenir à l'héritage",
         "confirmTitle": "Revenir {name} aux paramètres hérités ?",

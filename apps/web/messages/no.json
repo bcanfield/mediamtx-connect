@@ -280,6 +280,26 @@
         "lead": "MediaMTX har ingen kjørende bane med dette navnet og ingen egen konfigurasjonsoppføring. Hvis strømmen bare er stoppet, arves innstillingene — og MediaMTX kan bare si hvor fra mens strømmen kjører.",
         "openPathDefaults": "Åpne standardverdier for stier"
       },
+      "delete": {
+        "action": "Slett bane",
+        "confirmTitle": "Slette {name}?",
+        "confirmDescription": "Dette sletter banens konfigurasjonsoppføring i MediaMTX. Med mindre en jokeroppføring fortsatt dekker navnet, forsvinner banen fra katalogen og leveres ikke lenger.",
+        "checking": "Sjekker hva som er tilkoblet…",
+        "checkFailed": "Kunne ikke nå MediaMTX for å sjekke hva som er tilkoblet.",
+        "active": {
+          "title": "Denne banen er i bruk akkurat nå",
+          "publisher": "Publiserer via {type}",
+          "readers": "{count, plural, one {# leser tilkoblet via {types}} other {# lesere tilkoblet via {types}}}",
+          "lead": "Å slette banen kobler dem fra umiddelbart."
+        },
+        "cancel": "Avbryt",
+        "confirm": "Slett",
+        "toasts": {
+          "success": "{name} slettet",
+          "errorTitle": "Kunne ikke slette banen",
+          "errorDescription": "Banen er der fortsatt. Prøv igjen."
+        }
+      },
       "revert": {
         "action": "Tilbake til arvet",
         "confirmTitle": "Sette {name} tilbake til arvede innstillinger?",

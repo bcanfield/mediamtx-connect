@@ -303,6 +303,23 @@ export const router = os.router({
         }
       }),
 
+      // Read before a delete: MediaMTX drops an entry with live sessions on it
+      // without complaint, so the confirmation is the only warning there is.
+      getPathConnections: os.config.mediamtx.getPathConnections.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        try {
+          const runtime = await mediaMtxApi(config).pathsGet(input.name)
+          return {
+            publisher: runtime?.source?.type ?? null,
+            readers: (runtime?.readers ?? []).map(reader => reader.type ?? ''),
+          }
+        }
+        catch (error) {
+          logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+          return null
+        }
+      }),
+
       // The way back from a materialize: delete the path's own entry and it
       // tracks its wildcard again. Only offered once the path has one.
       deletePathConfig: os.config.mediamtx.deletePathConfig.handler(async ({ input }) => {
