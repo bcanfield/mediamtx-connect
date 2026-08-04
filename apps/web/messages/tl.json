@@ -280,6 +280,26 @@
         "lead": "Walang tumatakbong path ang MediaMTX na ganito ang pangalan, at wala rin itong sariling config entry. Kung nakahinto lang ang stream, minamana ang mga setting nito — at masasabi lang ng MediaMTX kung saan galing habang tumatakbo ang stream.",
         "openPathDefaults": "Buksan ang mga default ng path"
       },
+      "delete": {
+        "action": "Burahin ang path",
+        "confirmTitle": "Burahin ang {name}?",
+        "confirmDescription": "Buburahin nito ang config entry ng path sa MediaMTX. Maliban kung may wildcard na entry pa ring sumasaklaw sa pangalan, aalis ang path sa katalogo at hihinto na itong ihain.",
+        "checking": "Tinitingnan kung ano ang nakakonekta…",
+        "checkFailed": "Hindi maabot ang MediaMTX para tingnan kung ano ang nakakonekta.",
+        "active": {
+          "title": "Ginagamit ang path na ito ngayon",
+          "publisher": "Nagpa-publish sa pamamagitan ng {type}",
+          "readers": "{count, plural, one {# reader ang nakakonekta sa pamamagitan ng {types}} other {# na reader ang nakakonekta sa pamamagitan ng {types}}}",
+          "lead": "Agad silang madidiskonekta kapag binura ang path."
+        },
+        "cancel": "Kanselahin",
+        "confirm": "Burahin",
+        "toasts": {
+          "success": "Nabura ang {name}",
+          "errorTitle": "Hindi mabura ang path",
+          "errorDescription": "Nandiyan pa rin ang path. Subukan ulit."
+        }
+      },
       "revert": {
         "action": "Ibalik sa minana",
         "confirmTitle": "Ibalik ang {name} sa minanang mga setting?",

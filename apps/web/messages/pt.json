@@ -280,6 +280,26 @@
         "lead": "O MediaMTX não tem nenhum caminho em execução com este nome nem uma entrada de configuração própria. Se a transmissão estiver apenas parada, as suas definições são herdadas — e o MediaMTX só nos consegue dizer de onde enquanto a transmissão estiver em execução.",
         "openPathDefaults": "Abrir predefinições de caminhos"
       },
+      "delete": {
+        "action": "Eliminar caminho",
+        "confirmTitle": "Eliminar {name}?",
+        "confirmDescription": "Isto elimina a entrada de configuração do caminho no MediaMTX. A menos que uma entrada genérica continue a cobrir o nome, o caminho sai do catálogo e deixa de ser servido.",
+        "checking": "A verificar o que está ligado…",
+        "checkFailed": "Não foi possível contactar o MediaMTX para verificar o que está ligado.",
+        "active": {
+          "title": "Este caminho está a ser usado neste momento",
+          "publisher": "A publicar através de {type}",
+          "readers": "{count, plural, one {# leitor ligado através de {types}} other {# leitores ligados através de {types}}}",
+          "lead": "Eliminar o caminho desliga-os de imediato."
+        },
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "toasts": {
+          "success": "{name} eliminado",
+          "errorTitle": "Não foi possível eliminar o caminho",
+          "errorDescription": "O caminho continua lá. Tente novamente."
+        }
+      },
       "revert": {
         "action": "Voltar a herdar",
         "confirmTitle": "Voltar {name} às definições herdadas?",
