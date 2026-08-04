@@ -159,6 +159,20 @@ export const PathConfigResultSchema = z.discriminatedUnion('status', [
 
 export type PathConfigResult = z.infer<typeof PathConfigResultSchema>
 
+// What is attached to a runtime path right now. MediaMTX drops a path's config
+// entry without a word about the sessions it cuts off, so a delete confirmation
+// has to read this itself.
+export const PathConnectionsSchema = z.object({
+  // MediaMTX's own session type for whatever publishes — `rtspSession`,
+  // `rtmpConn`, `srtConn`, `webRTCSession`, `redirect`. Null while nothing does.
+  publisher: z.string().nullable(),
+  // One entry per consumer, by the session type it reads over. MediaMTX pairs
+  // each with an opaque id, which names nothing an operator would recognise.
+  readers: z.array(z.string()),
+})
+
+export type PathConnections = z.infer<typeof PathConnectionsSchema>
+
 // One row of the paths catalog: a *config entry*, not a runtime path. A regex
 // entry backs many runtime paths and a wildcard-backed path has no entry at
 // all, so this list and the live stream grid are different populations.
@@ -321,8 +335,13 @@ export const contract = {
       updatePathConfig: oc
         .input(z.object({ name: z.string().min(1), conf: PathConfigSchema }))
         .output(z.void()),
-      // Undoes a materialize: with its own entry gone, the path tracks whatever
-      // wildcard entry covers it again.
+      // What a delete would cut off. `null` is an unreachable server, not an
+      // idle path — a warning we couldn't build is not a path with nothing on it.
+      getPathConnections: oc
+        .input(z.object({ name: z.string().min(1) }))
+        .output(PathConnectionsSchema.nullable()),
+      // Removes the path's own entry. A path that a wildcard entry still covers
+      // goes back to tracking it; one whose entry was the path is gone.
       deletePathConfig: oc
         .input(z.object({ name: z.string().min(1) }))
         .output(z.void()),

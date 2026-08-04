@@ -280,6 +280,26 @@
         "lead": "MediaMTX 中没有以此名称运行的路径，也没有它自己的配置条目。如果该流只是已停止，它的设置就是继承而来的 — 而只有在流运行时，MediaMTX 才能告诉我们继承自哪里。",
         "openPathDefaults": "打开路径默认设置"
       },
+      "delete": {
+        "action": "删除路径",
+        "confirmTitle": "删除 {name}？",
+        "confirmDescription": "这会从 MediaMTX 中删除该路径的配置条目。除非仍有通配条目覆盖该名称，否则该路径将从目录中消失并停止提供服务。",
+        "checking": "正在检查连接情况…",
+        "checkFailed": "无法连接 MediaMTX，检查连接情况失败。",
+        "active": {
+          "title": "该路径当前正在使用",
+          "publisher": "正通过 {type} 推流",
+          "readers": "{count, plural, other {# 个读取端通过 {types} 连接}}",
+          "lead": "删除该路径会立即断开它们。"
+        },
+        "cancel": "取消",
+        "confirm": "删除",
+        "toasts": {
+          "success": "已删除 {name}",
+          "errorTitle": "无法删除该路径",
+          "errorDescription": "该路径仍然存在。请重试。"
+        }
+      },
       "revert": {
         "action": "恢复为继承",
         "confirmTitle": "将 {name} 恢复为继承的设置？",

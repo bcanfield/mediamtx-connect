@@ -280,6 +280,26 @@
         "lead": "MediaMTX har ingen körande sökväg med det här namnet och ingen egen konfigurationspost. Om strömmen bara är stoppad ärvs dess inställningar — och MediaMTX kan bara berätta varifrån medan strömmen körs.",
         "openPathDefaults": "Öppna standardvärden för sökvägar"
       },
+      "delete": {
+        "action": "Ta bort sökväg",
+        "confirmTitle": "Ta bort {name}?",
+        "confirmDescription": "Detta tar bort sökvägens konfigurationspost från MediaMTX. Om ingen jokerpost längre täcker namnet försvinner sökvägen ur katalogen och slutar levereras.",
+        "checking": "Kontrollerar vad som är anslutet…",
+        "checkFailed": "Kunde inte nå MediaMTX för att kontrollera vad som är anslutet.",
+        "active": {
+          "title": "Den här sökvägen används just nu",
+          "publisher": "Publicerar via {type}",
+          "readers": "{count, plural, one {# läsare ansluten via {types}} other {# läsare anslutna via {types}}}",
+          "lead": "Att ta bort sökvägen kopplar ned dem direkt."
+        },
+        "cancel": "Avbryt",
+        "confirm": "Ta bort",
+        "toasts": {
+          "success": "{name} borttagen",
+          "errorTitle": "Kunde inte ta bort sökvägen",
+          "errorDescription": "Sökvägen finns kvar. Försök igen."
+        }
+      },
       "revert": {
         "action": "Återgå till ärvda",
         "confirmTitle": "Återgå {name} till ärvda inställningar?",

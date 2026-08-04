@@ -280,6 +280,26 @@
         "lead": "MediaMTX non ha alcun percorso in esecuzione con questo nome né una voce di configurazione propria. Se lo stream è semplicemente fermo, le sue impostazioni sono ereditate — e MediaMTX può dirci da dove solo mentre lo stream è in esecuzione.",
         "openPathDefaults": "Apri i valori predefiniti dei percorsi"
       },
+      "delete": {
+        "action": "Elimina percorso",
+        "confirmTitle": "Eliminare {name}?",
+        "confirmDescription": "Questo elimina la voce di configurazione del percorso da MediaMTX. A meno che una voce con caratteri jolly non copra ancora il nome, il percorso esce dal catalogo e smette di essere servito.",
+        "checking": "Verifica di che cosa è connesso…",
+        "checkFailed": "Impossibile contattare MediaMTX per verificare che cosa è connesso.",
+        "active": {
+          "title": "Questo percorso è in uso in questo momento",
+          "publisher": "Pubblicazione in corso via {type}",
+          "readers": "{count, plural, one {# lettore connesso via {types}} other {# lettori connessi via {types}}}",
+          "lead": "Eliminare il percorso li disconnette immediatamente."
+        },
+        "cancel": "Annulla",
+        "confirm": "Elimina",
+        "toasts": {
+          "success": "{name} eliminato",
+          "errorTitle": "Impossibile eliminare il percorso",
+          "errorDescription": "Il percorso è ancora lì. Riprova."
+        }
+      },
       "revert": {
         "action": "Ripristina l'ereditarietà",
         "confirmTitle": "Ripristinare {name} alle impostazioni ereditate?",

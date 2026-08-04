@@ -18,10 +18,14 @@ let result: unknown = { status: 'resolved', confName: 'all_others', conf: { reco
 // What every value on the page is measured against.
 let defaults: unknown = null
 
+// What the delete confirm reads to name what it would cut off. Idle by default.
+let connections: unknown = { publisher: null, readers: [] }
+
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
   pathConfig: () => result,
   pathDefaults: () => defaults,
+  pathConnections: () => connections,
   deletePathConfig,
 }
 
@@ -31,6 +35,7 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 afterEach(() => {
   server.resetHandlers()
   defaults = null
+  connections = { publisher: null, readers: [] }
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
@@ -79,6 +84,74 @@ describe('revert to inherited', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(deletePathConfig).not.toHaveBeenCalled()
+  })
+})
+
+// MediaMTX drops an entry with live sessions on it and says nothing, so the
+// confirm is the only warning there is — and it has to name what is attached
+// rather than just report that something is.
+describe('path deletion', () => {
+  it('offers nothing to delete while the path tracks a wildcard entry', async () => {
+    await renderPage('all_others')
+
+    expect(await screen.findByText(/currently inherited from all_others/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Delete path' })).not.toBeInTheDocument()
+  })
+
+  it('deletes an idle path and returns to the catalog', async () => {
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+    await view.user.click(await screen.findByRole('button', { name: 'Delete' }))
+
+    expect(await screen.findByText('Deleted stream1')).toBeInTheDocument()
+    expect(deletePathConfig).toHaveBeenCalledWith(
+      { name: 'stream1' } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'],
+    )
+    expect(view.router.state.location.pathname).toBe('/config/mediamtx/paths')
+  })
+
+  it('names the publisher and the readers before deleting anything', async () => {
+    connections = { publisher: 'rtspSession', readers: ['webRTCSession', 'hlsMuxer', 'webRTCSession'] }
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+
+    expect(await screen.findByText('This path is in use right now')).toBeInTheDocument()
+    expect(screen.getByText('Publishing over rtspSession')).toBeInTheDocument()
+    expect(screen.getByText('3 readers connected over webRTCSession, hlsMuxer')).toBeInTheDocument()
+    expect(deletePathConfig).not.toHaveBeenCalled()
+  })
+
+  // Confirming before the answer lands would skip the warning entirely.
+  it('holds the confirm until it knows what is connected', async () => {
+    let land!: () => void
+    connections = new Promise((resolve) => {
+      land = () => resolve({ publisher: 'rtspSession', readers: [] })
+    })
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+
+    expect(await screen.findByText('Checking what is connected…')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Delete' })).toBeDisabled()
+
+    land()
+
+    expect(await screen.findByText('Publishing over rtspSession')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Delete' })).toBeEnabled()
+  })
+
+  it('leaves the path alone when the confirm is cancelled', async () => {
+    connections = { publisher: 'rtspSession', readers: [] }
+    const view = await renderPage('stream1')
+
+    await view.user.click(await screen.findByRole('button', { name: 'Delete path' }))
+    await view.user.click(await screen.findByRole('button', { name: 'Cancel' }))
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(deletePathConfig).not.toHaveBeenCalled()
+    expect(view.router.state.location.pathname).toBe('/')
   })
 })
 
@@ -158,5 +231,6 @@ describe('a name with nothing to resolve', () => {
     // an offer to undo overrides would be true.
     expect(screen.queryByText(/Settings for this stream/)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Revert to inherited' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Delete path' })).not.toBeInTheDocument()
   })
 })
