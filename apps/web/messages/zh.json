@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX 无响应。"
       }
     },
+    "pathHealth": {
+      "title": "实时状态",
+      "stateLive": "LIVE",
+      "stateIdle": "空闲",
+      "idleLead": "当前没有任何来源向该路径推流。上线后即可看到轨道和计数。",
+      "unreachable": "无法连接 MediaMTX 读取该路径的状态。",
+      "uptime": "运行时长",
+      "readers": "读取端",
+      "received": "已接收",
+      "sent": "已发送",
+      "framesInError": "错误帧",
+      "tracks": "轨道",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "正通过 {type} 推流",
+      "readerTypes": "通过 {types} 读取"
+    },
     "pathConfig": {
       "pageHeader": "路径配置 · {name}",
       "pageSubHeader": "该流的设置，保存到服务器。",

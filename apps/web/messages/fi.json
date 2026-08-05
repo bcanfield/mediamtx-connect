@@ -271,6 +271,22 @@
         "unreachable": "Ei vastausta MediaMTX:ltä."
       }
     },
+    "pathHealth": {
+      "title": "Live-tila",
+      "stateLive": "LIVE",
+      "stateIdle": "käyttämättä",
+      "idleLead": "Tähän polkuun ei julkaista juuri nyt mitään. Raidat ja laskurit ilmestyvät heti, kun se menee liveksi.",
+      "unreachable": "MediaMTX:ään ei saatu yhteyttä tämän polun tilan lukemiseksi.",
+      "uptime": "Käyntiaika",
+      "readers": "Lukijat",
+      "received": "Vastaanotettu",
+      "sent": "Lähetetty",
+      "framesInError": "Virheelliset ruudut",
+      "tracks": "Raidat",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Julkaisee parhaillaan yhteydellä {type}",
+      "readerTypes": "Luetaan yhteydellä {types}"
+    },
     "pathConfig": {
       "pageHeader": "Polun asetukset · {name}",
       "pageSubHeader": "Tämän lähetyksen asetukset, tallennetaan palvelimelle.",

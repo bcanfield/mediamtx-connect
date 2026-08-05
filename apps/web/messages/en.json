@@ -271,6 +271,22 @@
         "unreachable": "No response from MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live health",
+      "stateLive": "LIVE",
+      "stateIdle": "idle",
+      "idleLead": "Nothing is publishing to this path right now. Tracks and counters appear once it goes live.",
+      "unreachable": "Couldn't reach MediaMTX to read this path's health.",
+      "uptime": "Uptime",
+      "readers": "Readers",
+      "received": "Received",
+      "sent": "Sent",
+      "framesInError": "Frames in error",
+      "tracks": "Tracks",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publishing over {type}",
+      "readerTypes": "Read over {types}"
+    },
     "pathConfig": {
       "pageHeader": "Path Config · {name}",
       "pageSubHeader": "Settings for this stream, saved to the server.",

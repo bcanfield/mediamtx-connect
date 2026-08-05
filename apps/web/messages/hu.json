@@ -271,6 +271,22 @@
         "unreachable": "Nincs válasz a MediaMTX-től."
       }
     },
+    "pathHealth": {
+      "title": "Élő állapot",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktív",
+      "idleLead": "Jelenleg semmi sem publikál erre az útvonalra. A sávok és a számlálók akkor jelennek meg, amikor élőbe megy.",
+      "unreachable": "Nem sikerült elérni a MediaMTX-et az útvonal állapotának beolvasásához.",
+      "uptime": "Üzemidő",
+      "readers": "Olvasók",
+      "received": "Fogadva",
+      "sent": "Küldve",
+      "framesInError": "Hibás képkockák",
+      "tracks": "Sávok",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Éppen közvetít ezen: {type}",
+      "readerTypes": "Olvasás ezen: {types}"
+    },
     "pathConfig": {
       "pageHeader": "Útvonal-konfiguráció · {name}",
       "pageSubHeader": "Ennek a streamnek a beállításai, a szerverre mentve.",

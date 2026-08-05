@@ -271,6 +271,22 @@
         "unreachable": "Geen reactie van MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live status",
+      "stateLive": "LIVE",
+      "stateIdle": "inactief",
+      "idleLead": "Er publiceert op dit moment niets naar dit pad. Tracks en tellers verschijnen zodra het live gaat.",
+      "unreachable": "MediaMTX was niet bereikbaar om de status van dit pad te lezen.",
+      "uptime": "Actieve tijd",
+      "readers": "Lezers",
+      "received": "Ontvangen",
+      "sent": "Verzonden",
+      "framesInError": "Frames met fouten",
+      "tracks": "Tracks",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publiceert nu via {type}",
+      "readerTypes": "Gelezen via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Padconfiguratie · {name}",
       "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",

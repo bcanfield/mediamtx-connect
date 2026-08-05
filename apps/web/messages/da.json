@@ -271,6 +271,22 @@
         "unreachable": "Intet svar fra MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Livestatus",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktiv",
+      "idleLead": "Der er ikke noget, der publicerer til denne sti lige nu. Spor og tællere vises, så snart den går live.",
+      "unreachable": "Kunne ikke nå MediaMTX for at læse denne stis status.",
+      "uptime": "Oppetid",
+      "readers": "Læsere",
+      "received": "Modtaget",
+      "sent": "Sendt",
+      "framesInError": "Billeder med fejl",
+      "tracks": "Spor",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publicerer via {type}",
+      "readerTypes": "Læses via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Sti-konfiguration · {name}",
       "pageSubHeader": "Indstillinger for dette stream, gemmes på serveren.",

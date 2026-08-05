@@ -271,6 +271,22 @@
         "unreachable": "Žádná odpověď od MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Živý stav",
+      "stateLive": "LIVE",
+      "stateIdle": "nečinný",
+      "idleLead": "Do této cesty právě nic nepublikuje. Stopy a čítače se objeví, jakmile půjde živě.",
+      "unreachable": "Nepodařilo se spojit s MediaMTX a načíst stav této cesty.",
+      "uptime": "Doba běhu",
+      "readers": "Čtenáři",
+      "received": "Přijato",
+      "sent": "Odesláno",
+      "framesInError": "Snímky s chybou",
+      "tracks": "Stopy",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Právě se publikuje přes {type}",
+      "readerTypes": "Čteno přes {types}"
+    },
     "pathConfig": {
       "pageHeader": "Konfigurace cesty · {name}",
       "pageSubHeader": "Nastavení tohoto streamu, uložená na serveru.",

@@ -271,6 +271,22 @@
         "unreachable": "Không có phản hồi từ MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Tình trạng trực tiếp",
+      "stateLive": "LIVE",
+      "stateIdle": "không hoạt động",
+      "idleLead": "Hiện chưa có gì phát lên đường dẫn này. Các track và bộ đếm sẽ xuất hiện ngay khi nó lên sóng.",
+      "unreachable": "Không liên hệ được MediaMTX để đọc tình trạng của đường dẫn này.",
+      "uptime": "Thời gian hoạt động",
+      "readers": "Trình đọc",
+      "received": "Đã nhận",
+      "sent": "Đã gửi",
+      "framesInError": "Khung hình lỗi",
+      "tracks": "Track",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Đang phát qua {type}",
+      "readerTypes": "Đọc qua {types}"
+    },
     "pathConfig": {
       "pageHeader": "Cấu hình đường dẫn · {name}",
       "pageSubHeader": "Cài đặt của luồng này, được lưu trên máy chủ.",

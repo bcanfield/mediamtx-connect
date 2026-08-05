@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX से कोई प्रतिक्रिया नहीं।"
       }
     },
+    "pathHealth": {
+      "title": "लाइव स्थिति",
+      "stateLive": "LIVE",
+      "stateIdle": "निष्क्रिय",
+      "idleLead": "अभी इस पाथ पर कुछ भी प्रकाशित नहीं हो रहा है। लाइव होते ही ट्रैक और काउंटर दिखने लगेंगे।",
+      "unreachable": "इस पाथ की स्थिति पढ़ने के लिए MediaMTX से संपर्क नहीं हो सका।",
+      "uptime": "अपटाइम",
+      "readers": "रीडर",
+      "received": "प्राप्त",
+      "sent": "भेजा गया",
+      "framesInError": "त्रुटि वाले फ़्रेम",
+      "tracks": "ट्रैक",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} के ज़रिए प्रकाशित हो रहा है",
+      "readerTypes": "{types} के ज़रिए पढ़ा जा रहा है"
+    },
     "pathConfig": {
       "pageHeader": "पथ कॉन्फ़िग · {name}",
       "pageSubHeader": "इस स्ट्रीम की सेटिंग्स, सर्वर पर सहेजी जाती हैं।",
