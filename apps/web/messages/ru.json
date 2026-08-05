@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Запись",
-        "pathHooks": "Хуки пути"
+        "pathHooks": "Хуки пути",
+        "source": "Источник"
       },
       "sectionDescriptions": {
         "logging": "Вывод логов, тайм-ауты и глобальные ограничения.",
@@ -381,7 +382,8 @@
         "webrtc": "Воспроизведение и публикация в браузере с низкой задержкой.",
         "srt": "Публикация и чтение трансляций по SRT.",
         "recording": "Записывать потоки на диск.",
-        "pathHooks": "Команды, которые MediaMTX выполняет при событиях жизненного цикла пути."
+        "pathHooks": "Команды, которые MediaMTX выполняет при событиях жизненного цикла пути.",
+        "source": "Откуда берётся поток этого пути."
       },
       "sectionWarnings": {
         "pathHooks": "Сохранение хука перезапускает путь и отключает его источник публикации — поток пропадёт, пока источник не подключится снова."
@@ -409,7 +411,11 @@
         "passwordAria": "Пароль сервера ICE {index}",
         "removeAria": "Удалить сервер ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX не примет это значение. Используйте publisher, redirect, rpiCamera или URL, начинающийся с rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// или wheps://."
+      },
       "help": {
+        "source": "Откуда берётся поток: publisher (что-то публикует на этот путь), redirect, rpiCamera или URL, с которого MediaMTX его забирает.",
         "logLevel": "Детализация вывода логов (error, warn, info или debug).",
         "logDestinations": "Куда писать логи (stdout, file или syslog).",
         "logFile": "Путь к файлу логов, когда logDestinations включает file.",

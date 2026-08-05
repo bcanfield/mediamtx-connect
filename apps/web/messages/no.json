@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Opptak",
-        "pathHooks": "Sti-hooks"
+        "pathHooks": "Sti-hooks",
+        "source": "Kilde"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsavbrudd og globale grenser.",
@@ -381,7 +382,8 @@
         "webrtc": "Avspilling og publisering i nettleseren med lav forsinkelse.",
         "srt": "Publiser og les strømmer over SRT.",
         "recording": "Ta opp strømmer til disk.",
-        "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser."
+        "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser.",
+        "source": "Hvor strømmen til denne stien kommer fra."
       },
       "sectionWarnings": {
         "pathHooks": "Å lagre en hook starter stien på nytt og kobler fra utgiveren — strømmen faller ut til utgiveren kobler til igjen."
@@ -409,7 +411,11 @@
         "passwordAria": "Passord for ICE-server {index}",
         "removeAria": "Fjern ICE-server {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX godtar ikke dette. Bruk publisher, redirect, rpiCamera eller en URL som starter med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."
+      },
       "help": {
+        "source": "Hvor strømmen kommer fra: publisher (noe publiserer til denne stien), redirect, rpiCamera eller en URL som MediaMTX henter den fra.",
         "logLevel": "Detaljnivå for loggutdata (error, warn, info eller debug).",
         "logDestinations": "Hvor logger skrives (stdout, file eller syslog).",
         "logFile": "Bane til loggfilen når logDestinations inkluderer file.",

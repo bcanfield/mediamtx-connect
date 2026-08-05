@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Grabación",
-        "pathHooks": "Hooks de ruta"
+        "pathHooks": "Hooks de ruta",
+        "source": "Origen"
       },
       "sectionDescriptions": {
         "logging": "Salida de registros, tiempos de espera y límites globales.",
@@ -381,7 +382,8 @@
         "webrtc": "Reproducción y publicación de baja latencia en el navegador.",
         "srt": "Publica y lee transmisiones por SRT.",
         "recording": "Graba las transmisiones en disco.",
-        "pathHooks": "Comandos que MediaMTX ejecuta en los eventos del ciclo de vida de una ruta."
+        "pathHooks": "Comandos que MediaMTX ejecuta en los eventos del ciclo de vida de una ruta.",
+        "source": "De dónde procede el flujo de esta ruta."
       },
       "sectionWarnings": {
         "pathHooks": "Guardar un hook reinicia la ruta y desconecta su publicador: la transmisión se corta hasta que vuelva a conectarse."
@@ -409,7 +411,11 @@
         "passwordAria": "Contraseña del servidor ICE {index}",
         "removeAria": "Eliminar servidor ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX no aceptará esto. Usa publisher, redirect, rpiCamera o una URL que empiece por rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// o wheps://."
+      },
       "help": {
+        "source": "De dónde procede el flujo: publisher (algo publica en esta ruta), redirect, rpiCamera o una URL de la que MediaMTX lo extrae.",
         "logLevel": "Verbosidad de la salida de registros (error, warn, info o debug).",
         "logDestinations": "Dónde escribir los registros (stdout, file o syslog).",
         "logFile": "Ruta del archivo de registro cuando logDestinations incluye file.",

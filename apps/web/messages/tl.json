@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Pag-record",
-        "pathHooks": "Hooks ng path"
+        "pathHooks": "Hooks ng path",
+        "source": "Pinagmulan"
       },
       "sectionDescriptions": {
         "logging": "Log output, mga timeout, at mga global na limitasyon.",
@@ -381,7 +382,8 @@
         "webrtc": "Low-latency na playback at pag-publish sa browser.",
         "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
         "recording": "I-record ang mga stream sa disk.",
-        "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path."
+        "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path.",
+        "source": "Kung saan nanggagaling ang stream ng path na ito."
       },
       "sectionWarnings": {
         "pathHooks": "Ang pag-save ng hook ay nagre-restart sa path at nagdidiskonekta sa publisher nito — mawawala ang stream hanggang muling kumonekta ang publisher."
@@ -409,7 +411,11 @@
         "passwordAria": "Password ng ICE server {index}",
         "removeAria": "Alisin ang ICE server {index}"
       },
+      "errors": {
+        "invalidSource": "Hindi ito tatanggapin ng MediaMTX. Gumamit ng publisher, redirect, rpiCamera, o isang URL na nagsisimula sa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, o wheps://."
+      },
       "help": {
+        "source": "Kung saan nanggagaling ang stream: publisher (may nagpa-publish sa path na ito), redirect, rpiCamera, o isang URL na kinukunan ng MediaMTX.",
         "logLevel": "Antas ng detalye ng log output (error, warn, info, o debug).",
         "logDestinations": "Kung saan isusulat ang mga log (stdout, file, o syslog).",
         "logFile": "Path ng log file kapag kasama ang file sa logDestinations.",

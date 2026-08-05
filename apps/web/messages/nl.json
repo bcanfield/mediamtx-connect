@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Opnemen",
-        "pathHooks": "Pad-hooks"
+        "pathHooks": "Pad-hooks",
+        "source": "Bron"
       },
       "sectionDescriptions": {
         "logging": "Loguitvoer, time-outs en globale limieten.",
@@ -381,7 +382,8 @@
         "webrtc": "Afspelen en publiceren in de browser met lage latentie.",
         "srt": "Streams publiceren en lezen via SRT.",
         "recording": "Neem streams op naar schijf.",
-        "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf."
+        "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf.",
+        "source": "Waar de stream van dit pad vandaan komt."
       },
       "sectionWarnings": {
         "pathHooks": "Een hook opslaan herstart het pad en verbreekt de verbinding met de publisher — de stream valt weg tot de publisher opnieuw verbindt."
@@ -409,7 +411,11 @@
         "passwordAria": "Wachtwoord van ICE-server {index}",
         "removeAria": "ICE-server {index} verwijderen"
       },
+      "errors": {
+        "invalidSource": "MediaMTX accepteert dit niet. Gebruik publisher, redirect, rpiCamera of een URL die begint met rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// of wheps://."
+      },
       "help": {
+        "source": "Waar de stream vandaan komt: publisher (iets publiceert naar dit pad), redirect, rpiCamera of een URL waar MediaMTX hem ophaalt.",
         "logLevel": "Uitgebreidheid van de loguitvoer (error, warn, info of debug).",
         "logDestinations": "Waar logs naartoe worden geschreven (stdout, file of syslog).",
         "logFile": "Pad van het logbestand wanneer logDestinations file bevat.",

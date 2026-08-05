@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "録画",
-        "pathHooks": "パスフック"
+        "pathHooks": "パスフック",
+        "source": "ソース"
       },
       "sectionDescriptions": {
         "logging": "ログ出力、タイムアウト、グローバル制限。",
@@ -381,7 +382,8 @@
         "webrtc": "低遅延のブラウザ再生と配信。",
         "srt": "SRT でストリームを配信・視聴します。",
         "recording": "ストリームをディスクに録画します。",
-        "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。"
+        "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。",
+        "source": "このパスのストリームがどこから来るか。"
       },
       "sectionWarnings": {
         "pathHooks": "フックを保存するとパスが再起動し、パブリッシャーの接続が切れます。再接続するまでストリームは停止します。"
@@ -409,7 +411,11 @@
         "passwordAria": "ICE サーバー {index} のパスワード",
         "removeAria": "ICE サーバー {index} を削除"
       },
+      "errors": {
+        "invalidSource": "MediaMTX はこの値を受け付けません。publisher、redirect、rpiCamera、または rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep://、wheps:// で始まる URL を指定してください。"
+      },
       "help": {
+        "source": "ストリームの取得元: publisher（このパスに配信される）、redirect、rpiCamera、または MediaMTX が取得しにいく URL。",
         "logLevel": "ログ出力の詳細度(error、warn、info、debug)。",
         "logDestinations": "ログの出力先(stdout、file、syslog)。",
         "logFile": "logDestinations に file が含まれる場合のログファイルのパス。",

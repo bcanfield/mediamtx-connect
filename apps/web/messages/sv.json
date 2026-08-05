@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Inspelning",
-        "pathHooks": "Sökvägshooks"
+        "pathHooks": "Sökvägshooks",
+        "source": "Källa"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsgränser och globala begränsningar.",
@@ -381,7 +382,8 @@
         "webrtc": "Uppspelning och publicering i webbläsaren med låg latens.",
         "srt": "Publicera och läs strömmar via SRT.",
         "recording": "Spela in strömmar till disk.",
-        "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser."
+        "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser.",
+        "source": "Var strömmen för den här sökvägen kommer ifrån."
       },
       "sectionWarnings": {
         "pathHooks": "Att spara en hook startar om sökvägen och kopplar från dess utgivare — strömmen försvinner tills utgivaren ansluter igen."
@@ -409,7 +411,11 @@
         "passwordAria": "Lösenord för ICE-server {index}",
         "removeAria": "Ta bort ICE-server {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX godtar inte det här. Använd publisher, redirect, rpiCamera eller en URL som börjar med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."
+      },
       "help": {
+        "source": "Var strömmen kommer ifrån: publisher (något publicerar till den här sökvägen), redirect, rpiCamera eller en URL som MediaMTX hämtar den från.",
         "logLevel": "Detaljnivå för loggutdata (error, warn, info eller debug).",
         "logDestinations": "Var loggar skrivs (stdout, file eller syslog).",
         "logFile": "Sökväg till loggfilen när logDestinations innehåller file.",

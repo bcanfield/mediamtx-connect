@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "錄影",
-        "pathHooks": "路徑掛鉤"
+        "pathHooks": "路徑掛鉤",
+        "source": "來源"
       },
       "sectionDescriptions": {
         "logging": "記錄輸出、逾時與全域限制。",
@@ -381,7 +382,8 @@
         "webrtc": "低延遲的瀏覽器播放與發布。",
         "srt": "透過 SRT 發布與觀看串流。",
         "recording": "將串流錄製到磁碟。",
-        "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。"
+        "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。",
+        "source": "這個路徑的串流來自哪裡。"
       },
       "sectionWarnings": {
         "pathHooks": "儲存掛鉤會重新啟動路徑並中斷其發布者的連線：在發布者重新連線之前，串流會中斷。"
@@ -409,7 +411,11 @@
         "passwordAria": "ICE 伺服器 {index} 的密碼",
         "removeAria": "移除 ICE 伺服器 {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX 不會接受這個值。請使用 publisher、redirect、rpiCamera，或以 rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep:// 或 wheps:// 開頭的 URL。"
+      },
       "help": {
+        "source": "串流的來源：publisher（由外部推送到這個路徑）、redirect、rpiCamera，或 MediaMTX 拉流的 URL。",
         "logLevel": "記錄輸出的詳細程度（error、warn、info 或 debug）。",
         "logDestinations": "記錄寫入位置（stdout、file 或 syslog）。",
         "logFile": "當 logDestinations 包含 file 時記錄檔的路徑。",
