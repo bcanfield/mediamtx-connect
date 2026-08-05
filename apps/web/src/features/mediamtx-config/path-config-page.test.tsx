@@ -1,4 +1,5 @@
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
+import { ORPCError } from '@orpc/server'
 import { screen, within } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
@@ -9,6 +10,13 @@ import { PathConfigPage } from './path-config-page'
 // entry again, so what this suite covers is the way back: the affordance shows
 // up only for a path that has an entry of its own, and only the confirm deletes.
 const deletePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['deletePathConfig']) => void>()
+
+const updatePathConfig = vi.fn<(input: RpcInputs['config']['mediamtx']['updatePathConfig']) => void>()
+
+// What MediaMTX says when it turns a write down. Thrown by the stub rather than
+// staged as the mock's return value: a rejected promise a mock still holds when
+// vitest resets it reads to vitest as an unhandled rejection.
+let rejection: Error | null = null
 
 // What the page reads: `resolved` carries the entry the values come from — a
 // wildcard until the path is materialized, its own name after — and
@@ -27,6 +35,11 @@ const stub: StubApi = {
   pathDefaults: () => defaults,
   pathConnections: () => connections,
   deletePathConfig,
+  updatePathConfig: (input) => {
+    updatePathConfig(input)
+    if (rejection)
+      throw rejection
+  },
 }
 
 const server = createRpcServer(stub)
@@ -36,9 +49,12 @@ afterEach(() => {
   server.resetHandlers()
   defaults = null
   connections = { publisher: null, readers: [] }
+  rejection = null
   vi.clearAllMocks()
 })
 afterAll(() => server.close())
+
+type User = Awaited<ReturnType<typeof renderWithProviders>>['user']
 
 async function renderPage(confName: string) {
   result = { status: 'resolved', confName, conf: { record: true } }
@@ -215,6 +231,114 @@ describe('inherited vs overridden', () => {
     expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
     expect(screen.queryByText('Inherited')).not.toBeInTheDocument()
     expect(screen.queryByText('Overridden')).not.toBeInTheDocument()
+  })
+})
+
+// `source` is the one key on this page that isn't a per-path override of path
+// defaults — it says where the stream comes from, and it is the field an
+// operator actually retypes when a camera moves.
+describe('editing the source', () => {
+  async function renderWithSource(source: string) {
+    result = { status: 'resolved', confName: 'stream1', conf: { record: true, source } }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  async function retypeSource(user: User, next: string) {
+    const field = await screen.findByLabelText('source')
+    await user.clear(field)
+    await user.type(field, next)
+    // The form validates on blur, so the message has to be reachable without
+    // pressing a save button that is by then already disabled.
+    await user.tab()
+  }
+
+  it('saves the new source as the path\'s own override', async () => {
+    const view = await renderWithSource('rtsp://old.lan:554/live')
+
+    await retypeSource(view.user, 'rtsp://new.lan:554/live')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+    // Only the key that changed: everything else keeps tracking path defaults.
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      {
+        name: 'stream1',
+        conf: { source: 'rtsp://new.lan:554/live' },
+      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  // The write is only half of it: a value the page then reads back as the old
+  // one would look saved and be gone on the next visit.
+  it('reads the saved source back on a fresh visit', async () => {
+    const view = await renderWithSource('rtsp://old.lan:554/live')
+
+    await retypeSource(view.user, 'rtsp://new.lan:554/live')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+
+    // What MediaMTX holds for the path now, served to a fresh mount.
+    const saved = updatePathConfig.mock.calls[0]![0].conf
+    result = { status: 'resolved', confName: 'stream1', conf: { record: true, ...saved } }
+    view.unmount()
+    await renderWithProviders(<PathConfigPage name="stream1" />)
+
+    expect(await screen.findByLabelText('source')).toHaveValue('rtsp://new.lan:554/live')
+  })
+
+  // MediaMTX takes three keywords or a URL in a scheme it can pull; anything
+  // else comes back as a refused PATCH, which is a slow way to learn about a typo.
+  it('rejects a source MediaMTX would refuse before sending anything', async () => {
+    const view = await renderWithSource('rtsp://old.lan:554/live')
+
+    await retypeSource(view.user, 'rtsp:/old.lan/live')
+
+    expect(await within(screen.getByTestId('field-source')).findByText(/MediaMTX won't accept this/))
+      .toBeInTheDocument()
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+    expect(updatePathConfig).not.toHaveBeenCalled()
+  })
+
+  it('accepts the keywords MediaMTX takes in place of a URL', async () => {
+    const view = await renderWithSource('rtsp://old.lan:554/live')
+
+    await retypeSource(view.user, 'publisher')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+    expect(updatePathConfig.mock.calls[0]?.[0].conf).toEqual({ source: 'publisher' })
+  })
+
+  // The mirror can only be as current as MediaMTX's own rule, so a rejection
+  // still has to land on the field that caused it rather than in a toast.
+  it('puts a server-side rejection on the field that caused it', async () => {
+    rejection = new ORPCError('BAD_REQUEST', {
+      message: 'invalid source: \'srt://cam.lan:8890\'',
+    })
+    const view = await renderWithSource('rtsp://old.lan:554/live')
+
+    await retypeSource(view.user, 'srt://cam.lan:8890')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    expect(await within(screen.getByTestId('field-source')).findByText(/invalid source/))
+      .toBeInTheDocument()
+  })
+
+  // Path defaults holds no `source`, so there is no inherited value for one to
+  // still match — a marker either way would claim a comparison we can't make.
+  it('marks the source neither inherited nor overridden', async () => {
+    defaults = { record: true, recordPath: './recordings/%path' }
+    await renderWithSource('rtsp://old.lan:554/live')
+
+    expect(await screen.findByLabelText('source')).toBeInTheDocument()
+    expect(within(screen.getByTestId('field-source')).queryByText(/Inherited|Overridden/))
+      .not
+      .toBeInTheDocument()
+    // The keys path defaults does hold are still marked.
+    expect(within(screen.getByTestId('field-recordPath')).getByText(/Inherited|Overridden/))
+      .toBeInTheDocument()
   })
 })
 

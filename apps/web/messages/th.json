@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "การบันทึก",
-        "pathHooks": "Hooks ของพาธ"
+        "pathHooks": "Hooks ของพาธ",
+        "source": "แหล่งที่มา"
       },
       "sectionDescriptions": {
         "logging": "เอาต์พุตล็อก ไทม์เอาต์ และขีดจำกัดส่วนกลาง",
@@ -381,7 +382,8 @@
         "webrtc": "การเล่นและการเผยแพร่ผ่านเบราว์เซอร์แบบหน่วงต่ำ",
         "srt": "เผยแพร่และรับชมสตรีมผ่าน SRT",
         "recording": "บันทึกสตรีมลงดิสก์",
-        "pathHooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์ในวงจรชีวิตของพาธนั้นเอง"
+        "pathHooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์ในวงจรชีวิตของพาธนั้นเอง",
+        "source": "สตรีมของพาธนี้มาจากที่ใด"
       },
       "sectionWarnings": {
         "pathHooks": "การบันทึก hook จะรีสตาร์ทพาธและตัดการเชื่อมต่อของผู้เผยแพร่ — สตรีมจะหยุดจนกว่าผู้เผยแพร่จะเชื่อมต่อใหม่"
@@ -409,7 +411,11 @@
         "passwordAria": "รหัสผ่านของเซิร์ฟเวอร์ ICE {index}",
         "removeAria": "ลบเซิร์ฟเวอร์ ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX จะไม่ยอมรับค่านี้ ให้ใช้ publisher, redirect, rpiCamera หรือ URL ที่ขึ้นต้นด้วย rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// หรือ wheps://"
+      },
       "help": {
+        "source": "สตรีมมาจากที่ใด: publisher (มีบางอย่างส่งสตรีมมายังพาธนี้), redirect, rpiCamera หรือ URL ที่ MediaMTX ดึงสตรีมมา",
         "logLevel": "ระดับความละเอียดของเอาต์พุตล็อก (error, warn, info หรือ debug)",
         "logDestinations": "ที่สำหรับเขียนล็อก (stdout, file หรือ syslog)",
         "logFile": "พาธของไฟล์ล็อกเมื่อ logDestinations มี file",

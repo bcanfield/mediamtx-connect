@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Tallennus",
-        "pathHooks": "Polun hookit"
+        "pathHooks": "Polun hookit",
+        "source": "Lähde"
       },
       "sectionDescriptions": {
         "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
@@ -381,7 +382,8 @@
         "webrtc": "Matalan viiveen selaintoisto ja julkaisu.",
         "srt": "Julkaise ja vastaanota striimejä SRT:llä.",
         "recording": "Tallenna striimit levylle.",
-        "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa."
+        "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa.",
+        "source": "Mistä tämän polun striimi tulee."
       },
       "sectionWarnings": {
         "pathHooks": "Hookin tallentaminen käynnistää polun uudelleen ja katkaisee sen julkaisijan yhteyden — striimi katkeaa, kunnes julkaisija yhdistää uudelleen."
@@ -409,7 +411,11 @@
         "passwordAria": "ICE-palvelimen {index} salasana",
         "removeAria": "Poista ICE-palvelin {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX ei hyväksy tätä. Käytä arvoa publisher, redirect tai rpiCamera taikka URL-osoitetta, joka alkaa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// tai wheps://."
+      },
       "help": {
+        "source": "Mistä striimi tulee: publisher (jokin julkaisee tähän polkuun), redirect, rpiCamera tai URL-osoite, josta MediaMTX hakee sen.",
         "logLevel": "Lokitulosteen yksityiskohtaisuus (error, warn, info tai debug).",
         "logDestinations": "Minne lokit kirjoitetaan (stdout, file tai syslog).",
         "logFile": "Lokitiedoston polku, kun logDestinations sisältää arvon file.",

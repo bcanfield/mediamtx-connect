@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Kayıt",
-        "pathHooks": "Yol Hook’ları"
+        "pathHooks": "Yol Hook’ları",
+        "source": "Kaynak"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
@@ -381,7 +382,8 @@
         "webrtc": "Düşük gecikmeli tarayıcı oynatma ve yayınlama.",
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
         "recording": "Akışları diske kaydeder.",
-        "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar."
+        "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar.",
+        "source": "Bu yolun akışının nereden geldiği."
       },
       "sectionWarnings": {
         "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir."
@@ -409,7 +411,11 @@
         "passwordAria": "ICE sunucusu {index} parolası",
         "removeAria": "ICE sunucusu {index} kaldır"
       },
+      "errors": {
+        "invalidSource": "MediaMTX bunu kabul etmez. publisher, redirect, rpiCamera ya da rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// veya wheps:// ile başlayan bir URL kullan."
+      },
       "help": {
+        "source": "Akışın nereden geldiği: publisher (bir şey bu yola yayın yapar), redirect, rpiCamera ya da MediaMTX’in akışı çektiği bir URL.",
         "logLevel": "Günlük çıktısının ayrıntı düzeyi (error, warn, info veya debug).",
         "logDestinations": "Günlüklerin yazılacağı yer (stdout, file veya syslog).",
         "logFile": "logDestinations file içerdiğinde günlük dosyasının yolu.",
