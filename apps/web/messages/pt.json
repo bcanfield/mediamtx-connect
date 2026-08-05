@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Gravação",
-        "pathHooks": "Hooks de caminho"
+        "pathHooks": "Hooks de caminho",
+        "source": "Origem"
       },
       "sectionDescriptions": {
         "logging": "Saída de registos, tempos limite e limites globais.",
@@ -381,7 +382,8 @@
         "webrtc": "Reprodução e publicação de baixa latência no navegador.",
         "srt": "Publica e lê transmissões por SRT.",
         "recording": "Grava as transmissões no disco.",
-        "pathHooks": "Comandos que o MediaMTX executa nos eventos do ciclo de vida de um caminho."
+        "pathHooks": "Comandos que o MediaMTX executa nos eventos do ciclo de vida de um caminho.",
+        "source": "De onde vem o stream deste caminho."
       },
       "sectionWarnings": {
         "pathHooks": "Guardar um hook reinicia o caminho e desliga o seu emissor — a transmissão cai até este voltar a ligar-se."
@@ -409,7 +411,11 @@
         "passwordAria": "Palavra-passe do servidor ICE {index}",
         "removeAria": "Remover servidor ICE {index}"
       },
+      "errors": {
+        "invalidSource": "O MediaMTX não vai aceitar isto. Usa publisher, redirect, rpiCamera ou um URL começado por rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// ou wheps://."
+      },
       "help": {
+        "source": "De onde vem o stream: publisher (algo publica neste caminho), redirect, rpiCamera ou um URL de onde o MediaMTX o vai buscar.",
         "logLevel": "Verbosidade da saída de registos (error, warn, info ou debug).",
         "logDestinations": "Onde escrever os registos (stdout, file ou syslog).",
         "logFile": "Caminho do ficheiro de registo quando logDestinations inclui file.",

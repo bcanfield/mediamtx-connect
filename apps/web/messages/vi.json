@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Ghi hình",
-        "pathHooks": "Hooks đường dẫn"
+        "pathHooks": "Hooks đường dẫn",
+        "source": "Nguồn"
       },
       "sectionDescriptions": {
         "logging": "Đầu ra nhật ký, thời gian chờ và giới hạn toàn cục.",
@@ -381,7 +382,8 @@
         "webrtc": "Phát và đẩy luồng độ trễ thấp trên trình duyệt.",
         "srt": "Đẩy và xem luồng qua SRT.",
         "recording": "Ghi luồng xuống đĩa.",
-        "pathHooks": "Các lệnh MediaMTX chạy khi có sự kiện vòng đời của chính đường dẫn."
+        "pathHooks": "Các lệnh MediaMTX chạy khi có sự kiện vòng đời của chính đường dẫn.",
+        "source": "Luồng của path này đến từ đâu."
       },
       "sectionWarnings": {
         "pathHooks": "Lưu một hook sẽ khởi động lại đường dẫn và ngắt kết nối nguồn phát — luồng sẽ dừng cho đến khi nguồn phát kết nối lại."
@@ -409,7 +411,11 @@
         "passwordAria": "Mật khẩu của máy chủ ICE {index}",
         "removeAria": "Xóa máy chủ ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX sẽ không chấp nhận giá trị này. Hãy dùng publisher, redirect, rpiCamera hoặc một URL bắt đầu bằng rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// hoặc wheps://."
+      },
       "help": {
+        "source": "Luồng đến từ đâu: publisher (có thứ gì đó đẩy luồng vào path này), redirect, rpiCamera hoặc một URL mà MediaMTX kéo luồng về.",
         "logLevel": "Mức độ chi tiết của nhật ký (error, warn, info hoặc debug).",
         "logDestinations": "Nơi ghi nhật ký (stdout, file hoặc syslog).",
         "logFile": "Đường dẫn tệp nhật ký khi logDestinations bao gồm file.",

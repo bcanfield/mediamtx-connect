@@ -130,9 +130,38 @@ export const PathDefaultsSchema = z.object({
 export type PathDefaults = z.infer<typeof PathDefaultsSchema>
 export type PathDefaultsFormData = z.input<typeof PathDefaultsSchema>
 
-// A path's own config is exactly the per-path override of the defaults scope —
-// same keys, applied to one path (ADR 0002).
-export const PathConfigSchema = PathDefaultsSchema
+// MediaMTX's own whitelist for a path's `source` (its conf validation): three
+// keywords, or a URL in one of the schemes it can pull from. Mirrored here so a
+// typo is caught by the form instead of coming back as a refused PATCH.
+const PATH_SOURCE_KEYWORDS = ['publisher', 'redirect', 'rpiCamera']
+
+const PATH_SOURCE_URL_SCHEMES = [
+  'rtsp',
+  'rtsps',
+  'rtmp',
+  'rtmps',
+  'http',
+  'https',
+  'udp',
+  'srt',
+  'whep',
+  'wheps',
+]
+
+export function isValidPathSource(source: string): boolean {
+  return PATH_SOURCE_KEYWORDS.includes(source)
+    || PATH_SOURCE_URL_SCHEMES.some(scheme => source.startsWith(`${scheme}://`))
+}
+
+// A path's own config is the per-path override of the defaults scope (ADR
+// 0002), plus `source`: where a stream comes from belongs to one path, and
+// MediaMTX does not serve it from pathdefaults.
+export const PathConfigSchema = PathDefaultsSchema.extend({
+  // Unrefined on the wire on purpose — MediaMTX is the authority on what it
+  // accepts, and a source kind added in a later version still has to read back.
+  // The form validates against `isValidPathSource` before it writes.
+  source: z.string().optional(),
+})
 
 export type PathConfig = z.infer<typeof PathConfigSchema>
 export type PathConfigFormData = z.input<typeof PathConfigSchema>
@@ -214,8 +243,7 @@ export type RtspTransport = (typeof RTSP_TRANSPORTS)[number]
 
 // Creating a path is a narrower surface than editing one: the guided add
 // composes `source` from its parts and sends the finished URL, and `source` is
-// not a path-defaults key, so `PathConfigSchema` — which is exactly the
-// per-path override of path defaults (ADR 0002) — can't carry it.
+// the only key it writes.
 export const AddPathInputSchema = z.object({
   name: z.string().min(1),
   source: z.string().min(1),

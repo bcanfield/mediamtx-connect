@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Felvétel",
-        "pathHooks": "Útvonal hookok"
+        "pathHooks": "Útvonal hookok",
+        "source": "Forrás"
       },
       "sectionDescriptions": {
         "logging": "Naplókimenet, időkorlátok és globális korlátok.",
@@ -381,7 +382,8 @@
         "webrtc": "Alacsony késleltetésű böngészős lejátszás és közzététel.",
         "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
         "recording": "Streamek rögzítése lemezre.",
-        "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat."
+        "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat.",
+        "source": "Honnan érkezik ennek az útvonalnak a streamje."
       },
       "sectionWarnings": {
         "pathHooks": "Egy hook mentése újraindítja az útvonalat és bontja a közzétevő kapcsolatát — a stream megszakad, amíg a közzétevő újra nem csatlakozik."
@@ -409,7 +411,11 @@
         "passwordAria": "{index}. ICE szerver jelszava",
         "removeAria": "{index}. ICE szerver eltávolítása"
       },
+      "errors": {
+        "invalidSource": "A MediaMTX ezt nem fogadja el. Használd a publisher, redirect vagy rpiCamera értéket, illetve egy rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// vagy wheps:// kezdetű URL-t."
+      },
       "help": {
+        "source": "Honnan érkezik a stream: publisher (valami erre az útvonalra publikál), redirect, rpiCamera, vagy egy URL, ahonnan a MediaMTX lehúzza.",
         "logLevel": "A naplókimenet részletessége (error, warn, info vagy debug).",
         "logDestinations": "Hová íródjanak a naplók (stdout, file vagy syslog).",
         "logFile": "A naplófájl elérési útja, ha a logDestinations tartalmazza a file értéket.",

@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Εγγραφή",
-        "pathHooks": "Hooks διαδρομής"
+        "pathHooks": "Hooks διαδρομής",
+        "source": "Πηγή"
       },
       "sectionDescriptions": {
         "logging": "Έξοδος καταγραφής, χρονικά όρια και καθολικά όρια.",
@@ -381,7 +382,8 @@
         "webrtc": "Αναπαραγωγή και δημοσίευση στον περιηγητή με χαμηλή καθυστέρηση.",
         "srt": "Δημοσίευση και ανάγνωση ροών μέσω SRT.",
         "recording": "Εγγραφή ροών στον δίσκο.",
-        "pathHooks": "Εντολές που εκτελεί το MediaMTX στα συμβάντα κύκλου ζωής της ίδιας της διαδρομής."
+        "pathHooks": "Εντολές που εκτελεί το MediaMTX στα συμβάντα κύκλου ζωής της ίδιας της διαδρομής.",
+        "source": "Από πού προέρχεται η ροή αυτής της διαδρομής."
       },
       "sectionWarnings": {
         "pathHooks": "Η αποθήκευση ενός hook επανεκκινεί τη διαδρομή και αποσυνδέει τον εκδότη της — η ροή διακόπτεται μέχρι ο εκδότης να επανασυνδεθεί."
@@ -409,7 +411,11 @@
         "passwordAria": "Κωδικός πρόσβασης διακομιστή ICE {index}",
         "removeAria": "Αφαίρεση διακομιστή ICE {index}"
       },
+      "errors": {
+        "invalidSource": "Το MediaMTX δεν θα το δεχτεί αυτό. Χρησιμοποίησε publisher, redirect, rpiCamera ή ένα URL που ξεκινά με rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// ή wheps://."
+      },
       "help": {
+        "source": "Από πού προέρχεται η ροή: publisher (κάτι δημοσιεύει σε αυτή τη διαδρομή), redirect, rpiCamera ή ένα URL από το οποίο τη λαμβάνει το MediaMTX.",
         "logLevel": "Λεπτομέρεια της εξόδου καταγραφής (error, warn, info ή debug).",
         "logDestinations": "Πού να γράφονται τα αρχεία καταγραφής (stdout, file ή syslog).",
         "logFile": "Διαδρομή του αρχείου καταγραφής όταν το logDestinations περιλαμβάνει file.",

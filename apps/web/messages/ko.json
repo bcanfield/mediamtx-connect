@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "녹화",
-        "pathHooks": "경로 훅"
+        "pathHooks": "경로 훅",
+        "source": "소스"
       },
       "sectionDescriptions": {
         "logging": "로그 출력, 타임아웃 및 전역 제한.",
@@ -381,7 +382,8 @@
         "webrtc": "저지연 브라우저 재생 및 게시.",
         "srt": "SRT로 스트림을 게시하고 시청합니다.",
         "recording": "스트림을 디스크에 녹화합니다.",
-        "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령."
+        "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령.",
+        "source": "이 경로의 스트림이 어디에서 오는지."
       },
       "sectionWarnings": {
         "pathHooks": "훅을 저장하면 경로가 다시 시작되고 게시자의 연결이 끊깁니다. 게시자가 다시 연결될 때까지 스트림이 중단됩니다."
@@ -409,7 +411,11 @@
         "passwordAria": "ICE 서버 {index} 비밀번호",
         "removeAria": "ICE 서버 {index} 제거"
       },
+      "errors": {
+        "invalidSource": "MediaMTX가 이 값을 받아들이지 않습니다. publisher, redirect, rpiCamera 또는 rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, wheps:// 로 시작하는 URL을 사용하세요."
+      },
       "help": {
+        "source": "스트림의 출처: publisher(무언가가 이 경로로 발행), redirect, rpiCamera 또는 MediaMTX가 가져올 URL.",
         "logLevel": "로그 출력의 상세 수준(error, warn, info 또는 debug).",
         "logDestinations": "로그를 기록할 위치(stdout, file 또는 syslog).",
         "logFile": "logDestinations에 file이 포함된 경우 로그 파일의 경로.",

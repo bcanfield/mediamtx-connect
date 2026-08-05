@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "रिकॉर्डिंग",
-        "pathHooks": "पथ Hooks"
+        "pathHooks": "पथ Hooks",
+        "source": "स्रोत"
       },
       "sectionDescriptions": {
         "logging": "लॉग आउटपुट, टाइमआउट और ग्लोबल सीमाएँ।",
@@ -381,7 +382,8 @@
         "webrtc": "कम विलंबता वाला ब्राउज़र प्लेबैक और प्रकाशन।",
         "srt": "SRT पर स्ट्रीम प्रकाशित करें और पढ़ें।",
         "recording": "स्ट्रीम को डिस्क पर रिकॉर्ड करें।",
-        "pathHooks": "पाथ के अपने लाइफ़साइकिल इवेंट पर MediaMTX द्वारा चलाए जाने वाले कमांड।"
+        "pathHooks": "पाथ के अपने लाइफ़साइकिल इवेंट पर MediaMTX द्वारा चलाए जाने वाले कमांड।",
+        "source": "इस पाथ की स्ट्रीम कहाँ से आती है।"
       },
       "sectionWarnings": {
         "pathHooks": "हुक सहेजने पर पाथ पुनः प्रारंभ होता है और उसका प्रकाशक डिस्कनेक्ट हो जाता है — प्रकाशक के दोबारा कनेक्ट होने तक स्ट्रीम बंद रहेगी।"
@@ -409,7 +411,11 @@
         "passwordAria": "ICE सर्वर {index} पासवर्ड",
         "removeAria": "ICE सर्वर {index} हटाएँ"
       },
+      "errors": {
+        "invalidSource": "MediaMTX इसे स्वीकार नहीं करेगा। publisher, redirect, rpiCamera, या rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// या wheps:// से शुरू होने वाला URL इस्तेमाल करें।"
+      },
       "help": {
+        "source": "स्ट्रीम कहाँ से आती है: publisher (कोई इस पाथ पर पब्लिश करता है), redirect, rpiCamera, या वह URL जहाँ से MediaMTX उसे खींचता है।",
         "logLevel": "लॉग आउटपुट की वर्बोसिटी (error, warn, info या debug)।",
         "logDestinations": "लॉग कहाँ लिखे जाएँ (stdout, file या syslog)।",
         "logFile": "logDestinations में file शामिल होने पर लॉग फ़ाइल का पाथ।",

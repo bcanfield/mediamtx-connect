@@ -1,7 +1,13 @@
 import type { GlobalConfigFormData, PathConfigFormData, PathDefaultsFormData } from '@connect/contract'
 import type { FieldPath, FieldValues } from 'react-hook-form'
 import type { ZodType } from 'zod'
-import { GlobalConfigSchema, PathConfigSchema, PathDefaultsSchema } from '@connect/contract'
+import {
+  GlobalConfigSchema,
+  isValidPathSource,
+  PathConfigSchema,
+  PathDefaultsSchema,
+} from '@connect/contract'
+import { z } from 'zod'
 
 export type FieldKind = 'text' | 'number' | 'switch' | 'list'
 
@@ -192,9 +198,25 @@ export const PATH_DEFAULTS_SCOPE: ConfigScope<PathDefaultsFormData> = {
   sections: PATH_SECTIONS,
 }
 
-export const PATH_CONFIG_SCOPE: ConfigScope<PathConfigFormData> = {
-  schema: PathConfigSchema,
-  sections: PATH_SECTIONS,
+// `source` is a path's own key — MediaMTX serves it per path, not from
+// pathdefaults — so it heads the per-path scope and appears on no other.
+const SOURCE_SECTION: SectionDef<PathConfigFormData> = {
+  id: 'source',
+  fields: [{ name: 'source', kind: 'text' }],
+}
+
+// Built rather than declared like the other scopes: the source rule mirrors
+// MediaMTX's own whitelist, and the message it fails with is localized.
+export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathConfigFormData> {
+  return {
+    schema: PathConfigSchema.extend({
+      source: z
+        .string()
+        .refine(isValidPathSource, { message: invalidSourceMessage })
+        .optional(),
+    }),
+    sections: [SOURCE_SECTION, ...PATH_SECTIONS],
+  }
 }
 
 export function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): string[] {

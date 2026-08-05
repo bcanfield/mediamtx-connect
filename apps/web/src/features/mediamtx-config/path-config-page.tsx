@@ -2,7 +2,7 @@ import type { PathConfigResult } from '@connect/contract'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { TriangleAlertIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
 
@@ -22,11 +22,14 @@ import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
 
 import { MediaMTXConfigForm } from './mediamtx-config-form'
-import { PATH_CONFIG_SCOPE } from './sections'
+import { pathConfigScope } from './sections'
 
 export function PathConfigPage({ name, section }: { name: string, section?: string }) {
   const t = useTranslations('Config')
   const queryClient = useQueryClient()
+  // The form re-arms its scroll spy whenever the scope's identity changes.
+  const invalidSource = t('mediamtxForm.errors.invalidSource')
+  const scope = useMemo(() => pathConfigScope(invalidSource), [invalidSource])
   const options = orpc.config.mediamtx.getPathConfig.queryOptions({ input: { name } })
   const pathConfig = useQuery(options)
   // What the values below are measured against: a key still equal to its
@@ -72,7 +75,7 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
           // Reverting swaps every value for the inherited one, and the
           // form only reads `conf` when it mounts.
           key={effective.confName}
-          scope={PATH_CONFIG_SCOPE}
+          scope={scope}
           conf={effective.conf}
           initialSection={section}
           inheritedValues={pathDefaults.data ?? undefined}

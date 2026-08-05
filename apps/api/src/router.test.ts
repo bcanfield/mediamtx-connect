@@ -43,6 +43,7 @@ const api = {
   configPathsList: vi.fn(),
   configPathGet: vi.fn(),
   configPathAdd: vi.fn(),
+  configPathPatch: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -364,6 +365,53 @@ describe('config.mediamtx.addPath', () => {
       name: 'front-door',
       source: 'rtsp://cam.lan:554/live',
     })).rejects.toThrow('Failed to add path')
+  })
+})
+
+describe('config.mediamtx.updatePathConfig', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('patches the path\'s own entry with just the keys that changed', async () => {
+    api.configPathGet.mockResolvedValue({ source: 'rtsp://old.lan:554/live' })
+
+    await call(router.config.mediamtx.updatePathConfig, {
+      name: 'front-door',
+      conf: { source: 'rtsp://new.lan:554/live' },
+    })
+
+    expect(api.configPathPatch).toHaveBeenCalledWith('front-door', {
+      source: 'rtsp://new.lan:554/live',
+    })
+  })
+
+  // The reason is the only thing that says which field to go back to; a generic
+  // "failed" would leave the form with no way to point at one.
+  it('passes MediaMTX\'s own reason through on a refused write', async () => {
+    api.configPathGet.mockResolvedValue({ source: 'publisher' })
+    api.configPathPatch.mockRejectedValue(
+      new MediaMtxError(400, 'invalid source: \'nope\'', 'PATCH /config/paths/patch/front-door'),
+    )
+
+    await expect(call(router.config.mediamtx.updatePathConfig, {
+      name: 'front-door',
+      conf: { source: 'nope' },
+    })).rejects.toThrow('invalid source')
+  })
+
+  it('does not claim a reason when the server gave none', async () => {
+    api.configPathGet.mockRejectedValue(new Error('fetch failed'))
+
+    await expect(call(router.config.mediamtx.updatePathConfig, {
+      name: 'front-door',
+      conf: { source: 'publisher' },
+    })).rejects.toThrow('Failed to update path config')
   })
 })
 

@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { MediaMTXConfigForm } from './mediamtx-config-form'
-import { GLOBAL_SCOPE, PATH_CONFIG_SCOPE, PATH_DEFAULTS_SCOPE } from './sections'
+import { GLOBAL_SCOPE, PATH_DEFAULTS_SCOPE, pathConfigScope } from './sections'
 
 // Saving a runOn* key makes MediaMTX re-create the path, which drops the
 // publisher, while a record* save leaves the session alone (ADR 0002's
@@ -15,7 +15,7 @@ const noop = vi.fn(async () => {})
 describe('path hooks save warning', () => {
   it('warns on the per-path scope', async () => {
     await renderWithProviders(
-      <MediaMTXConfigForm scope={PATH_CONFIG_SCOPE} conf={{}} onSave={noop} />,
+      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
     )
 
     expect(screen.getByRole('heading', { name: 'Path Hooks' })).toBeInTheDocument()

@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Enregistrement",
-        "pathHooks": "Hooks de chemin"
+        "pathHooks": "Hooks de chemin",
+        "source": "Source"
       },
       "sectionDescriptions": {
         "logging": "Sortie des journaux, délais d'expiration et limites globales.",
@@ -381,7 +382,8 @@
         "webrtc": "Lecture et publication à faible latence dans le navigateur.",
         "srt": "Publier et lire des flux via SRT.",
         "recording": "Enregistre les flux sur le disque.",
-        "pathHooks": "Commandes que MediaMTX exécute lors des événements de cycle de vie d'un chemin."
+        "pathHooks": "Commandes que MediaMTX exécute lors des événements de cycle de vie d'un chemin.",
+        "source": "D’où provient le flux de ce chemin."
       },
       "sectionWarnings": {
         "pathHooks": "Enregistrer un hook redémarre le chemin et déconnecte son émetteur : le flux s'interrompt jusqu'à ce qu'il se reconnecte."
@@ -409,7 +411,11 @@
         "passwordAria": "Mot de passe du serveur ICE {index}",
         "removeAria": "Supprimer le serveur ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX refusera cette valeur. Utilise publisher, redirect, rpiCamera ou une URL commençant par rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// ou wheps://."
+      },
       "help": {
+        "source": "D’où provient le flux : publisher (quelque chose publie sur ce chemin), redirect, rpiCamera ou une URL depuis laquelle MediaMTX le récupère.",
         "logLevel": "Verbosité de la sortie des journaux (error, warn, info ou debug).",
         "logDestinations": "Où écrire les journaux (stdout, file ou syslog).",
         "logFile": "Chemin du fichier journal lorsque logDestinations inclut file.",

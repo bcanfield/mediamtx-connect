@@ -2,6 +2,7 @@ import type { GlobalConfigFormData } from '@connect/contract'
 import type { Control, FieldErrors, FieldPath, FieldValues, Resolver } from 'react-hook-form'
 import type { ConfigScope, SectionDef } from './sections'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ORPCError } from '@orpc/client'
 import { TriangleAlertIcon } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
 import { useForm, useFormState, useWatch } from 'react-hook-form'
@@ -17,6 +18,7 @@ import { cn } from '@/lib/utils'
 import { InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
 import { IceServersRows } from './ice-servers-rows'
 import { countErrorsForSection } from './sections'
+import { offendingField } from './server-rejection'
 
 // The rail form for one MediaMTX config scope (ADR 0002). Global and path
 // defaults differ only in schema, sections, and the procedure that saves them.
@@ -59,9 +61,18 @@ export function MediaMTXConfigForm<T extends FieldValues>({
       form.reset(values)
       toast.success(t('toasts.success'))
     }
-    catch {
+    catch (error) {
+      // MediaMTX's own words for a write it turned down, forwarded as a
+      // BAD_REQUEST. It names the key it disliked, so the message goes on that
+      // field too — a toast alone leaves the operator hunting for it.
+      const reason = error instanceof ORPCError && error.code === 'BAD_REQUEST'
+        ? error.message
+        : null
+      const field = reason && offendingField(reason, Object.keys(changed))
+      if (field)
+        form.setError(field as FieldPath<T>, { message: reason })
       toast.error(t('toasts.errorTitle'), {
-        description: t('toasts.errorDescription'),
+        description: reason ?? t('toasts.errorDescription'),
       })
     }
   }

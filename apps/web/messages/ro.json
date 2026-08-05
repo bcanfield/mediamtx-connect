@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Înregistrare",
-        "pathHooks": "Hook-uri de cale"
+        "pathHooks": "Hook-uri de cale",
+        "source": "Sursă"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
@@ -381,7 +382,8 @@
         "webrtc": "Redare și publicare în browser cu latență redusă.",
         "srt": "Publicați și citiți fluxuri prin SRT.",
         "recording": "Înregistrează fluxurile pe disc.",
-        "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii."
+        "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii.",
+        "source": "De unde vine fluxul acestei căi."
       },
       "sectionWarnings": {
         "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează."
@@ -409,7 +411,11 @@
         "passwordAria": "Parola serverului ICE {index}",
         "removeAria": "Elimină serverul ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX nu va accepta această valoare. Folosește publisher, redirect, rpiCamera sau un URL care începe cu rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// sau wheps://."
+      },
       "help": {
+        "source": "De unde vine fluxul: publisher (ceva publică pe această cale), redirect, rpiCamera sau un URL de unde îl preia MediaMTX.",
         "logLevel": "Nivelul de detaliu al jurnalului (error, warn, info sau debug).",
         "logDestinations": "Unde se scriu jurnalele (stdout, file sau syslog).",
         "logFile": "Calea fișierului de jurnal când logDestinations include file.",

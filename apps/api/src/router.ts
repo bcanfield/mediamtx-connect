@@ -299,6 +299,10 @@ export const router = os.router({
         }
         catch (error) {
           logger.error({ err: error }, 'Failed to update path config')
+          // A refused write is the operator's to fix, and MediaMTX's reason
+          // names the key it disliked — the form puts it back on that field.
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path config' })
         }
       }),

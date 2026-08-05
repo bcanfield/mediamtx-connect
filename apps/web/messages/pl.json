@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Nagrywanie",
-        "pathHooks": "Hooki ścieżki"
+        "pathHooks": "Hooki ścieżki",
+        "source": "Źródło"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
@@ -381,7 +382,8 @@
         "webrtc": "Odtwarzanie i publikowanie w przeglądarce z niskim opóźnieniem.",
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
         "recording": "Nagrywaj strumienie na dysk.",
-        "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki."
+        "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki.",
+        "source": "Skąd pochodzi strumień tej ścieżki."
       },
       "sectionWarnings": {
         "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie."
@@ -409,7 +411,11 @@
         "passwordAria": "Hasło serwera ICE {index}",
         "removeAria": "Usuń serwer ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX nie przyjmie tej wartości. Użyj publisher, redirect, rpiCamera albo adresu URL zaczynającego się od rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// lub wheps://."
+      },
       "help": {
+        "source": "Skąd pochodzi strumień: publisher (coś publikuje na tę ścieżkę), redirect, rpiCamera albo adres URL, z którego MediaMTX go pobiera.",
         "logLevel": "Szczegółowość wyjścia logów (error, warn, info lub debug).",
         "logDestinations": "Gdzie zapisywać logi (stdout, file lub syslog).",
         "logFile": "Ścieżka pliku logu, gdy logDestinations zawiera file.",
