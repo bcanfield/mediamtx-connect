@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Nahrávání",
-        "pathHooks": "Hooky cesty"
+        "pathHooks": "Hooky cesty",
+        "source": "Zdroj"
       },
       "sectionDescriptions": {
         "logging": "Výstup logů, časové limity a globální limity.",
@@ -381,7 +382,8 @@
         "webrtc": "Přehrávání a publikování v prohlížeči s nízkou latencí.",
         "srt": "Publikujte a přijímejte streamy přes SRT.",
         "recording": "Nahrávat streamy na disk.",
-        "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty."
+        "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty.",
+        "source": "Odkud pochází stream této cesty."
       },
       "sectionWarnings": {
         "pathHooks": "Uložení hooku restartuje cestu a odpojí její vysílač — stream vypadne, dokud se vysílač znovu nepřipojí."
@@ -409,7 +411,11 @@
         "passwordAria": "Heslo serveru ICE {index}",
         "removeAria": "Odebrat server ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX tuto hodnotu nepřijme. Použij publisher, redirect, rpiCamera nebo URL začínající na rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// či wheps://."
+      },
       "help": {
+        "source": "Odkud stream pochází: publisher (něco publikuje do této cesty), redirect, rpiCamera nebo URL, ze které si ho MediaMTX stahuje.",
         "logLevel": "Podrobnost výstupu logu (error, warn, info nebo debug).",
         "logDestinations": "Kam zapisovat logy (stdout, file nebo syslog).",
         "logFile": "Cesta k souboru logu, když logDestinations obsahuje file.",

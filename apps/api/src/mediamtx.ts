@@ -37,10 +37,9 @@ export interface MediaMtxPathConfList {
   items?: MediaMtxPathConf[]
 }
 
-// The create body carries `source`, which `PathConfig` doesn't: that schema is
-// the per-path override of path defaults, and `source` is not one of them.
+// The create body also carries `rtspTransport`, which the per-path editor
+// doesn't surface — only the guided add writes it.
 export type MediaMtxPathCreate = PathConfig & {
-  source?: string
   rtspTransport?: string
 }
 

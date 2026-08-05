@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "রেকর্ডিং",
-        "pathHooks": "পাথ Hooks"
+        "pathHooks": "পাথ Hooks",
+        "source": "উৎস"
       },
       "sectionDescriptions": {
         "logging": "লগ আউটপুট, টাইমআউট এবং গ্লোবাল সীমা।",
@@ -381,7 +382,8 @@
         "webrtc": "কম লেটেন্সির ব্রাউজার প্লেব্যাক ও প্রকাশনা।",
         "srt": "SRT-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
         "recording": "স্ট্রিম ডিস্কে রেকর্ড করুন।",
-        "pathHooks": "পাথের নিজস্ব লাইফসাইকেল ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।"
+        "pathHooks": "পাথের নিজস্ব লাইফসাইকেল ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।",
+        "source": "এই পাথের স্ট্রিম কোথা থেকে আসে।"
       },
       "sectionWarnings": {
         "pathHooks": "হুক সেভ করলে পাথ পুনরায় চালু হয় এবং তার প্রকাশকের সংযোগ বিচ্ছিন্ন হয় — প্রকাশক পুনরায় সংযুক্ত না হওয়া পর্যন্ত স্ট্রিম বন্ধ থাকবে।"
@@ -409,7 +411,11 @@
         "passwordAria": "ICE সার্ভার {index} পাসওয়ার্ড",
         "removeAria": "ICE সার্ভার {index} সরান"
       },
+      "errors": {
+        "invalidSource": "MediaMTX এটি গ্রহণ করবে না। publisher, redirect, rpiCamera, অথবা rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// বা wheps:// দিয়ে শুরু হওয়া একটি URL ব্যবহার করুন।"
+      },
       "help": {
+        "source": "স্ট্রিম কোথা থেকে আসে: publisher (কিছু একটা এই পাথে পাবলিশ করে), redirect, rpiCamera, অথবা যে URL থেকে MediaMTX সেটি টেনে আনে।",
         "logLevel": "লগ আউটপুটের বিস্তারিত মাত্রা (error, warn, info বা debug)।",
         "logDestinations": "লগ কোথায় লেখা হবে (stdout, file বা syslog)।",
         "logFile": "logDestinations-এ file থাকলে লগ ফাইলের পাথ।",

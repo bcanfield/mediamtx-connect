@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Aufzeichnung",
-        "pathHooks": "Pfad-Hooks"
+        "pathHooks": "Pfad-Hooks",
+        "source": "Quelle"
       },
       "sectionDescriptions": {
         "logging": "Log-Ausgabe, Timeouts und globale Grenzwerte.",
@@ -381,7 +382,8 @@
         "webrtc": "Browser-Wiedergabe und -Veröffentlichung mit niedriger Latenz.",
         "srt": "Streams über SRT veröffentlichen und lesen.",
         "recording": "Streams auf die Festplatte aufzeichnen.",
-        "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt."
+        "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt.",
+        "source": "Woher der Stream dieses Pfads kommt."
       },
       "sectionWarnings": {
         "pathHooks": "Das Speichern eines Hooks startet den Pfad neu und trennt seinen Publisher — der Stream fällt aus, bis der Publisher sich wieder verbindet."
@@ -409,7 +411,11 @@
         "passwordAria": "Passwort von ICE-Server {index}",
         "removeAria": "ICE-Server {index} entfernen"
       },
+      "errors": {
+        "invalidSource": "MediaMTX akzeptiert diesen Wert nicht. Verwende publisher, redirect, rpiCamera oder eine URL, die mit rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// oder wheps:// beginnt."
+      },
       "help": {
+        "source": "Woher der Stream kommt: publisher (etwas veröffentlicht auf diesem Pfad), redirect, rpiCamera oder eine URL, von der MediaMTX ihn abruft.",
         "logLevel": "Ausführlichkeit der Log-Ausgabe (error, warn, info oder debug).",
         "logDestinations": "Wohin Logs geschrieben werden (stdout, file oder syslog).",
         "logFile": "Pfad der Log-Datei, wenn logDestinations file enthält.",

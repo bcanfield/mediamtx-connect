@@ -369,7 +369,8 @@
         "webrtc": "WebRTC",
         "srt": "SRT",
         "recording": "Perekaman",
-        "pathHooks": "Hooks Jalur"
+        "pathHooks": "Hooks Jalur",
+        "source": "Sumber"
       },
       "sectionDescriptions": {
         "logging": "Keluaran log, batas waktu, dan batas global.",
@@ -381,7 +382,8 @@
         "webrtc": "Pemutaran dan publikasi di peramban dengan latensi rendah.",
         "srt": "Publikasikan dan baca aliran melalui SRT.",
         "recording": "Rekam aliran ke disk.",
-        "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri."
+        "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri.",
+        "source": "Dari mana stream path ini berasal."
       },
       "sectionWarnings": {
         "pathHooks": "Menyimpan hook akan memulai ulang jalur dan memutus koneksi publisher-nya — aliran terhenti sampai publisher terhubung kembali."
@@ -409,7 +411,11 @@
         "passwordAria": "Kata sandi server ICE {index}",
         "removeAria": "Hapus server ICE {index}"
       },
+      "errors": {
+        "invalidSource": "MediaMTX tidak akan menerima nilai ini. Gunakan publisher, redirect, rpiCamera, atau URL yang diawali rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, atau wheps://."
+      },
       "help": {
+        "source": "Dari mana stream berasal: publisher (sesuatu mem-publish ke path ini), redirect, rpiCamera, atau URL yang ditarik MediaMTX.",
         "logLevel": "Tingkat kerincian keluaran log (error, warn, info, atau debug).",
         "logDestinations": "Tempat menulis log (stdout, file, atau syslog).",
         "logFile": "Jalur berkas log saat logDestinations menyertakan file.",

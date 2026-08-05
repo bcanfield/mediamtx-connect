@@ -67,7 +67,9 @@ export function RowShell({
 // indistinguishable from one that leaves it alone, and reads as inherited.
 //
 // Renders nothing for the scopes that inherit from nothing (global, path
-// defaults), which pass no `inheritedValues`.
+// defaults), which pass no `inheritedValues`, and nothing for a key the
+// inherited scope doesn't hold at all — `source` is a path's own, so there is
+// no default for it to still match.
 export function InheritanceMarker({
   inheritedValues,
   name,
@@ -78,7 +80,7 @@ export function InheritanceMarker({
   value: unknown
 }) {
   const t = useTranslations('Config.mediamtxForm.inheritance')
-  if (!inheritedValues)
+  if (!inheritedValues || !(name in inheritedValues))
     return null
 
   const inherited = sameValue(value, inheritedValues[name])
