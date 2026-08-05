@@ -1,3 +1,15 @@
+## [2.4.0](https://github.com/bcanfield/mediamtx-connect/compare/2.3.0...2.4.0) (2026-08-05)
+
+### Features
+
+* Path deletion ([#322](https://github.com/bcanfield/mediamtx-connect/issues/322)) ([433c4fd](https://github.com/bcanfield/mediamtx-connect/commit/433c4fd56f1d9e4e0c1ceb677f465a4db726b57f))
+* Per-path detail page ([#321](https://github.com/bcanfield/mediamtx-connect/issues/321)) ([7235983](https://github.com/bcanfield/mediamtx-connect/commit/7235983038b09c634504c5e8dd512b50297be7c1))
+* Warn on the live view when MediaMTX advertises only loopback WebRTC hosts ([#319](https://github.com/bcanfield/mediamtx-connect/issues/319)) ([f87461e](https://github.com/bcanfield/mediamtx-connect/commit/f87461e8c02441d4b4e6966af6d3346dc1d1a527))
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#320](https://github.com/bcanfield/mediamtx-connect/issues/320)) ([bd4d6a1](https://github.com/bcanfield/mediamtx-connect/commit/bd4d6a178c08c494d4e1c385267b15aa8ee6bcc1))
+
 ## [2.3.0](https://github.com/bcanfield/mediamtx-connect/compare/2.2.0...2.3.0) (2026-08-03)
 
 ### Features
