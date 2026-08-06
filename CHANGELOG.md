@@ -1,3 +1,13 @@
+## [2.5.0](https://github.com/bcanfield/mediamtx-connect/compare/2.4.0...2.5.0) (2026-08-06)
+
+### Features
+
+* Path configuration editing ([#325](https://github.com/bcanfield/mediamtx-connect/issues/325)) ([4a36ff7](https://github.com/bcanfield/mediamtx-connect/commit/4a36ff71bc72b40ca0b99978d73f2372c94fb550))
+
+### Bug Fixes
+
+* **deps:** update dependency tsx to v4.23.5 ([#327](https://github.com/bcanfield/mediamtx-connect/issues/327)) ([5c4bcaf](https://github.com/bcanfield/mediamtx-connect/commit/5c4bcaf8555b71b8ee2fb7a70d0b89b194a0419d))
+
 ## [2.4.0](https://github.com/bcanfield/mediamtx-connect/compare/2.3.0...2.4.0) (2026-08-05)
 
 ### Features
