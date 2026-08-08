@@ -15,7 +15,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | E2E | Playwright | Only what needs a real server: live MediaMTX round-trips, WHEP over a real peer connection, an ffmpeg snapshot, accessibility of the rendered document | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-**215 Vitest tests (73 api + 136 web + 6 scripts), 24 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
+**265 Vitest tests (118 api + 141 web + 6 scripts), 24 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
 
 ## Component tests
 

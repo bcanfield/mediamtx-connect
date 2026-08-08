@@ -26,4 +26,6 @@ Every test was verified to fail against a mutated source before being accepted. 
 
 The claim below that "E2E does exercise it in api.spec.ts" was **false**: those tests targeted a stream named `camera1`, which does not exist in `tests/fixtures/`, so every one of them took the `else` branch and asserted a 404. The 206 assertion never ran. api.spec.ts and mediamtx.spec.ts are now deleted.
 
+**`recordings-fs.ts` and `mediamtx.ts` paid down 2026-08-01** (#304, the baseline half of docs/adr/0004): colocated suites for the last two substantive api modules — the client's URL/method/header composition and its error mapping over a stubbed `fetch`, and the fs helpers against a real temp tree. Both were swept against 28 source mutations and no test survived all of them. What remains of this entry is packages/contract schemas.
+
 The tooling question is settled, so what remains is writing tests rather than choosing a framework; principal drops 3d → 1d. Still uncovered: packages/contract schemas, recordings-fs.ts, and the RHF forms. The forms half is the expensive part: apps/web has no test runner at all — Vitest was added to apps/api only — so it needs a jsdom/browser-mode setup that does not exist yet.
