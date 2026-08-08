@@ -271,6 +271,22 @@
         "unreachable": "Ingen respons fra MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Livestatus",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktiv",
+      "idleLead": "Ingenting publiserer til denne stien akkurat nå. Spor og tellere vises så snart den går live.",
+      "unreachable": "Fikk ikke kontakt med MediaMTX for å lese statusen til denne stien.",
+      "uptime": "Oppetid",
+      "readers": "Lesere",
+      "received": "Mottatt",
+      "sent": "Sendt",
+      "framesInError": "Bilder med feil",
+      "tracks": "Spor",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publiserer via {type}",
+      "readerTypes": "Leses via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Bane-konfigurasjon · {name}",
       "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",

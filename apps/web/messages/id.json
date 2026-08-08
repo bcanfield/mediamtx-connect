@@ -271,6 +271,22 @@
         "unreachable": "Tidak ada respons dari MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Status langsung",
+      "stateLive": "LIVE",
+      "stateIdle": "tidak aktif",
+      "idleLead": "Saat ini tidak ada yang menerbitkan ke jalur ini. Trek dan penghitung muncul begitu jalur ini aktif.",
+      "unreachable": "Tidak dapat menghubungi MediaMTX untuk membaca status jalur ini.",
+      "uptime": "Waktu aktif",
+      "readers": "Pembaca",
+      "received": "Diterima",
+      "sent": "Dikirim",
+      "framesInError": "Frame bermasalah",
+      "tracks": "Trek",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Sedang menyiarkan lewat {type}",
+      "readerTypes": "Dibaca lewat {types}"
+    },
     "pathConfig": {
       "pageHeader": "Konfigurasi jalur · {name}",
       "pageSubHeader": "Pengaturan stream ini, disimpan ke server.",

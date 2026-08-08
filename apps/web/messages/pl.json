@@ -271,6 +271,22 @@
         "unreachable": "Brak odpowiedzi od MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Stan na żywo",
+      "stateLive": "LIVE",
+      "stateIdle": "bezczynna",
+      "idleLead": "W tej chwili nic nie publikuje na tej ścieżce. Ścieżki mediów i liczniki pojawią się, gdy wejdzie na żywo.",
+      "unreachable": "Nie udało się połączyć z MediaMTX, aby odczytać stan tej ścieżki.",
+      "uptime": "Czas działania",
+      "readers": "Odbiorcy",
+      "received": "Odebrano",
+      "sent": "Wysłano",
+      "framesInError": "Klatki z błędami",
+      "tracks": "Ścieżki mediów",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Trwa publikowanie przez {type}",
+      "readerTypes": "Odczyt przez {types}"
+    },
     "pathConfig": {
       "pageHeader": "Konfiguracja ścieżki · {name}",
       "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",

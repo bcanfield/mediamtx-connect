@@ -271,6 +271,22 @@
         "unreachable": "Niciun răspuns de la MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Stare live",
+      "stateLive": "LIVE",
+      "stateIdle": "inactiv",
+      "idleLead": "Momentan nimic nu publică pe această cale. Pistele și contoarele apar imediat ce intră în direct.",
+      "unreachable": "Nu s-a putut contacta MediaMTX pentru a citi starea acestei căi.",
+      "uptime": "Timp de funcționare",
+      "readers": "Cititori",
+      "received": "Primit",
+      "sent": "Trimis",
+      "framesInError": "Cadre cu erori",
+      "tracks": "Piste",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Se publică prin {type}",
+      "readerTypes": "Citit prin {types}"
+    },
     "pathConfig": {
       "pageHeader": "Configurare cale · {name}",
       "pageSubHeader": "Setările acestui flux, salvate pe server.",

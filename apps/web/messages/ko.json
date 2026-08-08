@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX에서 응답이 없습니다."
       }
     },
+    "pathHealth": {
+      "title": "라이브 상태",
+      "stateLive": "LIVE",
+      "stateIdle": "유휴",
+      "idleLead": "지금은 이 경로로 게시 중인 것이 없습니다. 라이브가 되면 트랙과 카운터가 표시됩니다.",
+      "unreachable": "이 경로의 상태를 읽기 위해 MediaMTX에 연결하지 못했습니다.",
+      "uptime": "가동 시간",
+      "readers": "리더",
+      "received": "수신",
+      "sent": "송신",
+      "framesInError": "오류 프레임",
+      "tracks": "트랙",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type}(으)로 송출 중",
+      "readerTypes": "{types}(으)로 읽는 중"
+    },
     "pathConfig": {
       "pageHeader": "경로 설정 · {name}",
       "pageSubHeader": "이 스트림의 설정이며 서버에 저장됩니다.",

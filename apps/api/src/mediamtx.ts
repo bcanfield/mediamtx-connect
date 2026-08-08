@@ -7,6 +7,14 @@ export interface MediaMtxPathReader {
   id?: string
 }
 
+// `tracks2` superseded the plain `tracks` string list in v1.19: same codecs,
+// plus the properties the codec was negotiated with. Only video codecs carry
+// dimensions, and MediaMTX sends `codecProps: null` for the ones that don't.
+export interface MediaMtxPathTrack {
+  codec?: string
+  codecProps?: { width?: number, height?: number } | null
+}
+
 export interface MediaMtxPath {
   name?: string
   confName?: string
@@ -15,9 +23,13 @@ export interface MediaMtxPath {
   ready?: boolean
   readyTime?: string | null
   tracks?: string[]
+  tracks2?: MediaMtxPathTrack[]
   readers?: MediaMtxPathReader[]
   bytesReceived?: number
   bytesSent?: number
+  // Added after v1.11.3, so absent on the older servers this client still talks
+  // to — and an absent counter is not a counter reading zero.
+  inboundFramesInError?: number
 }
 
 export interface MediaMtxPathList {

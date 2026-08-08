@@ -6,16 +6,11 @@ import { useFormatter, useTranslations } from 'use-intl'
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { formatBytes } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
 import { RecordingPlayer } from './recording-player'
 import { useRecordingDownload } from './use-recording-download'
-
-function formatBytes(bytes: number): string {
-  if (bytes >= 1024 ** 3)
-    return `${(bytes / 1024 ** 3).toFixed(1)} GB`
-  return `${(bytes / 1024 ** 2).toFixed(1)} MB`
-}
 
 function formatRate(bytesPerSec: number): string {
   return `${(bytesPerSec / 1024 ** 2).toFixed(1)} MB/s`

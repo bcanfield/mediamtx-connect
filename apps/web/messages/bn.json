@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX থেকে কোনো সাড়া নেই।"
       }
     },
+    "pathHealth": {
+      "title": "লাইভ অবস্থা",
+      "stateLive": "LIVE",
+      "stateIdle": "নিষ্ক্রিয়",
+      "idleLead": "এই পাথে এখন কিছুই পাবলিশ হচ্ছে না। লাইভ হলেই ট্র্যাক ও কাউন্টার দেখা যাবে।",
+      "unreachable": "এই পাথের অবস্থা পড়তে MediaMTX-এ পৌঁছানো যায়নি।",
+      "uptime": "আপটাইম",
+      "readers": "রিডার",
+      "received": "গৃহীত",
+      "sent": "পাঠানো",
+      "framesInError": "ত্রুটিযুক্ত ফ্রেম",
+      "tracks": "ট্র্যাক",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} দিয়ে প্রকাশ চলছে",
+      "readerTypes": "{types} দিয়ে পড়া হচ্ছে"
+    },
     "pathConfig": {
       "pageHeader": "পাথ কনফিগ · {name}",
       "pageSubHeader": "এই স্ট্রিমের সেটিংস, সার্ভারে সংরক্ষিত।",

@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX から応答がありません。"
       }
     },
+    "pathHealth": {
+      "title": "ライブ状態",
+      "stateLive": "LIVE",
+      "stateIdle": "アイドル",
+      "idleLead": "現在このパスに配信しているものはありません。ライブになるとトラックとカウンターが表示されます。",
+      "unreachable": "MediaMTX に接続できず、このパスの状態を取得できませんでした。",
+      "uptime": "稼働時間",
+      "readers": "リーダー",
+      "received": "受信",
+      "sent": "送信",
+      "framesInError": "エラーフレーム",
+      "tracks": "トラック",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} で配信中",
+      "readerTypes": "{types} で読み取り中"
+    },
     "pathConfig": {
       "pageHeader": "パス設定 · {name}",
       "pageSubHeader": "このストリームの設定。サーバーに保存されます。",

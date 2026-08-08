@@ -271,6 +271,22 @@
         "unreachable": "Немає відповіді від MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Стан у прямому ефірі",
+      "stateLive": "LIVE",
+      "stateIdle": "простій",
+      "idleLead": "Зараз у цей шлях ніхто не публікує. Доріжки та лічильники з'являться, щойно він вийде в ефір.",
+      "unreachable": "Не вдалося зв'язатися з MediaMTX, щоб прочитати стан цього шляху.",
+      "uptime": "Час роботи",
+      "readers": "Читачі",
+      "received": "Отримано",
+      "sent": "Надіслано",
+      "framesInError": "Кадри з помилками",
+      "tracks": "Доріжки",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Триває публікація через {type}",
+      "readerTypes": "Читання через {types}"
+    },
     "pathConfig": {
       "pageHeader": "Конфігурація шляху · {name}",
       "pageSubHeader": "Налаштування цього потоку, зберігаються на сервері.",

@@ -271,6 +271,22 @@
         "unreachable": "Sin respuesta de MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Estado en vivo",
+      "stateLive": "LIVE",
+      "stateIdle": "inactiva",
+      "idleLead": "Ahora mismo nada publica en esta ruta. Las pistas y los contadores aparecen en cuanto se ponga en directo.",
+      "unreachable": "No se pudo contactar con MediaMTX para leer el estado de esta ruta.",
+      "uptime": "Tiempo activo",
+      "readers": "Lectores",
+      "received": "Recibido",
+      "sent": "Enviado",
+      "framesInError": "Fotogramas con error",
+      "tracks": "Pistas",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publicando por {type}",
+      "readerTypes": "Leído por {types}"
+    },
     "pathConfig": {
       "pageHeader": "Config de ruta · {name}",
       "pageSubHeader": "Ajustes de esta transmisión, guardados en el servidor.",

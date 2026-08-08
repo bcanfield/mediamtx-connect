@@ -271,6 +271,22 @@
         "unreachable": "Inget svar från MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Livestatus",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktiv",
+      "idleLead": "Inget publicerar till den här sökvägen just nu. Spår och räknare visas så snart den går live.",
+      "unreachable": "Kunde inte nå MediaMTX för att läsa den här sökvägens status.",
+      "uptime": "Drifttid",
+      "readers": "Läsare",
+      "received": "Mottaget",
+      "sent": "Skickat",
+      "framesInError": "Bildrutor med fel",
+      "tracks": "Spår",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publicerar via {type}",
+      "readerTypes": "Läses via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Sökvägskonfiguration · {name}",
       "pageSubHeader": "Inställningar för den här strömmen, sparas på servern.",
