@@ -1,4 +1,4 @@
-import type { RecordState } from '@connect/contract'
+import type { PathTrack, RecordState } from '@connect/contract'
 import type { MediaMtxPath } from './mediamtx'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -35,6 +35,21 @@ async function recordStateFor(api: ReturnType<typeof mediaMtxApi>, confName: str
     logger.error({ err: error, confName }, 'Failed to read record state for config entry')
     return 'unknown'
   }
+}
+
+// `tracks2` carries the codec properties, `tracks` is the bare codec list older
+// servers serve instead. Only the former can answer resolution, so a path read
+// off the fallback shows codecs without one rather than nothing at all.
+function tracksOf(runtime: MediaMtxPath): PathTrack[] {
+  if (runtime.tracks2) {
+    return runtime.tracks2.map(({ codec, codecProps }) => ({
+      codec: codec ?? '',
+      resolution: codecProps?.width && codecProps.height
+        ? `${codecProps.width}×${codecProps.height}`
+        : null,
+    }))
+  }
+  return (runtime.tracks ?? []).map(codec => ({ codec, resolution: null }))
 }
 
 export const router = os.router({
@@ -304,6 +319,32 @@ export const router = os.router({
           if (error instanceof MediaMtxError && error.reason)
             throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path config' })
+        }
+      }),
+
+      // Runtime health for one path, polled while its detail page is open. A
+      // path MediaMTX isn't running (404 → null) and one it is running but that
+      // isn't ready are the same answer to an operator: nothing is flowing.
+      getPathHealth: os.config.mediamtx.getPathHealth.handler(async ({ input }) => {
+        const config = await getAppConfig()
+        try {
+          const runtime = await mediaMtxApi(config).pathsGet(input.name)
+          if (!runtime?.ready)
+            return { status: 'idle' as const }
+          return {
+            status: 'live' as const,
+            readyTime: runtime.readyTime ?? null,
+            publisher: runtime.source?.type ?? null,
+            readers: (runtime.readers ?? []).map(reader => reader.type ?? ''),
+            tracks: tracksOf(runtime),
+            bytesReceived: runtime.bytesReceived ?? 0,
+            bytesSent: runtime.bytesSent ?? 0,
+            framesInError: runtime.inboundFramesInError ?? null,
+          }
+        }
+        catch (error) {
+          logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+          return null
         }
       }),
 

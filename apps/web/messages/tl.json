@@ -271,6 +271,22 @@
         "unreachable": "Walang tugon mula sa MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live na kalagayan",
+      "stateLive": "LIVE",
+      "stateIdle": "walang ginagawa",
+      "idleLead": "Wala pang nagpu-publish sa path na ito ngayon. Lalabas ang mga track at counter sa oras na mag-live ito.",
+      "unreachable": "Hindi maabot ang MediaMTX para basahin ang kalagayan ng path na ito.",
+      "uptime": "Oras na aktibo",
+      "readers": "Mga reader",
+      "received": "Natanggap",
+      "sent": "Naipadala",
+      "framesInError": "Mga frame na may error",
+      "tracks": "Mga track",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Nagpa-publish sa pamamagitan ng {type}",
+      "readerTypes": "Binabasa sa pamamagitan ng {types}"
+    },
     "pathConfig": {
       "pageHeader": "Config ng path · {name}",
       "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",

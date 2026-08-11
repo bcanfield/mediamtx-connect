@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX 沒有回應。"
       }
     },
+    "pathHealth": {
+      "title": "即時狀態",
+      "stateLive": "LIVE",
+      "stateIdle": "閒置",
+      "idleLead": "目前沒有任何來源向此路徑推流。上線後即可看到軌道與計數。",
+      "unreachable": "無法連線 MediaMTX 讀取此路徑的狀態。",
+      "uptime": "運行時間",
+      "readers": "讀取端",
+      "received": "已接收",
+      "sent": "已傳送",
+      "framesInError": "錯誤影格",
+      "tracks": "軌道",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "正透過 {type} 推送",
+      "readerTypes": "透過 {types} 讀取"
+    },
     "pathConfig": {
       "pageHeader": "路徑設定 · {name}",
       "pageSubHeader": "此串流的設定，儲存到伺服器。",

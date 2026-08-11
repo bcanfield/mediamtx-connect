@@ -22,6 +22,7 @@ import {
 import { VideoPlayer } from '@/components/video-player'
 import { CONNECTION_POLL_MS } from '@/hooks/use-connection-state'
 import { Link } from '@/i18n/navigation'
+import { formatUptime } from '@/lib/format'
 import { logger } from '@/lib/logger'
 import { hlsUrlFor, whepUrlFor } from '@/lib/playback'
 import { publishUrl } from '@/lib/publish'
@@ -63,13 +64,6 @@ const overlayPillLive = cn(overlayPill, 'gap-1.5 border-live/35 text-live-foregr
 const overlayPillNeutral = cn(overlayPill, 'border-white/15 text-white/90')
 // The overlay always sits on black video, so these are fixed rather than themed.
 const overlayPillWarn = cn(overlayPill, 'border-amber-300/35 text-amber-300')
-
-function formatUptime(readyTime: string): string {
-  const totalMinutes = Math.max(0, Math.floor((Date.now() - new Date(readyTime).getTime()) / 60000))
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
-  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`
-}
 
 export function StreamCard({
   streamName,

@@ -22,6 +22,7 @@ import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
 
 import { MediaMTXConfigForm } from './mediamtx-config-form'
+import { PathHealthPanel } from './path-health-panel'
 import { pathConfigScope } from './sections'
 
 export function PathConfigPage({ name, section }: { name: string, section?: string }) {
@@ -70,6 +71,9 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
           : null
       }
     >
+      {/* Above the editor and independent of it: health is runtime state, and a
+          path whose config we can't resolve can still be publishing. */}
+      <PathHealthPanel name={name} />
       {effective && (
         <MediaMTXConfigForm
           // Reverting swaps every value for the inherited one, and the

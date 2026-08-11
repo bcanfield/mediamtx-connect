@@ -271,6 +271,22 @@
         "unreachable": "MediaMTX'ten yanıt alınamadı."
       }
     },
+    "pathHealth": {
+      "title": "Canlı durum",
+      "stateLive": "LIVE",
+      "stateIdle": "boşta",
+      "idleLead": "Şu anda bu yola hiçbir şey yayın yapmıyor. Parçalar ve sayaçlar yayın başlar başlamaz görünür.",
+      "unreachable": "Bu yolun durumunu okumak için MediaMTX'e ulaşılamadı.",
+      "uptime": "Çalışma süresi",
+      "readers": "Okuyucular",
+      "received": "Alınan",
+      "sent": "Gönderilen",
+      "framesInError": "Hatalı kareler",
+      "tracks": "Parçalar",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} üzerinden yayın yapılıyor",
+      "readerTypes": "{types} üzerinden okunuyor"
+    },
     "pathConfig": {
       "pageHeader": "Yol yapılandırması · {name}",
       "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",

@@ -271,6 +271,22 @@
         "unreachable": "Нет ответа от MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Состояние в эфире",
+      "stateLive": "LIVE",
+      "stateIdle": "простой",
+      "idleLead": "Сейчас в этот путь никто не публикует. Дорожки и счётчики появятся, как только он выйдет в эфир.",
+      "unreachable": "Не удалось связаться с MediaMTX, чтобы прочитать состояние этого пути.",
+      "uptime": "Время работы",
+      "readers": "Читатели",
+      "received": "Принято",
+      "sent": "Отправлено",
+      "framesInError": "Кадры с ошибками",
+      "tracks": "Дорожки",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Идёт публикация через {type}",
+      "readerTypes": "Чтение через {types}"
+    },
     "pathConfig": {
       "pageHeader": "Конфигурация пути · {name}",
       "pageSubHeader": "Настройки этого потока, сохраняются на сервере.",

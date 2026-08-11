@@ -271,6 +271,22 @@
         "unreachable": "Nessuna risposta da MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Stato live",
+      "stateLive": "LIVE",
+      "stateIdle": "inattivo",
+      "idleLead": "Al momento nessuno sta pubblicando su questo percorso. Tracce e contatori compaiono appena va in diretta.",
+      "unreachable": "Impossibile raggiungere MediaMTX per leggere lo stato di questo percorso.",
+      "uptime": "Tempo di attività",
+      "readers": "Lettori",
+      "received": "Ricevuti",
+      "sent": "Inviati",
+      "framesInError": "Frame con errori",
+      "tracks": "Tracce",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Pubblicazione in corso via {type}",
+      "readerTypes": "Letto via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Config del percorso · {name}",
       "pageSubHeader": "Impostazioni di questo stream, salvate sul server.",

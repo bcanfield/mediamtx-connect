@@ -271,6 +271,22 @@
         "unreachable": "Keine Antwort von MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live-Zustand",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktiv",
+      "idleLead": "Aktuell veröffentlicht nichts auf diesem Pfad. Spuren und Zähler erscheinen, sobald er live geht.",
+      "unreachable": "MediaMTX war nicht erreichbar, um den Zustand dieses Pfads zu lesen.",
+      "uptime": "Laufzeit",
+      "readers": "Leser",
+      "received": "Empfangen",
+      "sent": "Gesendet",
+      "framesInError": "Fehlerhafte Frames",
+      "tracks": "Spuren",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Veröffentlicht gerade über {type}",
+      "readerTypes": "Gelesen über {types}"
+    },
     "pathConfig": {
       "pageHeader": "Pfad-Konfiguration · {name}",
       "pageSubHeader": "Einstellungen dieses Streams, gespeichert auf dem Server.",
