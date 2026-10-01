@@ -16,9 +16,18 @@ export const AppConfigSchema = z.object({
 
 export type AppConfig = z.infer<typeof AppConfigSchema>
 
-// Mirrors MediaMTX v1.11.3 GlobalConf. Field names match the YAML keys 1:1.
-// The oldest MediaMTX Connect supports: the one CI's e2e runs against, not the
-// oldest that probably works. Raise it with whatever starts depending on newer.
+// MediaMTX's TLS policy for RTSP and RTMP. It accepts nothing else, so an empty
+// value fails the whole save.
+export const ENCRYPTION_MODES = ['no', 'optional', 'strict'] as const
+
+// How MediaMTX authenticates every client, Connect's own API calls included.
+export const AUTH_METHODS = ['internal', 'http', 'jwt'] as const
+
+// Key names mirror MediaMTX v1.21.1 GlobalConf; CI runs 1.20.0. Field names
+// match the YAML keys 1:1. The drift e2e lists the keys left out on purpose.
+//
+// That CI version is also the oldest MediaMTX Connect supports, not the oldest
+// that probably works. Raise it with whatever starts depending on newer.
 export const MEDIAMTX_MIN_VERSION = '1.20.0'
 
 export const GlobalConfigSchema = z.object({
@@ -29,7 +38,9 @@ export const GlobalConfigSchema = z.object({
   writeTimeout: z.string().optional(),
   writeQueueSize: z.coerce.number().optional(),
   udpMaxPayloadSize: z.coerce.number().optional(),
-  externalAuthenticationURL: z.string().optional(),
+  authMethod: z.enum(AUTH_METHODS).optional(),
+  // Used only when authMethod is `http`.
+  authHTTPAddress: z.string().optional(),
   api: z.boolean().optional(),
   apiAddress: z.string().optional(),
   metrics: z.boolean().optional(),
@@ -40,8 +51,8 @@ export const GlobalConfigSchema = z.object({
   runOnConnectRestart: z.boolean().optional(),
   runOnDisconnect: z.string().optional(),
   rtsp: z.boolean().optional(),
-  protocols: z.array(z.string()).optional(),
-  encryption: z.string().optional(),
+  rtspTransports: z.array(z.string()).optional(),
+  rtspEncryption: z.enum(ENCRYPTION_MODES).optional(),
   rtspAddress: z.string().optional(),
   rtspsAddress: z.string().optional(),
   rtpAddress: z.string().optional(),
@@ -49,12 +60,12 @@ export const GlobalConfigSchema = z.object({
   multicastIPRange: z.string().optional(),
   multicastRTPPort: z.coerce.number().optional(),
   multicastRTCPPort: z.coerce.number().optional(),
-  serverKey: z.string().optional(),
-  serverCert: z.string().optional(),
-  authMethods: z.array(z.string()).optional(),
+  rtspServerKey: z.string().optional(),
+  rtspServerCert: z.string().optional(),
+  rtspAuthMethods: z.array(z.string()).optional(),
   rtmp: z.boolean().optional(),
   rtmpAddress: z.string().optional(),
-  rtmpEncryption: z.string().optional(),
+  rtmpEncryption: z.enum(ENCRYPTION_MODES).optional(),
   rtmpsAddress: z.string().optional(),
   rtmpServerKey: z.string().optional(),
   rtmpServerCert: z.string().optional(),
@@ -69,7 +80,7 @@ export const GlobalConfigSchema = z.object({
   hlsSegmentDuration: z.string().optional(),
   hlsPartDuration: z.string().optional(),
   hlsSegmentMaxSize: z.string().optional(),
-  hlsAllowOrigin: z.string().optional(),
+  hlsAllowOrigins: z.array(z.string()).optional(),
   hlsTrustedProxies: z.array(z.string()).optional(),
   hlsDirectory: z.string().optional(),
   webrtc: z.boolean().optional(),
@@ -77,7 +88,7 @@ export const GlobalConfigSchema = z.object({
   webrtcEncryption: z.boolean().optional(),
   webrtcServerKey: z.string().optional(),
   webrtcServerCert: z.string().optional(),
-  webrtcAllowOrigin: z.string().optional(),
+  webrtcAllowOrigins: z.array(z.string()).optional(),
   webrtcTrustedProxies: z.array(z.string()).optional(),
   webrtcLocalUDPAddress: z.string().optional(),
   webrtcLocalTCPAddress: z.string().optional(),
@@ -121,9 +132,12 @@ export const PathDefaultsSchema = z.object({
   runOnDemandStartTimeout: z.string().optional(),
   runOnDemandCloseAfter: z.string().optional(),
   runOnUnDemand: z.string().optional(),
-  runOnReady: z.string().optional(),
-  runOnReadyRestart: z.boolean().optional(),
-  runOnNotReady: z.string().optional(),
+  runOnAvailable: z.string().optional(),
+  runOnAvailableRestart: z.boolean().optional(),
+  runOnUnavailable: z.string().optional(),
+  runOnOnline: z.string().optional(),
+  runOnOnlineRestart: z.boolean().optional(),
+  runOnOffline: z.string().optional(),
   runOnRead: z.string().optional(),
   runOnReadRestart: z.boolean().optional(),
   runOnUnread: z.string().optional(),
@@ -158,8 +172,9 @@ export function isValidPathSource(source: string): boolean {
 }
 
 // A path's own config is the per-path override of the defaults scope (ADR
-// 0002), plus `source`: where a stream comes from belongs to one path, and
-// MediaMTX does not serve it from pathdefaults.
+// 0002), plus `source`. MediaMTX serves `source` from path defaults too; it
+// stays off PathDefaultsSchema because where a stream comes from belongs to
+// one path, which is a product choice.
 export const PathConfigSchema = PathDefaultsSchema.extend({
   // Unrefined on the wire on purpose — MediaMTX is the authority on what it
   // accepts, and a source kind added in a later version still has to read back.
