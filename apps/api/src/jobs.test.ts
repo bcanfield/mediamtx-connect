@@ -122,15 +122,13 @@ describe('captureLiveSnapshots', () => {
   it('writes to a tmp file, then renames it in once ffmpeg succeeds', async () => {
     await captureLiveSnapshots()
 
-    expect(argvOf().at(-1)).toBe('/shots/stream1/live.png.tmp')
+    const tmp = argvOf().at(-1)
+    expect(tmp).toMatch(/^\/shots\/stream1\/live\.png\..+\.tmp$/)
     expect(fs.renameSync).not.toHaveBeenCalled()
 
     proc.emit('close', 0)
 
-    expect(fs.renameSync).toHaveBeenCalledWith(
-      '/shots/stream1/live.png.tmp',
-      '/shots/stream1/live.png',
-    )
+    expect(fs.renameSync).toHaveBeenCalledWith(tmp, '/shots/stream1/live.png')
   })
 
   it('discards the tmp file and keeps the old snapshot when ffmpeg fails', async () => {
@@ -138,7 +136,7 @@ describe('captureLiveSnapshots', () => {
     proc.emit('close', 1)
 
     expect(fs.renameSync).not.toHaveBeenCalled()
-    expect(fs.rmSync).toHaveBeenCalledWith('/shots/stream1/live.png.tmp', { force: true })
+    expect(fs.rmSync).toHaveBeenCalledWith(argvOf().at(-1), { force: true })
   })
 
   it('kills an ffmpeg that stalls past 15s', async () => {
@@ -210,6 +208,37 @@ describe('captureLiveSnapshots', () => {
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES + 1)
   })
 
+  it('gives concurrent captures of one stream their own tmp file', async () => {
+    // A manual "Take snapshot" can land while the cron is capturing the same
+    // stream. Sharing a tmp file, the second rename finds nothing to move and
+    // throws inside ffmpeg's 'close' listener, which crashes the API process.
+    const procs: FakeProc[] = []
+    vi.mocked(cp.spawn).mockImplementation(() => {
+      const p = fakeProc()
+      procs.push(p)
+      return p as unknown as ChildProcess
+    })
+    const renamed = new Set<string>()
+    vi.mocked(fs.renameSync).mockImplementation((from) => {
+      if (renamed.has(String(from)))
+        throw Object.assign(new Error(`ENOENT: no such file or directory, rename '${String(from)}'`), { code: 'ENOENT' })
+      renamed.add(String(from))
+    })
+
+    await captureLiveSnapshots()
+    const manual = captureSnapshot('stream1')
+    await flushMicrotasks()
+    const [cron, onDemand] = procs
+    if (!cron || !onDemand)
+      throw new Error('expected two spawned capture processes')
+
+    cron.emit('close', 0)
+    onDemand.emit('close', 0)
+
+    await expect(manual).resolves.toBeUndefined()
+    expect(argvOf(0).at(-1)).not.toBe(argvOf(1).at(-1))
+  })
+
   it('counts on-demand captures against the same cap as the cron', async () => {
     // Saturate the gate with a full cron sweep, then a user-triggered capture
     // must wait rather than spawn a process on top of the cap.
@@ -262,10 +291,7 @@ describe('captureSnapshot on demand', () => {
     proc.emit('close', 0)
 
     await expect(done).resolves.toBeUndefined()
-    expect(fs.renameSync).toHaveBeenCalledWith(
-      '/shots/parking-lot/live.png.tmp',
-      '/shots/parking-lot/live.png',
-    )
+    expect(fs.renameSync).toHaveBeenCalledWith(argvOf().at(-1), '/shots/parking-lot/live.png')
   })
 
   it('rejects and keeps the old snapshot when ffmpeg fails', async () => {
@@ -275,7 +301,7 @@ describe('captureSnapshot on demand', () => {
 
     await expect(done).rejects.toThrow()
     expect(fs.renameSync).not.toHaveBeenCalled()
-    expect(fs.rmSync).toHaveBeenCalledWith('/shots/parking-lot/live.png.tmp', { force: true })
+    expect(fs.rmSync).toHaveBeenCalledWith(argvOf().at(-1), { force: true })
   })
 })
 

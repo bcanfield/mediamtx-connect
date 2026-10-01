@@ -1,4 +1,5 @@
 import cp from 'node:child_process'
+import { randomUUID } from 'node:crypto'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -158,7 +159,9 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
   const dir = path.join(screenshotsDirectory, streamName)
   fs.mkdirSync(dir, { recursive: true })
   const outputFile = path.join(dir, 'live.png')
-  const tmp = `${outputFile}.tmp`
+  // Unique per capture: the cron and a manual snapshot can capture the same
+  // stream at once, and a shared tmp makes the second rename throw ENOENT.
+  const tmp = `${outputFile}.${randomUUID()}.tmp`
 
   return new Promise((resolve, reject) => {
     // -c:v/-f are explicit because the tmp name has no .png for ffmpeg to sniff.
