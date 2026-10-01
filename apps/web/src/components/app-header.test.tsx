@@ -75,8 +75,7 @@ describe('primary navigation', () => {
   it('shows the brand and a link home', async () => {
     await renderHeader('/recordings')
 
-    expect(screen.getByText('MediaMTX')).toBeInTheDocument()
-    expect(screen.getByText('Connect')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'MediaMTX Connect' })).toHaveAttribute('href', '/')
   })
 })
 
@@ -142,6 +141,7 @@ describe('locale switching', () => {
 
     await renderHeader()
 
-    expect(await within(nav()).findByRole('link', { name: 'Recordings' })).toBeInTheDocument()
+    await waitFor(() => expect(document.documentElement.lang).toBe('en'))
+    expect(localStorage.getItem('locale')).toBe('en')
   })
 })

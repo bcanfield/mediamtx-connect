@@ -1,5 +1,5 @@
 import type { StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -68,25 +68,28 @@ describe('the loopback WebRTC banner', () => {
 
   it('says nothing to a browser on the machine MediaMTX is advertising', async () => {
     browsingFrom('localhost')
-    await renderWithProviders(<LiveViewPage />)
+    const { queryClient } = await renderWithProviders(<LiveViewPage />)
 
     expect(await screen.findByText('front-door')).toBeInTheDocument()
+    await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(banner()).not.toBeInTheDocument()
   })
 
   it('says nothing when a routable host is advertised alongside loopback', async () => {
     globalConfig = { ...globalConfig, webrtcAdditionalHosts: ['127.0.0.1', 'cam.lan'] }
-    await renderWithProviders(<LiveViewPage />)
+    const { queryClient } = await renderWithProviders(<LiveViewPage />)
 
     expect(await screen.findByText('front-door')).toBeInTheDocument()
+    await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(banner()).not.toBeInTheDocument()
   })
 
   it('says nothing when the server serves no WebRTC at all — there is nothing to fix', async () => {
     globalConfig = { ...globalConfig, webrtc: false }
-    await renderWithProviders(<LiveViewPage />)
+    const { queryClient } = await renderWithProviders(<LiveViewPage />)
 
     expect(await screen.findByText('front-door')).toBeInTheDocument()
+    await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(banner()).not.toBeInTheDocument()
   })
 })
