@@ -71,6 +71,11 @@ function argvOf(nth = 0): string[] {
   return (argv ?? []) as string[]
 }
 
+/** The error Node throws renaming a tmp file ffmpeg never wrote. */
+function enoent(syscall: string, file: string) {
+  return Object.assign(new Error(`ENOENT: no such file or directory, ${syscall} '${file}'`), { code: 'ENOENT' })
+}
+
 /** Drain the microtask queue so gated spawns run — fake timers don't touch it. */
 async function flushMicrotasks() {
   for (let i = 0; i < 10; i++)
@@ -249,6 +254,67 @@ describe('captureLiveSnapshots', () => {
     expect(argvOf(0).at(-1)).not.toBe(argvOf(1).at(-1))
   })
 
+  it('logs, and does not crash, when ffmpeg exits 0 without writing a frame', async () => {
+    // A path torn down mid-capture: ffmpeg connects, gets no frame and still
+    // exits 0. The rename used to throw inside the 'close' listener, an
+    // uncaught exception that took the API process down.
+    vi.mocked(fs.renameSync).mockImplementation((from) => {
+      throw enoent('rename', String(from))
+    })
+    await captureLiveSnapshots()
+
+    expect(() => proc.emit('close', 0)).not.toThrow()
+    await flushMicrotasks()
+
+    expect(vi.mocked(logger.warn).mock.calls.flat()).toContainEqual(expect.stringContaining('stream1'))
+    expect(fs.rmSync).toHaveBeenCalledWith(argvOf().at(-1), { force: true })
+  })
+
+  it('does not crash when discarding a failed capture\'s tmp file throws', async () => {
+    vi.mocked(fs.rmSync).mockImplementation(() => {
+      throw Object.assign(new Error('EACCES: permission denied'), { code: 'EACCES' })
+    })
+    await captureLiveSnapshots()
+
+    expect(() => proc.emit('close', 1)).not.toThrow()
+  })
+
+  it('releases one slot when a capture\'s rename fails', async () => {
+    const procs = procPerSpawn()
+    vi.mocked(fs.renameSync).mockImplementation((from) => {
+      throw enoent('rename', String(from))
+    })
+    const names = Array.from({ length: MAX_CONCURRENT_CAPTURES }, (_, i) => `s${i}`)
+    mockMediaMtx(names.map(name => ({ name, ready: true })))
+    await captureLiveSnapshots()
+
+    captureSnapshot('a').catch(() => {})
+    captureSnapshot('b').catch(() => {})
+    await flushMicrotasks()
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES)
+
+    procs[0]!.emit('close', 0)
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES + 1)
+  })
+
+  it('releases its slot when the snapshot directory cannot be created', async () => {
+    procPerSpawn()
+    vi.mocked(fs.mkdirSync).mockImplementationOnce(() => {
+      throw Object.assign(new Error('EACCES: permission denied'), { code: 'EACCES' })
+    })
+    await expect(captureSnapshot('locked')).rejects.toThrow('EACCES')
+
+    // A leaked permit would leave one slot short, so the last stream would wait.
+    const names = Array.from({ length: MAX_CONCURRENT_CAPTURES }, (_, i) => `s${i}`)
+    mockMediaMtx(names.map(name => ({ name, ready: true })))
+    await captureLiveSnapshots()
+    await flushMicrotasks()
+
+    expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES)
+  })
+
   it('counts on-demand captures against the same cap as the cron', async () => {
     // Saturate the gate with a full cron sweep, then user-triggered captures
     // must wait rather than spawn a process on top of the cap.
@@ -314,6 +380,19 @@ describe('captureSnapshot on demand', () => {
     await expect(done).rejects.toThrow()
     expect(fs.renameSync).not.toHaveBeenCalled()
     expect(fs.rmSync).toHaveBeenCalledWith(argvOf().at(-1), { force: true })
+  })
+
+  it('rejects, naming the stream, when ffmpeg exits 0 without writing a frame', async () => {
+    vi.mocked(fs.renameSync).mockImplementation((from) => {
+      throw enoent('rename', String(from))
+    })
+    const done = captureSnapshot('parking-lot')
+    await flushMicrotasks()
+
+    expect(() => proc.emit('close', 0)).not.toThrow()
+
+    await expect(done).rejects.toThrow('parking-lot')
+    expect(vi.mocked(logger.warn).mock.calls.flat()).toContainEqual(expect.stringContaining('parking-lot'))
   })
 })
 
@@ -585,6 +664,14 @@ describe('on a real recordings tree', () => {
       expect(fs.existsSync(path.join(root, 'escaped'))).toBe(false)
       expect(configGlobalGet).not.toHaveBeenCalled()
       expect(cp.spawn).not.toHaveBeenCalled()
+    })
+
+    it('rejects rather than crashing when ffmpeg exits 0 but wrote no frame', async () => {
+      // The CI crash for real: no tmp file on disk, so the rename is ENOENT.
+      ffmpegExits(0)
+
+      await expect(captureSnapshot('gone')).rejects.toThrow('gone')
+      expect(fs.readdirSync(path.join(screenshots, 'gone'))).toEqual([])
     })
 
     it('still captures a nested MediaMTX path', async () => {
