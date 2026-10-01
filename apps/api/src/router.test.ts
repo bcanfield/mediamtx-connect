@@ -47,6 +47,8 @@ const api = {
   configPathGet: vi.fn(),
   configPathAdd: vi.fn(),
   configPathPatch: vi.fn(),
+  configGlobalPatch: vi.fn(),
+  configPathDefaultsPatch: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -415,6 +417,51 @@ describe('config.mediamtx.updatePathConfig', () => {
       name: 'front-door',
       conf: { source: 'publisher' },
     })).rejects.toThrow('Failed to update path config')
+  })
+})
+
+// The whole-form scopes refuse the same way a path does, and the form needs the
+// reason just as much to put it back on the field.
+describe.each([
+  {
+    proc: 'updateGlobal',
+    method: 'configGlobalPatch',
+    save: () => call(router.config.mediamtx.updateGlobal, {}),
+    fallback: 'Failed to update global config',
+  },
+  {
+    proc: 'updatePathDefaults',
+    method: 'configPathDefaultsPatch',
+    save: () => call(router.config.mediamtx.updatePathDefaults, {}),
+    fallback: 'Failed to update path defaults',
+  },
+] as const)('config.mediamtx.$proc', ({ method, save, fallback }) => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('passes MediaMTX\'s own reason through as BAD_REQUEST on a refused write', async () => {
+    const reason = '\'udpMaxPayloadSize\' must be less than 1472'
+    api[method].mockRejectedValue(new MediaMtxError(400, reason, 'PATCH /config/x/patch'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'BAD_REQUEST',
+      message: reason,
+    })
+  })
+
+  it('stays INTERNAL_SERVER_ERROR when the failure is not a refusal', async () => {
+    api[method].mockRejectedValue(new Error('fetch failed'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: fallback,
+    })
   })
 })
 
