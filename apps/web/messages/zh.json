@@ -197,6 +197,24 @@
       "override": "此路径在其自身的路径配置中将 <code>recordFormat</code> 设为 {format}，覆盖了路径默认值。请在那里将其改为 <code>fmp4</code>。",
       "openPathConfig": "打开此路径的录像配置",
       "pathDefaultsUnreadable": "无法从 MediaMTX 读取路径默认值。"
+    },
+    "clip": {
+      "title": "下载片段",
+      "rangeAria": "片段范围",
+      "last5Min": "最近 5 分钟",
+      "last15Min": "最近 15 分钟",
+      "last1Hour": "最近 1 小时",
+      "custom": "自定义",
+      "start": "开始",
+      "durationMinutes": "时长（分钟）",
+      "range": "{start} – {end}",
+      "download": "下载",
+      "cancel": "取消",
+      "preparing": "正在准备片段…",
+      "progress": "已接收 {received} · {rate}/秒",
+      "complete": "片段已下载",
+      "failed": "片段下载失败",
+      "noRecordings": "此范围内没有录像"
     }
   },
   "Sessions": {

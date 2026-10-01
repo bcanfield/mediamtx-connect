@@ -197,6 +197,24 @@
       "override": "Questo path imposta <code>recordFormat</code> a {format} nella propria configurazione, che prevale sui valori predefiniti dei path. Impostalo a <code>fmp4</code> lì.",
       "openPathConfig": "Apri la configurazione di registrazione di questo path",
       "pathDefaultsUnreadable": "Impossibile leggere i valori predefiniti dei path da MediaMTX."
+    },
+    "clip": {
+      "title": "Scarica clip",
+      "rangeAria": "Intervallo della clip",
+      "last5Min": "Ultimi 5 min",
+      "last15Min": "Ultimi 15 min",
+      "last1Hour": "Ultima 1 h",
+      "custom": "Personalizzato",
+      "start": "Inizio",
+      "durationMinutes": "Durata (min)",
+      "range": "{start} – {end}",
+      "download": "Scarica",
+      "cancel": "Annulla",
+      "preparing": "Preparazione della clip…",
+      "progress": "{received} ricevuti · {rate}/s",
+      "complete": "Clip scaricata",
+      "failed": "Download della clip non riuscito",
+      "noRecordings": "Nessuna registrazione in questo intervallo"
     }
   },
   "Sessions": {

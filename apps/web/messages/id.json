@@ -197,6 +197,24 @@
       "override": "Path ini mengatur <code>recordFormat</code> ke {format} di konfigurasi path-nya sendiri, yang menimpa default path. Ubah menjadi <code>fmp4</code> di sana.",
       "openPathConfig": "Buka konfigurasi rekaman path ini",
       "pathDefaultsUnreadable": "Tidak dapat membaca default path dari MediaMTX."
+    },
+    "clip": {
+      "title": "Unduh klip",
+      "rangeAria": "Rentang klip",
+      "last5Min": "5 mnt terakhir",
+      "last15Min": "15 mnt terakhir",
+      "last1Hour": "1 jam terakhir",
+      "custom": "Kustom",
+      "start": "Mulai",
+      "durationMinutes": "Durasi (mnt)",
+      "range": "{start} – {end}",
+      "download": "Unduh",
+      "cancel": "Batal",
+      "preparing": "Menyiapkan klip…",
+      "progress": "{received} diterima · {rate}/dtk",
+      "complete": "Klip diunduh",
+      "failed": "Gagal mengunduh klip",
+      "noRecordings": "Tidak ada rekaman dalam rentang ini"
     }
   },
   "Sessions": {

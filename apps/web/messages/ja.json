@@ -197,6 +197,24 @@
       "override": "このパスは自身のパス設定で <code>recordFormat</code> を {format} にしており、パス既定値より優先されます。そちらで <code>fmp4</code> に設定してください。",
       "openPathConfig": "このパスの録画設定を開く",
       "pathDefaultsUnreadable": "MediaMTX からパス既定値を読み込めませんでした。"
+    },
+    "clip": {
+      "title": "クリップをダウンロード",
+      "rangeAria": "クリップの範囲",
+      "last5Min": "直近 5 分",
+      "last15Min": "直近 15 分",
+      "last1Hour": "直近 1 時間",
+      "custom": "カスタム",
+      "start": "開始",
+      "durationMinutes": "長さ（分）",
+      "range": "{start} – {end}",
+      "download": "ダウンロード",
+      "cancel": "キャンセル",
+      "preparing": "クリップを準備しています…",
+      "progress": "{received} 受信 · {rate}/秒",
+      "complete": "クリップをダウンロードしました",
+      "failed": "クリップのダウンロードに失敗しました",
+      "noRecordings": "この範囲に録画はありません"
     }
   },
   "Sessions": {

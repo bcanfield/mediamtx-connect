@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
+import { ClipDownload } from './clip-download'
 import { PlaybackEnableCard } from './playback-enable-card'
 import { RecordingPlayer } from './recording-player'
 
@@ -241,6 +242,8 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
               ))}
             </ul>
           )}
+
+      {spans.length > 0 && <ClipDownload streamName={streamName} day={day} spans={spans} selected={selected} />}
     </section>
   )
 }

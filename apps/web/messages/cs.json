@@ -197,6 +197,24 @@
       "override": "Tato cesta nastavuje <code>recordFormat</code> na {format} ve vlastní konfiguraci, která přepisuje výchozí hodnoty cest. Nastavte tam <code>fmp4</code>.",
       "openPathConfig": "Otevřít konfiguraci nahrávání této cesty",
       "pathDefaultsUnreadable": "Výchozí hodnoty cest se z MediaMTX nepodařilo načíst."
+    },
+    "clip": {
+      "title": "Stáhnout klip",
+      "rangeAria": "Rozsah klipu",
+      "last5Min": "Posledních 5 min",
+      "last15Min": "Posledních 15 min",
+      "last1Hour": "Poslední 1 h",
+      "custom": "Vlastní",
+      "start": "Začátek",
+      "durationMinutes": "Délka (min)",
+      "range": "{start} – {end}",
+      "download": "Stáhnout",
+      "cancel": "Zrušit",
+      "preparing": "Připravuji klip…",
+      "progress": "přijato {received} · {rate}/s",
+      "complete": "Klip stažen",
+      "failed": "Stažení klipu se nezdařilo",
+      "noRecordings": "V tomto rozsahu nejsou žádné záznamy"
     }
   },
   "Sessions": {

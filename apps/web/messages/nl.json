@@ -197,6 +197,24 @@
       "override": "Dit pad zet <code>recordFormat</code> op {format} in zijn eigen padconfiguratie, die de padstandaarden overschrijft. Zet het daar op <code>fmp4</code>.",
       "openPathConfig": "Opnameconfiguratie van dit pad openen",
       "pathDefaultsUnreadable": "Kon de padstandaarden niet uit MediaMTX lezen."
+    },
+    "clip": {
+      "title": "Clip downloaden",
+      "rangeAria": "Clipbereik",
+      "last5Min": "Laatste 5 min",
+      "last15Min": "Laatste 15 min",
+      "last1Hour": "Laatste 1 u",
+      "custom": "Aangepast",
+      "start": "Begin",
+      "durationMinutes": "Duur (min)",
+      "range": "{start} – {end}",
+      "download": "Downloaden",
+      "cancel": "Annuleren",
+      "preparing": "Clip wordt voorbereid…",
+      "progress": "{received} ontvangen · {rate}/s",
+      "complete": "Clip gedownload",
+      "failed": "Downloaden van clip mislukt",
+      "noRecordings": "Geen opnamen in dit bereik"
     }
   },
   "Sessions": {

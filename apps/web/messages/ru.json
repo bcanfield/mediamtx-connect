@@ -197,6 +197,24 @@
       "override": "Этот путь задаёт <code>recordFormat</code> = {format} в собственной конфигурации пути, которая переопределяет значения пути по умолчанию. Установите там <code>fmp4</code>.",
       "openPathConfig": "Открыть настройки записи этого пути",
       "pathDefaultsUnreadable": "Не удалось прочитать значения пути по умолчанию из MediaMTX."
+    },
+    "clip": {
+      "title": "Скачать фрагмент",
+      "rangeAria": "Диапазон фрагмента",
+      "last5Min": "Последние 5 мин",
+      "last15Min": "Последние 15 мин",
+      "last1Hour": "Последний 1 ч",
+      "custom": "Свой",
+      "start": "Начало",
+      "durationMinutes": "Длительность (мин)",
+      "range": "{start} – {end}",
+      "download": "Скачать",
+      "cancel": "Отмена",
+      "preparing": "Подготовка фрагмента…",
+      "progress": "получено {received} · {rate}/с",
+      "complete": "Фрагмент скачан",
+      "failed": "Не удалось скачать фрагмент",
+      "noRecordings": "В этом диапазоне нет записей"
     }
   },
   "Sessions": {

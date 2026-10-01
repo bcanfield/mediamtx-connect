@@ -197,6 +197,24 @@
       "override": "Denne sti sætter <code>recordFormat</code> til {format} i sin egen stikonfiguration, som tilsidesætter stiernes standarder. Sæt den til <code>fmp4</code> der.",
       "openPathConfig": "Åbn optagelseskonfigurationen for denne sti",
       "pathDefaultsUnreadable": "Kunne ikke læse stiernes standarder fra MediaMTX."
+    },
+    "clip": {
+      "title": "Download klip",
+      "rangeAria": "Klippets interval",
+      "last5Min": "Sidste 5 min",
+      "last15Min": "Sidste 15 min",
+      "last1Hour": "Sidste 1 t",
+      "custom": "Brugerdefineret",
+      "start": "Start",
+      "durationMinutes": "Varighed (min)",
+      "range": "{start} – {end}",
+      "download": "Download",
+      "cancel": "Annuller",
+      "preparing": "Forbereder klip…",
+      "progress": "{received} modtaget · {rate}/s",
+      "complete": "Klip downloadet",
+      "failed": "Download af klip mislykkedes",
+      "noRecordings": "Ingen optagelser i dette interval"
     }
   },
   "Sessions": {

@@ -197,6 +197,24 @@
       "override": "Itinatakda ng path na ito ang <code>recordFormat</code> sa {format} sa sarili nitong path config, na nangingibabaw sa path defaults. Itakda ito sa <code>fmp4</code> doon.",
       "openPathConfig": "Buksan ang recording config ng path na ito",
       "pathDefaultsUnreadable": "Hindi mabasa ang path defaults mula sa MediaMTX."
+    },
+    "clip": {
+      "title": "I-download ang clip",
+      "rangeAria": "Saklaw ng clip",
+      "last5Min": "Huling 5 min",
+      "last15Min": "Huling 15 min",
+      "last1Hour": "Huling 1 oras",
+      "custom": "Custom",
+      "start": "Simula",
+      "durationMinutes": "Tagal (min)",
+      "range": "{start} – {end}",
+      "download": "I-download",
+      "cancel": "Kanselahin",
+      "preparing": "Inihahanda ang clip…",
+      "progress": "{received} natanggap · {rate}/s",
+      "complete": "Na-download ang clip",
+      "failed": "Nabigo ang pag-download ng clip",
+      "noRecordings": "Walang recording sa saklaw na ito"
     }
   },
   "Sessions": {

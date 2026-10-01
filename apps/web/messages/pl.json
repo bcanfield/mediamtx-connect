@@ -197,6 +197,24 @@
       "override": "Ta ścieżka ustawia <code>recordFormat</code> na {format} we własnej konfiguracji, która nadpisuje domyślne ustawienia ścieżek. Ustaw tam <code>fmp4</code>.",
       "openPathConfig": "Otwórz konfigurację nagrywania tej ścieżki",
       "pathDefaultsUnreadable": "Nie udało się odczytać domyślnych ustawień ścieżek z MediaMTX."
+    },
+    "clip": {
+      "title": "Pobierz klip",
+      "rangeAria": "Zakres klipu",
+      "last5Min": "Ostatnie 5 min",
+      "last15Min": "Ostatnie 15 min",
+      "last1Hour": "Ostatnia 1 godz.",
+      "custom": "Własny",
+      "start": "Początek",
+      "durationMinutes": "Czas trwania (min)",
+      "range": "{start} – {end}",
+      "download": "Pobierz",
+      "cancel": "Anuluj",
+      "preparing": "Przygotowywanie klipu…",
+      "progress": "odebrano {received} · {rate}/s",
+      "complete": "Klip pobrany",
+      "failed": "Nie udało się pobrać klipu",
+      "noRecordings": "Brak nagrań w tym zakresie"
     }
   },
   "Sessions": {

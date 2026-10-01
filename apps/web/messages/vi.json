@@ -197,6 +197,24 @@
       "override": "Đường dẫn này đặt <code>recordFormat</code> thành {format} trong cấu hình riêng, ghi đè giá trị mặc định của đường dẫn. Hãy đặt thành <code>fmp4</code> ở đó.",
       "openPathConfig": "Mở cấu hình ghi của đường dẫn này",
       "pathDefaultsUnreadable": "Không đọc được giá trị mặc định của đường dẫn từ MediaMTX."
+    },
+    "clip": {
+      "title": "Tải clip xuống",
+      "rangeAria": "Khoảng thời gian clip",
+      "last5Min": "5 phút gần nhất",
+      "last15Min": "15 phút gần nhất",
+      "last1Hour": "1 giờ gần nhất",
+      "custom": "Tùy chỉnh",
+      "start": "Bắt đầu",
+      "durationMinutes": "Thời lượng (phút)",
+      "range": "{start} – {end}",
+      "download": "Tải xuống",
+      "cancel": "Hủy",
+      "preparing": "Đang chuẩn bị clip…",
+      "progress": "Đã nhận {received} · {rate}/giây",
+      "complete": "Đã tải clip xuống",
+      "failed": "Tải clip xuống thất bại",
+      "noRecordings": "Không có bản ghi nào trong khoảng này"
     }
   },
   "Sessions": {

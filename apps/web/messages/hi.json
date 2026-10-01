@@ -197,6 +197,24 @@
       "override": "यह पाथ अपनी पाथ कॉन्फ़िग में <code>recordFormat</code> को {format} पर सेट करता है, जो पाथ डिफ़ॉल्ट को ओवरराइड करता है। वहाँ इसे <code>fmp4</code> पर सेट करें।",
       "openPathConfig": "इस पाथ की रिकॉर्डिंग कॉन्फ़िग खोलें",
       "pathDefaultsUnreadable": "MediaMTX से पाथ डिफ़ॉल्ट पढ़े नहीं जा सके।"
+    },
+    "clip": {
+      "title": "क्लिप डाउनलोड करें",
+      "rangeAria": "क्लिप की अवधि-सीमा",
+      "last5Min": "पिछले 5 मिनट",
+      "last15Min": "पिछले 15 मिनट",
+      "last1Hour": "पिछला 1 घंटा",
+      "custom": "कस्टम",
+      "start": "शुरुआत",
+      "durationMinutes": "अवधि (मिनट)",
+      "range": "{start} – {end}",
+      "download": "डाउनलोड करें",
+      "cancel": "रद्द करें",
+      "preparing": "क्लिप तैयार हो रही है…",
+      "progress": "{received} प्राप्त · {rate}/से",
+      "complete": "क्लिप डाउनलोड हो गई",
+      "failed": "क्लिप डाउनलोड विफल रहा",
+      "noRecordings": "इस अवधि में कोई रिकॉर्डिंग नहीं है"
     }
   },
   "Sessions": {

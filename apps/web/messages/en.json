@@ -197,6 +197,24 @@
       "override": "This path sets <code>recordFormat</code> to {format} in its own path config, which overrides path defaults. Set it to <code>fmp4</code> there.",
       "openPathConfig": "Open this path's recording config",
       "pathDefaultsUnreadable": "Couldn't read path defaults from MediaMTX."
+    },
+    "clip": {
+      "title": "Download clip",
+      "rangeAria": "Clip range",
+      "last5Min": "Last 5 min",
+      "last15Min": "Last 15 min",
+      "last1Hour": "Last 1 h",
+      "custom": "Custom",
+      "start": "Start",
+      "durationMinutes": "Duration (min)",
+      "range": "{start} – {end}",
+      "download": "Download",
+      "cancel": "Cancel",
+      "preparing": "Preparing clip…",
+      "progress": "{received} received · {rate}/s",
+      "complete": "Clip downloaded",
+      "failed": "Clip download failed",
+      "noRecordings": "No recordings in this range"
     }
   },
   "Sessions": {

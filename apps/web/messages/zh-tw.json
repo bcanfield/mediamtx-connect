@@ -197,6 +197,24 @@
       "override": "此路徑在自身的路徑設定中將 <code>recordFormat</code> 設為 {format}，覆寫了路徑預設值。請在那裡將其改為 <code>fmp4</code>。",
       "openPathConfig": "開啟此路徑的錄影設定",
       "pathDefaultsUnreadable": "無法從 MediaMTX 讀取路徑預設值。"
+    },
+    "clip": {
+      "title": "下載片段",
+      "rangeAria": "片段範圍",
+      "last5Min": "最近 5 分鐘",
+      "last15Min": "最近 15 分鐘",
+      "last1Hour": "最近 1 小時",
+      "custom": "自訂",
+      "start": "開始",
+      "durationMinutes": "長度（分鐘）",
+      "range": "{start} – {end}",
+      "download": "下載",
+      "cancel": "取消",
+      "preparing": "正在準備片段…",
+      "progress": "已接收 {received} · {rate}/秒",
+      "complete": "片段已下載",
+      "failed": "片段下載失敗",
+      "noRecordings": "此範圍內沒有錄影"
     }
   },
   "Sessions": {

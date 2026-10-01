@@ -68,6 +68,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 ### Recordings
 
 - A day timeline per stream from MediaMTX's playback server: recorded spans and the gaps between them, each one playable. If playback is off, Connect lists the exact config changes it needs and applies them in one click.
+- Clip download: any range up to an hour (or the last 5 min, 15 min or hour) as one plain MP4, stitched across segments by MediaMTX without re-encoding.
 - MP4 or MPEG-TS segments per stream, grouped by day, with auto-generated thumbnails.
 - An inline player that expands in place, seekable over HTTP range requests.
 - Downloads that stream, with live progress and cancel.
