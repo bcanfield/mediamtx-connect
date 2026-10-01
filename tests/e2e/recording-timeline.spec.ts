@@ -2,6 +2,7 @@
 // server: the guided card turns playback on, and only a running recorder
 // produces the spans /list indexes and the fMP4 /get stitches.
 import type { APIRequestContext } from '@playwright/test'
+import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
 const API = 'http://localhost:9997/v3'
@@ -107,6 +108,25 @@ test.describe('Recording timeline', () => {
       expect(res.status()).toBe(200)
       expect(res.headers()['content-type']).toBe('video/mp4')
       expect((await res.body()).subarray(4, 8).toString('ascii')).toBe('ftyp')
+
+      // The same span as a plain MP4 clip, saved through the browser. "Last 5
+      // min" is clamped to the span's start, and the span may be seconds old,
+      // so this asserts a real file, not a duration (the unit tests cover the
+      // range maths).
+      const clip = page.getByRole('region', { name: 'Download clip' })
+      await clip.getByRole('button', { name: 'Last 5 min' }).click()
+      const clipResponse = page.waitForResponse(r => r.url().includes('/media/playback/get?') && r.url().includes('format=mp4'))
+      const download = page.waitForEvent('download')
+      await clip.getByRole('button', { name: 'Download' }).click()
+      expect((await clipResponse).status()).toBe(200)
+      expect((await clipResponse).headers()['content-type']).toBe('video/mp4')
+      const saved = await download
+      expect(saved.suggestedFilename()).toMatch(new RegExp(`^${STREAM}_\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}\\.mp4$`))
+      const bytes = await readFile((await saved.path())!)
+      expect(bytes.subarray(4, 8).toString('ascii')).toBe('ftyp')
+      // More than ftyp + moov alone (well under 2 kB): stream4's HEVC keyframe
+      // at 540p is several kB by itself.
+      expect(bytes.length).toBeGreaterThan(2_000)
 
       // The <video> may still be streaming that span through the api, and the
       // restore below closes the playback server under it.
