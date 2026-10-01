@@ -194,7 +194,7 @@
       "disabled": "{protocol} (ไม่ได้เปิดใช้บนเซิร์ฟเวอร์นี้)",
       "failed": "{protocol} (อ่านไม่ได้)",
       "unlisted": "ไม่ได้แสดง: {protocols}",
-      "truncated": "แสดง 100 เซสชัน {protocol} แรกเท่านั้น"
+      "truncated": "แสดง {count, number} เซสชัน {protocol} แรกเท่านั้น"
     },
     "kick": {
       "action": "เตะออก",

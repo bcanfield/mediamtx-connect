@@ -194,7 +194,7 @@
       "disabled": "{protocol} (এই সার্ভারে চালু নেই)",
       "failed": "{protocol} (পড়া যায়নি)",
       "unlisted": "তালিকাভুক্ত নয়: {protocols}।",
-      "truncated": "প্রথম 100টি {protocol} সেশন দেখানো হচ্ছে।"
+      "truncated": "প্রথম {count, number}টি {protocol} সেশন দেখানো হচ্ছে।"
     },
     "kick": {
       "action": "কিক",

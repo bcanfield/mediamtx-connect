@@ -693,6 +693,24 @@ describe('sessions.list', () => {
     })
   })
 
+  // A state a newer MediaMTX adds must not fail output validation for the
+  // whole list.
+  it('reads a state it doesn\'t know as idle', async () => {
+    lists = {
+      rtmp: { pageCount: 1, items: [{ id: 'm1', path: 'stream1', remoteAddr: 'a', state: 'handshaking', created: '2026-10-01T10:00:00Z', inboundBytes: 0, outboundBytes: 0 }] },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions.map(s => s.state)).toEqual(['idle'])
+  })
+
+  it('reports the page size a truncated protocol was cut to', async () => {
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.pageSize).toBe(100)
+  })
+
   it('flags a protocol with more than one page as truncated', async () => {
     lists = { webrtc: { pageCount: 3, items: [] } }
 

@@ -194,7 +194,7 @@
       "disabled": "{protocol} (ikke aktiveret på denne server)",
       "failed": "{protocol} (kunne ikke læses)",
       "unlisted": "Ikke vist: {protocols}.",
-      "truncated": "Viser de første 100 {protocol}-sessioner."
+      "truncated": "Viser de første {count, number} {protocol}-sessioner."
     },
     "kick": {
       "action": "Smid ud",

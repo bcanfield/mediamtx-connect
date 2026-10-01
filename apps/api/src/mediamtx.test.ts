@@ -115,6 +115,8 @@ describe('writes', () => {
   it.each([
     { name: 'a patch', call: (a: Api) => a.configPathPatch('stream1', { record: true }) },
     { name: 'a delete', call: (a: Api) => a.configPathDelete('stream1') },
+    { name: 'an add', call: (a: Api) => a.configPathAdd('stream1', { record: true }) },
+    { name: 'a kick', call: (a: Api) => a.sessionsKick('rtsp', 'abc') },
   ])('resolves $name against an empty body', async ({ call }) => {
     fetchMock.mockResolvedValue(new Response('', { status: 200 }))
 

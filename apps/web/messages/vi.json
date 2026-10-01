@@ -194,7 +194,7 @@
       "disabled": "{protocol} (chưa bật trên máy chủ này)",
       "failed": "{protocol} (không đọc được)",
       "unlisted": "Không liệt kê: {protocols}.",
-      "truncated": "Đang hiển thị 100 phiên {protocol} đầu tiên."
+      "truncated": "Đang hiển thị {count, number} phiên {protocol} đầu tiên."
     },
     "kick": {
       "action": "Ngắt",

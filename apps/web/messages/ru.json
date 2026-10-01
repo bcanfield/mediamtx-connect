@@ -194,7 +194,7 @@
       "disabled": "{protocol} (не включён на этом сервере)",
       "failed": "{protocol} (не удалось прочитать)",
       "unlisted": "Не показаны: {protocols}.",
-      "truncated": "Показаны первые 100 сеансов {protocol}."
+      "truncated": "Показаны первые {count, number} сеансов {protocol}."
     },
     "kick": {
       "action": "Отключить",

@@ -194,7 +194,7 @@
       "disabled": "{protocol} (ei käytössä tällä palvelimella)",
       "failed": "{protocol} (ei voitu lukea)",
       "unlisted": "Ei listattu: {protocols}.",
-      "truncated": "Näytetään ensimmäiset 100 {protocol}-istuntoa."
+      "truncated": "Näytetään ensimmäiset {count, number} {protocol}-istuntoa."
     },
     "kick": {
       "action": "Katkaise",

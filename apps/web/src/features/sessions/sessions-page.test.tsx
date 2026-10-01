@@ -44,7 +44,7 @@ function session(overrides: Record<string, unknown>) {
 }
 
 function connected(rows: unknown[], protocols: unknown[] = ALL_LISTED) {
-  return { status: 'connected', sessions: rows, protocols }
+  return { status: 'connected', sessions: rows, protocols, pageSize: 100 }
 }
 
 describe('sessions page', () => {
@@ -75,13 +75,17 @@ describe('sessions page', () => {
   })
 
   it('says when a protocol\'s list was cut at the first page', async () => {
-    sessions = connected([session({})], [
-      ...ALL_LISTED.filter(p => p.protocol !== 'webrtc'),
-      { protocol: 'webrtc', status: 'listed', truncated: true },
-    ])
+    sessions = {
+      ...connected([session({})], [
+        ...ALL_LISTED.filter(p => p.protocol !== 'webrtc'),
+        { protocol: 'webrtc', status: 'listed', truncated: true },
+      ]),
+      pageSize: 2500,
+    }
     await renderWithProviders(<SessionsPage />)
 
-    expect(await screen.findByText('Showing the first 100 WebRTC sessions.')).toBeInTheDocument()
+    // The page size comes off the API, formatted per locale.
+    expect(await screen.findByText('Showing the first 2,500 WebRTC sessions.')).toBeInTheDocument()
   })
 
   it('renders the error state, not an empty table, when MediaMTX is unreachable', async () => {

@@ -194,7 +194,7 @@
       "disabled": "{protocol} (auf diesem Server nicht aktiviert)",
       "failed": "{protocol} (konnte nicht gelesen werden)",
       "unlisted": "Nicht aufgeführt: {protocols}.",
-      "truncated": "Es werden die ersten 100 {protocol}-Sitzungen angezeigt."
+      "truncated": "Es werden die ersten {count, number} {protocol}-Sitzungen angezeigt."
     },
     "kick": {
       "action": "Trennen",

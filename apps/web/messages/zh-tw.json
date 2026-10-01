@@ -194,7 +194,7 @@
       "disabled": "{protocol}（此伺服器未啟用）",
       "failed": "{protocol}（無法讀取）",
       "unlisted": "未列出：{protocols}。",
-      "truncated": "僅顯示前 100 個 {protocol} 工作階段。"
+      "truncated": "僅顯示前 {count, number} 個 {protocol} 工作階段。"
     },
     "kick": {
       "action": "踢除",

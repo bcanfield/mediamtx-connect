@@ -194,7 +194,7 @@
       "disabled": "{protocol}（このサーバーでは無効）",
       "failed": "{protocol}（読み取れませんでした）",
       "unlisted": "一覧にないもの: {protocols}。",
-      "truncated": "{protocol} のセッションは最初の 100 件のみ表示しています。"
+      "truncated": "{protocol} のセッションは最初の {count, number} 件のみ表示しています。"
     },
     "kick": {
       "action": "切断",

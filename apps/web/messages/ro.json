@@ -194,7 +194,7 @@
       "disabled": "{protocol} (neactivat pe acest server)",
       "failed": "{protocol} (nu a putut fi citit)",
       "unlisted": "Nelistate: {protocols}.",
-      "truncated": "Se afișează primele 100 de sesiuni {protocol}."
+      "truncated": "Se afișează primele {count, number} de sesiuni {protocol}."
     },
     "kick": {
       "action": "Deconectează",

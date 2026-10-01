@@ -66,7 +66,7 @@ export function SessionsPage() {
                   <SessionsTable sessions={state.sessions} />
                 </>
               )}
-          <ProtocolNotes protocols={state.protocols} />
+          <ProtocolNotes protocols={state.protocols} pageSize={state.pageSize} />
         </div>
       )}
     </PageLayout>
@@ -171,7 +171,7 @@ function KickDialog({ session }: { session: Session }) {
 
 // A protocol we didn't list is not a protocol with nobody on it, so the page
 // says which ones are missing from the table and why.
-function ProtocolNotes({ protocols }: { protocols: SessionProtocolStatus[] }) {
+function ProtocolNotes({ protocols, pageSize }: { protocols: SessionProtocolStatus[], pageSize: number }) {
   const t = useTranslations('Sessions.protocols')
   const format = useFormatter()
   const unlisted = protocols
@@ -185,7 +185,7 @@ function ProtocolNotes({ protocols }: { protocols: SessionProtocolStatus[] }) {
   return (
     <div className="flex flex-col gap-1 text-meta text-muted-foreground">
       {truncated.map(p => (
-        <p key={p.protocol}>{t('truncated', { protocol: PROTOCOL_LABELS[p.protocol] })}</p>
+        <p key={p.protocol}>{t('truncated', { protocol: PROTOCOL_LABELS[p.protocol], count: pageSize })}</p>
       ))}
       {unlisted.length > 0 && (
         <p>{t('unlisted', { protocols: format.list(unlisted, { type: 'unit', style: 'short' }) })}</p>

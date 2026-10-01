@@ -194,7 +194,7 @@
       "disabled": "{protocol} (इस सर्वर पर सक्षम नहीं)",
       "failed": "{protocol} (पढ़ा नहीं जा सका)",
       "unlisted": "सूचीबद्ध नहीं: {protocols}।",
-      "truncated": "पहले 100 {protocol} सत्र दिखाए जा रहे हैं।"
+      "truncated": "पहले {count, number} {protocol} सत्र दिखाए जा रहे हैं।"
     },
     "kick": {
       "action": "निकालें",

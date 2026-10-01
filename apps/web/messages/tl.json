@@ -194,7 +194,7 @@
       "disabled": "{protocol} (hindi naka-enable sa server na ito)",
       "failed": "{protocol} (hindi mabasa)",
       "unlisted": "Hindi nakalista: {protocols}.",
-      "truncated": "Ipinapakita ang unang 100 {protocol} na session."
+      "truncated": "Ipinapakita ang unang {count, number} {protocol} na session."
     },
     "kick": {
       "action": "I-kick",

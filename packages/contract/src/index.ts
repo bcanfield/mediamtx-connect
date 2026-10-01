@@ -378,6 +378,8 @@ export const SessionsStateSchema = z.discriminatedUnion('status', [
     status: z.literal('connected'),
     sessions: z.array(SessionSchema),
     protocols: z.array(SessionProtocolStatusSchema),
+    // How many sessions a truncated protocol was cut to.
+    pageSize: z.number().int(),
   }),
 ])
 

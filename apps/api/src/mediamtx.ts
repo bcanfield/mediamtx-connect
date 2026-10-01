@@ -59,12 +59,13 @@ export type MediaMtxPathCreate = PathConfig & {
 // Which byte counters are real differs by protocol: SRT counts in
 // `bytesReceived`/`bytesSent`, the rest in `inboundBytes`/`outboundBytes` (their
 // `bytes*` are deprecated aliases). HLS sessions have no `state` and no inbound.
+// MediaMTX always sends id, created, remoteAddr and path on every protocol.
 export interface MediaMtxSession {
-  id?: string
-  created?: string
-  remoteAddr?: string
+  id: string
+  created: string
+  remoteAddr: string
   state?: string
-  path?: string
+  path: string
   inboundBytes?: number
   outboundBytes?: number
   bytesReceived?: number

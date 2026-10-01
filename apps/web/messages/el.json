@@ -194,7 +194,7 @@
       "disabled": "{protocol} (δεν είναι ενεργό σε αυτόν τον διακομιστή)",
       "failed": "{protocol} (δεν ήταν δυνατή η ανάγνωση)",
       "unlisted": "Δεν εμφανίζονται: {protocols}.",
-      "truncated": "Εμφανίζονται οι πρώτες 100 συνεδρίες {protocol}."
+      "truncated": "Εμφανίζονται οι πρώτες {count, number} συνεδρίες {protocol}."
     },
     "kick": {
       "action": "Αποσύνδεση",

@@ -194,7 +194,7 @@
       "disabled": "{protocol} (na tomto serveru není zapnuto)",
       "failed": "{protocol} (nelze načíst)",
       "unlisted": "Nevypsáno: {protocols}.",
-      "truncated": "Zobrazeno prvních 100 relací {protocol}."
+      "truncated": "Zobrazeno prvních {count, number} relací {protocol}."
     },
     "kick": {
       "action": "Odpojit",

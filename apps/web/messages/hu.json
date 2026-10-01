@@ -194,7 +194,7 @@
       "disabled": "{protocol} (nincs engedélyezve ezen a szerveren)",
       "failed": "{protocol} (nem sikerült beolvasni)",
       "unlisted": "Nem listázva: {protocols}.",
-      "truncated": "Az első 100 {protocol} munkamenet látható."
+      "truncated": "Az első {count, number} {protocol} munkamenet látható."
     },
     "kick": {
       "action": "Kirúgás",

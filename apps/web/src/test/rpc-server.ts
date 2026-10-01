@@ -77,7 +77,7 @@ export function createRpcServer(stub: StubApi) {
     },
     sessions: {
       list: os.sessions.list.handler(
-        () => (stub.sessionsList?.() ?? { status: 'connected', sessions: [], protocols: [] }) as never,
+        () => (stub.sessionsList?.() ?? { status: 'connected', sessions: [], protocols: [], pageSize: 100 }) as never,
       ),
       kick: os.sessions.kick.handler(async ({ input }) => {
         await stub.kickSession?.(input)

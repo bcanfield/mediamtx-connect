@@ -42,13 +42,35 @@ async function ourReaders(request: APIRequestContext): Promise<RtspSession[] | n
   }
 }
 
+// Not idempotent like a patch: an add that landed but lost its response socket
+// makes the retry answer "path already exists". After a first attempt, that
+// answer means our earlier add went through.
+async function addReaderPath(request: APIRequestContext) {
+  let attempted = false
+  await expect.poll(async () => {
+    try {
+      const res = await request.post(`${API}/config/paths/add/${READER_PATH}`, {
+        data: {
+          runOnInit: `ffmpeg -rtsp_transport tcp -i 'rtsp://localhost:$RTSP_PORT/${STREAM}?${QUERY}' -c copy -f null -`,
+          runOnInitRestart: false,
+        },
+      })
+      if (res.ok())
+        return true
+      const alreadyExists = res.status() === 400 && (await res.text()).includes('already exists')
+      return attempted && alreadyExists
+    }
+    catch {
+      return false
+    }
+    finally {
+      attempted = true
+    }
+  }).toBe(true)
+}
+
 test('kicks an RTSP reader from the sessions page', async ({ page, request }) => {
-  await untilOk(() => request.post(`${API}/config/paths/add/${READER_PATH}`, {
-    data: {
-      runOnInit: `ffmpeg -rtsp_transport tcp -i 'rtsp://localhost:$RTSP_PORT/${STREAM}?${QUERY}' -c copy -f null -`,
-      runOnInitRestart: false,
-    },
-  }))
+  await addReaderPath(request)
   try {
     let reader: RtspSession | undefined
     await expect.poll(async () => {

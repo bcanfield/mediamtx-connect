@@ -52,21 +52,31 @@ function tracksOf(runtime: MediaMtxPath): PathTrack[] {
   return (runtime.tracks ?? []).map(codec => ({ codec, resolution: null }))
 }
 
+// MediaMTX's default `itemsPerPage`; the lists ask for its first page only.
+const SESSIONS_PAGE_SIZE = 100
+
 // Folds one protocol's session into the shared row. SRT keeps its real
 // counters in `bytesReceived`/`bytesSent` (deprecated aliases everywhere else),
 // and an HLS session has no inbound counter and no state: it only ever reads.
+const SESSION_STATES: readonly string[] = ['idle', 'read', 'publish']
+
 function toSession(protocol: SessionProtocol, item: MediaMtxSession): Session {
+  // A state a later MediaMTX adds reads as idle rather than failing output
+  // validation for every row on the page.
+  const state = protocol === 'hls'
+    ? 'read'
+    : SESSION_STATES.includes(item.state ?? '') ? item.state as Session['state'] : 'idle'
   return {
-    id: item.id ?? '',
+    id: item.id,
     protocol,
-    path: item.path ?? '',
-    remoteAddr: item.remoteAddr ?? '',
-    state: protocol === 'hls' ? 'read' : item.state as Session['state'],
+    path: item.path,
+    remoteAddr: item.remoteAddr,
+    state,
     inboundBytes: protocol === 'hls'
       ? null
       : (protocol === 'srt' ? item.bytesReceived : item.inboundBytes) ?? 0,
     outboundBytes: (protocol === 'srt' ? item.bytesSent : item.outboundBytes) ?? 0,
-    created: new Date(item.created ?? 0),
+    created: new Date(item.created),
   }
 }
 
@@ -176,7 +186,7 @@ export const router = os.router({
         || a.created.getTime() - b.created.getTime(),
       )
 
-      return { status: 'connected' as const, sessions, protocols }
+      return { status: 'connected' as const, sessions, protocols, pageSize: SESSIONS_PAGE_SIZE }
     }),
 
     kick: os.sessions.kick.handler(async ({ input }) => {

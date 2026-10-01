@@ -194,7 +194,7 @@
       "disabled": "{protocol} (niewłączony na tym serwerze)",
       "failed": "{protocol} (nie udało się odczytać)",
       "unlisted": "Nie wyświetlono: {protocols}.",
-      "truncated": "Wyświetlono pierwsze 100 sesji {protocol}."
+      "truncated": "Wyświetlono pierwsze {count, number} sesji {protocol}."
     },
     "kick": {
       "action": "Rozłącz",

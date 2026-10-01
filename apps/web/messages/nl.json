@@ -194,7 +194,7 @@
       "disabled": "{protocol} (niet ingeschakeld op deze server)",
       "failed": "{protocol} (kon niet worden gelezen)",
       "unlisted": "Niet vermeld: {protocols}.",
-      "truncated": "De eerste 100 {protocol}-sessies worden getoond."
+      "truncated": "De eerste {count, number} {protocol}-sessies worden getoond."
     },
     "kick": {
       "action": "Verbreken",

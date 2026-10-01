@@ -194,7 +194,7 @@
       "disabled": "{protocol}（此服务器未启用）",
       "failed": "{protocol}（无法读取）",
       "unlisted": "未列出：{protocols}。",
-      "truncated": "仅显示前 100 个 {protocol} 会话。"
+      "truncated": "仅显示前 {count, number} 个 {protocol} 会话。"
     },
     "kick": {
       "action": "踢出",

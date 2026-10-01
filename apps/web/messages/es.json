@@ -194,7 +194,7 @@
       "disabled": "{protocol} (no habilitado en este servidor)",
       "failed": "{protocol} (no se pudo leer)",
       "unlisted": "Sin listar: {protocols}.",
-      "truncated": "Se muestran las primeras 100 sesiones {protocol}."
+      "truncated": "Se muestran las primeras {count, number} sesiones {protocol}."
     },
     "kick": {
       "action": "Expulsar",

@@ -194,7 +194,7 @@
       "disabled": "{protocol} (tidak diaktifkan di server ini)",
       "failed": "{protocol} (tidak dapat dibaca)",
       "unlisted": "Tidak tercantum: {protocols}.",
-      "truncated": "Menampilkan 100 sesi {protocol} pertama."
+      "truncated": "Menampilkan {count, number} sesi {protocol} pertama."
     },
     "kick": {
       "action": "Keluarkan",

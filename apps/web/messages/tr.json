@@ -194,7 +194,7 @@
       "disabled": "{protocol} (bu sunucuda etkin değil)",
       "failed": "{protocol} (okunamadı)",
       "unlisted": "Listelenmeyenler: {protocols}.",
-      "truncated": "İlk 100 {protocol} oturumu gösteriliyor."
+      "truncated": "İlk {count, number} {protocol} oturumu gösteriliyor."
     },
     "kick": {
       "action": "At",

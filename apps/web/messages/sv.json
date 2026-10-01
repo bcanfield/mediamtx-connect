@@ -194,7 +194,7 @@
       "disabled": "{protocol} (inte aktiverat på den här servern)",
       "failed": "{protocol} (kunde inte läsas)",
       "unlisted": "Inte listade: {protocols}.",
-      "truncated": "Visar de första 100 {protocol}-sessionerna."
+      "truncated": "Visar de första {count, number} {protocol}-sessionerna."
     },
     "kick": {
       "action": "Sparka ut",
