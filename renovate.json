@@ -9,6 +9,7 @@
   ],
   "prHourlyLimit": 0,
   "semanticCommits": "enabled",
+  "assignees": ["bcanfield"],
   "minimumReleaseAge": "3 days",
   "packageRules": [
     {
