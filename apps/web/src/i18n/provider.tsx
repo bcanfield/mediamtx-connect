@@ -10,7 +10,7 @@ const LOCALE_STORAGE_KEY = 'locale'
 type Messages = Record<string, unknown>
 
 // English is bundled eagerly; every other locale loads on demand.
-const messageModules = import.meta.glob<{ default: Messages }>('../../messages/*.json')
+const messageModules = import.meta.glob<{ default: Messages }>(['../../messages/*.json', '!../../messages/en.json'])
 
 async function loadMessages(locale: Locale): Promise<Messages> {
   if (locale === 'en')
