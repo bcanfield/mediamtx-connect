@@ -10,22 +10,34 @@ import { LiveViewPage } from './live-view-page'
 // browser reached this app at — trip it. `advertisesOnlyLoopback` itself is
 // covered in `lib/playback.test.ts`.
 let globalConfig: Record<string, unknown> = {}
+let streams: unknown[] = []
+
+const frontDoor = {
+  name: 'front-door',
+  readyTime: '2026-07-27T10:00:00Z',
+  recordState: 'off',
+  codecs: [],
+  viewers: 0,
+  snapshotMtime: null,
+}
 
 const stub: StubApi = {
   streamsList: () => ({
     status: 'connected',
     hlsAddress: ':8888',
     remoteMediaMtxUrl: 'http://cam.lan',
-    streams: [{
-      name: 'front-door',
-      readyTime: '2026-07-27T10:00:00Z',
-      recordState: 'off',
-      codecs: [],
-      viewers: 0,
-      snapshotMtime: null,
-    }],
+    streams,
   }),
   globalConfig: () => globalConfig,
+  // The docker-compose shape: the API reaches MediaMTX by its service name,
+  // which no operator's machine can resolve.
+  appConfig: () => ({
+    mediaMtxUrl: 'http://mediamtx',
+    mediaMtxApiPort: 9997,
+    remoteMediaMtxUrl: 'http://cam.lan',
+    recordingsDirectory: '/recordings',
+    screenshotsDirectory: '/screenshots',
+  }),
 }
 
 const server = createRpcServer(stub)
@@ -52,6 +64,7 @@ function browsingFrom(hostname: string) {
 const banner = () => screen.queryByText('WebRTC hosts are loopback-only')
 
 beforeEach(() => {
+  streams = [frontDoor]
   globalConfig = { webrtc: true, webrtcAddress: ':8889', webrtcAdditionalHosts: ['127.0.0.1'] }
   browsingFrom('cam.lan')
 })
@@ -91,5 +104,16 @@ describe('the loopback WebRTC banner', () => {
     expect(await screen.findByText('front-door')).toBeInTheDocument()
     await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(banner()).not.toBeInTheDocument()
+  })
+})
+
+describe('publish URL hints', () => {
+  it('point at the browser-facing MediaMTX host, not the one the API uses', async () => {
+    streams = []
+    browsingFrom('connect.lan')
+    await renderWithProviders(<LiveViewPage />)
+
+    expect(await screen.findByText('No streams are publishing')).toBeInTheDocument()
+    expect(screen.getByText(/^rtsp:\/\//)).toHaveTextContent('rtsp://cam.lan:8554/')
   })
 })
