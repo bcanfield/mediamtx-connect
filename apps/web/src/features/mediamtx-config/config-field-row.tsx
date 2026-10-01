@@ -23,6 +23,12 @@ function toTextarea(value: string[] | undefined): string {
   return value?.join('\n') ?? ''
 }
 
+// Run on blur, not on change, so the newline being typed isn't eaten. An
+// emptied list becomes [], MediaMTX's own "none"; it refuses `[""]` for most keys.
+function cleanLines(value: string[] | undefined): string[] {
+  return (value ?? []).map(line => line.trim()).filter(line => line !== '')
+}
+
 // ConfigFieldRow (handoff §3): fixed key column with the MediaMTX config key
 // verbatim in mono (never localized — docs/I18N.md), localized help below,
 // control on the right, hairline row separator.
@@ -221,6 +227,10 @@ export function ListFieldRow<T extends FieldValues>({
                 className="min-h-16 font-mono text-control"
                 value={toTextarea(field.value as string[] | undefined)}
                 onChange={e => field.onChange(fromTextarea(e))}
+                onBlur={() => {
+                  field.onChange(cleanLines(field.value as string[] | undefined))
+                  field.onBlur()
+                }}
               />
             </FormControl>
             <FormMessage />
