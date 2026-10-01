@@ -13,6 +13,10 @@ export function useConnectionState() {
   return {
     connected: state?.status === 'connected',
     unknown: state === undefined,
-    liveCount: state?.status === 'connected' ? state.streams.length : 0,
+    // The path list includes configured and on-demand paths with no publisher;
+    // only a ready one (non-null readyTime) is live.
+    liveCount: state?.status === 'connected'
+      ? state.streams.filter(stream => stream.readyTime !== null).length
+      : 0,
   }
 }

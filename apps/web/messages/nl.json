@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webinterface voor MediaMTX. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser."
-  },
   "Forms": {
     "errors": {
       "required": "Dit veld is verplicht",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Opnieuw proberen",
-    "loading": "Laden…",
     "theme": {
-      "lightMode": "Lichte modus",
-      "darkMode": "Donkere modus",
       "switchToLight": "Schakel naar licht thema",
       "switchToDark": "Schakel naar donker thema"
     },
@@ -92,10 +81,6 @@
       "stop": "Stoppen",
       "playAria": "{streamName} afspelen",
       "actionsAria": "Streamacties",
-      "stub": {
-        "title": "Nog niet geïmplementeerd",
-        "description": "Deze actie staat op de roadmap — ze is geregistreerd."
-      },
       "recordError": {
         "title": "Opname kon niet worden gewijzigd",
         "description": "MediaMTX heeft de wijziging geweigerd — de opname van deze stream is ongewijzigd."
@@ -117,7 +102,6 @@
         "description": "MediaMTX kon geen beeld vastleggen — de stream is mogelijk offline."
       },
       "menu": {
-        "openDetail": "Streamdetail openen",
         "viewRecordings": "Opnames bekijken",
         "takeSnapshot": "Snapshot maken",
         "record": "Opnemen",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Publicatie-URL's kopiëren",
-        "shareEmbed": "Delen & insluiten…",
         "editPathConfig": "Padconfiguratie bewerken",
         "editHooks": "Hooks bewerken"
       }

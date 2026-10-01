@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Antarmuka web untuk MediaMTX. Tonton aliran, telusuri rekaman, dan ubah konfigurasi dari peramban Anda."
-  },
   "Forms": {
     "errors": {
       "required": "Bidang ini wajib diisi",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Coba lagi",
-    "loading": "Memuat…",
     "theme": {
-      "lightMode": "Mode terang",
-      "darkMode": "Mode gelap",
       "switchToLight": "Beralih ke tema terang",
       "switchToDark": "Beralih ke tema gelap"
     },
@@ -92,10 +81,6 @@
       "stop": "Hentikan",
       "playAria": "Putar {streamName}",
       "actionsAria": "Tindakan aliran",
-      "stub": {
-        "title": "Belum diimplementasikan",
-        "description": "Tindakan ini ada di peta jalan — sudah dicatat."
-      },
       "recordError": {
         "title": "Tidak dapat mengubah perekaman",
         "description": "MediaMTX menolak perubahan — perekaman stream ini tidak berubah."
@@ -117,7 +102,6 @@
         "description": "MediaMTX tidak dapat mengambil bingkai — stream mungkin sedang offline."
       },
       "menu": {
-        "openDetail": "Buka detail aliran",
         "viewRecordings": "Lihat rekaman",
         "takeSnapshot": "Ambil snapshot",
         "record": "Rekam",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Salin URL publikasi",
-        "shareEmbed": "Bagikan & sematkan…",
         "editPathConfig": "Ubah konfigurasi path",
         "editHooks": "Ubah hooks"
       }

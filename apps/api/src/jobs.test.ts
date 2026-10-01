@@ -38,6 +38,18 @@ function fakeProc(): FakeProc {
   return proc
 }
 
+// A fresh emitter per spawn, so a test can end one process. With the shared
+// beforeEach proc an emit fans out to every capture's handlers.
+function procPerSpawn(): FakeProc[] {
+  const procs: FakeProc[] = []
+  vi.mocked(cp.spawn).mockImplementation(() => {
+    const p = fakeProc()
+    procs.push(p)
+    return p as unknown as ChildProcess
+  })
+  return procs
+}
+
 function mockMediaMtx(
   items: Array<{ name?: string, ready?: boolean }>,
   globalConf: { rtspAddress?: string } = { rtspAddress: ':8554' },
@@ -159,31 +171,25 @@ describe('captureLiveSnapshots', () => {
   })
 
   it('never runs more ffmpeg at once than the concurrency cap', async () => {
-    const names = Array.from({ length: MAX_CONCURRENT_CAPTURES + 1 }, (_, i) => `s${i}`)
+    const procs = procPerSpawn()
+    const names = Array.from({ length: MAX_CONCURRENT_CAPTURES + 2 }, (_, i) => `s${i}`)
     mockMediaMtx(names.map(name => ({ name, ready: true })))
 
     await captureLiveSnapshots()
 
-    // One more ready stream than the cap, so the last capture waits for a slot.
+    // Two more ready streams than the cap, so the last two wait for a slot.
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES)
 
-    // Free a slot; the queued capture now spawns.
-    proc.emit('close', 0)
+    // Free one slot; exactly one queued capture spawns.
+    procs[0]!.emit('close', 0)
     await flushMicrotasks()
 
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES + 1)
   })
 
   it('releases only one slot when a spawn both errors and closes', async () => {
-    // A failed spawn (e.g. ffmpeg missing) fires both 'error' and 'close'. Each
-    // capture needs its own emitter to target one; the shared beforeEach proc
-    // would fan an emit out to every capture's handlers.
-    const procs: FakeProc[] = []
-    vi.mocked(cp.spawn).mockImplementation(() => {
-      const p = fakeProc()
-      procs.push(p)
-      return p as unknown as ChildProcess
-    })
+    // A failed spawn (e.g. ffmpeg missing) fires both 'error' and 'close'.
+    const procs = procPerSpawn()
 
     const names = Array.from({ length: MAX_CONCURRENT_CAPTURES }, (_, i) => `s${i}`)
     mockMediaMtx(names.map(name => ({ name, ready: true })))
@@ -240,18 +246,20 @@ describe('captureLiveSnapshots', () => {
   })
 
   it('counts on-demand captures against the same cap as the cron', async () => {
-    // Saturate the gate with a full cron sweep, then a user-triggered capture
+    // Saturate the gate with a full cron sweep, then user-triggered captures
     // must wait rather than spawn a process on top of the cap.
+    const procs = procPerSpawn()
     const names = Array.from({ length: MAX_CONCURRENT_CAPTURES }, (_, i) => `s${i}`)
     mockMediaMtx(names.map(name => ({ name, ready: true })))
     await captureLiveSnapshots()
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES)
 
-    captureSnapshot('on-demand').catch(() => {})
+    captureSnapshot('a').catch(() => {})
+    captureSnapshot('b').catch(() => {})
     await flushMicrotasks()
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES)
 
-    proc.emit('close', 0)
+    procs[0]!.emit('close', 0)
     await flushMicrotasks()
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_CAPTURES + 1)
   })

@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX 的网页界面。在浏览器中观看直播、浏览录像并编辑配置。"
-  },
   "Forms": {
     "errors": {
       "required": "此字段为必填项",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "重试",
-    "loading": "加载中…",
     "theme": {
-      "lightMode": "浅色模式",
-      "darkMode": "深色模式",
       "switchToLight": "切换到浅色主题",
       "switchToDark": "切换到深色主题"
     },
@@ -92,10 +81,6 @@
       "stop": "停止",
       "playAria": "播放 {streamName}",
       "actionsAria": "流操作",
-      "stub": {
-        "title": "尚未实现",
-        "description": "此操作已在路线图中 — 已记录。"
-      },
       "recordError": {
         "title": "无法更改录制",
         "description": "MediaMTX 拒绝了此更改 — 该流的录制状态未改变。"
@@ -117,7 +102,6 @@
         "description": "MediaMTX 无法抓取画面 — 该流可能已离线。"
       },
       "menu": {
-        "openDetail": "打开流详情",
         "viewRecordings": "查看录像",
         "takeSnapshot": "拍摄快照",
         "record": "录制",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "复制推流 URL",
-        "shareEmbed": "分享与嵌入…",
         "editPathConfig": "编辑路径配置",
         "editHooks": "编辑钩子"
       }

@@ -18,9 +18,9 @@
 //              there is nothing left to narrow.
 //   test       vitest --changed, which resolves the module graph and runs only
 //              the tests an edit can reach.
-//   i18n       skipped unless a message catalogue or a README moved. It walks
-//              every locale and every translated README every time, and no
-//              other kind of edit can affect its result.
+//   i18n       skipped unless a message catalogue moved. It walks every
+//              locale every time, and no other kind of edit can affect its
+//              result.
 //
 // Build is NOT here — that is verify's job, and it is what makes verify the
 // thing that mirrors CI's Build job rather than merely resembling it.
@@ -46,20 +46,18 @@ function changedFiles() {
   if (explicit.length)
     return explicit
   if (since)
-    return git('diff', '--name-only', `${since}...HEAD`)
+    return git('diff', '--name-only', '--diff-filter=d', `${since}...HEAD`)
   // Working tree: tracked modifications plus untracked files. A new file that
   // has never been added is exactly the one most likely to have a lint error.
   return [
-    ...git('diff', '--name-only', 'HEAD'),
+    ...git('diff', '--name-only', '--diff-filter=d', 'HEAD'),
     ...git('ls-files', '--others', '--exclude-standard'),
   ]
 }
 
 const files = [...new Set(changedFiles())]
 const lintable = files.filter(f => /\.[cm]?[jt]sx?$/.test(f))
-const touchesI18n = files.some(f =>
-  f.startsWith('apps/web/messages/') || /(?:^|\/)README(?:\.[a-z-]+)?\.md$/.test(f),
-)
+const touchesI18n = files.some(f => f.startsWith('apps/web/messages/'))
 
 // Anything vitest could reach. `--changed` reads git itself, so an explicit path
 // list is only a signal about whether to bother running it at all.

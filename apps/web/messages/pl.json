@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfejs WWW dla MediaMTX. Oglądaj transmisje, przeglądaj nagrania i edytuj konfigurację z przeglądarki."
-  },
   "Forms": {
     "errors": {
       "required": "To pole jest wymagane",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Spróbuj ponownie",
-    "loading": "Ładowanie…",
     "theme": {
-      "lightMode": "Tryb jasny",
-      "darkMode": "Tryb ciemny",
       "switchToLight": "Przełącz na motyw jasny",
       "switchToDark": "Przełącz na motyw ciemny"
     },
@@ -92,10 +81,6 @@
       "stop": "Zatrzymaj",
       "playAria": "Odtwórz {streamName}",
       "actionsAria": "Akcje transmisji",
-      "stub": {
-        "title": "Jeszcze niezaimplementowane",
-        "description": "Ta akcja jest w planach — została odnotowana."
-      },
       "recordError": {
         "title": "Nie udało się zmienić nagrywania",
         "description": "MediaMTX odrzucił zmianę — nagrywanie tego strumienia pozostało bez zmian."
@@ -117,7 +102,6 @@
         "description": "MediaMTX nie mógł pobrać klatki — strumień może być offline."
       },
       "menu": {
-        "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",
         "takeSnapshot": "Zrób migawkę",
         "record": "Nagrywanie",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiuj adresy URL publikowania",
-        "shareEmbed": "Udostępnij i osadź…",
         "editPathConfig": "Edytuj konfigurację ścieżki",
         "editHooks": "Edytuj hooki"
       }

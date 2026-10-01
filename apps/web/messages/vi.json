@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Giao diện web cho MediaMTX. Xem các luồng, duyệt bản ghi và chỉnh sửa cấu hình từ trình duyệt của bạn."
-  },
   "Forms": {
     "errors": {
       "required": "Trường này là bắt buộc",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Thử lại",
-    "loading": "Đang tải…",
     "theme": {
-      "lightMode": "Chế độ sáng",
-      "darkMode": "Chế độ tối",
       "switchToLight": "Chuyển sang giao diện sáng",
       "switchToDark": "Chuyển sang giao diện tối"
     },
@@ -92,10 +81,6 @@
       "stop": "Dừng",
       "playAria": "Phát {streamName}",
       "actionsAria": "Hành động trên luồng",
-      "stub": {
-        "title": "Chưa được triển khai",
-        "description": "Hành động này nằm trong lộ trình — đã được ghi nhận."
-      },
       "recordError": {
         "title": "Không thể thay đổi ghi hình",
         "description": "MediaMTX đã từ chối thay đổi — trạng thái ghi hình của luồng này không đổi."
@@ -117,7 +102,6 @@
         "description": "MediaMTX không thể lấy khung hình — luồng có thể đang ngoại tuyến."
       },
       "menu": {
-        "openDetail": "Mở chi tiết luồng",
         "viewRecordings": "Xem bản ghi",
         "takeSnapshot": "Chụp ảnh nhanh",
         "record": "Ghi hình",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Sao chép URL đẩy luồng",
-        "shareEmbed": "Chia sẻ & nhúng…",
         "editPathConfig": "Chỉnh sửa cấu hình đường dẫn",
         "editHooks": "Chỉnh sửa hook"
       }

@@ -6,7 +6,6 @@ apps/api/public
 .git
 .github
 .vscode
-.agents
 .playwright-mcp
 .pnpm-store
 Dockerfile
@@ -16,6 +15,6 @@ demo
 docs
 examples
 tests
-test-data
+.scratch
 test-results
 playwright-report
