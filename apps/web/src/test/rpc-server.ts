@@ -42,6 +42,8 @@ export interface StubApi {
   addPath?: (input: Inputs['config']['mediamtx']['addPath']) => void | Promise<void>
   /** What is attached to a path — `{publisher, readers}`, or null when unreachable. Defaults to idle. */
   pathConnections?: () => unknown
+  /** One path's runtime health — `{status: 'live', …}`, `{status: 'idle'}`, or null. Defaults to idle. */
+  pathHealth?: () => unknown
   deletePathConfig?: (input: Inputs['config']['mediamtx']['deletePathConfig']) => void
   /** One summary per stream that has recordings. Defaults to none. */
   recordingStreams?: () => unknown
@@ -111,6 +113,11 @@ export function createRpcServer(stub: StubApi) {
         updatePathConfig: os.config.mediamtx.updatePathConfig.handler(async ({ input }) => {
           await stub.updatePathConfig?.(input)
         }),
+        // Not `?? {status: 'idle'}`: a stub that answers `null` is driving the
+        // unreachable branch, and a fallback would swallow it as idle.
+        getPathHealth: os.config.mediamtx.getPathHealth.handler(
+          () => (stub.pathHealth ? stub.pathHealth() : { status: 'idle' }) as never,
+        ),
         getPathConnections: os.config.mediamtx.getPathConnections.handler(
           () => (stub.pathConnections?.() ?? { publisher: null, readers: [] }) as never,
         ),
