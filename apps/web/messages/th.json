@@ -326,6 +326,7 @@
         "noProtocols": "เซิร์ฟเวอร์ปิดทุกโปรโตคอลสำหรับส่วนนี้",
         "copyUrl": "คัดลอก URL {protocol}",
         "copySnippet": "คัดลอกสนิปเป็ต {client} สำหรับ {protocol}",
+        "snippetLabel": "สนิปเป็ต {client} สำหรับ {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 เผยแพร่ผ่าน WHIP ได้เฉพาะเมื่ออินพุตมีทั้งแทร็กวิดีโอและแทร็กเสียง"
         },

@@ -326,6 +326,7 @@
         "noProtocols": "Sunucu bunun için tüm protokolleri kapatmış.",
         "copyUrl": "{protocol} URL'sini kopyala",
         "copySnippet": "{protocol} için {client} parçacığını kopyala",
+        "snippetLabel": "{protocol} için {client} parçacığı",
         "notes": {
           "whipTracks": "FFmpeg 8, WHIP üzerinden yalnızca girişte hem video hem ses izi olduğunda yayın yapar."
         },

@@ -326,6 +326,7 @@
         "noProtocols": "A szerveren ehhez minden protokoll ki van kapcsolva.",
         "copyUrl": "{protocol} URL másolása",
         "copySnippet": "{client} kódrészlet másolása ehhez: {protocol}",
+        "snippetLabel": "{client} kódrészlet ehhez: {protocol}",
         "notes": {
           "whipTracks": "Az FFmpeg 8 csak akkor tesz közzé WHIP-en, ha a bemenetben van videó- és hangsáv is."
         },

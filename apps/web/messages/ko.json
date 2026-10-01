@@ -326,6 +326,7 @@
         "noProtocols": "서버에서 이 용도의 프로토콜이 모두 꺼져 있습니다.",
         "copyUrl": "{protocol} URL 복사",
         "copySnippet": "{protocol}용 {client} 스니펫 복사",
+        "snippetLabel": "{protocol}용 {client} 스니펫",
         "notes": {
           "whipTracks": "FFmpeg 8은 입력에 비디오 트랙과 오디오 트랙이 모두 있을 때만 WHIP으로 게시합니다."
         },

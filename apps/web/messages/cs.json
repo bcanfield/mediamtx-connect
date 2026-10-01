@@ -326,6 +326,7 @@
         "noProtocols": "Server má pro tento účel vypnuté všechny protokoly.",
         "copyUrl": "Kopírovat URL {protocol}",
         "copySnippet": "Kopírovat úryvek {client} pro {protocol}",
+        "snippetLabel": "Úryvek {client} pro {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publikuje přes WHIP jen tehdy, když má vstup video i zvukovou stopu."
         },

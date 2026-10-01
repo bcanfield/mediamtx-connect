@@ -326,6 +326,7 @@
         "noProtocols": "El servidor tiene desactivados todos los protocolos para esto.",
         "copyUrl": "Copiar URL de {protocol}",
         "copySnippet": "Copiar el fragmento de {client} para {protocol}",
+        "snippetLabel": "Fragmento de {client} para {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 solo publica por WHIP si la entrada tiene una pista de vídeo y otra de audio."
         },

@@ -326,6 +326,7 @@
         "noProtocols": "সার্ভার এর জন্য সব প্রোটোকল বন্ধ রেখেছে।",
         "copyUrl": "{protocol} URL কপি করুন",
         "copySnippet": "{protocol}-এর জন্য {client} স্নিপেট কপি করুন",
+        "snippetLabel": "{protocol}-এর জন্য {client} স্নিপেট",
         "notes": {
           "whipTracks": "ইনপুটে ভিডিও ও অডিও দুটো ট্র্যাকই থাকলে তবেই FFmpeg 8 WHIP-এ প্রকাশ করে।"
         },

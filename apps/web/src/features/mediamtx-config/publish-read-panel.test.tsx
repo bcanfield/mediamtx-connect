@@ -117,6 +117,21 @@ it('says so when the read of the listen addresses fails outright', async () => {
   expect(screen.queryByText('rtsp://cam.lan:8554/cam')).not.toBeInTheDocument()
 })
 
+// Long snippets scroll sideways, and a scroll region a keyboard can't reach
+// hides the rest of the command from anyone not using a mouse (axe
+// scrollable-region-focusable).
+it('makes each snippet a named tab stop', async () => {
+  const view = await renderWithProviders(<PublishReadPanel name="cam" source={undefined} />)
+  const snippet = await screen.findByRole('region', { name: 'GStreamer snippet for RTSP' })
+
+  expect(snippet).toHaveAttribute('tabindex', '0')
+  expect(snippet).toHaveTextContent('rtspclientsink')
+  // Reached by tabbing, right after the copy button for the snippet before it.
+  screen.getByRole('button', { name: 'Copy the ffmpeg snippet for RTSP' }).focus()
+  await view.user.tab()
+  expect(snippet).toHaveFocus()
+})
+
 describe('copying', () => {
   it('puts exactly the displayed text on the clipboard', async () => {
     const view = await renderWithProviders(<PublishReadPanel name="cam" source={undefined} />)

@@ -326,6 +326,7 @@
         "noProtocols": "服务器已关闭此处的所有协议。",
         "copyUrl": "复制 {protocol} URL",
         "copySnippet": "复制 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
         "notes": {
           "whipTracks": "只有当输入同时包含视频轨和音频轨时，FFmpeg 8 才能通过 WHIP 发布。"
         },

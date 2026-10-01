@@ -326,6 +326,7 @@
         "noProtocols": "Serwer ma wyłączone wszystkie protokoły dla tego celu.",
         "copyUrl": "Kopiuj URL {protocol}",
         "copySnippet": "Kopiuj fragment {client} dla {protocol}",
+        "snippetLabel": "Fragment {client} dla {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publikuje przez WHIP tylko wtedy, gdy wejście ma zarówno ścieżkę wideo, jak i audio."
         },

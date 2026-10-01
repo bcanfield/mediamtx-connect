@@ -326,6 +326,7 @@
         "noProtocols": "サーバーではこの用途のプロトコルがすべて無効です。",
         "copyUrl": "{protocol} の URL をコピー",
         "copySnippet": "{protocol} 用の {client} スニペットをコピー",
+        "snippetLabel": "{protocol} 用の {client} スニペット",
         "notes": {
           "whipTracks": "FFmpeg 8 は、入力に映像トラックと音声トラックの両方がある場合にのみ WHIP で配信します。"
         },

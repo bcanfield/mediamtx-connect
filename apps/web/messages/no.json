@@ -326,6 +326,7 @@
         "noProtocols": "Serveren har slått av alle protokoller for dette.",
         "copyUrl": "Kopier {protocol}-URL",
         "copySnippet": "Kopier {client}-utdraget for {protocol}",
+        "snippetLabel": "{client}-utdrag for {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publiserer over WHIP bare når inndata har både et video- og et lydspor."
         },

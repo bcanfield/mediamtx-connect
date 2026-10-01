@@ -326,6 +326,7 @@
         "noProtocols": "Máy chủ đã tắt mọi giao thức cho mục này.",
         "copyUrl": "Sao chép URL {protocol}",
         "copySnippet": "Sao chép đoạn {client} cho {protocol}",
+        "snippetLabel": "Đoạn {client} cho {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 chỉ phát qua WHIP khi đầu vào có cả track video và track âm thanh."
         },

@@ -326,6 +326,7 @@
         "noProtocols": "Ο διακομιστής έχει απενεργοποιήσει κάθε πρωτόκολλο για αυτό.",
         "copyUrl": "Αντιγραφή URL {protocol}",
         "copySnippet": "Αντιγραφή αποσπάσματος {client} για {protocol}",
+        "snippetLabel": "Απόσπασμα {client} για {protocol}",
         "notes": {
           "whipTracks": "Το FFmpeg 8 δημοσιεύει μέσω WHIP μόνο όταν η είσοδος έχει και κομμάτι βίντεο και κομμάτι ήχου."
         },

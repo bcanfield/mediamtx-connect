@@ -326,6 +326,7 @@
         "noProtocols": "सर्वर ने इसके लिए सभी प्रोटोकॉल बंद कर रखे हैं।",
         "copyUrl": "{protocol} URL कॉपी करें",
         "copySnippet": "{protocol} के लिए {client} स्निपेट कॉपी करें",
+        "snippetLabel": "{protocol} के लिए {client} स्निपेट",
         "notes": {
           "whipTracks": "FFmpeg 8 WHIP पर तभी प्रकाशित करता है जब इनपुट में वीडियो और ऑडियो दोनों ट्रैक हों।"
         },

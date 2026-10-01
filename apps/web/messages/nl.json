@@ -326,6 +326,7 @@
         "noProtocols": "De server heeft alle protocollen hiervoor uitgeschakeld.",
         "copyUrl": "{protocol}-URL kopiëren",
         "copySnippet": "{client}-fragment voor {protocol} kopiëren",
+        "snippetLabel": "{client}-fragment voor {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publiceert via WHIP alleen als de invoer zowel een video- als een audiospoor heeft."
         },

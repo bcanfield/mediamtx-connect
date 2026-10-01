@@ -326,6 +326,7 @@
         "noProtocols": "Serverul are dezactivate toate protocoalele pentru asta.",
         "copyUrl": "Copiază URL-ul {protocol}",
         "copySnippet": "Copiază fragmentul {client} pentru {protocol}",
+        "snippetLabel": "Fragment {client} pentru {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publică prin WHIP doar când intrarea are atât o pistă video, cât și una audio."
         },

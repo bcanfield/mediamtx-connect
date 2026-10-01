@@ -326,6 +326,7 @@
         "noProtocols": "Server mematikan semua protokol untuk ini.",
         "copyUrl": "Salin URL {protocol}",
         "copySnippet": "Salin cuplikan {client} untuk {protocol}",
+        "snippetLabel": "Cuplikan {client} untuk {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 hanya memublikasikan lewat WHIP jika input memiliki trek video dan trek audio."
         },

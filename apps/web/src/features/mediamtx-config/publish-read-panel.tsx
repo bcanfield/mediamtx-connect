@@ -79,7 +79,16 @@ function EndpointBlock({ endpoint }: { endpoint: Endpoint }) {
         <div key={snippet.client} className="flex flex-col gap-1">
           <span className="text-meta text-muted-foreground">{snippet.client}</span>
           <div className="flex items-start gap-2">
-            <pre className="min-w-0 flex-1 overflow-x-auto rounded-md bg-muted px-2 py-1 font-mono text-meta">{snippet.text}</pre>
+            {/* Long commands scroll sideways, so the keyboard has to be able to
+                reach the scroll region too. */}
+            <pre
+              role="region"
+              aria-label={t('snippetLabel', { client: snippet.client, protocol })}
+              tabIndex={0}
+              className="min-w-0 flex-1 overflow-x-auto rounded-md bg-muted px-2 py-1 font-mono text-meta focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20"
+            >
+              {snippet.text}
+            </pre>
             <CopyButton text={snippet.text} label={t('copySnippet', { client: snippet.client, protocol })} />
           </div>
           {snippet.note && <p className="text-meta text-muted-foreground">{t(`notes.${snippet.note}`)}</p>}

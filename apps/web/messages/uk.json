@@ -326,6 +326,7 @@
         "noProtocols": "На сервері вимкнено всі протоколи для цього.",
         "copyUrl": "Копіювати URL {protocol}",
         "copySnippet": "Копіювати фрагмент {client} для {protocol}",
+        "snippetLabel": "Фрагмент {client} для {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 публікує через WHIP, лише якщо вхідний потік має і відео-, і аудіодоріжку."
         },

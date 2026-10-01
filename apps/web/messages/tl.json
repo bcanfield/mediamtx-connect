@@ -326,6 +326,7 @@
         "noProtocols": "Naka-off sa server ang lahat ng protocol para dito.",
         "copyUrl": "Kopyahin ang {protocol} URL",
         "copySnippet": "Kopyahin ang {client} snippet para sa {protocol}",
+        "snippetLabel": "{client} snippet para sa {protocol}",
         "notes": {
           "whipTracks": "Nagpa-publish lang ang FFmpeg 8 sa WHIP kapag may video at audio track ang input."
         },

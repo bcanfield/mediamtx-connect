@@ -326,6 +326,7 @@
         "noProtocols": "The server has every protocol for this turned off.",
         "copyUrl": "Copy {protocol} URL",
         "copySnippet": "Copy the {client} snippet for {protocol}",
+        "snippetLabel": "{client} snippet for {protocol}",
         "notes": {
           "whipTracks": "FFmpeg 8 publishes over WHIP only when the input has both a video and an audio track."
         },
