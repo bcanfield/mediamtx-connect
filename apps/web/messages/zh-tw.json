@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "已連線",
-      "offline": "離線"
+      "offline": "離線",
+      "connectedVersion": "已連線 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。部分設定可能缺失或遭拒絕。"
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 設定",
-      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。"
+      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 執行起始於 {started}",
+      "tooOldTitle": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。",
+      "tooOldBody": "部分設定可能缺失或遭拒絕。其餘設定仍可正常載入和儲存。"
     },
     "pathDefaults": {
       "pageHeader": "路徑預設值",

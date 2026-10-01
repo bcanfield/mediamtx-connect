@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "yhdistetty",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "yhdistetty · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio. Jotkin asetukset voivat puuttua tai ne voidaan hylätä."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-asetukset",
-      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle."
+      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · käynnissä alkaen {started}",
+      "tooOldTitle": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio.",
+      "tooOldBody": "Jotkin asetukset voivat puuttua tai ne voidaan hylätä. Muut latautuvat ja tallentuvat edelleen."
     },
     "pathDefaults": {
       "pageHeader": "Polkujen oletusarvot",

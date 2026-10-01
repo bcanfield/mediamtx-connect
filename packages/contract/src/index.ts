@@ -17,6 +17,10 @@ export const AppConfigSchema = z.object({
 export type AppConfig = z.infer<typeof AppConfigSchema>
 
 // Mirrors MediaMTX v1.11.3 GlobalConf. Field names match the YAML keys 1:1.
+// The oldest MediaMTX Connect supports: the one CI's e2e runs against, not the
+// oldest that probably works. Raise it with whatever starts depending on newer.
+export const MEDIAMTX_MIN_VERSION = '1.20.0'
+
 export const GlobalConfigSchema = z.object({
   logLevel: z.string().optional(),
   logDestinations: z.array(z.string()).optional(),
@@ -351,8 +355,27 @@ export const RecordingSchema = z.object({
 
 export type Recording = z.infer<typeof RecordingSchema>
 
+// MediaMTX's `GET /v3/info`.
+export const MediaMtxInfoSchema = z.object({
+  // Verbatim, e.g. `v1.20.0`. Null when /v3/info answered 404: MediaMTX older
+  // than v1.15.2, where the endpoint first appeared.
+  version: z.string().nullable(),
+  started: z.date().nullable(),
+  // False whenever the version is null or doesn't parse as x.y.z.
+  belowMinimum: z.boolean(),
+})
+
+export type MediaMtxInfo = z.infer<typeof MediaMtxInfoSchema>
+
 export const contract = {
   health: oc.output(HealthSchema),
+  mediamtx: {
+    // Which MediaMTX Connect is talking to. Its own procedure, not part of
+    // `health` (which must answer while MediaMTX is down) or `streams.list`
+    // (polled every 15s, for a value that changes only on restart). `null` is
+    // an unreachable server.
+    info: oc.output(MediaMtxInfoSchema.nullable()),
+  },
   streams: {
     list: oc.output(StreamsStateSchema),
     // Capture a frame for one stream now, off the same RTSP feed the snapshot

@@ -37,6 +37,7 @@ const CONFIG = {
 }
 
 const api = {
+  info: vi.fn(),
   pathsList: vi.fn(),
   pathsGet: vi.fn(),
   configGlobalGet: vi.fn(),
@@ -588,6 +589,68 @@ describe('config.mediamtx.getPathConnections', () => {
     api.pathsGet.mockRejectedValue(new Error('fetch failed'))
 
     const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
+
+    expect(result).toBeNull()
+  })
+})
+
+describe('mediamtx.info', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  // MediaMTX sends nanosecond precision; `new Date` keeps the milliseconds.
+  const STARTED = '2026-10-01T14:17:37.190837375Z'
+
+  it('reports the version verbatim, with the start time as a Date', async () => {
+    api.info.mockResolvedValue({ version: 'v1.21.1', started: STARTED })
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toEqual({
+      version: 'v1.21.1',
+      started: new Date('2026-10-01T14:17:37.190Z'),
+      belowMinimum: false,
+    })
+  })
+
+  it.each([
+    { version: 'v1.20.0', belowMinimum: false },
+    { version: 'v1.19.2', belowMinimum: true },
+    { version: 'v0.23.0', belowMinimum: true },
+    { version: 'v1.100.0', belowMinimum: false },
+    // Anything after the patch number is ignored, so a release candidate of the
+    // floor counts as the floor.
+    { version: 'v1.20.0-rc1', belowMinimum: false },
+    // Unparseable: shown as-is, never warned about.
+    { version: 'dev', belowMinimum: false },
+  ])('$version is belowMinimum: $belowMinimum', async ({ version, belowMinimum }) => {
+    api.info.mockResolvedValue({ version, started: STARTED })
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toMatchObject({ version, belowMinimum })
+  })
+
+  // `/v3/info` arrived in v1.15.2. An older server answers 404, which is a
+  // reachable server with no version to show, not an unreachable one.
+  it('reports no version when MediaMTX predates /v3/info', async () => {
+    api.info.mockResolvedValue(null)
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toEqual({ version: null, started: null, belowMinimum: false })
+  })
+
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.info.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.mediamtx.info, undefined as never)
 
     expect(result).toBeNull()
   })

@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "připojeno",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "připojeno · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} je starší než {minimum}, nejstarší verze, kterou Connect podporuje. Některá nastavení mohou chybět nebo být odmítnuta."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Konfigurace MediaMTX",
-      "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server."
+      "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · běží od {started}",
+      "tooOldTitle": "MediaMTX {version} je starší než {minimum}, nejstarší verze, kterou Connect podporuje.",
+      "tooOldBody": "Některá nastavení mohou chybět nebo být odmítnuta. Ostatní se stále načítají a ukládají."
     },
     "pathDefaults": {
       "pageHeader": "Výchozí hodnoty cest",
