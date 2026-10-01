@@ -63,7 +63,7 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 
 `pnpm verify` reproduces the CI `build` job exactly — including `pnpm build`, which is why a Vite or tsdown config error cannot pass here and then fail there. It needs no Docker and no browsers.
 
-`pnpm check` is the inner loop. It lints only the changed files, typechecks the affected packages, runs only the tests your edit can reach, and skips `i18n:check` unless a message catalogue moved. It runs its steps concurrently, because each carries a fixed startup cost that dominates its real work: ESLint takes ~2s to resolve its flat config whether it checks one file or four hundred.
+`pnpm check` is the inner loop. It lints only the changed files, typechecks the affected packages, runs only the tests your edit can reach, and skips `i18n:check` unless a message catalogue, a README or `docs/i18n/` moved. It runs its steps concurrently, because each carries a fixed startup cost that dominates its real work: ESLint takes ~2s to resolve its flat config whether it checks one file or four hundred.
 
 Neither needs Docker or the E2E stack.
 

@@ -14,6 +14,41 @@ Watch live streams, browse recordings, and edit your MediaMTX config from the br
 
 <img src=".github/assets/demo.png" alt="MediaMTX Connect — live stream grid, recording browser, and config editor" width="860">
 
+<details>
+<summary>🌍 Read this in 30 languages</summary>
+<p>
+  🇺🇸 <strong>English</strong> •
+  🇪🇸 <a href="./docs/i18n/README.es.md">Español</a> •
+  🇨🇳 <a href="./docs/i18n/README.zh.md">中文</a> •
+  🇮🇹 <a href="./docs/i18n/README.it.md">Italiano</a> •
+  🇩🇪 <a href="./docs/i18n/README.de.md">Deutsch</a> •
+  🇷🇺 <a href="./docs/i18n/README.ru.md">Русский</a> •
+  🇫🇷 <a href="./docs/i18n/README.fr.md">Français</a> •
+  🇵🇹 <a href="./docs/i18n/README.pt.md">Português</a> •
+  🇯🇵 <a href="./docs/i18n/README.ja.md">日本語</a> •
+  🇵🇱 <a href="./docs/i18n/README.pl.md">Polski</a> •
+  🇰🇷 <a href="./docs/i18n/README.ko.md">한국어</a> •
+  🇹🇷 <a href="./docs/i18n/README.tr.md">Türkçe</a> •
+  🇳🇱 <a href="./docs/i18n/README.nl.md">Nederlands</a> •
+  🇨🇿 <a href="./docs/i18n/README.cs.md">Čeština</a> •
+  🇹🇼 <a href="./docs/i18n/README.zh-tw.md">繁體中文</a> •
+  🇧🇷 <a href="./docs/i18n/README.pt-br.md">Português (BR)</a> •
+  🇮🇩 <a href="./docs/i18n/README.id.md">Bahasa Indonesia</a> •
+  🇷🇴 <a href="./docs/i18n/README.ro.md">Română</a> •
+  🇸🇪 <a href="./docs/i18n/README.sv.md">Svenska</a> •
+  🇩🇰 <a href="./docs/i18n/README.da.md">Dansk</a> •
+  🇳🇴 <a href="./docs/i18n/README.no.md">Norsk</a> •
+  🇫🇮 <a href="./docs/i18n/README.fi.md">Suomi</a> •
+  🇬🇷 <a href="./docs/i18n/README.el.md">Ελληνικά</a> •
+  🇭🇺 <a href="./docs/i18n/README.hu.md">Magyar</a> •
+  🇺🇦 <a href="./docs/i18n/README.uk.md">Українська</a> •
+  🇻🇳 <a href="./docs/i18n/README.vi.md">Tiếng Việt</a> •
+  🇵🇭 <a href="./docs/i18n/README.tl.md">Tagalog</a> •
+  🇹🇭 <a href="./docs/i18n/README.th.md">ไทย</a> •
+  🇮🇳 <a href="./docs/i18n/README.hi.md">हिन्दी</a> •
+  🇧🇩 <a href="./docs/i18n/README.bn.md">বাংলা</a>
+</p>
+</details>
 
 </div>
 
