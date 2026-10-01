@@ -504,10 +504,10 @@
         "runOnUnread": "Komento, joka suoritetaan, kun asiakas lopettaa tämän polun lukemisen.",
         "runOnRecordSegmentCreate": "Komento, joka suoritetaan, kun tallennussegmentti luodaan.",
         "runOnRecordSegmentComplete": "Komento, joka suoritetaan, kun tallennussegmentti on valmis.",
-        "alwaysAvailable": "Kun mikään ei julkaise, toistetaan offline-segmenttiä silmukassa, jotta lukijat pysyvät yhdistettyinä. Striimi pysyy available-tilassa, ei online-tilassa. Vaatii alwaysAvailableFile-asetuksen tai mediamtx.yml-tiedostossa asetetun alwaysAvailableTracks-asetuksen. Hylätään regex-merkinnässä sekä yhdessä sourceOnDemandin tai runOnDemandin kanssa.",
+        "alwaysAvailable": "Kun mikään ei julkaise, toistetaan offline-segmenttiä silmukassa, jotta lukijat pysyvät yhdistettyinä. Striimi pysyy available-tilassa, ei online-tilassa. Vaatii alwaysAvailableFile-asetuksen tai mediamtx.yml-tiedostossa asetetun alwaysAvailableTracks-asetuksen. Hylätään regex- tai all_others-merkinnässä sekä yhdessä sourceOnDemandin tai runOnDemandin kanssa.",
         "alwaysAvailableFile": "MP4-tiedoston polku MediaMTX-palvelimen omassa tiedostojärjestelmässä; Connect ei lataa sitä. Raitojen on oltava AV1, VP9, H265, H264, Opus, MPEG-4 Audio tai LPCM. Ei yhdistettävissä alwaysAvailableTracksin kanssa.",
         "sourceOnDemand": "Hae lähde vain, kun vähintään yksi lukija on yhdistettynä. Vain lähteelle, jonka MediaMTX hakee URL-osoitteesta; hylätään, kun source on publisher.",
-        "sourceOnDemandStartTimeout": "Kuinka kauan ensimmäinen lukija odottaa lähteen käynnistymistä ennen luovuttamista. MediaMTX:n oletus on 10s.",
+        "sourceOnDemandStartTimeout": "Kuinka kauan ensimmäinen lukija odottaa lähteen muuttumista available-tilaan ennen luovuttamista. MediaMTX:n oletus on 10s.",
         "sourceOnDemandCloseAfter": "Kuinka kauan lähde pysyy auki viimeisen lukijan lähdettyä. MediaMTX:n oletus on 10s."
       },
       "toasts": {

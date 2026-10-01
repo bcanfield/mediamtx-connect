@@ -504,10 +504,10 @@
         "runOnUnread": "Command na patatakbuhin kapag may client na huminto sa pagbabasa ng path na ito.",
         "runOnRecordSegmentCreate": "Command na patatakbuhin kapag nagawa ang isang segment ng recording.",
         "runOnRecordSegmentComplete": "Command na patatakbuhin kapag kumpleto na ang isang segment ng recording.",
-        "alwaysAvailable": "Habang walang nagpa-publish, paulit-ulit na pinapatugtog ang isang offline na segment para manatiling nakakonekta ang mga reader. Nananatiling available ang stream, hindi online. Kailangan ng alwaysAvailableFile, o alwaysAvailableTracks na nakatakda sa mediamtx.yml. Tinatanggihan sa regex na entry at kasabay ng sourceOnDemand o runOnDemand.",
+        "alwaysAvailable": "Habang walang nagpa-publish, paulit-ulit na pinapatugtog ang isang offline na segment para manatiling nakakonekta ang mga reader. Nananatiling available ang stream, hindi online. Kailangan ng alwaysAvailableFile, o alwaysAvailableTracks na nakatakda sa mediamtx.yml. Tinatanggihan sa regex o all_others na entry at kasabay ng sourceOnDemand o runOnDemand.",
         "alwaysAvailableFile": "Path ng isang MP4 sa sariling filesystem ng MediaMTX server; hindi ito ina-upload ng Connect. Ang mga track ay dapat AV1, VP9, H265, H264, Opus, MPEG-4 Audio o LPCM. Hindi puwedeng isabay sa alwaysAvailableTracks.",
         "sourceOnDemand": "Kunin lang ang source habang may kahit isang reader na nakakonekta. Para lang sa source na kinukuha ng MediaMTX mula sa URL; tinatanggihan kapag publisher ang source.",
-        "sourceOnDemandStartTimeout": "Gaano katagal maghihintay ang unang reader na umandar ang source bago sumuko. 10s ang default ng MediaMTX.",
+        "sourceOnDemandStartTimeout": "Gaano katagal maghihintay ang unang reader na maging available ang source bago sumuko. 10s ang default ng MediaMTX.",
         "sourceOnDemandCloseAfter": "Gaano katagal mananatiling bukas ang source pagkaalis ng huling reader. 10s ang default ng MediaMTX."
       },
       "toasts": {

@@ -504,10 +504,10 @@
         "runOnUnread": "클라이언트가 이 경로의 시청을 중지할 때 실행할 명령.",
         "runOnRecordSegmentCreate": "녹화 세그먼트가 생성될 때 실행할 명령.",
         "runOnRecordSegmentComplete": "녹화 세그먼트가 완료될 때 실행할 명령.",
-        "alwaysAvailable": "아무것도 게시하지 않는 동안 오프라인 세그먼트를 반복 재생해 리더의 연결을 유지합니다. 스트림은 available 상태로 남지만 online은 아닙니다. alwaysAvailableFile 또는 mediamtx.yml에 설정된 alwaysAvailableTracks가 필요합니다. 정규식 항목과 sourceOnDemand 또는 runOnDemand와 함께 쓰면 거부됩니다.",
+        "alwaysAvailable": "아무것도 게시하지 않는 동안 오프라인 세그먼트를 반복 재생해 리더의 연결을 유지합니다. 스트림은 available 상태로 남지만 online은 아닙니다. alwaysAvailableFile 또는 mediamtx.yml에 설정된 alwaysAvailableTracks가 필요합니다. 정규식 또는 all_others 항목과 sourceOnDemand 또는 runOnDemand와 함께 쓰면 거부됩니다.",
         "alwaysAvailableFile": "MediaMTX 서버 자체 파일 시스템에 있는 MP4의 경로입니다. Connect는 업로드하지 않습니다. 트랙은 AV1, VP9, H265, H264, Opus, MPEG-4 Audio 또는 LPCM이어야 합니다. alwaysAvailableTracks와 함께 쓸 수 없습니다.",
         "sourceOnDemand": "리더가 하나 이상 연결된 동안에만 소스를 가져옵니다. MediaMTX가 URL에서 가져오는 소스에만 해당하며, source가 publisher이면 거부됩니다.",
-        "sourceOnDemandStartTimeout": "첫 번째 리더가 포기하기 전에 소스가 올라오기를 기다리는 시간입니다. MediaMTX 기본값은 10s입니다.",
+        "sourceOnDemandStartTimeout": "첫 번째 리더가 포기하기 전에 소스가 available 상태가 되기를 기다리는 시간입니다. MediaMTX 기본값은 10s입니다.",
         "sourceOnDemandCloseAfter": "마지막 리더가 떠난 뒤 소스를 열어 두는 시간입니다. MediaMTX 기본값은 10s입니다."
       },
       "toasts": {

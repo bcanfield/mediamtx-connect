@@ -504,10 +504,10 @@
         "runOnUnread": "คำสั่งที่รันเมื่อไคลเอนต์หยุดรับชมพาธนี้",
         "runOnRecordSegmentCreate": "คำสั่งที่รันเมื่อมีการสร้างเซกเมนต์การบันทึก",
         "runOnRecordSegmentComplete": "คำสั่งที่รันเมื่อเซกเมนต์การบันทึกเสร็จสมบูรณ์",
-        "alwaysAvailable": "ขณะที่ไม่มีอะไรเผยแพร่ จะเล่นเซกเมนต์ออฟไลน์วนซ้ำเพื่อให้ผู้อ่านยังเชื่อมต่ออยู่ สตรีมยังคง available แต่ไม่ online ต้องมี alwaysAvailableFile หรือ alwaysAvailableTracks ที่ตั้งไว้ใน mediamtx.yml ถูกปฏิเสธในรายการ regex และเมื่อใช้ร่วมกับ sourceOnDemand หรือ runOnDemand",
+        "alwaysAvailable": "ขณะที่ไม่มีอะไรเผยแพร่ จะเล่นเซกเมนต์ออฟไลน์วนซ้ำเพื่อให้ผู้อ่านยังเชื่อมต่ออยู่ สตรีมยังคง available แต่ไม่ online ต้องมี alwaysAvailableFile หรือ alwaysAvailableTracks ที่ตั้งไว้ใน mediamtx.yml ถูกปฏิเสธในรายการ regex หรือ all_others และเมื่อใช้ร่วมกับ sourceOnDemand หรือ runOnDemand",
         "alwaysAvailableFile": "พาธของไฟล์ MP4 บนระบบไฟล์ของเซิร์ฟเวอร์ MediaMTX เอง Connect ไม่ได้อัปโหลดให้ แทร็กต้องเป็น AV1, VP9, H265, H264, Opus, MPEG-4 Audio หรือ LPCM ใช้ร่วมกับ alwaysAvailableTracks ไม่ได้",
         "sourceOnDemand": "ดึงแหล่งที่มาเฉพาะเมื่อมีผู้อ่านเชื่อมต่ออย่างน้อยหนึ่งราย ใช้ได้เฉพาะแหล่งที่มาที่ MediaMTX ดึงจาก URL ถูกปฏิเสธเมื่อ source เป็น publisher",
-        "sourceOnDemandStartTimeout": "ระยะเวลาที่ผู้อ่านคนแรกรอให้แหล่งที่มาเริ่มทำงานก่อนยอมแพ้ ค่าเริ่มต้นของ MediaMTX คือ 10s",
+        "sourceOnDemandStartTimeout": "ระยะเวลาที่ผู้อ่านคนแรกรอให้แหล่งที่มากลายเป็น available ก่อนยอมแพ้ ค่าเริ่มต้นของ MediaMTX คือ 10s",
         "sourceOnDemandCloseAfter": "ระยะเวลาที่แหล่งที่มายังเปิดอยู่หลังจากผู้อ่านคนสุดท้ายออกไป ค่าเริ่มต้นของ MediaMTX คือ 10s"
       },
       "toasts": {

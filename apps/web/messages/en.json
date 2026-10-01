@@ -504,10 +504,10 @@
         "runOnUnread": "Command to run when a client stops reading this path.",
         "runOnRecordSegmentCreate": "Command to run when a recording segment is created.",
         "runOnRecordSegmentComplete": "Command to run when a recording segment is complete.",
-        "alwaysAvailable": "While nothing is publishing, play an offline segment on repeat so readers stay connected. The stream stays available, not online. Needs alwaysAvailableFile, or alwaysAvailableTracks set in mediamtx.yml. Refused on a regex entry and together with sourceOnDemand or runOnDemand.",
+        "alwaysAvailable": "While nothing is publishing, play an offline segment on repeat so readers stay connected. The stream stays available, not online. Needs alwaysAvailableFile, or alwaysAvailableTracks set in mediamtx.yml. Refused on a regex or all_others entry and together with sourceOnDemand or runOnDemand.",
         "alwaysAvailableFile": "Path of an MP4 on the MediaMTX server's own filesystem; Connect doesn't upload it. Tracks must be AV1, VP9, H265, H264, Opus, MPEG-4 Audio or LPCM. Can't be combined with alwaysAvailableTracks.",
         "sourceOnDemand": "Pull the source only while at least one reader is connected. Only for a source MediaMTX pulls from a URL; refused when source is publisher.",
-        "sourceOnDemandStartTimeout": "How long the first reader waits for the source to come up before giving up. MediaMTX's default is 10s.",
+        "sourceOnDemandStartTimeout": "How long the first reader waits for the source to become available before giving up. MediaMTX's default is 10s.",
         "sourceOnDemandCloseAfter": "How long the source stays open after the last reader leaves. MediaMTX's default is 10s."
       },
       "toasts": {

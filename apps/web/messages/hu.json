@@ -504,10 +504,10 @@
         "runOnUnread": "Akkor futtatandó parancs, amikor egy kliens abbahagyja ennek az útvonalnak az olvasását.",
         "runOnRecordSegmentCreate": "Felvételi szegmens létrehozásakor futtatandó parancs.",
         "runOnRecordSegmentComplete": "Felvételi szegmens befejeződésekor futtatandó parancs.",
-        "alwaysAvailable": "Amíg semmi nem tesz közzé, egy offline szegmenst játszik le ismétlődően, hogy az olvasók csatlakozva maradjanak. A stream available marad, nem online. Szükséges hozzá az alwaysAvailableFile, vagy a mediamtx.yml-ben beállított alwaysAvailableTracks. Regex bejegyzésen, valamint sourceOnDemanddal vagy runOnDemanddal együtt elutasítva.",
+        "alwaysAvailable": "Amíg semmi nem tesz közzé, egy offline szegmenst játszik le ismétlődően, hogy az olvasók csatlakozva maradjanak. A stream available marad, nem online. Szükséges hozzá az alwaysAvailableFile, vagy a mediamtx.yml-ben beállított alwaysAvailableTracks. Regex vagy all_others bejegyzésen, valamint sourceOnDemanddal vagy runOnDemanddal együtt elutasítva.",
         "alwaysAvailableFile": "Egy MP4 elérési útja magának a MediaMTX-szervernek a fájlrendszerén; a Connect nem tölti fel. A sávok csak AV1, VP9, H265, H264, Opus, MPEG-4 Audio vagy LPCM lehetnek. Nem kombinálható az alwaysAvailableTracks-szel.",
         "sourceOnDemand": "Csak akkor húzza be a forrást, amíg legalább egy olvasó csatlakozik. Csak olyan forráshoz, amelyet a MediaMTX URL-ről húz be; elutasítva, ha a source értéke publisher.",
-        "sourceOnDemandStartTimeout": "Mennyit vár az első olvasó a forrás elindulására, mielőtt feladja. A MediaMTX alapértéke 10s.",
+        "sourceOnDemandStartTimeout": "Mennyit vár az első olvasó, hogy a forrás available legyen, mielőtt feladja. A MediaMTX alapértéke 10s.",
         "sourceOnDemandCloseAfter": "Mennyi ideig marad nyitva a forrás az utolsó olvasó távozása után. A MediaMTX alapértéke 10s."
       },
       "toasts": {

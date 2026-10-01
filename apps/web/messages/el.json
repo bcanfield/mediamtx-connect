@@ -504,10 +504,10 @@
         "runOnUnread": "Εντολή που εκτελείται όταν ένας πελάτης σταματά να διαβάζει αυτή τη διαδρομή.",
         "runOnRecordSegmentCreate": "Εντολή που εκτελείται όταν δημιουργείται ένα τμήμα εγγραφής.",
         "runOnRecordSegmentComplete": "Εντολή που εκτελείται όταν ολοκληρώνεται ένα τμήμα εγγραφής.",
-        "alwaysAvailable": "Όσο τίποτα δεν δημοσιεύει, αναπαράγεται σε επανάληψη ένα offline τμήμα ώστε οι αναγνώστες να μένουν συνδεδεμένοι. Η ροή μένει available, όχι online. Απαιτεί alwaysAvailableFile ή alwaysAvailableTracks ορισμένο στο mediamtx.yml. Απορρίπτεται σε καταχώριση regex και μαζί με sourceOnDemand ή runOnDemand.",
+        "alwaysAvailable": "Όσο τίποτα δεν δημοσιεύει, αναπαράγεται σε επανάληψη ένα offline τμήμα ώστε οι αναγνώστες να μένουν συνδεδεμένοι. Η ροή μένει available, όχι online. Απαιτεί alwaysAvailableFile ή alwaysAvailableTracks ορισμένο στο mediamtx.yml. Απορρίπτεται σε καταχώριση regex ή all_others και μαζί με sourceOnDemand ή runOnDemand.",
         "alwaysAvailableFile": "Διαδρομή ενός MP4 στο σύστημα αρχείων του ίδιου του διακομιστή MediaMTX· το Connect δεν το ανεβάζει. Τα κομμάτια πρέπει να είναι AV1, VP9, H265, H264, Opus, MPEG-4 Audio ή LPCM. Δεν συνδυάζεται με alwaysAvailableTracks.",
         "sourceOnDemand": "Άντληση της πηγής μόνο όσο είναι συνδεδεμένος τουλάχιστον ένας αναγνώστης. Μόνο για πηγή που το MediaMTX αντλεί από URL· απορρίπτεται όταν το source είναι publisher.",
-        "sourceOnDemandStartTimeout": "Πόσο περιμένει ο πρώτος αναγνώστης να ξεκινήσει η πηγή πριν τα παρατήσει. Η προεπιλογή του MediaMTX είναι 10s.",
+        "sourceOnDemandStartTimeout": "Πόσο περιμένει ο πρώτος αναγνώστης να γίνει η πηγή available πριν τα παρατήσει. Η προεπιλογή του MediaMTX είναι 10s.",
         "sourceOnDemandCloseAfter": "Πόσο μένει ανοιχτή η πηγή αφού φύγει ο τελευταίος αναγνώστης. Η προεπιλογή του MediaMTX είναι 10s."
       },
       "toasts": {

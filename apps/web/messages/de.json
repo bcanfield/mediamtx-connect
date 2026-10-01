@@ -504,10 +504,10 @@
         "runOnUnread": "Befehl, der ausgeführt wird, wenn ein Client aufhört, diesen Pfad zu lesen.",
         "runOnRecordSegmentCreate": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment erstellt wird.",
         "runOnRecordSegmentComplete": "Befehl, der ausgeführt wird, wenn ein Aufzeichnungssegment abgeschlossen ist.",
-        "alwaysAvailable": "Solange nichts publiziert, wird ein Offline-Segment in Schleife abgespielt, damit Leser verbunden bleiben. Der Stream bleibt available, aber nicht online. Benötigt alwaysAvailableFile oder in mediamtx.yml gesetzte alwaysAvailableTracks. Abgelehnt bei einem Regex-Eintrag und zusammen mit sourceOnDemand oder runOnDemand.",
+        "alwaysAvailable": "Solange nichts publiziert, wird ein Offline-Segment in Schleife abgespielt, damit Leser verbunden bleiben. Der Stream bleibt available, aber nicht online. Benötigt alwaysAvailableFile oder in mediamtx.yml gesetzte alwaysAvailableTracks. Abgelehnt bei einem Regex- oder all_others-Eintrag und zusammen mit sourceOnDemand oder runOnDemand.",
         "alwaysAvailableFile": "Pfad einer MP4-Datei im Dateisystem des MediaMTX-Servers; Connect lädt sie nicht hoch. Spuren müssen AV1, VP9, H265, H264, Opus, MPEG-4 Audio oder LPCM sein. Nicht kombinierbar mit alwaysAvailableTracks.",
         "sourceOnDemand": "Die Quelle nur abrufen, solange mindestens ein Leser verbunden ist. Nur für eine Quelle, die MediaMTX von einer URL abruft; abgelehnt, wenn source publisher ist.",
-        "sourceOnDemandStartTimeout": "Wie lange der erste Leser wartet, bis die Quelle bereit ist, bevor er aufgibt. MediaMTX-Standard ist 10s.",
+        "sourceOnDemandStartTimeout": "Wie lange der erste Leser wartet, bis die Quelle available wird, bevor er aufgibt. MediaMTX-Standard ist 10s.",
         "sourceOnDemandCloseAfter": "Wie lange die Quelle geöffnet bleibt, nachdem der letzte Leser gegangen ist. MediaMTX-Standard ist 10s."
       },
       "toasts": {

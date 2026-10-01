@@ -504,10 +504,10 @@
         "runOnUnread": "Opdracht die wordt uitgevoerd wanneer een client stopt met het lezen van dit pad.",
         "runOnRecordSegmentCreate": "Opdracht die wordt uitgevoerd wanneer een opnamesegment wordt aangemaakt.",
         "runOnRecordSegmentComplete": "Opdracht die wordt uitgevoerd wanneer een opnamesegment is voltooid.",
-        "alwaysAvailable": "Zolang niets publiceert, wordt een offline-segment herhaald afgespeeld zodat lezers verbonden blijven. De stream blijft available, niet online. Vereist alwaysAvailableFile, of alwaysAvailableTracks ingesteld in mediamtx.yml. Geweigerd op een regex-item en samen met sourceOnDemand of runOnDemand.",
+        "alwaysAvailable": "Zolang niets publiceert, wordt een offline-segment herhaald afgespeeld zodat lezers verbonden blijven. De stream blijft available, niet online. Vereist alwaysAvailableFile, of alwaysAvailableTracks ingesteld in mediamtx.yml. Geweigerd op een regex- of all_others-item en samen met sourceOnDemand of runOnDemand.",
         "alwaysAvailableFile": "Pad van een MP4 op het bestandssysteem van de MediaMTX-server zelf; Connect uploadt het niet. Tracks moeten AV1, VP9, H265, H264, Opus, MPEG-4 Audio of LPCM zijn. Niet te combineren met alwaysAvailableTracks.",
         "sourceOnDemand": "Haal de bron alleen op zolang er minstens één lezer verbonden is. Alleen voor een bron die MediaMTX van een URL ophaalt; geweigerd als source publisher is.",
-        "sourceOnDemandStartTimeout": "Hoe lang de eerste lezer wacht tot de bron opkomt voordat hij opgeeft. De MediaMTX-standaard is 10s.",
+        "sourceOnDemandStartTimeout": "Hoe lang de eerste lezer wacht tot de bron available wordt voordat hij opgeeft. De MediaMTX-standaard is 10s.",
         "sourceOnDemandCloseAfter": "Hoe lang de bron open blijft nadat de laatste lezer vertrekt. De MediaMTX-standaard is 10s."
       },
       "toasts": {

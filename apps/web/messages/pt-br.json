@@ -504,10 +504,10 @@
         "runOnUnread": "Comando a executar quando um cliente para de ler este caminho.",
         "runOnRecordSegmentCreate": "Comando a executar quando um segmento de gravação é criado.",
         "runOnRecordSegmentComplete": "Comando a executar quando um segmento de gravação é concluído.",
-        "alwaysAvailable": "Enquanto nada está publicando, reproduz em loop um segmento offline para que os leitores continuem conectados. O stream fica available, não online. Requer alwaysAvailableFile, ou alwaysAvailableTracks definido no mediamtx.yml. Recusado em uma entrada regex e junto com sourceOnDemand ou runOnDemand.",
+        "alwaysAvailable": "Enquanto nada está publicando, reproduz em loop um segmento offline para que os leitores continuem conectados. O stream fica available, não online. Requer alwaysAvailableFile, ou alwaysAvailableTracks definido no mediamtx.yml. Recusado em uma entrada regex ou all_others e junto com sourceOnDemand ou runOnDemand.",
         "alwaysAvailableFile": "Caminho de um MP4 no sistema de arquivos do próprio servidor MediaMTX; o Connect não faz o upload. As faixas precisam ser AV1, VP9, H265, H264, Opus, MPEG-4 Audio ou LPCM. Não pode ser combinado com alwaysAvailableTracks.",
         "sourceOnDemand": "Puxa a fonte só enquanto pelo menos um leitor estiver conectado. Apenas para uma fonte que o MediaMTX puxa de uma URL; recusado quando source é publisher.",
-        "sourceOnDemandStartTimeout": "Quanto tempo o primeiro leitor espera a fonte subir antes de desistir. O padrão do MediaMTX é 10s.",
+        "sourceOnDemandStartTimeout": "Quanto tempo o primeiro leitor espera a fonte ficar available antes de desistir. O padrão do MediaMTX é 10s.",
         "sourceOnDemandCloseAfter": "Quanto tempo a fonte fica aberta depois que o último leitor sai. O padrão do MediaMTX é 10s."
       },
       "toasts": {

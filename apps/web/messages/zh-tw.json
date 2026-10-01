@@ -504,10 +504,10 @@
         "runOnUnread": "用戶端停止讀取此路徑時執行的命令。",
         "runOnRecordSegmentCreate": "建立錄影分段時執行的命令。",
         "runOnRecordSegmentComplete": "錄影分段完成時執行的命令。",
-        "alwaysAvailable": "沒有發布者時，循環播放一段離線片段，讓讀取端保持連線。串流保持 available，而非 online。需要 alwaysAvailableFile，或在 mediamtx.yml 中設定 alwaysAvailableTracks。在正規表示式項目上以及與 sourceOnDemand 或 runOnDemand 同時使用時會被拒絕。",
+        "alwaysAvailable": "沒有發布者時，循環播放一段離線片段，讓讀取端保持連線。串流保持 available，而非 online。需要 alwaysAvailableFile，或在 mediamtx.yml 中設定 alwaysAvailableTracks。在正規表示式或 all_others 項目上以及與 sourceOnDemand 或 runOnDemand 同時使用時會被拒絕。",
         "alwaysAvailableFile": "MediaMTX 伺服器本身檔案系統上的 MP4 路徑；Connect 不會上傳它。軌道必須是 AV1、VP9、H265、H264、Opus、MPEG-4 Audio 或 LPCM。不能與 alwaysAvailableTracks 同時使用。",
         "sourceOnDemand": "僅在至少有一個讀取端連線時拉取來源。僅適用於 MediaMTX 從 URL 拉取的來源；source 為 publisher 時會被拒絕。",
-        "sourceOnDemandStartTimeout": "第一個讀取端在放棄前等待來源啟動的時間。MediaMTX 預設值為 10s。",
+        "sourceOnDemandStartTimeout": "第一個讀取端在放棄前等待來源變為 available 的時間。MediaMTX 預設值為 10s。",
         "sourceOnDemandCloseAfter": "最後一個讀取端離開後來源保持開啟的時間。MediaMTX 預設值為 10s。"
       },
       "toasts": {

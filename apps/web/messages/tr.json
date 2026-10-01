@@ -504,10 +504,10 @@
         "runOnUnread": "Bir istemci bu yolu okumayı bıraktığında çalıştırılacak komut.",
         "runOnRecordSegmentCreate": "Bir kayıt parçası oluşturulduğunda çalıştırılacak komut.",
         "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut.",
-        "alwaysAvailable": "Hiçbir şey yayınlamazken, okuyucular bağlı kalsın diye çevrimdışı bir segment döngüde oynatılır. Yayın available kalır, online olmaz. alwaysAvailableFile veya mediamtx.yml içinde ayarlanmış alwaysAvailableTracks gerekir. Regex girişinde ve sourceOnDemand ya da runOnDemand ile birlikte reddedilir.",
+        "alwaysAvailable": "Hiçbir şey yayınlamazken, okuyucular bağlı kalsın diye çevrimdışı bir segment döngüde oynatılır. Yayın available kalır, online olmaz. alwaysAvailableFile veya mediamtx.yml içinde ayarlanmış alwaysAvailableTracks gerekir. Regex veya all_others girişinde ve sourceOnDemand ya da runOnDemand ile birlikte reddedilir.",
         "alwaysAvailableFile": "MediaMTX sunucusunun kendi dosya sistemindeki bir MP4'ün yolu; Connect bunu yüklemez. İzler AV1, VP9, H265, H264, Opus, MPEG-4 Audio veya LPCM olmalıdır. alwaysAvailableTracks ile birlikte kullanılamaz.",
         "sourceOnDemand": "Kaynağı yalnızca en az bir okuyucu bağlıyken çekin. Yalnızca MediaMTX'in bir URL'den çektiği kaynaklar için; source publisher olduğunda reddedilir.",
-        "sourceOnDemandStartTimeout": "İlk okuyucunun vazgeçmeden önce kaynağın açılmasını ne kadar beklediği. MediaMTX varsayılanı 10s.",
+        "sourceOnDemandStartTimeout": "İlk okuyucunun vazgeçmeden önce kaynağın available olmasını ne kadar beklediği. MediaMTX varsayılanı 10s.",
         "sourceOnDemandCloseAfter": "Son okuyucu ayrıldıktan sonra kaynağın ne kadar açık kaldığı. MediaMTX varsayılanı 10s."
       },
       "toasts": {

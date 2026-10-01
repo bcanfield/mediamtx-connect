@@ -504,10 +504,10 @@
         "runOnUnread": "Comandă de rulat când un client încetează să citească această cale.",
         "runOnRecordSegmentCreate": "Comandă de rulat când este creat un segment de înregistrare.",
         "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet.",
-        "alwaysAvailable": "Cât timp nimic nu publică, redă în buclă un segment offline ca cititorii să rămână conectați. Streamul rămâne available, nu online. Necesită alwaysAvailableFile sau alwaysAvailableTracks setat în mediamtx.yml. Refuzat pe o intrare regex și împreună cu sourceOnDemand sau runOnDemand.",
+        "alwaysAvailable": "Cât timp nimic nu publică, redă în buclă un segment offline ca cititorii să rămână conectați. Streamul rămâne available, nu online. Necesită alwaysAvailableFile sau alwaysAvailableTracks setat în mediamtx.yml. Refuzat pe o intrare regex sau all_others și împreună cu sourceOnDemand sau runOnDemand.",
         "alwaysAvailableFile": "Calea unui MP4 pe sistemul de fișiere al serverului MediaMTX însuși; Connect nu îl încarcă. Pistele trebuie să fie AV1, VP9, H265, H264, Opus, MPEG-4 Audio sau LPCM. Nu se poate combina cu alwaysAvailableTracks.",
         "sourceOnDemand": "Preia sursa doar cât timp cel puțin un cititor este conectat. Doar pentru o sursă pe care MediaMTX o preia de la un URL; refuzat când source este publisher.",
-        "sourceOnDemandStartTimeout": "Cât așteaptă primul cititor pornirea sursei înainte să renunțe. Valoarea implicită MediaMTX este 10s.",
+        "sourceOnDemandStartTimeout": "Cât așteaptă primul cititor ca sursa să devină available înainte să renunțe. Valoarea implicită MediaMTX este 10s.",
         "sourceOnDemandCloseAfter": "Cât rămâne deschisă sursa după ce pleacă ultimul cititor. Valoarea implicită MediaMTX este 10s."
       },
       "toasts": {

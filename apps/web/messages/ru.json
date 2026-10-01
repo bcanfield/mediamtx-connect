@@ -504,10 +504,10 @@
         "runOnUnread": "Команда, выполняемая, когда клиент прекращает читать этот путь.",
         "runOnRecordSegmentCreate": "Команда, выполняемая при создании сегмента записи.",
         "runOnRecordSegmentComplete": "Команда, выполняемая при завершении сегмента записи.",
-        "alwaysAvailable": "Пока ничего не публикуется, по кругу воспроизводится офлайн-сегмент, чтобы читатели оставались подключены. Поток остаётся available, но не online. Требуется alwaysAvailableFile или alwaysAvailableTracks, заданный в mediamtx.yml. Отклоняется для записи с regex и вместе с sourceOnDemand или runOnDemand.",
+        "alwaysAvailable": "Пока ничего не публикуется, по кругу воспроизводится офлайн-сегмент, чтобы читатели оставались подключены. Поток остаётся available, но не online. Требуется alwaysAvailableFile или alwaysAvailableTracks, заданный в mediamtx.yml. Отклоняется для записи с regex или all_others и вместе с sourceOnDemand или runOnDemand.",
         "alwaysAvailableFile": "Путь к MP4 в файловой системе самого сервера MediaMTX; Connect его не загружает. Дорожки должны быть AV1, VP9, H265, H264, Opus, MPEG-4 Audio или LPCM. Нельзя совмещать с alwaysAvailableTracks.",
         "sourceOnDemand": "Получать источник только пока подключён хотя бы один читатель. Только для источника, который MediaMTX получает по URL; отклоняется, когда source равен publisher.",
-        "sourceOnDemandStartTimeout": "Сколько первый читатель ждёт запуска источника, прежде чем сдаться. По умолчанию в MediaMTX — 10s.",
+        "sourceOnDemandStartTimeout": "Сколько первый читатель ждёт, пока источник станет available, прежде чем сдаться. По умолчанию в MediaMTX — 10s.",
         "sourceOnDemandCloseAfter": "Сколько источник остаётся открытым после ухода последнего читателя. По умолчанию в MediaMTX — 10s."
       },
       "toasts": {

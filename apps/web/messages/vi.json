@@ -504,10 +504,10 @@
         "runOnUnread": "Lệnh chạy khi một máy khách ngừng đọc đường dẫn này.",
         "runOnRecordSegmentCreate": "Lệnh chạy khi một phân đoạn ghi được tạo.",
         "runOnRecordSegmentComplete": "Lệnh chạy khi một phân đoạn ghi hoàn tất.",
-        "alwaysAvailable": "Khi không có gì đang phát, phát lặp lại một đoạn ngoại tuyến để người đọc vẫn kết nối. Luồng vẫn available, không online. Cần alwaysAvailableFile, hoặc alwaysAvailableTracks được đặt trong mediamtx.yml. Bị từ chối trên mục regex và khi dùng cùng sourceOnDemand hoặc runOnDemand.",
+        "alwaysAvailable": "Khi không có gì đang phát, phát lặp lại một đoạn ngoại tuyến để người đọc vẫn kết nối. Luồng vẫn available, không online. Cần alwaysAvailableFile, hoặc alwaysAvailableTracks được đặt trong mediamtx.yml. Bị từ chối trên mục regex hoặc all_others và khi dùng cùng sourceOnDemand hoặc runOnDemand.",
         "alwaysAvailableFile": "Đường dẫn của một tệp MP4 trên hệ thống tệp của chính máy chủ MediaMTX; Connect không tải tệp lên. Các track phải là AV1, VP9, H265, H264, Opus, MPEG-4 Audio hoặc LPCM. Không thể kết hợp với alwaysAvailableTracks.",
         "sourceOnDemand": "Chỉ kéo nguồn khi có ít nhất một người đọc đang kết nối. Chỉ dành cho nguồn mà MediaMTX kéo từ URL; bị từ chối khi source là publisher.",
-        "sourceOnDemandStartTimeout": "Người đọc đầu tiên chờ nguồn khởi động bao lâu trước khi bỏ cuộc. Mặc định của MediaMTX là 10s.",
+        "sourceOnDemandStartTimeout": "Người đọc đầu tiên chờ nguồn trở thành available bao lâu trước khi bỏ cuộc. Mặc định của MediaMTX là 10s.",
         "sourceOnDemandCloseAfter": "Nguồn giữ mở bao lâu sau khi người đọc cuối cùng rời đi. Mặc định của MediaMTX là 10s."
       },
       "toasts": {

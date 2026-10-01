@@ -504,10 +504,10 @@
         "runOnUnread": "কোনো ক্লায়েন্ট এই পাথ পড়া বন্ধ করলে চালানোর কমান্ড।",
         "runOnRecordSegmentCreate": "রেকর্ডিং সেগমেন্ট তৈরি হলে চালানোর কমান্ড।",
         "runOnRecordSegmentComplete": "রেকর্ডিং সেগমেন্ট সম্পূর্ণ হলে চালানোর কমান্ড।",
-        "alwaysAvailable": "কিছুই প্রকাশ না করার সময় একটি অফলাইন সেগমেন্ট বারবার চালানো হয় যাতে রিডাররা সংযুক্ত থাকে। স্ট্রিম available থাকে, online নয়। alwaysAvailableFile, অথবা mediamtx.yml-এ সেট করা alwaysAvailableTracks প্রয়োজন। regex এন্ট্রিতে এবং sourceOnDemand বা runOnDemand-এর সাথে প্রত্যাখ্যাত হয়।",
+        "alwaysAvailable": "কিছুই প্রকাশ না করার সময় একটি অফলাইন সেগমেন্ট বারবার চালানো হয় যাতে রিডাররা সংযুক্ত থাকে। স্ট্রিম available থাকে, online নয়। alwaysAvailableFile, অথবা mediamtx.yml-এ সেট করা alwaysAvailableTracks প্রয়োজন। regex বা all_others এন্ট্রিতে এবং sourceOnDemand বা runOnDemand-এর সাথে প্রত্যাখ্যাত হয়।",
         "alwaysAvailableFile": "MediaMTX সার্ভারের নিজস্ব ফাইল সিস্টেমে থাকা একটি MP4-এর পাথ; Connect এটি আপলোড করে না। ট্র্যাকগুলো AV1, VP9, H265, H264, Opus, MPEG-4 Audio বা LPCM হতে হবে। alwaysAvailableTracks-এর সাথে একত্রে ব্যবহার করা যায় না।",
         "sourceOnDemand": "অন্তত একজন রিডার সংযুক্ত থাকলেই কেবল সোর্স টেনে আনুন। শুধুমাত্র সেই সোর্সের জন্য যা MediaMTX একটি URL থেকে টানে; source publisher হলে প্রত্যাখ্যাত হয়।",
-        "sourceOnDemandStartTimeout": "হাল ছাড়ার আগে প্রথম রিডার সোর্স চালু হওয়ার জন্য কতক্ষণ অপেক্ষা করে। MediaMTX-এর ডিফল্ট 10s।",
+        "sourceOnDemandStartTimeout": "হাল ছাড়ার আগে প্রথম রিডার সোর্স available হওয়ার জন্য কতক্ষণ অপেক্ষা করে। MediaMTX-এর ডিফল্ট 10s।",
         "sourceOnDemandCloseAfter": "শেষ রিডার চলে যাওয়ার পর সোর্স কতক্ষণ খোলা থাকে। MediaMTX-এর ডিফল্ট 10s।"
       },
       "toasts": {

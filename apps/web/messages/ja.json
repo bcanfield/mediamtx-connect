@@ -504,10 +504,10 @@
         "runOnUnread": "クライアントがこのパスの視聴を停止したときに実行するコマンド。",
         "runOnRecordSegmentCreate": "録画セグメントが作成されたときに実行するコマンド。",
         "runOnRecordSegmentComplete": "録画セグメントが完了したときに実行するコマンド。",
-        "alwaysAvailable": "何もパブリッシュしていない間、オフラインのセグメントをループ再生して読み取り側の接続を維持します。ストリームは available のままで、online にはなりません。alwaysAvailableFile、または mediamtx.yml で設定された alwaysAvailableTracks が必要です。正規表現のエントリや、sourceOnDemand・runOnDemand との併用は拒否されます。",
+        "alwaysAvailable": "何もパブリッシュしていない間、オフラインのセグメントをループ再生して読み取り側の接続を維持します。ストリームは available のままで、online にはなりません。alwaysAvailableFile、または mediamtx.yml で設定された alwaysAvailableTracks が必要です。正規表現や all_others のエントリ、sourceOnDemand・runOnDemand との併用は拒否されます。",
         "alwaysAvailableFile": "MediaMTX サーバー自身のファイルシステム上にある MP4 のパス。Connect はアップロードしません。トラックは AV1、VP9、H265、H264、Opus、MPEG-4 Audio、LPCM のいずれかである必要があります。alwaysAvailableTracks とは併用できません。",
         "sourceOnDemand": "読み取り側が 1 つ以上接続している間だけソースを取得します。MediaMTX が URL から取得するソース専用で、source が publisher の場合は拒否されます。",
-        "sourceOnDemandStartTimeout": "最初の読み取り側がソースの起動を待ってから諦めるまでの時間。MediaMTX の既定値は 10s です。",
+        "sourceOnDemandStartTimeout": "最初の読み取り側がソースが available になるのを待ってから諦めるまでの時間。MediaMTX の既定値は 10s です。",
         "sourceOnDemandCloseAfter": "最後の読み取り側が離れた後、ソースを開いたままにする時間。MediaMTX の既定値は 10s です。"
       },
       "toasts": {

@@ -504,10 +504,10 @@
         "runOnUnread": "Kommando der køres, når en klient holder op med at læse denne sti.",
         "runOnRecordSegmentCreate": "Kommando der køres, når et optagelsessegment oprettes.",
         "runOnRecordSegmentComplete": "Kommando der køres, når et optagelsessegment er færdigt.",
-        "alwaysAvailable": "Mens intet publicerer, afspilles et offline-segment i løkke, så læsere forbliver forbundet. Streamen forbliver available, ikke online. Kræver alwaysAvailableFile eller alwaysAvailableTracks sat i mediamtx.yml. Afvises på en regex-post og sammen med sourceOnDemand eller runOnDemand.",
+        "alwaysAvailable": "Mens intet publicerer, afspilles et offline-segment i løkke, så læsere forbliver forbundet. Streamen forbliver available, ikke online. Kræver alwaysAvailableFile eller alwaysAvailableTracks sat i mediamtx.yml. Afvises på en regex- eller all_others-post og sammen med sourceOnDemand eller runOnDemand.",
         "alwaysAvailableFile": "Sti til en MP4 på MediaMTX-serverens eget filsystem; Connect uploader den ikke. Spor skal være AV1, VP9, H265, H264, Opus, MPEG-4 Audio eller LPCM. Kan ikke kombineres med alwaysAvailableTracks.",
         "sourceOnDemand": "Hent kun kilden, mens mindst én læser er forbundet. Kun for en kilde, MediaMTX henter fra en URL; afvises, når source er publisher.",
-        "sourceOnDemandStartTimeout": "Hvor længe den første læser venter på, at kilden kommer op, før den giver op. MediaMTX' standard er 10s.",
+        "sourceOnDemandStartTimeout": "Hvor længe den første læser venter på, at kilden bliver available, før den giver op. MediaMTX' standard er 10s.",
         "sourceOnDemandCloseAfter": "Hvor længe kilden forbliver åben, efter den sidste læser er gået. MediaMTX' standard er 10s."
       },
       "toasts": {
