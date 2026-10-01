@@ -197,6 +197,26 @@
       "override": "พาธนี้ตั้งค่า <code>recordFormat</code> เป็น {format} ในการตั้งค่าพาธของตัวเอง ซึ่งแทนที่ค่าเริ่มต้นของพาธ ให้ตั้งเป็น <code>fmp4</code> ที่นั่น",
       "openPathConfig": "เปิดการตั้งค่าการบันทึกของพาธนี้",
       "pathDefaultsUnreadable": "ไม่สามารถอ่านค่าเริ่มต้นของพาธจาก MediaMTX ได้"
+    },
+    "clip": {
+      "title": "ดาวน์โหลดคลิป",
+      "rangeAria": "ช่วงเวลาของคลิป",
+      "last5Min": "5 นาทีล่าสุด",
+      "last15Min": "15 นาทีล่าสุด",
+      "last1Hour": "1 ชม. ล่าสุด",
+      "custom": "กำหนดเอง",
+      "start": "เริ่ม",
+      "durationMinutes": "ระยะเวลา (นาที)",
+      "invalidStart": "ป้อนเวลาเป็น HH:MM:SS",
+      "minutesRange": "จำนวนนาทีเต็ม ตั้งแต่ 1 ถึง 60",
+      "range": "{start} – {end}",
+      "download": "ดาวน์โหลด",
+      "cancel": "ยกเลิก",
+      "preparing": "กำลังเตรียมคลิป…",
+      "progress": "ได้รับ {received} · {rate}/วิ",
+      "complete": "ดาวน์โหลดคลิปแล้ว",
+      "failed": "ดาวน์โหลดคลิปไม่สำเร็จ",
+      "noRecordings": "ไม่มีการบันทึกในช่วงนี้"
     }
   },
   "Sessions": {

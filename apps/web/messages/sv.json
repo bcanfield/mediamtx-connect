@@ -197,6 +197,26 @@
       "override": "Den här sökvägen sätter <code>recordFormat</code> till {format} i sin egen sökvägskonfiguration, som åsidosätter standardvärdena. Ställ in <code>fmp4</code> där.",
       "openPathConfig": "Öppna inspelningskonfigurationen för den här sökvägen",
       "pathDefaultsUnreadable": "Det gick inte att läsa sökvägarnas standardvärden från MediaMTX."
+    },
+    "clip": {
+      "title": "Ladda ned klipp",
+      "rangeAria": "Klippets intervall",
+      "last5Min": "Senaste 5 min",
+      "last15Min": "Senaste 15 min",
+      "last1Hour": "Senaste 1 h",
+      "custom": "Anpassat",
+      "start": "Start",
+      "durationMinutes": "Längd (min)",
+      "invalidStart": "Ange en tid som TT:MM:SS",
+      "minutesRange": "Hela minuter, från 1 till 60",
+      "range": "{start} – {end}",
+      "download": "Ladda ned",
+      "cancel": "Avbryt",
+      "preparing": "Förbereder klipp…",
+      "progress": "{received} mottaget · {rate}/s",
+      "complete": "Klipp nedladdat",
+      "failed": "Nedladdningen av klippet misslyckades",
+      "noRecordings": "Inga inspelningar i det här intervallet"
     }
   },
   "Sessions": {

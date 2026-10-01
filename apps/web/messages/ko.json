@@ -197,6 +197,26 @@
       "override": "이 경로는 자체 경로 설정에서 <code>recordFormat</code>을(를) {format}(으)로 지정하며, 이는 경로 기본값보다 우선합니다. 그곳에서 <code>fmp4</code>(으)로 설정하세요.",
       "openPathConfig": "이 경로의 녹화 설정 열기",
       "pathDefaultsUnreadable": "MediaMTX에서 경로 기본값을 읽을 수 없습니다."
+    },
+    "clip": {
+      "title": "클립 다운로드",
+      "rangeAria": "클립 범위",
+      "last5Min": "최근 5분",
+      "last15Min": "최근 15분",
+      "last1Hour": "최근 1시간",
+      "custom": "사용자 지정",
+      "start": "시작",
+      "durationMinutes": "길이(분)",
+      "invalidStart": "시간을 HH:MM:SS 형식으로 입력하세요",
+      "minutesRange": "1~60 사이의 정수(분)",
+      "range": "{start} – {end}",
+      "download": "다운로드",
+      "cancel": "취소",
+      "preparing": "클립 준비 중…",
+      "progress": "{received} 수신 · {rate}/초",
+      "complete": "클립을 다운로드했습니다",
+      "failed": "클립 다운로드 실패",
+      "noRecordings": "이 범위에 녹화가 없습니다"
     }
   },
   "Sessions": {

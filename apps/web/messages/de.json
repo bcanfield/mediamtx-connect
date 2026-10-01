@@ -197,6 +197,26 @@
       "override": "Dieser Pfad setzt <code>recordFormat</code> in seiner eigenen Pfadkonfiguration auf {format}, was die Pfad-Standardwerte überschreibt. Stelle es dort auf <code>fmp4</code>.",
       "openPathConfig": "Aufnahmekonfiguration dieses Pfads öffnen",
       "pathDefaultsUnreadable": "Pfad-Standardwerte konnten nicht von MediaMTX gelesen werden."
+    },
+    "clip": {
+      "title": "Clip herunterladen",
+      "rangeAria": "Clip-Zeitraum",
+      "last5Min": "Letzte 5 Min.",
+      "last15Min": "Letzte 15 Min.",
+      "last1Hour": "Letzte 1 Std.",
+      "custom": "Benutzerdefiniert",
+      "start": "Beginn",
+      "durationMinutes": "Dauer (Min.)",
+      "invalidStart": "Zeit als HH:MM:SS eingeben",
+      "minutesRange": "Ganze Minuten von 1 bis 60",
+      "range": "{start} – {end}",
+      "download": "Herunterladen",
+      "cancel": "Abbrechen",
+      "preparing": "Clip wird vorbereitet…",
+      "progress": "{received} empfangen · {rate}/s",
+      "complete": "Clip heruntergeladen",
+      "failed": "Clip-Download fehlgeschlagen",
+      "noRecordings": "Keine Aufzeichnungen in diesem Zeitraum"
     }
   },
   "Sessions": {

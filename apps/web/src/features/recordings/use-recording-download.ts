@@ -8,11 +8,13 @@ export interface DownloadProgress {
   bytesPerSec: number
 }
 
-// Streams the MP4 through fetch so the row can render live progress
-// (board 2c downloading state). Cancelable via AbortController.
-export function useRecordingDownload(streamName: string, fileName: string, callbacks: {
+// Streams an MP4 through fetch so the caller can render live progress, then
+// saves it as `fileName`. Cancelable via AbortController. `totalBytes` is 0
+// when the response has no Content-Length (MediaMTX's /get never sends one).
+// `onError` gets the HTTP status, or null when there was no response.
+export function useRecordingDownload(url: string, fileName: string, callbacks: {
   onComplete: () => void
-  onError: () => void
+  onError: (status: number | null) => void
 }) {
   const [progress, setProgress] = useState<DownloadProgress | null>(null)
   const abortRef = useRef<AbortController | null>(null)
@@ -29,11 +31,10 @@ export function useRecordingDownload(streamName: string, fileName: string, callb
     const startedAt = performance.now()
     setProgress({ receivedBytes: 0, totalBytes: 0, bytesPerSec: 0 })
 
+    let status: number | null = null
     try {
-      const response = await fetch(
-        `/media/recordings/${encodeURIComponent(streamName)}/${encodeURIComponent(fileName)}?download`,
-        { signal: controller.signal },
-      )
+      const response = await fetch(url, { signal: controller.signal })
+      status = response.status
       if (!response.ok || !response.body)
         throw new Error(`Failed to download video: ${response.status} ${response.statusText}`)
 
@@ -57,18 +58,18 @@ export function useRecordingDownload(streamName: string, fileName: string, callb
       }
 
       const blob = new Blob(chunks as BlobPart[], { type: 'video/mp4' })
-      const url = URL.createObjectURL(blob)
+      const objectUrl = URL.createObjectURL(blob)
       const a = document.createElement('a')
-      a.href = url
+      a.href = objectUrl
       a.download = fileName.endsWith('.mp4') ? fileName : `${fileName}.mp4`
       a.click()
-      URL.revokeObjectURL(url)
+      URL.revokeObjectURL(objectUrl)
       callbacks.onComplete()
     }
     catch (error) {
       if (!controller.signal.aborted) {
         logger.error('Error downloading video', error)
-        callbacks.onError()
+        callbacks.onError(status)
       }
     }
     abortRef.current = null

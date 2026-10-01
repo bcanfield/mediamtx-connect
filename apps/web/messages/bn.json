@@ -197,6 +197,26 @@
       "override": "এই পাথ নিজের পাথ কনফিগে <code>recordFormat</code> কে {format} এ সেট করে, যা পাথ ডিফল্টকে ওভাররাইড করে। সেখানে এটি <code>fmp4</code> এ সেট করুন।",
       "openPathConfig": "এই পাথের রেকর্ডিং কনফিগ খুলুন",
       "pathDefaultsUnreadable": "MediaMTX থেকে পাথ ডিফল্ট পড়া যায়নি।"
+    },
+    "clip": {
+      "title": "ক্লিপ ডাউনলোড",
+      "rangeAria": "ক্লিপের পরিসর",
+      "last5Min": "শেষ ৫ মিনিট",
+      "last15Min": "শেষ ১৫ মিনিট",
+      "last1Hour": "শেষ ১ ঘণ্টা",
+      "custom": "কাস্টম",
+      "start": "শুরু",
+      "durationMinutes": "সময়কাল (মিনিট)",
+      "invalidStart": "সময় HH:MM:SS আকারে লিখুন",
+      "minutesRange": "পূর্ণ মিনিট, ১ থেকে ৬০",
+      "range": "{start} – {end}",
+      "download": "ডাউনলোড",
+      "cancel": "বাতিল",
+      "preparing": "ক্লিপ প্রস্তুত হচ্ছে…",
+      "progress": "{received} প্রাপ্ত · {rate}/সে",
+      "complete": "ক্লিপ ডাউনলোড হয়েছে",
+      "failed": "ক্লিপ ডাউনলোড ব্যর্থ হয়েছে",
+      "noRecordings": "এই পরিসরে কোনো রেকর্ডিং নেই"
     }
   },
   "Sessions": {

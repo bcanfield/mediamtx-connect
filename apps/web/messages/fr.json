@@ -197,6 +197,26 @@
       "override": "Ce chemin définit <code>recordFormat</code> à {format} dans sa propre configuration, qui remplace les valeurs par défaut des chemins. Réglez-le sur <code>fmp4</code> à cet endroit.",
       "openPathConfig": "Ouvrir la configuration d'enregistrement de ce chemin",
       "pathDefaultsUnreadable": "Impossible de lire les valeurs par défaut des chemins depuis MediaMTX."
+    },
+    "clip": {
+      "title": "Télécharger un extrait",
+      "rangeAria": "Plage de l’extrait",
+      "last5Min": "5 dernières min",
+      "last15Min": "15 dernières min",
+      "last1Hour": "Dernière heure",
+      "custom": "Personnalisé",
+      "start": "Début",
+      "durationMinutes": "Durée (min)",
+      "invalidStart": "Saisissez une heure au format HH:MM:SS",
+      "minutesRange": "Minutes entières, de 1 à 60",
+      "range": "{start} – {end}",
+      "download": "Télécharger",
+      "cancel": "Annuler",
+      "preparing": "Préparation de l’extrait…",
+      "progress": "{received} reçus · {rate}/s",
+      "complete": "Extrait téléchargé",
+      "failed": "Échec du téléchargement de l’extrait",
+      "noRecordings": "Aucun enregistrement dans cette plage"
     }
   },
   "Sessions": {

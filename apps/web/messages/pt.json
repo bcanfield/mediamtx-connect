@@ -197,6 +197,26 @@
       "override": "Este caminho define <code>recordFormat</code> como {format} na sua própria configuração, que se sobrepõe às predefinições dos caminhos. Altere-o para <code>fmp4</code> aí.",
       "openPathConfig": "Abrir a configuração de gravação deste caminho",
       "pathDefaultsUnreadable": "Não foi possível ler as predefinições dos caminhos do MediaMTX."
+    },
+    "clip": {
+      "title": "Transferir clip",
+      "rangeAria": "Intervalo do clip",
+      "last5Min": "Últimos 5 min",
+      "last15Min": "Últimos 15 min",
+      "last1Hour": "Última 1 h",
+      "custom": "Personalizado",
+      "start": "Início",
+      "durationMinutes": "Duração (min)",
+      "invalidStart": "Introduza uma hora como HH:MM:SS",
+      "minutesRange": "Minutos inteiros, de 1 a 60",
+      "range": "{start} – {end}",
+      "download": "Transferir",
+      "cancel": "Cancelar",
+      "preparing": "A preparar o clip…",
+      "progress": "{received} recebidos · {rate}/s",
+      "complete": "Clip transferido",
+      "failed": "Falha ao transferir o clip",
+      "noRecordings": "Sem gravações neste intervalo"
     }
   },
   "Sessions": {

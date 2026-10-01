@@ -224,6 +224,14 @@ describe('the day timeline', () => {
 
     expect(await screen.findByText('No recordings on this day.')).toBeInTheDocument()
     expect(screen.queryByRole('list', { name: 'Recorded spans' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Download clip' })).not.toBeInTheDocument()
+  })
+
+  it('offers a clip download under a day with recordings', async () => {
+    await renderDay()
+
+    const clip = screen.getByRole('region', { name: 'Download clip' })
+    expect(within(clip).getByRole('button', { name: 'Last 5 min' })).toBeInTheDocument()
   })
 
   it('steps back to the previous local day', async () => {

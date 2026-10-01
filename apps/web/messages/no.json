@@ -197,6 +197,26 @@
       "override": "Denne stien setter <code>recordFormat</code> til {format} i sin egen stikonfigurasjon, som overstyrer standardverdiene for stier. Sett den til <code>fmp4</code> der.",
       "openPathConfig": "Åpne opptakskonfigurasjonen for denne stien",
       "pathDefaultsUnreadable": "Kunne ikke lese standardverdiene for stier fra MediaMTX."
+    },
+    "clip": {
+      "title": "Last ned klipp",
+      "rangeAria": "Klippets tidsrom",
+      "last5Min": "Siste 5 min",
+      "last15Min": "Siste 15 min",
+      "last1Hour": "Siste 1 t",
+      "custom": "Egendefinert",
+      "start": "Start",
+      "durationMinutes": "Varighet (min)",
+      "invalidStart": "Skriv inn et klokkeslett som TT:MM:SS",
+      "minutesRange": "Hele minutter, fra 1 til 60",
+      "range": "{start} – {end}",
+      "download": "Last ned",
+      "cancel": "Avbryt",
+      "preparing": "Forbereder klipp…",
+      "progress": "{received} mottatt · {rate}/s",
+      "complete": "Klipp lastet ned",
+      "failed": "Nedlasting av klipp mislyktes",
+      "noRecordings": "Ingen opptak i dette tidsrommet"
     }
   },
   "Sessions": {

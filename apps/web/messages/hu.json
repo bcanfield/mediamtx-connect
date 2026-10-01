@@ -197,6 +197,26 @@
       "override": "Ez az útvonal a saját konfigurációjában {format} értékre állítja a(z) <code>recordFormat</code> kulcsot, ami felülírja az útvonal-alapértékeket. Ott állítsa <code>fmp4</code> értékre.",
       "openPathConfig": "Az útvonal felvételi beállításainak megnyitása",
       "pathDefaultsUnreadable": "Nem sikerült beolvasni az útvonal-alapértékeket a MediaMTX-ből."
+    },
+    "clip": {
+      "title": "Klip letöltése",
+      "rangeAria": "Klip időtartománya",
+      "last5Min": "Utolsó 5 perc",
+      "last15Min": "Utolsó 15 perc",
+      "last1Hour": "Utolsó 1 óra",
+      "custom": "Egyéni",
+      "start": "Kezdés",
+      "durationMinutes": "Időtartam (perc)",
+      "invalidStart": "Adja meg az időt ÓÓ:PP:MM formában",
+      "minutesRange": "Egész percek, 1 és 60 között",
+      "range": "{start} – {end}",
+      "download": "Letöltés",
+      "cancel": "Mégse",
+      "preparing": "Klip előkészítése…",
+      "progress": "{received} fogadva · {rate}/s",
+      "complete": "Klip letöltve",
+      "failed": "A klip letöltése sikertelen",
+      "noRecordings": "Ebben a tartományban nincs felvétel"
     }
   },
   "Sessions": {

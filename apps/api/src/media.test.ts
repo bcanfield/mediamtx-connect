@@ -189,6 +189,18 @@ describe('recording playback proxy', () => {
     expect(new URL(playbackRequest()!).searchParams.get('duration')).toBe('7200')
   })
 
+  it('asks for plain MP4 when the clip download wants it', async () => {
+    await media.request(`${VALID}&format=mp4`)
+
+    expect(new URL(playbackRequest()!).searchParams.get('format')).toBe('mp4')
+  })
+
+  it('accepts exactly one hour of MP4', async () => {
+    const res = await media.request('/playback/get?path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3600&format=mp4')
+
+    expect(res.status).toBe(200)
+  })
+
   it.each([
     { name: 'no path', query: 'start=2026-03-14T10%3A00%3A00Z&duration=60' },
     { name: 'no start', query: 'path=stream1&duration=60' },
@@ -200,6 +212,8 @@ describe('recording playback proxy', () => {
     { name: 'a zero duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=0' },
     { name: 'an infinite duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=Infinity' },
     { name: 'a duration that overflows to infinity', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=1e999' },
+    { name: 'a format MediaMTX cannot mux', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=60&format=avi' },
+    { name: 'an MP4 longer than an hour', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3601&format=mp4' },
   ])('answers 400 for $name without asking MediaMTX', async ({ query }) => {
     const res = await media.request(`/playback/get?${query}`)
 

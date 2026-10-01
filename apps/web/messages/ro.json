@@ -197,6 +197,26 @@
       "override": "Această cale setează <code>recordFormat</code> la {format} în propria configurație, care suprascrie valorile implicite ale căilor. Setează-l acolo la <code>fmp4</code>.",
       "openPathConfig": "Deschide configurația de înregistrare a acestei căi",
       "pathDefaultsUnreadable": "Valorile implicite ale căilor nu au putut fi citite din MediaMTX."
+    },
+    "clip": {
+      "title": "Descarcă clipul",
+      "rangeAria": "Intervalul clipului",
+      "last5Min": "Ultimele 5 min",
+      "last15Min": "Ultimele 15 min",
+      "last1Hour": "Ultima 1 h",
+      "custom": "Personalizat",
+      "start": "Început",
+      "durationMinutes": "Durată (min)",
+      "invalidStart": "Introduceți o oră ca HH:MM:SS",
+      "minutesRange": "Minute întregi, de la 1 la 60",
+      "range": "{start} – {end}",
+      "download": "Descarcă",
+      "cancel": "Anulează",
+      "preparing": "Se pregătește clipul…",
+      "progress": "{received} primiți · {rate}/s",
+      "complete": "Clip descărcat",
+      "failed": "Descărcarea clipului a eșuat",
+      "noRecordings": "Nicio înregistrare în acest interval"
     }
   },
   "Sessions": {

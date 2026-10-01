@@ -197,6 +197,26 @@
       "override": "Bu yol kendi yol yapılandırmasında <code>recordFormat</code> değerini {format} olarak ayarlıyor ve bu, yol varsayılanlarını geçersiz kılıyor. Orada <code>fmp4</code> olarak ayarlayın.",
       "openPathConfig": "Bu yolun kayıt yapılandırmasını aç",
       "pathDefaultsUnreadable": "Yol varsayılanları MediaMTX'ten okunamadı."
+    },
+    "clip": {
+      "title": "Klibi indir",
+      "rangeAria": "Klip aralığı",
+      "last5Min": "Son 5 dk",
+      "last15Min": "Son 15 dk",
+      "last1Hour": "Son 1 sa",
+      "custom": "Özel",
+      "start": "Başlangıç",
+      "durationMinutes": "Süre (dk)",
+      "invalidStart": "Saati SS:DD:sn biçiminde girin",
+      "minutesRange": "Tam dakika, 1 ile 60 arası",
+      "range": "{start} – {end}",
+      "download": "İndir",
+      "cancel": "İptal",
+      "preparing": "Klip hazırlanıyor…",
+      "progress": "{received} alındı · {rate}/sn",
+      "complete": "Klip indirildi",
+      "failed": "Klip indirilemedi",
+      "noRecordings": "Bu aralıkta kayıt yok"
     }
   },
   "Sessions": {

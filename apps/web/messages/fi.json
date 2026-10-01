@@ -197,6 +197,26 @@
       "override": "Tämä polku asettaa <code>recordFormat</code>:n arvoksi {format} omassa polkukonfiguraatiossaan, joka ohittaa polkujen oletukset. Aseta se siellä arvoon <code>fmp4</code>.",
       "openPathConfig": "Avaa tämän polun tallennusasetukset",
       "pathDefaultsUnreadable": "Polkujen oletuksia ei voitu lukea MediaMTX:ltä."
+    },
+    "clip": {
+      "title": "Lataa leike",
+      "rangeAria": "Leikkeen aikaväli",
+      "last5Min": "Viimeiset 5 min",
+      "last15Min": "Viimeiset 15 min",
+      "last1Hour": "Viimeinen 1 h",
+      "custom": "Mukautettu",
+      "start": "Alku",
+      "durationMinutes": "Kesto (min)",
+      "invalidStart": "Anna aika muodossa HH:MM:SS",
+      "minutesRange": "Kokonaisia minuutteja, 1–60",
+      "range": "{start} – {end}",
+      "download": "Lataa",
+      "cancel": "Peruuta",
+      "preparing": "Valmistellaan leikettä…",
+      "progress": "{received} vastaanotettu · {rate}/s",
+      "complete": "Leike ladattu",
+      "failed": "Leikkeen lataus epäonnistui",
+      "noRecordings": "Tällä aikavälillä ei ole tallenteita"
     }
   },
   "Sessions": {
