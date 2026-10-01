@@ -188,9 +188,28 @@ export interface ConfigScope<T extends FieldValues> {
   sections: SectionDef<T>[]
 }
 
-export const GLOBAL_SCOPE: ConfigScope<GlobalConfigFormData> = {
-  schema: GlobalConfigSchema,
-  sections: GLOBAL_SECTIONS,
+// Built for its localized messages. MediaMTX has no "unset" for a number key
+// and refuses 0 for all of them (`udpMaxPayloadSize: 0` makes it exit), while
+// the contract's coerce would turn a cleared input into exactly that 0. The
+// form holds the input's raw string, so '' is caught here, before coercion.
+export function globalScope({ required, mustBePositive }: {
+  required: string
+  mustBePositive: string
+}): ConfigScope<GlobalConfigFormData> {
+  const positiveNumber = z
+    .coerce
+    .string()
+    .min(1, { message: required })
+    .pipe(z.coerce.number<string>().gt(0, { message: mustBePositive }))
+    .optional()
+  const numberFields = GLOBAL_SECTIONS
+    .flatMap(section => section.fields)
+    .filter(field => field.kind === 'number')
+    .map(field => [field.name, positiveNumber])
+  return {
+    schema: GlobalConfigSchema.extend(Object.fromEntries(numberFields)),
+    sections: GLOBAL_SECTIONS,
+  }
 }
 
 export const PATH_DEFAULTS_SCOPE: ConfigScope<PathDefaultsFormData> = {

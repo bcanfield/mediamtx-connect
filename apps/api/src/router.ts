@@ -172,6 +172,8 @@ export const router = os.router({
         }
         catch (error) {
           logger.error({ err: error }, 'Failed to update global config')
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update global config' })
         }
       }),
@@ -195,6 +197,8 @@ export const router = os.router({
         }
         catch (error) {
           logger.error({ err: error }, 'Failed to update path defaults')
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path defaults' })
         }
       }),
