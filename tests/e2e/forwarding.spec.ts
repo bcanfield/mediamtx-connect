@@ -74,8 +74,10 @@ test.describe('Forwarding', () => {
       await expect.poll(async () => (readyTime = await readyTimeOf())).toBeTruthy()
 
       await page.goto(`/config/mediamtx/paths/${SRC}`)
-      await page.getByRole('button', { name: 'Add destination' }).click()
-      const dest = page.getByLabel('Destination 1')
+      await page.getByRole('button', { name: 'Add destination', exact: true }).click()
+      // Exact: the row's Show and Remove buttons are labelled "… destination 1" too.
+      // A password input has no textbox role, so this goes by label.
+      const dest = page.getByLabel('Destination 1', { exact: true })
       await dest.fill(DEST_URL)
       await dest.blur()
       await page.getByTestId('save-bar').getByRole('button', { name: 'Save to server' }).click()
@@ -85,7 +87,7 @@ test.describe('Forwarding', () => {
       // `forward` is hot-reloaded: the source kept its session.
       await expect.poll(readyTimeOf).toBe(readyTime)
 
-      await page.getByRole('button', { name: 'Remove destination 1' }).click()
+      await page.getByRole('button', { name: 'Remove destination 1', exact: true }).click()
       await page.getByTestId('save-bar').getByRole('button', { name: 'Save to server' }).click()
       await expect(page.getByTestId('save-bar')).toBeHidden()
 
