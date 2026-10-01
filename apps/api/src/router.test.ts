@@ -1,4 +1,5 @@
-import type { MediaMtxPath } from './mediamtx'
+import type { SessionProtocol } from '@connect/contract'
+import type { MediaMtxPath, MediaMtxSessionList } from './mediamtx'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
@@ -51,6 +52,8 @@ const api = {
   configPathPatch: vi.fn(),
   configGlobalPatch: vi.fn(),
   configPathDefaultsPatch: vi.fn(),
+  sessionsList: vi.fn(),
+  sessionsKick: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -642,6 +645,166 @@ describe('config.mediamtx.getPathConnections', () => {
     const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
 
     expect(result).toBeNull()
+  })
+})
+
+describe('sessions.list', () => {
+  const NONE: MediaMtxSessionList = { pageCount: 0, items: [] }
+  let lists: Partial<Record<SessionProtocol, MediaMtxSessionList | Error>>
+
+  beforeEach(() => {
+    lists = {}
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+    api.sessionsList.mockImplementation(async (protocol: SessionProtocol) => {
+      const answer = lists[protocol] ?? NONE
+      if (answer instanceof Error)
+        throw answer
+      return answer
+    })
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('merges every protocol into one list sorted by path, protocol, then created', async () => {
+    lists = {
+      rtsp: {
+        pageCount: 1,
+        items: [
+          { id: 'r2', path: 'stream1', remoteAddr: '10.0.0.2:5000', state: 'read', created: '2026-10-01T10:05:00Z', inboundBytes: 10, outboundBytes: 20, bytesReceived: 999, bytesSent: 999 },
+          { id: 'r1', path: 'stream1', remoteAddr: '10.0.0.1:5000', state: 'publish', created: '2026-10-01T10:00:00Z', inboundBytes: 100, outboundBytes: 0 },
+        ],
+      },
+      srt: {
+        pageCount: 1,
+        items: [{ id: 's1', path: 'stream1', remoteAddr: '10.0.0.3:6000', state: 'read', created: '2026-10-01T09:00:00Z', bytesReceived: 5, bytesSent: 50 }],
+      },
+      hls: {
+        pageCount: 1,
+        items: [{ id: 'h1', path: 'cam', remoteAddr: '10.0.0.4', created: '2026-10-01T11:00:00Z', outboundBytes: 70 }],
+      },
+      webrtc: {
+        pageCount: 1,
+        items: [{ id: 'w1', path: 'stream1', remoteAddr: '10.0.0.5:7000', state: 'read', created: '2026-10-01T08:00:00Z', inboundBytes: 1, outboundBytes: 2 }],
+      },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions).toEqual([
+      { id: 'h1', protocol: 'hls', path: 'cam', remoteAddr: '10.0.0.4', state: 'read', inboundBytes: null, outboundBytes: 70, created: new Date('2026-10-01T11:00:00Z') },
+      { id: 'r1', protocol: 'rtsp', path: 'stream1', remoteAddr: '10.0.0.1:5000', state: 'publish', inboundBytes: 100, outboundBytes: 0, created: new Date('2026-10-01T10:00:00Z') },
+      { id: 'r2', protocol: 'rtsp', path: 'stream1', remoteAddr: '10.0.0.2:5000', state: 'read', inboundBytes: 10, outboundBytes: 20, created: new Date('2026-10-01T10:05:00Z') },
+      { id: 's1', protocol: 'srt', path: 'stream1', remoteAddr: '10.0.0.3:6000', state: 'read', inboundBytes: 5, outboundBytes: 50, created: new Date('2026-10-01T09:00:00Z') },
+      { id: 'w1', protocol: 'webrtc', path: 'stream1', remoteAddr: '10.0.0.5:7000', state: 'read', inboundBytes: 1, outboundBytes: 2, created: new Date('2026-10-01T08:00:00Z') },
+    ])
+  })
+
+  it('lists every protocol on the server', async () => {
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(api.sessionsList.mock.calls.map(([protocol]) => protocol))
+      .toEqual(['rtsp', 'rtsps', 'rtmp', 'rtmps', 'srt', 'webrtc', 'hls'])
+    expect(state.status === 'connected' && state.protocols.every(p => p.status === 'listed')).toBe(true)
+  })
+
+  // MediaMTX doesn't register a disabled protocol's routes at all.
+  it('marks a protocol answering 404 as disabled and still lists the rest', async () => {
+    lists = {
+      rtmps: new MediaMtxError(404, null, 'GET /rtmpsconns/list'),
+      rtsp: { pageCount: 1, items: [{ id: 'r1', path: 'stream1', remoteAddr: 'a', state: 'publish', created: '2026-10-01T10:00:00Z', inboundBytes: 1, outboundBytes: 0 }] },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions.map(s => s.id)).toEqual(['r1'])
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'rtmps'))
+      .toEqual({ protocol: 'rtmps', status: 'disabled', truncated: false })
+  })
+
+  it('marks a protocol failing any other way as failed', async () => {
+    lists = { srt: new MediaMtxError(500, null, 'GET /srtconns/list') }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'srt'))
+      .toEqual({ protocol: 'srt', status: 'failed', truncated: false })
+  })
+
+  it('reports an unreachable MediaMTX when no list got an HTTP answer', async () => {
+    api.sessionsList.mockRejectedValue(new TypeError('fetch failed'))
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state).toEqual({
+      status: 'connection-error',
+      mediaMtxUrl: CONFIG.mediaMtxUrl,
+      mediaMtxApiPort: CONFIG.mediaMtxApiPort,
+    })
+  })
+
+  // A state a newer MediaMTX adds must not fail output validation for the
+  // whole list.
+  it('reads a state it doesn\'t know as idle', async () => {
+    lists = {
+      rtmp: { pageCount: 1, items: [{ id: 'm1', path: 'stream1', remoteAddr: 'a', state: 'handshaking', created: '2026-10-01T10:00:00Z', inboundBytes: 0, outboundBytes: 0 }] },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions.map(s => s.state)).toEqual(['idle'])
+  })
+
+  it('reports the page size a truncated protocol was cut to', async () => {
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.pageSize).toBe(100)
+  })
+
+  it('flags a protocol with more than one page as truncated', async () => {
+    lists = { webrtc: { pageCount: 3, items: [] } }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'webrtc'))
+      .toEqual({ protocol: 'webrtc', status: 'listed', truncated: true })
+  })
+})
+
+describe('sessions.kick', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('kicks the session over its own protocol', async () => {
+    api.sessionsKick.mockResolvedValue(undefined)
+
+    await call(router.sessions.kick, { protocol: 'srt', id: 'abc' })
+
+    expect(api.sessionsKick).toHaveBeenCalledWith('srt', 'abc')
+  })
+
+  it('answers NOT_FOUND when the session had already gone', async () => {
+    api.sessionsKick.mockRejectedValue(new MediaMtxError(404, 'session not found', 'POST /srtconns/kick/abc'))
+
+    await expect(call(router.sessions.kick, { protocol: 'srt', id: 'abc' }))
+      .rejects
+      .toMatchObject({ code: 'NOT_FOUND' })
+  })
+
+  it('answers INTERNAL_SERVER_ERROR on any other failure', async () => {
+    api.sessionsKick.mockRejectedValue(new MediaMtxError(500, null, 'POST /srtconns/kick/abc'))
+
+    await expect(call(router.sessions.kick, { protocol: 'srt', id: 'abc' }))
+      .rejects
+      .toMatchObject({ code: 'INTERNAL_SERVER_ERROR' })
   })
 })
 

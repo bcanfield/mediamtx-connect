@@ -31,6 +31,7 @@
     "items": {
       "live": "En vivo",
       "recordings": "Grabaciones",
+      "sessions": "Sesiones",
       "appConfig": "Configuración de la app",
       "mediamtxConfig": "Configuración de MediaMTX",
       "paths": "Rutas"
@@ -169,6 +170,51 @@
       "showing": "Mostrando {from}–{to} de {total}",
       "previous": "Página anterior",
       "next": "Página siguiente"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesiones",
+    "pageSubHeader": "Todos los clientes conectados ahora a MediaMTX, publicando o leyendo, por cualquier protocolo.",
+    "summary": "{count, plural, one {# sesión} other {# sesiones}}",
+    "columns": {
+      "path": "Ruta",
+      "protocol": "Protocolo",
+      "remoteAddr": "Dirección remota",
+      "state": "Estado",
+      "bytesIn": "Bytes de entrada",
+      "bytesOut": "Bytes de salida",
+      "uptime": "Tiempo activo",
+      "actions": "Acciones"
+    },
+    "states": {
+      "idle": "inactiva",
+      "read": "lectura",
+      "publish": "publicación"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (no habilitado en este servidor)",
+      "failed": "{protocol} (no se pudo leer)",
+      "unlisted": "Sin listar: {protocols}.",
+      "truncated": "Se muestran las primeras {count, number} sesiones {protocol}."
+    },
+    "kick": {
+      "action": "Expulsar",
+      "confirmTitle": "¿Expulsar al cliente {protocol} {remoteAddr} de {path}?",
+      "confirmDescription": "MediaMTX corta la conexión ahora. No es un bloqueo: el cliente puede volver a conectarse enseguida.",
+      "hlsCaveat": "Un reproductor HLS vuelve a pedir su lista de reproducción en segundos y obtiene una sesión nueva, así que esto casi solo lo reinicia.",
+      "cancel": "Cancelar",
+      "confirm": "Expulsar cliente",
+      "toasts": {
+        "success": "{remoteAddr} expulsado",
+        "alreadyGone": "{remoteAddr} ya se había desconectado",
+        "errorTitle": "No se pudo expulsar la sesión",
+        "errorDescription": "MediaMTX no aceptó la expulsión. Inténtalo de nuevo."
+      }
+    },
+    "empty": {
+      "title": "No hay nadie conectado",
+      "lead": "MediaMTX no tiene publicadores ni lectores ahora mismo."
     }
   },
   "Config": {

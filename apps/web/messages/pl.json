@@ -31,6 +31,7 @@
     "items": {
       "live": "Na żywo",
       "recordings": "Nagrania",
+      "sessions": "Sesje",
       "appConfig": "Konfiguracja aplikacji",
       "mediamtxConfig": "Konfiguracja MediaMTX",
       "paths": "Ścieżki"
@@ -169,6 +170,51 @@
       "showing": "Wyświetlanie {from}–{to} z {total}",
       "previous": "Poprzednia strona",
       "next": "Następna strona"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesje",
+    "pageSubHeader": "Każdy klient połączony teraz z MediaMTX, publikujący lub odczytujący, przez dowolny protokół.",
+    "summary": "{count, plural, one {# sesja} few {# sesje} many {# sesji} other {# sesji}}",
+    "columns": {
+      "path": "Ścieżka",
+      "protocol": "Protokół",
+      "remoteAddr": "Adres zdalny",
+      "state": "Stan",
+      "bytesIn": "Bajty przychodzące",
+      "bytesOut": "Bajty wychodzące",
+      "uptime": "Czas działania",
+      "actions": "Akcje"
+    },
+    "states": {
+      "idle": "bezczynna",
+      "read": "odczyt",
+      "publish": "publikacja"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (niewłączony na tym serwerze)",
+      "failed": "{protocol} (nie udało się odczytać)",
+      "unlisted": "Nie wyświetlono: {protocols}.",
+      "truncated": "Wyświetlono pierwsze {count, number} sesji {protocol}."
+    },
+    "kick": {
+      "action": "Rozłącz",
+      "confirmTitle": "Rozłączyć klienta {protocol} {remoteAddr} od {path}?",
+      "confirmDescription": "MediaMTX zamknie połączenie teraz. To nie jest blokada: klient może od razu połączyć się ponownie.",
+      "hlsCaveat": "Odtwarzacz HLS w ciągu kilku sekund ponownie pobiera playlistę i dostaje nową sesję, więc to głównie go resetuje.",
+      "cancel": "Anuluj",
+      "confirm": "Rozłącz klienta",
+      "toasts": {
+        "success": "Rozłączono {remoteAddr}",
+        "alreadyGone": "{remoteAddr} był już rozłączony",
+        "errorTitle": "Nie udało się rozłączyć sesji",
+        "errorDescription": "MediaMTX nie przyjął żądania. Spróbuj ponownie."
+      }
+    },
+    "empty": {
+      "title": "Nikt nie jest połączony",
+      "lead": "MediaMTX nie ma teraz żadnych wydawców ani odbiorców."
     }
   },
   "Config": {

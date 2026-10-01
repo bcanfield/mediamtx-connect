@@ -31,6 +31,7 @@
     "items": {
       "live": "Živě",
       "recordings": "Záznamy",
+      "sessions": "Relace",
       "appConfig": "Konfigurace aplikace",
       "mediamtxConfig": "Konfigurace MediaMTX",
       "paths": "Cesty"
@@ -169,6 +170,51 @@
       "showing": "Zobrazeno {from}–{to} z {total}",
       "previous": "Předchozí stránka",
       "next": "Další stránka"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Relace",
+    "pageSubHeader": "Všichni klienti právě připojení k MediaMTX, publikující i čtoucí, přes jakýkoli protokol.",
+    "summary": "{count, plural, one {# relace} few {# relace} many {# relace} other {# relací}}",
+    "columns": {
+      "path": "Cesta",
+      "protocol": "Protokol",
+      "remoteAddr": "Vzdálená adresa",
+      "state": "Stav",
+      "bytesIn": "Bajty dovnitř",
+      "bytesOut": "Bajty ven",
+      "uptime": "Doba běhu",
+      "actions": "Akce"
+    },
+    "states": {
+      "idle": "nečinná",
+      "read": "čtení",
+      "publish": "publikace"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (na tomto serveru není zapnuto)",
+      "failed": "{protocol} (nelze načíst)",
+      "unlisted": "Nevypsáno: {protocols}.",
+      "truncated": "Zobrazeno prvních {count, number} relací {protocol}."
+    },
+    "kick": {
+      "action": "Odpojit",
+      "confirmTitle": "Odpojit klienta {protocol} {remoteAddr} od {path}?",
+      "confirmDescription": "MediaMTX spojení ihned ukončí. Nejde o zákaz: klient se může hned znovu připojit.",
+      "hlsCaveat": "Přehrávač HLS si během několika sekund znovu vyžádá playlist a získá novou relaci, takže ho to většinou jen resetuje.",
+      "cancel": "Zrušit",
+      "confirm": "Odpojit klienta",
+      "toasts": {
+        "success": "Odpojeno: {remoteAddr}",
+        "alreadyGone": "{remoteAddr} se už odpojil",
+        "errorTitle": "Relaci nelze odpojit",
+        "errorDescription": "MediaMTX odpojení nepřijalo. Zkuste to znovu."
+      }
+    },
+    "empty": {
+      "title": "Nikdo není připojen",
+      "lead": "MediaMTX teď nemá žádné vydavatele ani čtenáře."
     }
   },
   "Config": {

@@ -31,6 +31,7 @@
     "items": {
       "live": "Ao vivo",
       "recordings": "Gravações",
+      "sessions": "Sessões",
       "appConfig": "Configuração do app",
       "mediamtxConfig": "Configuração do MediaMTX",
       "paths": "Caminhos"
@@ -169,6 +170,51 @@
       "showing": "Mostrando {from}–{to} de {total}",
       "previous": "Página anterior",
       "next": "Próxima página"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessões",
+    "pageSubHeader": "Todos os clientes conectados ao MediaMTX agora, publicando ou lendo, em qualquer protocolo.",
+    "summary": "{count, plural, one {# sessão} other {# sessões}}",
+    "columns": {
+      "path": "Caminho",
+      "protocol": "Protocolo",
+      "remoteAddr": "Endereço remoto",
+      "state": "Estado",
+      "bytesIn": "Bytes recebidos",
+      "bytesOut": "Bytes enviados",
+      "uptime": "Tempo ativo",
+      "actions": "Ações"
+    },
+    "states": {
+      "idle": "ociosa",
+      "read": "leitura",
+      "publish": "publicação"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (não habilitado neste servidor)",
+      "failed": "{protocol} (não foi possível ler)",
+      "unlisted": "Não listados: {protocols}.",
+      "truncated": "Mostrando as primeiras {count, number} sessões {protocol}."
+    },
+    "kick": {
+      "action": "Expulsar",
+      "confirmTitle": "Expulsar o cliente {protocol} {remoteAddr} de {path}?",
+      "confirmDescription": "O MediaMTX encerra a conexão agora. Não é um banimento: o cliente pode se reconectar na hora.",
+      "hlsCaveat": "Um player HLS pede a playlist de novo em segundos e recebe uma nova sessão, então isso basicamente só o reinicia.",
+      "cancel": "Cancelar",
+      "confirm": "Expulsar cliente",
+      "toasts": {
+        "success": "{remoteAddr} expulso",
+        "alreadyGone": "{remoteAddr} já tinha se desconectado",
+        "errorTitle": "Não foi possível expulsar a sessão",
+        "errorDescription": "O MediaMTX não aceitou a solicitação. Tente novamente."
+      }
+    },
+    "empty": {
+      "title": "Ninguém está conectado",
+      "lead": "O MediaMTX não tem publicadores nem leitores agora."
     }
   },
   "Config": {

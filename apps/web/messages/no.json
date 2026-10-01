@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Opptak",
+      "sessions": "Økter",
       "appConfig": "Appkonfigurasjon",
       "mediamtxConfig": "MediaMTX-konfigurasjon",
       "paths": "Baner"
@@ -169,6 +170,51 @@
       "showing": "Viser {from}–{to} av {total}",
       "previous": "Forrige side",
       "next": "Neste side"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Økter",
+    "pageSubHeader": "Alle klienter som er koblet til MediaMTX akkurat nå, som publiserer eller leser, over alle protokoller.",
+    "summary": "{count, plural, one {# økt} other {# økter}}",
+    "columns": {
+      "path": "Bane",
+      "protocol": "Protokoll",
+      "remoteAddr": "Ekstern adresse",
+      "state": "Tilstand",
+      "bytesIn": "Byte inn",
+      "bytesOut": "Byte ut",
+      "uptime": "Oppetid",
+      "actions": "Handlinger"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "leser",
+      "publish": "publiserer"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ikke aktivert på denne serveren)",
+      "failed": "{protocol} (kunne ikke leses)",
+      "unlisted": "Ikke oppført: {protocols}.",
+      "truncated": "Viser de første {count, number} {protocol}-øktene."
+    },
+    "kick": {
+      "action": "Kast ut",
+      "confirmTitle": "Kaste ut {protocol}-klienten {remoteAddr} fra {path}?",
+      "confirmDescription": "MediaMTX bryter forbindelsen nå. Dette er ikke en utestengelse: klienten kan koble til igjen med en gang.",
+      "hlsCaveat": "En HLS-spiller ber om spillelisten igjen innen sekunder og får en ny økt, så dette tilbakestiller den stort sett bare.",
+      "cancel": "Avbryt",
+      "confirm": "Kast ut klient",
+      "toasts": {
+        "success": "{remoteAddr} kastet ut",
+        "alreadyGone": "{remoteAddr} hadde allerede koblet fra",
+        "errorTitle": "Kunne ikke kaste ut økten",
+        "errorDescription": "MediaMTX godtok ikke forespørselen. Prøv igjen."
+      }
+    },
+    "empty": {
+      "title": "Ingen er tilkoblet",
+      "lead": "MediaMTX har ingen publisister eller lesere akkurat nå."
     }
   },
   "Config": {

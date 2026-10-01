@@ -20,6 +20,7 @@ import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
 import { PathsCatalogPage } from '@/features/mediamtx-config/paths-catalog-page'
 import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
+import { SessionsPage } from '@/features/sessions/sessions-page'
 import { LiveViewPage } from '@/features/streams/live-view-page'
 import { I18nProvider } from '@/i18n/provider'
 
@@ -71,6 +72,12 @@ const streamRecordingsRoute = createRoute({
     page: Number(search.page) >= 1 ? Number(search.page) : undefined,
     take: Number(search.take) >= 1 ? Number(search.take) : undefined,
   }),
+})
+
+const sessionsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/sessions',
+  component: SessionsPage,
 })
 
 const configRoute = createRoute({
@@ -133,6 +140,7 @@ const router = createRouter({
     liveRoute,
     recordingsRoute,
     streamRecordingsRoute,
+    sessionsRoute,
     configRoute,
     mediamtxConfigRoute,
     pathDefaultsRoute,

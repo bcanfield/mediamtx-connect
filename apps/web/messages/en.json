@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Recordings",
+      "sessions": "Sessions",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Paths"
@@ -169,6 +170,51 @@
       "showing": "Showing {from}–{to} of {total}",
       "previous": "Previous page",
       "next": "Next page"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessions",
+    "pageSubHeader": "Every client connected to MediaMTX right now, publishing or reading, over any protocol.",
+    "summary": "{count, plural, one {# session} other {# sessions}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "State",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes out",
+      "uptime": "Uptime",
+      "actions": "Actions"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "read",
+      "publish": "publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (not enabled on this server)",
+      "failed": "{protocol} (couldn't be read)",
+      "unlisted": "Not listed: {protocols}.",
+      "truncated": "Showing the first {count, number} {protocol} sessions."
+    },
+    "kick": {
+      "action": "Kick",
+      "confirmTitle": "Kick {protocol} client {remoteAddr} from {path}?",
+      "confirmDescription": "MediaMTX drops the connection now. This is not a ban: the client can reconnect straight away.",
+      "hlsCaveat": "An HLS player asks for its playlist again within seconds and gets a new session, so this mostly just resets it.",
+      "cancel": "Cancel",
+      "confirm": "Kick client",
+      "toasts": {
+        "success": "Kicked {remoteAddr}",
+        "alreadyGone": "{remoteAddr} had already disconnected",
+        "errorTitle": "Couldn't kick the session",
+        "errorDescription": "MediaMTX didn't accept the kick. Try again."
+      }
+    },
+    "empty": {
+      "title": "No one is connected",
+      "lead": "MediaMTX has no publishers or readers right now."
     }
   },
   "Config": {

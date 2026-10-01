@@ -31,6 +31,7 @@
     "items": {
       "live": "Canlı",
       "recordings": "Kayıtlar",
+      "sessions": "Oturumlar",
       "appConfig": "Uygulama yapılandırması",
       "mediamtxConfig": "MediaMTX yapılandırması",
       "paths": "Yollar"
@@ -169,6 +170,51 @@
       "showing": "{total} sonuçtan {from}–{to} gösteriliyor",
       "previous": "Önceki sayfa",
       "next": "Sonraki sayfa"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Oturumlar",
+    "pageSubHeader": "Şu anda MediaMTX’e bağlı her istemci, yayın yapan veya okuyan, her protokolde.",
+    "summary": "{count, plural, other {# oturum}}",
+    "columns": {
+      "path": "Yol",
+      "protocol": "Protokol",
+      "remoteAddr": "Uzak adres",
+      "state": "Durum",
+      "bytesIn": "Gelen bayt",
+      "bytesOut": "Giden bayt",
+      "uptime": "Çalışma süresi",
+      "actions": "İşlemler"
+    },
+    "states": {
+      "idle": "boşta",
+      "read": "okuma",
+      "publish": "yayın"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (bu sunucuda etkin değil)",
+      "failed": "{protocol} (okunamadı)",
+      "unlisted": "Listelenmeyenler: {protocols}.",
+      "truncated": "İlk {count, number} {protocol} oturumu gösteriliyor."
+    },
+    "kick": {
+      "action": "At",
+      "confirmTitle": "{protocol} istemcisi {remoteAddr}, {path} yolundan atılsın mı?",
+      "confirmDescription": "MediaMTX bağlantıyı şimdi keser. Bu bir yasak değildir: istemci hemen yeniden bağlanabilir.",
+      "hlsCaveat": "Bir HLS oynatıcı birkaç saniye içinde oynatma listesini yeniden ister ve yeni bir oturum alır, bu yüzden bu çoğunlukla onu yalnızca sıfırlar.",
+      "cancel": "İptal",
+      "confirm": "İstemciyi at",
+      "toasts": {
+        "success": "{remoteAddr} atıldı",
+        "alreadyGone": "{remoteAddr} zaten bağlantıyı kesmişti",
+        "errorTitle": "Oturum atılamadı",
+        "errorDescription": "MediaMTX isteği kabul etmedi. Tekrar deneyin."
+      }
+    },
+    "empty": {
+      "title": "Kimse bağlı değil",
+      "lead": "MediaMTX’in şu anda yayıncısı veya okuyucusu yok."
     }
   },
   "Config": {

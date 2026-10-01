@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Mga recording",
+      "sessions": "Mga Session",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Mga path"
@@ -169,6 +170,51 @@
       "showing": "Ipinapakita ang {from}–{to} ng {total}",
       "previous": "Nakaraang pahina",
       "next": "Susunod na pahina"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Mga Session",
+    "pageSubHeader": "Bawat client na nakakonekta sa MediaMTX ngayon, nagpa-publish o nagbabasa, sa anumang protocol.",
+    "summary": "{count, plural, one {# session} other {# na session}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "Estado",
+      "bytesIn": "Bytes papasok",
+      "bytesOut": "Bytes palabas",
+      "uptime": "Uptime",
+      "actions": "Mga aksyon"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "nagbabasa",
+      "publish": "nagpa-publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (hindi naka-enable sa server na ito)",
+      "failed": "{protocol} (hindi mabasa)",
+      "unlisted": "Hindi nakalista: {protocols}.",
+      "truncated": "Ipinapakita ang unang {count, number} {protocol} na session."
+    },
+    "kick": {
+      "action": "I-kick",
+      "confirmTitle": "I-kick ang {protocol} client na {remoteAddr} mula sa {path}?",
+      "confirmDescription": "Puputulin ng MediaMTX ang koneksyon ngayon. Hindi ito ban: maaaring kumonekta muli agad ang client.",
+      "hlsCaveat": "Humihingi ulit ng playlist ang HLS player sa loob ng ilang segundo at nakakakuha ng bagong session, kaya kadalasan ay nire-reset lang ito.",
+      "cancel": "Kanselahin",
+      "confirm": "I-kick ang client",
+      "toasts": {
+        "success": "Na-kick ang {remoteAddr}",
+        "alreadyGone": "Nakadiskonekta na ang {remoteAddr}",
+        "errorTitle": "Hindi ma-kick ang session",
+        "errorDescription": "Hindi tinanggap ng MediaMTX ang kahilingan. Subukan ulit."
+      }
+    },
+    "empty": {
+      "title": "Walang nakakonekta",
+      "lead": "Walang publisher o reader ang MediaMTX ngayon."
     }
   },
   "Config": {
