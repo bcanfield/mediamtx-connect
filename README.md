@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>The web UI for <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Watch live streams, browse recordings, edit any config key — from your browser.</p>
+Watch live streams, browse recordings, and edit your MediaMTX config from the browser.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -14,41 +14,6 @@ Watch live streams, browse recordings, edit any config key — from your browser
 
 <img src=".github/assets/demo.png" alt="MediaMTX Connect — live stream grid, recording browser, and config editor" width="860">
 
-<details>
-<summary>🌍 Read this in 30 languages</summary>
-<p>
-  🇺🇸 <strong>English</strong> •
-  🇪🇸 <a href="./docs/i18n/README.es.md">Español</a> •
-  🇨🇳 <a href="./docs/i18n/README.zh.md">中文</a> •
-  🇮🇹 <a href="./docs/i18n/README.it.md">Italiano</a> •
-  🇩🇪 <a href="./docs/i18n/README.de.md">Deutsch</a> •
-  🇷🇺 <a href="./docs/i18n/README.ru.md">Русский</a> •
-  🇫🇷 <a href="./docs/i18n/README.fr.md">Français</a> •
-  🇵🇹 <a href="./docs/i18n/README.pt.md">Português</a> •
-  🇯🇵 <a href="./docs/i18n/README.ja.md">日本語</a> •
-  🇵🇱 <a href="./docs/i18n/README.pl.md">Polski</a> •
-  🇰🇷 <a href="./docs/i18n/README.ko.md">한국어</a> •
-  🇹🇷 <a href="./docs/i18n/README.tr.md">Türkçe</a> •
-  🇳🇱 <a href="./docs/i18n/README.nl.md">Nederlands</a> •
-  🇨🇿 <a href="./docs/i18n/README.cs.md">Čeština</a> •
-  🇹🇼 <a href="./docs/i18n/README.zh-tw.md">繁體中文</a> •
-  🇧🇷 <a href="./docs/i18n/README.pt-br.md">Português (BR)</a> •
-  🇮🇩 <a href="./docs/i18n/README.id.md">Bahasa Indonesia</a> •
-  🇷🇴 <a href="./docs/i18n/README.ro.md">Română</a> •
-  🇸🇪 <a href="./docs/i18n/README.sv.md">Svenska</a> •
-  🇩🇰 <a href="./docs/i18n/README.da.md">Dansk</a> •
-  🇳🇴 <a href="./docs/i18n/README.no.md">Norsk</a> •
-  🇫🇮 <a href="./docs/i18n/README.fi.md">Suomi</a> •
-  🇬🇷 <a href="./docs/i18n/README.el.md">Ελληνικά</a> •
-  🇭🇺 <a href="./docs/i18n/README.hu.md">Magyar</a> •
-  🇺🇦 <a href="./docs/i18n/README.uk.md">Українська</a> •
-  🇻🇳 <a href="./docs/i18n/README.vi.md">Tiếng Việt</a> •
-  🇵🇭 <a href="./docs/i18n/README.tl.md">Tagalog</a> •
-  🇹🇭 <a href="./docs/i18n/README.th.md">ไทย</a> •
-  🇮🇳 <a href="./docs/i18n/README.hi.md">हिन्दी</a> •
-  🇧🇩 <a href="./docs/i18n/README.bn.md">বাংলা</a>
-</p>
-</details>
 
 </div>
 
@@ -60,7 +25,7 @@ It's a companion, not a replacement. Every screen maps to something MediaMTX alr
 
 ## Quick start
 
-Multi-arch images (`linux/amd64`, `linux/arm64`) — Docker pulls the right one.
+Multi-arch images (`linux/amd64`, `linux/arm64`); Docker pulls the right one.
 
 **Already running MediaMTX?** Add Connect beside it:
 
@@ -68,12 +33,14 @@ Multi-arch images (`linux/amd64`, `linux/arm64`) — Docker pulls the right one.
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
+  -e REMOTE_MEDIAMTX_URL=http://<host-your-browser-uses> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
+  -v mediamtx-connect-screenshots:/screenshots \
   bcanfield/mediamtx-connect:latest
 ```
 
-**Starting from scratch?** The bundled compose runs both:
+**Starting from scratch?** The bundled compose builds Connect and runs it next to MediaMTX:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -92,8 +59,8 @@ Then open <http://localhost:3000>.
 
 Every path MediaMTX knows, in a 2–4 column grid.
 
-- **WebRTC or HLS, per card.** `AUTO` falls back silently, `LOW-LAT` insists on WebRTC, `COMPAT` forces HLS — and each card reports the transport it actually got.
-- **Snapshots while idle.** A background job keeps a recent frame on every card, with its age on the pill.
+- **WebRTC or HLS, per card.** `AUTO` falls back silently, `LOW-LAT` insists on WebRTC, `COMPAT` forces HLS. Each card reports the transport it actually got.
+- **Snapshots while idle.** A background job keeps a recent frame on every card, with its age on the pill. Need a fresh one now? Take it from the card menu.
 - **Live telemetry.** Codecs, viewer count, and uptime, straight from the path list.
 - **Honest record state.** Cards show whether a stream is *effectively* recording; a state Connect couldn't read says unknown, never off.
 - **Publish URLs on the clipboard.** RTSP, RTMP, and SRT, built from the server's own listen addresses.
@@ -107,27 +74,33 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Configuration, without YAML
 
-- **The whole server config** — 65 typed, validated controls across Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, and SRT.
+- **The whole server config:** 65 typed, validated controls across Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, and SRT.
 - **Path defaults and per-path overrides**, on the scopes MediaMTX serves them from. Saving a wildcard-backed stream writes a sparse entry, so untouched keys keep tracking the defaults.
-- **All 15 `runOn*` hooks**, with a warning where saving restarts the path.
-- **Sparse writes** — only the keys you changed.
+- **A paths catalog** with live and regex badges, a guided "add an RTSP camera" form, and revert or delete for any path's own entry (with a warning if someone is connected).
+- **Live health on each path's page:** tracks, readers, bytes moved, frames in error and uptime, refreshed every 5 seconds. A path with nothing publishing reads idle, not broken.
+- **Every `runOn*` hook**, with a warning where saving restarts the path.
+- **Sparse writes.** Only the keys you changed get sent.
 
 ### Ops
 
-One process for API, SPA, and media · multi-arch · `GET /health` · structured logs · PWA · dark and light · 30 languages · no database.
+One process for API, SPA, and media · multi-arch · `GET /api/health` · structured logs · installable as a PWA · dark and light · 30 languages · no database.
 
 ## Environment variables
 
 These seed the first boot. Everything stays editable under **Config**.
 
-| Variable | Default | Purpose |
+| Variable | Default in the image | Purpose |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Where Connect reaches the MediaMTX API from inside its container |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Where Connect reaches the MediaMTX API |
 | `MEDIAMTX_API_PORT` | `9997` | MediaMTX API port |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Host path mounted for recordings (compose only) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Where thumbnails are stored |
+| `REMOTE_MEDIAMTX_URL` | `http://localhost` | Where the *browser* reaches MediaMTX for playback. Set it whenever the browser isn't on the server |
+| `MEDIAMTX_RECORDINGS_DIR` | `/recordings` | Where Connect reads recordings |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Where snapshots and thumbnails go |
+| `DATA_DIR` | `/data` | Where `config.json` lives |
+| `PORT` | `3000` | HTTP port |
+| `LOG_LEVEL` | `info` | Pino log level |
 
-`http://mediamtx` only resolves on the bundled compose network — for a standalone `docker run`, point it at your host.
+`http://mediamtx` only resolves on the bundled compose network. For a standalone `docker run`, point it at your host. With compose, set `REMOTE_MEDIAMTX_HOST` in `.env` instead of `REMOTE_MEDIAMTX_URL`: it also sets the WebRTC host MediaMTX advertises. [`.env.example`](.env.example) explains each one, and `pnpm dev` uses localhost defaults with no `.env` at all.
 
 ## How it works
 
@@ -152,13 +125,13 @@ Playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thu
 | | |
 |---|---|
 | [Features](docs/FEATURES.md) | Every shipped capability, route, and procedure |
-| [Architecture](ARCHITECTURE.md) | How the pieces fit |
+| [Architecture](docs/ARCHITECTURE.md) | How the pieces fit |
 | [Contributing](CONTRIBUTING.md) | Dev setup, scripts, PR process |
 | [Examples](examples/) | Raspberry Pi camera, fake streams for testing |
 
 ## Contributing
 
-Issues and PRs welcome. `pnpm install && pnpm dev` gets you a full stack with fixtures — see [CONTRIBUTING.md](CONTRIBUTING.md), and note that PR titles are conventional commits. We follow a [Code of Conduct](CODE_OF_CONDUCT.md).
+Issues and PRs welcome. `pnpm install && pnpm dev` gets you a full stack with fixtures. See [CONTRIBUTING.md](CONTRIBUTING.md), and note that PR titles are conventional commits. We follow a [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 

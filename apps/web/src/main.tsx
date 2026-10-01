@@ -10,7 +10,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { AppHeader } from '@/components/app-header'
-import { ServiceWorker } from '@/components/service-worker'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { ClientConfigPage } from '@/features/client-config/client-config-page'
@@ -38,7 +37,6 @@ const rootRoute = createRootRoute({
         </div>
         <Toaster />
       </ThemeProvider>
-      <ServiceWorker />
     </I18nProvider>
   ),
 })

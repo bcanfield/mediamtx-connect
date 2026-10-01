@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX 的網頁介面。在瀏覽器中觀看串流、瀏覽錄影並編輯設定。"
-  },
   "Forms": {
     "errors": {
       "required": "此欄位為必填",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "重試",
-    "loading": "載入中…",
     "theme": {
-      "lightMode": "淺色模式",
-      "darkMode": "深色模式",
       "switchToLight": "切換為淺色佈景主題",
       "switchToDark": "切換為深色佈景主題"
     },
@@ -92,10 +81,6 @@
       "stop": "停止",
       "playAria": "播放 {streamName}",
       "actionsAria": "串流操作",
-      "stub": {
-        "title": "尚未實作",
-        "description": "此操作已列入藍圖 — 已記錄。"
-      },
       "recordError": {
         "title": "無法變更錄影",
         "description": "MediaMTX 拒絕了此變更 — 該串流的錄影狀態未改變。"
@@ -117,7 +102,6 @@
         "description": "MediaMTX 無法擷取畫面 — 該串流可能已離線。"
       },
       "menu": {
-        "openDetail": "開啟串流詳細資訊",
         "viewRecordings": "檢視錄影",
         "takeSnapshot": "拍攝快照",
         "record": "錄影",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "複製發布 URL",
-        "shareEmbed": "分享與嵌入…",
         "editPathConfig": "編輯路徑設定",
         "editHooks": "編輯掛鉤"
       }

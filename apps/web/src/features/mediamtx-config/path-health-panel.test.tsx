@@ -59,6 +59,16 @@ describe('a live path', () => {
     expect(screen.getByText('Read over webRTCSession, hlsMuxer')).toBeInTheDocument()
   })
 
+  // A path that just went live has moved kilobytes, not megabytes, and "0.0 MB"
+  // reads as a feed that isn't flowing.
+  it('scales small byte counters to a unit they read in', async () => {
+    pathHealth.mockReturnValue({ ...LIVE, bytesReceived: 1024 * 3.5, bytesSent: 512 })
+    await renderWithProviders(<PathHealthPanel name="stream1" />)
+
+    expect(await screen.findByText('3.5 kB')).toBeInTheDocument()
+    expect(screen.getByText('512 byte')).toBeInTheDocument()
+  })
+
   // A counter MediaMTX never sent is not a counter reading zero, so the stat is
   // left off rather than claiming a clean feed.
   it('leaves out the error counter the server did not send', async () => {
@@ -89,6 +99,7 @@ describe('a path that is not running', () => {
 
     expect(await screen.findByText(/Couldn't reach MediaMTX/)).toBeInTheDocument()
     expect(screen.queryByText('idle')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Nothing is publishing to this path/)).not.toBeInTheDocument()
     expect(screen.queryByText('LIVE')).not.toBeInTheDocument()
   })
 })

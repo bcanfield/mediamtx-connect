@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfaccia web per MediaMTX. Guarda i flussi, sfoglia le registrazioni e modifica la configurazione dal browser."
-  },
   "Forms": {
     "errors": {
       "required": "Questo campo è obbligatorio",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Riprova",
-    "loading": "Caricamento…",
     "theme": {
-      "lightMode": "Modalità chiara",
-      "darkMode": "Modalità scura",
       "switchToLight": "Passa al tema chiaro",
       "switchToDark": "Passa al tema scuro"
     },
@@ -92,10 +81,6 @@
       "stop": "Ferma",
       "playAria": "Riproduci {streamName}",
       "actionsAria": "Azioni del flusso",
-      "stub": {
-        "title": "Non ancora implementato",
-        "description": "Questa azione è nella roadmap — è stata registrata."
-      },
       "recordError": {
         "title": "Impossibile modificare la registrazione",
         "description": "MediaMTX ha rifiutato la modifica: la registrazione di questo stream è invariata."
@@ -117,7 +102,6 @@
         "description": "MediaMTX non è riuscito a catturare un fotogramma: lo stream potrebbe essere offline."
       },
       "menu": {
-        "openDetail": "Apri il dettaglio del flusso",
         "viewRecordings": "Visualizza registrazioni",
         "takeSnapshot": "Scatta istantanea",
         "record": "Registra",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copia gli URL di pubblicazione",
-        "shareEmbed": "Condividi e incorpora…",
         "editPathConfig": "Modifica la config del path",
         "editHooks": "Modifica gli hooks"
       }

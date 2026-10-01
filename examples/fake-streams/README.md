@@ -26,7 +26,7 @@ and on-demand cameras (`front-door`, `warehouse-cam`, `parking-lot`, …) live i
 ### With Docker Compose
 
 `pnpm dev` starts this service automatically as part of the dev stack. To run
-just the MediaMTX side standalone:
+MediaMTX and the fake streams without the app:
 
 ```bash
 docker compose -f docker-compose.dev.yml up -d

@@ -87,6 +87,7 @@ describe('the breadcrumb', () => {
     // The E2E version of this only checked the page didn't crash. Same intent,
     // plus the assertion that the empty state is genuinely empty.
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
+    expect(await screen.findByText('0 recordings')).toBeInTheDocument()
     expect(rows()).toHaveLength(0)
   })
 })

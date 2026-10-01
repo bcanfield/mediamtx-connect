@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webgrænseflade til MediaMTX. Se streams, gennemse optagelser, og rediger konfigurationen fra din browser."
-  },
   "Forms": {
     "errors": {
       "required": "Dette felt er påkrævet",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Prøv igen",
-    "loading": "Indlæser…",
     "theme": {
-      "lightMode": "Lys tilstand",
-      "darkMode": "Mørk tilstand",
       "switchToLight": "Skift til lyst tema",
       "switchToDark": "Skift til mørkt tema"
     },
@@ -92,10 +81,6 @@
       "stop": "Stop",
       "playAria": "Afspil {streamName}",
       "actionsAria": "Streamhandlinger",
-      "stub": {
-        "title": "Ikke implementeret endnu",
-        "description": "Denne handling er på køreplanen — den er blevet logget."
-      },
       "recordError": {
         "title": "Optagelsen kunne ikke ændres",
         "description": "MediaMTX afviste ændringen – optagelsen for dette stream er uændret."
@@ -117,7 +102,6 @@
         "description": "MediaMTX kunne ikke hente et billede – streamen er muligvis offline."
       },
       "menu": {
-        "openDetail": "Åbn streamdetaljer",
         "viewRecordings": "Vis optagelser",
         "takeSnapshot": "Tag øjebliksbillede",
         "record": "Optag",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiér publicerings-URL'er",
-        "shareEmbed": "Del & indlejr…",
         "editPathConfig": "Rediger stikonfiguration",
         "editHooks": "Rediger hooks"
       }

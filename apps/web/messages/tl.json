@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web interface para sa MediaMTX. Manood ng mga stream, mag-browse ng mga recording, at i-edit ang configuration mula sa iyong browser."
-  },
   "Forms": {
     "errors": {
       "required": "Kinakailangan ang field na ito",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Subukang muli",
-    "loading": "Naglo-load…",
     "theme": {
-      "lightMode": "Light mode",
-      "darkMode": "Dark mode",
       "switchToLight": "Lumipat sa light theme",
       "switchToDark": "Lumipat sa dark theme"
     },
@@ -92,10 +81,6 @@
       "stop": "Itigil",
       "playAria": "I-play ang {streamName}",
       "actionsAria": "Mga aksyon sa stream",
-      "stub": {
-        "title": "Hindi pa naipapatupad",
-        "description": "Nasa roadmap ang aksyong ito — nai-log na ito."
-      },
       "recordError": {
         "title": "Hindi mabago ang pag-record",
         "description": "Tinanggihan ng MediaMTX ang pagbabago — hindi nagbago ang pag-record ng stream na ito."
@@ -117,7 +102,6 @@
         "description": "Hindi makakuha ng frame ang MediaMTX — maaaring offline ang stream."
       },
       "menu": {
-        "openDetail": "Buksan ang detalye ng stream",
         "viewRecordings": "Tingnan ang mga recording",
         "takeSnapshot": "Kumuha ng snapshot",
         "record": "I-record",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopyahin ang mga publish URL",
-        "shareEmbed": "Ibahagi at i-embed…",
         "editPathConfig": "I-edit ang path config",
         "editHooks": "I-edit ang mga hook"
       }

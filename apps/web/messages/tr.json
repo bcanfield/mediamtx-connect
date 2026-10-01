@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX için web arayüzü. Akışları izleyin, kayıtlara göz atın ve yapılandırmayı tarayıcıdan düzenleyin."
-  },
   "Forms": {
     "errors": {
       "required": "Bu alan zorunludur",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Tekrar dene",
-    "loading": "Yükleniyor…",
     "theme": {
-      "lightMode": "Açık mod",
-      "darkMode": "Koyu mod",
       "switchToLight": "Açık temaya geç",
       "switchToDark": "Koyu temaya geç"
     },
@@ -92,10 +81,6 @@
       "stop": "Durdur",
       "playAria": "{streamName} akışını oynat",
       "actionsAria": "Akış eylemleri",
-      "stub": {
-        "title": "Henüz uygulanmadı",
-        "description": "Bu eylem yol haritasında — kayda geçirildi."
-      },
       "recordError": {
         "title": "Kayıt değiştirilemedi",
         "description": "MediaMTX değişikliği reddetti — bu yayının kayıt durumu değişmedi."
@@ -117,7 +102,6 @@
         "description": "MediaMTX bir kare yakalayamadı — akış çevrimdışı olabilir."
       },
       "menu": {
-        "openDetail": "Akış detayını aç",
         "viewRecordings": "Kayıtları görüntüle",
         "takeSnapshot": "Anlık görüntü al",
         "record": "Kayıt",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Yayın URL'lerini kopyala",
-        "shareEmbed": "Paylaş ve göm…",
         "editPathConfig": "Yol yapılandırmasını düzenle",
         "editHooks": "Hook'ları düzenle"
       }

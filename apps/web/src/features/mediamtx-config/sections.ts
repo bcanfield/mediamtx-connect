@@ -9,11 +9,11 @@ import {
 } from '@connect/contract'
 import { z } from 'zod'
 
-export type FieldKind = 'text' | 'number' | 'switch' | 'list'
+type FieldKind = 'text' | 'number' | 'switch' | 'list'
 
 // Field names are MediaMTX config keys verbatim, and are rendered
 // untranslated in every scope below (docs/I18N.md).
-export interface SectionField<T extends FieldValues> {
+interface SectionField<T extends FieldValues> {
   name: FieldPath<T>
   kind: FieldKind
 }
@@ -29,7 +29,7 @@ export interface SectionDef<T extends FieldValues> {
 }
 
 // Board 2e's eight global-scope sections, in scroll order.
-export const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
+const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
   {
     id: 'logging',
     fields: [
@@ -140,7 +140,7 @@ export const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
 // Shared by both path-scoped surfaces: a path's own config is the per-path
 // override of the same keys path defaults sets server-wide (ADR 0002).
 // MediaMTX serves many more keys than these two groups.
-export const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
+const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
   {
     id: 'recording',
     enableField: 'record',
@@ -219,7 +219,7 @@ export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathC
   }
 }
 
-export function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): string[] {
+function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): string[] {
   const names: string[] = section.fields.map(f => f.name)
   if (section.enableField)
     names.push(section.enableField)

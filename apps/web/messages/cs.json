@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webové rozhraní pro MediaMTX. Sledujte streamy, procházejte záznamy a upravujte konfiguraci z prohlížeče."
-  },
   "Forms": {
     "errors": {
       "required": "Toto pole je povinné",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Zkusit znovu",
-    "loading": "Načítání…",
     "theme": {
-      "lightMode": "Světlý režim",
-      "darkMode": "Tmavý režim",
       "switchToLight": "Přepnout na světlý motiv",
       "switchToDark": "Přepnout na tmavý motiv"
     },
@@ -92,10 +81,6 @@
       "stop": "Zastavit",
       "playAria": "Přehrát {streamName}",
       "actionsAria": "Akce streamu",
-      "stub": {
-        "title": "Zatím neimplementováno",
-        "description": "Tato akce je v plánu — byla zaznamenána."
-      },
       "recordError": {
         "title": "Nahrávání se nepodařilo změnit",
         "description": "MediaMTX změnu odmítl — nahrávání tohoto streamu zůstalo beze změny."
@@ -117,7 +102,6 @@
         "description": "MediaMTX nedokázal zachytit snímek — stream může být offline."
       },
       "menu": {
-        "openDetail": "Otevřít detail streamu",
         "viewRecordings": "Zobrazit záznamy",
         "takeSnapshot": "Pořídit snímek",
         "record": "Nahrávání",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopírovat publikační URL",
-        "shareEmbed": "Sdílet a vložit…",
         "editPathConfig": "Upravit konfiguraci cesty",
         "editHooks": "Upravit hooky"
       }

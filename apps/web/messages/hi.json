@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX के लिए वेब इंटरफ़ेस। अपने ब्राउज़र से स्ट्रीम देखें, रिकॉर्डिंग ब्राउज़ करें और कॉन्फ़िगरेशन संपादित करें।"
-  },
   "Forms": {
     "errors": {
       "required": "यह फ़ील्ड आवश्यक है",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "पुनः प्रयास करें",
-    "loading": "लोड हो रहा है…",
     "theme": {
-      "lightMode": "लाइट मोड",
-      "darkMode": "डार्क मोड",
       "switchToLight": "लाइट थीम पर स्विच करें",
       "switchToDark": "डार्क थीम पर स्विच करें"
     },
@@ -92,10 +81,6 @@
       "stop": "रोकें",
       "playAria": "{streamName} चलाएँ",
       "actionsAria": "स्ट्रीम क्रियाएँ",
-      "stub": {
-        "title": "अभी लागू नहीं हुआ",
-        "description": "यह क्रिया रोडमैप पर है — इसे लॉग कर लिया गया है।"
-      },
       "recordError": {
         "title": "रिकॉर्डिंग नहीं बदली जा सकी",
         "description": "MediaMTX ने यह बदलाव अस्वीकार कर दिया — इस स्ट्रीम की रिकॉर्डिंग अपरिवर्तित है।"
@@ -117,7 +102,6 @@
         "description": "MediaMTX फ़्रेम कैप्चर नहीं कर सका — हो सकता है स्ट्रीम ऑफ़लाइन हो।"
       },
       "menu": {
-        "openDetail": "स्ट्रीम विवरण खोलें",
         "viewRecordings": "रिकॉर्डिंग देखें",
         "takeSnapshot": "स्नैपशॉट लें",
         "record": "रिकॉर्ड",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "प्रकाशन URL कॉपी करें",
-        "shareEmbed": "साझा और एम्बेड करें…",
         "editPathConfig": "पाथ कॉन्फ़िगरेशन संपादित करें",
         "editHooks": "Hooks संपादित करें"
       }

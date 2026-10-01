@@ -11,12 +11,9 @@ on:
     types: [opened, synchronize, reopened, edited]
 
 jobs:
-  # Lives in CI rather than its own workflow on purpose: the smallhours agent
-  # loop gates on this workflow by name (.smallhours.yml `ci_workflow: CI`,
-  # agent-loop.yml `workflow_run: workflows: [CI]`). A title check outside CI
-  # is invisible to it — the loop would read CI green, think the PR is ready,
-  # and never fire auto-fix on a title it can't see. Here, a bad title fails
-  # CI, which is a signal the loop already knows how to repair.
+  # main is squash-merged, so the PR title becomes the commit subject that
+  # semantic-release reads. A non-conventional title drops the change out of
+  # the next release, so check it here, where a bad title turns CI red.
   pr-title:
     name: Conventional commit format
     runs-on: ubuntu-latest
@@ -116,7 +113,7 @@ jobs:
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
-      - name: i18n key parity + README translation sync
+      - name: i18n key parity
         run: pnpm i18n:check
       - name: Unit tests
         run: pnpm test

@@ -117,8 +117,8 @@ export function RecordingRow({
                   />
                   <span aria-live="polite" className="font-mono text-label text-mute">
                     {t('downloading', {
-                      received: formatBytes(download.progress.receivedBytes),
-                      total: formatBytes(download.progress.totalBytes),
+                      received: formatBytes(format, download.progress.receivedBytes),
+                      total: formatBytes(format, download.progress.totalBytes),
                       rate: formatRate(download.progress.bytesPerSec),
                     })}
                   </span>
@@ -126,7 +126,7 @@ export function RecordingRow({
               )
             : (
                 <p className="truncate text-meta text-mute">
-                  {formatBytes(fileSize)}
+                  {formatBytes(format, fileSize)}
                 </p>
               )}
         </div>

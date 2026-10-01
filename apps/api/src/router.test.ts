@@ -164,7 +164,7 @@ describe('streams.snapshot', () => {
   it('surfaces a capture failure as an error', async () => {
     vi.mocked(captureSnapshot).mockRejectedValue(new Error('ffmpeg exited 1'))
 
-    await expect(call(router.streams.snapshot, { name: 'front-door' })).rejects.toThrow()
+    await expect(call(router.streams.snapshot, { name: 'front-door' })).rejects.toThrow('Failed to capture snapshot')
   })
 })
 
@@ -226,7 +226,7 @@ describe('streams.list card metadata', () => {
     })
 
     // Rejects rather than resolving: `connection-error` is reserved for MediaMTX.
-    await expect(call(router.streams.list, undefined as never)).rejects.toThrow()
+    await expect(call(router.streams.list, undefined as never)).rejects.toThrow('EIO: i/o error, stat')
   })
 })
 

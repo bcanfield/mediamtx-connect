@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webbgränssnitt för MediaMTX. Titta på strömmar, bläddra bland inspelningar och redigera konfigurationen från webbläsaren."
-  },
   "Forms": {
     "errors": {
       "required": "Detta fält är obligatoriskt",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Försök igen",
-    "loading": "Laddar…",
     "theme": {
-      "lightMode": "Ljust läge",
-      "darkMode": "Mörkt läge",
       "switchToLight": "Byt till ljust tema",
       "switchToDark": "Byt till mörkt tema"
     },
@@ -92,10 +81,6 @@
       "stop": "Stopp",
       "playAria": "Spela upp {streamName}",
       "actionsAria": "Strömåtgärder",
-      "stub": {
-        "title": "Inte implementerat än",
-        "description": "Denna åtgärd finns på färdplanen — den har loggats."
-      },
       "recordError": {
         "title": "Det gick inte att ändra inspelningen",
         "description": "MediaMTX avvisade ändringen – inspelningen för den här strömmen är oförändrad."
@@ -117,7 +102,6 @@
         "description": "MediaMTX kunde inte fånga en bild – strömmen kan vara offline."
       },
       "menu": {
-        "openDetail": "Öppna strömdetaljer",
         "viewRecordings": "Visa inspelningar",
         "takeSnapshot": "Ta ögonblicksbild",
         "record": "Spela in",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiera publicerings-URL:er",
-        "shareEmbed": "Dela & bädda in…",
         "editPathConfig": "Redigera sökvägskonfiguration",
         "editHooks": "Redigera hooks"
       }

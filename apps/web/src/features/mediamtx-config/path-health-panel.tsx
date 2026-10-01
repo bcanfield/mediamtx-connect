@@ -66,8 +66,8 @@ function LiveHealth({ health }: { health: Extract<PathHealth, { status: 'live' }
             stat rather than showing an uptime measured from nothing. */}
         {health.readyTime && <Stat label={t('uptime')} value={formatUptime(health.readyTime)} />}
         <Stat label={t('readers')} value={format.number(health.readers.length)} />
-        <Stat label={t('received')} value={formatBytes(health.bytesReceived)} />
-        <Stat label={t('sent')} value={formatBytes(health.bytesSent)} />
+        <Stat label={t('received')} value={formatBytes(format, health.bytesReceived)} />
+        <Stat label={t('sent')} value={formatBytes(format, health.bytesSent)} />
         {health.framesInError !== null && (
           <Stat label={t('framesInError')} value={format.number(health.framesInError)} />
         )}

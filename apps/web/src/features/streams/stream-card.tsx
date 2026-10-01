@@ -23,15 +23,13 @@ import { VideoPlayer } from '@/components/video-player'
 import { CONNECTION_POLL_MS } from '@/hooks/use-connection-state'
 import { Link } from '@/i18n/navigation'
 import { formatUptime } from '@/lib/format'
-import { logger } from '@/lib/logger'
 import { hlsUrlFor, whepUrlFor } from '@/lib/playback'
 import { publishUrl } from '@/lib/publish'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
 // Overlay-zone contract from the design handoff (board 1h): every optional
-// prop adds a chip in its zone; nothing reflows. Nothing passes resolution or
-// bitrate yet — those zones render only when the data shows up.
+// prop adds a chip in its zone; nothing reflows.
 export interface StreamCardProps {
   streamName: string
   readyTime?: string | null
@@ -47,8 +45,6 @@ export interface StreamCardProps {
   iceServers?: RTCIceServer[]
   playDisabled?: boolean
   codecs?: string[]
-  resolution?: string
-  bitrate?: string
   /**
    * Effective record state: the stream's own override merged over path
    * defaults. `unknown` when the API couldn't read the config entry.
@@ -76,8 +72,6 @@ export function StreamCard({
   iceServers,
   playDisabled = false,
   codecs = [],
-  resolution,
-  bitrate,
   recordState,
   viewers,
   snapshotMtime,
@@ -175,14 +169,6 @@ export function StreamCard({
     }
   }
 
-  const stub = (action: string) => () => {
-    logger.info(`stream action "${action}" is stubbed — not implemented yet`, {
-      action,
-      stream: streamName,
-    })
-    toast.info(t('stub.title'), { description: t('stub.description') })
-  }
-
   const protocolLabel = { webrtc: t('protocolWebrtc'), hls: t('protocolHls') }
   const recordLabel = { on: t('menu.recordOn'), off: t('menu.recordOff'), unknown: t('menu.recordUnknown') }
   // LOW-LAT is an explicit ask for WebRTC. Landing on HLS anyway is a fine
@@ -191,9 +177,7 @@ export function StreamCard({
   // expresses no preference, so the same fallback needs no announcement.
   const fellBackFromLowLat = playbackMode === 'low-lat' && protocol === 'hls'
 
-  const telemetry = [resolution, bitrate, viewers !== undefined ? t('viewers', { count: viewers }) : undefined]
-    .filter(Boolean)
-    .join(' · ')
+  const telemetry = viewers !== undefined ? t('viewers', { count: viewers }) : undefined
 
   return (
     <div
@@ -340,9 +324,6 @@ export function StreamCard({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 rounded-lg">
-              <DropdownMenuItem onClick={stub('open-stream-detail')}>
-                {t('menu.openDetail')}
-              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={`/recordings/${streamName}`}>{t('menu.viewRecordings')}</Link>
               </DropdownMenuItem>
@@ -358,9 +339,6 @@ export function StreamCard({
               </DropdownMenuItem>
               <DropdownMenuItem onClick={copyPublishUrls} disabled={publishTargets.length === 0}>
                 {t('menu.copyPublishUrls')}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={stub('share-embed')}>
-                {t('menu.shareEmbed')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
