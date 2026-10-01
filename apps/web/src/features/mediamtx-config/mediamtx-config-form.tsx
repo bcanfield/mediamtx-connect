@@ -15,7 +15,7 @@ import { Switch } from '@/components/ui/switch'
 import { useScrollSpy } from '@/hooks/use-scroll-spy'
 import { cn } from '@/lib/utils'
 
-import { InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
+import { EnumFieldRow, InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
 import { IceServersRows } from './ice-servers-rows'
 import { countErrorsForSection } from './sections'
 import { offendingField } from './server-rejection'
@@ -326,15 +326,25 @@ function ConfigSection<T extends FieldValues>({
                           inheritedValues={inheritedValues}
                         />
                       )
-                    : (
-                        <TextFieldRow
-                          key={field.name}
-                          control={control}
-                          name={field.name}
-                          kind={field.kind === 'number' ? 'number' : 'text'}
-                          inheritedValues={inheritedValues}
-                        />
-                      ),
+                    : field.kind === 'enum'
+                      ? (
+                          <EnumFieldRow
+                            key={field.name}
+                            control={control}
+                            name={field.name}
+                            options={field.options}
+                            inheritedValues={inheritedValues}
+                          />
+                        )
+                      : (
+                          <TextFieldRow
+                            key={field.name}
+                            control={control}
+                            name={field.name}
+                            kind={field.kind === 'number' ? 'number' : 'text'}
+                            inheritedValues={inheritedValues}
+                          />
+                        ),
               )}
               {/* webrtcICEServers2 exists only on the global scope. */}
               {section.hasIceServers && (
