@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Felvétel",
         "pathHooks": "Útvonal hookok",
-        "source": "Forrás"
+        "source": "Forrás",
+        "resilience": "Hibatűrés"
       },
       "sectionDescriptions": {
         "logging": "Naplókimenet, időkorlátok és globális korlátok.",
@@ -384,11 +385,13 @@
         "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
         "recording": "Streamek rögzítése lemezre.",
         "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat.",
-        "source": "Honnan érkezik ennek az útvonalnak a streamje."
+        "source": "Honnan érkezik ennek az útvonalnak a streamje.",
+        "resilience": "Tartsa csatlakoztatva az olvasókat, ha a forrás kiesik, vagy csak akkor húzza be a forrást, amíg valaki nézi."
       },
       "sectionWarnings": {
         "auth": "A MediaMTX hitelesítési módjának módosítása minden kliensre vonatkozik, a Connectre is — egy hibás beállítás levághatja a Connectet a MediaMTX-ről.",
-        "pathHooks": "Egy hook mentése újraindítja az útvonalat és bontja a közzétevő kapcsolatát — a stream megszakad, amíg a közzétevő újra nem csatlakozik."
+        "pathHooks": "Egy hook mentése újraindítja az útvonalat és bontja a közzétevő kapcsolatát — a stream megszakad, amíg a közzétevő újra nem csatlakozik.",
+        "resilience": "Ezek bármelyikének mentése újraindítja az útvonalat és lecsatlakoztatja a közzétevőjét — a stream megszakad, amíg újra nem csatlakozik."
       },
       "enabled": "Engedélyezve",
       "off": "Kikapcsolva",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "A parancs újraindítása, ha kilép.",
         "runOnUnread": "Akkor futtatandó parancs, amikor egy kliens abbahagyja ennek az útvonalnak az olvasását.",
         "runOnRecordSegmentCreate": "Felvételi szegmens létrehozásakor futtatandó parancs.",
-        "runOnRecordSegmentComplete": "Felvételi szegmens befejeződésekor futtatandó parancs."
+        "runOnRecordSegmentComplete": "Felvételi szegmens befejeződésekor futtatandó parancs.",
+        "alwaysAvailable": "Amíg semmi nem tesz közzé, egy offline szegmenst játszik le ismétlődően, hogy az olvasók csatlakozva maradjanak. A stream available marad, nem online. Szükséges hozzá az alwaysAvailableFile, vagy a mediamtx.yml-ben beállított alwaysAvailableTracks. Regex bejegyzésen, valamint sourceOnDemanddal vagy runOnDemanddal együtt elutasítva.",
+        "alwaysAvailableFile": "Egy MP4 elérési útja magának a MediaMTX-szervernek a fájlrendszerén; a Connect nem tölti fel. A sávok csak AV1, VP9, H265, H264, Opus, MPEG-4 Audio vagy LPCM lehetnek. Nem kombinálható az alwaysAvailableTracks-szel.",
+        "sourceOnDemand": "Csak akkor húzza be a forrást, amíg legalább egy olvasó csatlakozik. Csak olyan forráshoz, amelyet a MediaMTX URL-ről húz be; elutasítva, ha a source értéke publisher.",
+        "sourceOnDemandStartTimeout": "Mennyit vár az első olvasó a forrás elindulására, mielőtt feladja. A MediaMTX alapértéke 10s.",
+        "sourceOnDemandCloseAfter": "Mennyi ideig marad nyitva a forrás az utolsó olvasó távozása után. A MediaMTX alapértéke 10s."
       },
       "toasts": {
         "success": "MediaMTX konfiguráció mentve",

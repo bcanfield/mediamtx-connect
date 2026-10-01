@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Inspelning",
         "pathHooks": "Sökvägshooks",
-        "source": "Källa"
+        "source": "Källa",
+        "resilience": "Motståndskraft"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsgränser och globala begränsningar.",
@@ -384,11 +385,13 @@
         "srt": "Publicera och läs strömmar via SRT.",
         "recording": "Spela in strömmar till disk.",
         "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser.",
-        "source": "Var strömmen för den här sökvägen kommer ifrån."
+        "source": "Var strömmen för den här sökvägen kommer ifrån.",
+        "resilience": "Håll läsare anslutna när källan faller bort, eller hämta källan bara medan någon tittar."
       },
       "sectionWarnings": {
         "auth": "Att ändra hur MediaMTX autentiserar gäller alla klienter, även Connect — en felaktig inställning kan koppla bort Connect från MediaMTX.",
-        "pathHooks": "Att spara en hook startar om sökvägen och kopplar från dess utgivare — strömmen försvinner tills utgivaren ansluter igen."
+        "pathHooks": "Att spara en hook startar om sökvägen och kopplar från dess utgivare — strömmen försvinner tills utgivaren ansluter igen.",
+        "resilience": "Att spara någon av dessa startar om sökvägen och kopplar från dess publicerare — strömmen bryts tills den ansluter igen."
       },
       "enabled": "Aktiverad",
       "off": "Av",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Starta om kommandot om det avslutas.",
         "runOnUnread": "Kommando som körs när en klient slutar läsa denna sökväg.",
         "runOnRecordSegmentCreate": "Kommando som körs när ett inspelningssegment skapas.",
-        "runOnRecordSegmentComplete": "Kommando som körs när ett inspelningssegment är färdigt."
+        "runOnRecordSegmentComplete": "Kommando som körs när ett inspelningssegment är färdigt.",
+        "alwaysAvailable": "Medan inget publicerar spelas ett offline-segment upp i loop så att läsare förblir anslutna. Strömmen förblir available, inte online. Kräver alwaysAvailableFile, eller alwaysAvailableTracks satt i mediamtx.yml. Avvisas på en regex-post och tillsammans med sourceOnDemand eller runOnDemand.",
+        "alwaysAvailableFile": "Sökväg till en MP4 på MediaMTX-serverns eget filsystem; Connect laddar inte upp den. Spår måste vara AV1, VP9, H265, H264, Opus, MPEG-4 Audio eller LPCM. Kan inte kombineras med alwaysAvailableTracks.",
+        "sourceOnDemand": "Hämta källan bara medan minst en läsare är ansluten. Endast för en källa som MediaMTX hämtar från en URL; avvisas när source är publisher.",
+        "sourceOnDemandStartTimeout": "Hur länge den första läsaren väntar på att källan ska komma upp innan den ger upp. MediaMTX standard är 10s.",
+        "sourceOnDemandCloseAfter": "Hur länge källan förblir öppen efter att den sista läsaren lämnat. MediaMTX standard är 10s."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen har sparats",

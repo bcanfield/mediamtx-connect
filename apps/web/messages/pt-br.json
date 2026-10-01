@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Gravação",
         "pathHooks": "Hooks do caminho",
-        "source": "Origem"
+        "source": "Origem",
+        "resilience": "Resiliência"
       },
       "sectionDescriptions": {
         "logging": "Saída de logs, tempos limite e limites globais.",
@@ -384,11 +385,13 @@
         "srt": "Publique e leia transmissões via SRT.",
         "recording": "Grava as transmissões em disco.",
         "pathHooks": "Comandos que o MediaMTX executa em eventos do ciclo de vida do próprio caminho.",
-        "source": "De onde vem o stream deste caminho."
+        "source": "De onde vem o stream deste caminho.",
+        "resilience": "Mantenha os leitores conectados quando a fonte cai, ou puxe a fonte só enquanto alguém está assistindo."
       },
       "sectionWarnings": {
         "auth": "Mudar a forma como o MediaMTX autentica vale para todos os clientes, inclusive o Connect — uma configuração errada pode isolar o Connect do MediaMTX.",
-        "pathHooks": "Salvar um hook reinicia o caminho e desconecta seu emissor — a transmissão cai até que ele se reconecte."
+        "pathHooks": "Salvar um hook reinicia o caminho e desconecta seu emissor — a transmissão cai até que ele se reconecte.",
+        "resilience": "Salvar qualquer uma destas configurações reinicia o caminho e desconecta o publicador — o stream cai até ele se reconectar."
       },
       "enabled": "Habilitado",
       "off": "Desligado",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Reinicia o comando se ele encerrar.",
         "runOnUnread": "Comando a executar quando um cliente para de ler este caminho.",
         "runOnRecordSegmentCreate": "Comando a executar quando um segmento de gravação é criado.",
-        "runOnRecordSegmentComplete": "Comando a executar quando um segmento de gravação é concluído."
+        "runOnRecordSegmentComplete": "Comando a executar quando um segmento de gravação é concluído.",
+        "alwaysAvailable": "Enquanto nada está publicando, reproduz em loop um segmento offline para que os leitores continuem conectados. O stream fica available, não online. Requer alwaysAvailableFile, ou alwaysAvailableTracks definido no mediamtx.yml. Recusado em uma entrada regex e junto com sourceOnDemand ou runOnDemand.",
+        "alwaysAvailableFile": "Caminho de um MP4 no sistema de arquivos do próprio servidor MediaMTX; o Connect não faz o upload. As faixas precisam ser AV1, VP9, H265, H264, Opus, MPEG-4 Audio ou LPCM. Não pode ser combinado com alwaysAvailableTracks.",
+        "sourceOnDemand": "Puxa a fonte só enquanto pelo menos um leitor estiver conectado. Apenas para uma fonte que o MediaMTX puxa de uma URL; recusado quando source é publisher.",
+        "sourceOnDemandStartTimeout": "Quanto tempo o primeiro leitor espera a fonte subir antes de desistir. O padrão do MediaMTX é 10s.",
+        "sourceOnDemandCloseAfter": "Quanto tempo a fonte fica aberta depois que o último leitor sai. O padrão do MediaMTX é 10s."
       },
       "toasts": {
         "success": "Configuração do MediaMTX salva",

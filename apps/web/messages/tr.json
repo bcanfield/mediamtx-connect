@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Kayıt",
         "pathHooks": "Yol Hook’ları",
-        "source": "Kaynak"
+        "source": "Kaynak",
+        "resilience": "Dayanıklılık"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
@@ -384,11 +385,13 @@
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
         "recording": "Akışları diske kaydeder.",
         "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar.",
-        "source": "Bu yolun akışının nereden geldiği."
+        "source": "Bu yolun akışının nereden geldiği.",
+        "resilience": "Kaynak düştüğünde okuyucuları bağlı tutun veya kaynağı yalnızca biri izlerken çekin."
       },
       "sectionWarnings": {
         "auth": "MediaMTX'in kimlik doğrulama biçimini değiştirmek Connect dahil tüm istemcileri etkiler — yanlış bir ayar Connect'in MediaMTX ile bağlantısını kesebilir.",
-        "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir."
+        "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir.",
+        "resilience": "Bunlardan herhangi birini kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayın yeniden bağlanana kadar kesilir."
       },
       "enabled": "Etkin",
       "off": "Kapalı",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Komut sonlanırsa yeniden başlatır.",
         "runOnUnread": "Bir istemci bu yolu okumayı bıraktığında çalıştırılacak komut.",
         "runOnRecordSegmentCreate": "Bir kayıt parçası oluşturulduğunda çalıştırılacak komut.",
-        "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut."
+        "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut.",
+        "alwaysAvailable": "Hiçbir şey yayınlamazken, okuyucular bağlı kalsın diye çevrimdışı bir segment döngüde oynatılır. Yayın available kalır, online olmaz. alwaysAvailableFile veya mediamtx.yml içinde ayarlanmış alwaysAvailableTracks gerekir. Regex girişinde ve sourceOnDemand ya da runOnDemand ile birlikte reddedilir.",
+        "alwaysAvailableFile": "MediaMTX sunucusunun kendi dosya sistemindeki bir MP4'ün yolu; Connect bunu yüklemez. İzler AV1, VP9, H265, H264, Opus, MPEG-4 Audio veya LPCM olmalıdır. alwaysAvailableTracks ile birlikte kullanılamaz.",
+        "sourceOnDemand": "Kaynağı yalnızca en az bir okuyucu bağlıyken çekin. Yalnızca MediaMTX'in bir URL'den çektiği kaynaklar için; source publisher olduğunda reddedilir.",
+        "sourceOnDemandStartTimeout": "İlk okuyucunun vazgeçmeden önce kaynağın açılmasını ne kadar beklediği. MediaMTX varsayılanı 10s.",
+        "sourceOnDemandCloseAfter": "Son okuyucu ayrıldıktan sonra kaynağın ne kadar açık kaldığı. MediaMTX varsayılanı 10s."
       },
       "toasts": {
         "success": "MediaMTX yapılandırması kaydedildi",

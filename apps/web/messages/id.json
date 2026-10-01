@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Perekaman",
         "pathHooks": "Hooks Jalur",
-        "source": "Sumber"
+        "source": "Sumber",
+        "resilience": "Ketahanan"
       },
       "sectionDescriptions": {
         "logging": "Keluaran log, batas waktu, dan batas global.",
@@ -384,11 +385,13 @@
         "srt": "Publikasikan dan baca aliran melalui SRT.",
         "recording": "Rekam aliran ke disk.",
         "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri.",
-        "source": "Dari mana stream path ini berasal."
+        "source": "Dari mana stream path ini berasal.",
+        "resilience": "Jaga pembaca tetap terhubung saat sumber putus, atau tarik sumber hanya selama ada yang menonton."
       },
       "sectionWarnings": {
         "auth": "Mengubah cara MediaMTX mengautentikasi berlaku untuk semua klien, termasuk Connect — pengaturan yang salah dapat memutus Connect dari MediaMTX.",
-        "pathHooks": "Menyimpan hook akan memulai ulang jalur dan memutus koneksi publisher-nya — aliran terhenti sampai publisher terhubung kembali."
+        "pathHooks": "Menyimpan hook akan memulai ulang jalur dan memutus koneksi publisher-nya — aliran terhenti sampai publisher terhubung kembali.",
+        "resilience": "Menyimpan salah satu pengaturan ini memulai ulang path dan memutus publisher-nya — stream terputus sampai tersambung kembali."
       },
       "enabled": "Aktif",
       "off": "Nonaktif",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Mulai ulang perintah jika berhenti.",
         "runOnUnread": "Perintah yang dijalankan saat klien berhenti membaca jalur ini.",
         "runOnRecordSegmentCreate": "Perintah yang dijalankan saat segmen rekaman dibuat.",
-        "runOnRecordSegmentComplete": "Perintah yang dijalankan saat segmen rekaman selesai."
+        "runOnRecordSegmentComplete": "Perintah yang dijalankan saat segmen rekaman selesai.",
+        "alwaysAvailable": "Selama tidak ada yang memublikasikan, putar segmen offline berulang agar pembaca tetap terhubung. Stream tetap available, bukan online. Memerlukan alwaysAvailableFile, atau alwaysAvailableTracks yang diatur di mediamtx.yml. Ditolak pada entri regex dan bersama sourceOnDemand atau runOnDemand.",
+        "alwaysAvailableFile": "Path sebuah MP4 di sistem berkas server MediaMTX itu sendiri; Connect tidak mengunggahnya. Trek harus AV1, VP9, H265, H264, Opus, MPEG-4 Audio, atau LPCM. Tidak dapat digabung dengan alwaysAvailableTracks.",
+        "sourceOnDemand": "Tarik sumber hanya selama setidaknya satu pembaca terhubung. Hanya untuk sumber yang ditarik MediaMTX dari URL; ditolak saat source adalah publisher.",
+        "sourceOnDemandStartTimeout": "Berapa lama pembaca pertama menunggu sumber aktif sebelum menyerah. Default MediaMTX adalah 10s.",
+        "sourceOnDemandCloseAfter": "Berapa lama sumber tetap terbuka setelah pembaca terakhir pergi. Default MediaMTX adalah 10s."
       },
       "toasts": {
         "success": "Konfigurasi MediaMTX disimpan",

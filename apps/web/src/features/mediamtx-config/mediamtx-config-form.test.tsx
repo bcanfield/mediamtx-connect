@@ -139,6 +139,33 @@ describe('path hooks', () => {
   })
 })
 
+// MediaMTX validates path defaults as the `all_others` entry and refuses both
+// switches there, so the section is only offered where a save can succeed.
+describe('resilience', () => {
+  const KEYS = ['alwaysAvailable', 'alwaysAvailableFile', 'sourceOnDemand', 'sourceOnDemandStartTimeout', 'sourceOnDemandCloseAfter']
+
+  it('renders the five keys with the restart warning on the per-path scope', async () => {
+    await renderWithProviders(
+      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
+    )
+
+    const section = screen.getByRole('heading', { name: 'Resilience' }).closest('section')!
+    expect(within(section).getAllByTestId(/^field-/).map(row => row.dataset.testid))
+      .toEqual(KEYS.map(key => `field-${key}`))
+    expect(within(section).getByText(/Saving any of these restarts the path/)).toBeInTheDocument()
+  })
+
+  it('leaves it off the path-defaults scope', async () => {
+    await renderWithProviders(
+      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />,
+    )
+
+    expect(screen.queryByRole('heading', { name: 'Resilience' })).not.toBeInTheDocument()
+    for (const key of KEYS)
+      expect(screen.queryByTestId(`field-${key}`)).not.toBeInTheDocument()
+  })
+})
+
 // MediaMTX refuses `""` for these and fails the whole save, so the control
 // offers exactly the values it accepts and has no empty state.
 describe('enum fields', () => {

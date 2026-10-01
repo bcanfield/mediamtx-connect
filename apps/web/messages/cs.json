@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Nahrávání",
         "pathHooks": "Hooky cesty",
-        "source": "Zdroj"
+        "source": "Zdroj",
+        "resilience": "Odolnost"
       },
       "sectionDescriptions": {
         "logging": "Výstup logů, časové limity a globální limity.",
@@ -384,11 +385,13 @@
         "srt": "Publikujte a přijímejte streamy přes SRT.",
         "recording": "Nahrávat streamy na disk.",
         "pathHooks": "Příkazy, které MediaMTX spouští při událostech životního cyklu samotné cesty.",
-        "source": "Odkud pochází stream této cesty."
+        "source": "Odkud pochází stream této cesty.",
+        "resilience": "Udržte čtenáře připojené, když zdroj vypadne, nebo stahujte zdroj jen tehdy, když se někdo dívá."
       },
       "sectionWarnings": {
         "auth": "Změna způsobu ověřování v MediaMTX se týká všech klientů včetně Connect — chybné nastavení může Connect od MediaMTX odpojit.",
-        "pathHooks": "Uložení hooku restartuje cestu a odpojí její vysílač — stream vypadne, dokud se vysílač znovu nepřipojí."
+        "pathHooks": "Uložení hooku restartuje cestu a odpojí její vysílač — stream vypadne, dokud se vysílač znovu nepřipojí.",
+        "resilience": "Uložení kteréhokoli z těchto nastavení restartuje cestu a odpojí jejího vydavatele — stream vypadne, dokud se znovu nepřipojí."
       },
       "enabled": "Zapnuto",
       "off": "Vypnuto",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Restartovat příkaz, pokud skončí.",
         "runOnUnread": "Příkaz spuštěný, když klient přestane číst tuto cestu.",
         "runOnRecordSegmentCreate": "Příkaz spuštěný při vytvoření segmentu nahrávky.",
-        "runOnRecordSegmentComplete": "Příkaz spuštěný při dokončení segmentu nahrávky."
+        "runOnRecordSegmentComplete": "Příkaz spuštěný při dokončení segmentu nahrávky.",
+        "alwaysAvailable": "Dokud nic nepublikuje, přehrává se ve smyčce offline segment, aby čtenáři zůstali připojeni. Stream zůstává available, ne online. Vyžaduje alwaysAvailableFile nebo alwaysAvailableTracks nastavené v mediamtx.yml. Odmítnuto u regex položky a společně se sourceOnDemand nebo runOnDemand.",
+        "alwaysAvailableFile": "Cesta k MP4 v souborovém systému samotného serveru MediaMTX; Connect jej nenahrává. Stopy musí být AV1, VP9, H265, H264, Opus, MPEG-4 Audio nebo LPCM. Nelze kombinovat s alwaysAvailableTracks.",
+        "sourceOnDemand": "Stahovat zdroj jen tehdy, když je připojen alespoň jeden čtenář. Pouze pro zdroj, který MediaMTX stahuje z URL; odmítnuto, když je source publisher.",
+        "sourceOnDemandStartTimeout": "Jak dlouho první čtenář čeká na spuštění zdroje, než to vzdá. Výchozí hodnota MediaMTX je 10s.",
+        "sourceOnDemandCloseAfter": "Jak dlouho zůstane zdroj otevřený po odchodu posledního čtenáře. Výchozí hodnota MediaMTX je 10s."
       },
       "toasts": {
         "success": "Konfigurace MediaMTX uložena",

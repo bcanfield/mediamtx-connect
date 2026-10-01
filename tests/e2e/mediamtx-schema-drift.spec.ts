@@ -83,12 +83,6 @@ const DELIBERATELY_UNMODELED = {
     'name',
     // #347
     'forward',
-    // #348
-    'alwaysAvailable',
-    'alwaysAvailableFile',
-    'sourceOnDemand',
-    'sourceOnDemandStartTimeout',
-    'sourceOnDemandCloseAfter',
     // No ticket: the rest of always-available. Tracks need their own editor;
     // Recorded is 1.21.x only.
     'alwaysAvailableTracks',

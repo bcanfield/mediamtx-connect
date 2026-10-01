@@ -78,6 +78,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - **Path defaults and per-path overrides**, on the scopes MediaMTX serves them from. Saving a wildcard-backed stream writes a sparse entry, so untouched keys keep tracking the defaults.
 - **A paths catalog** with live and regex badges, a guided "add an RTSP camera" form, and revert or delete for any path's own entry (with a warning if someone is connected).
 - **Live health on each path's page:** tracks, readers, bytes moved, frames in error and uptime, refreshed every 5 seconds. A path with nothing publishing reads idle, not broken.
+- **Resilience on each path:** an always-available fallback that loops an offline clip while the camera is down, and on-demand pulling that only opens the source while someone watches.
 - **Every `runOn*` hook**, with a warning where saving restarts the path.
 - **Sparse writes.** Only the keys you changed get sent.
 

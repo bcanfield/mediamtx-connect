@@ -138,6 +138,15 @@ export const PathDefaultsSchema = z.object({
   runOnUnread: z.string().optional(),
   runOnRecordSegmentCreate: z.string().optional(),
   runOnRecordSegmentComplete: z.string().optional(),
+
+  // Resilience. Modeled on both path scopes because MediaMTX serves them from
+  // both, but only the per-path form edits them: MediaMTX refuses either
+  // switch on the stock `all_others` entry.
+  alwaysAvailable: z.boolean().optional(),
+  alwaysAvailableFile: z.string().optional(),
+  sourceOnDemand: z.boolean().optional(),
+  sourceOnDemandStartTimeout: z.string().optional(),
+  sourceOnDemandCloseAfter: z.string().optional(),
 })
 
 export type PathDefaults = z.infer<typeof PathDefaultsSchema>

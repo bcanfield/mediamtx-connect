@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Nagrywanie",
         "pathHooks": "Hooki ścieżki",
-        "source": "Źródło"
+        "source": "Źródło",
+        "resilience": "Odporność"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
@@ -384,11 +385,13 @@
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
         "recording": "Nagrywaj strumienie na dysk.",
         "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki.",
-        "source": "Skąd pochodzi strumień tej ścieżki."
+        "source": "Skąd pochodzi strumień tej ścieżki.",
+        "resilience": "Utrzymuj połączenie czytelników, gdy źródło padnie, albo pobieraj źródło tylko wtedy, gdy ktoś ogląda."
       },
       "sectionWarnings": {
         "auth": "Zmiana sposobu uwierzytelniania w MediaMTX dotyczy wszystkich klientów, także Connect — błędne ustawienie może odciąć Connect od MediaMTX.",
-        "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie."
+        "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie.",
+        "resilience": "Zapisanie którejkolwiek z tych opcji restartuje ścieżkę i rozłącza jej wydawcę — strumień zostaje przerwany do ponownego połączenia."
       },
       "enabled": "Włączone",
       "off": "Wyłączone",
@@ -500,7 +503,12 @@
         "runOnReadRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
         "runOnUnread": "Polecenie uruchamiane, gdy klient przestaje odbierać tę ścieżkę.",
         "runOnRecordSegmentCreate": "Polecenie uruchamiane, gdy zostanie utworzony segment nagrania.",
-        "runOnRecordSegmentComplete": "Polecenie uruchamiane, gdy segment nagrania zostanie ukończony."
+        "runOnRecordSegmentComplete": "Polecenie uruchamiane, gdy segment nagrania zostanie ukończony.",
+        "alwaysAvailable": "Gdy nic nie publikuje, odtwarza w pętli segment offline, aby czytelnicy pozostali połączeni. Strumień pozostaje available, nie online. Wymaga alwaysAvailableFile lub alwaysAvailableTracks ustawionego w mediamtx.yml. Odrzucane we wpisie regex oraz razem z sourceOnDemand lub runOnDemand.",
+        "alwaysAvailableFile": "Ścieżka pliku MP4 w systemie plików samego serwera MediaMTX; Connect go nie przesyła. Ścieżki muszą być w AV1, VP9, H265, H264, Opus, MPEG-4 Audio lub LPCM. Nie można łączyć z alwaysAvailableTracks.",
+        "sourceOnDemand": "Pobieraj źródło tylko wtedy, gdy połączony jest co najmniej jeden czytelnik. Tylko dla źródła, które MediaMTX pobiera z URL; odrzucane, gdy source to publisher.",
+        "sourceOnDemandStartTimeout": "Jak długo pierwszy czytelnik czeka na uruchomienie źródła, zanim zrezygnuje. Domyślnie w MediaMTX 10s.",
+        "sourceOnDemandCloseAfter": "Jak długo źródło pozostaje otwarte po odejściu ostatniego czytelnika. Domyślnie w MediaMTX 10s."
       },
       "toasts": {
         "success": "Zapisano konfigurację MediaMTX",
