@@ -32,6 +32,11 @@ export interface MediaMtxPath {
   inboundFramesInError?: number
 }
 
+export interface MediaMtxInfo {
+  version?: string
+  started?: string
+}
+
 export interface MediaMtxPathList {
   pageCount?: number
   items?: MediaMtxPath[]
@@ -103,6 +108,8 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
   const jsonHeaders = { 'Content-Type': 'application/json' }
 
   return {
+    // 404 on MediaMTX older than v1.15.2, which has no /v3/info.
+    info: () => requestOrNull<MediaMtxInfo>('/info'),
     pathsList: () => request<MediaMtxPathList>('/paths/list'),
     pathsGet: (name: string) =>
       requestOrNull<MediaMtxPath>(`/paths/get/${encodeURIComponent(name)}`),

@@ -83,7 +83,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Ops
 
-One process for API, SPA, and media · multi-arch · `GET /api/health` · structured logs · installable as a PWA · dark and light · 30 languages · no database.
+One process for API, SPA, and media · multi-arch · `GET /api/health` · MediaMTX version in the header · structured logs · installable as a PWA · dark and light · 30 languages · no database.
 
 ## Environment variables
 

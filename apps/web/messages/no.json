@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "tilkoblet",
-      "offline": "frakoblet"
+      "offline": "frakoblet",
+      "connectedVersion": "tilkoblet · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} er eldre enn {minimum}, den eldste versjonen Connect støtter. Noen innstillinger kan mangle eller bli avvist."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-konfigurasjon",
-      "pageSubHeader": "Globale MediaMTX-serverinnstillinger, lagret på serveren."
+      "pageSubHeader": "Globale MediaMTX-serverinnstillinger, lagret på serveren.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · kjører siden {started}",
+      "tooOldTitle": "MediaMTX {version} er eldre enn {minimum}, den eldste versjonen Connect støtter.",
+      "tooOldBody": "Noen innstillinger kan mangle eller bli avvist. Resten lastes og lagres fortsatt."
     },
     "pathDefaults": {
       "pageHeader": "Standardverdier for stier",

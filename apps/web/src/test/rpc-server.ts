@@ -31,6 +31,8 @@ const APP_CONFIG = {
 
 export interface StubApi {
   streamsList: () => unknown
+  /** `{version, started, belowMinimum}`, or null when unreachable. Defaults to null. */
+  mediamtxInfo?: () => unknown
   snapshot?: (input: Inputs['streams']['snapshot']) => void
   /** Returning a promise holds the write open, so a test can assert in-flight state. */
   updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>
@@ -65,6 +67,9 @@ export interface StubApi {
 export function createRpcServer(stub: StubApi) {
   const router = os.router({
     health: os.health.handler(() => ({ status: 'ok' as const, uptime: 0 })),
+    mediamtx: {
+      info: os.mediamtx.info.handler(() => (stub.mediamtxInfo?.() ?? null) as never),
+    },
     streams: {
       list: os.streams.list.handler(() => stub.streamsList() as never),
       snapshot: os.streams.snapshot.handler(({ input }) => {

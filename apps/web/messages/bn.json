@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "সংযুক্ত",
-      "offline": "অফলাইন"
+      "offline": "অফলাইন",
+      "connectedVersion": "সংযুক্ত · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ। কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে।"
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX কনফিগ",
-      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।"
+      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · চালু আছে {started}",
+      "tooOldTitle": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ।",
+      "tooOldBody": "কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে। বাকিগুলো এখনও লোড ও সংরক্ষণ হয়।"
     },
     "pathDefaults": {
       "pageHeader": "পাথের ডিফল্ট",

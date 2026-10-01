@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "कनेक्टेड",
-      "offline": "ऑफ़लाइन"
+      "offline": "ऑफ़लाइन",
+      "connectedVersion": "कनेक्टेड · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}, {minimum} से पुराना है, जो Connect द्वारा समर्थित सबसे पुराना संस्करण है। कुछ सेटिंग्स गायब हो सकती हैं या अस्वीकार की जा सकती हैं।"
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX कॉन्फ़िगरेशन",
-      "pageSubHeader": "ग्लोबल MediaMTX सर्वर सेटिंग्स, सर्वर पर सहेजी जाती हैं।"
+      "pageSubHeader": "ग्लोबल MediaMTX सर्वर सेटिंग्स, सर्वर पर सहेजी जाती हैं।",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · {started} से चल रहा है",
+      "tooOldTitle": "MediaMTX {version}, {minimum} से पुराना है, जो Connect द्वारा समर्थित सबसे पुराना संस्करण है।",
+      "tooOldBody": "कुछ सेटिंग्स गायब हो सकती हैं या अस्वीकार की जा सकती हैं। बाकी अब भी लोड और सहेजी जाती हैं।"
     },
     "pathDefaults": {
       "pageHeader": "पथ डिफ़ॉल्ट",
