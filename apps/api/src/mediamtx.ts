@@ -1,7 +1,7 @@
 import type { AppConfig, GlobalConfig, PathConfig, PathDefaults, SessionProtocol } from '@connect/contract'
 
 // Minimal hand-rolled client for the handful of MediaMTX endpoints this app
-// uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
+// uses (of the full v3 API). Key names mirror MediaMTX v1.21.1; CI runs 1.20.0.
 interface MediaMtxPathReader {
   type?: string
   id?: string

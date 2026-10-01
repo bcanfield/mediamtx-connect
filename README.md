@@ -67,7 +67,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Recordings
 
-- MP4s per stream, grouped by day, with auto-generated thumbnails.
+- MP4 or MPEG-TS segments per stream, grouped by day, with auto-generated thumbnails.
 - An inline player that expands in place, seekable over HTTP range requests.
 - Downloads that stream, with live progress and cancel.
 - Press `/` to filter.
@@ -79,7 +79,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Configuration, without YAML
 
-- **The whole server config:** 65 typed, validated controls across Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, and SRT.
+- **The server config:** 66 typed, validated controls across Logging, API, Authentication, Hooks, RTSP, RTMP, HLS, WebRTC, and SRT.
 - **Path defaults and per-path overrides**, on the scopes MediaMTX serves them from. Saving a wildcard-backed stream writes a sparse entry, so untouched keys keep tracking the defaults.
 - **A paths catalog** with live and regex badges, a guided "add an RTSP camera" form, and revert or delete for any path's own entry (with a warning if someone is connected).
 - **Live health on each path's page:** tracks, readers, bytes moved, frames in error and uptime, refreshed every 5 seconds. A path with nothing publishing reads idle, not broken.
