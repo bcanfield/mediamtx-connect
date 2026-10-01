@@ -1,4 +1,7 @@
 import type { MediaMtxPath } from './mediamtx'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
@@ -637,5 +640,39 @@ describe('config.mediamtx.getPathConnections', () => {
     const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
 
     expect(result).toBeNull()
+  })
+})
+
+describe('recordings.listForStream', () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(path.join(tmpdir(), 'list-for-stream-'))
+    mkdirSync(path.join(root, 'recordings', 'cam', 'front'), { recursive: true })
+    writeFileSync(path.join(root, 'recordings', 'cam', 'front', '2026-07-01_10-00-00.mp4'), '')
+    // Somewhere real to escape to, or the test passes on a missing directory.
+    mkdirSync(path.join(root, 'sibling'))
+    writeFileSync(path.join(root, 'sibling', 'secret.mp4'), '')
+    vi.mocked(getAppConfig).mockResolvedValue({
+      ...CONFIG,
+      recordingsDirectory: path.join(root, 'recordings'),
+      screenshotsDirectory: path.join(root, 'screenshots'),
+    })
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('lists a nested MediaMTX path\'s recordings', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: 'cam/front', page: 1, take: 10 })
+
+    expect(result.recordings.map(r => r.name)).toEqual(['2026-07-01_10-00-00.mp4'])
+  })
+
+  it('treats a name that climbs out of the recordings directory as no stream', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: '../sibling', page: 1, take: 10 })
+
+    expect(result).toEqual({ recordings: [], totalCount: 0 })
   })
 })
