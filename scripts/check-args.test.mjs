@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { parseArgs } from './check-args.mjs'
+import { parseArgs, touchesI18n } from './check-args.mjs'
 
 describe('parseArgs', () => {
   it('rejects --since with no ref after it', () => {
@@ -23,6 +23,25 @@ describe('parseArgs', () => {
 
   it('passes bare paths through as explicit files', () => {
     expect(parseArgs(['some/file.ts', 'other.tsx'])).toEqual({ since: null, explicit: ['some/file.ts', 'other.tsx'] })
+  })
+})
+
+describe('touchesI18n', () => {
+  it('runs i18n:check for a message catalogue', () => {
+    expect(touchesI18n(['apps/web/messages/de.json'])).toBe(true)
+  })
+
+  it('runs i18n:check for the English README and every translated one', () => {
+    expect(touchesI18n(['README.md'])).toBe(true)
+    expect(touchesI18n(['docs/i18n/README.pt-br.md'])).toBe(true)
+  })
+
+  it('runs i18n:check when only the sync hashes moved', () => {
+    expect(touchesI18n(['docs/i18n/.translation-status.json'])).toBe(true)
+  })
+
+  it('skips i18n:check for an edit that cannot affect it', () => {
+    expect(touchesI18n(['apps/api/src/env.ts', 'docs/FEATURES.md'])).toBe(false)
   })
 })
 

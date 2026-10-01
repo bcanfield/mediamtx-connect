@@ -113,7 +113,7 @@ jobs:
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
-      - name: i18n key parity
+      - name: i18n key parity + README translation sync
         run: pnpm i18n:check
       - name: Unit tests
         run: pnpm test

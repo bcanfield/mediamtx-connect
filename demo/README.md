@@ -235,3 +235,7 @@ open .work/contact.png     # confirm each page shows its caption, HLS renders, s
 
 `output/` is git-ignored. To ship the demo, copy `demo.mp4` (and/or `demo.gif`)
 into `.github/assets/` and reference it from `README.md`.
+
+⚠️ Changing the top-level `README.md` trips the translation staleness guard
+(`pnpm i18n:check`): every `docs/i18n/README.*.md` must be re-synced in the
+same change. Batch that; don't swap the asset piecemeal.
