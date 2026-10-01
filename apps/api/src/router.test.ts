@@ -456,6 +456,100 @@ describe('config.mediamtx.getPathConfig', () => {
   })
 })
 
+describe('config.mediamtx.getPathHealth', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('reports the counters, tracks and sessions of a ready path', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      ready: true,
+      readyTime: '2026-07-16T10:00:00Z',
+      source: { type: 'rtspSession', id: 'a' },
+      readers: [{ type: 'webRTCSession', id: 'b' }, { type: 'hlsMuxer', id: 'c' }],
+      tracks2: [
+        { codec: 'H264', codecProps: { width: 1920, height: 1080 } },
+        { codec: 'MPEG-4 Audio', codecProps: null },
+      ],
+      bytesReceived: 4096,
+      bytesSent: 2048,
+      inboundFramesInError: 7,
+    })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toEqual({
+      status: 'live',
+      readyTime: '2026-07-16T10:00:00Z',
+      publisher: 'rtspSession',
+      readers: ['webRTCSession', 'hlsMuxer'],
+      tracks: [
+        { codec: 'H264', resolution: '1920×1080' },
+        { codec: 'MPEG-4 Audio', resolution: null },
+      ],
+      bytesReceived: 4096,
+      bytesSent: 2048,
+      framesInError: 7,
+    })
+  })
+
+  // Older servers serve the bare codec list and no error counter. Both are
+  // worth degrading for rather than dropping the panel.
+  it('falls back to the bare codec list, and to no error counter', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      ready: true,
+      readyTime: '2026-07-16T10:00:00Z',
+      tracks: ['H264'],
+    })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toMatchObject({
+      status: 'live',
+      tracks: [{ codec: 'H264', resolution: null }],
+      // Not zero: a counter the server never sent is not a counter at zero.
+      framesInError: null,
+      bytesReceived: 0,
+      bytesSent: 0,
+    })
+  })
+
+  it('reports a configured path MediaMTX is not running as idle', async () => {
+    api.pathsGet.mockResolvedValue(null)
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stopped' })
+
+    expect(result).toEqual({ status: 'idle' })
+  })
+
+  // A runtime path exists the moment MediaMTX holds an entry for it; it is
+  // `ready` only once something publishes. Idle, not live with empty counters.
+  it('reports a runtime path that is not ready as idle', async () => {
+    api.pathsGet.mockResolvedValue({ name: 'stream1', ready: false, readyTime: null })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toEqual({ status: 'idle' })
+  })
+
+  // Distinct from idle: a server that didn't answer says nothing about whether
+  // the path is up, and the panel says so rather than claiming it is down.
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.pathsGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toBeNull()
+  })
+})
+
 describe('config.mediamtx.getPathConnections', () => {
   beforeEach(() => {
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
