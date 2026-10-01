@@ -3,8 +3,7 @@
 pnpm + Turborepo monorepo housing the migrated MediaMTX Connect app: a
 decoupled Vite/React SPA (`apps/web`) and Hono API (`apps/api`) share one oRPC
 contract (`packages/contract`) and ship as a single Docker image where Hono
-serves the SPA build. `MIGRATION.md` records how the old Next.js app maps onto
-this layout.
+serves the SPA build. See `docs/ARCHITECTURE.md`.
 
 ## Commands
 

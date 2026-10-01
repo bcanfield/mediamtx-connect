@@ -117,7 +117,7 @@ Playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thu
 | | |
 |---|---|
 | [Features](docs/FEATURES.md) | Every shipped capability, route, and procedure |
-| [Architecture](ARCHITECTURE.md) | How the pieces fit |
+| [Architecture](docs/ARCHITECTURE.md) | How the pieces fit |
 | [Contributing](CONTRIBUTING.md) | Dev setup, scripts, PR process |
 | [Examples](examples/) | Raspberry Pi camera, fake streams for testing |
 

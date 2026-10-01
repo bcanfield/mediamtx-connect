@@ -18,7 +18,7 @@ Keep entries factual and present-tense. No roadmap items, no "coming soon." Rese
 
 Unshipped work lives in GitHub issues, ordered by the pinned roadmap issue (ADR 0007). Never add it here until it's merged.
 
-Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`, `CHANGELOG.md`, `package.json`, Dockerfile, compose files, oRPC contract, MediaMTX API integration, Playwright suites. Architecture migrated from Next.js to the Vite + Hono + oRPC monorepo per `docs/MIGRATION.md`.
+Sources reviewed at last full audit (2026-10-01): source tree, `README.md`, `docs/ARCHITECTURE.md`, `package.json`, Dockerfile, compose files, oRPC contract, MediaMTX API integration, test suites.
 
 ---
 
@@ -351,7 +351,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ### 13.1 Production image (`Dockerfile`)
 - **Turborepo-pruned multi-stage build** — `turbo prune --docker` → pnpm install with BuildKit store cache → `turbo build` → `pnpm deploy --legacy --prod` for a self-contained output.
 - **Single process serves everything** — Hono serves the SPA build from `/app/public`, the oRPC API, and media streaming on port 3000.
-- **Runtime: `node:24-bookworm-slim` + ffmpeg** — ffmpeg is required for thumbnail generation; see `docs/MIGRATION.md` §5 for the distroless trade-off.
+- **Runtime: `node:24-bookworm-slim` + ffmpeg** — ffmpeg is required for thumbnail generation; see `docs/ARCHITECTURE.md` § Packaging for the distroless trade-off.
 - **Pre-created mount points** — `/recordings`, `/screenshots`, `/data` (config.json), owned by the non-root `node` user.
 - **Production-shaped env defaults** — bootstrap env vars (`BACKEND_SERVER_MEDIAMTX_URL=http://mediamtx`, `MEDIAMTX_API_PORT=9997`, `REMOTE_MEDIAMTX_URL=http://localhost`, `MEDIAMTX_RECORDINGS_DIR=/recordings`, `MEDIAMTX_SCREENSHOTS_DIR=/screenshots`) come from the Zod schema in `apps/api/src/env.ts`, so `docker run` with no env produces a valid first-boot seed. Override at `docker run` time to skip the in-app `/config` step. Under compose `REMOTE_MEDIAMTX_URL` is no longer left to that default — it is derived from `REMOTE_MEDIAMTX_HOST` (§13.2). `REMOTE_MEDIAMTX_HOST` itself is compose-only and is **not** in `env.ts`: the app has no use for a bare host.
 - **Non-root `node` user**.
@@ -494,8 +494,8 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 - **Renovate auto-approve** (`.github/workflows/renovate-approve.yml`) — `main` requires an approving review, which Renovate cannot supply itself. This approves `renovate[bot]` PRs with `GITHUB_TOKEN` so automerge can proceed; CI remains the gate. Skips PRs that already carry a live `github-actions[bot]` approval, and `workflow_dispatch` sweeps open PRs that predate a given run.
 - **MIT licensed** — `LICENSE`.
 - **Contribution guide** — `CONTRIBUTING.md`.
-- **Architecture doc** — `ARCHITECTURE.md`; stack rationale in `docs/STACK.md`; migration record in `docs/MIGRATION.md`.
-- **Project conventions** — `AGENTS.md`, `docs/PROJECT-STRUCTURE.md`.
+- **Architecture doc** — `docs/ARCHITECTURE.md` (system diagram, layout, stack rationale, responsive policy).
+- **Project conventions** — `AGENTS.md`.
 - **Demo GIF** — `.github/assets/demo.gif` referenced from README.
 
 ---

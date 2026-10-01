@@ -10,22 +10,20 @@ If your change adds, removes, or modifies a user-visible feature, route, API end
 
 ## Stack
 
-pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), Hono API (`apps/api`), shared oRPC contract (`packages/contract`, imported as `@connect/contract`), one Docker image. Monorepo conventions and commands live in `AGENTS.md` (read it before touching code); `docs/MIGRATION.md` records how the previous Next.js app mapped onto this layout.
+pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), Hono API (`apps/api`), shared oRPC contract (`packages/contract`, imported as `@connect/contract`), one Docker image. Monorepo conventions and commands live in `AGENTS.md` (read it before touching code).
 
 ## Where things live
 
 | Topic | Path |
 |-------|------|
 | Shipped feature inventory (source of truth — read first) | `docs/FEATURES.md` |
-| Monorepo commands, package layout, conventions | `AGENTS.md`, `docs/PROJECT-STRUCTURE.md` |
-| Stack rationale (why Vite/Hono/oRPC/tsdown/catalog) | `docs/STACK.md` |
-| System diagram | `ARCHITECTURE.md` |
+| Monorepo commands and conventions | `AGENTS.md` |
+| System diagram, layout, stack rationale, responsive policy | `docs/ARCHITECTURE.md` |
 | Dev setup, scripts, PR process | `CONTRIBUTING.md` |
 | Test layers, conventions, CI gates | `docs/TESTING.md` |
 | API shapes (oRPC contract + Zod schemas — the only place they are defined) | `packages/contract/src/index.ts` |
 | App settings store (JSON file, no database) | `apps/api/src/config-store.ts` |
 | i18n policy and "add a language" workflow | `docs/I18N.md` |
-| Responsive breakpoint policy (supported viewport range, which Tailwind breakpoints are in use) | `docs/RESPONSIVE.md` |
 
 ## Code rules
 
@@ -42,7 +40,7 @@ pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), H
 
 ## Before finishing
 
-- [ ] Layout/naming per `docs/PROJECT-STRUCTURE.md` and `AGENTS.md`.
+- [ ] Layout/naming per `docs/ARCHITECTURE.md` and `AGENTS.md`.
 - [ ] `docs/FEATURES.md` updated.
 - [ ] `pnpm typecheck`, `pnpm lint`, and `pnpm i18n:check` clean.
 - [ ] PR title is a conventional commit, with the type that reflects whether this should ship a release.

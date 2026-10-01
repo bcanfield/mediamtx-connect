@@ -25,9 +25,9 @@ RUN cp -r apps/web/dist apps/api/public
 # runtime image doesn't have (pnpm #9883). Alternative: inject-workspace-packages.
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter @connect/api deploy --legacy --prod /prod/api
 
-# node:22-slim instead of distroless: the app shells out to ffmpeg for
-# recording thumbnails, and slim gives us a real distro package for it
-# (see MIGRATION.md §5 / docs/debt docker-runtime-choice).
+# slim instead of distroless: the app shells out to ffmpeg for snapshots and
+# thumbnails, and slim gives us a real distro package for it
+# (docs/ARCHITECTURE.md § Packaging).
 FROM node:24-bookworm-slim AS runner
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ffmpeg \
