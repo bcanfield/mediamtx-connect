@@ -166,7 +166,13 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
   await captureGate.acquire()
 
   const dir = path.join(screenshotsDirectory, streamName)
-  fs.mkdirSync(dir, { recursive: true })
+  try {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+  catch (err) {
+    captureGate.release()
+    throw err
+  }
   const outputFile = path.join(dir, 'live.png')
   // Unique per capture: the cron and a manual snapshot can capture the same
   // stream at once, and a shared tmp makes the second rename throw ENOENT.
@@ -212,16 +218,35 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish(() => reject(err))
     })
+    // Nothing in here may throw: an exception in a child-process listener is
+    // uncaught and takes the whole API process down.
+    const fail = (message: string, err?: unknown) => {
+      try {
+        fs.rmSync(tmp, { force: true })
+      }
+      catch (rmErr) {
+        logger.warn({ err: rmErr }, `Could not remove ${tmp}`)
+      }
+      logger.warn({ err }, message)
+      reject(new Error(message, { cause: err }))
+    }
+
     proc.on('close', (code) => {
       finish(() => {
-        if (code === 0) {
-          fs.renameSync(tmp, outputFile)
-          resolve()
+        if (code !== 0) {
+          fail(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
           return
         }
-        fs.rmSync(tmp, { force: true })
-        logger.warn(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
-        reject(new Error(`ffmpeg exited ${code} capturing snapshot for ${streamName}`))
+        // ffmpeg exits 0 without writing anything when the stream ends before
+        // a frame arrives (a path removed mid-capture), so the rename can miss.
+        try {
+          fs.renameSync(tmp, outputFile)
+        }
+        catch (err) {
+          fail(`ffmpeg wrote no frame capturing snapshot for ${streamName}`, err)
+          return
+        }
+        resolve()
       })
     })
   })
