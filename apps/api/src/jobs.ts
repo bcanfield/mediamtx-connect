@@ -7,17 +7,19 @@ import cron from 'node-cron'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
 import { mediaMtxApi } from './mediamtx'
+import { isRecordingSegment, safeJoin } from './recordings-fs'
 
 function getSubdirectories(dirPath: string): string[] {
   const files = fs.readdirSync(dirPath).filter(f => !f.startsWith('.'))
   return files.filter(file => fs.statSync(path.join(dirPath, file)).isDirectory())
 }
 
-function getFileNamesWithoutExtension(directoryPath: string): string[] {
-  return fs
-    .readdirSync(directoryPath)
-    .filter(f => !f.startsWith('.'))
-    .map(file => path.parse(file).name)
+// Stems of the recording segments in one stream's directory. A segment's
+// thumbnail is `<stem>.png`.
+function segmentStems(recordingDirectory: string): Set<string> {
+  if (!fs.existsSync(recordingDirectory))
+    return new Set()
+  return new Set(fs.readdirSync(recordingDirectory).filter(isRecordingSegment).map(f => path.parse(f).name))
 }
 
 // A permit gate over ffmpeg spawns: acquire before spawning, release on exit.
@@ -102,14 +104,17 @@ async function generateScreenshot(inputFile: string, outputFile: string): Promis
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish()
     })
-    proc.on('close', () => {
-      logger.info(`Finished generating screenshot ${outputFile}`)
+    proc.on('close', (code) => {
+      if (code === 0)
+        logger.info(`Finished generating screenshot ${outputFile}`)
+      else
+        logger.warn(`ffmpeg exited ${code} generating screenshot ${outputFile}`)
       finish()
     })
   })
 }
 
-// Scan the recordings tree for MP4s without a sibling PNG and spawn ffmpeg to
+// Scan the recordings tree for segments without a same-stem PNG and spawn ffmpeg to
 // grab a first-frame thumbnail. Parallel, bounded by the thumbnail gate, so a
 // large backlog runs in waves instead of spawning every ffmpeg at once.
 export async function generateScreenshots() {
@@ -125,15 +130,21 @@ export async function generateScreenshots() {
       logger.info('Screenshots directory created successfully.')
     }
 
-    const recordings = getFileNamesWithoutExtension(path.join(config.recordingsDirectory, subdirectory))
-    const screenshots = getFileNamesWithoutExtension(streamScreenshotDirectory)
-    const missing = recordings.filter(file => !screenshots.includes(file))
+    const recordingDirectory = path.join(config.recordingsDirectory, subdirectory)
+    const thumbnails = new Set(
+      fs.readdirSync(streamScreenshotDirectory)
+        .filter(f => f.endsWith('.png'))
+        .map(f => path.parse(f).name),
+    )
+    const missing = fs.readdirSync(recordingDirectory)
+      .filter(isRecordingSegment)
+      .filter(file => !thumbnails.has(path.parse(file).name))
 
     logger.info(`${missing.length} recordings without screenshots in: ${subdirectory}`)
 
-    for (const recording of missing) {
-      const inputFile = path.join(config.recordingsDirectory, subdirectory, `${recording}.mp4`)
-      const outputFile = path.join(streamScreenshotDirectory, `${recording}.png`)
+    for (const segment of missing) {
+      const inputFile = path.join(recordingDirectory, segment)
+      const outputFile = path.join(streamScreenshotDirectory, `${path.parse(segment).name}.png`)
       pending.push(generateScreenshot(inputFile, outputFile))
     }
   }
@@ -246,6 +257,8 @@ export async function captureLiveSnapshots() {
 // the ffmpeg exit and rejects on failure so the caller can report the outcome.
 export async function captureSnapshot(streamName: string): Promise<void> {
   const config = await getAppConfig()
+  if (!safeJoin(config.screenshotsDirectory, streamName))
+    throw new Error(`No stream named ${streamName}`)
   const globalConf = await mediaMtxApi(config).configGlobalGet()
   await captureFrame(
     streamName,
@@ -254,8 +267,11 @@ export async function captureSnapshot(streamName: string): Promise<void> {
   )
 }
 
-// Deletes screenshots older than 2 days, per stream subdirectory.
-async function cleanupScreenshots() {
+// Deletes files older than 2 days from each stream's screenshots directory,
+// except a recording thumbnail whose segment still exists: MediaMTX's
+// recordDeleteAfter decides how long that lives, and deleting it here only
+// makes generateScreenshots run ffmpeg again on the next sweep.
+export async function cleanupScreenshots() {
   logger.info('Cleaning up screenshots')
   const config = await getAppConfig()
   const streamDirectories = getSubdirectories(config.screenshotsDirectory)
@@ -263,7 +279,10 @@ async function cleanupScreenshots() {
 
   for (const subdirectory of streamDirectories) {
     const dir = path.join(config.screenshotsDirectory, subdirectory)
+    const segments = segmentStems(path.join(config.recordingsDirectory, subdirectory))
     for (const file of fs.readdirSync(dir).filter(f => !f.startsWith('.'))) {
+      if (file.endsWith('.png') && segments.has(path.parse(file).name))
+        continue
       const filePath = path.join(dir, file)
       const fileStat = fs.statSync(filePath)
       if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {
