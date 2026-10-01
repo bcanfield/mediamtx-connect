@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Înregistrare",
         "pathHooks": "Hook-uri de cale",
-        "source": "Sursă"
+        "source": "Sursă",
+        "forward": "Redirecționare"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
@@ -508,7 +509,8 @@
         "srt": "Publicați și citiți fluxuri prin SRT.",
         "recording": "Înregistrează fluxurile pe disc.",
         "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii.",
-        "source": "De unde vine fluxul acestei căi."
+        "source": "De unde vine fluxul acestei căi.",
+        "forward": "Republică fluxul acestei căi pe alte servere, precum YouTube sau Twitch."
       },
       "sectionWarnings": {
         "auth": "Schimbarea modului în care MediaMTX autentifică se aplică tuturor clienților, inclusiv Connect — o setare greșită poate izola Connect de MediaMTX.",
@@ -536,6 +538,15 @@
         "usernameAria": "Numele de utilizator al serverului ICE {index}",
         "passwordAria": "Parola serverului ICE {index}",
         "removeAria": "Elimină serverul ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Adaugă destinație",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinația {index}",
+        "showAria": "Afișează destinația {index}",
+        "hideAria": "Ascunde destinația {index}",
+        "removeAria": "Elimină destinația {index}",
+        "plaintextNotice": "MediaMTX stochează aceste URL-uri, inclusiv cheile de flux, în text simplu în configurația sa și le returnează nemascate din API-ul său."
       },
       "errors": {
         "invalidSource": "MediaMTX nu va accepta această valoare. Folosește publisher, redirect, rpiCamera sau un URL care începe cu rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// sau wheps://."

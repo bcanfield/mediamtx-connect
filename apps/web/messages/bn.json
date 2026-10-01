@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "রেকর্ডিং",
         "pathHooks": "পাথ Hooks",
-        "source": "উৎস"
+        "source": "উৎস",
+        "forward": "ফরোয়ার্ডিং"
       },
       "sectionDescriptions": {
         "logging": "লগ আউটপুট, টাইমআউট এবং গ্লোবাল সীমা।",
@@ -508,7 +509,8 @@
         "srt": "SRT-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
         "recording": "স্ট্রিম ডিস্কে রেকর্ড করুন।",
         "pathHooks": "পাথের নিজস্ব লাইফসাইকেল ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।",
-        "source": "এই পাথের স্ট্রিম কোথা থেকে আসে।"
+        "source": "এই পাথের স্ট্রিম কোথা থেকে আসে।",
+        "forward": "এই পাথের স্ট্রিম অন্য সার্ভারে, যেমন YouTube বা Twitch-এ, পুনরায় প্রকাশ করুন।"
       },
       "sectionWarnings": {
         "auth": "MediaMTX কীভাবে প্রমাণীকরণ করে তা বদলালে সব ক্লায়েন্টের ওপর প্রভাব পড়ে, Connect-ও বাদ নয় — ভুল সেটিং Connect-কে MediaMTX থেকে বিচ্ছিন্ন করে দিতে পারে।",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE সার্ভার {index} ব্যবহারকারীর নাম",
         "passwordAria": "ICE সার্ভার {index} পাসওয়ার্ড",
         "removeAria": "ICE সার্ভার {index} সরান"
+      },
+      "forwardDests": {
+        "add": "গন্তব্য যোগ করুন",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "গন্তব্য {index}",
+        "showAria": "গন্তব্য {index} দেখান",
+        "hideAria": "গন্তব্য {index} লুকান",
+        "removeAria": "গন্তব্য {index} সরান",
+        "plaintextNotice": "MediaMTX এই URL-গুলো, স্ট্রিম কী সহ, তার কনফিগে সাধারণ টেক্সটে সংরক্ষণ করে এবং তার API থেকে অপরিবর্তিত অবস্থায় ফেরত দেয়।"
       },
       "errors": {
         "invalidSource": "MediaMTX এটি গ্রহণ করবে না। publisher, redirect, rpiCamera, অথবা rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// বা wheps:// দিয়ে শুরু হওয়া একটি URL ব্যবহার করুন।"

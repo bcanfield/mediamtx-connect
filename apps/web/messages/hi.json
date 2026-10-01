@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "रिकॉर्डिंग",
         "pathHooks": "पथ Hooks",
-        "source": "स्रोत"
+        "source": "स्रोत",
+        "forward": "फ़ॉरवर्डिंग"
       },
       "sectionDescriptions": {
         "logging": "लॉग आउटपुट, टाइमआउट और ग्लोबल सीमाएँ।",
@@ -508,7 +509,8 @@
         "srt": "SRT पर स्ट्रीम प्रकाशित करें और पढ़ें।",
         "recording": "स्ट्रीम को डिस्क पर रिकॉर्ड करें।",
         "pathHooks": "पाथ के अपने लाइफ़साइकिल इवेंट पर MediaMTX द्वारा चलाए जाने वाले कमांड।",
-        "source": "इस पाथ की स्ट्रीम कहाँ से आती है।"
+        "source": "इस पाथ की स्ट्रीम कहाँ से आती है।",
+        "forward": "इस पाथ की स्ट्रीम को अन्य सर्वरों, जैसे YouTube या Twitch, पर फिर से प्रकाशित करें।"
       },
       "sectionWarnings": {
         "auth": "MediaMTX के प्रमाणीकरण का तरीका बदलना सभी क्लाइंट पर लागू होता है, Connect पर भी — गलत सेटिंग Connect को MediaMTX से काट सकती है।",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE सर्वर {index} उपयोगकर्ता नाम",
         "passwordAria": "ICE सर्वर {index} पासवर्ड",
         "removeAria": "ICE सर्वर {index} हटाएँ"
+      },
+      "forwardDests": {
+        "add": "गंतव्य जोड़ें",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "गंतव्य {index}",
+        "showAria": "गंतव्य {index} दिखाएँ",
+        "hideAria": "गंतव्य {index} छिपाएँ",
+        "removeAria": "गंतव्य {index} हटाएँ",
+        "plaintextNotice": "MediaMTX इन URL को, स्ट्रीम कुंजियों सहित, अपने कॉन्फ़िग में सादे टेक्स्ट में सहेजता है और अपने API से बिना छिपाए लौटाता है।"
       },
       "errors": {
         "invalidSource": "MediaMTX इसे स्वीकार नहीं करेगा। publisher, redirect, rpiCamera, या rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// या wheps:// से शुरू होने वाला URL इस्तेमाल करें।"

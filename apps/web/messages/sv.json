@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Inspelning",
         "pathHooks": "Sökvägshooks",
-        "source": "Källa"
+        "source": "Källa",
+        "forward": "Vidarebefordran"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsgränser och globala begränsningar.",
@@ -508,7 +509,8 @@
         "srt": "Publicera och läs strömmar via SRT.",
         "recording": "Spela in strömmar till disk.",
         "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser.",
-        "source": "Var strömmen för den här sökvägen kommer ifrån."
+        "source": "Var strömmen för den här sökvägen kommer ifrån.",
+        "forward": "Publicera om den här sökvägens ström till andra servrar, som YouTube eller Twitch."
       },
       "sectionWarnings": {
         "auth": "Att ändra hur MediaMTX autentiserar gäller alla klienter, även Connect — en felaktig inställning kan koppla bort Connect från MediaMTX.",
@@ -536,6 +538,15 @@
         "usernameAria": "Användarnamn för ICE-server {index}",
         "passwordAria": "Lösenord för ICE-server {index}",
         "removeAria": "Ta bort ICE-server {index}"
+      },
+      "forwardDests": {
+        "add": "Lägg till mål",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Mål {index}",
+        "showAria": "Visa mål {index}",
+        "hideAria": "Dölj mål {index}",
+        "removeAria": "Ta bort mål {index}",
+        "plaintextNotice": "MediaMTX lagrar dessa URL:er, inklusive strömnycklar, i klartext i sin konfiguration och returnerar dem omaskerade från sitt API."
       },
       "errors": {
         "invalidSource": "MediaMTX godtar inte det här. Använd publisher, redirect, rpiCamera eller en URL som börjar med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."

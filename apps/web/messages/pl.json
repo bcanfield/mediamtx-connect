@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Nagrywanie",
         "pathHooks": "Hooki ścieżki",
-        "source": "Źródło"
+        "source": "Źródło",
+        "forward": "Przekazywanie"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
@@ -508,7 +509,8 @@
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
         "recording": "Nagrywaj strumienie na dysk.",
         "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki.",
-        "source": "Skąd pochodzi strumień tej ścieżki."
+        "source": "Skąd pochodzi strumień tej ścieżki.",
+        "forward": "Ponownie publikuj strumień tej ścieżki na innych serwerach, takich jak YouTube lub Twitch."
       },
       "sectionWarnings": {
         "auth": "Zmiana sposobu uwierzytelniania w MediaMTX dotyczy wszystkich klientów, także Connect — błędne ustawienie może odciąć Connect od MediaMTX.",
@@ -536,6 +538,15 @@
         "usernameAria": "Nazwa użytkownika serwera ICE {index}",
         "passwordAria": "Hasło serwera ICE {index}",
         "removeAria": "Usuń serwer ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Dodaj cel",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Cel {index}",
+        "showAria": "Pokaż cel {index}",
+        "hideAria": "Ukryj cel {index}",
+        "removeAria": "Usuń cel {index}",
+        "plaintextNotice": "MediaMTX przechowuje te adresy URL, łącznie z kluczami strumienia, jako zwykły tekst w swojej konfiguracji i zwraca je bez maskowania ze swojego API."
       },
       "errors": {
         "invalidSource": "MediaMTX nie przyjmie tej wartości. Użyj publisher, redirect, rpiCamera albo adresu URL zaczynającego się od rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// lub wheps://."

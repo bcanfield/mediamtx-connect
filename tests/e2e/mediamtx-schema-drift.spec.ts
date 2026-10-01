@@ -78,8 +78,6 @@ const DELIBERATELY_UNMODELED = {
   pathDefaults: [
     // The entry's own name, not a setting.
     'name',
-    // #347
-    'forward',
     // #348
     'alwaysAvailable',
     'alwaysAvailableFile',

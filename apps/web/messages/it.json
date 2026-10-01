@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Registrazione",
         "pathHooks": "Hooks del percorso",
-        "source": "Sorgente"
+        "source": "Sorgente",
+        "forward": "Inoltro"
       },
       "sectionDescriptions": {
         "logging": "Output dei log, timeout e limiti globali.",
@@ -508,7 +509,8 @@
         "srt": "Pubblica e leggi flussi via SRT.",
         "recording": "Registra i flussi su disco.",
         "pathHooks": "Comandi che MediaMTX esegue sugli eventi del ciclo di vita di un percorso.",
-        "source": "Da dove arriva lo stream di questo percorso."
+        "source": "Da dove arriva lo stream di questo percorso.",
+        "forward": "Ripubblica lo stream di questo percorso su altri server, come YouTube o Twitch."
       },
       "sectionWarnings": {
         "auth": "Cambiare il modo in cui MediaMTX autentica riguarda tutti i client, Connect incluso: un'impostazione errata può tagliare fuori Connect da MediaMTX.",
@@ -536,6 +538,15 @@
         "usernameAria": "Nome utente del server ICE {index}",
         "passwordAria": "Password del server ICE {index}",
         "removeAria": "Rimuovi il server ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Aggiungi destinazione",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinazione {index}",
+        "showAria": "Mostra destinazione {index}",
+        "hideAria": "Nascondi destinazione {index}",
+        "removeAria": "Rimuovi destinazione {index}",
+        "plaintextNotice": "MediaMTX salva questi URL, chiavi di stream comprese, in chiaro nella sua configurazione e li restituisce senza oscurarli dalla sua API."
       },
       "errors": {
         "invalidSource": "MediaMTX non accetterà questo valore. Usa publisher, redirect, rpiCamera o un URL che inizi con rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// o wheps://."

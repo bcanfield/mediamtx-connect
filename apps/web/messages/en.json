@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Recording",
         "pathHooks": "Path Hooks",
-        "source": "Source"
+        "source": "Source",
+        "forward": "Forwarding"
       },
       "sectionDescriptions": {
         "logging": "Log output, timeouts and global limits.",
@@ -508,7 +509,8 @@
         "srt": "Publish and read streams over SRT.",
         "recording": "Record streams to disk.",
         "pathHooks": "Commands MediaMTX runs on a path's own lifecycle events.",
-        "source": "Where this path's stream comes from."
+        "source": "Where this path's stream comes from.",
+        "forward": "Re-publish this path's stream to other servers, such as YouTube or Twitch."
       },
       "sectionWarnings": {
         "auth": "Changing how MediaMTX authenticates applies to every client, Connect included — a wrong setting can cut Connect off from MediaMTX.",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE server {index} username",
         "passwordAria": "ICE server {index} password",
         "removeAria": "Remove ICE server {index}"
+      },
+      "forwardDests": {
+        "add": "Add destination",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destination {index}",
+        "showAria": "Show destination {index}",
+        "hideAria": "Hide destination {index}",
+        "removeAria": "Remove destination {index}",
+        "plaintextNotice": "MediaMTX stores these URLs, stream keys included, in plaintext in its config and returns them unredacted from its API."
       },
       "errors": {
         "invalidSource": "MediaMTX won't accept this. Use publisher, redirect, rpiCamera, or a URL starting with rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// or wheps://."

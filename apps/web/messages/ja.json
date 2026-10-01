@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "録画",
         "pathHooks": "パスフック",
-        "source": "ソース"
+        "source": "ソース",
+        "forward": "転送"
       },
       "sectionDescriptions": {
         "logging": "ログ出力、タイムアウト、グローバル制限。",
@@ -508,7 +509,8 @@
         "srt": "SRT でストリームを配信・視聴します。",
         "recording": "ストリームをディスクに録画します。",
         "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。",
-        "source": "このパスのストリームがどこから来るか。"
+        "source": "このパスのストリームがどこから来るか。",
+        "forward": "このパスのストリームを YouTube や Twitch などの別のサーバーへ再配信します。"
       },
       "sectionWarnings": {
         "auth": "MediaMTX の認証方式を変更すると Connect を含む全クライアントに影響します。設定を誤ると Connect が MediaMTX から切り離されることがあります。",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE サーバー {index} のユーザー名",
         "passwordAria": "ICE サーバー {index} のパスワード",
         "removeAria": "ICE サーバー {index} を削除"
+      },
+      "forwardDests": {
+        "add": "転送先を追加",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "転送先 {index}",
+        "showAria": "転送先 {index} を表示",
+        "hideAria": "転送先 {index} を隠す",
+        "removeAria": "転送先 {index} を削除",
+        "plaintextNotice": "MediaMTX はこれらの URL をストリームキーを含めて設定に平文で保存し、API からもマスクせずに返します。"
       },
       "errors": {
         "invalidSource": "MediaMTX はこの値を受け付けません。publisher、redirect、rpiCamera、または rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep://、wheps:// で始まる URL を指定してください。"

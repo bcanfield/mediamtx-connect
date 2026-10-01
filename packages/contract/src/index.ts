@@ -174,15 +174,32 @@ export function isValidPathSource(source: string): boolean {
     || PATH_SOURCE_URL_SCHEMES.some(scheme => source.startsWith(`${scheme}://`))
 }
 
+// One entry of a path's `forward` list: MediaMTX re-publishes the path's
+// stream to `dest` (v1.20.0+). The other three keys exist only from v1.21.0;
+// they're carried so a value set in YAML survives a save, and never sent on a
+// new row, because v1.20.0 refuses unknown fields.
+export const ForwardDestSchema = z.object({
+  dest: z.string().min(1),
+  destFingerprint: z.string().optional(),
+  moqTransport: z.string().optional(),
+  whipBearerToken: z.string().optional(),
+})
+
+export type ForwardDest = z.infer<typeof ForwardDestSchema>
+
 // A path's own config is the per-path override of the defaults scope (ADR
-// 0002), plus `source`. MediaMTX serves `source` from path defaults too; it
-// stays off PathDefaultsSchema because where a stream comes from belongs to
-// one path, which is a product choice.
+// 0002), plus `source` and `forward`. MediaMTX serves both from path defaults
+// too; they stay off PathDefaultsSchema because where a stream comes from, and
+// where it is pushed to, belong to one path, which is a product choice.
 export const PathConfigSchema = PathDefaultsSchema.extend({
   // Unrefined on the wire on purpose — MediaMTX is the authority on what it
   // accepts, and a source kind added in a later version still has to read back.
   // The form validates against `isValidPathSource` before it writes.
   source: z.string().optional(),
+  // Off path defaults for the same reason as `source`: a destination's stream
+  // key belongs to one account, not to every path. MediaMTX's PATCH replaces
+  // the whole list, so it is always written whole.
+  forward: z.array(ForwardDestSchema).optional(),
 })
 
 export type PathConfig = z.infer<typeof PathConfigSchema>

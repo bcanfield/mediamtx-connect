@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "录制",
         "pathHooks": "路径钩子",
-        "source": "来源"
+        "source": "来源",
+        "forward": "转发"
       },
       "sectionDescriptions": {
         "logging": "日志输出、超时和全局限制。",
@@ -508,7 +509,8 @@
         "srt": "通过 SRT 推流和观看流。",
         "recording": "将流录制到磁盘。",
         "pathHooks": "MediaMTX 在路径自身生命周期事件时运行的命令。",
-        "source": "该路径的流来自哪里。"
+        "source": "该路径的流来自哪里。",
+        "forward": "将此路径的流重新发布到其他服务器，例如 YouTube 或 Twitch。"
       },
       "sectionWarnings": {
         "auth": "更改 MediaMTX 的验证方式会影响所有客户端，包括 Connect：错误的设置可能使 Connect 无法连接到 MediaMTX。",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE 服务器 {index} 的用户名",
         "passwordAria": "ICE 服务器 {index} 的密码",
         "removeAria": "移除 ICE 服务器 {index}"
+      },
+      "forwardDests": {
+        "add": "添加目标",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "目标 {index}",
+        "showAria": "显示目标 {index}",
+        "hideAria": "隐藏目标 {index}",
+        "removeAria": "移除目标 {index}",
+        "plaintextNotice": "MediaMTX 会将这些 URL（包括推流密钥）以明文保存在配置中，并通过其 API 原样返回。"
       },
       "errors": {
         "invalidSource": "MediaMTX 不会接受这个值。请使用 publisher、redirect、rpiCamera，或以 rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep:// 或 wheps:// 开头的 URL。"

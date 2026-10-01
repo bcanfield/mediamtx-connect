@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "錄影",
         "pathHooks": "路徑掛鉤",
-        "source": "來源"
+        "source": "來源",
+        "forward": "轉送"
       },
       "sectionDescriptions": {
         "logging": "記錄輸出、逾時與全域限制。",
@@ -508,7 +509,8 @@
         "srt": "透過 SRT 發布與觀看串流。",
         "recording": "將串流錄製到磁碟。",
         "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。",
-        "source": "這個路徑的串流來自哪裡。"
+        "source": "這個路徑的串流來自哪裡。",
+        "forward": "將此路徑的串流重新發布到其他伺服器，例如 YouTube 或 Twitch。"
       },
       "sectionWarnings": {
         "auth": "變更 MediaMTX 的驗證方式會影響所有用戶端，包括 Connect：錯誤的設定可能使 Connect 無法連上 MediaMTX。",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE 伺服器 {index} 的使用者名稱",
         "passwordAria": "ICE 伺服器 {index} 的密碼",
         "removeAria": "移除 ICE 伺服器 {index}"
+      },
+      "forwardDests": {
+        "add": "新增目的地",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "目的地 {index}",
+        "showAria": "顯示目的地 {index}",
+        "hideAria": "隱藏目的地 {index}",
+        "removeAria": "移除目的地 {index}",
+        "plaintextNotice": "MediaMTX 會將這些 URL（包括串流金鑰）以明文儲存在設定中，並透過其 API 原樣傳回。"
       },
       "errors": {
         "invalidSource": "MediaMTX 不會接受這個值。請使用 publisher、redirect、rpiCamera，或以 rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep:// 或 wheps:// 開頭的 URL。"

@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "การบันทึก",
         "pathHooks": "Hooks ของพาธ",
-        "source": "แหล่งที่มา"
+        "source": "แหล่งที่มา",
+        "forward": "การส่งต่อ"
       },
       "sectionDescriptions": {
         "logging": "เอาต์พุตล็อก ไทม์เอาต์ และขีดจำกัดส่วนกลาง",
@@ -508,7 +509,8 @@
         "srt": "เผยแพร่และรับชมสตรีมผ่าน SRT",
         "recording": "บันทึกสตรีมลงดิสก์",
         "pathHooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์ในวงจรชีวิตของพาธนั้นเอง",
-        "source": "สตรีมของพาธนี้มาจากที่ใด"
+        "source": "สตรีมของพาธนี้มาจากที่ใด",
+        "forward": "เผยแพร่สตรีมของพาธนี้ซ้ำไปยังเซิร์ฟเวอร์อื่น เช่น YouTube หรือ Twitch"
       },
       "sectionWarnings": {
         "auth": "การเปลี่ยนวิธียืนยันตัวตนของ MediaMTX มีผลกับไคลเอนต์ทุกตัว รวมถึง Connect — การตั้งค่าที่ผิดอาจตัด Connect ออกจาก MediaMTX",
@@ -536,6 +538,15 @@
         "usernameAria": "ชื่อผู้ใช้ของเซิร์ฟเวอร์ ICE {index}",
         "passwordAria": "รหัสผ่านของเซิร์ฟเวอร์ ICE {index}",
         "removeAria": "ลบเซิร์ฟเวอร์ ICE {index}"
+      },
+      "forwardDests": {
+        "add": "เพิ่มปลายทาง",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "ปลายทาง {index}",
+        "showAria": "แสดงปลายทาง {index}",
+        "hideAria": "ซ่อนปลายทาง {index}",
+        "removeAria": "ลบปลายทาง {index}",
+        "plaintextNotice": "MediaMTX เก็บ URL เหล่านี้ รวมถึงคีย์สตรีม เป็นข้อความธรรมดาในคอนฟิก และส่งคืนจาก API โดยไม่ปิดบัง"
       },
       "errors": {
         "invalidSource": "MediaMTX จะไม่ยอมรับค่านี้ ให้ใช้ publisher, redirect, rpiCamera หรือ URL ที่ขึ้นต้นด้วย rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// หรือ wheps://"

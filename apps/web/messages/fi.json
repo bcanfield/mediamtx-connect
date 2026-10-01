@@ -494,7 +494,8 @@
         "srt": "SRT",
         "recording": "Tallennus",
         "pathHooks": "Polun hookit",
-        "source": "Lähde"
+        "source": "Lähde",
+        "forward": "Edelleenlähetys"
       },
       "sectionDescriptions": {
         "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
@@ -508,7 +509,8 @@
         "srt": "Julkaise ja vastaanota striimejä SRT:llä.",
         "recording": "Tallenna striimit levylle.",
         "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa.",
-        "source": "Mistä tämän polun striimi tulee."
+        "source": "Mistä tämän polun striimi tulee.",
+        "forward": "Julkaise tämän polun stream uudelleen muille palvelimille, kuten YouTubeen tai Twitchiin."
       },
       "sectionWarnings": {
         "auth": "MediaMTX:n todennustavan muuttaminen koskee kaikkia asiakkaita, myös Connectia — väärä asetus voi katkaista Connectin yhteyden MediaMTX:ään.",
@@ -536,6 +538,15 @@
         "usernameAria": "ICE-palvelimen {index} käyttäjänimi",
         "passwordAria": "ICE-palvelimen {index} salasana",
         "removeAria": "Poista ICE-palvelin {index}"
+      },
+      "forwardDests": {
+        "add": "Lisää kohde",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Kohde {index}",
+        "showAria": "Näytä kohde {index}",
+        "hideAria": "Piilota kohde {index}",
+        "removeAria": "Poista kohde {index}",
+        "plaintextNotice": "MediaMTX tallentaa nämä URL-osoitteet stream-avaimineen selväkielisinä asetuksiinsa ja palauttaa ne peittämättöminä API:staan."
       },
       "errors": {
         "invalidSource": "MediaMTX ei hyväksy tätä. Käytä arvoa publisher, redirect tai rpiCamera taikka URL-osoitetta, joka alkaa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// tai wheps://."

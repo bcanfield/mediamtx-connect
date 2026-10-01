@@ -1,4 +1,4 @@
-import type { GlobalConfigFormData } from '@connect/contract'
+import type { GlobalConfigFormData, PathConfigFormData } from '@connect/contract'
 import type { Control, FieldErrors, FieldPath, FieldValues, Resolver } from 'react-hook-form'
 import type { ConfigScope, SectionDef } from './sections'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +16,7 @@ import { useScrollSpy } from '@/hooks/use-scroll-spy'
 import { cn } from '@/lib/utils'
 
 import { EnumFieldRow, InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
+import { ForwardDestsRows } from './forward-dests-rows'
 import { IceServersRows } from './ice-servers-rows'
 import { countErrorsForSection } from './sections'
 import { offendingField } from './server-rejection'
@@ -293,7 +294,7 @@ function ConfigSection<T extends FieldValues>({
       </header>
 
       {section.warnsOnSave && (
-        <p className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
+        <p role="note" className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
           <TriangleAlertIcon aria-hidden className="mt-px size-3.5 shrink-0 text-warning" />
           {t(`sectionWarnings.${section.id}`)}
         </p>
@@ -318,6 +319,10 @@ function ConfigSection<T extends FieldValues>({
               {/* webrtcICEServers2 exists only on the global scope. */}
               {section.hasIceServers && (
                 <IceServersRows control={control as unknown as Control<GlobalConfigFormData>} />
+              )}
+              {/* `forward` exists only on a path's own scope. */}
+              {section.hasForwardDests && (
+                <ForwardDestsRows control={control as unknown as Control<PathConfigFormData>} />
               )}
             </div>
           )}
