@@ -4,15 +4,16 @@ import { Readable } from 'node:stream'
 import { Hono } from 'hono'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
-import { latestScreenshotPathFor } from './recordings-fs'
+import { mediaMtxApi, MediaMtxError, mediaMtxPlayback } from './mediamtx'
+import { latestScreenshotPathFor, safeJoin } from './recordings-fs'
 
 // Binary/streaming endpoints — screenshots and recordings. JSON lives in the
 // oRPC router; files live here.
 export const media = new Hono()
 
-function safeJoin(baseDir: string, ...segments: string[]): string | null {
-  const resolved = path.resolve(baseDir, ...segments)
-  return resolved.startsWith(path.resolve(baseDir) + path.sep) ? resolved : null
+const recordingContentTypes: Record<string, string> = {
+  '.mp4': 'video/mp4',
+  '.ts': 'video/mp2t',
 }
 
 function streamResponse(filePath: string, headers: Record<string, string>, status = 200, opts?: { start: number, end: number }) {
@@ -66,7 +67,7 @@ media.get('/recordings/:streamName/:file', async (c) => {
   }
 
   const headers: Record<string, string> = {
-    'Content-Type': 'video/mp4',
+    'Content-Type': recordingContentTypes[path.extname(filePath)] ?? 'application/octet-stream',
     'Accept-Ranges': 'bytes',
   }
   if (c.req.query('download') !== undefined)
@@ -90,4 +91,41 @@ media.get('/recordings/:streamName/:file', async (c) => {
   }
 
   return streamResponse(filePath, { ...headers, 'Content-Length': String(size) })
+})
+
+// RFC 3339 with an explicit offset: what MediaMTX's /get parses `start` as.
+const RFC3339 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/i
+
+// A recorded time range off MediaMTX's playback server, stitched into one file:
+// fMP4 for the timeline player, plain MP4 for clip downloads. Proxied rather
+// than linked: the compose stack doesn't publish 9996, a direct request would
+// be cross-origin, and playback credentials stay server-side. fMP4 is uncapped
+// (a span can be hours long) and streamed, never buffered. MP4 is capped at an
+// hour because MediaMTX indexes the whole range in memory before the first
+// byte, and the browser buffers the whole clip to save it.
+media.get('/playback/get', async (c) => {
+  const path = c.req.query('path')
+  const start = c.req.query('start')
+  const duration = Number(c.req.query('duration'))
+  const format = c.req.query('format') ?? 'fmp4'
+  if (!path || !start || !RFC3339.test(start) || Number.isNaN(Date.parse(start)) || !Number.isFinite(duration) || duration <= 0)
+    return c.text('Expected path, an RFC 3339 start and a positive duration', 400)
+  if (format !== 'fmp4' && format !== 'mp4')
+    return c.text('Expected format fmp4 or mp4', 400)
+  if (format === 'mp4' && duration > 3600)
+    return c.text('An MP4 clip can be at most 3600 seconds long', 400)
+
+  const config = await getAppConfig()
+  try {
+    const global = await mediaMtxApi(config).configGlobalGet()
+    const upstream = await mediaMtxPlayback(config, global.playbackAddress)
+      .get({ path, start, duration, format })
+    return new Response(upstream.body, { headers: { 'Content-Type': 'video/mp4' } })
+  }
+  catch (error) {
+    if (error instanceof MediaMtxError && error.status === 404)
+      return c.text('Recording not found', 404)
+    logger.error({ err: error, path }, 'Failed to proxy recording playback')
+    return c.text('Could not reach MediaMTX\'s playback server', 502)
+  }
 })

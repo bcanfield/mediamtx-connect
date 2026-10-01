@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX-এর জন্য ওয়েব ইন্টারফেস। আপনার ব্রাউজার থেকে স্ট্রিম দেখুন, রেকর্ডিং ব্রাউজ করুন এবং কনফিগারেশন সম্পাদনা করুন।"
-  },
   "Forms": {
     "errors": {
       "required": "এই ক্ষেত্রটি আবশ্যক",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "আবার চেষ্টা করুন",
-    "loading": "লোড হচ্ছে…",
     "theme": {
-      "lightMode": "লাইট মোড",
-      "darkMode": "ডার্ক মোড",
       "switchToLight": "লাইট থিমে স্যুইচ করুন",
       "switchToDark": "ডার্ক থিমে স্যুইচ করুন"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "সংযুক্ত",
-      "offline": "অফলাইন"
+      "offline": "অফলাইন",
+      "connectedVersion": "সংযুক্ত · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ। কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে।"
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
+      "sessions": "সেশন",
       "appConfig": "অ্যাপ কনফিগ",
       "mediamtxConfig": "MediaMTX কনফিগ",
       "paths": "পাথ"
@@ -92,10 +84,6 @@
       "stop": "বন্ধ করুন",
       "playAria": "{streamName} চালান",
       "actionsAria": "স্ট্রিম অ্যাকশন",
-      "stub": {
-        "title": "এখনও বাস্তবায়িত হয়নি",
-        "description": "এই অ্যাকশনটি রোডম্যাপে আছে — এটি লগ করা হয়েছে।"
-      },
       "recordError": {
         "title": "রেকর্ডিং পরিবর্তন করা যায়নি",
         "description": "MediaMTX পরিবর্তনটি প্রত্যাখ্যান করেছে — এই স্ট্রিমের রেকর্ডিং অপরিবর্তিত রয়েছে।"
@@ -117,7 +105,6 @@
         "description": "MediaMTX একটি ফ্রেম নিতে পারেনি — স্ট্রিমটি অফলাইন থাকতে পারে।"
       },
       "menu": {
-        "openDetail": "স্ট্রিমের বিস্তারিত খুলুন",
         "viewRecordings": "রেকর্ডিং দেখুন",
         "takeSnapshot": "স্ন্যাপশট নিন",
         "record": "রেকর্ড",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "পাবলিশ URL কপি করুন",
-        "shareEmbed": "শেয়ার ও এম্বেড…",
         "editPathConfig": "পাথ কনফিগ সম্পাদনা করুন",
         "editHooks": "Hooks সম্পাদনা করুন"
       }
@@ -184,6 +170,98 @@
       "showing": "{total}-এর মধ্যে {from}–{to} দেখানো হচ্ছে",
       "previous": "আগের পৃষ্ঠা",
       "next": "পরের পৃষ্ঠা"
+    },
+    "timeline": {
+      "previousDay": "আগের দিন",
+      "nextDay": "পরের দিন",
+      "trackAria": "২৪ ঘণ্টার টাইমলাইন",
+      "spansAria": "রেকর্ড করা অংশ",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} চালান",
+      "durationParts": "{hours} {minutes}",
+      "empty": "এই দিনে কোনো রেকর্ডিং নেই।",
+      "errorTitle": "রেকর্ডিং টাইমলাইন পড়া যায়নি",
+      "unreachableTitle": "MediaMTX-এ পৌঁছানো যাচ্ছে না",
+      "unreachableDescription": "রেকর্ডিং টাইমলাইন MediaMTX থেকে আসে। নিচের ফাইলগুলো ডিস্ক থেকে পড়া হয় এবং এখনও চালানো যায়।"
+    },
+    "enablePlayback": {
+      "title": "রেকর্ডিং প্লেব্যাক চালু করুন",
+      "playbackOff": "MediaMTX-এর প্লেব্যাক সার্ভার বন্ধ আছে।",
+      "notFmp4": "এই স্ট্রিম {format}-এ রেকর্ড করে, আর প্লেব্যাক সার্ভার শুধু fMP4 পড়ে।",
+      "changesIntro": "Connect এই সেটিংগুলো বদলাবে:",
+      "changesAria": "যে পরিবর্তনগুলো করা হবে",
+      "olderNote": "এই পরিবর্তনের আগের রেকর্ডিংগুলো নিচের ফাইল তালিকায় থেকে যাবে।",
+      "apply": "পরিবর্তন প্রয়োগ করুন",
+      "applying": "প্রয়োগ করা হচ্ছে…",
+      "refused": "MediaMTX পরিবর্তনটি প্রত্যাখ্যান করেছে",
+      "override": "এই পাথ নিজের পাথ কনফিগে <code>recordFormat</code> কে {format} এ সেট করে, যা পাথ ডিফল্টকে ওভাররাইড করে। সেখানে এটি <code>fmp4</code> এ সেট করুন।",
+      "openPathConfig": "এই পাথের রেকর্ডিং কনফিগ খুলুন",
+      "pathDefaultsUnreadable": "MediaMTX থেকে পাথ ডিফল্ট পড়া যায়নি।"
+    },
+    "clip": {
+      "title": "ক্লিপ ডাউনলোড",
+      "rangeAria": "ক্লিপের পরিসর",
+      "last5Min": "শেষ ৫ মিনিট",
+      "last15Min": "শেষ ১৫ মিনিট",
+      "last1Hour": "শেষ ১ ঘণ্টা",
+      "custom": "কাস্টম",
+      "start": "শুরু",
+      "durationMinutes": "সময়কাল (মিনিট)",
+      "invalidStart": "সময় HH:MM:SS আকারে লিখুন",
+      "minutesRange": "পূর্ণ মিনিট, ১ থেকে ৬০",
+      "range": "{start} – {end}",
+      "download": "ডাউনলোড",
+      "cancel": "বাতিল",
+      "preparing": "ক্লিপ প্রস্তুত হচ্ছে…",
+      "progress": "{received} প্রাপ্ত · {rate}/সে",
+      "complete": "ক্লিপ ডাউনলোড হয়েছে",
+      "failed": "ক্লিপ ডাউনলোড ব্যর্থ হয়েছে",
+      "noRecordings": "এই পরিসরে কোনো রেকর্ডিং নেই"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "সেশন",
+    "pageSubHeader": "এই মুহূর্তে MediaMTX-এ সংযুক্ত প্রতিটি ক্লায়েন্ট, প্রকাশ বা পাঠ, যেকোনো প্রোটোকলে।",
+    "summary": "{count, plural, one {#টি সেশন} other {#টি সেশন}}",
+    "columns": {
+      "path": "পাথ",
+      "protocol": "প্রোটোকল",
+      "remoteAddr": "দূরবর্তী ঠিকানা",
+      "state": "অবস্থা",
+      "bytesIn": "আগত বাইট",
+      "bytesOut": "বহির্গামী বাইট",
+      "uptime": "আপটাইম",
+      "actions": "কাজ"
+    },
+    "states": {
+      "idle": "নিষ্ক্রিয়",
+      "read": "পাঠ",
+      "publish": "প্রকাশ"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (এই সার্ভারে চালু নেই)",
+      "failed": "{protocol} (পড়া যায়নি)",
+      "unlisted": "তালিকাভুক্ত নয়: {protocols}।",
+      "truncated": "প্রথম {count, number}টি {protocol} সেশন দেখানো হচ্ছে।"
+    },
+    "kick": {
+      "action": "কিক",
+      "confirmTitle": "{path} থেকে {protocol} ক্লায়েন্ট {remoteAddr} কিক করবেন?",
+      "confirmDescription": "MediaMTX এখনই সংযোগটি বিচ্ছিন্ন করবে। এটি নিষেধাজ্ঞা নয়: ক্লায়েন্ট সঙ্গে সঙ্গে আবার সংযুক্ত হতে পারে।",
+      "hlsCaveat": "একটি HLS প্লেয়ার কয়েক সেকেন্ডের মধ্যে আবার প্লেলিস্ট চায় এবং নতুন সেশন পায়, তাই এটি মূলত সেটিকে রিসেট করে।",
+      "cancel": "বাতিল",
+      "confirm": "ক্লায়েন্ট কিক করুন",
+      "toasts": {
+        "success": "{remoteAddr} কিক করা হয়েছে",
+        "alreadyGone": "{remoteAddr} আগেই সংযোগ বিচ্ছিন্ন করেছিল",
+        "errorTitle": "সেশনটি কিক করা যায়নি",
+        "errorDescription": "MediaMTX কিক গ্রহণ করেনি। আবার চেষ্টা করুন।"
+      }
+    },
+    "empty": {
+      "title": "কেউ সংযুক্ত নেই",
+      "lead": "এই মুহূর্তে MediaMTX-এ কোনো প্রকাশক বা পাঠক নেই।"
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX কনফিগ",
-      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।"
+      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · চালু আছে {started}",
+      "tooOldTitle": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ।",
+      "tooOldBody": "কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে। বাকিগুলো এখনও লোড ও সংরক্ষণ হয়।"
     },
     "pathDefaults": {
       "pageHeader": "পাথের ডিফল্ট",
@@ -271,6 +353,22 @@
         "unreachable": "MediaMTX থেকে কোনো সাড়া নেই।"
       }
     },
+    "pathHealth": {
+      "title": "লাইভ অবস্থা",
+      "stateLive": "LIVE",
+      "stateIdle": "নিষ্ক্রিয়",
+      "idleLead": "এই পাথে এখন কিছুই পাবলিশ হচ্ছে না। লাইভ হলেই ট্র্যাক ও কাউন্টার দেখা যাবে।",
+      "unreachable": "এই পাথের অবস্থা পড়তে MediaMTX-এ পৌঁছানো যায়নি।",
+      "uptime": "আপটাইম",
+      "readers": "রিডার",
+      "received": "গৃহীত",
+      "sent": "পাঠানো",
+      "framesInError": "ত্রুটিযুক্ত ফ্রেম",
+      "tracks": "ট্র্যাক",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} দিয়ে প্রকাশ চলছে",
+      "readerTypes": "{types} দিয়ে পড়া হচ্ছে"
+    },
     "pathConfig": {
       "pageHeader": "পাথ কনফিগ · {name}",
       "pageSubHeader": "এই স্ট্রিমের সেটিংস, সার্ভারে সংরক্ষিত।",
@@ -310,6 +408,31 @@
           "success": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফিরে আসা হয়েছে",
           "errorTitle": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফেরা যায়নি",
           "errorDescription": "পাথের কনফিগ এন্ট্রি এখনও রয়েছে। আবার চেষ্টা করুন।"
+        }
+      },
+      "publishRead": {
+        "title": "প্রকাশ ও চালান",
+        "publishTab": "প্রকাশ",
+        "readTab": "চালান",
+        "pullSource": "এই পাথ তার উৎস থেকে স্ট্রিম টেনে আনে; MediaMTX প্রকাশকদের প্রত্যাখ্যান করে।",
+        "readFailed": "সার্ভারের শোনার ঠিকানাগুলো পড়া যায়নি।",
+        "noProtocols": "সার্ভার এর জন্য সব প্রোটোকল বন্ধ রেখেছে।",
+        "copyUrl": "{protocol} URL কপি করুন",
+        "copySnippet": "{protocol}-এর জন্য {client} স্নিপেট কপি করুন",
+        "snippetLabel": "{protocol}-এর জন্য {client} স্নিপেট",
+        "notes": {
+          "whipTracks": "ইনপুটে ভিডিও ও অডিও দুটো ট্র্যাকই থাকলে তবেই FFmpeg 8 WHIP-এ প্রকাশ করে।"
+        },
+        "links": {
+          "systemPlayer": "সিস্টেম প্লেয়ারে খুলুন",
+          "browserPublish": "ব্রাউজার থেকে প্রকাশ করুন",
+          "hlsPage": "MediaMTX-এর HLS পেজ খুলুন",
+          "webrtcPage": "MediaMTX-এর WebRTC পেজ খুলুন"
+        },
+        "toasts": {
+          "copied": "ক্লিপবোর্ডে কপি হয়েছে",
+          "copyFailedTitle": "কপি করা যায়নি",
+          "copyFailedDescription": "ব্রাউজার ক্লিপবোর্ড অ্যাক্সেস আটকে দিয়েছে। টেক্সট নির্বাচন করে নিজে কপি করুন।"
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "লগিং",
         "api": "API",
+        "auth": "প্রমাণীকরণ",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "রেকর্ডিং",
         "pathHooks": "পাথ Hooks",
-        "source": "উৎস"
+        "source": "উৎস",
+        "forward": "ফরোয়ার্ডিং",
+        "resilience": "স্থিতিস্থাপকতা"
       },
       "sectionDescriptions": {
         "logging": "লগ আউটপুট, টাইমআউট এবং গ্লোবাল সীমা।",
         "api": "যে HTTP API MediaMTX Connect নিজে ব্যবহার করে।",
+        "auth": "MediaMTX কীভাবে যাচাই করে কে প্রকাশ করতে, পড়তে বা এর API ব্যবহার করতে পারবে।",
         "hooks": "সংযোগ ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।",
         "rtsp": "RTSP-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
         "rtmp": "RTMP-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
@@ -383,10 +510,14 @@
         "srt": "SRT-এর মাধ্যমে স্ট্রিম প্রকাশ করুন ও পড়ুন।",
         "recording": "স্ট্রিম ডিস্কে রেকর্ড করুন।",
         "pathHooks": "পাথের নিজস্ব লাইফসাইকেল ইভেন্টে MediaMTX যে কমান্ডগুলি চালায়।",
-        "source": "এই পাথের স্ট্রিম কোথা থেকে আসে।"
+        "source": "এই পাথের স্ট্রিম কোথা থেকে আসে।",
+        "forward": "এই পাথের স্ট্রিম অন্য সার্ভারে, যেমন YouTube বা Twitch-এ, পুনরায় প্রকাশ করুন।",
+        "resilience": "সোর্স বন্ধ হয়ে গেলে রিডারদের সংযুক্ত রাখুন, অথবা কেউ দেখার সময়ই কেবল সোর্স টেনে আনুন।"
       },
       "sectionWarnings": {
-        "pathHooks": "হুক সেভ করলে পাথ পুনরায় চালু হয় এবং তার প্রকাশকের সংযোগ বিচ্ছিন্ন হয় — প্রকাশক পুনরায় সংযুক্ত না হওয়া পর্যন্ত স্ট্রিম বন্ধ থাকবে।"
+        "auth": "MediaMTX কীভাবে প্রমাণীকরণ করে তা বদলালে সব ক্লায়েন্টের ওপর প্রভাব পড়ে, Connect-ও বাদ নয় — ভুল সেটিং Connect-কে MediaMTX থেকে বিচ্ছিন্ন করে দিতে পারে।",
+        "pathHooks": "হুক সেভ করলে পাথ পুনরায় চালু হয় এবং তার প্রকাশকের সংযোগ বিচ্ছিন্ন হয় — প্রকাশক পুনরায় সংযুক্ত না হওয়া পর্যন্ত স্ট্রিম বন্ধ থাকবে।",
+        "resilience": "এগুলোর যেকোনোটি সংরক্ষণ করলে পাথটি পুনরায় চালু হয় এবং এর প্রকাশক বিচ্ছিন্ন হয় — পুনরায় সংযোগ না হওয়া পর্যন্ত স্ট্রিম বন্ধ থাকে।"
       },
       "enabled": "সক্রিয়",
       "off": "বন্ধ",
@@ -411,6 +542,15 @@
         "passwordAria": "ICE সার্ভার {index} পাসওয়ার্ড",
         "removeAria": "ICE সার্ভার {index} সরান"
       },
+      "forwardDests": {
+        "add": "গন্তব্য যোগ করুন",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "গন্তব্য {index}",
+        "showAria": "গন্তব্য {index} দেখান",
+        "hideAria": "গন্তব্য {index} লুকান",
+        "removeAria": "গন্তব্য {index} সরান",
+        "plaintextNotice": "MediaMTX এই URL-গুলো, স্ট্রিম কী সহ, তার কনফিগে সাধারণ টেক্সটে সংরক্ষণ করে এবং তার API থেকে অপরিবর্তিত অবস্থায় ফেরত দেয়।"
+      },
       "errors": {
         "invalidSource": "MediaMTX এটি গ্রহণ করবে না। publisher, redirect, rpiCamera, অথবা rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// বা wheps:// দিয়ে শুরু হওয়া একটি URL ব্যবহার করুন।"
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "লেখার কাজের জন্য টাইমআউট।",
         "writeQueueSize": "প্রতি সংযোগে বহির্গামী কিউয়ের আকার। দুইয়ের ঘাত হতে হবে।",
         "udpMaxPayloadSize": "বহির্গামী UDP প্যাকেটের সর্বোচ্চ আকার।",
-        "externalAuthenticationURL": "বাহ্যিক প্রমাণীকরণ সার্ভারের URL, প্রতিটি সংযোগে কল করা হয়।",
         "apiAddress": "HTTP API-এর লিসেন ঠিকানা।",
         "metrics": "Prometheus-সামঞ্জস্যপূর্ণ মেট্রিক প্রকাশ করুন।",
         "metricsAddress": "মেট্রিক এন্ডপয়েন্টের লিসেন ঠিকানা।",
         "pprof": "Go pprof প্রোফাইলিং এন্ডপয়েন্ট প্রকাশ করুন।",
         "pprofAddress": "pprof এন্ডপয়েন্টের লিসেন ঠিকানা।",
+        "authMethod": "MediaMTX কীভাবে ক্লায়েন্টদের প্রমাণীকরণ করে: internal (এর কনফিগে তালিকাভুক্ত ব্যবহারকারী), http (একটি বাহ্যিক HTTP সার্ভার) অথবা jwt (আইডেন্টিটি প্রোভাইডারের টোকেন)।",
+        "authHTTPAddress": "authMethod http হলে প্রতিটি প্রমাণীকরণ অনুরোধের জন্য MediaMTX যে URL-এ কল করে। 2xx প্রতিক্রিয়া কাজটি অনুমোদন করে।",
         "runOnConnect": "ক্লায়েন্ট সংযুক্ত হলে চালানোর কমান্ড।",
         "runOnConnectRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
         "runOnDisconnect": "ক্লায়েন্টের সংযোগ বিচ্ছিন্ন হলে চালানোর কমান্ড।",
@@ -439,13 +580,13 @@
         "multicastIPRange": "মাল্টিকাস্ট ডেলিভারির জন্য ব্যবহৃত IP রেঞ্জ।",
         "multicastRTPPort": "মাল্টিকাস্ট RTP প্যাকেটের পোর্ট।",
         "multicastRTCPPort": "মাল্টিকাস্ট RTCP প্যাকেটের পোর্ট।",
-        "protocols": "RTSP সার্ভার যে ট্রান্সপোর্ট প্রোটোকল গ্রহণ করে (udp, multicast বা tcp)।",
-        "encryption": "TLS এনক্রিপশন নীতি (no, strict বা optional)।",
-        "serverKey": "TLS সার্ভার কী-এর পাথ।",
-        "serverCert": "TLS সার্ভার সার্টিফিকেটের পাথ।",
-        "authMethods": "RTSP সার্ভার যে প্রমাণীকরণ পদ্ধতি গ্রহণ করে (basic বা digest)।",
+        "rtspTransports": "RTSP সার্ভার যে ট্রান্সপোর্ট প্রোটোকল গ্রহণ করে (udp, multicast বা tcp)।",
+        "rtspEncryption": "নিরাপদ RTSPS, SRTP ও SRTCP ভ্যারিয়েন্ট ব্যবহার করুন (no, optional বা strict)।",
+        "rtspServerKey": "TLS সার্ভার কী-এর পাথ।",
+        "rtspServerCert": "TLS সার্ভার সার্টিফিকেটের পাথ।",
+        "rtspAuthMethods": "RTSP সার্ভার যে প্রমাণীকরণ পদ্ধতি গ্রহণ করে (basic বা digest)।",
         "rtmpAddress": "RTMP সার্ভারের লিসেন ঠিকানা।",
-        "rtmpEncryption": "RTMP-এর জন্য TLS এনক্রিপশন নীতি (no, strict বা optional)।",
+        "rtmpEncryption": "RTMP-এর জন্য TLS এনক্রিপশন নীতি (no, optional বা strict)।",
         "rtmpsAddress": "RTMPS (TLS) সার্ভারের লিসেন ঠিকানা।",
         "rtmpServerKey": "RTMPS সার্ভার কী-এর পাথ।",
         "rtmpServerCert": "RTMPS সার্ভার সার্টিফিকেটের পাথ।",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "প্রতিটি সেগমেন্টের ন্যূনতম সময়কাল।",
         "hlsPartDuration": "কম-লেটেন্সি মোডে প্রতিটি অংশের সময়কাল।",
         "hlsSegmentMaxSize": "প্রতিটি সেগমেন্টের সর্বোচ্চ আকার।",
-        "hlsAllowOrigin": "Access-Control-Allow-Origin হেডারের মান।",
+        "hlsAllowOrigins": "অনুমোদিত CORS অরিজিন। ওয়াইল্ডকার্ড কাজ করে, যেমন http://*.example.com।",
         "hlsTrustedProxies": "HLS সার্ভারের সামনে থাকা প্রক্সিগুলির IP বা নেটওয়ার্ক।",
         "hlsDirectory": "RAM-এর পরিবর্তে এই ডিরেক্টরিতে ডিস্কে সেগমেন্ট লিখুন।",
         "webrtcAddress": "WebRTC HTTP সার্ভারের লিসেন ঠিকানা।",
         "webrtcEncryption": "TLS (HTTPS)-এর মাধ্যমে WebRTC পরিবেশন করুন।",
         "webrtcServerKey": "WebRTC সার্ভার কী-এর পাথ।",
         "webrtcServerCert": "WebRTC সার্ভার সার্টিফিকেটের পাথ।",
-        "webrtcAllowOrigin": "Access-Control-Allow-Origin হেডারের মান।",
+        "webrtcAllowOrigins": "অনুমোদিত CORS অরিজিন। ওয়াইল্ডকার্ড কাজ করে, যেমন http://*.example.com। Connect-এর ব্রাউজারে-চলা প্লেয়ারের নিজস্ব অরিজিন অনুমোদিত থাকতে হবে।",
         "webrtcTrustedProxies": "WebRTC সার্ভারের সামনে থাকা প্রক্সিগুলির IP বা নেটওয়ার্ক।",
         "webrtcLocalUDPAddress": "WebRTC ট্র্যাফিকের জন্য ব্যবহৃত স্থানীয় UDP ঠিকানা।",
         "webrtcLocalTCPAddress": "WebRTC ট্র্যাফিকের জন্য ব্যবহৃত স্থানীয় TCP ঠিকানা।",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "অন-ডিমান্ড প্রকাশক চালু হওয়ার জন্য কত সময় অপেক্ষা করতে হবে।",
         "runOnDemandCloseAfter": "শেষ রিডার চলে যাওয়ার এত সময় পরে অন-ডিমান্ড কমান্ড বন্ধ করুন।",
         "runOnUnDemand": "অন-ডিমান্ড কমান্ড বন্ধ হলে চালানোর কমান্ড।",
-        "runOnReady": "স্ট্রিম পড়ার জন্য প্রস্তুত হলে চালানোর কমান্ড।",
-        "runOnReadyRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
-        "runOnNotReady": "স্ট্রিম আর প্রস্তুত না থাকলে চালানোর কমান্ড।",
+        "runOnAvailable": "স্ট্রিম উপলব্ধ হলে চালানোর কমান্ড: কোনো সোর্স প্রকাশ করছে অথবা একটি ফলব্যাক চলছে। আর উপলব্ধ না থাকলে বন্ধ করা হয়।",
+        "runOnAvailableRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
+        "runOnUnavailable": "স্ট্রিম আর উপলব্ধ না থাকলে চালানোর কমান্ড।",
+        "runOnOnline": "স্ট্রিম অনলাইনে এলে চালানোর কমান্ড: এর আসল সোর্স প্রকাশ করছে, ফলব্যাক নয়। অফলাইনে গেলে বন্ধ করা হয়।",
+        "runOnOnlineRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
+        "runOnOffline": "স্ট্রিম আর অনলাইনে না থাকলে চালানোর কমান্ড।",
         "runOnRead": "কোনো ক্লায়েন্ট এই পাথ পড়া শুরু করলে চালানোর কমান্ড।",
         "runOnReadRestart": "কমান্ড বন্ধ হয়ে গেলে পুনরায় চালু করুন।",
         "runOnUnread": "কোনো ক্লায়েন্ট এই পাথ পড়া বন্ধ করলে চালানোর কমান্ড।",
         "runOnRecordSegmentCreate": "রেকর্ডিং সেগমেন্ট তৈরি হলে চালানোর কমান্ড।",
-        "runOnRecordSegmentComplete": "রেকর্ডিং সেগমেন্ট সম্পূর্ণ হলে চালানোর কমান্ড।"
+        "runOnRecordSegmentComplete": "রেকর্ডিং সেগমেন্ট সম্পূর্ণ হলে চালানোর কমান্ড।",
+        "alwaysAvailable": "কিছুই প্রকাশ না করার সময় একটি অফলাইন সেগমেন্ট বারবার চালানো হয় যাতে রিডাররা সংযুক্ত থাকে। স্ট্রিম available থাকে, online নয়। alwaysAvailableFile, অথবা mediamtx.yml-এ সেট করা alwaysAvailableTracks প্রয়োজন। regex বা all_others এন্ট্রিতে এবং sourceOnDemand বা runOnDemand-এর সাথে প্রত্যাখ্যাত হয়।",
+        "alwaysAvailableFile": "MediaMTX সার্ভারের নিজস্ব ফাইল সিস্টেমে থাকা একটি MP4-এর পাথ; Connect এটি আপলোড করে না। ট্র্যাকগুলো AV1, VP9, H265, H264, Opus, MPEG-4 Audio বা LPCM হতে হবে। alwaysAvailableTracks-এর সাথে একত্রে ব্যবহার করা যায় না।",
+        "sourceOnDemand": "অন্তত একজন রিডার সংযুক্ত থাকলেই কেবল সোর্স টেনে আনুন। শুধুমাত্র সেই সোর্সের জন্য যা MediaMTX একটি URL থেকে টানে; source publisher হলে প্রত্যাখ্যাত হয়।",
+        "sourceOnDemandStartTimeout": "হাল ছাড়ার আগে প্রথম রিডার সোর্স available হওয়ার জন্য কতক্ষণ অপেক্ষা করে। MediaMTX-এর ডিফল্ট 10s।",
+        "sourceOnDemandCloseAfter": "শেষ রিডার চলে যাওয়ার পর সোর্স কতক্ষণ খোলা থাকে। MediaMTX-এর ডিফল্ট 10s।"
       },
       "toasts": {
         "success": "MediaMTX কনফিগ সংরক্ষিত হয়েছে",

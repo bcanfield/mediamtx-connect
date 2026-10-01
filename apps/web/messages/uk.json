@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Веб-інтерфейс для MediaMTX. Дивіться трансляції, переглядайте записи та редагуйте конфігурацію в браузері."
-  },
   "Forms": {
     "errors": {
       "required": "Це поле обов'язкове",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Повторити",
-    "loading": "Завантаження…",
     "theme": {
-      "lightMode": "Світла тема",
-      "darkMode": "Темна тема",
       "switchToLight": "Перемкнути на світлу тему",
       "switchToDark": "Перемкнути на темну тему"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "підключено",
-      "offline": "офлайн"
+      "offline": "офлайн",
+      "connectedVersion": "підключено · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect. Деякі налаштування можуть бути відсутні або відхилені."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Наживо",
       "recordings": "Записи",
+      "sessions": "Сеанси",
       "appConfig": "Налаштування застосунку",
       "mediamtxConfig": "Конфігурація MediaMTX",
       "paths": "Шляхи"
@@ -92,10 +84,6 @@
       "stop": "Зупинити",
       "playAria": "Відтворити {streamName}",
       "actionsAria": "Дії з трансляцією",
-      "stub": {
-        "title": "Ще не реалізовано",
-        "description": "Ця дія в дорожній карті — її зафіксовано."
-      },
       "recordError": {
         "title": "Не вдалося змінити запис",
         "description": "MediaMTX відхилив зміну — стан запису цього потоку не змінився."
@@ -117,7 +105,6 @@
         "description": "MediaMTX не зміг отримати кадр — потік може бути офлайн."
       },
       "menu": {
-        "openDetail": "Відкрити сторінку трансляції",
         "viewRecordings": "Переглянути записи",
         "takeSnapshot": "Зробити знімок",
         "record": "Запис",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Скопіювати URL публікації",
-        "shareEmbed": "Поділитися та вбудувати…",
         "editPathConfig": "Змінити конфігурацію шляху",
         "editHooks": "Змінити хуки"
       }
@@ -184,6 +170,98 @@
       "showing": "Показано {from}–{to} з {total}",
       "previous": "Попередня сторінка",
       "next": "Наступна сторінка"
+    },
+    "timeline": {
+      "previousDay": "Попередній день",
+      "nextDay": "Наступний день",
+      "trackAria": "Шкала часу на 24 години",
+      "spansAria": "Записані проміжки",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Відтворити {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Цього дня записів немає.",
+      "errorTitle": "Не вдалося прочитати шкалу записів",
+      "unreachableTitle": "MediaMTX недоступний",
+      "unreachableDescription": "Шкала записів надходить із MediaMTX. Файли нижче читаються з диска й надалі відтворюються."
+    },
+    "enablePlayback": {
+      "title": "Увімкнути відтворення записів",
+      "playbackOff": "Сервер відтворення MediaMTX вимкнено.",
+      "notFmp4": "Цей потік записується у {format}, а сервер відтворення читає лише fMP4.",
+      "changesIntro": "Connect змінить ці налаштування:",
+      "changesAria": "Зміни",
+      "olderNote": "Записи, зроблені до цієї зміни, залишаться у списку файлів нижче.",
+      "apply": "Застосувати зміни",
+      "applying": "Застосування…",
+      "refused": "MediaMTX відхилив зміну",
+      "override": "Цей шлях задає <code>recordFormat</code> = {format} у власній конфігурації шляху, яка перевизначає типові значення шляхів. Установіть там <code>fmp4</code>.",
+      "openPathConfig": "Відкрити налаштування запису цього шляху",
+      "pathDefaultsUnreadable": "Не вдалося прочитати типові значення шляхів із MediaMTX."
+    },
+    "clip": {
+      "title": "Завантажити фрагмент",
+      "rangeAria": "Діапазон фрагмента",
+      "last5Min": "Останні 5 хв",
+      "last15Min": "Останні 15 хв",
+      "last1Hour": "Остання 1 год",
+      "custom": "Власний",
+      "start": "Початок",
+      "durationMinutes": "Тривалість (хв)",
+      "invalidStart": "Введіть час у форматі ГГ:ХХ:СС",
+      "minutesRange": "Ціле число хвилин, від 1 до 60",
+      "range": "{start} – {end}",
+      "download": "Завантажити",
+      "cancel": "Скасувати",
+      "preparing": "Підготовка фрагмента…",
+      "progress": "отримано {received} · {rate}/с",
+      "complete": "Фрагмент завантажено",
+      "failed": "Не вдалося завантажити фрагмент",
+      "noRecordings": "У цьому діапазоні немає записів"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Сеанси",
+    "pageSubHeader": "Усі клієнти, підключені до MediaMTX зараз, що публікують або читають, за будь-яким протоколом.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанси} many {# сеансів} other {# сеансу}}",
+    "columns": {
+      "path": "Шлях",
+      "protocol": "Протокол",
+      "remoteAddr": "Віддалена адреса",
+      "state": "Стан",
+      "bytesIn": "Байт вхідних",
+      "bytesOut": "Байт вихідних",
+      "uptime": "Час роботи",
+      "actions": "Дії"
+    },
+    "states": {
+      "idle": "простій",
+      "read": "читання",
+      "publish": "публікація"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не ввімкнено на цьому сервері)",
+      "failed": "{protocol} (не вдалося прочитати)",
+      "unlisted": "Не показано: {protocols}.",
+      "truncated": "Показано перші {count, number} сеансів {protocol}."
+    },
+    "kick": {
+      "action": "Відключити",
+      "confirmTitle": "Відключити клієнта {protocol} {remoteAddr} від {path}?",
+      "confirmDescription": "MediaMTX одразу розірве зʼєднання. Це не блокування: клієнт може одразу перепідключитися.",
+      "hlsCaveat": "HLS-плеєр за кілька секунд знову запитує плейлист і отримує новий сеанс, тож це здебільшого лише скидає його.",
+      "cancel": "Скасувати",
+      "confirm": "Відключити клієнта",
+      "toasts": {
+        "success": "{remoteAddr} відключено",
+        "alreadyGone": "{remoteAddr} уже відключився",
+        "errorTitle": "Не вдалося відключити сеанс",
+        "errorDescription": "MediaMTX не прийняв запит. Спробуйте ще раз."
+      }
+    },
+    "empty": {
+      "title": "Ніхто не підключений",
+      "lead": "Зараз у MediaMTX немає ні видавців, ні читачів."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Конфігурація MediaMTX",
-      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері."
+      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · працює з {started}",
+      "tooOldTitle": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect.",
+      "tooOldBody": "Деякі налаштування можуть бути відсутні або відхилені. Решта, як і раніше, завантажується та зберігається."
     },
     "pathDefaults": {
       "pageHeader": "Типові значення шляхів",
@@ -271,6 +353,22 @@
         "unreachable": "Немає відповіді від MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Стан у прямому ефірі",
+      "stateLive": "LIVE",
+      "stateIdle": "простій",
+      "idleLead": "Зараз у цей шлях ніхто не публікує. Доріжки та лічильники з'являться, щойно він вийде в ефір.",
+      "unreachable": "Не вдалося зв'язатися з MediaMTX, щоб прочитати стан цього шляху.",
+      "uptime": "Час роботи",
+      "readers": "Читачі",
+      "received": "Отримано",
+      "sent": "Надіслано",
+      "framesInError": "Кадри з помилками",
+      "tracks": "Доріжки",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Триває публікація через {type}",
+      "readerTypes": "Читання через {types}"
+    },
     "pathConfig": {
       "pageHeader": "Конфігурація шляху · {name}",
       "pageSubHeader": "Налаштування цього потоку, зберігаються на сервері.",
@@ -310,6 +408,31 @@
           "success": "Повернуто до успадкованих налаштувань",
           "errorTitle": "Не вдалося повернути успадковані налаштування",
           "errorDescription": "Запис конфігурації шляху досі на місці. Спробуйте ще раз."
+        }
+      },
+      "publishRead": {
+        "title": "Публікація та перегляд",
+        "publishTab": "Публікація",
+        "readTab": "Перегляд",
+        "pullSource": "Цей шлях забирає потік зі свого джерела; MediaMTX відхиляє тих, хто публікує.",
+        "readFailed": "Не вдалося прочитати адреси, які слухає сервер.",
+        "noProtocols": "На сервері вимкнено всі протоколи для цього.",
+        "copyUrl": "Копіювати URL {protocol}",
+        "copySnippet": "Копіювати фрагмент {client} для {protocol}",
+        "snippetLabel": "Фрагмент {client} для {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 публікує через WHIP, лише якщо вхідний потік має і відео-, і аудіодоріжку."
+        },
+        "links": {
+          "systemPlayer": "Відкрити в системному плеєрі",
+          "browserPublish": "Публікувати з браузера",
+          "hlsPage": "Відкрити HLS-сторінку MediaMTX",
+          "webrtcPage": "Відкрити WebRTC-сторінку MediaMTX"
+        },
+        "toasts": {
+          "copied": "Скопійовано в буфер обміну",
+          "copyFailedTitle": "Не вдалося скопіювати",
+          "copyFailedDescription": "Браузер заблокував доступ до буфера обміну. Виділіть текст і скопіюйте його вручну."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Журнали",
         "api": "API",
+        "auth": "Автентифікація",
         "hooks": "Хуки",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Запис",
         "pathHooks": "Хуки шляху",
-        "source": "Джерело"
+        "source": "Джерело",
+        "forward": "Пересилання",
+        "resilience": "Стійкість"
       },
       "sectionDescriptions": {
         "logging": "Вивід журналів, тайм-аути та глобальні обмеження.",
         "api": "HTTP API, який використовує сам MediaMTX Connect.",
+        "auth": "Як MediaMTX перевіряє, кому дозволено публікувати, читати або використовувати його API.",
         "hooks": "Команди, які MediaMTX виконує під час подій підключення.",
         "rtsp": "Публікація та читання трансляцій через RTSP.",
         "rtmp": "Публікація та читання трансляцій через RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Публікація та читання трансляцій через SRT.",
         "recording": "Записувати потоки на диск.",
         "pathHooks": "Команди, які MediaMTX виконує під час власних подій життєвого циклу шляху.",
-        "source": "Звідки надходить потік цього шляху."
+        "source": "Звідки надходить потік цього шляху.",
+        "forward": "Повторно публікувати потік цього шляху на інші сервери, як-от YouTube або Twitch.",
+        "resilience": "Тримайте читачів підключеними, коли джерело зникає, або отримуйте джерело лише поки хтось дивиться."
       },
       "sectionWarnings": {
-        "pathHooks": "Збереження хука перезапускає шлях і від’єднує його джерело публікації — потік зникне, доки джерело не під’єднається знову."
+        "auth": "Зміна способу автентифікації в MediaMTX стосується всіх клієнтів, зокрема Connect — неправильне налаштування може відрізати Connect від MediaMTX.",
+        "pathHooks": "Збереження хука перезапускає шлях і від’єднує його джерело публікації — потік зникне, доки джерело не під’єднається знову.",
+        "resilience": "Збереження будь-якого з цих параметрів перезапускає шлях і відключає його видавця — потік переривається, доки він не перепідключиться."
       },
       "enabled": "Увімкнено",
       "off": "Вимкнено",
@@ -411,6 +542,15 @@
         "passwordAria": "Пароль сервера ICE {index}",
         "removeAria": "Видалити сервер ICE {index}"
       },
+      "forwardDests": {
+        "add": "Додати призначення",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Призначення {index}",
+        "showAria": "Показати призначення {index}",
+        "hideAria": "Сховати призначення {index}",
+        "removeAria": "Вилучити призначення {index}",
+        "plaintextNotice": "MediaMTX зберігає ці URL, разом із ключами потоку, відкритим текстом у своїй конфігурації та повертає їх без маскування через свій API."
+      },
       "errors": {
         "invalidSource": "MediaMTX не прийме це значення. Використовуй publisher, redirect, rpiCamera або URL, що починається з rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// чи wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Тайм-аут операцій запису.",
         "writeQueueSize": "Розмір вихідної черги на з'єднання. Має бути степенем двійки.",
         "udpMaxPayloadSize": "Максимальний розмір вихідних UDP-пакетів.",
-        "externalAuthenticationURL": "URL зовнішнього сервера автентифікації, викликається при кожному підключенні.",
         "apiAddress": "Адреса прослуховування HTTP API.",
         "metrics": "Експортувати метрики, сумісні з Prometheus.",
         "metricsAddress": "Адреса прослуховування ендпоінта метрик.",
         "pprof": "Відкрити ендпоінт профілювання Go pprof.",
         "pprofAddress": "Адреса прослуховування ендпоінта pprof.",
+        "authMethod": "Як MediaMTX автентифікує клієнтів: internal (користувачі з його конфігурації), http (зовнішній HTTP-сервер) або jwt (токени від провайдера ідентифікації).",
+        "authHTTPAddress": "URL, який MediaMTX викликає під час кожного запиту автентифікації, коли authMethod дорівнює http. Відповідь 2xx дозволяє дію.",
         "runOnConnect": "Команда, що виконується при підключенні клієнта.",
         "runOnConnectRestart": "Перезапускати команду, якщо вона завершилася.",
         "runOnDisconnect": "Команда, що виконується при відключенні клієнта.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "Діапазон IP-адрес для multicast-доставки.",
         "multicastRTPPort": "Порт для multicast RTP-пакетів.",
         "multicastRTCPPort": "Порт для multicast RTCP-пакетів.",
-        "protocols": "Транспортні протоколи, які приймає сервер RTSP (udp, multicast або tcp).",
-        "encryption": "Політика TLS-шифрування (no, strict або optional).",
-        "serverKey": "Шлях до ключа TLS-сервера.",
-        "serverCert": "Шлях до сертифіката TLS-сервера.",
-        "authMethods": "Методи автентифікації, які приймає сервер RTSP (basic або digest).",
+        "rtspTransports": "Транспортні протоколи, які приймає сервер RTSP (udp, multicast або tcp).",
+        "rtspEncryption": "Використовувати захищені варіанти RTSPS, SRTP і SRTCP (no, optional або strict).",
+        "rtspServerKey": "Шлях до ключа TLS-сервера.",
+        "rtspServerCert": "Шлях до сертифіката TLS-сервера.",
+        "rtspAuthMethods": "Методи автентифікації, які приймає сервер RTSP (basic або digest).",
         "rtmpAddress": "Адреса прослуховування сервера RTMP.",
-        "rtmpEncryption": "Політика TLS-шифрування для RTMP (no, strict або optional).",
+        "rtmpEncryption": "Політика TLS-шифрування для RTMP (no, optional або strict).",
         "rtmpsAddress": "Адреса прослуховування сервера RTMPS (TLS).",
         "rtmpServerKey": "Шлях до ключа сервера RTMPS.",
         "rtmpServerCert": "Шлях до сертифіката сервера RTMPS.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Мінімальна тривалість кожного сегмента.",
         "hlsPartDuration": "Тривалість кожної частини в режимі низької затримки.",
         "hlsSegmentMaxSize": "Максимальний розмір кожного сегмента.",
-        "hlsAllowOrigin": "Значення заголовка Access-Control-Allow-Origin.",
+        "hlsAllowOrigins": "Дозволені джерела CORS. Підстановні символи працюють, як у http://*.example.com.",
         "hlsTrustedProxies": "IP-адреси або мережі проксі, розташованих перед сервером HLS.",
         "hlsDirectory": "Записувати сегменти на диск у цей каталог замість RAM.",
         "webrtcAddress": "Адреса прослуховування HTTP-сервера WebRTC.",
         "webrtcEncryption": "Роздавати WebRTC через TLS (HTTPS).",
         "webrtcServerKey": "Шлях до ключа сервера WebRTC.",
         "webrtcServerCert": "Шлях до сертифіката сервера WebRTC.",
-        "webrtcAllowOrigin": "Значення заголовка Access-Control-Allow-Origin.",
+        "webrtcAllowOrigins": "Дозволені джерела CORS. Підстановні символи працюють, як у http://*.example.com. Для вбудованого в браузер плеєра Connect потрібно дозволити його власне джерело.",
         "webrtcTrustedProxies": "IP-адреси або мережі проксі, розташованих перед сервером WebRTC.",
         "webrtcLocalUDPAddress": "Локальна UDP-адреса для трафіку WebRTC.",
         "webrtcLocalTCPAddress": "Локальна TCP-адреса для трафіку WebRTC.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Скільки чекати на запуск джерела публікації на вимогу.",
         "runOnDemandCloseAfter": "Зупиняти команду на вимогу через цей час після виходу останнього читача.",
         "runOnUnDemand": "Команда, що виконується при зупинці команди на вимогу.",
-        "runOnReady": "Команда, що виконується, коли потік готовий до читання.",
-        "runOnReadyRestart": "Перезапускати команду, якщо вона завершилася.",
-        "runOnNotReady": "Команда, що виконується, коли потік більше не готовий.",
+        "runOnAvailable": "Команда, що виконується, коли потік стає доступним: джерело публікує або відтворюється резервний потік. Зупиняється, коли потік перестає бути доступним.",
+        "runOnAvailableRestart": "Перезапускати команду, якщо вона завершилася.",
+        "runOnUnavailable": "Команда, що виконується, коли потік більше не доступний.",
+        "runOnOnline": "Команда, що виконується, коли потік виходить в онлайн: публікує його справжнє джерело, а не резервний потік. Зупиняється, коли потік переходить в офлайн.",
+        "runOnOnlineRestart": "Перезапускати команду, якщо вона завершилася.",
+        "runOnOffline": "Команда, що виконується, коли потік більше не в онлайні.",
         "runOnRead": "Команда, що виконується, коли клієнт починає читати цей шлях.",
         "runOnReadRestart": "Перезапускати команду, якщо вона завершилася.",
         "runOnUnread": "Команда, що виконується, коли клієнт припиняє читати цей шлях.",
         "runOnRecordSegmentCreate": "Команда, що виконується при створенні сегмента запису.",
-        "runOnRecordSegmentComplete": "Команда, що виконується при завершенні сегмента запису."
+        "runOnRecordSegmentComplete": "Команда, що виконується при завершенні сегмента запису.",
+        "alwaysAvailable": "Поки нічого не публікується, по колу відтворюється офлайн-сегмент, щоб читачі залишалися підключеними. Потік лишається available, але не online. Потрібен alwaysAvailableFile або alwaysAvailableTracks, заданий у mediamtx.yml. Відхиляється для запису з regex або all_others і разом із sourceOnDemand або runOnDemand.",
+        "alwaysAvailableFile": "Шлях до MP4 у файловій системі самого сервера MediaMTX; Connect його не завантажує. Доріжки мають бути AV1, VP9, H265, H264, Opus, MPEG-4 Audio або LPCM. Не можна поєднувати з alwaysAvailableTracks.",
+        "sourceOnDemand": "Отримувати джерело лише поки підключено хоча б одного читача. Лише для джерела, яке MediaMTX отримує за URL; відхиляється, коли source дорівнює publisher.",
+        "sourceOnDemandStartTimeout": "Скільки перший читач чекає, поки джерело стане available, перш ніж здатися. Типово в MediaMTX — 10s.",
+        "sourceOnDemandCloseAfter": "Скільки джерело лишається відкритим після відходу останнього читача. Типово в MediaMTX — 10s."
       },
       "toasts": {
         "success": "Конфігурацію MediaMTX збережено",

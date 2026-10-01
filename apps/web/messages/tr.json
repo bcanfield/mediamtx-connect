@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX için web arayüzü. Akışları izleyin, kayıtlara göz atın ve yapılandırmayı tarayıcıdan düzenleyin."
-  },
   "Forms": {
     "errors": {
       "required": "Bu alan zorunludur",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Tekrar dene",
-    "loading": "Yükleniyor…",
     "theme": {
-      "lightMode": "Açık mod",
-      "darkMode": "Koyu mod",
       "switchToLight": "Açık temaya geç",
       "switchToDark": "Koyu temaya geç"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "bağlı",
-      "offline": "çevrimdışı"
+      "offline": "çevrimdışı",
+      "connectedVersion": "bağlı · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski. Bazı ayarlar eksik olabilir veya reddedilebilir."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Canlı",
       "recordings": "Kayıtlar",
+      "sessions": "Oturumlar",
       "appConfig": "Uygulama yapılandırması",
       "mediamtxConfig": "MediaMTX yapılandırması",
       "paths": "Yollar"
@@ -92,10 +84,6 @@
       "stop": "Durdur",
       "playAria": "{streamName} akışını oynat",
       "actionsAria": "Akış eylemleri",
-      "stub": {
-        "title": "Henüz uygulanmadı",
-        "description": "Bu eylem yol haritasında — kayda geçirildi."
-      },
       "recordError": {
         "title": "Kayıt değiştirilemedi",
         "description": "MediaMTX değişikliği reddetti — bu yayının kayıt durumu değişmedi."
@@ -117,7 +105,6 @@
         "description": "MediaMTX bir kare yakalayamadı — akış çevrimdışı olabilir."
       },
       "menu": {
-        "openDetail": "Akış detayını aç",
         "viewRecordings": "Kayıtları görüntüle",
         "takeSnapshot": "Anlık görüntü al",
         "record": "Kayıt",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Yayın URL'lerini kopyala",
-        "shareEmbed": "Paylaş ve göm…",
         "editPathConfig": "Yol yapılandırmasını düzenle",
         "editHooks": "Hook'ları düzenle"
       }
@@ -184,6 +170,98 @@
       "showing": "{total} sonuçtan {from}–{to} gösteriliyor",
       "previous": "Önceki sayfa",
       "next": "Sonraki sayfa"
+    },
+    "timeline": {
+      "previousDay": "Önceki gün",
+      "nextDay": "Sonraki gün",
+      "trackAria": "24 saatlik zaman çizelgesi",
+      "spansAria": "Kaydedilen aralıklar",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} oynat",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Bu günde kayıt yok.",
+      "errorTitle": "Kayıt zaman çizelgesi okunamadı",
+      "unreachableTitle": "MediaMTX'e ulaşılamıyor",
+      "unreachableDescription": "Kayıt zaman çizelgesi MediaMTX'ten gelir. Aşağıdaki dosyalar diskten okunur ve oynatılmaya devam eder."
+    },
+    "enablePlayback": {
+      "title": "Kayıt oynatmayı aç",
+      "playbackOff": "MediaMTX'in oynatma sunucusu kapalı.",
+      "notFmp4": "Bu yayın {format} biçiminde kaydediyor ve oynatma sunucusu yalnızca fMP4 okur.",
+      "changesIntro": "Connect şu ayarları değiştirecek:",
+      "changesAria": "Yapılacak değişiklikler",
+      "olderNote": "Bu değişiklikten önceki kayıtlar aşağıdaki dosya listesinde kalır.",
+      "apply": "Değişiklikleri uygula",
+      "applying": "Uygulanıyor…",
+      "refused": "MediaMTX değişikliği reddetti",
+      "override": "Bu yol kendi yol yapılandırmasında <code>recordFormat</code> değerini {format} olarak ayarlıyor ve bu, yol varsayılanlarını geçersiz kılıyor. Orada <code>fmp4</code> olarak ayarlayın.",
+      "openPathConfig": "Bu yolun kayıt yapılandırmasını aç",
+      "pathDefaultsUnreadable": "Yol varsayılanları MediaMTX'ten okunamadı."
+    },
+    "clip": {
+      "title": "Klibi indir",
+      "rangeAria": "Klip aralığı",
+      "last5Min": "Son 5 dk",
+      "last15Min": "Son 15 dk",
+      "last1Hour": "Son 1 sa",
+      "custom": "Özel",
+      "start": "Başlangıç",
+      "durationMinutes": "Süre (dk)",
+      "invalidStart": "Saati SS:DD:sn biçiminde girin",
+      "minutesRange": "Tam dakika, 1 ile 60 arası",
+      "range": "{start} – {end}",
+      "download": "İndir",
+      "cancel": "İptal",
+      "preparing": "Klip hazırlanıyor…",
+      "progress": "{received} alındı · {rate}/sn",
+      "complete": "Klip indirildi",
+      "failed": "Klip indirilemedi",
+      "noRecordings": "Bu aralıkta kayıt yok"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Oturumlar",
+    "pageSubHeader": "Şu anda MediaMTX’e bağlı her istemci, yayın yapan veya okuyan, her protokolde.",
+    "summary": "{count, plural, other {# oturum}}",
+    "columns": {
+      "path": "Yol",
+      "protocol": "Protokol",
+      "remoteAddr": "Uzak adres",
+      "state": "Durum",
+      "bytesIn": "Gelen bayt",
+      "bytesOut": "Giden bayt",
+      "uptime": "Çalışma süresi",
+      "actions": "İşlemler"
+    },
+    "states": {
+      "idle": "boşta",
+      "read": "okuma",
+      "publish": "yayın"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (bu sunucuda etkin değil)",
+      "failed": "{protocol} (okunamadı)",
+      "unlisted": "Listelenmeyenler: {protocols}.",
+      "truncated": "İlk {count, number} {protocol} oturumu gösteriliyor."
+    },
+    "kick": {
+      "action": "At",
+      "confirmTitle": "{protocol} istemcisi {remoteAddr}, {path} yolundan atılsın mı?",
+      "confirmDescription": "MediaMTX bağlantıyı şimdi keser. Bu bir yasak değildir: istemci hemen yeniden bağlanabilir.",
+      "hlsCaveat": "Bir HLS oynatıcı birkaç saniye içinde oynatma listesini yeniden ister ve yeni bir oturum alır, bu yüzden bu çoğunlukla onu yalnızca sıfırlar.",
+      "cancel": "İptal",
+      "confirm": "İstemciyi at",
+      "toasts": {
+        "success": "{remoteAddr} atıldı",
+        "alreadyGone": "{remoteAddr} zaten bağlantıyı kesmişti",
+        "errorTitle": "Oturum atılamadı",
+        "errorDescription": "MediaMTX isteği kabul etmedi. Tekrar deneyin."
+      }
+    },
+    "empty": {
+      "title": "Kimse bağlı değil",
+      "lead": "MediaMTX’in şu anda yayıncısı veya okuyucusu yok."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX yapılandırması",
-      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir."
+      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · çalışma başlangıcı {started}",
+      "tooOldTitle": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski.",
+      "tooOldBody": "Bazı ayarlar eksik olabilir veya reddedilebilir. Geri kalanı yüklenmeye ve kaydedilmeye devam eder."
     },
     "pathDefaults": {
       "pageHeader": "Yol varsayılanları",
@@ -271,6 +353,22 @@
         "unreachable": "MediaMTX'ten yanıt alınamadı."
       }
     },
+    "pathHealth": {
+      "title": "Canlı durum",
+      "stateLive": "LIVE",
+      "stateIdle": "boşta",
+      "idleLead": "Şu anda bu yola hiçbir şey yayın yapmıyor. Parçalar ve sayaçlar yayın başlar başlamaz görünür.",
+      "unreachable": "Bu yolun durumunu okumak için MediaMTX'e ulaşılamadı.",
+      "uptime": "Çalışma süresi",
+      "readers": "Okuyucular",
+      "received": "Alınan",
+      "sent": "Gönderilen",
+      "framesInError": "Hatalı kareler",
+      "tracks": "Parçalar",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "{type} üzerinden yayın yapılıyor",
+      "readerTypes": "{types} üzerinden okunuyor"
+    },
     "pathConfig": {
       "pageHeader": "Yol yapılandırması · {name}",
       "pageSubHeader": "Bu yayının ayarları, sunucuya kaydedilir.",
@@ -310,6 +408,31 @@
           "success": "Devralınan ayarlara geri dönüldü",
           "errorTitle": "Devralınan ayarlara geri dönülemedi",
           "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
+        }
+      },
+      "publishRead": {
+        "title": "Yayınla ve oynat",
+        "publishTab": "Yayınla",
+        "readTab": "Oynat",
+        "pullSource": "Bu yol yayını kaynağından çeker; MediaMTX yayıncıları reddeder.",
+        "readFailed": "Sunucunun dinleme adresleri okunamadı.",
+        "noProtocols": "Sunucu bunun için tüm protokolleri kapatmış.",
+        "copyUrl": "{protocol} URL'sini kopyala",
+        "copySnippet": "{protocol} için {client} parçacığını kopyala",
+        "snippetLabel": "{protocol} için {client} parçacığı",
+        "notes": {
+          "whipTracks": "FFmpeg 8, WHIP üzerinden yalnızca girişte hem video hem ses izi olduğunda yayın yapar."
+        },
+        "links": {
+          "systemPlayer": "Sistem oynatıcısında aç",
+          "browserPublish": "Tarayıcıdan yayınla",
+          "hlsPage": "MediaMTX HLS sayfasını aç",
+          "webrtcPage": "MediaMTX WebRTC sayfasını aç"
+        },
+        "toasts": {
+          "copied": "Panoya kopyalandı",
+          "copyFailedTitle": "Kopyalanamadı",
+          "copyFailedDescription": "Tarayıcı pano erişimini engelledi. Metni seçip kendiniz kopyalayın."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Günlük kaydı",
         "api": "API",
+        "auth": "Kimlik doğrulama",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Kayıt",
         "pathHooks": "Yol Hook’ları",
-        "source": "Kaynak"
+        "source": "Kaynak",
+        "forward": "Yönlendirme",
+        "resilience": "Dayanıklılık"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
         "api": "MediaMTX Connect'in kendisinin kullandığı HTTP API.",
+        "auth": "MediaMTX'in kimlerin yayın yapabileceğini, okuyabileceğini veya API'sini kullanabileceğini nasıl denetlediği.",
         "hooks": "MediaMTX'in bağlantı olaylarında çalıştırdığı komutlar.",
         "rtsp": "RTSP üzerinden akış yayınlayın ve okuyun.",
         "rtmp": "RTMP üzerinden akış yayınlayın ve okuyun.",
@@ -383,10 +510,14 @@
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
         "recording": "Akışları diske kaydeder.",
         "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar.",
-        "source": "Bu yolun akışının nereden geldiği."
+        "source": "Bu yolun akışının nereden geldiği.",
+        "forward": "Bu yolun akışını YouTube veya Twitch gibi başka sunuculara yeniden yayınlayın.",
+        "resilience": "Kaynak düştüğünde okuyucuları bağlı tutun veya kaynağı yalnızca biri izlerken çekin."
       },
       "sectionWarnings": {
-        "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir."
+        "auth": "MediaMTX'in kimlik doğrulama biçimini değiştirmek Connect dahil tüm istemcileri etkiler — yanlış bir ayar Connect'in MediaMTX ile bağlantısını kesebilir.",
+        "pathHooks": "Bir hook’u kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayıncı yeniden bağlanana kadar akış kesilir.",
+        "resilience": "Bunlardan herhangi birini kaydetmek yolu yeniden başlatır ve yayıncısının bağlantısını keser — yayın yeniden bağlanana kadar kesilir."
       },
       "enabled": "Etkin",
       "off": "Kapalı",
@@ -411,6 +542,15 @@
         "passwordAria": "ICE sunucusu {index} parolası",
         "removeAria": "ICE sunucusu {index} kaldır"
       },
+      "forwardDests": {
+        "add": "Hedef ekle",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Hedef {index}",
+        "showAria": "Hedef {index} göster",
+        "hideAria": "Hedef {index} gizle",
+        "removeAria": "Hedef {index} kaldır",
+        "plaintextNotice": "MediaMTX bu URL'leri, akış anahtarları dahil, yapılandırmasında düz metin olarak saklar ve API'sinden maskelemeden döndürür."
+      },
       "errors": {
         "invalidSource": "MediaMTX bunu kabul etmez. publisher, redirect, rpiCamera ya da rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// veya wheps:// ile başlayan bir URL kullan."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Yazma işlemleri için zaman aşımı.",
         "writeQueueSize": "Bağlantı başına giden kuyruğun boyutu. İkinin kuvveti olmalıdır.",
         "udpMaxPayloadSize": "Giden UDP paketlerinin en büyük boyutu.",
-        "externalAuthenticationURL": "Her bağlantıda çağrılan harici kimlik doğrulama sunucusunun URL'si.",
         "apiAddress": "HTTP API'nin dinleme adresi.",
         "metrics": "Prometheus uyumlu metrikleri yayımla.",
         "metricsAddress": "Metrik uç noktasının dinleme adresi.",
         "pprof": "Go pprof profilleme uç noktasını yayımla.",
         "pprofAddress": "pprof uç noktasının dinleme adresi.",
+        "authMethod": "MediaMTX istemcilerin kimliğini nasıl doğrular: internal (yapılandırmasında listelenen kullanıcılar), http (harici bir HTTP sunucusu) veya jwt (bir kimlik sağlayıcıdan gelen belirteçler).",
+        "authHTTPAddress": "authMethod http olduğunda MediaMTX'in her kimlik doğrulama isteğinde çağırdığı URL. 2xx yanıtı işleme izin verir.",
         "runOnConnect": "Bir istemci bağlandığında çalıştırılacak komut.",
         "runOnConnectRestart": "Komut sonlanırsa yeniden başlat.",
         "runOnDisconnect": "Bir istemcinin bağlantısı kesildiğinde çalıştırılacak komut.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "Multicast dağıtımı için kullanılan IP aralığı.",
         "multicastRTPPort": "Multicast RTP paketleri için bağlantı noktası.",
         "multicastRTCPPort": "Multicast RTCP paketleri için bağlantı noktası.",
-        "protocols": "RTSP sunucusunun kabul ettiği taşıma protokolleri (udp, multicast veya tcp).",
-        "encryption": "TLS şifreleme politikası (no, strict veya optional).",
-        "serverKey": "TLS sunucu anahtarının yolu.",
-        "serverCert": "TLS sunucu sertifikasının yolu.",
-        "authMethods": "RTSP sunucusunun kabul ettiği kimlik doğrulama yöntemleri (basic veya digest).",
+        "rtspTransports": "RTSP sunucusunun kabul ettiği taşıma protokolleri (udp, multicast veya tcp).",
+        "rtspEncryption": "Güvenli varyantları kullanın: RTSPS, SRTP ve SRTCP (no, optional veya strict).",
+        "rtspServerKey": "TLS sunucu anahtarının yolu.",
+        "rtspServerCert": "TLS sunucu sertifikasının yolu.",
+        "rtspAuthMethods": "RTSP sunucusunun kabul ettiği kimlik doğrulama yöntemleri (basic veya digest).",
         "rtmpAddress": "RTMP sunucusunun dinleme adresi.",
-        "rtmpEncryption": "RTMP için TLS şifreleme politikası (no, strict veya optional).",
+        "rtmpEncryption": "RTMP için TLS şifreleme politikası (no, optional veya strict).",
         "rtmpsAddress": "RTMPS (TLS) sunucusunun dinleme adresi.",
         "rtmpServerKey": "RTMPS sunucu anahtarının yolu.",
         "rtmpServerCert": "RTMPS sunucu sertifikasının yolu.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Her segmentin asgari süresi.",
         "hlsPartDuration": "Düşük gecikme modunda her parçanın süresi.",
         "hlsSegmentMaxSize": "Her segmentin en büyük boyutu.",
-        "hlsAllowOrigin": "Access-Control-Allow-Origin başlığının değeri.",
+        "hlsAllowOrigins": "İzin verilen CORS kaynakları. Joker karakterler çalışır, örneğin http://*.example.com.",
         "hlsTrustedProxies": "HLS sunucusunun önüne yerleştirilen proxy'lerin IP'leri veya ağları.",
         "hlsDirectory": "Segmentleri RAM yerine bu dizindeki diske yaz.",
         "webrtcAddress": "WebRTC HTTP sunucusunun dinleme adresi.",
         "webrtcEncryption": "WebRTC'yi TLS (HTTPS) üzerinden sun.",
         "webrtcServerKey": "WebRTC sunucu anahtarının yolu.",
         "webrtcServerCert": "WebRTC sunucu sertifikasının yolu.",
-        "webrtcAllowOrigin": "Access-Control-Allow-Origin başlığının değeri.",
+        "webrtcAllowOrigins": "İzin verilen CORS kaynakları. Joker karakterler çalışır, örneğin http://*.example.com. Connect'in tarayıcı içi oynatıcısı için kendi kaynağına izin verilmesi gerekir.",
         "webrtcTrustedProxies": "WebRTC sunucusunun önüne yerleştirilen proxy'lerin IP'leri veya ağları.",
         "webrtcLocalUDPAddress": "WebRTC trafiği için kullanılan yerel UDP adresi.",
         "webrtcLocalTCPAddress": "WebRTC trafiği için kullanılan yerel TCP adresi.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "İstek üzerine çalışan yayıncının başlaması için beklenecek süre.",
         "runOnDemandCloseAfter": "Son okuyucu ayrıldıktan bu kadar süre sonra istek üzerine çalışan komutu durdurur.",
         "runOnUnDemand": "İstek üzerine çalışan komut durdurulduğunda çalıştırılacak komut.",
-        "runOnReady": "Akış okunmaya hazır olduğunda çalıştırılacak komut.",
-        "runOnReadyRestart": "Komut sonlanırsa yeniden başlatır.",
-        "runOnNotReady": "Akış artık hazır olmadığında çalıştırılacak komut.",
+        "runOnAvailable": "Akış kullanılabilir hale geldiğinde çalıştırılacak komut: bir kaynak yayın yapıyor veya yedek bir akış oynatılıyor. Artık kullanılabilir olmadığında durdurulur.",
+        "runOnAvailableRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnUnavailable": "Akış artık kullanılabilir olmadığında çalıştırılacak komut.",
+        "runOnOnline": "Akış çevrimiçi olduğunda çalıştırılacak komut: yedek değil, gerçek kaynağı yayın yapıyor. Çevrimdışı olduğunda durdurulur.",
+        "runOnOnlineRestart": "Komut sonlanırsa yeniden başlatır.",
+        "runOnOffline": "Akış artık çevrimiçi olmadığında çalıştırılacak komut.",
         "runOnRead": "Bir istemci bu yolu okumaya başladığında çalıştırılacak komut.",
         "runOnReadRestart": "Komut sonlanırsa yeniden başlatır.",
         "runOnUnread": "Bir istemci bu yolu okumayı bıraktığında çalıştırılacak komut.",
         "runOnRecordSegmentCreate": "Bir kayıt parçası oluşturulduğunda çalıştırılacak komut.",
-        "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut."
+        "runOnRecordSegmentComplete": "Bir kayıt parçası tamamlandığında çalıştırılacak komut.",
+        "alwaysAvailable": "Hiçbir şey yayınlamazken, okuyucular bağlı kalsın diye çevrimdışı bir segment döngüde oynatılır. Yayın available kalır, online olmaz. alwaysAvailableFile veya mediamtx.yml içinde ayarlanmış alwaysAvailableTracks gerekir. Regex veya all_others girişinde ve sourceOnDemand ya da runOnDemand ile birlikte reddedilir.",
+        "alwaysAvailableFile": "MediaMTX sunucusunun kendi dosya sistemindeki bir MP4'ün yolu; Connect bunu yüklemez. İzler AV1, VP9, H265, H264, Opus, MPEG-4 Audio veya LPCM olmalıdır. alwaysAvailableTracks ile birlikte kullanılamaz.",
+        "sourceOnDemand": "Kaynağı yalnızca en az bir okuyucu bağlıyken çekin. Yalnızca MediaMTX'in bir URL'den çektiği kaynaklar için; source publisher olduğunda reddedilir.",
+        "sourceOnDemandStartTimeout": "İlk okuyucunun vazgeçmeden önce kaynağın available olmasını ne kadar beklediği. MediaMTX varsayılanı 10s.",
+        "sourceOnDemandCloseAfter": "Son okuyucu ayrıldıktan sonra kaynağın ne kadar açık kaldığı. MediaMTX varsayılanı 10s."
       },
       "toasts": {
         "success": "MediaMTX yapılandırması kaydedildi",

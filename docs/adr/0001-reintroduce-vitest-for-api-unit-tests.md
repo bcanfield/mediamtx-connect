@@ -5,7 +5,7 @@
 
 ## Context
 
-The Next.js → Vite/Hono migration dropped the old Vitest layers (they targeted Prisma, server actions, and `instrumentation.ts`), leaving Playwright E2E plus a Docker image smoke test as the only behavioral gates. `docs/debt/20260714231521-vitest-layers-not-ported.md` tracks this, and `docs/TESTING.md` named Vitest as the intended replacement without one being installed.
+The Next.js → Vite/Hono migration dropped the old Vitest layers (they targeted Prisma, server actions, and `instrumentation.ts`), leaving Playwright E2E plus a Docker image smoke test as the only behavioral gates. That gap was tracked as debt, and `docs/TESTING.md` named Vitest as the intended replacement without one being installed.
 
 The live snapshot cron added in `apps/api/src/jobs.ts` forced the issue. Its risky logic is invisible to a browser: it spawns one `ffmpeg` per ready stream, writes via tmp+rename so `/latest` never serves a half-written PNG, arms a 15s SIGKILL for stalled cameras, and parses an RTSP port out of MediaMTX's `rtspAddress`. E2E can only observe that a PNG eventually appears — it cannot assert that the tmp file is discarded on a non-zero exit, or that a hung ffmpeg is killed rather than accumulating every 30s. Both failures are silent in production, which is the same class of silent failure that let MediaMTX record to a directory nothing read for 2.5 hours.
 
@@ -29,4 +29,4 @@ Scope is deliberately narrow: `jobs.ts` only. The rest of the debt entry (contra
 
 ## Payoff trigger
 
-None — this is not deferred work. The remaining uncovered modules stay tracked in `docs/debt/20260714231521-vitest-layers-not-ported.md`.
+None — this is not deferred work. The remaining uncovered modules are tracked as GitHub issues.

@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>L'interface web de <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Regardez les flux en direct, parcourez les enregistrements, modifiez n'importe quelle clé de configuration — depuis votre navigateur.</p>
+Regardez les flux en direct, parcourez les enregistrements et modifiez votre configuration MediaMTX depuis le navigateur.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -56,11 +56,11 @@ Regardez les flux en direct, parcourez les enregistrements, modifiez n'importe q
 
 MediaMTX est un excellent serveur de streaming sans interface. Connect est le front-end qui lui manque : un conteneur qui dialogue avec l'API de MediaMTX et la transforme en mur de caméras, en archive d'enregistrements et en éditeur de configuration.
 
-C'est un compagnon, pas un remplaçant. Chaque écran s'appuie sur ce que MediaMTX expose déjà : un path, un endpoint, un hook `runOn*`, un protocole qu'il sert nativement. Aucune vidéo stockée, aucun média relayé, aucune base de données.
+C'est un compagnon, pas un remplaçant. Chaque écran correspond à quelque chose que MediaMTX expose déjà : un path, un endpoint d'API, un hook `runOn*`, un protocole qu'il sert nativement. Aucune vidéo stockée, aucun média relayé, aucune base de données.
 
 ## Démarrage rapide
 
-Images multi-arch (`linux/amd64`, `linux/arm64`) — Docker télécharge la bonne.
+Images multi-arch (`linux/amd64`, `linux/arm64`) ; Docker télécharge la bonne.
 
 **MediaMTX tourne déjà ?** Ajoutez Connect à côté :
 
@@ -68,12 +68,14 @@ Images multi-arch (`linux/amd64`, `linux/arm64`) — Docker télécharge la bonn
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
+  -e REMOTE_MEDIAMTX_URL=http://<host-your-browser-uses> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
+  -v mediamtx-connect-screenshots:/screenshots \
   bcanfield/mediamtx-connect:latest
 ```
 
-**Vous partez de rien ?** Le compose fourni démarre les deux :
+**Vous partez de rien ?** Le compose fourni construit Connect et le lance à côté de MediaMTX :
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -92,42 +94,57 @@ Ouvrez ensuite <http://localhost:3000>.
 
 Tous les path connus de MediaMTX, en grille de 2 à 4 colonnes.
 
-- **WebRTC ou HLS, carte par carte.** `AUTO` bascule sur HLS sans bruit, `LOW-LAT` exige WebRTC, `COMPAT` impose HLS — et chaque carte annonce le transport réellement obtenu.
-- **Des captures même à l'arrêt.** Une tâche de fond garde une image récente sur chaque carte, avec son âge sur la pastille.
-- **Télémétrie en direct.** Codecs, spectateurs et durée en ligne, issus de la liste des path.
+- **WebRTC ou HLS, carte par carte.** `AUTO` bascule sans bruit, `LOW-LAT` exige WebRTC, `COMPAT` impose HLS. Chaque carte annonce le transport réellement obtenu.
+- **Des captures même à l'arrêt.** Une tâche de fond garde une image récente sur chaque carte, avec son âge sur la pastille. Besoin d'une image fraîche tout de suite ? Prenez-la depuis le menu de la carte.
+- **Télémétrie en direct.** Codecs, nombre de spectateurs et durée en ligne, issus directement de la liste des path.
 - **Un état d'enregistrement honnête.** Les cartes indiquent si un flux enregistre *effectivement* ; un état que Connect n'a pas pu lire s'affiche comme inconnu, jamais comme désactivé.
-- **URL de publication dans le presse-papiers.** RTSP, RTMP et SRT, construites à partir des adresses d'écoute du serveur lui-même.
+- **URL de publication dans le presse-papiers.** RTSP, RTMP et SRT, construites à partir des adresses d'écoute du serveur lui-même. La page de chaque path va plus loin avec un panneau de publication et de lecture : tous les protocoles que sert le serveur, y compris WHIP, WHEP, HLS et les variantes TLS, avec des extraits ffmpeg, GStreamer, OBS, ffplay et VLC prêts à copier.
 
 ### Enregistrements
 
-- Les MP4 de chaque flux, groupés par jour, avec vignettes automatiques.
-- Un lecteur qui se déplie sur place, navigable via des requêtes HTTP Range.
+- Une frise journalière par flux, issue du serveur de lecture de MediaMTX : les plages enregistrées et les trous entre elles, chacune lisible. Si la lecture est désactivée, Connect liste les changements de configuration exacts dont elle a besoin et les applique en un clic.
+- Téléchargement d'extraits : n'importe quelle plage jusqu'à une heure (ou les 5 dernières minutes, 15 minutes ou la dernière heure) en un seul MP4 simple, assemblé à travers les segments par MediaMTX sans réencodage.
+- Des segments MP4 ou MPEG-TS par flux, groupés par jour, avec vignettes générées automatiquement.
+- Un lecteur intégré qui se déplie sur place, navigable via des requêtes HTTP Range.
 - Des téléchargements en flux, avec progression en direct et annulation.
 - Appuyez sur `/` pour filtrer.
 
+### Sessions
+
+- **Tous les connectés, dans un seul tableau.** Éditeurs et lecteurs en RTSP, RTSPS, RTMP, RTMPS, SRT, WebRTC et HLS, avec adresse distante, octets entrants et sortants, et durée de connexion, rafraîchis toutes les 5 secondes.
+- **Expulsez un client** après confirmation. Il peut se reconnecter ; une expulsion n'est pas un bannissement.
+
 ### La configuration, sans YAML
 
-- **Toute la configuration du serveur** — 65 contrôles typés et validés répartis entre Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC et SRT.
-- **Path defaults et overrides par path**, sur les portées d'où MediaMTX les sert. Enregistrer un flux couvert par un joker écrit une entrée creuse : les clés non touchées continuent d'hériter.
-- **Les 15 hooks `runOn*`**, avec un avertissement là où enregistrer redémarre le path.
-- **Écritures creuses** — seulement les clés modifiées.
+- **La configuration du serveur :** 66 contrôles typés et validés répartis entre Logging, API, Authentication, Hooks, RTSP, RTMP, HLS, WebRTC et SRT.
+- **Path defaults et overrides par path**, sur les portées d'où MediaMTX les sert. Enregistrer un flux couvert par un joker écrit une entrée creuse : les clés non touchées continuent de suivre les valeurs par défaut.
+- **Un catalogue des path** avec badges en direct et regex, un formulaire guidé « ajouter une caméra RTSP », et l'annulation ou la suppression de l'entrée propre à n'importe quel path (avec un avertissement si quelqu'un est connecté).
+- **L'état en direct sur la page de chaque path :** pistes, lecteurs, octets transférés, images en erreur et durée en ligne, rafraîchis toutes les 5 secondes. Un path sur lequel rien n'est publié apparaît inactif, pas en panne.
+- **De la résilience sur chaque path :** un fallback toujours disponible qui boucle un clip hors ligne pendant que la caméra est en panne, et une récupération à la demande qui n'ouvre la source que lorsque quelqu'un regarde.
+- **Chaque hook `runOn*`**, avec un avertissement là où enregistrer redémarre le path.
+- **Retransmission :** poussez un path vers YouTube, Twitch ou un autre serveur via la liste native `forward` de MediaMTX, avec les clés de stream masquées et sans redémarrage du path.
+- **Écritures creuses.** Seules les clés que vous avez modifiées sont envoyées.
 
 ### Exploitation
 
-Un seul processus pour l'API, la SPA et les médias · multi-arch · `GET /health` · logs structurés · PWA · clair et sombre · 30 langues · aucune base de données.
+Un seul processus pour l'API, la SPA et les médias · multi-arch · `GET /api/health` · version de MediaMTX dans l'en-tête · logs structurés · installable en PWA · sombre et clair · 30 langues · aucune base de données.
 
 ## Variables d'environnement
 
 Elles ne servent qu'au premier démarrage. Tout reste modifiable dans **Config**.
 
-| Variable | Par défaut | Rôle |
+| Variable | Valeur par défaut dans l'image | Rôle |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Où Connect joint l'API de MediaMTX depuis l'intérieur de son conteneur |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Où Connect joint l'API de MediaMTX |
 | `MEDIAMTX_API_PORT` | `9997` | Port de l'API MediaMTX |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Chemin hôte monté pour les enregistrements (compose uniquement) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Où sont rangées les vignettes |
+| `REMOTE_MEDIAMTX_URL` | `http://localhost` | Où le *navigateur* joint MediaMTX pour la lecture. À définir dès que le navigateur n'est pas sur le serveur |
+| `MEDIAMTX_RECORDINGS_DIR` | `/recordings` | Où Connect lit les enregistrements |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Où vont les captures et les vignettes |
+| `DATA_DIR` | `/data` | Où se trouve `config.json` |
+| `PORT` | `3000` | Port HTTP |
+| `LOG_LEVEL` | `info` | Niveau de log Pino |
 
-`http://mediamtx` ne se résout que sur le réseau du compose fourni — pour un `docker run` autonome, pointez-le vers votre hôte.
+`http://mediamtx` ne se résout que sur le réseau du compose fourni. Pour un `docker run` autonome, pointez-le vers votre hôte. Avec compose, définissez `REMOTE_MEDIAMTX_HOST` dans `.env` au lieu de `REMOTE_MEDIAMTX_URL` : cela règle aussi l'hôte WebRTC que MediaMTX annonce. [`.env.example`](../../.env.example) explique chacune d'elles, et `pnpm dev` utilise des valeurs par défaut sur localhost sans aucun `.env`.
 
 ## Comment ça marche
 
@@ -145,20 +162,20 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-La lecture va du navigateur à MediaMTX. Connect ne déplace que du JSON, plus les enregistrements et vignettes qu'il lit sur le disque.
+La lecture en direct va du navigateur à MediaMTX. Connect déplace du JSON, plus les enregistrements et les vignettes : depuis le disque, ou des plages enregistrées relayées depuis le serveur de lecture de MediaMTX.
 
 ## Documentation
 
 | | |
 |---|---|
-| [Fonctionnalités](../FEATURES.md) | Toutes les capacités, routes et procédures livrées |
-| [Architecture](../../ARCHITECTURE.md) | Comment les pièces s'assemblent |
+| [Fonctionnalités](../../docs/FEATURES.md) | Toutes les capacités, routes et procédures livrées |
+| [Architecture](../../docs/ARCHITECTURE.md) | Comment les pièces s'assemblent |
 | [Contribuer](../../CONTRIBUTING.md) | Environnement de dev, scripts, processus de PR |
 | [Exemples](../../examples/) | Caméra Raspberry Pi, faux flux pour les tests |
 
 ## Contribuer
 
-Les issues et les PR sont bienvenues. `pnpm install && pnpm dev` vous donne la stack complète avec des données de test — voyez [CONTRIBUTING.md](../../CONTRIBUTING.md), et notez que les titres de PR sont des conventional commits. Nous suivons un [Code de Conduite](../../CODE_OF_CONDUCT.md).
+Les issues et les PR sont bienvenues. `pnpm install && pnpm dev` vous donne la stack complète avec des données de test. Voyez [CONTRIBUTING.md](../../CONTRIBUTING.md), et notez que les titres de PR sont des conventional commits. Nous suivons un [Code de Conduite](../../CODE_OF_CONDUCT.md).
 
 ## Licence
 

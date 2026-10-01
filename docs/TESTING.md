@@ -15,7 +15,7 @@ Reference for what to test, where it lives, and which tool runs it. Update this 
 | E2E | Playwright | Only what needs a real server: live MediaMTX round-trips, WHEP over a real peer connection, an ffmpeg snapshot, accessibility of the rendered document | `tests/e2e/*.spec.ts` |
 | Image smoke | Docker + curl in CI | `docker build` + `/api/health` against the production image | `.github/workflows/ci.yml` |
 
-**215 Vitest tests (73 api + 136 web + 6 scripts), 24 Playwright tests.** ADR 0005's change 1 is now complete: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
+ADR 0005 moved most coverage down the stack: the recordings index and detail pages, the App Config form, the primary nav, locale switching, the streams grid and toolbar, and the SPA fallback all moved down out of Playwright. What remains in E2E is only what a stub router cannot answer — writes to a live MediaMTX, a real WHEP peer connection, an ffmpeg capture, and axe over the rendered document.
 
 ## Component tests
 
@@ -63,9 +63,9 @@ E2E_ALL_BROWSERS=1 pnpm test:e2e   # add firefox/webkit/mobile (what nightly run
 
 `pnpm verify` reproduces the CI `build` job exactly — including `pnpm build`, which is why a Vite or tsdown config error cannot pass here and then fail there. It needs no Docker and no browsers.
 
-`pnpm check` is the inner loop. It lints only the changed files, typechecks the affected packages, runs only the tests your edit can reach, and skips `i18n:check` unless a message catalogue or a README moved. It runs its steps concurrently, because each carries a fixed startup cost that dominates its real work: ESLint takes ~2s to resolve its flat config whether it checks one file or four hundred.
+`pnpm check` is the inner loop. It lints only the changed files, typechecks the affected packages, runs only the tests your edit can reach, and skips `i18n:check` unless a message catalogue, a README or `docs/i18n/` moved. It runs its steps concurrently, because each carries a fixed startup cost that dominates its real work: ESLint takes ~2s to resolve its flat config whether it checks one file or four hundred.
 
-Both are runnable by an agent in CI, which is the point — see `AGENTS.md`. Neither needs the E2E stack.
+Neither needs Docker or the E2E stack.
 
 ## Conventions
 
@@ -75,7 +75,7 @@ Both are runnable by an agent in CI, which is the point — see `AGENTS.md`. Nei
 - **A test you haven't seen fail isn't a test.** Break the line it covers and confirm it goes red before moving on.
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
-- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `recording-row`, `save-bar`).
+- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `stream-summary-card`, `recording-row`, `save-bar`, `source-preview`, and `field-<key>` on config rows).
 - **Scope an assertion when the same string appears twice.** A card's "7 recordings" chip and the toolbar's "7 recordings" summary both match a bare `getByText`, and the unscoped version passes on the toolbar alone while the chip is missing. Use `within()` or `toHaveTextContent` on the element you mean.
 - **Don't assert on a library's behaviour and call it ours.** TanStack Link sets its own prefix-matched `aria-current`, so asserting the current tab through a rendered header tests Link, not `isActiveRoute`. Pure routing rules live in their own module with a `logic`-project test — that is why `nav-active.ts` exists apart from `app-header.tsx`.
 - **A `.test.ts` under `apps/web/src` runs in the `logic` project, in node.** Importing a `.tsx` module from one drags React, the router and the orpc client into a node environment, and the failure is a wall of `socket hang up`. Extract the pure function instead.
@@ -87,7 +87,7 @@ Both are runnable by an agent in CI, which is the point — see `AGENTS.md`. Nei
 
 ## E2E projects
 
-`playwright.config.ts` runs `chromium` only by default — **24 tests in 7 files**, down from 56 in 11 before ADR 0005's change 1 landed. It runs every spec, and this is what PRs and local runs get.
+`playwright.config.ts` runs `chromium` only by default. It runs every spec, and this is what PRs and local runs get.
 
 Setting `E2E_ALL_BROWSERS=1` adds four more projects:
 
@@ -100,13 +100,15 @@ Those four now run **only `a11y.spec.ts`**. The rest of what `uiSpecs` used to m
 
 That spec has now landed — `playback.spec.ts` drives WHEP against live MediaMTX — and it is still **chromium only**. Opting it into the other four projects is ADR 0005's payoff trigger, and it wants a deliberate look first: what Playwright's own Firefox and WebKit builds can negotiate over WebRTC is a separate question from what those browsers ship, and a nightly that goes red for the runner's WebRTC support rather than for ours is worse than no nightly coverage.
 
-`path-defaults`, `path-config`, `record-toggle` and `publish-urls` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. `publish-urls` patches the server-wide `rtmpAddress` to a non-default port and restores it (RTMP has no fixture publisher, so moving its port leaves the RTSP streams untouched). The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
+`path-defaults`, `path-config`, `record-toggle`, `publish-urls`, `sessions`, `recording-timeline` and `forwarding` are UI specs that deliberately stay out of the `uiSpecs` pattern: they write to live MediaMTX, and `fullyParallel` would have five projects racing the same key — each capturing a different "original" to restore. One browser is the correct number for a spec that mutates shared server state. `publish-urls` patches the server-wide `rtmpAddress` to a non-default port and restores it (RTMP has no fixture publisher, so moving its port leaves the RTSP streams untouched). The pattern is anchored on `/` for this reason: unanchored, it matched any spec whose name merely *ends* in `config.spec.ts`, which silently opted `path-config` into all five.
 
 `path-config` and `record-toggle` additionally run `mode: 'serial'`. Each shares one mutable resource — a stream's config entry — and materializing it changes what the read tests see, so within-file parallelism races them against each other.
 
 Those two also target **different streams** (`stream1` and `stream2`): `fullyParallel` runs spec *files* concurrently within a project, so pointing both at the same entry would race them across files even though each is serial internally.
 
-Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
+`recording-timeline` runs in its own project, `chromium-one-at-a-time`, capped at one worker. The guided card it drives writes path defaults' `recordPath` and global `playback`, and that can't be narrowed to one path, so a second copy of the test would undo the first one's writes mid-test. A normal run never starts two copies, but `--repeat-each` does, in separate workers that `mode: 'serial'` can't hold back. Two more things keep it deterministic. It records `stream4`, which no other spec writes; `record-toggle` turns `stream2`'s recording off for a while. And it waits on the playback server's `/list` for a span recorded after its own write before it looks at the page. It doesn't reload until one renders, because under a full parallel run a page load alone can outlast a short per-try timeout. The `playback` write restarts only MediaMTX's playback server, not its API listener (`closeAPI` in MediaMTX's `core.go` doesn't depend on it), so other specs' API calls don't notice it.
+
+Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/sessions`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates
 
@@ -125,7 +127,7 @@ Playwright traces, screenshots, and HTML report upload on failure only.
 
 **Docs-only changes skip E2E and image smoke.** A `changes` job diffs the PR against its base; if nothing outside `docs/`, `*.md`, or `LICENSE` changed, both expensive jobs are skipped. Note this is the **whole PR** versus its base, not the latest commit — pushing a docs commit onto a branch that also touches code still runs the full gate, which is the intended reading of "can this PR break the app?" It fails open — an unknown base runs everything — and applies to `pull_request` only, so pushes to `main`/`beta` always run the full gate and `release` never depends on a skipped job. The gate is a job-level `if` rather than a top-level `paths-ignore` on purpose: a *skipped job* reports success to branch protection, whereas a skipped *workflow* never reports at all and would leave PRs waiting forever.
 
-> **Renaming a CI job breaks branch protection.** ADR 0004 makes required status checks on `main`/`beta` a precondition for the whole enforcement story, and those rules name jobs by their display name. `Build`, `E2E Tests`, and `Docker image smoke` keep their names for this reason. If you rename one, update the branch protection rule in the same change.
+> **Renaming a CI job breaks branch protection.** The `protect-release-branches` ruleset on `main`/`beta` requires status checks by job display name. `Build`, `E2E Tests`, and `Docker image smoke` keep their names for this reason. If you rename one, update the branch protection rule in the same change.
 
 ## What we explicitly don't test
 

@@ -8,7 +8,7 @@ const link = new RPCLink({
   url: `${window.location.origin}/rpc`,
 })
 
-export const client: ContractRouterClient<typeof contract>
+const client: ContractRouterClient<typeof contract>
   = createORPCClient(link)
 
 export const orpc = createTanstackQueryUtils(client)

@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfață web pentru MediaMTX. Vizionați fluxuri, răsfoiți înregistrări și editați configurația din browser."
-  },
   "Forms": {
     "errors": {
       "required": "Acest câmp este obligatoriu",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Reîncearcă",
-    "loading": "Se încarcă…",
     "theme": {
-      "lightMode": "Mod luminos",
-      "darkMode": "Mod întunecat",
       "switchToLight": "Comută la tema luminoasă",
       "switchToDark": "Comută la tema întunecată"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "conectat",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "conectat · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect. Unele setări pot lipsi sau pot fi refuzate."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Înregistrări",
+      "sessions": "Sesiuni",
       "appConfig": "Configurare aplicație",
       "mediamtxConfig": "Configurare MediaMTX",
       "paths": "Căi"
@@ -92,10 +84,6 @@
       "stop": "Oprește",
       "playAria": "Redă {streamName}",
       "actionsAria": "Acțiuni pentru flux",
-      "stub": {
-        "title": "Încă neimplementat",
-        "description": "Această acțiune este în plan — a fost consemnată."
-      },
       "recordError": {
         "title": "Înregistrarea nu a putut fi modificată",
         "description": "MediaMTX a respins modificarea — înregistrarea acestui flux este neschimbată."
@@ -117,7 +105,6 @@
         "description": "MediaMTX nu a putut captura un cadru — fluxul ar putea fi offline."
       },
       "menu": {
-        "openDetail": "Deschide detaliile fluxului",
         "viewRecordings": "Vezi înregistrările",
         "takeSnapshot": "Fă un instantaneu",
         "record": "Înregistrare",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copiază URL-urile de publicare",
-        "shareEmbed": "Partajează și încorporează…",
         "editPathConfig": "Editează configurația căii",
         "editHooks": "Editează hook-urile"
       }
@@ -184,6 +170,98 @@
       "showing": "Se afișează {from}–{to} din {total}",
       "previous": "Pagina anterioară",
       "next": "Pagina următoare"
+    },
+    "timeline": {
+      "previousDay": "Ziua anterioară",
+      "nextDay": "Ziua următoare",
+      "trackAria": "Cronologie de 24 de ore",
+      "spansAria": "Intervale înregistrate",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Redă {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Nicio înregistrare în această zi.",
+      "errorTitle": "Cronologia înregistrărilor nu a putut fi citită",
+      "unreachableTitle": "MediaMTX nu este accesibil",
+      "unreachableDescription": "Cronologia înregistrărilor vine de la MediaMTX. Fișierele de mai jos sunt citite de pe disc și pot fi redate în continuare."
+    },
+    "enablePlayback": {
+      "title": "Activează redarea înregistrărilor",
+      "playbackOff": "Serverul de redare MediaMTX este oprit.",
+      "notFmp4": "Acest stream înregistrează în {format}, iar serverul de redare citește doar fMP4.",
+      "changesIntro": "Connect va modifica aceste setări:",
+      "changesAria": "Modificări de aplicat",
+      "olderNote": "Înregistrările dinainte de această modificare rămân în lista de fișiere de mai jos.",
+      "apply": "Aplică modificările",
+      "applying": "Se aplică…",
+      "refused": "MediaMTX a refuzat modificarea",
+      "override": "Această cale setează <code>recordFormat</code> la {format} în propria configurație, care suprascrie valorile implicite ale căilor. Setează-l acolo la <code>fmp4</code>.",
+      "openPathConfig": "Deschide configurația de înregistrare a acestei căi",
+      "pathDefaultsUnreadable": "Valorile implicite ale căilor nu au putut fi citite din MediaMTX."
+    },
+    "clip": {
+      "title": "Descarcă clipul",
+      "rangeAria": "Intervalul clipului",
+      "last5Min": "Ultimele 5 min",
+      "last15Min": "Ultimele 15 min",
+      "last1Hour": "Ultima 1 h",
+      "custom": "Personalizat",
+      "start": "Început",
+      "durationMinutes": "Durată (min)",
+      "invalidStart": "Introduceți o oră ca HH:MM:SS",
+      "minutesRange": "Minute întregi, de la 1 la 60",
+      "range": "{start} – {end}",
+      "download": "Descarcă",
+      "cancel": "Anulează",
+      "preparing": "Se pregătește clipul…",
+      "progress": "{received} primiți · {rate}/s",
+      "complete": "Clip descărcat",
+      "failed": "Descărcarea clipului a eșuat",
+      "noRecordings": "Nicio înregistrare în acest interval"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesiuni",
+    "pageSubHeader": "Fiecare client conectat acum la MediaMTX, care publică sau citește, prin orice protocol.",
+    "summary": "{count, plural, one {# sesiune} few {# sesiuni} other {# de sesiuni}}",
+    "columns": {
+      "path": "Cale",
+      "protocol": "Protocol",
+      "remoteAddr": "Adresă la distanță",
+      "state": "Stare",
+      "bytesIn": "Octeți intrați",
+      "bytesOut": "Octeți ieșiți",
+      "uptime": "Timp activ",
+      "actions": "Acțiuni"
+    },
+    "states": {
+      "idle": "inactivă",
+      "read": "citire",
+      "publish": "publicare"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (neactivat pe acest server)",
+      "failed": "{protocol} (nu a putut fi citit)",
+      "unlisted": "Nelistate: {protocols}.",
+      "truncated": "Se afișează primele {count, number} de sesiuni {protocol}."
+    },
+    "kick": {
+      "action": "Deconectează",
+      "confirmTitle": "Deconectezi clientul {protocol} {remoteAddr} de la {path}?",
+      "confirmDescription": "MediaMTX închide conexiunea acum. Nu este o interdicție: clientul se poate reconecta imediat.",
+      "hlsCaveat": "Un player HLS cere din nou playlistul în câteva secunde și primește o sesiune nouă, așa că de obicei doar îl resetează.",
+      "cancel": "Anulează",
+      "confirm": "Deconectează clientul",
+      "toasts": {
+        "success": "{remoteAddr} deconectat",
+        "alreadyGone": "{remoteAddr} se deconectase deja",
+        "errorTitle": "Sesiunea nu a putut fi deconectată",
+        "errorDescription": "MediaMTX nu a acceptat cererea. Încearcă din nou."
+      }
+    },
+    "empty": {
+      "title": "Nimeni nu este conectat",
+      "lead": "MediaMTX nu are acum niciun publicator sau cititor."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Configurare MediaMTX",
-      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server."
+      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · rulează din {started}",
+      "tooOldTitle": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect.",
+      "tooOldBody": "Unele setări pot lipsi sau pot fi refuzate. Restul se încarcă și se salvează în continuare."
     },
     "pathDefaults": {
       "pageHeader": "Valori implicite pentru căi",
@@ -271,6 +353,22 @@
         "unreachable": "Niciun răspuns de la MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Stare live",
+      "stateLive": "LIVE",
+      "stateIdle": "inactiv",
+      "idleLead": "Momentan nimic nu publică pe această cale. Pistele și contoarele apar imediat ce intră în direct.",
+      "unreachable": "Nu s-a putut contacta MediaMTX pentru a citi starea acestei căi.",
+      "uptime": "Timp de funcționare",
+      "readers": "Cititori",
+      "received": "Primit",
+      "sent": "Trimis",
+      "framesInError": "Cadre cu erori",
+      "tracks": "Piste",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Se publică prin {type}",
+      "readerTypes": "Citit prin {types}"
+    },
     "pathConfig": {
       "pageHeader": "Configurare cale · {name}",
       "pageSubHeader": "Setările acestui flux, salvate pe server.",
@@ -310,6 +408,31 @@
           "success": "S-a revenit la setările moștenite",
           "errorTitle": "Nu s-a putut reveni la setările moștenite",
           "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
+        }
+      },
+      "publishRead": {
+        "title": "Publicare și redare",
+        "publishTab": "Publicare",
+        "readTab": "Redare",
+        "pullSource": "Această cale preia streamul de la sursa sa; MediaMTX refuză publisherii.",
+        "readFailed": "Nu s-au putut citi adresele de ascultare ale serverului.",
+        "noProtocols": "Serverul are dezactivate toate protocoalele pentru asta.",
+        "copyUrl": "Copiază URL-ul {protocol}",
+        "copySnippet": "Copiază fragmentul {client} pentru {protocol}",
+        "snippetLabel": "Fragment {client} pentru {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publică prin WHIP doar când intrarea are atât o pistă video, cât și una audio."
+        },
+        "links": {
+          "systemPlayer": "Deschide în playerul sistemului",
+          "browserPublish": "Publică din browser",
+          "hlsPage": "Deschide pagina HLS a MediaMTX",
+          "webrtcPage": "Deschide pagina WebRTC a MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiat în clipboard",
+          "copyFailedTitle": "Nu s-a putut copia",
+          "copyFailedDescription": "Browserul a blocat accesul la clipboard. Selectează textul și copiază-l manual."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Jurnalizare",
         "api": "API",
+        "auth": "Autentificare",
         "hooks": "Hook-uri",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Înregistrare",
         "pathHooks": "Hook-uri de cale",
-        "source": "Sursă"
+        "source": "Sursă",
+        "forward": "Redirecționare",
+        "resilience": "Reziliență"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
         "api": "API-ul HTTP pe care îl folosește chiar MediaMTX Connect.",
+        "auth": "Cum verifică MediaMTX cine poate publica, citi sau folosi API-ul său.",
         "hooks": "Comenzi pe care MediaMTX le rulează la evenimentele de conexiune.",
         "rtsp": "Publicați și citiți fluxuri prin RTSP.",
         "rtmp": "Publicați și citiți fluxuri prin RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Publicați și citiți fluxuri prin SRT.",
         "recording": "Înregistrează fluxurile pe disc.",
         "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii.",
-        "source": "De unde vine fluxul acestei căi."
+        "source": "De unde vine fluxul acestei căi.",
+        "forward": "Republică fluxul acestei căi pe alte servere, precum YouTube sau Twitch.",
+        "resilience": "Păstrează cititorii conectați când sursa cade sau preia sursa doar cât timp se uită cineva."
       },
       "sectionWarnings": {
-        "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează."
+        "auth": "Schimbarea modului în care MediaMTX autentifică se aplică tuturor clienților, inclusiv Connect — o setare greșită poate izola Connect de MediaMTX.",
+        "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează.",
+        "resilience": "Salvarea oricăreia dintre aceste setări repornește calea și deconectează publisherul — streamul se întrerupe până la reconectare."
       },
       "enabled": "Activat",
       "off": "Dezactivat",
@@ -411,6 +542,15 @@
         "passwordAria": "Parola serverului ICE {index}",
         "removeAria": "Elimină serverul ICE {index}"
       },
+      "forwardDests": {
+        "add": "Adaugă destinație",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinația {index}",
+        "showAria": "Afișează destinația {index}",
+        "hideAria": "Ascunde destinația {index}",
+        "removeAria": "Elimină destinația {index}",
+        "plaintextNotice": "MediaMTX stochează aceste URL-uri, inclusiv cheile de flux, în text simplu în configurația sa și le returnează nemascate din API-ul său."
+      },
       "errors": {
         "invalidSource": "MediaMTX nu va accepta această valoare. Folosește publisher, redirect, rpiCamera sau un URL care începe cu rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// sau wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Timpul limită pentru operațiunile de scriere.",
         "writeQueueSize": "Dimensiunea cozii de ieșire per conexiune. Trebuie să fie o putere a lui doi.",
         "udpMaxPayloadSize": "Dimensiunea maximă a pachetelor UDP de ieșire.",
-        "externalAuthenticationURL": "URL-ul unui server extern de autentificare, apelat la fiecare conexiune.",
         "apiAddress": "Adresa de ascultare a API-ului HTTP.",
         "metrics": "Expune metrici compatibile cu Prometheus.",
         "metricsAddress": "Adresa de ascultare a punctului final de metrici.",
         "pprof": "Expune punctul final de profilare Go pprof.",
         "pprofAddress": "Adresa de ascultare a punctului final pprof.",
+        "authMethod": "Cum autentifică MediaMTX clienții: internal (utilizatori listați în configurația sa), http (un server HTTP extern) sau jwt (token-uri de la un furnizor de identitate).",
+        "authHTTPAddress": "URL pe care MediaMTX îl apelează la fiecare cerere de autentificare când authMethod este http. Un răspuns 2xx permite acțiunea.",
         "runOnConnect": "Comandă de rulat când un client se conectează.",
         "runOnConnectRestart": "Repornește comanda dacă se încheie.",
         "runOnDisconnect": "Comandă de rulat când un client se deconectează.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "Intervalul de IP-uri folosit pentru livrarea multicast.",
         "multicastRTPPort": "Portul pentru pachetele RTP multicast.",
         "multicastRTCPPort": "Portul pentru pachetele RTCP multicast.",
-        "protocols": "Protocoalele de transport acceptate de serverul RTSP (udp, multicast sau tcp).",
-        "encryption": "Politica de criptare TLS (no, strict sau optional).",
-        "serverKey": "Calea cheii serverului TLS.",
-        "serverCert": "Calea certificatului serverului TLS.",
-        "authMethods": "Metodele de autentificare acceptate de serverul RTSP (basic sau digest).",
+        "rtspTransports": "Protocoalele de transport acceptate de serverul RTSP (udp, multicast sau tcp).",
+        "rtspEncryption": "Folosește variantele securizate RTSPS, SRTP și SRTCP (no, optional sau strict).",
+        "rtspServerKey": "Calea cheii serverului TLS.",
+        "rtspServerCert": "Calea certificatului serverului TLS.",
+        "rtspAuthMethods": "Metodele de autentificare acceptate de serverul RTSP (basic sau digest).",
         "rtmpAddress": "Adresa de ascultare a serverului RTMP.",
-        "rtmpEncryption": "Politica de criptare TLS pentru RTMP (no, strict sau optional).",
+        "rtmpEncryption": "Politica de criptare TLS pentru RTMP (no, optional sau strict).",
         "rtmpsAddress": "Adresa de ascultare a serverului RTMPS (TLS).",
         "rtmpServerKey": "Calea cheii serverului RTMPS.",
         "rtmpServerCert": "Calea certificatului serverului RTMPS.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Durata minimă a fiecărui segment.",
         "hlsPartDuration": "Durata fiecărei părți în modul cu latență redusă.",
         "hlsSegmentMaxSize": "Dimensiunea maximă a fiecărui segment.",
-        "hlsAllowOrigin": "Valoarea antetului Access-Control-Allow-Origin.",
+        "hlsAllowOrigins": "Originile CORS permise. Metacaracterele funcționează, ca în http://*.example.com.",
         "hlsTrustedProxies": "IP-urile sau rețelele proxy-urilor plasate înaintea serverului HLS.",
         "hlsDirectory": "Scrie segmentele pe disc în acest director în loc de RAM.",
         "webrtcAddress": "Adresa de ascultare a serverului HTTP WebRTC.",
         "webrtcEncryption": "Servește WebRTC prin TLS (HTTPS).",
         "webrtcServerKey": "Calea cheii serverului WebRTC.",
         "webrtcServerCert": "Calea certificatului serverului WebRTC.",
-        "webrtcAllowOrigin": "Valoarea antetului Access-Control-Allow-Origin.",
+        "webrtcAllowOrigins": "Originile CORS permise. Metacaracterele funcționează, ca în http://*.example.com. Playerul Connect din browser are nevoie ca propria origine să fie permisă.",
         "webrtcTrustedProxies": "IP-urile sau rețelele proxy-urilor plasate înaintea serverului WebRTC.",
         "webrtcLocalUDPAddress": "Adresa UDP locală folosită pentru traficul WebRTC.",
         "webrtcLocalTCPAddress": "Adresa TCP locală folosită pentru traficul WebRTC.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Cât se așteaptă pornirea publicatorului la cerere.",
         "runOnDemandCloseAfter": "Oprește comanda la cerere după acest interval de la plecarea ultimului cititor.",
         "runOnUnDemand": "Comandă de rulat când comanda la cerere este oprită.",
-        "runOnReady": "Comandă de rulat când fluxul este gata de citire.",
-        "runOnReadyRestart": "Repornește comanda dacă se încheie.",
-        "runOnNotReady": "Comandă de rulat când fluxul nu mai este gata.",
+        "runOnAvailable": "Comandă de rulat când fluxul devine disponibil: o sursă publică sau rulează una de rezervă. Este oprită când nu mai este disponibil.",
+        "runOnAvailableRestart": "Repornește comanda dacă se încheie.",
+        "runOnUnavailable": "Comandă de rulat când fluxul nu mai este disponibil.",
+        "runOnOnline": "Comandă de rulat când fluxul intră online: sursa sa reală publică, nu una de rezervă. Este oprită când trece offline.",
+        "runOnOnlineRestart": "Repornește comanda dacă se încheie.",
+        "runOnOffline": "Comandă de rulat când fluxul nu mai este online.",
         "runOnRead": "Comandă de rulat când un client începe să citească această cale.",
         "runOnReadRestart": "Repornește comanda dacă se încheie.",
         "runOnUnread": "Comandă de rulat când un client încetează să citească această cale.",
         "runOnRecordSegmentCreate": "Comandă de rulat când este creat un segment de înregistrare.",
-        "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet."
+        "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet.",
+        "alwaysAvailable": "Cât timp nimic nu publică, redă în buclă un segment offline ca cititorii să rămână conectați. Streamul rămâne available, nu online. Necesită alwaysAvailableFile sau alwaysAvailableTracks setat în mediamtx.yml. Refuzat pe o intrare regex sau all_others și împreună cu sourceOnDemand sau runOnDemand.",
+        "alwaysAvailableFile": "Calea unui MP4 pe sistemul de fișiere al serverului MediaMTX însuși; Connect nu îl încarcă. Pistele trebuie să fie AV1, VP9, H265, H264, Opus, MPEG-4 Audio sau LPCM. Nu se poate combina cu alwaysAvailableTracks.",
+        "sourceOnDemand": "Preia sursa doar cât timp cel puțin un cititor este conectat. Doar pentru o sursă pe care MediaMTX o preia de la un URL; refuzat când source este publisher.",
+        "sourceOnDemandStartTimeout": "Cât așteaptă primul cititor ca sursa să devină available înainte să renunțe. Valoarea implicită MediaMTX este 10s.",
+        "sourceOnDemandCloseAfter": "Cât rămâne deschisă sursa după ce pleacă ultimul cititor. Valoarea implicită MediaMTX este 10s."
       },
       "toasts": {
         "success": "Configurarea MediaMTX a fost salvată",

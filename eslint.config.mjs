@@ -10,8 +10,6 @@ export default antfu(
       'apps/api/public',
       // standalone demo-capture rig with throwaway scripts
       'demo/**',
-      // agent-harness scaffolding, untracked (see .git/info/exclude) — not our code
-      '.smallhours-toolkit/**',
     ],
   },
   {
@@ -28,7 +26,7 @@ export default antfu(
     // collide with @antfu/eslint-config (variant exports, nested component
     // props, etc.). We don't hand-edit these files except for re-export
     // tweaks, so loosen the rules here.
-    files: ['apps/web/src/components/ui/**', 'apps/web/src/hooks/use-mobile.ts'],
+    files: ['apps/web/src/components/ui/**'],
     rules: {
       'react-refresh/only-export-components': 'off',
       'react/no-nested-component-definitions': 'off',
@@ -44,17 +42,15 @@ export default antfu(
   },
   {
     // i18n: user-visible strings live in apps/web/messages/*.json — see
-    // docs/I18N.md in the main repo. Bans hardcoded JSX text and translatable
+    // docs/I18N.md. Bans hardcoded JSX text and translatable
     // string props in feature and shared component code. Excludes shadcn
-    // primitives, MediaMTX field labels (intentionally English to mirror
-    // MediaMTX docs), and the locale-switcher (language names are not
-    // translated).
+    // primitives and the locale-switcher (language names are not translated).
+    // MediaMTX field labels pass because they render the config key verbatim
+    // from a variable, never as a literal.
     files: ['apps/web/src/features/**/*.tsx', 'apps/web/src/components/**/*.tsx'],
     ignores: [
       '**/*.test.tsx',
       'apps/web/src/components/ui/**',
-      'apps/web/src/features/mediamtx-config/sections/**',
-      'apps/web/src/features/mediamtx-config/form-fields.tsx',
       'apps/web/src/components/locale-switcher.tsx',
     ],
     rules: {

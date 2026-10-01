@@ -1,10 +1,18 @@
-import type { AppConfig, GlobalConfig, PathConfig, PathDefaults } from '@connect/contract'
+import type { AppConfig, GlobalConfig, PathConfig, PathDefaults, SessionProtocol } from '@connect/contract'
 
 // Minimal hand-rolled client for the handful of MediaMTX endpoints this app
-// uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
-export interface MediaMtxPathReader {
+// uses (of the full v3 API). Key names mirror MediaMTX v1.21.1; CI runs 1.20.0.
+interface MediaMtxPathReader {
   type?: string
   id?: string
+}
+
+// `tracks2` superseded the plain `tracks` string list in v1.19: same codecs,
+// plus the properties the codec was negotiated with. Only video codecs carry
+// dimensions, and MediaMTX sends `codecProps: null` for the ones that don't.
+export interface MediaMtxPathTrack {
+  codec?: string
+  codecProps?: { width?: number, height?: number } | null
 }
 
 export interface MediaMtxPath {
@@ -15,9 +23,18 @@ export interface MediaMtxPath {
   ready?: boolean
   readyTime?: string | null
   tracks?: string[]
+  tracks2?: MediaMtxPathTrack[]
   readers?: MediaMtxPathReader[]
   bytesReceived?: number
   bytesSent?: number
+  // Added after v1.11.3, so absent on the older servers this client still talks
+  // to — and an absent counter is not a counter reading zero.
+  inboundFramesInError?: number
+}
+
+export interface MediaMtxInfo {
+  version?: string
+  started?: string
 }
 
 export interface MediaMtxPathList {
@@ -27,7 +44,7 @@ export interface MediaMtxPathList {
 
 // A config entry as the list endpoint serves it: the sparse override plus the
 // name it is filed under. `PathConfig` carries neither, so it can't be reused.
-export interface MediaMtxPathConf {
+interface MediaMtxPathConf {
   name?: string
   source?: string
 }
@@ -41,6 +58,42 @@ export interface MediaMtxPathConfList {
 // doesn't surface — only the guided add writes it.
 export type MediaMtxPathCreate = PathConfig & {
   rtspTransport?: string
+}
+
+// One session or conn off any protocol's list, with only the fields we read.
+// Which byte counters are real differs by protocol: SRT counts in
+// `bytesReceived`/`bytesSent`, the rest in `inboundBytes`/`outboundBytes` (their
+// `bytes*` are deprecated aliases). HLS sessions have no `state` and no inbound.
+// MediaMTX always sends id, created, remoteAddr and path on every protocol.
+export interface MediaMtxSession {
+  id: string
+  created: string
+  remoteAddr: string
+  state?: string
+  path: string
+  inboundBytes?: number
+  outboundBytes?: number
+  bytesReceived?: number
+  bytesSent?: number
+}
+
+export interface MediaMtxSessionList {
+  pageCount?: number
+  items?: MediaMtxSession[]
+}
+
+// The legacy route names: v1.20.0, the shipped image, serves only these, and
+// v1.21 still serves them next to its new category routes. RTSP is `sessions`,
+// not `conns` — only a session carries a path and state, and only it kicks.
+// HLS is sessions (one per reader), not muxers.
+const SESSION_ROUTES: Record<SessionProtocol, string> = {
+  rtsp: '/rtspsessions',
+  rtsps: '/rtspssessions',
+  rtmp: '/rtmpconns',
+  rtmps: '/rtmpsconns',
+  srt: '/srtconns',
+  webrtc: '/webrtcsessions',
+  hls: '/hlssessions',
 }
 
 // MediaMTX answers a rejected write with `{"error": "..."}`. That reason — a
@@ -72,7 +125,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     const res = await fetch(`${base}${route}`, init)
     if (!res.ok)
       throw new MediaMtxError(res.status, await errorReason(res), `${init?.method ?? 'GET'} ${route}`)
-    if (res.status === 204 || init?.method === 'PATCH' || init?.method === 'DELETE')
+    if (res.status === 204 || (init?.method !== undefined && init.method !== 'GET'))
       return undefined as T
     return await res.json() as T
   }
@@ -91,6 +144,8 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
   const jsonHeaders = { 'Content-Type': 'application/json' }
 
   return {
+    // 404 on MediaMTX older than v1.15.2, which has no /v3/info.
+    info: () => requestOrNull<MediaMtxInfo>('/info'),
     pathsList: () => request<MediaMtxPathList>('/paths/list'),
     pathsGet: (name: string) =>
       requestOrNull<MediaMtxPath>(`/paths/get/${encodeURIComponent(name)}`),
@@ -132,5 +187,64 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     // covers it. 404 when there is no entry under this name.
     configPathDelete: (name: string) =>
       request<void>(`/config/paths/delete/${encodeURIComponent(name)}`, { method: 'DELETE' }),
+
+    // First page only (MediaMTX's default, 100 items). A disabled protocol
+    // isn't routed at all, so its list rejects with a 404 MediaMtxError.
+    sessionsList: (protocol: SessionProtocol) =>
+      request<MediaMtxSessionList>(`${SESSION_ROUTES[protocol]}/list`),
+    // 404 when the session has already gone.
+    sessionsKick: (protocol: SessionProtocol, id: string) =>
+      request<void>(`${SESSION_ROUTES[protocol]}/kick/${encodeURIComponent(id)}`, { method: 'POST' }),
+  }
+}
+
+// One continuous run of recording segments, as the playback server's /list
+// serves it. `url` is built from the Host header of *our* request, so it names
+// a host only the api can reach.
+export interface MediaMtxPlaybackSpan {
+  start: string
+  duration: number
+  url?: string
+}
+
+// MediaMTX listen addresses are `host:port` with the host usually empty
+// (`:9996`). The api reaches MediaMTX on `mediaMtxUrl`, so only the port is kept.
+function portOf(address: string | undefined, fallback: number): number {
+  const port = Number.parseInt(address?.split(':').pop() ?? '', 10)
+  return Number.isNaN(port) ? fallback : port
+}
+
+// MediaMTX's playback server: a separate listener from the v3 API, indexing a
+// path's recording segments into spans and serving any span as one fMP4. Its
+// address comes from global config, so the caller reads that first.
+export function mediaMtxPlayback(config: Pick<AppConfig, 'mediaMtxUrl'>, playbackAddress: string | undefined) {
+  const base = `${config.mediaMtxUrl}:${portOf(playbackAddress, 9996)}`
+
+  return {
+    // 404 is the playback server's answer for a range with no segments in it.
+    list: async (path: string, start: Date, end: Date): Promise<MediaMtxPlaybackSpan[]> => {
+      const query = new URLSearchParams({ path, start: start.toISOString(), end: end.toISOString() })
+      const res = await fetch(`${base}/list?${query}`)
+      if (res.status === 404)
+        return []
+      if (!res.ok)
+        throw new MediaMtxError(res.status, await errorReason(res), 'GET /list')
+      return await res.json() as MediaMtxPlaybackSpan[]
+    },
+
+    // The OK response itself, so the caller can stream its body: a span can be
+    // hours of video. `start` is passed through as the RFC 3339 string it came as.
+    get: async (params: { path: string, start: string, duration: number, format: 'fmp4' | 'mp4' }): Promise<Response> => {
+      const query = new URLSearchParams({
+        path: params.path,
+        start: params.start,
+        duration: String(params.duration),
+        format: params.format,
+      })
+      const res = await fetch(`${base}/get?${query}`)
+      if (!res.ok)
+        throw new MediaMtxError(res.status, await errorReason(res), 'GET /get')
+      return res
+    },
   }
 }
