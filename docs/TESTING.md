@@ -106,6 +106,8 @@ That spec has now landed — `playback.spec.ts` drives WHEP against live MediaMT
 
 Those two also target **different streams** (`stream1` and `stream2`): `fullyParallel` runs spec *files* concurrently within a project, so pointing both at the same entry would race them across files even though each is serial internally.
 
+`recording-timeline` runs in its own project, `chromium-one-at-a-time`, capped at one worker. The guided card it drives writes path defaults' `recordPath` and global `playback`, and that can't be narrowed to one path, so a second copy of the test would undo the first one's writes mid-test. A normal run never starts two copies, but `--repeat-each` does, in separate workers that `mode: 'serial'` can't hold back. Two more things keep it deterministic. It records `stream4`, which no other spec writes; `record-toggle` turns `stream2`'s recording off for a while. And it waits on the playback server's `/list` for a span recorded after its own write before it looks at the page. It doesn't reload until one renders, because under a full parallel run a page load alone can outlast a short per-try timeout. The `playback` write restarts only MediaMTX's playback server, not its API listener (`closeAPI` in MediaMTX's `core.go` doesn't depend on it), so other specs' API calls don't notice it.
+
 Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/sessions`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates

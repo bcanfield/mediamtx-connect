@@ -15,6 +15,12 @@ import { defineConfig, devices } from '@playwright/test'
 // buys nothing.
 const uiSpecs = /\/a11y\.spec\.ts/
 
+// Specs that flip a server-wide setting a second copy of themselves would undo
+// mid-test. `fullyParallel` never runs one test twice at once, but
+// `--repeat-each` (how a flake gets measured) does, in separate workers that
+// `mode: 'serial'` can't hold back. Their own project with one worker can.
+const oneAtATime = /\/recording-timeline\.spec\.ts/
+
 // Opt-in: the nightly workflow sets this, PRs and local runs get chromium only.
 // See docs/adr/0005-fast-test-suite.md.
 const allBrowsers = !!process.env.E2E_ALL_BROWSERS
@@ -36,7 +42,8 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] }, testIgnore: oneAtATime },
+    { name: 'chromium-one-at-a-time', use: { ...devices['Desktop Chrome'] }, testMatch: oneAtATime, workers: 1 },
     ...allBrowsers
       ? [
           { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: uiSpecs },
