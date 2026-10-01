@@ -67,7 +67,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Recordings
 
-- MP4s per stream, grouped by day, with auto-generated thumbnails.
+- MP4 or MPEG-TS segments per stream, grouped by day, with auto-generated thumbnails.
 - An inline player that expands in place, seekable over HTTP range requests.
 - Downloads that stream, with live progress and cancel.
 - Press `/` to filter.

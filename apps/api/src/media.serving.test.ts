@@ -1,7 +1,8 @@
-import { statSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import { media } from './media'
 
@@ -113,6 +114,37 @@ describe('recording download', () => {
     const res = await media.request(`/recordings/stream1/${RECORDING}`)
 
     expect(res.headers.get('content-disposition')).toBeNull()
+  })
+})
+
+// MediaMTX writes `.ts` segments under `recordFormat: mpegts`. A download
+// labelled video/mp4 hands the wrong type to whatever opens it.
+describe('recording content type', () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(path.join(tmpdir(), 'media-type-'))
+    mkdirSync(path.join(root, 's1'))
+    writeFileSync(path.join(root, 's1', 'a.ts'), 'ts')
+    writeFileSync(path.join(root, 's1', 'notes.txt'), 'txt')
+    vi.mocked(getAppConfig).mockResolvedValue({ ...CONFIG, recordingsDirectory: root })
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('serves an MPEG-TS segment as video/mp2t', async () => {
+    const res = await media.request('/recordings/s1/a.ts')
+
+    expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toBe('video/mp2t')
+  })
+
+  it('serves a file that is no known segment as a generic binary', async () => {
+    const res = await media.request('/recordings/s1/notes.txt')
+
+    expect(res.headers.get('content-type')).toBe('application/octet-stream')
   })
 })
 
