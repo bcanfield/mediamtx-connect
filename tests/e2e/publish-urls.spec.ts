@@ -54,8 +54,10 @@ test.describe('Copy publish URLs', () => {
       await expect(page.getByText('Publish URLs copied')).toBeVisible()
 
       const clipboard = await page.evaluate(() => navigator.clipboard.readText())
-      // The RTMP URL carries the port the operator configured, not the default.
-      expect(clipboard).toMatch(new RegExp(`^rtmp://.+:${RTMP_PORT}/${STREAM}$`, 'm'))
+      // The RTMP URL carries the port the operator configured, not the default,
+      // on the browser-facing host (REMOTE_MEDIAMTX_URL) rather than the
+      // 127.0.0.1 the API reaches MediaMTX at.
+      expect(clipboard).toMatch(new RegExp(`^rtmp://localhost:${RTMP_PORT}/${STREAM}$`, 'm'))
       expect(clipboard).not.toContain(':1935/')
     }
     finally {

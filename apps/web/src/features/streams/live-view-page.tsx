@@ -22,14 +22,17 @@ function isConnectedState(
   return state?.status === 'connected'
 }
 
-function publishHost(mediaMtxUrl: string | undefined): string {
-  if (!mediaMtxUrl)
+// Publishers connect from the operator's network, so this is the browser-facing
+// MediaMTX URL, never the one the API reaches it at (`http://mediamtx` under
+// docker-compose).
+function publishHost(remoteMediaMtxUrl: string | null): string {
+  if (!remoteMediaMtxUrl)
     return window.location.hostname
   try {
-    return new URL(mediaMtxUrl).hostname
+    return new URL(remoteMediaMtxUrl).hostname
   }
   catch {
-    return mediaMtxUrl
+    return remoteMediaMtxUrl
   }
 }
 
@@ -37,10 +40,9 @@ export function LiveViewPage() {
   // MediaMTX's WebRTC address and ICE servers come from the global conf rather
   // than from streams.list: they're server-wide, the contract already carries
   // them here, and WHEP needs no per-stream surface of its own.
-  const [streamsQuery, configQuery, globalQuery] = useQueries({
+  const [streamsQuery, globalQuery] = useQueries({
     queries: [
       orpc.streams.list.queryOptions(),
-      orpc.config.app.get.queryOptions(),
       orpc.config.mediamtx.getGlobal.queryOptions(),
     ],
   })
@@ -66,7 +68,7 @@ export function LiveViewPage() {
     [globalQuery.data?.webrtcICEServers2],
   )
 
-  const host = publishHost(configQuery.data?.mediaMtxUrl)
+  const host = publishHost(remoteMediaMtxUrl)
   const targets = useMemo(() => publishTargets(host, globalQuery.data), [host, globalQuery.data])
 
   return (
