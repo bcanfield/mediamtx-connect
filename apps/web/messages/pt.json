@@ -310,6 +310,30 @@
           "errorTitle": "Não foi possível voltar às definições herdadas",
           "errorDescription": "A entrada de configuração do caminho continua lá. Tente novamente."
         }
+      },
+      "publishRead": {
+        "title": "Publicar e reproduzir",
+        "publishTab": "Publicar",
+        "readTab": "Reproduzir",
+        "pullSource": "Este caminho obtém o stream da sua fonte; o MediaMTX recusa publicadores.",
+        "readFailed": "Não foi possível ler os endereços de escuta do servidor.",
+        "noProtocols": "O servidor tem todos os protocolos para isto desativados.",
+        "copyUrl": "Copiar URL {protocol}",
+        "copySnippet": "Copiar o excerto {client} para {protocol}",
+        "notes": {
+          "whipTracks": "O FFmpeg 8 só publica por WHIP quando a entrada tem uma faixa de vídeo e uma de áudio."
+        },
+        "links": {
+          "systemPlayer": "Abrir no leitor do sistema",
+          "browserPublish": "Publicar a partir do navegador",
+          "hlsPage": "Abrir a página HLS do MediaMTX",
+          "webrtcPage": "Abrir a página WebRTC do MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiado para a área de transferência",
+          "copyFailedTitle": "Não foi possível copiar",
+          "copyFailedDescription": "O navegador bloqueou o acesso à área de transferência. Selecione o texto e copie-o manualmente."
+        }
       }
     },
     "saveBar": {

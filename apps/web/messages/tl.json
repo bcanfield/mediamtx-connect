@@ -310,6 +310,30 @@
           "errorTitle": "Hindi maibalik sa minanang mga setting",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
         }
+      },
+      "publishRead": {
+        "title": "I-publish at i-play",
+        "publishTab": "I-publish",
+        "readTab": "I-play",
+        "pullSource": "Kinukuha ng path na ito ang stream mula sa source nito; tinatanggihan ng MediaMTX ang mga publisher.",
+        "readFailed": "Hindi mabasa ang mga listen address ng server.",
+        "noProtocols": "Naka-off sa server ang lahat ng protocol para dito.",
+        "copyUrl": "Kopyahin ang {protocol} URL",
+        "copySnippet": "Kopyahin ang {client} snippet para sa {protocol}",
+        "notes": {
+          "whipTracks": "Nagpa-publish lang ang FFmpeg 8 sa WHIP kapag may video at audio track ang input."
+        },
+        "links": {
+          "systemPlayer": "Buksan sa system player",
+          "browserPublish": "I-publish mula sa browser",
+          "hlsPage": "Buksan ang HLS page ng MediaMTX",
+          "webrtcPage": "Buksan ang WebRTC page ng MediaMTX"
+        },
+        "toasts": {
+          "copied": "Nakopya sa clipboard",
+          "copyFailedTitle": "Hindi makopya",
+          "copyFailedDescription": "Hinarang ng browser ang access sa clipboard. Piliin ang text at kopyahin ito nang mano-mano."
+        }
       }
     },
     "saveBar": {

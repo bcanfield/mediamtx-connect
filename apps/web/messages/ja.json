@@ -310,6 +310,30 @@
           "errorTitle": "継承した設定に戻せませんでした",
           "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
         }
+      },
+      "publishRead": {
+        "title": "配信と再生",
+        "publishTab": "配信",
+        "readTab": "再生",
+        "pullSource": "このパスはソースからストリームを取得するため、MediaMTX は配信者を拒否します。",
+        "readFailed": "サーバーの待ち受けアドレスを読み取れませんでした。",
+        "noProtocols": "サーバーではこの用途のプロトコルがすべて無効です。",
+        "copyUrl": "{protocol} の URL をコピー",
+        "copySnippet": "{protocol} 用の {client} スニペットをコピー",
+        "notes": {
+          "whipTracks": "FFmpeg 8 は、入力に映像トラックと音声トラックの両方がある場合にのみ WHIP で配信します。"
+        },
+        "links": {
+          "systemPlayer": "システムのプレーヤーで開く",
+          "browserPublish": "ブラウザーから配信",
+          "hlsPage": "MediaMTX の HLS ページを開く",
+          "webrtcPage": "MediaMTX の WebRTC ページを開く"
+        },
+        "toasts": {
+          "copied": "クリップボードにコピーしました",
+          "copyFailedTitle": "コピーできませんでした",
+          "copyFailedDescription": "ブラウザーがクリップボードへのアクセスをブロックしました。テキストを選択して手動でコピーしてください。"
+        }
       }
     },
     "saveBar": {

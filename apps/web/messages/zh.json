@@ -310,6 +310,30 @@
           "errorTitle": "无法恢复为继承的设置",
           "errorDescription": "该路径的配置条目仍然存在。请重试。"
         }
+      },
+      "publishRead": {
+        "title": "发布与播放",
+        "publishTab": "发布",
+        "readTab": "播放",
+        "pullSource": "此路径从其源拉取流，MediaMTX 会拒绝发布者。",
+        "readFailed": "无法读取服务器的监听地址。",
+        "noProtocols": "服务器已关闭此处的所有协议。",
+        "copyUrl": "复制 {protocol} URL",
+        "copySnippet": "复制 {protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有当输入同时包含视频轨和音频轨时，FFmpeg 8 才能通过 WHIP 发布。"
+        },
+        "links": {
+          "systemPlayer": "在系统播放器中打开",
+          "browserPublish": "从浏览器发布",
+          "hlsPage": "打开 MediaMTX 的 HLS 页面",
+          "webrtcPage": "打开 MediaMTX 的 WebRTC 页面"
+        },
+        "toasts": {
+          "copied": "已复制到剪贴板",
+          "copyFailedTitle": "无法复制",
+          "copyFailedDescription": "浏览器阻止了剪贴板访问。请选中文本后手动复制。"
+        }
       }
     },
     "saveBar": {

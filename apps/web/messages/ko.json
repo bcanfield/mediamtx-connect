@@ -310,6 +310,30 @@
           "errorTitle": "상속된 설정으로 되돌리지 못했습니다",
           "errorDescription": "경로 설정 항목이 그대로 남아 있습니다. 다시 시도하세요."
         }
+      },
+      "publishRead": {
+        "title": "게시 및 재생",
+        "publishTab": "게시",
+        "readTab": "재생",
+        "pullSource": "이 경로는 소스에서 스트림을 가져오므로 MediaMTX가 게시자를 거부합니다.",
+        "readFailed": "서버의 수신 주소를 읽지 못했습니다.",
+        "noProtocols": "서버에서 이 용도의 프로토콜이 모두 꺼져 있습니다.",
+        "copyUrl": "{protocol} URL 복사",
+        "copySnippet": "{protocol}용 {client} 스니펫 복사",
+        "notes": {
+          "whipTracks": "FFmpeg 8은 입력에 비디오 트랙과 오디오 트랙이 모두 있을 때만 WHIP으로 게시합니다."
+        },
+        "links": {
+          "systemPlayer": "시스템 플레이어에서 열기",
+          "browserPublish": "브라우저에서 게시",
+          "hlsPage": "MediaMTX HLS 페이지 열기",
+          "webrtcPage": "MediaMTX WebRTC 페이지 열기"
+        },
+        "toasts": {
+          "copied": "클립보드에 복사했습니다",
+          "copyFailedTitle": "복사하지 못했습니다",
+          "copyFailedDescription": "브라우저가 클립보드 접근을 차단했습니다. 텍스트를 선택해 직접 복사하세요."
+        }
       }
     },
     "saveBar": {

@@ -310,6 +310,30 @@
           "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
           "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
         }
+      },
+      "publishRead": {
+        "title": "Publiceren & afspelen",
+        "publishTab": "Publiceren",
+        "readTab": "Afspelen",
+        "pullSource": "Dit pad haalt de stream op bij de bron; MediaMTX weigert publishers.",
+        "readFailed": "Kon de luisteradressen van de server niet lezen.",
+        "noProtocols": "De server heeft alle protocollen hiervoor uitgeschakeld.",
+        "copyUrl": "{protocol}-URL kopiëren",
+        "copySnippet": "{client}-fragment voor {protocol} kopiëren",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publiceert via WHIP alleen als de invoer zowel een video- als een audiospoor heeft."
+        },
+        "links": {
+          "systemPlayer": "Openen in systeemspeler",
+          "browserPublish": "Publiceren vanuit de browser",
+          "hlsPage": "HLS-pagina van MediaMTX openen",
+          "webrtcPage": "WebRTC-pagina van MediaMTX openen"
+        },
+        "toasts": {
+          "copied": "Gekopieerd naar het klembord",
+          "copyFailedTitle": "Kopiëren mislukt",
+          "copyFailedDescription": "De browser blokkeerde toegang tot het klembord. Selecteer de tekst en kopieer hem zelf."
+        }
       }
     },
     "saveBar": {

@@ -310,6 +310,30 @@
           "errorTitle": "Kunde inte återgå till ärvda inställningar",
           "errorDescription": "Sökvägens konfigurationspost finns kvar. Försök igen."
         }
+      },
+      "publishRead": {
+        "title": "Publicera och spela upp",
+        "publishTab": "Publicera",
+        "readTab": "Spela upp",
+        "pullSource": "Den här sökvägen hämtar strömmen från sin källa; MediaMTX nekar publicerare.",
+        "readFailed": "Kunde inte läsa serverns lyssningsadresser.",
+        "noProtocols": "Servern har stängt av alla protokoll för detta.",
+        "copyUrl": "Kopiera {protocol}-URL",
+        "copySnippet": "Kopiera {client}-kodsnutten för {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publicerar över WHIP bara när indata har både ett video- och ett ljudspår."
+        },
+        "links": {
+          "systemPlayer": "Öppna i systemspelaren",
+          "browserPublish": "Publicera från webbläsaren",
+          "hlsPage": "Öppna MediaMTX HLS-sida",
+          "webrtcPage": "Öppna MediaMTX WebRTC-sida"
+        },
+        "toasts": {
+          "copied": "Kopierat till urklipp",
+          "copyFailedTitle": "Kunde inte kopiera",
+          "copyFailedDescription": "Webbläsaren blockerade åtkomst till urklipp. Markera texten och kopiera den själv."
+        }
       }
     },
     "saveBar": {

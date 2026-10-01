@@ -310,6 +310,30 @@
           "errorTitle": "Devralınan ayarlara geri dönülemedi",
           "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
         }
+      },
+      "publishRead": {
+        "title": "Yayınla ve oynat",
+        "publishTab": "Yayınla",
+        "readTab": "Oynat",
+        "pullSource": "Bu yol yayını kaynağından çeker; MediaMTX yayıncıları reddeder.",
+        "readFailed": "Sunucunun dinleme adresleri okunamadı.",
+        "noProtocols": "Sunucu bunun için tüm protokolleri kapatmış.",
+        "copyUrl": "{protocol} URL'sini kopyala",
+        "copySnippet": "{protocol} için {client} parçacığını kopyala",
+        "notes": {
+          "whipTracks": "FFmpeg 8, WHIP üzerinden yalnızca girişte hem video hem ses izi olduğunda yayın yapar."
+        },
+        "links": {
+          "systemPlayer": "Sistem oynatıcısında aç",
+          "browserPublish": "Tarayıcıdan yayınla",
+          "hlsPage": "MediaMTX HLS sayfasını aç",
+          "webrtcPage": "MediaMTX WebRTC sayfasını aç"
+        },
+        "toasts": {
+          "copied": "Panoya kopyalandı",
+          "copyFailedTitle": "Kopyalanamadı",
+          "copyFailedDescription": "Tarayıcı pano erişimini engelledi. Metni seçip kendiniz kopyalayın."
+        }
       }
     },
     "saveBar": {

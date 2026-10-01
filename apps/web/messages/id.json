@@ -310,6 +310,30 @@
           "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
           "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
         }
+      },
+      "publishRead": {
+        "title": "Publikasikan & putar",
+        "publishTab": "Publikasikan",
+        "readTab": "Putar",
+        "pullSource": "Path ini menarik stream dari sumbernya; MediaMTX menolak publisher.",
+        "readFailed": "Tidak dapat membaca alamat listen server.",
+        "noProtocols": "Server mematikan semua protokol untuk ini.",
+        "copyUrl": "Salin URL {protocol}",
+        "copySnippet": "Salin cuplikan {client} untuk {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 hanya memublikasikan lewat WHIP jika input memiliki trek video dan trek audio."
+        },
+        "links": {
+          "systemPlayer": "Buka di pemutar sistem",
+          "browserPublish": "Publikasikan dari browser",
+          "hlsPage": "Buka halaman HLS MediaMTX",
+          "webrtcPage": "Buka halaman WebRTC MediaMTX"
+        },
+        "toasts": {
+          "copied": "Disalin ke clipboard",
+          "copyFailedTitle": "Tidak dapat menyalin",
+          "copyFailedDescription": "Browser memblokir akses clipboard. Pilih teksnya dan salin secara manual."
+        }
       }
     },
     "saveBar": {

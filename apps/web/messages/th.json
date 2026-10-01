@@ -310,6 +310,30 @@
           "errorTitle": "ย้อนกลับไปใช้การตั้งค่าที่สืบทอดไม่สำเร็จ",
           "errorDescription": "รายการการตั้งค่าของพาธยังอยู่ ลองอีกครั้ง"
         }
+      },
+      "publishRead": {
+        "title": "เผยแพร่และเล่น",
+        "publishTab": "เผยแพร่",
+        "readTab": "เล่น",
+        "pullSource": "พาธนี้ดึงสตรีมจากต้นทางของตัวเอง MediaMTX จึงปฏิเสธผู้เผยแพร่",
+        "readFailed": "อ่านที่อยู่ที่เซิร์ฟเวอร์รับฟังไม่ได้",
+        "noProtocols": "เซิร์ฟเวอร์ปิดทุกโปรโตคอลสำหรับส่วนนี้",
+        "copyUrl": "คัดลอก URL {protocol}",
+        "copySnippet": "คัดลอกสนิปเป็ต {client} สำหรับ {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 เผยแพร่ผ่าน WHIP ได้เฉพาะเมื่ออินพุตมีทั้งแทร็กวิดีโอและแทร็กเสียง"
+        },
+        "links": {
+          "systemPlayer": "เปิดในเครื่องเล่นของระบบ",
+          "browserPublish": "เผยแพร่จากเบราว์เซอร์",
+          "hlsPage": "เปิดหน้า HLS ของ MediaMTX",
+          "webrtcPage": "เปิดหน้า WebRTC ของ MediaMTX"
+        },
+        "toasts": {
+          "copied": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+          "copyFailedTitle": "คัดลอกไม่สำเร็จ",
+          "copyFailedDescription": "เบราว์เซอร์บล็อกการเข้าถึงคลิปบอร์ด เลือกข้อความแล้วคัดลอกเอง"
+        }
       }
     },
     "saveBar": {

@@ -310,6 +310,30 @@
           "errorTitle": "無法還原為繼承的設定",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
         }
+      },
+      "publishRead": {
+        "title": "發佈與播放",
+        "publishTab": "發佈",
+        "readTab": "播放",
+        "pullSource": "此路徑從其來源拉取串流，MediaMTX 會拒絕發佈者。",
+        "readFailed": "無法讀取伺服器的監聽位址。",
+        "noProtocols": "伺服器已關閉此處的所有協定。",
+        "copyUrl": "複製 {protocol} URL",
+        "copySnippet": "複製 {protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有當輸入同時包含視訊軌和音訊軌時，FFmpeg 8 才能透過 WHIP 發佈。"
+        },
+        "links": {
+          "systemPlayer": "在系統播放器中開啟",
+          "browserPublish": "從瀏覽器發佈",
+          "hlsPage": "開啟 MediaMTX 的 HLS 頁面",
+          "webrtcPage": "開啟 MediaMTX 的 WebRTC 頁面"
+        },
+        "toasts": {
+          "copied": "已複製到剪貼簿",
+          "copyFailedTitle": "無法複製",
+          "copyFailedDescription": "瀏覽器封鎖了剪貼簿存取。請選取文字後手動複製。"
+        }
       }
     },
     "saveBar": {

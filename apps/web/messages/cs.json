@@ -310,6 +310,30 @@
           "errorTitle": "Nepodařilo se vrátit zděděná nastavení",
           "errorDescription": "Konfigurační záznam cesty tam pořád je. Zkuste to znovu."
         }
+      },
+      "publishRead": {
+        "title": "Publikování a přehrávání",
+        "publishTab": "Publikovat",
+        "readTab": "Přehrát",
+        "pullSource": "Tato cesta stahuje stream ze svého zdroje; MediaMTX odmítá publikující.",
+        "readFailed": "Nepodařilo se načíst adresy, na kterých server naslouchá.",
+        "noProtocols": "Server má pro tento účel vypnuté všechny protokoly.",
+        "copyUrl": "Kopírovat URL {protocol}",
+        "copySnippet": "Kopírovat úryvek {client} pro {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publikuje přes WHIP jen tehdy, když má vstup video i zvukovou stopu."
+        },
+        "links": {
+          "systemPlayer": "Otevřít v systémovém přehrávači",
+          "browserPublish": "Publikovat z prohlížeče",
+          "hlsPage": "Otevřít stránku HLS v MediaMTX",
+          "webrtcPage": "Otevřít stránku WebRTC v MediaMTX"
+        },
+        "toasts": {
+          "copied": "Zkopírováno do schránky",
+          "copyFailedTitle": "Kopírování se nezdařilo",
+          "copyFailedDescription": "Prohlížeč zablokoval přístup ke schránce. Označte text a zkopírujte ho ručně."
+        }
       }
     },
     "saveBar": {
