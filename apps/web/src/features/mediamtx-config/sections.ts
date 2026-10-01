@@ -2,6 +2,8 @@ import type { GlobalConfigFormData, PathConfigFormData, PathDefaultsFormData } f
 import type { FieldPath, FieldValues } from 'react-hook-form'
 import type { ZodType } from 'zod'
 import {
+  AUTH_METHODS,
+  ENCRYPTION_MODES,
   GlobalConfigSchema,
   isValidPathSource,
   PathConfigSchema,
@@ -9,14 +11,12 @@ import {
 } from '@connect/contract'
 import { z } from 'zod'
 
-type FieldKind = 'text' | 'number' | 'switch' | 'list'
-
 // Field names are MediaMTX config keys verbatim, and are rendered
-// untranslated in every scope below (docs/I18N.md).
-interface SectionField<T extends FieldValues> {
-  name: FieldPath<T>
-  kind: FieldKind
-}
+// untranslated in every scope below (docs/I18N.md). So are enum options, which
+// come from the contract's constants.
+type SectionField<T extends FieldValues>
+  = | { name: FieldPath<T>, kind: 'text' | 'number' | 'switch' | 'list' }
+    | { name: FieldPath<T>, kind: 'enum', options: readonly string[] }
 
 export interface SectionDef<T extends FieldValues> {
   id: string
@@ -28,7 +28,7 @@ export interface SectionDef<T extends FieldValues> {
   warnsOnSave?: boolean
 }
 
-// Board 2e's eight global-scope sections, in scroll order.
+// Board 2e's global-scope sections plus Authentication, in scroll order.
 const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
   {
     id: 'logging',
@@ -40,7 +40,6 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
       { name: 'writeTimeout', kind: 'text' },
       { name: 'writeQueueSize', kind: 'number' },
       { name: 'udpMaxPayloadSize', kind: 'number' },
-      { name: 'externalAuthenticationURL', kind: 'text' },
     ],
   },
   {
@@ -52,6 +51,16 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
       { name: 'metricsAddress', kind: 'text' },
       { name: 'pprof', kind: 'switch' },
       { name: 'pprofAddress', kind: 'text' },
+    ],
+  },
+  // Changing how MediaMTX authenticates applies to every client, Connect's own
+  // API calls included.
+  {
+    id: 'auth',
+    warnsOnSave: true,
+    fields: [
+      { name: 'authMethod', kind: 'enum', options: AUTH_METHODS },
+      { name: 'authHTTPAddress', kind: 'text' },
     ],
   },
   {
@@ -73,11 +82,11 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
       { name: 'multicastIPRange', kind: 'text' },
       { name: 'multicastRTPPort', kind: 'number' },
       { name: 'multicastRTCPPort', kind: 'number' },
-      { name: 'protocols', kind: 'list' },
-      { name: 'encryption', kind: 'text' },
-      { name: 'serverKey', kind: 'text' },
-      { name: 'serverCert', kind: 'text' },
-      { name: 'authMethods', kind: 'list' },
+      { name: 'rtspTransports', kind: 'list' },
+      { name: 'rtspEncryption', kind: 'enum', options: ENCRYPTION_MODES },
+      { name: 'rtspServerKey', kind: 'text' },
+      { name: 'rtspServerCert', kind: 'text' },
+      { name: 'rtspAuthMethods', kind: 'list' },
     ],
   },
   {
@@ -85,7 +94,7 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
     enableField: 'rtmp',
     fields: [
       { name: 'rtmpAddress', kind: 'text' },
-      { name: 'rtmpEncryption', kind: 'text' },
+      { name: 'rtmpEncryption', kind: 'enum', options: ENCRYPTION_MODES },
       { name: 'rtmpsAddress', kind: 'text' },
       { name: 'rtmpServerKey', kind: 'text' },
       { name: 'rtmpServerCert', kind: 'text' },
@@ -105,7 +114,7 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
       { name: 'hlsSegmentDuration', kind: 'text' },
       { name: 'hlsPartDuration', kind: 'text' },
       { name: 'hlsSegmentMaxSize', kind: 'text' },
-      { name: 'hlsAllowOrigin', kind: 'text' },
+      { name: 'hlsAllowOrigins', kind: 'list' },
       { name: 'hlsTrustedProxies', kind: 'list' },
       { name: 'hlsDirectory', kind: 'text' },
     ],
@@ -119,7 +128,7 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
       { name: 'webrtcEncryption', kind: 'switch' },
       { name: 'webrtcServerKey', kind: 'text' },
       { name: 'webrtcServerCert', kind: 'text' },
-      { name: 'webrtcAllowOrigin', kind: 'text' },
+      { name: 'webrtcAllowOrigins', kind: 'list' },
       { name: 'webrtcTrustedProxies', kind: 'list' },
       { name: 'webrtcLocalUDPAddress', kind: 'text' },
       { name: 'webrtcLocalTCPAddress', kind: 'text' },
@@ -168,9 +177,12 @@ const PATH_SECTIONS: SectionDef<PathDefaultsFormData>[] = [
       { name: 'runOnDemandStartTimeout', kind: 'text' },
       { name: 'runOnDemandCloseAfter', kind: 'text' },
       { name: 'runOnUnDemand', kind: 'text' },
-      { name: 'runOnReady', kind: 'text' },
-      { name: 'runOnReadyRestart', kind: 'switch' },
-      { name: 'runOnNotReady', kind: 'text' },
+      { name: 'runOnAvailable', kind: 'text' },
+      { name: 'runOnAvailableRestart', kind: 'switch' },
+      { name: 'runOnUnavailable', kind: 'text' },
+      { name: 'runOnOnline', kind: 'text' },
+      { name: 'runOnOnlineRestart', kind: 'switch' },
+      { name: 'runOnOffline', kind: 'text' },
       { name: 'runOnRead', kind: 'text' },
       { name: 'runOnReadRestart', kind: 'switch' },
       { name: 'runOnUnread', kind: 'text' },
@@ -217,8 +229,9 @@ export const PATH_DEFAULTS_SCOPE: ConfigScope<PathDefaultsFormData> = {
   sections: PATH_SECTIONS,
 }
 
-// `source` is a path's own key — MediaMTX serves it per path, not from
-// pathdefaults — so it heads the per-path scope and appears on no other.
+// MediaMTX serves `source` from path defaults as well, but where a stream comes
+// from belongs to one path. That product choice keeps it on the per-path scope
+// only, at the head of it.
 const SOURCE_SECTION: SectionDef<PathConfigFormData> = {
   id: 'source',
   fields: [{ name: 'source', kind: 'text' }],

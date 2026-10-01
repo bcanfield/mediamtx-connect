@@ -12,6 +12,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
 
 function fromTextarea(event: ChangeEvent<HTMLTextAreaElement>): string[] {
@@ -74,8 +75,9 @@ export function RowShell({
 //
 // Renders nothing for the scopes that inherit from nothing (global, path
 // defaults), which pass no `inheritedValues`, and nothing for a key the
-// inherited scope doesn't hold at all — `source` is a path's own, so there is
-// no default for it to still match.
+// inherited scope doesn't hold at all. That covers `source`: MediaMTX serves it
+// from path defaults, but the inherited values come through `getPathDefaults`,
+// whose output schema leaves it out.
 export function InheritanceMarker({
   inheritedValues,
   name,
@@ -230,6 +232,58 @@ export function ListFieldRow<T extends FieldValues>({
                   field.onBlur()
                 }}
               />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </RowShell>
+      )}
+    />
+  )
+}
+
+// A key MediaMTX accepts only a fixed set of values for. Segmented rather than
+// free text so it can't be emptied: MediaMTX refuses `""` and fails the save.
+export function EnumFieldRow<T extends FieldValues>({
+  control,
+  name,
+  options,
+  inheritedValues,
+}: {
+  control: Control<T>
+  name: FieldPath<T>
+  options: readonly string[]
+  inheritedValues?: Record<string, unknown>
+}) {
+  const help = useFieldHelp(name)
+  const { dirtyFields } = useFormState({ control, name, exact: true })
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <RowShell
+          name={name}
+          help={help}
+          dirty={Boolean((dirtyFields as Record<string, unknown>)[name])}
+          inheritedValues={inheritedValues}
+          value={field.value}
+        >
+          <FormItem className="space-y-1.5">
+            <FormControl>
+              <ToggleGroup
+                type="single"
+                variant="outline"
+                value={field.value ?? ''}
+                // Radix clears the value when the active item is pressed again.
+                onValueChange={next => next && field.onChange(next)}
+                aria-label={name}
+              >
+                {options.map(option => (
+                  <ToggleGroupItem key={option} value={option} className="font-mono">
+                    {option}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
             </FormControl>
             <FormMessage />
           </FormItem>
