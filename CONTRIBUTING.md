@@ -101,6 +101,6 @@ multi-arch image build. semantic-release publishes nothing on a night when no
 releasable commit landed. The train refuses to run if the latest CI run on
 `main` is not green, and `workflow_dispatch` triggers an out-of-band release.
 
-## Questions
+## Questions and decisions
 
-Open an issue.
+Open an issue. This is a one-maintainer project: [@bcanfield](https://github.com/bcanfield) has the final say on direction and on what gets merged, and decisions are made in the open on issues and pull requests.

@@ -17,8 +17,6 @@ pnpm + Turborepo monorepo: Vite + React 19 + TanStack Router SPA (`apps/web`), H
 | Topic | Path |
 |-------|------|
 | Shipped feature inventory (source of truth — read first) | `docs/FEATURES.md` |
-| Ranked idea backlog — unshipped, Top 10 + flat backlog (do **not** treat as features) | `docs/ideas/FEATURES-LONGLIST.md` |
-| Idea catalog overview + cross-cutting brainstorm (links to domain files `01`–`05`) | `docs/ideas/00-index.md` |
 | Monorepo commands, package layout, conventions | `AGENTS.md`, `docs/PROJECT-STRUCTURE.md` |
 | Stack rationale (why Vite/Hono/oRPC/tsdown/catalog) | `docs/STACK.md` |
 | System diagram | `ARCHITECTURE.md` |

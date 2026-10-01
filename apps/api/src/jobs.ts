@@ -53,8 +53,7 @@ function createSpawnGate(limit: number) {
 
 // One ffmpeg per core, with a floor so a single-core host still overlaps two and
 // a ceiling because anything past 8 at once is reasoned, not measured. A 4-core
-// box — what the old flat 4 assumed — still gets 4
-// (docs/debt/20260717153914-snapshot-cap-untuned.md).
+// box — what the old flat 4 assumed — still gets 4.
 const maxSpawnsPerJob = Math.min(8, Math.max(2, os.availableParallelism()))
 
 // Snapshot capture: both the 30s cron and the on-demand mutation acquire here,
