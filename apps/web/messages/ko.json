@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX용 웹 인터페이스. 브라우저에서 스트림을 보고, 녹화를 탐색하며, 설정을 편집할 수 있습니다."
-  },
   "Forms": {
     "errors": {
       "required": "이 필드는 필수입니다",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "다시 시도",
-    "loading": "로드 중…",
     "theme": {
-      "lightMode": "라이트 모드",
-      "darkMode": "다크 모드",
       "switchToLight": "라이트 테마로 전환",
       "switchToDark": "다크 테마로 전환"
     },
@@ -92,10 +81,6 @@
       "stop": "중지",
       "playAria": "{streamName} 재생",
       "actionsAria": "스트림 작업",
-      "stub": {
-        "title": "아직 구현되지 않았습니다",
-        "description": "이 작업은 로드맵에 있습니다 — 기록되었습니다."
-      },
       "recordError": {
         "title": "녹화를 변경할 수 없습니다",
         "description": "MediaMTX가 변경을 거부했습니다 — 이 스트림의 녹화 상태는 그대로입니다."
@@ -117,7 +102,6 @@
         "description": "MediaMTX가 프레임을 가져오지 못했습니다 — 스트림이 오프라인일 수 있습니다."
       },
       "menu": {
-        "openDetail": "스트림 상세 열기",
         "viewRecordings": "녹화 보기",
         "takeSnapshot": "스냅샷 찍기",
         "record": "녹화",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "게시 URL 복사",
-        "shareEmbed": "공유 및 임베드…",
         "editPathConfig": "경로 설정 편집",
         "editHooks": "훅 편집"
       }

@@ -24,7 +24,7 @@ app, drives the UI with Playwright while recording, and renders `demo.mp4` /
 
 The shot: **Live Streams grid → play a stream (real HLS in the browser) →
 Recordings index → per-stream recordings (Today/Yesterday) → play + download a
-clip → MediaMTX config tabs (no YAML) → sticky save bar → light/dark toggle.**
+clip → MediaMTX config editor (no YAML) → sticky save bar → light/dark toggle.**
 Every scene shows a caption pill that names the page, plus a synthetic cursor.
 
 ---
@@ -235,7 +235,3 @@ open .work/contact.png     # confirm each page shows its caption, HLS renders, s
 
 `output/` is git-ignored. To ship the demo, copy `demo.mp4` (and/or `demo.gif`)
 into `.github/assets/` and reference it from `README.md`.
-
-⚠️ Changing the top-level `README.md` trips the translation staleness guard
-(`pnpm i18n:check`): all 30 `docs/i18n/README.*.md` must be re-synced in the
-same change. Batch that; don't swap the asset piecemeal.

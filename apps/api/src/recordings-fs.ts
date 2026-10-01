@@ -16,7 +16,9 @@ export function summarizeStreamRecordings(directoryPath: string): Record<string,
 
   for (const dir of directories) {
     const dirPath = path.join(directoryPath, dir)
-    const files = readdirSync(dirPath)
+    // Same dotfile rule as listStreamRecordingFiles, or the index count and
+    // the stream page's total disagree.
+    const files = readdirSync(dirPath).filter(f => !f.startsWith('.'))
     let latestMtime: Date | null = null
     for (const file of files) {
       const stat = statSync(path.join(dirPath, file))

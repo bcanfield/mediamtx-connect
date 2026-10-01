@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX のウェブインターフェース。ブラウザでストリームを視聴し、録画を閲覧し、設定を編集できます。"
-  },
   "Forms": {
     "errors": {
       "required": "この項目は必須です",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "再試行",
-    "loading": "読み込み中…",
     "theme": {
-      "lightMode": "ライトモード",
-      "darkMode": "ダークモード",
       "switchToLight": "ライトテーマに切り替え",
       "switchToDark": "ダークテーマに切り替え"
     },
@@ -92,10 +81,6 @@
       "stop": "停止",
       "playAria": "{streamName} を再生",
       "actionsAria": "ストリームの操作",
-      "stub": {
-        "title": "未実装です",
-        "description": "この操作はロードマップにあります — 記録されました。"
-      },
       "recordError": {
         "title": "録画を変更できませんでした",
         "description": "MediaMTX が変更を拒否しました — このストリームの録画状態は変わっていません。"
@@ -117,7 +102,6 @@
         "description": "MediaMTX がフレームを取得できませんでした — ストリームがオフラインの可能性があります。"
       },
       "menu": {
-        "openDetail": "ストリーム詳細を開く",
         "viewRecordings": "録画を表示",
         "takeSnapshot": "スナップショットを撮る",
         "record": "録画",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "配信用 URL をコピー",
-        "shareEmbed": "共有と埋め込み…",
         "editPathConfig": "パス設定を編集",
         "editHooks": "フックを編集"
       }

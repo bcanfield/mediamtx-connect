@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfață web pentru MediaMTX. Vizionați fluxuri, răsfoiți înregistrări și editați configurația din browser."
-  },
   "Forms": {
     "errors": {
       "required": "Acest câmp este obligatoriu",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Reîncearcă",
-    "loading": "Se încarcă…",
     "theme": {
-      "lightMode": "Mod luminos",
-      "darkMode": "Mod întunecat",
       "switchToLight": "Comută la tema luminoasă",
       "switchToDark": "Comută la tema întunecată"
     },
@@ -92,10 +81,6 @@
       "stop": "Oprește",
       "playAria": "Redă {streamName}",
       "actionsAria": "Acțiuni pentru flux",
-      "stub": {
-        "title": "Încă neimplementat",
-        "description": "Această acțiune este în plan — a fost consemnată."
-      },
       "recordError": {
         "title": "Înregistrarea nu a putut fi modificată",
         "description": "MediaMTX a respins modificarea — înregistrarea acestui flux este neschimbată."
@@ -117,7 +102,6 @@
         "description": "MediaMTX nu a putut captura un cadru — fluxul ar putea fi offline."
       },
       "menu": {
-        "openDetail": "Deschide detaliile fluxului",
         "viewRecordings": "Vezi înregistrările",
         "takeSnapshot": "Fă un instantaneu",
         "record": "Înregistrare",
@@ -125,7 +109,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copiază URL-urile de publicare",
-        "shareEmbed": "Partajează și încorporează…",
         "editPathConfig": "Editează configurația căii",
         "editHooks": "Editează hook-urile"
       }

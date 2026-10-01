@@ -1,8 +1,8 @@
 import type { AppConfig } from '@connect/contract'
-import { mkdirSync, mkdtempSync, utimesSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import {
   latestScreenshotMtimeFor,
   latestScreenshotPathFor,
@@ -34,6 +34,8 @@ beforeAll(() => {
 
   writeAt(path.join(recordings, 'stream1', '2026-07-01_10-00-00.mp4'), '2026-07-01T10:00:00Z')
   writeAt(path.join(recordings, 'stream1', '2026-07-02_10-00-00.mp4'), '2026-07-02T10:00:00Z')
+  // Finder litter, newer than any recording.
+  writeAt(path.join(recordings, 'stream1', '.DS_Store'), '2026-07-03T10:00:00Z')
   writeAt(path.join(recordings, 'stream2', '2026-07-01_10-00-00.mp4'), '2026-07-01T10:00:00Z')
   writeFileSync(path.join(recordings, 'dotted', 'a.mp4'), '')
   writeFileSync(path.join(recordings, 'dotted', '.partial.mp4'), '')
@@ -63,6 +65,8 @@ beforeAll(() => {
   }
 })
 
+afterAll(() => rmSync(root, { recursive: true, force: true }))
+
 describe('summarizeStreamRecordings', () => {
   it('keys the summary by stream directory, skipping loose files', () => {
     const summary = summarizeStreamRecordings(config.recordingsDirectory)
@@ -70,14 +74,20 @@ describe('summarizeStreamRecordings', () => {
     expect(Object.keys(summary).sort()).toEqual(['dotted', 'stream1', 'stream2'])
   })
 
-  it('counts the files in each stream directory', () => {
+  it('counts the recordings in each stream directory, not its dotfiles', () => {
     const summary = summarizeStreamRecordings(config.recordingsDirectory)
 
     expect(summary.stream1?.count).toBe(2)
     expect(summary.stream2?.count).toBe(1)
   })
 
-  it('reports the newest mtime in each stream directory', () => {
+  it('counts the same files the per-stream listing returns', () => {
+    const summary = summarizeStreamRecordings(config.recordingsDirectory)
+
+    expect(summary.stream1?.count).toBe(listStreamRecordingFiles(config.recordingsDirectory, 'stream1').length)
+  })
+
+  it('takes the newest mtime in each stream directory from recordings only', () => {
     const summary = summarizeStreamRecordings(config.recordingsDirectory)
 
     expect(summary.stream1?.latestMtime).toEqual(new Date('2026-07-02T10:00:00Z'))

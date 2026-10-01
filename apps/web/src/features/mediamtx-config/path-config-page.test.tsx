@@ -1,6 +1,6 @@
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
 import { ORPCError } from '@orpc/server'
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -226,9 +226,10 @@ describe('inherited vs overridden', () => {
   // Nothing to compare against is not the same as nothing overridden, so an
   // unreadable path-defaults scope marks no field either way.
   it('marks nothing when path defaults can\'t be read', async () => {
-    await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
+    const { queryClient } = await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
 
     expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
+    await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(screen.queryByText('Inherited')).not.toBeInTheDocument()
     expect(screen.queryByText('Overridden')).not.toBeInTheDocument()
   })
