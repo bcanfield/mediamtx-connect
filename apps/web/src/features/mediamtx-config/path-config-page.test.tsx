@@ -1,6 +1,6 @@
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
 import { ORPCError } from '@orpc/server'
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -226,9 +226,10 @@ describe('inherited vs overridden', () => {
   // Nothing to compare against is not the same as nothing overridden, so an
   // unreadable path-defaults scope marks no field either way.
   it('marks nothing when path defaults can\'t be read', async () => {
-    await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
+    const { queryClient } = await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
 
     expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
+    await waitFor(() => expect(queryClient.isFetching()).toBe(0))
     expect(screen.queryByText('Inherited')).not.toBeInTheDocument()
     expect(screen.queryByText('Overridden')).not.toBeInTheDocument()
   })
@@ -356,5 +357,168 @@ describe('a name with nothing to resolve', () => {
     expect(screen.queryByText(/Settings for this stream/)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Revert to inherited' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Delete path' })).not.toBeInTheDocument()
+  })
+})
+
+// MediaMTX's own answers to a camera that drops or one that eats bandwidth. Any
+// of these keys re-creates the path on save, so the write has to stay sparse.
+describe('resilience', () => {
+  async function renderPulledPath() {
+    result = {
+      status: 'resolved',
+      confName: 'stream1',
+      conf: {
+        source: 'rtsp://cam.lan:554/live',
+        alwaysAvailable: false,
+        alwaysAvailableFile: '',
+        sourceOnDemand: false,
+        sourceOnDemandStartTimeout: '10s',
+        sourceOnDemandCloseAfter: '10s',
+      },
+    }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  it('saves on-demand pulling as the path\'s own override and nothing else', async () => {
+    const view = await renderPulledPath()
+
+    await view.user.click(await screen.findByRole('switch', { name: 'sourceOnDemand' }))
+    const closeAfter = screen.getByLabelText('sourceOnDemandCloseAfter')
+    await view.user.clear(closeAfter)
+    await view.user.type(closeAfter, '30s')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      {
+        name: 'stream1',
+        conf: { sourceOnDemand: true, sourceOnDemandCloseAfter: '30s' },
+      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  // With no file MediaMTX falls back to alwaysAvailableTracks, which Connect
+  // doesn't edit, and names that key in the refusal.
+  it('puts the missing-fallback refusal on the alwaysAvailable switch', async () => {
+    rejection = new ORPCError('BAD_REQUEST', {
+      message: '\'alwaysAvailableTracks\' must contain at least one track',
+    })
+    const view = await renderPulledPath()
+
+    await view.user.click(await screen.findByRole('switch', { name: 'alwaysAvailable' }))
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    expect(await within(screen.getByTestId('field-alwaysAvailable')).findByText(/must contain at least one track/))
+      .toBeInTheDocument()
+  })
+})
+
+// MediaMTX re-publishes a path to every `forward` destination. Its PATCH
+// replaces the list wholesale, so whatever goes out has to be the whole list —
+// including keys only a newer MediaMTX serves, which the form can't edit.
+describe('forwarding', () => {
+  async function renderWithForward(forward: unknown[]) {
+    result = { status: 'resolved', confName: 'stream1', conf: { record: true, forward } }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  async function forwardSection() {
+    const heading = await screen.findByRole('heading', { name: 'Forwarding' })
+    return heading.closest('section')!
+  }
+
+  async function addDestination(user: User, index: number, dest: string) {
+    await user.click(await screen.findByRole('button', { name: 'Add destination' }))
+    await user.type(screen.getByLabelText(`Destination ${index}`), dest)
+    // The form validates on blur, and the new row starts out empty and invalid.
+    await user.tab()
+  }
+
+  async function save(user: User) {
+    await user.click(screen.getByRole('button', { name: 'Save to server' }))
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+  }
+
+  it('saves a new destination as the whole list', async () => {
+    const view = await renderWithForward([])
+
+    await addDestination(view.user, 1, 'rtmp://example.com/live#secretkey')
+    await save(view.user)
+
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      {
+        name: 'stream1',
+        conf: { forward: [{ dest: 'rtmp://example.com/live#secretkey' }] },
+      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  // A slice can't be nulled through MediaMTX's PATCH, and an empty row is a
+  // destination it would try to dial.
+  it('sends an empty list when the last destination is removed', async () => {
+    const view = await renderWithForward([{ dest: 'rtmp://example.com/live#k' }])
+
+    await view.user.click(await screen.findByRole('button', { name: 'Remove destination 1' }))
+    await save(view.user)
+
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      { name: 'stream1', conf: { forward: [] } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  it('sends keys it can\'t edit back unchanged', async () => {
+    const existing = {
+      dest: 'whip://example.com/whip',
+      destFingerprint: 'ab:cd',
+      moqTransport: 'quic',
+      whipBearerToken: '',
+    }
+    const view = await renderWithForward([existing])
+
+    await addDestination(view.user, 2, 'srt://example.com:8890')
+    await save(view.user)
+
+    expect(updatePathConfig.mock.calls[0]?.[0].conf).toEqual({
+      forward: [existing, { dest: 'srt://example.com:8890' }],
+    })
+  })
+
+  // Destinations carry stream keys, and MediaMTX hands them back in full.
+  it('masks a destination until Show is pressed', async () => {
+    const view = await renderWithForward([{ dest: 'rtmp://example.com/live#k' }])
+
+    const input = await screen.findByLabelText('Destination 1')
+    expect(input).toHaveAttribute('type', 'password')
+    expect(input).toHaveAttribute('autocomplete', 'off')
+
+    await view.user.click(screen.getByRole('button', { name: 'Show destination 1' }))
+
+    expect(input).toHaveAttribute('type', 'text')
+    expect(screen.getByRole('button', { name: 'Hide destination 1' })).toBeInTheDocument()
+  })
+
+  // Writing `forward` hot-reloads the path; nothing is restarted.
+  it('warns about plaintext storage, not about a restart', async () => {
+    await renderWithForward([])
+
+    const section = await forwardSection()
+    // The plaintext notice is the section's only note: a restart warning would
+    // be a second one.
+    const notes = within(section).getAllByRole('note')
+    expect(notes).toHaveLength(1)
+    expect(notes[0]).toHaveTextContent(/stores these URLs, stream keys included, in plaintext/)
+  })
+
+  it('places Forwarding and then Resilience directly after Source in the rail', async () => {
+    await renderWithForward([])
+
+    const [rail] = await screen.findAllByRole('navigation', { name: 'Config sections' })
+    expect(rail).toBeDefined()
+    const labels = within(rail!).getAllByRole('button').map(b => b.textContent)
+    expect(labels.slice(0, 3)).toEqual(['Source', 'Forwarding', 'Resilience'])
   })
 })

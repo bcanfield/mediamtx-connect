@@ -14,12 +14,14 @@ function formatClock(seconds: number): string {
 }
 
 // Custom seekbar per board 2c: 3px track, blue fill, white knob.
-export function RecordingPlayer({ src }: { src: string }) {
+// `fallbackDuration` (seconds) is for a source that can't say how long it is:
+// MediaMTX's playback server streams fMP4, which reports an infinite duration.
+export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallbackDuration?: number }) {
   const t = useTranslations('Recordings.player')
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(true)
   const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(fallbackDuration ?? 0)
 
   const togglePlay = () => {
     const video = videoRef.current
@@ -51,7 +53,10 @@ export function RecordingPlayer({ src }: { src: string }) {
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onTimeUpdate={e => setCurrentTime(e.currentTarget.currentTime)}
-        onLoadedMetadata={e => setDuration(e.currentTarget.duration)}
+        onLoadedMetadata={(e) => {
+          const reported = e.currentTarget.duration
+          setDuration(Number.isFinite(reported) ? reported : (fallbackDuration ?? 0))
+        }}
       />
       <div className="flex items-center gap-3 px-2.5 py-2">
         <Button

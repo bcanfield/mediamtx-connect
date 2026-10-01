@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
 
 import { RecordingRow } from './recording-row'
+import { RecordingTimelineSection } from './recording-timeline'
 
 interface StreamRecordingsPageProps {
   streamName: string
@@ -83,6 +84,8 @@ export function StreamRecordingsPage({
           </p>
         )}
       </header>
+
+      <RecordingTimelineSection streamName={streamName} />
 
       {error
         ? (

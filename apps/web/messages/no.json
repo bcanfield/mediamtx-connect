@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webgrensesnitt for MediaMTX. Se strømmer, bla gjennom opptak og rediger konfigurasjon fra nettleseren din."
-  },
   "Forms": {
     "errors": {
       "required": "Dette feltet er obligatorisk",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Prøv igjen",
-    "loading": "Laster…",
     "theme": {
-      "lightMode": "Lyst modus",
-      "darkMode": "Mørkt modus",
       "switchToLight": "Bytt til lyst tema",
       "switchToDark": "Bytt til mørkt tema"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "tilkoblet",
-      "offline": "frakoblet"
+      "offline": "frakoblet",
+      "connectedVersion": "tilkoblet · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} er eldre enn {minimum}, den eldste versjonen Connect støtter. Noen innstillinger kan mangle eller bli avvist."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Opptak",
+      "sessions": "Økter",
       "appConfig": "Appkonfigurasjon",
       "mediamtxConfig": "MediaMTX-konfigurasjon",
       "paths": "Baner"
@@ -92,10 +84,6 @@
       "stop": "Stopp",
       "playAria": "Spill av {streamName}",
       "actionsAria": "Strømhandlinger",
-      "stub": {
-        "title": "Ikke implementert ennå",
-        "description": "Denne handlingen står på veikartet — den er logget."
-      },
       "recordError": {
         "title": "Kunne ikke endre opptak",
         "description": "MediaMTX avviste endringen – opptaket for denne strømmen er uendret."
@@ -117,7 +105,6 @@
         "description": "MediaMTX kunne ikke hente et bilde – strømmen er kanskje frakoblet."
       },
       "menu": {
-        "openDetail": "Åpne strømdetaljer",
         "viewRecordings": "Vis opptak",
         "takeSnapshot": "Ta øyeblikksbilde",
         "record": "Ta opp",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopier publiserings-URL-er",
-        "shareEmbed": "Del & bygg inn…",
         "editPathConfig": "Rediger banekonfigurasjon",
         "editHooks": "Rediger hooks"
       }
@@ -184,6 +170,98 @@
       "showing": "Viser {from}–{to} av {total}",
       "previous": "Forrige side",
       "next": "Neste side"
+    },
+    "timeline": {
+      "previousDay": "Forrige dag",
+      "nextDay": "Neste dag",
+      "trackAria": "Tidslinje på 24 timer",
+      "spansAria": "Innspilte perioder",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Spill av {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Ingen opptak denne dagen.",
+      "errorTitle": "Kunne ikke lese opptakstidslinjen",
+      "unreachableTitle": "MediaMTX kan ikke nås",
+      "unreachableDescription": "Opptakstidslinjen kommer fra MediaMTX. Filene nedenfor leses fra disk og kan fortsatt spilles av."
+    },
+    "enablePlayback": {
+      "title": "Slå på avspilling av opptak",
+      "playbackOff": "Avspillingsserveren til MediaMTX er av.",
+      "notFmp4": "Denne strømmen tar opp i {format}, og avspillingsserveren leser bare fMP4.",
+      "changesIntro": "Connect endrer disse innstillingene:",
+      "changesAria": "Endringer som gjøres",
+      "olderNote": "Opptak fra før denne endringen blir liggende i fillisten nedenfor.",
+      "apply": "Bruk endringer",
+      "applying": "Bruker…",
+      "refused": "MediaMTX avviste endringen",
+      "override": "Denne stien setter <code>recordFormat</code> til {format} i sin egen stikonfigurasjon, som overstyrer standardverdiene for stier. Sett den til <code>fmp4</code> der.",
+      "openPathConfig": "Åpne opptakskonfigurasjonen for denne stien",
+      "pathDefaultsUnreadable": "Kunne ikke lese standardverdiene for stier fra MediaMTX."
+    },
+    "clip": {
+      "title": "Last ned klipp",
+      "rangeAria": "Klippets tidsrom",
+      "last5Min": "Siste 5 min",
+      "last15Min": "Siste 15 min",
+      "last1Hour": "Siste 1 t",
+      "custom": "Egendefinert",
+      "start": "Start",
+      "durationMinutes": "Varighet (min)",
+      "invalidStart": "Skriv inn et klokkeslett som TT:MM:SS",
+      "minutesRange": "Hele minutter, fra 1 til 60",
+      "range": "{start} – {end}",
+      "download": "Last ned",
+      "cancel": "Avbryt",
+      "preparing": "Forbereder klipp…",
+      "progress": "{received} mottatt · {rate}/s",
+      "complete": "Klipp lastet ned",
+      "failed": "Nedlasting av klipp mislyktes",
+      "noRecordings": "Ingen opptak i dette tidsrommet"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Økter",
+    "pageSubHeader": "Alle klienter som er koblet til MediaMTX akkurat nå, som publiserer eller leser, over alle protokoller.",
+    "summary": "{count, plural, one {# økt} other {# økter}}",
+    "columns": {
+      "path": "Bane",
+      "protocol": "Protokoll",
+      "remoteAddr": "Ekstern adresse",
+      "state": "Tilstand",
+      "bytesIn": "Byte inn",
+      "bytesOut": "Byte ut",
+      "uptime": "Oppetid",
+      "actions": "Handlinger"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "leser",
+      "publish": "publiserer"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ikke aktivert på denne serveren)",
+      "failed": "{protocol} (kunne ikke leses)",
+      "unlisted": "Ikke oppført: {protocols}.",
+      "truncated": "Viser de første {count, number} {protocol}-øktene."
+    },
+    "kick": {
+      "action": "Kast ut",
+      "confirmTitle": "Kaste ut {protocol}-klienten {remoteAddr} fra {path}?",
+      "confirmDescription": "MediaMTX bryter forbindelsen nå. Dette er ikke en utestengelse: klienten kan koble til igjen med en gang.",
+      "hlsCaveat": "En HLS-spiller ber om spillelisten igjen innen sekunder og får en ny økt, så dette tilbakestiller den stort sett bare.",
+      "cancel": "Avbryt",
+      "confirm": "Kast ut klient",
+      "toasts": {
+        "success": "{remoteAddr} kastet ut",
+        "alreadyGone": "{remoteAddr} hadde allerede koblet fra",
+        "errorTitle": "Kunne ikke kaste ut økten",
+        "errorDescription": "MediaMTX godtok ikke forespørselen. Prøv igjen."
+      }
+    },
+    "empty": {
+      "title": "Ingen er tilkoblet",
+      "lead": "MediaMTX har ingen publisister eller lesere akkurat nå."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-konfigurasjon",
-      "pageSubHeader": "Globale MediaMTX-serverinnstillinger, lagret på serveren."
+      "pageSubHeader": "Globale MediaMTX-serverinnstillinger, lagret på serveren.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · kjører siden {started}",
+      "tooOldTitle": "MediaMTX {version} er eldre enn {minimum}, den eldste versjonen Connect støtter.",
+      "tooOldBody": "Noen innstillinger kan mangle eller bli avvist. Resten lastes og lagres fortsatt."
     },
     "pathDefaults": {
       "pageHeader": "Standardverdier for stier",
@@ -271,6 +353,22 @@
         "unreachable": "Ingen respons fra MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Livestatus",
+      "stateLive": "LIVE",
+      "stateIdle": "inaktiv",
+      "idleLead": "Ingenting publiserer til denne stien akkurat nå. Spor og tellere vises så snart den går live.",
+      "unreachable": "Fikk ikke kontakt med MediaMTX for å lese statusen til denne stien.",
+      "uptime": "Oppetid",
+      "readers": "Lesere",
+      "received": "Mottatt",
+      "sent": "Sendt",
+      "framesInError": "Bilder med feil",
+      "tracks": "Spor",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publiserer via {type}",
+      "readerTypes": "Leses via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Bane-konfigurasjon · {name}",
       "pageSubHeader": "Innstillinger for denne strømmen, lagres på serveren.",
@@ -310,6 +408,31 @@
           "success": "Tilbake til arvede innstillinger",
           "errorTitle": "Kunne ikke gå tilbake til arvede innstillinger",
           "errorDescription": "Banens konfigurasjonsoppføring er der fortsatt. Prøv igjen."
+        }
+      },
+      "publishRead": {
+        "title": "Publiser og spill av",
+        "publishTab": "Publiser",
+        "readTab": "Spill av",
+        "pullSource": "Denne stien henter strømmen fra kilden sin; MediaMTX avviser publiserere.",
+        "readFailed": "Kunne ikke lese serverens lytteadresser.",
+        "noProtocols": "Serveren har slått av alle protokoller for dette.",
+        "copyUrl": "Kopier {protocol}-URL",
+        "copySnippet": "Kopier {client}-utdraget for {protocol}",
+        "snippetLabel": "{client}-utdrag for {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publiserer over WHIP bare når inndata har både et video- og et lydspor."
+        },
+        "links": {
+          "systemPlayer": "Åpne i systemspiller",
+          "browserPublish": "Publiser fra nettleseren",
+          "hlsPage": "Åpne MediaMTX sin HLS-side",
+          "webrtcPage": "Åpne MediaMTX sin WebRTC-side"
+        },
+        "toasts": {
+          "copied": "Kopiert til utklippstavlen",
+          "copyFailedTitle": "Kunne ikke kopiere",
+          "copyFailedDescription": "Nettleseren blokkerte tilgang til utklippstavlen. Merk teksten og kopier den selv."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Logging",
         "api": "API",
+        "auth": "Autentisering",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Opptak",
         "pathHooks": "Sti-hooks",
-        "source": "Kilde"
+        "source": "Kilde",
+        "forward": "Videresending",
+        "resilience": "Robusthet"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsavbrudd og globale grenser.",
         "api": "HTTP-API-et som MediaMTX Connect selv bruker.",
+        "auth": "Hvordan MediaMTX sjekker hvem som kan publisere, lese eller bruke API-et.",
         "hooks": "Kommandoer MediaMTX kjører ved tilkoblingshendelser.",
         "rtsp": "Publiser og les strømmer over RTSP.",
         "rtmp": "Publiser og les strømmer over RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Publiser og les strømmer over SRT.",
         "recording": "Ta opp strømmer til disk.",
         "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser.",
-        "source": "Hvor strømmen til denne stien kommer fra."
+        "source": "Hvor strømmen til denne stien kommer fra.",
+        "forward": "Publiser denne stiens strøm på nytt til andre servere, som YouTube eller Twitch.",
+        "resilience": "Hold lesere tilkoblet når kilden faller ut, eller hent kilden bare mens noen ser på."
       },
       "sectionWarnings": {
-        "pathHooks": "Å lagre en hook starter stien på nytt og kobler fra utgiveren — strømmen faller ut til utgiveren kobler til igjen."
+        "auth": "Å endre hvordan MediaMTX autentiserer gjelder alle klienter, også Connect — en feil innstilling kan kutte Connect fra MediaMTX.",
+        "pathHooks": "Å lagre en hook starter stien på nytt og kobler fra utgiveren — strømmen faller ut til utgiveren kobler til igjen.",
+        "resilience": "Lagring av noen av disse starter banen på nytt og kobler fra publisereren — strømmen faller ut til den kobler til igjen."
       },
       "enabled": "Aktivert",
       "off": "Av",
@@ -411,6 +542,15 @@
         "passwordAria": "Passord for ICE-server {index}",
         "removeAria": "Fjern ICE-server {index}"
       },
+      "forwardDests": {
+        "add": "Legg til mål",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Mål {index}",
+        "showAria": "Vis mål {index}",
+        "hideAria": "Skjul mål {index}",
+        "removeAria": "Fjern mål {index}",
+        "plaintextNotice": "MediaMTX lagrer disse URL-ene, inkludert strømnøkler, i klartekst i konfigurasjonen sin og returnerer dem uskjult fra API-et sitt."
+      },
       "errors": {
         "invalidSource": "MediaMTX godtar ikke dette. Bruk publisher, redirect, rpiCamera eller en URL som starter med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Tidsavbrudd for skriveoperasjoner.",
         "writeQueueSize": "Størrelse på utgående kø per tilkobling. Må være en toerpotens.",
         "udpMaxPayloadSize": "Maksimal størrelse på utgående UDP-pakker.",
-        "externalAuthenticationURL": "URL til en ekstern autentiseringsserver som kalles ved hver tilkobling.",
         "apiAddress": "Lytteadresse for HTTP-API-et.",
         "metrics": "Eksponer Prometheus-kompatible metrikker.",
         "metricsAddress": "Lytteadresse for metrikk-endepunktet.",
         "pprof": "Eksponer Go sitt pprof-profileringsendepunkt.",
         "pprofAddress": "Lytteadresse for pprof-endepunktet.",
+        "authMethod": "Hvordan MediaMTX autentiserer klienter: internal (brukere oppført i konfigurasjonen), http (en ekstern HTTP-server) eller jwt (tokens fra en identitetsleverandør).",
+        "authHTTPAddress": "URL som MediaMTX kaller for hver autentiseringsforespørsel når authMethod er http. Et 2xx-svar tillater handlingen.",
         "runOnConnect": "Kommando som kjøres når en klient kobler til.",
         "runOnConnectRestart": "Start kommandoen på nytt hvis den avsluttes.",
         "runOnDisconnect": "Kommando som kjøres når en klient kobler fra.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "IP-område brukt for multicast-levering.",
         "multicastRTPPort": "Port for multicast-RTP-pakker.",
         "multicastRTCPPort": "Port for multicast-RTCP-pakker.",
-        "protocols": "Transportprotokoller som RTSP-serveren godtar (udp, multicast eller tcp).",
-        "encryption": "TLS-krypteringspolicy (no, strict eller optional).",
-        "serverKey": "Bane til TLS-servernøkkelen.",
-        "serverCert": "Bane til TLS-serversertifikatet.",
-        "authMethods": "Autentiseringsmetoder som RTSP-serveren godtar (basic eller digest).",
+        "rtspTransports": "Transportprotokoller som RTSP-serveren godtar (udp, multicast eller tcp).",
+        "rtspEncryption": "Bruk de sikre variantene RTSPS, SRTP og SRTCP (no, optional eller strict).",
+        "rtspServerKey": "Bane til TLS-servernøkkelen.",
+        "rtspServerCert": "Bane til TLS-serversertifikatet.",
+        "rtspAuthMethods": "Autentiseringsmetoder som RTSP-serveren godtar (basic eller digest).",
         "rtmpAddress": "Lytteadresse for RTMP-serveren.",
-        "rtmpEncryption": "TLS-krypteringspolicy for RTMP (no, strict eller optional).",
+        "rtmpEncryption": "TLS-krypteringspolicy for RTMP (no, optional eller strict).",
         "rtmpsAddress": "Lytteadresse for RTMPS-serveren (TLS).",
         "rtmpServerKey": "Bane til RTMPS-servernøkkelen.",
         "rtmpServerCert": "Bane til RTMPS-serversertifikatet.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Minste varighet for hvert segment.",
         "hlsPartDuration": "Varighet for hver del i modus med lav forsinkelse.",
         "hlsSegmentMaxSize": "Maksimal størrelse for hvert segment.",
-        "hlsAllowOrigin": "Verdi for Access-Control-Allow-Origin-headeren.",
+        "hlsAllowOrigins": "Tillatte CORS-origins. Jokertegn fungerer, som i http://*.example.com.",
         "hlsTrustedProxies": "IP-er eller nettverk for proxyer plassert foran HLS-serveren.",
         "hlsDirectory": "Skriv segmenter til disk i denne mappen i stedet for RAM.",
         "webrtcAddress": "Lytteadresse for WebRTC-HTTP-serveren.",
         "webrtcEncryption": "Server WebRTC over TLS (HTTPS).",
         "webrtcServerKey": "Bane til WebRTC-servernøkkelen.",
         "webrtcServerCert": "Bane til WebRTC-serversertifikatet.",
-        "webrtcAllowOrigin": "Verdi for Access-Control-Allow-Origin-headeren.",
+        "webrtcAllowOrigins": "Tillatte CORS-origins. Jokertegn fungerer, som i http://*.example.com. Connects avspiller i nettleseren må ha sin egen origin tillatt.",
         "webrtcTrustedProxies": "IP-er eller nettverk for proxyer plassert foran WebRTC-serveren.",
         "webrtcLocalUDPAddress": "Lokal UDP-adresse brukt for WebRTC-trafikk.",
         "webrtcLocalTCPAddress": "Lokal TCP-adresse brukt for WebRTC-trafikk.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Hvor lenge det ventes på at utgiveren ved behov starter.",
         "runOnDemandCloseAfter": "Stopp kommandoen ved behov så lang tid etter at den siste leseren har gått.",
         "runOnUnDemand": "Kommando som kjøres når kommandoen ved behov stoppes.",
-        "runOnReady": "Kommando som kjøres når strømmen er klar til å leses.",
-        "runOnReadyRestart": "Start kommandoen på nytt hvis den avsluttes.",
-        "runOnNotReady": "Kommando som kjøres når strømmen ikke lenger er klar.",
+        "runOnAvailable": "Kommando som kjøres når strømmen blir tilgjengelig: en kilde publiserer, eller en reserve spilles av. Stoppes når den ikke lenger er det.",
+        "runOnAvailableRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnUnavailable": "Kommando som kjøres når strømmen ikke lenger er tilgjengelig.",
+        "runOnOnline": "Kommando som kjøres når strømmen kommer online: den egentlige kilden publiserer, ikke en reserve. Stoppes når den går offline.",
+        "runOnOnlineRestart": "Start kommandoen på nytt hvis den avsluttes.",
+        "runOnOffline": "Kommando som kjøres når strømmen ikke lenger er online.",
         "runOnRead": "Kommando som kjøres når en klient begynner å lese denne stien.",
         "runOnReadRestart": "Start kommandoen på nytt hvis den avsluttes.",
         "runOnUnread": "Kommando som kjøres når en klient slutter å lese denne stien.",
         "runOnRecordSegmentCreate": "Kommando som kjøres når et opptakssegment opprettes.",
-        "runOnRecordSegmentComplete": "Kommando som kjøres når et opptakssegment er fullført."
+        "runOnRecordSegmentComplete": "Kommando som kjøres når et opptakssegment er fullført.",
+        "alwaysAvailable": "Mens ingenting publiserer, spilles et offline-segment i løkke slik at lesere forblir tilkoblet. Strømmen forblir available, ikke online. Krever alwaysAvailableFile, eller alwaysAvailableTracks satt i mediamtx.yml. Avvises på en regex- eller all_others-oppføring og sammen med sourceOnDemand eller runOnDemand.",
+        "alwaysAvailableFile": "Bane til en MP4 på MediaMTX-serverens eget filsystem; Connect laster den ikke opp. Spor må være AV1, VP9, H265, H264, Opus, MPEG-4 Audio eller LPCM. Kan ikke kombineres med alwaysAvailableTracks.",
+        "sourceOnDemand": "Hent kilden bare mens minst én leser er tilkoblet. Kun for en kilde MediaMTX henter fra en URL; avvises når source er publisher.",
+        "sourceOnDemandStartTimeout": "Hvor lenge den første leseren venter på at kilden skal bli available før den gir opp. MediaMTX-standard er 10s.",
+        "sourceOnDemandCloseAfter": "Hvor lenge kilden holdes åpen etter at den siste leseren har gått. MediaMTX-standard er 10s."
       },
       "toasts": {
         "success": "MediaMTX-konfigurasjonen er lagret",

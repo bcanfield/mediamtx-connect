@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "เว็บอินเทอร์เฟซสำหรับ MediaMTX ดูสตรีม เรียกดูการบันทึก และแก้ไขการตั้งค่าจากเบราว์เซอร์ของคุณ"
-  },
   "Forms": {
     "errors": {
       "required": "ต้องกรอกฟิลด์นี้",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "ลองอีกครั้ง",
-    "loading": "กำลังโหลด…",
     "theme": {
-      "lightMode": "โหมดสว่าง",
-      "darkMode": "โหมดมืด",
       "switchToLight": "สลับเป็นธีมสว่าง",
       "switchToDark": "สลับเป็นธีมมืด"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "เชื่อมต่อแล้ว",
-      "offline": "ออฟไลน์"
+      "offline": "ออฟไลน์",
+      "connectedVersion": "เชื่อมต่อแล้ว · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ"
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "สด",
       "recordings": "การบันทึก",
+      "sessions": "เซสชัน",
       "appConfig": "การตั้งค่าแอป",
       "mediamtxConfig": "การตั้งค่า MediaMTX",
       "paths": "พาธ"
@@ -92,10 +84,6 @@
       "stop": "หยุด",
       "playAria": "เล่น {streamName}",
       "actionsAria": "การดำเนินการของสตรีม",
-      "stub": {
-        "title": "ยังไม่พร้อมใช้งาน",
-        "description": "การดำเนินการนี้อยู่ในแผนงาน — มีการบันทึกไว้แล้ว"
-      },
       "recordError": {
         "title": "ไม่สามารถเปลี่ยนการบันทึกได้",
         "description": "MediaMTX ปฏิเสธการเปลี่ยนแปลง — สถานะการบันทึกของสตรีมนี้ไม่เปลี่ยนแปลง"
@@ -117,7 +105,6 @@
         "description": "MediaMTX ไม่สามารถจับเฟรมได้ — สตรีมอาจออฟไลน์อยู่"
       },
       "menu": {
-        "openDetail": "เปิดรายละเอียดสตรีม",
         "viewRecordings": "ดูการบันทึก",
         "takeSnapshot": "ถ่ายสแนปช็อต",
         "record": "บันทึก",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "คัดลอก URL สำหรับเผยแพร่",
-        "shareEmbed": "แชร์และฝัง…",
         "editPathConfig": "แก้ไขการตั้งค่าพาธ",
         "editHooks": "แก้ไข hooks"
       }
@@ -184,6 +170,98 @@
       "showing": "แสดง {from}–{to} จาก {total}",
       "previous": "หน้าก่อนหน้า",
       "next": "หน้าถัดไป"
+    },
+    "timeline": {
+      "previousDay": "วันก่อนหน้า",
+      "nextDay": "วันถัดไป",
+      "trackAria": "ไทม์ไลน์ 24 ชั่วโมง",
+      "spansAria": "ช่วงที่บันทึกไว้",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "เล่น {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "ไม่มีการบันทึกในวันนี้",
+      "errorTitle": "ไม่สามารถอ่านไทม์ไลน์การบันทึกได้",
+      "unreachableTitle": "ไม่สามารถเชื่อมต่อ MediaMTX ได้",
+      "unreachableDescription": "ไทม์ไลน์การบันทึกมาจาก MediaMTX ไฟล์ด้านล่างอ่านจากดิสก์และยังเล่นได้"
+    },
+    "enablePlayback": {
+      "title": "เปิดการเล่นไฟล์บันทึก",
+      "playbackOff": "เซิร์ฟเวอร์เล่นซ้ำของ MediaMTX ปิดอยู่",
+      "notFmp4": "สตรีมนี้บันทึกเป็น {format} แต่เซิร์ฟเวอร์เล่นซ้ำอ่านได้เฉพาะ fMP4",
+      "changesIntro": "Connect จะเปลี่ยนการตั้งค่าเหล่านี้:",
+      "changesAria": "การเปลี่ยนแปลงที่จะทำ",
+      "olderNote": "ไฟล์บันทึกก่อนการเปลี่ยนแปลงนี้ยังอยู่ในรายการไฟล์ด้านล่าง",
+      "apply": "ใช้การเปลี่ยนแปลง",
+      "applying": "กำลังใช้…",
+      "refused": "MediaMTX ปฏิเสธการเปลี่ยนแปลง",
+      "override": "พาธนี้ตั้งค่า <code>recordFormat</code> เป็น {format} ในการตั้งค่าพาธของตัวเอง ซึ่งแทนที่ค่าเริ่มต้นของพาธ ให้ตั้งเป็น <code>fmp4</code> ที่นั่น",
+      "openPathConfig": "เปิดการตั้งค่าการบันทึกของพาธนี้",
+      "pathDefaultsUnreadable": "ไม่สามารถอ่านค่าเริ่มต้นของพาธจาก MediaMTX ได้"
+    },
+    "clip": {
+      "title": "ดาวน์โหลดคลิป",
+      "rangeAria": "ช่วงเวลาของคลิป",
+      "last5Min": "5 นาทีล่าสุด",
+      "last15Min": "15 นาทีล่าสุด",
+      "last1Hour": "1 ชม. ล่าสุด",
+      "custom": "กำหนดเอง",
+      "start": "เริ่ม",
+      "durationMinutes": "ระยะเวลา (นาที)",
+      "invalidStart": "ป้อนเวลาเป็น HH:MM:SS",
+      "minutesRange": "จำนวนนาทีเต็ม ตั้งแต่ 1 ถึง 60",
+      "range": "{start} – {end}",
+      "download": "ดาวน์โหลด",
+      "cancel": "ยกเลิก",
+      "preparing": "กำลังเตรียมคลิป…",
+      "progress": "ได้รับ {received} · {rate}/วิ",
+      "complete": "ดาวน์โหลดคลิปแล้ว",
+      "failed": "ดาวน์โหลดคลิปไม่สำเร็จ",
+      "noRecordings": "ไม่มีการบันทึกในช่วงนี้"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "เซสชัน",
+    "pageSubHeader": "ไคลเอนต์ทุกตัวที่เชื่อมต่อกับ MediaMTX อยู่ตอนนี้ ทั้งเผยแพร่และอ่าน ผ่านทุกโปรโตคอล",
+    "summary": "{count, plural, other {# เซสชัน}}",
+    "columns": {
+      "path": "พาธ",
+      "protocol": "โปรโตคอล",
+      "remoteAddr": "ที่อยู่ระยะไกล",
+      "state": "สถานะ",
+      "bytesIn": "ไบต์ขาเข้า",
+      "bytesOut": "ไบต์ขาออก",
+      "uptime": "เวลาทำงาน",
+      "actions": "การดำเนินการ"
+    },
+    "states": {
+      "idle": "ว่าง",
+      "read": "อ่าน",
+      "publish": "เผยแพร่"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ไม่ได้เปิดใช้บนเซิร์ฟเวอร์นี้)",
+      "failed": "{protocol} (อ่านไม่ได้)",
+      "unlisted": "ไม่ได้แสดง: {protocols}",
+      "truncated": "แสดง {count, number} เซสชัน {protocol} แรกเท่านั้น"
+    },
+    "kick": {
+      "action": "เตะออก",
+      "confirmTitle": "เตะไคลเอนต์ {protocol} {remoteAddr} ออกจาก {path} หรือไม่?",
+      "confirmDescription": "MediaMTX จะตัดการเชื่อมต่อทันที นี่ไม่ใช่การแบน ไคลเอนต์เชื่อมต่อใหม่ได้ทันที",
+      "hlsCaveat": "เครื่องเล่น HLS จะขอเพลย์ลิสต์ใหม่ภายในไม่กี่วินาทีและได้เซสชันใหม่ ดังนั้นส่วนใหญ่เป็นแค่การรีเซ็ต",
+      "cancel": "ยกเลิก",
+      "confirm": "เตะไคลเอนต์ออก",
+      "toasts": {
+        "success": "เตะ {remoteAddr} ออกแล้ว",
+        "alreadyGone": "{remoteAddr} ตัดการเชื่อมต่อไปแล้ว",
+        "errorTitle": "เตะเซสชันออกไม่ได้",
+        "errorDescription": "MediaMTX ไม่ยอมรับคำขอ ลองอีกครั้ง"
+      }
+    },
+    "empty": {
+      "title": "ไม่มีใครเชื่อมต่ออยู่",
+      "lead": "ตอนนี้ MediaMTX ไม่มีผู้เผยแพร่หรือผู้อ่าน"
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "การตั้งค่า MediaMTX",
-      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์"
+      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · ทำงานตั้งแต่ {started}",
+      "tooOldTitle": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ",
+      "tooOldBody": "การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ ส่วนที่เหลือยังโหลดและบันทึกได้ตามปกติ"
     },
     "pathDefaults": {
       "pageHeader": "ค่าเริ่มต้นของพาธ",
@@ -271,6 +353,22 @@
         "unreachable": "ไม่มีการตอบสนองจาก MediaMTX"
       }
     },
+    "pathHealth": {
+      "title": "สถานะสด",
+      "stateLive": "LIVE",
+      "stateIdle": "ว่าง",
+      "idleLead": "ตอนนี้ยังไม่มีอะไรเผยแพร่มาที่เส้นทางนี้ แทร็กและตัวนับจะปรากฏเมื่อเริ่มถ่ายทอดสด",
+      "unreachable": "ติดต่อ MediaMTX เพื่ออ่านสถานะของเส้นทางนี้ไม่ได้",
+      "uptime": "เวลาทำงาน",
+      "readers": "ผู้อ่าน",
+      "received": "รับแล้ว",
+      "sent": "ส่งแล้ว",
+      "framesInError": "เฟรมที่ผิดพลาด",
+      "tracks": "แทร็ก",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "กำลังเผยแพร่ผ่าน {type}",
+      "readerTypes": "อ่านผ่าน {types}"
+    },
     "pathConfig": {
       "pageHeader": "การตั้งค่าพาธ · {name}",
       "pageSubHeader": "การตั้งค่าของสตรีมนี้ บันทึกไว้บนเซิร์ฟเวอร์",
@@ -310,6 +408,31 @@
           "success": "ย้อนกลับไปใช้การตั้งค่าที่สืบทอดแล้ว",
           "errorTitle": "ย้อนกลับไปใช้การตั้งค่าที่สืบทอดไม่สำเร็จ",
           "errorDescription": "รายการการตั้งค่าของพาธยังอยู่ ลองอีกครั้ง"
+        }
+      },
+      "publishRead": {
+        "title": "เผยแพร่และเล่น",
+        "publishTab": "เผยแพร่",
+        "readTab": "เล่น",
+        "pullSource": "พาธนี้ดึงสตรีมจากต้นทางของตัวเอง MediaMTX จึงปฏิเสธผู้เผยแพร่",
+        "readFailed": "อ่านที่อยู่ที่เซิร์ฟเวอร์รับฟังไม่ได้",
+        "noProtocols": "เซิร์ฟเวอร์ปิดทุกโปรโตคอลสำหรับส่วนนี้",
+        "copyUrl": "คัดลอก URL {protocol}",
+        "copySnippet": "คัดลอกสนิปเป็ต {client} สำหรับ {protocol}",
+        "snippetLabel": "สนิปเป็ต {client} สำหรับ {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 เผยแพร่ผ่าน WHIP ได้เฉพาะเมื่ออินพุตมีทั้งแทร็กวิดีโอและแทร็กเสียง"
+        },
+        "links": {
+          "systemPlayer": "เปิดในเครื่องเล่นของระบบ",
+          "browserPublish": "เผยแพร่จากเบราว์เซอร์",
+          "hlsPage": "เปิดหน้า HLS ของ MediaMTX",
+          "webrtcPage": "เปิดหน้า WebRTC ของ MediaMTX"
+        },
+        "toasts": {
+          "copied": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+          "copyFailedTitle": "คัดลอกไม่สำเร็จ",
+          "copyFailedDescription": "เบราว์เซอร์บล็อกการเข้าถึงคลิปบอร์ด เลือกข้อความแล้วคัดลอกเอง"
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "การบันทึกล็อก",
         "api": "API",
+        "auth": "การยืนยันตัวตน",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "การบันทึก",
         "pathHooks": "Hooks ของพาธ",
-        "source": "แหล่งที่มา"
+        "source": "แหล่งที่มา",
+        "forward": "การส่งต่อ",
+        "resilience": "ความทนทาน"
       },
       "sectionDescriptions": {
         "logging": "เอาต์พุตล็อก ไทม์เอาต์ และขีดจำกัดส่วนกลาง",
         "api": "HTTP API ที่ MediaMTX Connect ใช้งานเอง",
+        "auth": "วิธีที่ MediaMTX ตรวจสอบว่าใครเผยแพร่ รับชม หรือใช้ API ของมันได้",
         "hooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์การเชื่อมต่อ",
         "rtsp": "เผยแพร่และรับชมสตรีมผ่าน RTSP",
         "rtmp": "เผยแพร่และรับชมสตรีมผ่าน RTMP",
@@ -383,10 +510,14 @@
         "srt": "เผยแพร่และรับชมสตรีมผ่าน SRT",
         "recording": "บันทึกสตรีมลงดิสก์",
         "pathHooks": "คำสั่งที่ MediaMTX รันเมื่อเกิดเหตุการณ์ในวงจรชีวิตของพาธนั้นเอง",
-        "source": "สตรีมของพาธนี้มาจากที่ใด"
+        "source": "สตรีมของพาธนี้มาจากที่ใด",
+        "forward": "เผยแพร่สตรีมของพาธนี้ซ้ำไปยังเซิร์ฟเวอร์อื่น เช่น YouTube หรือ Twitch",
+        "resilience": "ให้ผู้อ่านยังเชื่อมต่ออยู่เมื่อแหล่งที่มาหลุด หรือดึงแหล่งที่มาเฉพาะตอนที่มีคนดูอยู่"
       },
       "sectionWarnings": {
-        "pathHooks": "การบันทึก hook จะรีสตาร์ทพาธและตัดการเชื่อมต่อของผู้เผยแพร่ — สตรีมจะหยุดจนกว่าผู้เผยแพร่จะเชื่อมต่อใหม่"
+        "auth": "การเปลี่ยนวิธียืนยันตัวตนของ MediaMTX มีผลกับไคลเอนต์ทุกตัว รวมถึง Connect — การตั้งค่าที่ผิดอาจตัด Connect ออกจาก MediaMTX",
+        "pathHooks": "การบันทึก hook จะรีสตาร์ทพาธและตัดการเชื่อมต่อของผู้เผยแพร่ — สตรีมจะหยุดจนกว่าผู้เผยแพร่จะเชื่อมต่อใหม่",
+        "resilience": "การบันทึกการตั้งค่าใดก็ตามในส่วนนี้จะรีสตาร์ทพาธและตัดการเชื่อมต่อผู้เผยแพร่ — สตรีมจะหลุดจนกว่าจะเชื่อมต่อใหม่"
       },
       "enabled": "เปิดใช้งาน",
       "off": "ปิด",
@@ -411,6 +542,15 @@
         "passwordAria": "รหัสผ่านของเซิร์ฟเวอร์ ICE {index}",
         "removeAria": "ลบเซิร์ฟเวอร์ ICE {index}"
       },
+      "forwardDests": {
+        "add": "เพิ่มปลายทาง",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "ปลายทาง {index}",
+        "showAria": "แสดงปลายทาง {index}",
+        "hideAria": "ซ่อนปลายทาง {index}",
+        "removeAria": "ลบปลายทาง {index}",
+        "plaintextNotice": "MediaMTX เก็บ URL เหล่านี้ รวมถึงคีย์สตรีม เป็นข้อความธรรมดาในคอนฟิก และส่งคืนจาก API โดยไม่ปิดบัง"
+      },
       "errors": {
         "invalidSource": "MediaMTX จะไม่ยอมรับค่านี้ ให้ใช้ publisher, redirect, rpiCamera หรือ URL ที่ขึ้นต้นด้วย rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// หรือ wheps://"
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "ไทม์เอาต์สำหรับการดำเนินการเขียน",
         "writeQueueSize": "ขนาดคิวขาออกต่อการเชื่อมต่อ ต้องเป็นกำลังของสอง",
         "udpMaxPayloadSize": "ขนาดสูงสุดของแพ็กเก็ต UDP ขาออก",
-        "externalAuthenticationURL": "URL ของเซิร์ฟเวอร์ยืนยันตัวตนภายนอก ถูกเรียกทุกครั้งที่มีการเชื่อมต่อ",
         "apiAddress": "ที่อยู่รับฟังของ HTTP API",
         "metrics": "เปิดเผยเมตริกที่เข้ากันได้กับ Prometheus",
         "metricsAddress": "ที่อยู่รับฟังของเอนด์พอยต์เมตริก",
         "pprof": "เปิดเผยเอนด์พอยต์การทำโปรไฟล์ pprof ของ Go",
         "pprofAddress": "ที่อยู่รับฟังของเอนด์พอยต์ pprof",
+        "authMethod": "วิธีที่ MediaMTX ยืนยันตัวตนไคลเอนต์: internal (ผู้ใช้ที่ระบุไว้ในคอนฟิก), http (เซิร์ฟเวอร์ HTTP ภายนอก) หรือ jwt (โทเคนจากผู้ให้บริการระบุตัวตน)",
+        "authHTTPAddress": "URL ที่ MediaMTX เรียกทุกครั้งที่มีคำขอยืนยันตัวตนเมื่อ authMethod เป็น http การตอบกลับ 2xx จะอนุญาตการดำเนินการนั้น",
         "runOnConnect": "คำสั่งที่รันเมื่อไคลเอนต์เชื่อมต่อ",
         "runOnConnectRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
         "runOnDisconnect": "คำสั่งที่รันเมื่อไคลเอนต์ตัดการเชื่อมต่อ",
@@ -439,13 +580,13 @@
         "multicastIPRange": "ช่วง IP ที่ใช้สำหรับการส่งแบบมัลติแคสต์",
         "multicastRTPPort": "พอร์ตสำหรับแพ็กเก็ต RTP แบบมัลติแคสต์",
         "multicastRTCPPort": "พอร์ตสำหรับแพ็กเก็ต RTCP แบบมัลติแคสต์",
-        "protocols": "โปรโตคอลขนส่งที่เซิร์ฟเวอร์ RTSP ยอมรับ (udp, multicast หรือ tcp)",
-        "encryption": "นโยบายการเข้ารหัส TLS (no, strict หรือ optional)",
-        "serverKey": "พาธของคีย์เซิร์ฟเวอร์ TLS",
-        "serverCert": "พาธของใบรับรองเซิร์ฟเวอร์ TLS",
-        "authMethods": "วิธียืนยันตัวตนที่เซิร์ฟเวอร์ RTSP ยอมรับ (basic หรือ digest)",
+        "rtspTransports": "โปรโตคอลขนส่งที่เซิร์ฟเวอร์ RTSP ยอมรับ (udp, multicast หรือ tcp)",
+        "rtspEncryption": "ใช้ตัวแปรที่ปลอดภัย RTSPS, SRTP และ SRTCP (no, optional หรือ strict)",
+        "rtspServerKey": "พาธของคีย์เซิร์ฟเวอร์ TLS",
+        "rtspServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ TLS",
+        "rtspAuthMethods": "วิธียืนยันตัวตนที่เซิร์ฟเวอร์ RTSP ยอมรับ (basic หรือ digest)",
         "rtmpAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMP",
-        "rtmpEncryption": "นโยบายการเข้ารหัส TLS สำหรับ RTMP (no, strict หรือ optional)",
+        "rtmpEncryption": "นโยบายการเข้ารหัส TLS สำหรับ RTMP (no, optional หรือ strict)",
         "rtmpsAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMPS (TLS)",
         "rtmpServerKey": "พาธของคีย์เซิร์ฟเวอร์ RTMPS",
         "rtmpServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ RTMPS",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "ระยะเวลาขั้นต่ำของแต่ละเซกเมนต์",
         "hlsPartDuration": "ระยะเวลาของแต่ละส่วนในโหมดหน่วงต่ำ",
         "hlsSegmentMaxSize": "ขนาดสูงสุดของแต่ละเซกเมนต์",
-        "hlsAllowOrigin": "ค่าของเฮดเดอร์ Access-Control-Allow-Origin",
+        "hlsAllowOrigins": "origin ของ CORS ที่อนุญาต ใช้ไวลด์การ์ดได้ เช่น http://*.example.com",
         "hlsTrustedProxies": "IP หรือเครือข่ายของพร็อกซีที่อยู่หน้าเซิร์ฟเวอร์ HLS",
         "hlsDirectory": "เขียนเซกเมนต์ลงดิสก์ในไดเรกทอรีนี้แทนการใช้ RAM",
         "webrtcAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ HTTP สำหรับ WebRTC",
         "webrtcEncryption": "ให้บริการ WebRTC ผ่าน TLS (HTTPS)",
         "webrtcServerKey": "พาธของคีย์เซิร์ฟเวอร์ WebRTC",
         "webrtcServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ WebRTC",
-        "webrtcAllowOrigin": "ค่าของเฮดเดอร์ Access-Control-Allow-Origin",
+        "webrtcAllowOrigins": "origin ของ CORS ที่อนุญาต ใช้ไวลด์การ์ดได้ เช่น http://*.example.com โปรแกรมเล่นในเบราว์เซอร์ของ Connect ต้องได้รับอนุญาต origin ของตัวเอง",
         "webrtcTrustedProxies": "IP หรือเครือข่ายของพร็อกซีที่อยู่หน้าเซิร์ฟเวอร์ WebRTC",
         "webrtcLocalUDPAddress": "ที่อยู่ UDP ภายในเครื่องที่ใช้สำหรับทราฟฟิก WebRTC",
         "webrtcLocalTCPAddress": "ที่อยู่ TCP ภายในเครื่องที่ใช้สำหรับทราฟฟิก WebRTC",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "ระยะเวลารอให้ผู้เผยแพร่แบบออนดีมานด์เริ่มทำงาน",
         "runOnDemandCloseAfter": "หยุดคำสั่งออนดีมานด์หลังจากผู้รับชมคนสุดท้ายออกไปเป็นเวลาเท่านี้",
         "runOnUnDemand": "คำสั่งที่รันเมื่อคำสั่งออนดีมานด์ถูกหยุด",
-        "runOnReady": "คำสั่งที่รันเมื่อสตรีมพร้อมให้รับชม",
-        "runOnReadyRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
-        "runOnNotReady": "คำสั่งที่รันเมื่อสตรีมไม่พร้อมให้รับชมอีกต่อไป",
+        "runOnAvailable": "คำสั่งที่รันเมื่อสตรีมพร้อมใช้งาน: มีแหล่งที่มากำลังเผยแพร่หรือกำลังเล่นสตรีมสำรอง จะหยุดเมื่อไม่พร้อมใช้งานอีกต่อไป",
+        "runOnAvailableRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
+        "runOnUnavailable": "คำสั่งที่รันเมื่อสตรีมไม่พร้อมใช้งานอีกต่อไป",
+        "runOnOnline": "คำสั่งที่รันเมื่อสตรีมออนไลน์: แหล่งที่มาจริงกำลังเผยแพร่ ไม่ใช่สตรีมสำรอง จะหยุดเมื่อสตรีมออฟไลน์",
+        "runOnOnlineRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
+        "runOnOffline": "คำสั่งที่รันเมื่อสตรีมไม่ออนไลน์อีกต่อไป",
         "runOnRead": "คำสั่งที่รันเมื่อไคลเอนต์เริ่มรับชมพาธนี้",
         "runOnReadRestart": "รีสตาร์ตคำสั่งหากคำสั่งจบการทำงาน",
         "runOnUnread": "คำสั่งที่รันเมื่อไคลเอนต์หยุดรับชมพาธนี้",
         "runOnRecordSegmentCreate": "คำสั่งที่รันเมื่อมีการสร้างเซกเมนต์การบันทึก",
-        "runOnRecordSegmentComplete": "คำสั่งที่รันเมื่อเซกเมนต์การบันทึกเสร็จสมบูรณ์"
+        "runOnRecordSegmentComplete": "คำสั่งที่รันเมื่อเซกเมนต์การบันทึกเสร็จสมบูรณ์",
+        "alwaysAvailable": "ขณะที่ไม่มีอะไรเผยแพร่ จะเล่นเซกเมนต์ออฟไลน์วนซ้ำเพื่อให้ผู้อ่านยังเชื่อมต่ออยู่ สตรีมยังคง available แต่ไม่ online ต้องมี alwaysAvailableFile หรือ alwaysAvailableTracks ที่ตั้งไว้ใน mediamtx.yml ถูกปฏิเสธในรายการ regex หรือ all_others และเมื่อใช้ร่วมกับ sourceOnDemand หรือ runOnDemand",
+        "alwaysAvailableFile": "พาธของไฟล์ MP4 บนระบบไฟล์ของเซิร์ฟเวอร์ MediaMTX เอง Connect ไม่ได้อัปโหลดให้ แทร็กต้องเป็น AV1, VP9, H265, H264, Opus, MPEG-4 Audio หรือ LPCM ใช้ร่วมกับ alwaysAvailableTracks ไม่ได้",
+        "sourceOnDemand": "ดึงแหล่งที่มาเฉพาะเมื่อมีผู้อ่านเชื่อมต่ออย่างน้อยหนึ่งราย ใช้ได้เฉพาะแหล่งที่มาที่ MediaMTX ดึงจาก URL ถูกปฏิเสธเมื่อ source เป็น publisher",
+        "sourceOnDemandStartTimeout": "ระยะเวลาที่ผู้อ่านคนแรกรอให้แหล่งที่มากลายเป็น available ก่อนยอมแพ้ ค่าเริ่มต้นของ MediaMTX คือ 10s",
+        "sourceOnDemandCloseAfter": "ระยะเวลาที่แหล่งที่มายังเปิดอยู่หลังจากผู้อ่านคนสุดท้ายออกไป ค่าเริ่มต้นของ MediaMTX คือ 10s"
       },
       "toasts": {
         "success": "บันทึกการตั้งค่า MediaMTX แล้ว",

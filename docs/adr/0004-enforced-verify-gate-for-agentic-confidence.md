@@ -1,7 +1,15 @@
 # 0004 — Enforced verify gate for agentic-change confidence
 
 **Date:** 2026-07-17
-**Status:** Accepted
+**Status:** Superseded (2026-10-01). Only mechanism 2 was built.
+
+**Superseded 2026-10-01.** This ADR existed to make *unreviewed* PRs from the CI agent loop safe to
+merge. The loop has been removed, so every PR now gets a human review. What still holds:
+`pnpm verify` mirrors the CI `Build` job, and the `protect-release-branches` ruleset
+requires `Build`, `E2E Tests` and `Docker image smoke`. Mechanisms 1 (coverage floor,
+#305) and 3 (FEATURES.md gate, #306) were never built and are dropped. The FEATURES.md
+rule stays a written rule in `AGENTS.md`. Reopen those issues if unreviewed agent PRs
+come back. The rest of this file is the original record.
 
 **Amended 2026-07-30**, before implementation, after the board grill on #214. Five of
 the decisions below were written against a repo that has since changed under them —
@@ -17,7 +25,7 @@ The repo is set up to hand a task to an agent, have it complete the work, and me
 The weak leg is *proving no regression*. Today that confidence rests on two things that were designed for a human author, not an agent:
 
 - **E2E breadth.** 11 Playwright specs cover the browser flows, but E2E is coarse and slow. It cannot see whether a new oRPC procedure is exercised at all, and it needs Docker + MediaMTX + browsers, so an agent skips it locally and only learns of a failure in CI ~10 min later.
-- **Manual discipline.** The "before finishing" checklist in `CLAUDE.md`, the `FEATURES.md` "hard rule," and the `docs/debt/` registry all depend on the author *remembering* to run three separate commands and update a doc. A human reviewer catches lapses; an autonomous agent is both author and reviewer, so the lapse ships.
+- **Manual discipline.** The "before finishing" checklist in `CLAUDE.md`, the `FEATURES.md` "hard rule," and the debt registry all depend on the author *remembering* to run three separate commands and update a doc. A human reviewer catches lapses; an autonomous agent is both author and reviewer, so the lapse ships.
 
 Concretely, an agent can add a `config.mediamtx.*` procedure with no unit test, skip the `FEATURES.md` update, pass every CI gate green, and no signal anywhere says the safety net just shrank. There is no coverage measurement in the repo (`turbo test` runs `vitest run` with no `--coverage`), no single preflight command, and no check tying a feature diff to its doc. The component/form layer (~21 `.tsx` files, RHF+Zod) has zero unit coverage and is only reached if an E2E flow happens to traverse it.
 
@@ -44,7 +52,7 @@ Shift regression confidence from *discipline* to *enforced measurement*. The wor
 3. **A `FEATURES.md` gate keyed to the conventional-commit PR title.** When a PR's ~~contains a `feat:` commit~~ **title** matches `^feat(\(…\))?!?:` but its diff does not change `docs/FEATURES.md`, **fail**. `feat:` already *means* "a user-visible feature" (it drives the minor release via `semantic-release`), which is exactly what `FEATURES.md`'s maintenance contract says must be documented — so the trigger is a near-zero-false-positive signal that needs no path list to maintain. It **fails**, never warns: a warning is the ignorable suggestion an autonomous self-reviewer scrolls past. The escape hatch is honest and self-correcting — if it isn't really a feature the title was mistyped (fixing that also fixes the changelog); mislabeling `feat:`→`fix:` to dodge the gate also mislabels the release, so the incentive points the right way. No bypass label: an agent that can name its own exemption has defeated the gate.
    - **The title, not the commits.** `main` is squash-merged, so the PR title *is* the commit subject semantic-release parses; branch commits are agent-authored intermediate state that nothing downstream reads.
    - ~~fail the `build` job~~ **It runs in the `pr-title` job, not `build`.** `build` carries `if: github.event.action != 'edited'`, and `test`/`image-smoke` inherit or copy that guard, so a retitle skips all three — and GitHub counts a skipped required check as satisfied. A title-keyed gate inside `build` is therefore bypassable by opening as `chore:`, going green, and retitling to `feat:` before merge. `pr-title` already re-runs on `edited`, which is the only job that closes that hole.
-   - **That job must join the required contexts.** `pr-title` is not required today, so its failure blocks the smallhours loop but not a human merge. Adding it is a repo-settings change, outside the tree and outside what an agent can do — the same class of dependency as the precondition. Rename the job *before* adding it, never after: the context string is the job's `name`.
+   - **That job must join the required contexts.** `pr-title` is not required today, so its failure blocks the CI agent loop but not a human merge. Adding it is a repo-settings change, outside the tree and outside what an agent can do — the same class of dependency as the precondition. Rename the job *before* adding it, never after: the context string is the job's `name`.
 
 Scope is deliberately the fast, high-leverage layer. The component/form test layer (jsdom + Testing Library) is **deferred**, not decided against — see the payoff trigger. A local pre-push hook is **dropped** from scope entirely: its enforcement job is now covered by branch protection and its fast-feedback job by `pnpm verify`, so it would be tracking a phantom.
 
@@ -83,10 +91,8 @@ were caught by grilling #214 before dispatch rather than by an agent implementin
    that re-runs on retitle, and it has to become a required context to bite.
 
 The through-line: every one of these is a check that would have looked green while
-enforcing nothing, which is the failure class this ADR exists to close. Registered as
-`docs/debt/20260717154951-enforced-verify-gate-unimplemented.md`; that entry closes when
-mechanisms 1 and 3 land.
+enforcing nothing, which is the failure class this ADR exists to close. Tracked as #214.
 
 ## Payoff trigger
 
-Revisit — and pull the deferred component/form layer forward, and tighten the aggregate floor to per-file — when any of: an agent-authored change ships a regression through the component/form layer that a unit test would have caught; the `apps/api/src` floor has held for a full release cycle and the marginal risk has visibly moved to `apps/web`; or a genuinely user-visible change ships under a non-`feat:` PR title and escapes the doc gate. (The "red-CI PR found mergeable" trigger from the proposed draft is gone — making branch protection a precondition precludes it by construction.) Tracked against `docs/debt/20260714231521-vitest-layers-not-ported.md` and `docs/debt/20260717154951-enforced-verify-gate-unimplemented.md`.
+Revisit — and pull the deferred component/form layer forward, and tighten the aggregate floor to per-file — when any of: an agent-authored change ships a regression through the component/form layer that a unit test would have caught; the `apps/api/src` floor has held for a full release cycle and the marginal risk has visibly moved to `apps/web`; or a genuinely user-visible change ships under a non-`feat:` PR title and escapes the doc gate. (The "red-CI PR found mergeable" trigger from the proposed draft is gone — making branch protection a precondition precludes it by construction.) Tracked as #214.

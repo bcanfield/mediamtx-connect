@@ -1,5 +1,6 @@
-// Argument parsing for `pnpm check`, in its own module so it can be tested
-// without running the checks. See scripts/check.mjs for what it drives.
+// Argument parsing and i18n detection for `pnpm check`, in their own module so
+// they can be tested without running the checks. See scripts/check.mjs for what
+// they drive.
 //
 // `--since` with nothing after it used to read as `undefined` and fall through
 // to working-tree mode: a green result for a set of files nobody asked about.
@@ -20,4 +21,14 @@ export function parseArgs(args) {
     since: ref,
     explicit: args.filter((a, i) => a !== '--since' && i !== refIdx),
   }
+}
+
+// i18n:check also guards the translated READMEs, so an edit to README.md, to a
+// docs/i18n/README.<locale>.md or to their sync hashes has to run it too.
+export function touchesI18n(files) {
+  return files.some(f =>
+    f.startsWith('apps/web/messages/')
+    || f.startsWith('docs/i18n/')
+    || /(?:^|\/)README(?:\.[a-z-]+)?\.md$/.test(f),
+  )
 }

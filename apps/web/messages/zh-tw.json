@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX 的網頁介面。在瀏覽器中觀看串流、瀏覽錄影並編輯設定。"
-  },
   "Forms": {
     "errors": {
       "required": "此欄位為必填",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "重試",
-    "loading": "載入中…",
     "theme": {
-      "lightMode": "淺色模式",
-      "darkMode": "深色模式",
       "switchToLight": "切換為淺色佈景主題",
       "switchToDark": "切換為深色佈景主題"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "已連線",
-      "offline": "離線"
+      "offline": "離線",
+      "connectedVersion": "已連線 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。部分設定可能缺失或遭拒絕。"
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "直播",
       "recordings": "錄影",
+      "sessions": "工作階段",
       "appConfig": "應用程式設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "路徑"
@@ -92,10 +84,6 @@
       "stop": "停止",
       "playAria": "播放 {streamName}",
       "actionsAria": "串流操作",
-      "stub": {
-        "title": "尚未實作",
-        "description": "此操作已列入藍圖 — 已記錄。"
-      },
       "recordError": {
         "title": "無法變更錄影",
         "description": "MediaMTX 拒絕了此變更 — 該串流的錄影狀態未改變。"
@@ -117,7 +105,6 @@
         "description": "MediaMTX 無法擷取畫面 — 該串流可能已離線。"
       },
       "menu": {
-        "openDetail": "開啟串流詳細資訊",
         "viewRecordings": "檢視錄影",
         "takeSnapshot": "拍攝快照",
         "record": "錄影",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "複製發布 URL",
-        "shareEmbed": "分享與嵌入…",
         "editPathConfig": "編輯路徑設定",
         "editHooks": "編輯掛鉤"
       }
@@ -184,6 +170,98 @@
       "showing": "顯示第 {from}–{to} 項，共 {total} 項",
       "previous": "上一頁",
       "next": "下一頁"
+    },
+    "timeline": {
+      "previousDay": "前一天",
+      "nextDay": "後一天",
+      "trackAria": "24 小時時間軸",
+      "spansAria": "已錄製的時段",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "播放 {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "這一天沒有錄影。",
+      "errorTitle": "無法讀取錄影時間軸",
+      "unreachableTitle": "無法連線至 MediaMTX",
+      "unreachableDescription": "錄影時間軸來自 MediaMTX。下方檔案從磁碟讀取，仍可播放。"
+    },
+    "enablePlayback": {
+      "title": "開啟錄影回放",
+      "playbackOff": "MediaMTX 的回放伺服器已關閉。",
+      "notFmp4": "此串流以 {format} 錄製，而回放伺服器只讀取 fMP4。",
+      "changesIntro": "Connect 將變更以下設定：",
+      "changesAria": "即將進行的變更",
+      "olderNote": "此變更之前的錄影仍保留在下方的檔案清單中。",
+      "apply": "套用變更",
+      "applying": "正在套用…",
+      "refused": "MediaMTX 拒絕了此變更",
+      "override": "此路徑在自身的路徑設定中將 <code>recordFormat</code> 設為 {format}，覆寫了路徑預設值。請在那裡將其改為 <code>fmp4</code>。",
+      "openPathConfig": "開啟此路徑的錄影設定",
+      "pathDefaultsUnreadable": "無法從 MediaMTX 讀取路徑預設值。"
+    },
+    "clip": {
+      "title": "下載片段",
+      "rangeAria": "片段範圍",
+      "last5Min": "最近 5 分鐘",
+      "last15Min": "最近 15 分鐘",
+      "last1Hour": "最近 1 小時",
+      "custom": "自訂",
+      "start": "開始",
+      "durationMinutes": "長度（分鐘）",
+      "invalidStart": "請以 HH:MM:SS 格式輸入時間",
+      "minutesRange": "整數分鐘，1 到 60",
+      "range": "{start} – {end}",
+      "download": "下載",
+      "cancel": "取消",
+      "preparing": "正在準備片段…",
+      "progress": "已接收 {received} · {rate}/秒",
+      "complete": "片段已下載",
+      "failed": "片段下載失敗",
+      "noRecordings": "此範圍內沒有錄影"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "工作階段",
+    "pageSubHeader": "目前連線到 MediaMTX 的所有用戶端，不論發布或讀取，涵蓋所有通訊協定。",
+    "summary": "{count, plural, other {# 個工作階段}}",
+    "columns": {
+      "path": "路徑",
+      "protocol": "通訊協定",
+      "remoteAddr": "遠端位址",
+      "state": "狀態",
+      "bytesIn": "接收位元組",
+      "bytesOut": "傳送位元組",
+      "uptime": "運作時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "閒置",
+      "read": "讀取",
+      "publish": "發布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此伺服器未啟用）",
+      "failed": "{protocol}（無法讀取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "僅顯示前 {count, number} 個 {protocol} 工作階段。"
+    },
+    "kick": {
+      "action": "踢除",
+      "confirmTitle": "要將 {protocol} 用戶端 {remoteAddr} 從 {path} 踢除嗎？",
+      "confirmDescription": "MediaMTX 會立即中斷連線。這不是封鎖：用戶端可以馬上重新連線。",
+      "hlsCaveat": "HLS 播放器會在幾秒內重新請求播放清單並取得新的工作階段，所以這多半只是重設它。",
+      "cancel": "取消",
+      "confirm": "踢除用戶端",
+      "toasts": {
+        "success": "已踢除 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已經中斷連線",
+        "errorTitle": "無法踢除工作階段",
+        "errorDescription": "MediaMTX 未接受此要求。請再試一次。"
+      }
+    },
+    "empty": {
+      "title": "目前沒有任何連線",
+      "lead": "MediaMTX 目前沒有發布者或讀取者。"
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 設定",
-      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。"
+      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 執行起始於 {started}",
+      "tooOldTitle": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。",
+      "tooOldBody": "部分設定可能缺失或遭拒絕。其餘設定仍可正常載入和儲存。"
     },
     "pathDefaults": {
       "pageHeader": "路徑預設值",
@@ -271,6 +353,22 @@
         "unreachable": "MediaMTX 沒有回應。"
       }
     },
+    "pathHealth": {
+      "title": "即時狀態",
+      "stateLive": "LIVE",
+      "stateIdle": "閒置",
+      "idleLead": "目前沒有任何來源向此路徑推流。上線後即可看到軌道與計數。",
+      "unreachable": "無法連線 MediaMTX 讀取此路徑的狀態。",
+      "uptime": "運行時間",
+      "readers": "讀取端",
+      "received": "已接收",
+      "sent": "已傳送",
+      "framesInError": "錯誤影格",
+      "tracks": "軌道",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "正透過 {type} 推送",
+      "readerTypes": "透過 {types} 讀取"
+    },
     "pathConfig": {
       "pageHeader": "路徑設定 · {name}",
       "pageSubHeader": "此串流的設定，儲存到伺服器。",
@@ -310,6 +408,31 @@
           "success": "已還原為繼承的設定",
           "errorTitle": "無法還原為繼承的設定",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
+        }
+      },
+      "publishRead": {
+        "title": "發佈與播放",
+        "publishTab": "發佈",
+        "readTab": "播放",
+        "pullSource": "此路徑從其來源拉取串流，MediaMTX 會拒絕發佈者。",
+        "readFailed": "無法讀取伺服器的監聽位址。",
+        "noProtocols": "伺服器已關閉此處的所有協定。",
+        "copyUrl": "複製 {protocol} URL",
+        "copySnippet": "複製 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有當輸入同時包含視訊軌和音訊軌時，FFmpeg 8 才能透過 WHIP 發佈。"
+        },
+        "links": {
+          "systemPlayer": "在系統播放器中開啟",
+          "browserPublish": "從瀏覽器發佈",
+          "hlsPage": "開啟 MediaMTX 的 HLS 頁面",
+          "webrtcPage": "開啟 MediaMTX 的 WebRTC 頁面"
+        },
+        "toasts": {
+          "copied": "已複製到剪貼簿",
+          "copyFailedTitle": "無法複製",
+          "copyFailedDescription": "瀏覽器封鎖了剪貼簿存取。請選取文字後手動複製。"
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "記錄",
         "api": "API",
+        "auth": "驗證",
         "hooks": "掛鉤",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "錄影",
         "pathHooks": "路徑掛鉤",
-        "source": "來源"
+        "source": "來源",
+        "forward": "轉送",
+        "resilience": "容錯"
       },
       "sectionDescriptions": {
         "logging": "記錄輸出、逾時與全域限制。",
         "api": "MediaMTX Connect 本身使用的 HTTP API。",
+        "auth": "MediaMTX 如何檢查誰可以發布、讀取或使用其 API。",
         "hooks": "MediaMTX 在連線事件時執行的命令。",
         "rtsp": "透過 RTSP 發布與觀看串流。",
         "rtmp": "透過 RTMP 發布與觀看串流。",
@@ -383,10 +510,14 @@
         "srt": "透過 SRT 發布與觀看串流。",
         "recording": "將串流錄製到磁碟。",
         "pathHooks": "MediaMTX 在路徑自身生命週期事件時執行的命令。",
-        "source": "這個路徑的串流來自哪裡。"
+        "source": "這個路徑的串流來自哪裡。",
+        "forward": "將此路徑的串流重新發布到其他伺服器，例如 YouTube 或 Twitch。",
+        "resilience": "在來源中斷時保持讀取端連線，或僅在有人觀看時拉取來源。"
       },
       "sectionWarnings": {
-        "pathHooks": "儲存掛鉤會重新啟動路徑並中斷其發布者的連線：在發布者重新連線之前，串流會中斷。"
+        "auth": "變更 MediaMTX 的驗證方式會影響所有用戶端，包括 Connect：錯誤的設定可能使 Connect 無法連上 MediaMTX。",
+        "pathHooks": "儲存掛鉤會重新啟動路徑並中斷其發布者的連線：在發布者重新連線之前，串流會中斷。",
+        "resilience": "儲存其中任何一項都會重新啟動該路徑並中斷其發布者 — 在重新連線之前串流會中斷。"
       },
       "enabled": "已啟用",
       "off": "關閉",
@@ -411,6 +542,15 @@
         "passwordAria": "ICE 伺服器 {index} 的密碼",
         "removeAria": "移除 ICE 伺服器 {index}"
       },
+      "forwardDests": {
+        "add": "新增目的地",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "目的地 {index}",
+        "showAria": "顯示目的地 {index}",
+        "hideAria": "隱藏目的地 {index}",
+        "removeAria": "移除目的地 {index}",
+        "plaintextNotice": "MediaMTX 會將這些 URL（包括串流金鑰）以明文儲存在設定中，並透過其 API 原樣傳回。"
+      },
       "errors": {
         "invalidSource": "MediaMTX 不會接受這個值。請使用 publisher、redirect、rpiCamera，或以 rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep:// 或 wheps:// 開頭的 URL。"
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "寫入作業的逾時時間。",
         "writeQueueSize": "每個連線的傳出佇列大小。必須是 2 的次方。",
         "udpMaxPayloadSize": "傳出 UDP 封包的最大大小。",
-        "externalAuthenticationURL": "外部驗證伺服器的 URL，每次連線時呼叫。",
         "apiAddress": "HTTP API 的監聽位址。",
         "metrics": "公開相容 Prometheus 的指標。",
         "metricsAddress": "指標端點的監聽位址。",
         "pprof": "公開 Go pprof 效能分析端點。",
         "pprofAddress": "pprof 端點的監聽位址。",
+        "authMethod": "MediaMTX 驗證用戶端的方式：internal（設定中列出的使用者）、http（外部 HTTP 伺服器）或 jwt（來自身分提供者的權杖）。",
+        "authHTTPAddress": "authMethod 為 http 時，MediaMTX 在每次驗證請求時呼叫的 URL。回應 2xx 即允許該操作。",
         "runOnConnect": "用戶端連線時執行的命令。",
         "runOnConnectRestart": "命令結束時重新啟動。",
         "runOnDisconnect": "用戶端中斷連線時執行的命令。",
@@ -439,13 +580,13 @@
         "multicastIPRange": "用於多播傳送的 IP 範圍。",
         "multicastRTPPort": "多播 RTP 封包的連接埠。",
         "multicastRTCPPort": "多播 RTCP 封包的連接埠。",
-        "protocols": "RTSP 伺服器接受的傳輸協定（udp、multicast 或 tcp）。",
-        "encryption": "TLS 加密原則（no、strict 或 optional）。",
-        "serverKey": "TLS 伺服器金鑰的路徑。",
-        "serverCert": "TLS 伺服器憑證的路徑。",
-        "authMethods": "RTSP 伺服器接受的驗證方式（basic 或 digest）。",
+        "rtspTransports": "RTSP 伺服器接受的傳輸協定（udp、multicast 或 tcp）。",
+        "rtspEncryption": "使用安全變體 RTSPS、SRTP 和 SRTCP（no、optional 或 strict）。",
+        "rtspServerKey": "TLS 伺服器金鑰的路徑。",
+        "rtspServerCert": "TLS 伺服器憑證的路徑。",
+        "rtspAuthMethods": "RTSP 伺服器接受的驗證方式（basic 或 digest）。",
         "rtmpAddress": "RTMP 伺服器的監聽位址。",
-        "rtmpEncryption": "RTMP 的 TLS 加密原則（no、strict 或 optional）。",
+        "rtmpEncryption": "RTMP 的 TLS 加密原則（no、optional 或 strict）。",
         "rtmpsAddress": "RTMPS（TLS）伺服器的監聽位址。",
         "rtmpServerKey": "RTMPS 伺服器金鑰的路徑。",
         "rtmpServerCert": "RTMPS 伺服器憑證的路徑。",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "每個分段的最短時長。",
         "hlsPartDuration": "低延遲模式下每個部分的時長。",
         "hlsSegmentMaxSize": "每個分段的最大大小。",
-        "hlsAllowOrigin": "Access-Control-Allow-Origin 標頭的值。",
+        "hlsAllowOrigins": "允許的 CORS 來源。可使用萬用字元，例如 http://*.example.com。",
         "hlsTrustedProxies": "位於 HLS 伺服器之前的代理的 IP 或網路。",
         "hlsDirectory": "將分段寫入此目錄的磁碟，而非 RAM。",
         "webrtcAddress": "WebRTC HTTP 伺服器的監聽位址。",
         "webrtcEncryption": "透過 TLS（HTTPS）提供 WebRTC。",
         "webrtcServerKey": "WebRTC 伺服器金鑰的路徑。",
         "webrtcServerCert": "WebRTC 伺服器憑證的路徑。",
-        "webrtcAllowOrigin": "Access-Control-Allow-Origin 標頭的值。",
+        "webrtcAllowOrigins": "允許的 CORS 來源。可使用萬用字元，例如 http://*.example.com。Connect 的瀏覽器內播放器需要允許它自己的來源。",
         "webrtcTrustedProxies": "位於 WebRTC 伺服器之前的代理的 IP 或網路。",
         "webrtcLocalUDPAddress": "用於 WebRTC 流量的本機 UDP 位址。",
         "webrtcLocalTCPAddress": "用於 WebRTC 流量的本機 TCP 位址。",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "等待隨選發布端啟動的時間。",
         "runOnDemandCloseAfter": "最後一個讀取端離開後，經過此時間停止隨選命令。",
         "runOnUnDemand": "隨選命令停止時執行的命令。",
-        "runOnReady": "串流準備好可供讀取時執行的命令。",
-        "runOnReadyRestart": "命令結束時重新啟動。",
-        "runOnNotReady": "串流不再就緒時執行的命令。",
+        "runOnAvailable": "串流變為可用時執行的命令：有來源正在發布，或備援串流正在播放。不再可用時停止。",
+        "runOnAvailableRestart": "命令結束時重新啟動。",
+        "runOnUnavailable": "串流不再可用時執行的命令。",
+        "runOnOnline": "串流上線時執行的命令：是其真正的來源在發布，而非備援串流。離線時停止。",
+        "runOnOnlineRestart": "命令結束時重新啟動。",
+        "runOnOffline": "串流不再上線時執行的命令。",
         "runOnRead": "用戶端開始讀取此路徑時執行的命令。",
         "runOnReadRestart": "命令結束時重新啟動。",
         "runOnUnread": "用戶端停止讀取此路徑時執行的命令。",
         "runOnRecordSegmentCreate": "建立錄影分段時執行的命令。",
-        "runOnRecordSegmentComplete": "錄影分段完成時執行的命令。"
+        "runOnRecordSegmentComplete": "錄影分段完成時執行的命令。",
+        "alwaysAvailable": "沒有發布者時，循環播放一段離線片段，讓讀取端保持連線。串流保持 available，而非 online。需要 alwaysAvailableFile，或在 mediamtx.yml 中設定 alwaysAvailableTracks。在正規表示式或 all_others 項目上以及與 sourceOnDemand 或 runOnDemand 同時使用時會被拒絕。",
+        "alwaysAvailableFile": "MediaMTX 伺服器本身檔案系統上的 MP4 路徑；Connect 不會上傳它。軌道必須是 AV1、VP9、H265、H264、Opus、MPEG-4 Audio 或 LPCM。不能與 alwaysAvailableTracks 同時使用。",
+        "sourceOnDemand": "僅在至少有一個讀取端連線時拉取來源。僅適用於 MediaMTX 從 URL 拉取的來源；source 為 publisher 時會被拒絕。",
+        "sourceOnDemandStartTimeout": "第一個讀取端在放棄前等待來源變為 available 的時間。MediaMTX 預設值為 10s。",
+        "sourceOnDemandCloseAfter": "最後一個讀取端離開後來源保持開啟的時間。MediaMTX 預設值為 10s。"
       },
       "toasts": {
         "success": "已儲存 MediaMTX 設定",

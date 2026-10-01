@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webinterface voor MediaMTX. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser."
-  },
   "Forms": {
     "errors": {
       "required": "Dit veld is verplicht",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Opnieuw proberen",
-    "loading": "Laden…",
     "theme": {
-      "lightMode": "Lichte modus",
-      "darkMode": "Donkere modus",
       "switchToLight": "Schakel naar licht thema",
       "switchToDark": "Schakel naar donker thema"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "verbonden",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "verbonden · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt. Sommige instellingen kunnen ontbreken of worden geweigerd."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Opnames",
+      "sessions": "Sessies",
       "appConfig": "App-configuratie",
       "mediamtxConfig": "MediaMTX-configuratie",
       "paths": "Paden"
@@ -92,10 +84,6 @@
       "stop": "Stoppen",
       "playAria": "{streamName} afspelen",
       "actionsAria": "Streamacties",
-      "stub": {
-        "title": "Nog niet geïmplementeerd",
-        "description": "Deze actie staat op de roadmap — ze is geregistreerd."
-      },
       "recordError": {
         "title": "Opname kon niet worden gewijzigd",
         "description": "MediaMTX heeft de wijziging geweigerd — de opname van deze stream is ongewijzigd."
@@ -117,7 +105,6 @@
         "description": "MediaMTX kon geen beeld vastleggen — de stream is mogelijk offline."
       },
       "menu": {
-        "openDetail": "Streamdetail openen",
         "viewRecordings": "Opnames bekijken",
         "takeSnapshot": "Snapshot maken",
         "record": "Opnemen",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Publicatie-URL's kopiëren",
-        "shareEmbed": "Delen & insluiten…",
         "editPathConfig": "Padconfiguratie bewerken",
         "editHooks": "Hooks bewerken"
       }
@@ -184,6 +170,98 @@
       "showing": "{from}–{to} van {total} weergegeven",
       "previous": "Vorige pagina",
       "next": "Volgende pagina"
+    },
+    "timeline": {
+      "previousDay": "Vorige dag",
+      "nextDay": "Volgende dag",
+      "trackAria": "Tijdlijn van 24 uur",
+      "spansAria": "Opgenomen stukken",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} afspelen",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Geen opnames op deze dag.",
+      "errorTitle": "Kon de opnametijdlijn niet lezen",
+      "unreachableTitle": "MediaMTX is onbereikbaar",
+      "unreachableDescription": "De opnametijdlijn komt van MediaMTX. De bestanden hieronder worden van schijf gelezen en spelen nog af."
+    },
+    "enablePlayback": {
+      "title": "Opname-afspelen inschakelen",
+      "playbackOff": "De afspeelserver van MediaMTX staat uit.",
+      "notFmp4": "Deze stream neemt op in {format}, en de afspeelserver leest alleen fMP4.",
+      "changesIntro": "Connect wijzigt deze instellingen:",
+      "changesAria": "Door te voeren wijzigingen",
+      "olderNote": "Opnames van vóór deze wijziging blijven in de bestandslijst hieronder.",
+      "apply": "Wijzigingen toepassen",
+      "applying": "Toepassen…",
+      "refused": "MediaMTX heeft de wijziging geweigerd",
+      "override": "Dit pad zet <code>recordFormat</code> op {format} in zijn eigen padconfiguratie, die de padstandaarden overschrijft. Zet het daar op <code>fmp4</code>.",
+      "openPathConfig": "Opnameconfiguratie van dit pad openen",
+      "pathDefaultsUnreadable": "Kon de padstandaarden niet uit MediaMTX lezen."
+    },
+    "clip": {
+      "title": "Clip downloaden",
+      "rangeAria": "Clipbereik",
+      "last5Min": "Laatste 5 min",
+      "last15Min": "Laatste 15 min",
+      "last1Hour": "Laatste 1 u",
+      "custom": "Aangepast",
+      "start": "Begin",
+      "durationMinutes": "Duur (min)",
+      "invalidStart": "Voer een tijd in als UU:MM:SS",
+      "minutesRange": "Hele minuten, van 1 tot 60",
+      "range": "{start} – {end}",
+      "download": "Downloaden",
+      "cancel": "Annuleren",
+      "preparing": "Clip wordt voorbereid…",
+      "progress": "{received} ontvangen · {rate}/s",
+      "complete": "Clip gedownload",
+      "failed": "Downloaden van clip mislukt",
+      "noRecordings": "Geen opnamen in dit bereik"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessies",
+    "pageSubHeader": "Elke client die nu met MediaMTX verbonden is, publicerend of lezend, via elk protocol.",
+    "summary": "{count, plural, one {# sessie} other {# sessies}}",
+    "columns": {
+      "path": "Pad",
+      "protocol": "Protocol",
+      "remoteAddr": "Extern adres",
+      "state": "Status",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes uit",
+      "uptime": "Looptijd",
+      "actions": "Acties"
+    },
+    "states": {
+      "idle": "inactief",
+      "read": "lezen",
+      "publish": "publiceren"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (niet ingeschakeld op deze server)",
+      "failed": "{protocol} (kon niet worden gelezen)",
+      "unlisted": "Niet vermeld: {protocols}.",
+      "truncated": "De eerste {count, number} {protocol}-sessies worden getoond."
+    },
+    "kick": {
+      "action": "Verbreken",
+      "confirmTitle": "{protocol}-client {remoteAddr} loskoppelen van {path}?",
+      "confirmDescription": "MediaMTX verbreekt de verbinding nu. Dit is geen ban: de client kan meteen opnieuw verbinden.",
+      "hlsCaveat": "Een HLS-speler vraagt binnen enkele seconden opnieuw zijn afspeellijst op en krijgt een nieuwe sessie, dus dit reset hem vooral.",
+      "cancel": "Annuleren",
+      "confirm": "Client loskoppelen",
+      "toasts": {
+        "success": "{remoteAddr} losgekoppeld",
+        "alreadyGone": "{remoteAddr} was al losgekoppeld",
+        "errorTitle": "Kon de sessie niet verbreken",
+        "errorDescription": "MediaMTX accepteerde het verzoek niet. Probeer het opnieuw."
+      }
+    },
+    "empty": {
+      "title": "Niemand is verbonden",
+      "lead": "MediaMTX heeft op dit moment geen publishers of lezers."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-configuratie",
-      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server."
+      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · actief sinds {started}",
+      "tooOldTitle": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt.",
+      "tooOldBody": "Sommige instellingen kunnen ontbreken of worden geweigerd. De rest wordt nog steeds geladen en opgeslagen."
     },
     "pathDefaults": {
       "pageHeader": "Padstandaarden",
@@ -271,6 +353,22 @@
         "unreachable": "Geen reactie van MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live status",
+      "stateLive": "LIVE",
+      "stateIdle": "inactief",
+      "idleLead": "Er publiceert op dit moment niets naar dit pad. Tracks en tellers verschijnen zodra het live gaat.",
+      "unreachable": "MediaMTX was niet bereikbaar om de status van dit pad te lezen.",
+      "uptime": "Actieve tijd",
+      "readers": "Lezers",
+      "received": "Ontvangen",
+      "sent": "Verzonden",
+      "framesInError": "Frames met fouten",
+      "tracks": "Tracks",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publiceert nu via {type}",
+      "readerTypes": "Gelezen via {types}"
+    },
     "pathConfig": {
       "pageHeader": "Padconfiguratie · {name}",
       "pageSubHeader": "Instellingen van deze stream, opgeslagen op de server.",
@@ -310,6 +408,31 @@
           "success": "Teruggezet naar overgenomen instellingen",
           "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
           "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
+        }
+      },
+      "publishRead": {
+        "title": "Publiceren & afspelen",
+        "publishTab": "Publiceren",
+        "readTab": "Afspelen",
+        "pullSource": "Dit pad haalt de stream op bij de bron; MediaMTX weigert publishers.",
+        "readFailed": "Kon de luisteradressen van de server niet lezen.",
+        "noProtocols": "De server heeft alle protocollen hiervoor uitgeschakeld.",
+        "copyUrl": "{protocol}-URL kopiëren",
+        "copySnippet": "{client}-fragment voor {protocol} kopiëren",
+        "snippetLabel": "{client}-fragment voor {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publiceert via WHIP alleen als de invoer zowel een video- als een audiospoor heeft."
+        },
+        "links": {
+          "systemPlayer": "Openen in systeemspeler",
+          "browserPublish": "Publiceren vanuit de browser",
+          "hlsPage": "HLS-pagina van MediaMTX openen",
+          "webrtcPage": "WebRTC-pagina van MediaMTX openen"
+        },
+        "toasts": {
+          "copied": "Gekopieerd naar het klembord",
+          "copyFailedTitle": "Kopiëren mislukt",
+          "copyFailedDescription": "De browser blokkeerde toegang tot het klembord. Selecteer de tekst en kopieer hem zelf."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Logboek",
         "api": "API",
+        "auth": "Authenticatie",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Opnemen",
         "pathHooks": "Pad-hooks",
-        "source": "Bron"
+        "source": "Bron",
+        "forward": "Doorsturen",
+        "resilience": "Veerkracht"
       },
       "sectionDescriptions": {
         "logging": "Loguitvoer, time-outs en globale limieten.",
         "api": "De HTTP API die MediaMTX Connect zelf gebruikt.",
+        "auth": "Hoe MediaMTX controleert wie mag publiceren, lezen of de API mag gebruiken.",
         "hooks": "Opdrachten die MediaMTX uitvoert bij verbindingsgebeurtenissen.",
         "rtsp": "Streams publiceren en lezen via RTSP.",
         "rtmp": "Streams publiceren en lezen via RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Streams publiceren en lezen via SRT.",
         "recording": "Neem streams op naar schijf.",
         "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf.",
-        "source": "Waar de stream van dit pad vandaan komt."
+        "source": "Waar de stream van dit pad vandaan komt.",
+        "forward": "Publiceer de stream van dit pad opnieuw naar andere servers, zoals YouTube of Twitch.",
+        "resilience": "Houd lezers verbonden als de bron wegvalt, of haal de bron alleen op zolang iemand kijkt."
       },
       "sectionWarnings": {
-        "pathHooks": "Een hook opslaan herstart het pad en verbreekt de verbinding met de publisher — de stream valt weg tot de publisher opnieuw verbindt."
+        "auth": "Een andere manier van authenticeren in MediaMTX geldt voor alle clients, ook Connect — een verkeerde instelling kan Connect van MediaMTX afsluiten.",
+        "pathHooks": "Een hook opslaan herstart het pad en verbreekt de verbinding met de publisher — de stream valt weg tot de publisher opnieuw verbindt.",
+        "resilience": "Het opslaan van een van deze instellingen herstart het pad en verbreekt de verbinding met de publisher — de stream valt weg tot die opnieuw verbindt."
       },
       "enabled": "Ingeschakeld",
       "off": "Uit",
@@ -411,6 +542,15 @@
         "passwordAria": "Wachtwoord van ICE-server {index}",
         "removeAria": "ICE-server {index} verwijderen"
       },
+      "forwardDests": {
+        "add": "Bestemming toevoegen",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Bestemming {index}",
+        "showAria": "Bestemming {index} tonen",
+        "hideAria": "Bestemming {index} verbergen",
+        "removeAria": "Bestemming {index} verwijderen",
+        "plaintextNotice": "MediaMTX slaat deze URL's, inclusief streamsleutels, als platte tekst op in zijn configuratie en geeft ze onafgeschermd terug via zijn API."
+      },
       "errors": {
         "invalidSource": "MediaMTX accepteert dit niet. Gebruik publisher, redirect, rpiCamera of een URL die begint met rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// of wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Time-out voor schrijfbewerkingen.",
         "writeQueueSize": "Grootte van de uitgaande wachtrij per verbinding. Moet een macht van twee zijn.",
         "udpMaxPayloadSize": "Maximale grootte van uitgaande UDP-pakketten.",
-        "externalAuthenticationURL": "URL van een externe authenticatieserver, aangeroepen bij elke verbinding.",
         "apiAddress": "Luisteradres van de HTTP API.",
         "metrics": "Prometheus-compatibele metrieken beschikbaar stellen.",
         "metricsAddress": "Luisteradres van het metriek-eindpunt.",
         "pprof": "Het Go pprof-profileringseindpunt beschikbaar stellen.",
         "pprofAddress": "Luisteradres van het pprof-eindpunt.",
+        "authMethod": "Hoe MediaMTX clients authenticeert: internal (gebruikers uit de eigen config), http (een externe HTTP-server) of jwt (tokens van een identiteitsprovider).",
+        "authHTTPAddress": "URL die MediaMTX bij elk authenticatieverzoek aanroept wanneer authMethod http is. Een 2xx-antwoord staat de actie toe.",
         "runOnConnect": "Opdracht die wordt uitgevoerd wanneer een client verbinding maakt.",
         "runOnConnectRestart": "De opdracht opnieuw starten als deze wordt beëindigd.",
         "runOnDisconnect": "Opdracht die wordt uitgevoerd wanneer een client de verbinding verbreekt.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "IP-bereik gebruikt voor multicast-levering.",
         "multicastRTPPort": "Poort voor multicast-RTP-pakketten.",
         "multicastRTCPPort": "Poort voor multicast-RTCP-pakketten.",
-        "protocols": "Transportprotocollen die de RTSP-server accepteert (udp, multicast of tcp).",
-        "encryption": "TLS-versleutelingsbeleid (no, strict of optional).",
-        "serverKey": "Pad van de TLS-serversleutel.",
-        "serverCert": "Pad van het TLS-servercertificaat.",
-        "authMethods": "Authenticatiemethoden die de RTSP-server accepteert (basic of digest).",
+        "rtspTransports": "Transportprotocollen die de RTSP-server accepteert (udp, multicast of tcp).",
+        "rtspEncryption": "Gebruik de beveiligde varianten RTSPS, SRTP en SRTCP (no, optional of strict).",
+        "rtspServerKey": "Pad van de TLS-serversleutel.",
+        "rtspServerCert": "Pad van het TLS-servercertificaat.",
+        "rtspAuthMethods": "Authenticatiemethoden die de RTSP-server accepteert (basic of digest).",
         "rtmpAddress": "Luisteradres van de RTMP-server.",
-        "rtmpEncryption": "TLS-versleutelingsbeleid voor RTMP (no, strict of optional).",
+        "rtmpEncryption": "TLS-versleutelingsbeleid voor RTMP (no, optional of strict).",
         "rtmpsAddress": "Luisteradres van de RTMPS-server (TLS).",
         "rtmpServerKey": "Pad van de RTMPS-serversleutel.",
         "rtmpServerCert": "Pad van het RTMPS-servercertificaat.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Minimale duur van elk segment.",
         "hlsPartDuration": "Duur van elk deel in de modus met lage latentie.",
         "hlsSegmentMaxSize": "Maximale grootte van elk segment.",
-        "hlsAllowOrigin": "Waarde van de Access-Control-Allow-Origin-header.",
+        "hlsAllowOrigins": "Toegestane CORS-origins. Jokertekens werken, zoals in http://*.example.com.",
         "hlsTrustedProxies": "IP's of netwerken van proxy's vóór de HLS-server.",
         "hlsDirectory": "Segmenten naar schijf schrijven in deze map in plaats van in RAM.",
         "webrtcAddress": "Luisteradres van de WebRTC HTTP-server.",
         "webrtcEncryption": "WebRTC aanbieden via TLS (HTTPS).",
         "webrtcServerKey": "Pad van de WebRTC-serversleutel.",
         "webrtcServerCert": "Pad van het WebRTC-servercertificaat.",
-        "webrtcAllowOrigin": "Waarde van de Access-Control-Allow-Origin-header.",
+        "webrtcAllowOrigins": "Toegestane CORS-origins. Jokertekens werken, zoals in http://*.example.com. De speler van Connect in de browser heeft zijn eigen origin nodig in deze lijst.",
         "webrtcTrustedProxies": "IP's of netwerken van proxy's vóór de WebRTC-server.",
         "webrtcLocalUDPAddress": "Lokaal UDP-adres gebruikt voor WebRTC-verkeer.",
         "webrtcLocalTCPAddress": "Lokaal TCP-adres gebruikt voor WebRTC-verkeer.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Hoelang er wordt gewacht tot de on-demand publisher start.",
         "runOnDemandCloseAfter": "Stop de on-demand opdracht zo lang na het vertrek van de laatste lezer.",
         "runOnUnDemand": "Opdracht die wordt uitgevoerd wanneer de on-demand opdracht wordt gestopt.",
-        "runOnReady": "Opdracht die wordt uitgevoerd wanneer de stream gereed is om te lezen.",
-        "runOnReadyRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
-        "runOnNotReady": "Opdracht die wordt uitgevoerd wanneer de stream niet langer gereed is.",
+        "runOnAvailable": "Opdracht die wordt uitgevoerd wanneer de stream beschikbaar wordt: een bron publiceert of een fallback wordt afgespeeld. Wordt gestopt wanneer dat niet meer zo is.",
+        "runOnAvailableRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnUnavailable": "Opdracht die wordt uitgevoerd wanneer de stream niet langer beschikbaar is.",
+        "runOnOnline": "Opdracht die wordt uitgevoerd wanneer de stream online komt: de echte bron publiceert, geen fallback. Wordt gestopt wanneer de stream offline gaat.",
+        "runOnOnlineRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
+        "runOnOffline": "Opdracht die wordt uitgevoerd wanneer de stream niet langer online is.",
         "runOnRead": "Opdracht die wordt uitgevoerd wanneer een client dit pad begint te lezen.",
         "runOnReadRestart": "Start de opdracht opnieuw wanneer deze wordt afgesloten.",
         "runOnUnread": "Opdracht die wordt uitgevoerd wanneer een client stopt met het lezen van dit pad.",
         "runOnRecordSegmentCreate": "Opdracht die wordt uitgevoerd wanneer een opnamesegment wordt aangemaakt.",
-        "runOnRecordSegmentComplete": "Opdracht die wordt uitgevoerd wanneer een opnamesegment is voltooid."
+        "runOnRecordSegmentComplete": "Opdracht die wordt uitgevoerd wanneer een opnamesegment is voltooid.",
+        "alwaysAvailable": "Zolang niets publiceert, wordt een offline-segment herhaald afgespeeld zodat lezers verbonden blijven. De stream blijft available, niet online. Vereist alwaysAvailableFile, of alwaysAvailableTracks ingesteld in mediamtx.yml. Geweigerd op een regex- of all_others-item en samen met sourceOnDemand of runOnDemand.",
+        "alwaysAvailableFile": "Pad van een MP4 op het bestandssysteem van de MediaMTX-server zelf; Connect uploadt het niet. Tracks moeten AV1, VP9, H265, H264, Opus, MPEG-4 Audio of LPCM zijn. Niet te combineren met alwaysAvailableTracks.",
+        "sourceOnDemand": "Haal de bron alleen op zolang er minstens één lezer verbonden is. Alleen voor een bron die MediaMTX van een URL ophaalt; geweigerd als source publisher is.",
+        "sourceOnDemandStartTimeout": "Hoe lang de eerste lezer wacht tot de bron available wordt voordat hij opgeeft. De MediaMTX-standaard is 10s.",
+        "sourceOnDemandCloseAfter": "Hoe lang de bron open blijft nadat de laatste lezer vertrekt. De MediaMTX-standaard is 10s."
       },
       "toasts": {
         "success": "MediaMTX-configuratie opgeslagen",

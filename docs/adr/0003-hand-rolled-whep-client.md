@@ -20,7 +20,7 @@ Every function takes its `RTCPeerConnection` and `fetch` as parameters, so the n
 ## Consequences
 
 - No dependency, and the whole exchange is readable in one screen — when MediaMTX changes its WHEP behavior, the fix is local.
-- The negotiation is covered by `apps/web/src/lib/whep.test.ts` (Vitest, node env). Adding Vitest to `apps/web` is new tooling for that package; it follows the precedent and the reasoning of ADR 0001, and `docs/debt/20260714231521-vitest-layers-not-ported.md` already tracks the wider gap.
+- The negotiation is covered by `apps/web/src/lib/whep.test.ts` (Vitest, node env). Adding Vitest to `apps/web` is new tooling for that package; it follows the precedent and the reasoning of ADR 0001.
 - We own the protocol edge cases we do not yet handle: no PATCH/trickle, no `If-Match` ETag, no auth header. MediaMTX needs none of them for anonymous reads today.
 - Browser WebRTC quirks (Safari, Firefox) are ours to absorb rather than a maintainer's. The HLS fallback limits the blast radius: a browser we get wrong plays HLS instead of failing.
 

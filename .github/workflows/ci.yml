@@ -11,12 +11,9 @@ on:
     types: [opened, synchronize, reopened, edited]
 
 jobs:
-  # Lives in CI rather than its own workflow on purpose: the smallhours agent
-  # loop gates on this workflow by name (.smallhours.yml `ci_workflow: CI`,
-  # agent-loop.yml `workflow_run: workflows: [CI]`). A title check outside CI
-  # is invisible to it — the loop would read CI green, think the PR is ready,
-  # and never fire auto-fix on a title it can't see. Here, a bad title fails
-  # CI, which is a signal the loop already knows how to repair.
+  # main is squash-merged, so the PR title becomes the commit subject that
+  # semantic-release reads. A non-conventional title drops the change out of
+  # the next release, so check it here, where a bad title turns CI red.
   pr-title:
     name: Conventional commit format
     runs-on: ubuntu-latest
@@ -156,11 +153,30 @@ jobs:
           restore-keys: |
             turbo-${{ runner.os }}-e2e-
             turbo-${{ runner.os }}-build-
+      # Not just cron noise-suppression: streams.spec.ts's "taking a snapshot
+      # on demand" asserts the "Snapshot captured" toast, which spawns ffmpeg
+      # against the RTSP feed. Removing this turns that test red.
+      #
+      # A static build from GitHub's release CDN, cached, instead of apt: the
+      # runner's Azure mirror served apt's 105 MB of ffmpeg dependencies at
+      # ~100 kB/s often enough to stall this job for 20+ minutes.
+      - name: Cache ffmpeg
+        id: ffmpeg-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/ffmpeg
+          key: ffmpeg-${{ runner.os }}-btbn-n8.1
       - name: Install ffmpeg
-        # Not just cron noise-suppression: streams.spec.ts's "taking a snapshot
-        # on demand" asserts the "Snapshot captured" toast, which spawns ffmpeg
-        # against the RTSP feed. Removing this turns that test red.
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 5
+        run: |
+          mkdir -p ~/ffmpeg
+          curl -fsSL --retry 3 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n8.1-latest-linux64-gpl-8.1.tar.xz \
+            | tar -xJ -C ~/ffmpeg --strip-components=2 --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
+      - name: Put ffmpeg on PATH
+        run: |
+          echo "$HOME/ffmpeg" >> "$GITHUB_PATH"
+          "$HOME/ffmpeg/ffmpeg" -version | head -1
       - name: Seed test fixtures
         run: node scripts/seed-fixtures.mjs --target ./test-results/e2e-data
       - name: Start MediaMTX with fake streams

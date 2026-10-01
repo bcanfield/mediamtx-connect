@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>Interfața web pentru <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Urmărește transmisiuni live, răsfoiește înregistrări, editează orice cheie de configurare — din browser.</p>
+Urmărește transmisiuni live, răsfoiește înregistrări și editează configurația MediaMTX din browser.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
@@ -12,7 +12,7 @@ Urmărește transmisiuni live, răsfoiește înregistrări, editează orice chei
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
 
-<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — grila transmisiunilor live, browserul de înregistrări și editorul de configurare" width="860">
+<img src="../../.github/assets/demo.png" alt="MediaMTX Connect — grilă de transmisiuni live, browser de înregistrări și editor de configurare" width="860">
 
 <details>
 <summary>🌍 Citește în 30 de limbi</summary>
@@ -56,11 +56,11 @@ Urmărește transmisiuni live, răsfoiește înregistrări, editează orice chei
 
 MediaMTX este un server de streaming excelent, fără interfață. Connect este front-end-ul care îi lipsește: un container care vorbește cu API-ul MediaMTX și îl transformă într-un perete de camere, o arhivă de înregistrări și un editor de configurare.
 
-Este un însoțitor, nu un înlocuitor. Fiecare ecran se sprijină pe ceva ce MediaMTX expune deja: un path, un endpoint, un hook `runOn*`, un protocol pe care îl servește nativ. Nu stochează video, nu face proxy pentru media, nu ține bază de date.
+Este un însoțitor, nu un înlocuitor. Fiecare ecran corespunde unui lucru pe care MediaMTX îl expune deja: un path, un endpoint de API, un hook `runOn*`, un protocol pe care îl servește nativ. Nu stochează video, nu face proxy pentru media, nu ține bază de date.
 
 ## Pornire rapidă
 
-Imagini multi-arhitectură (`linux/amd64`, `linux/arm64`) — Docker o descarcă pe cea potrivită.
+Imagini multi-arhitectură (`linux/amd64`, `linux/arm64`); Docker o descarcă pe cea potrivită.
 
 **Ai deja MediaMTX pornit?** Pune Connect lângă el:
 
@@ -68,12 +68,14 @@ Imagini multi-arhitectură (`linux/amd64`, `linux/arm64`) — Docker o descarcă
 docker run -d \
   -p 3000:3000 \
   -e BACKEND_SERVER_MEDIAMTX_URL=http://<your-mediamtx-host> \
+  -e REMOTE_MEDIAMTX_URL=http://<host-your-browser-uses> \
   -v /path/to/recordings:/recordings \
   -v mediamtx-connect-data:/data \
+  -v mediamtx-connect-screenshots:/screenshots \
   bcanfield/mediamtx-connect:latest
 ```
 
-**Pornești de la zero?** Fișierul compose inclus le ridică pe amândouă:
+**Pornești de la zero?** Fișierul compose inclus construiește Connect și îl rulează lângă MediaMTX:
 
 ```bash
 git clone https://github.com/bcanfield/mediamtx-connect.git
@@ -90,44 +92,59 @@ Apoi deschide <http://localhost:3000>.
 
 ### Vizualizare live
 
-Fiecare path pe care îl cunoaște MediaMTX, într-o grilă de 2 până la 4 coloane.
+Fiecare path pe care îl cunoaște MediaMTX, într-o grilă de 2–4 coloane.
 
-- **WebRTC sau HLS, de la card la card.** `AUTO` coboară în tăcere la HLS, `LOW-LAT` insistă pe WebRTC, `COMPAT` impune HLS — iar fiecare card raportează transportul obținut efectiv.
-- **Instantanee și când stă.** O sarcină de fundal ține pe fiecare card un cadru recent, cu vechimea lui pe etichetă.
+- **WebRTC sau HLS, de la card la card.** `AUTO` revine în tăcere la varianta de rezervă, `LOW-LAT` insistă pe WebRTC, `COMPAT` impune HLS. Fiecare card raportează transportul obținut efectiv.
+- **Instantanee și când stă.** O sarcină de fundal ține pe fiecare card un cadru recent, cu vechimea lui pe etichetă. Ai nevoie de unul proaspăt chiar acum? Fă-l din meniul cardului.
 - **Telemetrie live.** Codecuri, spectatori și timp de funcționare, direct din lista de path.
 - **Stare de înregistrare cinstită.** Cardurile arată dacă un flux înregistrează *efectiv*; o stare pe care Connect nu a putut-o citi apare drept necunoscută, nu drept oprită.
-- **URL-uri de publicare în clipboard.** RTSP, RTMP și SRT, construite din adresele de ascultare ale serverului însuși.
+- **URL-uri de publicare în clipboard.** RTSP, RTMP și SRT, construite din adresele de ascultare ale serverului însuși. Pagina fiecărui path merge mai departe cu un panou de publicare și citire: fiecare protocol servit de server, inclusiv WHIP, WHEP, HLS și variantele TLS, cu fragmente gata de copiat pentru ffmpeg, GStreamer, OBS, ffplay și VLC.
 
 ### Înregistrări
 
-- Fișierele MP4 ale fiecărui flux, grupate pe zile, cu miniaturi automate.
-- Un player care se desfășoară pe loc, derulabil prin cereri HTTP Range.
+- O cronologie zilnică pentru fiecare flux, de la serverul de redare al MediaMTX: intervalele înregistrate și golurile dintre ele, fiecare putând fi redat. Dacă redarea e dezactivată, Connect listează exact modificările de configurare necesare și le aplică dintr-un clic.
+- Descărcare de clipuri: orice interval de până la o oră (sau ultimele 5 min, 15 min ori ultima oră) ca un singur MP4 simplu, îmbinat peste segmente de MediaMTX fără re-codare.
+- Segmente MP4 sau MPEG-TS pentru fiecare flux, grupate pe zile, cu miniaturi generate automat.
+- Un player integrat care se desfășoară pe loc, derulabil prin cereri HTTP Range.
 - Descărcări în flux, cu progres în timp real și anulare.
 - Apasă `/` pentru a filtra.
 
+### Sesiuni
+
+- **Toți cei conectați, într-un singur tabel.** Publicatori și cititori prin RTSP, RTSPS, RTMP, RTMPS, SRT, WebRTC și HLS, cu adresa la distanță, octeții primiți și trimiși și timpul de conectare, reîmprospătate la fiecare 5 secunde.
+- **Deconectează forțat un client** după o confirmare. Se poate reconecta; o deconectare forțată nu e o interdicție.
+
 ### Configurare, fără YAML
 
-- **Toată configurația serverului** — 65 de controale tipizate și validate în Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC și SRT.
-- **Path defaults și suprascrieri per path**, pe domeniile de unde MediaMTX le servește. Salvarea unui flux acoperit de wildcard scrie o intrare rară, așa că cheile neatinse continuă să moștenească.
-- **Toate cele 15 hook-uri `runOn*`**, cu avertisment acolo unde salvarea repornește path-ul.
-- **Scrieri rare** — doar cheile pe care le-ai schimbat.
+- **Configurația serverului:** 66 de controale tipizate și validate în Logging, API, Authentication, Hooks, RTSP, RTMP, HLS, WebRTC și SRT.
+- **Path defaults și suprascrieri per path**, pe domeniile de unde MediaMTX le servește. Salvarea unui flux acoperit de wildcard scrie o intrare rară, așa că cheile neatinse continuă să urmeze valorile implicite.
+- **Un catalog de path-uri** cu insigne pentru live și regex, un formular ghidat „adaugă o cameră RTSP” și revenire sau ștergere pentru intrarea proprie a oricărui path (cu avertisment dacă cineva e conectat).
+- **Starea live pe pagina fiecărui path:** piste, cititori, octeți transferați, cadre cu erori și timp de funcționare, reîmprospătate la fiecare 5 secunde. Un path pe care nu publică nimic apare inactiv, nu defect.
+- **Reziliență pe fiecare path:** o rezervă mereu disponibilă care rulează în buclă un clip offline cât timp camera e căzută, și preluare la cerere care deschide sursa doar cât timp se uită cineva.
+- **Fiecare hook `runOn*`**, cu avertisment acolo unde salvarea repornește path-ul.
+- **Redirecționare:** trimite un path către YouTube, Twitch sau alt server prin lista nativă `forward` a MediaMTX, cu cheile de stream mascate și fără repornirea path-ului.
+- **Scrieri rare.** Se trimit doar cheile pe care le-ai schimbat.
 
 ### Exploatare
 
-Un singur proces pentru API, SPA și media · multi-arhitectură · `GET /health` · loguri structurate · PWA · deschis și închis · 30 de limbi · fără bază de date.
+Un singur proces pentru API, SPA și media · multi-arhitectură · `GET /api/health` · versiunea MediaMTX în antet · loguri structurate · instalabil ca PWA · întunecat și deschis · 30 de limbi · fără bază de date.
 
 ## Variabile de mediu
 
-Însămânțează doar prima pornire. Restul rămâne editabil din **Config**.
+Acestea însămânțează prima pornire. Totul rămâne editabil din **Config**.
 
-| Variabilă | Implicit | La ce servește |
+| Variabilă | Implicit în imagine | La ce servește |
 |----------|---------|---------|
-| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Unde ajunge Connect la API-ul MediaMTX din interiorul containerului său |
+| `BACKEND_SERVER_MEDIAMTX_URL` | `http://mediamtx` | Unde ajunge Connect la API-ul MediaMTX |
 | `MEDIAMTX_API_PORT` | `9997` | Portul API-ului MediaMTX |
-| `MEDIAMTX_RECORDINGS_DIR` | `./recordings` | Calea de pe gazdă montată pentru înregistrări (doar compose) |
-| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Unde ajung miniaturile |
+| `REMOTE_MEDIAMTX_URL` | `http://localhost` | Unde ajunge *browserul* la MediaMTX pentru redare. Seteaz-o de fiecare dată când browserul nu rulează pe server |
+| `MEDIAMTX_RECORDINGS_DIR` | `/recordings` | De unde citește Connect înregistrările |
+| `MEDIAMTX_SCREENSHOTS_DIR` | `/screenshots` | Unde ajung instantaneele și miniaturile |
+| `DATA_DIR` | `/data` | Unde se află `config.json` |
+| `PORT` | `3000` | Portul HTTP |
+| `LOG_LEVEL` | `info` | Nivelul de log Pino |
 
-`http://mediamtx` se rezolvă doar în rețeaua compose-ului inclus — pentru un `docker run` de sine stătător, pune adresa gazdei tale.
+`http://mediamtx` se rezolvă doar în rețeaua compose-ului inclus. Pentru un `docker run` de sine stătător, pune adresa gazdei tale. Cu compose, setează `REMOTE_MEDIAMTX_HOST` în `.env` în loc de `REMOTE_MEDIAMTX_URL`: aceasta setează și gazda WebRTC pe care o anunță MediaMTX. [`.env.example`](../../.env.example) explică fiecare variabilă, iar `pnpm dev` folosește valori implicite pentru localhost fără niciun `.env`.
 
 ## Cum funcționează
 
@@ -145,20 +162,20 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Redarea merge de la browser la MediaMTX. Connect mută doar JSON, plus înregistrările și miniaturile pe care le citește de pe disc.
+Redarea live merge de la browser la MediaMTX. Connect mută JSON, plus înregistrările și miniaturile: de pe disc, sau intervale înregistrate trecute prin proxy de la serverul de redare al MediaMTX.
 
 ## Documentație
 
 | | |
 |---|---|
-| [Funcționalități](../FEATURES.md) | Fiecare capabilitate, rută și procedură livrată |
-| [Arhitectură](../../ARCHITECTURE.md) | Cum se îmbină piesele |
+| [Funcționalități](../../docs/FEATURES.md) | Fiecare capabilitate, rută și procedură livrată |
+| [Arhitectură](../../docs/ARCHITECTURE.md) | Cum se îmbină piesele |
 | [Contribuții](../../CONTRIBUTING.md) | Mediu de dezvoltare, scripturi, procesul de PR |
 | [Exemple](../../examples/) | Cameră Raspberry Pi, fluxuri false pentru teste |
 
 ## Contribuții
 
-Issue-urile și PR-urile sunt binevenite. `pnpm install && pnpm dev` îți ridică tot stack-ul cu date de test — restul în [CONTRIBUTING.md](../../CONTRIBUTING.md), iar titlurile de PR sunt conventional commits. Respectăm un [Cod de conduită](../../CODE_OF_CONDUCT.md).
+Issue-urile și PR-urile sunt binevenite. `pnpm install && pnpm dev` îți ridică tot stack-ul cu date de test. Vezi [CONTRIBUTING.md](../../CONTRIBUTING.md) și reține că titlurile de PR sunt conventional commits. Respectăm un [Cod de conduită](../../CODE_OF_CONDUCT.md).
 
 ## Licență
 

@@ -33,6 +33,9 @@ export default defineConfig({
           environment: 'happy-dom',
           include: ['src/**/*.test.tsx'],
           setupFiles: ['./src/test/setup.ts'],
+          // The zone render.tsx's IntlProvider formats in, so local-day math
+          // (the recording timeline) and formatted times agree on any machine.
+          env: { TZ: 'UTC' },
         },
       },
     ],

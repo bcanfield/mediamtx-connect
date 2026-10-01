@@ -15,13 +15,16 @@ import { AppHeader } from './app-header'
 // These use the app's REAL I18nProvider (`realI18n`), not the harness's fixed
 // English one, or there would be nothing to switch.
 
+let streams: unknown[] = []
+
 const stub: StubApi = {
-  streamsList: () => ({ status: 'connected', streams: [] }),
+  streamsList: () => ({ status: 'connected', hlsAddress: ':8888', remoteMediaMtxUrl: null, streams }),
 }
 const server = createRpcServer(stub)
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 beforeEach(() => {
+  streams = []
   localStorage.clear()
   document.documentElement.lang = ''
 })
@@ -51,6 +54,7 @@ describe('primary navigation', () => {
     expect(links.map(a => a.getAttribute('href'))).toEqual([
       '/',
       '/recordings',
+      '/sessions',
       '/config',
       '/config/mediamtx/global',
       '/config/mediamtx/paths',
@@ -66,17 +70,27 @@ describe('primary navigation', () => {
     expect(within(nav()).getAllByRole('link').map(a => a.textContent)).toEqual([
       'Live',
       'Recordings',
+      'Sessions',
       'App Config',
       'MediaMTX Config',
       'Paths',
     ])
   })
 
+  // Operational tabs on one side, config tabs on the other. The divider is
+  // keyed off the first config tab, so a tab added before it can't move it.
+  it('draws the divider right before App Config', async () => {
+    await renderHeader()
+
+    const appConfig = within(nav()).getByRole('link', { name: 'App Config' })
+    expect(appConfig.previousElementSibling).toHaveAttribute('data-nav-divider')
+    expect(nav().querySelectorAll('[data-nav-divider]')).toHaveLength(1)
+  })
+
   it('shows the brand and a link home', async () => {
     await renderHeader('/recordings')
 
-    expect(screen.getByText('MediaMTX')).toBeInTheDocument()
-    expect(screen.getByText('Connect')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'MediaMTX Connect' })).toHaveAttribute('href', '/')
   })
 })
 
@@ -142,6 +156,31 @@ describe('locale switching', () => {
 
     await renderHeader()
 
-    expect(await within(nav()).findByRole('link', { name: 'Recordings' })).toBeInTheDocument()
+    await waitFor(() => expect(document.documentElement.lang).toBe('en'))
+    expect(localStorage.getItem('locale')).toBe('en')
+  })
+})
+
+describe('the live dot on the Live tab', () => {
+  function path(name: string, readyTime: string | null) {
+    return { name, readyTime, recordState: 'off', codecs: [], viewers: 0, snapshotMtime: null }
+  }
+  const liveDot = () => within(nav()).getByRole('link', { name: 'Live' }).querySelector('.bg-live')
+
+  it('lights while a stream is publishing', async () => {
+    streams = [path('front-door', '2026-07-27T10:00:00Z'), path('back-yard', null)]
+    await renderWithProviders(<AppHeader />)
+
+    await screen.findByText('connected')
+    expect(liveDot()).not.toBeNull()
+  })
+
+  // MediaMTX lists configured and on-demand paths that have no publisher yet.
+  it('stays dark when every path is idle', async () => {
+    streams = [path('front-door', null), path('back-yard', null)]
+    await renderWithProviders(<AppHeader />)
+
+    await screen.findByText('connected')
+    expect(liveDot()).toBeNull()
   })
 })

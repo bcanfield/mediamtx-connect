@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web UI for MediaMTX. Watch streams, browse recordings, and edit config from your browser."
-  },
   "Forms": {
     "errors": {
       "required": "This field is required",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Retry",
-    "loading": "Loading…",
     "theme": {
-      "lightMode": "Light mode",
-      "darkMode": "Dark mode",
       "switchToLight": "Switch to light theme",
       "switchToDark": "Switch to dark theme"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "connected",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "connected · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} is older than {minimum}, the oldest version Connect supports. Some settings may be missing or refused."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Recordings",
+      "sessions": "Sessions",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Paths"
@@ -92,10 +84,6 @@
       "stop": "Stop",
       "playAria": "Play {streamName}",
       "actionsAria": "Stream actions",
-      "stub": {
-        "title": "Not implemented yet",
-        "description": "This action is on the roadmap — it was logged."
-      },
       "recordError": {
         "title": "Couldn't change recording",
         "description": "MediaMTX rejected the change — this stream's recording is unchanged."
@@ -117,7 +105,6 @@
         "description": "MediaMTX couldn't grab a frame — the stream may be offline."
       },
       "menu": {
-        "openDetail": "Open stream detail",
         "viewRecordings": "View recordings",
         "takeSnapshot": "Take snapshot",
         "record": "Record",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copy publish URLs",
-        "shareEmbed": "Share & embed…",
         "editPathConfig": "Edit path config",
         "editHooks": "Edit hooks"
       }
@@ -184,6 +170,98 @@
       "showing": "Showing {from}–{to} of {total}",
       "previous": "Previous page",
       "next": "Next page"
+    },
+    "timeline": {
+      "previousDay": "Previous day",
+      "nextDay": "Next day",
+      "trackAria": "24-hour timeline",
+      "spansAria": "Recorded spans",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Play {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "No recordings on this day.",
+      "errorTitle": "Could not read the recording timeline",
+      "unreachableTitle": "MediaMTX is unreachable",
+      "unreachableDescription": "The recording timeline comes from MediaMTX. The files below are read from disk and still play."
+    },
+    "enablePlayback": {
+      "title": "Turn on recording playback",
+      "playbackOff": "MediaMTX's playback server is off.",
+      "notFmp4": "This stream records in {format}, and the playback server reads only fMP4.",
+      "changesIntro": "Connect will change these settings:",
+      "changesAria": "Changes to make",
+      "olderNote": "Recordings made before this change stay in the file list below.",
+      "apply": "Apply changes",
+      "applying": "Applying…",
+      "refused": "MediaMTX refused the change",
+      "override": "This path sets <code>recordFormat</code> to {format} in its own path config, which overrides path defaults. Set it to <code>fmp4</code> there.",
+      "openPathConfig": "Open this path's recording config",
+      "pathDefaultsUnreadable": "Couldn't read path defaults from MediaMTX."
+    },
+    "clip": {
+      "title": "Download clip",
+      "rangeAria": "Clip range",
+      "last5Min": "Last 5 min",
+      "last15Min": "Last 15 min",
+      "last1Hour": "Last 1 h",
+      "custom": "Custom",
+      "start": "Start",
+      "durationMinutes": "Duration (min)",
+      "invalidStart": "Enter a time as HH:MM:SS",
+      "minutesRange": "Whole minutes, from 1 to 60",
+      "range": "{start} – {end}",
+      "download": "Download",
+      "cancel": "Cancel",
+      "preparing": "Preparing clip…",
+      "progress": "{received} received · {rate}/s",
+      "complete": "Clip downloaded",
+      "failed": "Clip download failed",
+      "noRecordings": "No recordings in this range"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessions",
+    "pageSubHeader": "Every client connected to MediaMTX right now, publishing or reading, over any protocol.",
+    "summary": "{count, plural, one {# session} other {# sessions}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "State",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes out",
+      "uptime": "Uptime",
+      "actions": "Actions"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "read",
+      "publish": "publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (not enabled on this server)",
+      "failed": "{protocol} (couldn't be read)",
+      "unlisted": "Not listed: {protocols}.",
+      "truncated": "Showing the first {count, number} {protocol} sessions."
+    },
+    "kick": {
+      "action": "Kick",
+      "confirmTitle": "Kick {protocol} client {remoteAddr} from {path}?",
+      "confirmDescription": "MediaMTX drops the connection now. This is not a ban: the client can reconnect straight away.",
+      "hlsCaveat": "An HLS player asks for its playlist again within seconds and gets a new session, so this mostly just resets it.",
+      "cancel": "Cancel",
+      "confirm": "Kick client",
+      "toasts": {
+        "success": "Kicked {remoteAddr}",
+        "alreadyGone": "{remoteAddr} had already disconnected",
+        "errorTitle": "Couldn't kick the session",
+        "errorDescription": "MediaMTX didn't accept the kick. Try again."
+      }
+    },
+    "empty": {
+      "title": "No one is connected",
+      "lead": "MediaMTX has no publishers or readers right now."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX Config",
-      "pageSubHeader": "Global MediaMTX server settings, saved to the server."
+      "pageSubHeader": "Global MediaMTX server settings, saved to the server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · running since {started}",
+      "tooOldTitle": "MediaMTX {version} is older than {minimum}, the oldest version Connect supports.",
+      "tooOldBody": "Some settings may be missing or refused. The rest still load and save."
     },
     "pathDefaults": {
       "pageHeader": "Path Defaults",
@@ -271,6 +353,22 @@
         "unreachable": "No response from MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live health",
+      "stateLive": "LIVE",
+      "stateIdle": "idle",
+      "idleLead": "Nothing is publishing to this path right now. Tracks and counters appear once it goes live.",
+      "unreachable": "Couldn't reach MediaMTX to read this path's health.",
+      "uptime": "Uptime",
+      "readers": "Readers",
+      "received": "Received",
+      "sent": "Sent",
+      "framesInError": "Frames in error",
+      "tracks": "Tracks",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Publishing over {type}",
+      "readerTypes": "Read over {types}"
+    },
     "pathConfig": {
       "pageHeader": "Path Config · {name}",
       "pageSubHeader": "Settings for this stream, saved to the server.",
@@ -310,6 +408,31 @@
           "success": "Reverted to inherited settings",
           "errorTitle": "Couldn't revert to inherited settings",
           "errorDescription": "The path config entry is still there. Try again."
+        }
+      },
+      "publishRead": {
+        "title": "Publish & read",
+        "publishTab": "Publish",
+        "readTab": "Read",
+        "pullSource": "This path pulls from its source; MediaMTX refuses publishers.",
+        "readFailed": "Couldn't read the server's listen addresses.",
+        "noProtocols": "The server has every protocol for this turned off.",
+        "copyUrl": "Copy {protocol} URL",
+        "copySnippet": "Copy the {client} snippet for {protocol}",
+        "snippetLabel": "{client} snippet for {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publishes over WHIP only when the input has both a video and an audio track."
+        },
+        "links": {
+          "systemPlayer": "Open in system player",
+          "browserPublish": "Publish from the browser",
+          "hlsPage": "Open MediaMTX's HLS page",
+          "webrtcPage": "Open MediaMTX's WebRTC page"
+        },
+        "toasts": {
+          "copied": "Copied to the clipboard",
+          "copyFailedTitle": "Couldn't copy",
+          "copyFailedDescription": "The browser blocked clipboard access. Select the text and copy it instead."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Logging",
         "api": "API",
+        "auth": "Authentication",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Recording",
         "pathHooks": "Path Hooks",
-        "source": "Source"
+        "source": "Source",
+        "forward": "Forwarding",
+        "resilience": "Resilience"
       },
       "sectionDescriptions": {
         "logging": "Log output, timeouts and global limits.",
         "api": "The HTTP API that MediaMTX Connect itself uses.",
+        "auth": "How MediaMTX checks who may publish, read or use its API.",
         "hooks": "Commands MediaMTX runs on connection events.",
         "rtsp": "Publish and read streams over RTSP.",
         "rtmp": "Publish and read streams over RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Publish and read streams over SRT.",
         "recording": "Record streams to disk.",
         "pathHooks": "Commands MediaMTX runs on a path's own lifecycle events.",
-        "source": "Where this path's stream comes from."
+        "source": "Where this path's stream comes from.",
+        "forward": "Re-publish this path's stream to other servers, such as YouTube or Twitch.",
+        "resilience": "Keep readers connected when the source drops, or pull the source only while someone watches."
       },
       "sectionWarnings": {
-        "pathHooks": "Saving a hook restarts the path and disconnects its publisher — the stream drops until it reconnects."
+        "auth": "Changing how MediaMTX authenticates applies to every client, Connect included — a wrong setting can cut Connect off from MediaMTX.",
+        "pathHooks": "Saving a hook restarts the path and disconnects its publisher — the stream drops until it reconnects.",
+        "resilience": "Saving any of these restarts the path and disconnects its publisher — the stream drops until it reconnects."
       },
       "enabled": "Enabled",
       "off": "Off",
@@ -411,6 +542,15 @@
         "passwordAria": "ICE server {index} password",
         "removeAria": "Remove ICE server {index}"
       },
+      "forwardDests": {
+        "add": "Add destination",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destination {index}",
+        "showAria": "Show destination {index}",
+        "hideAria": "Hide destination {index}",
+        "removeAria": "Remove destination {index}",
+        "plaintextNotice": "MediaMTX stores these URLs, stream keys included, in plaintext in its config and returns them unredacted from its API."
+      },
       "errors": {
         "invalidSource": "MediaMTX won't accept this. Use publisher, redirect, rpiCamera, or a URL starting with rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// or wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Timeout for write operations.",
         "writeQueueSize": "Size of the outgoing queue per connection. Must be a power of two.",
         "udpMaxPayloadSize": "Maximum size of outgoing UDP packets.",
-        "externalAuthenticationURL": "URL of an external authentication server, called on every connection.",
         "apiAddress": "Listen address of the HTTP API.",
         "metrics": "Expose Prometheus-compatible metrics.",
         "metricsAddress": "Listen address of the metrics endpoint.",
         "pprof": "Expose the Go pprof profiling endpoint.",
         "pprofAddress": "Listen address of the pprof endpoint.",
+        "authMethod": "How MediaMTX authenticates clients: internal (users listed in its config), http (an external HTTP server) or jwt (tokens from an identity provider).",
+        "authHTTPAddress": "URL MediaMTX calls for every authentication request when authMethod is http. A 2xx response allows the action.",
         "runOnConnect": "Command to run when a client connects.",
         "runOnConnectRestart": "Restart the command if it exits.",
         "runOnDisconnect": "Command to run when a client disconnects.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "IP range used for multicast delivery.",
         "multicastRTPPort": "Port for multicast RTP packets.",
         "multicastRTCPPort": "Port for multicast RTCP packets.",
-        "protocols": "Transport protocols accepted by the RTSP server (udp, multicast or tcp).",
-        "encryption": "TLS encryption policy (no, strict or optional).",
-        "serverKey": "Path of the TLS server key.",
-        "serverCert": "Path of the TLS server certificate.",
-        "authMethods": "Authentication methods accepted by the RTSP server (basic or digest).",
+        "rtspTransports": "Transport protocols accepted by the RTSP server (udp, multicast or tcp).",
+        "rtspEncryption": "Use the secure variants RTSPS, SRTP and SRTCP (no, optional or strict).",
+        "rtspServerKey": "Path of the TLS server key.",
+        "rtspServerCert": "Path of the TLS server certificate.",
+        "rtspAuthMethods": "Authentication methods accepted by the RTSP server (basic or digest).",
         "rtmpAddress": "Listen address of the RTMP server.",
-        "rtmpEncryption": "TLS encryption policy for RTMP (no, strict or optional).",
+        "rtmpEncryption": "TLS encryption policy for RTMP (no, optional or strict).",
         "rtmpsAddress": "Listen address of the RTMPS (TLS) server.",
         "rtmpServerKey": "Path of the RTMPS server key.",
         "rtmpServerCert": "Path of the RTMPS server certificate.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Minimum duration of each segment.",
         "hlsPartDuration": "Duration of each part in low-latency mode.",
         "hlsSegmentMaxSize": "Maximum size of each segment.",
-        "hlsAllowOrigin": "Value of the Access-Control-Allow-Origin header.",
+        "hlsAllowOrigins": "Allowed CORS origins. Wildcards work, as in http://*.example.com.",
         "hlsTrustedProxies": "IPs or networks of proxies placed before the HLS server.",
         "hlsDirectory": "Write segments to disk in this directory instead of RAM.",
         "webrtcAddress": "Listen address of the WebRTC HTTP server.",
         "webrtcEncryption": "Serve WebRTC over TLS (HTTPS).",
         "webrtcServerKey": "Path of the WebRTC server key.",
         "webrtcServerCert": "Path of the WebRTC server certificate.",
-        "webrtcAllowOrigin": "Value of the Access-Control-Allow-Origin header.",
+        "webrtcAllowOrigins": "Allowed CORS origins. Wildcards work, as in http://*.example.com. Connect's in-browser player needs its own origin allowed.",
         "webrtcTrustedProxies": "IPs or networks of proxies placed before the WebRTC server.",
         "webrtcLocalUDPAddress": "Local UDP address used for WebRTC traffic.",
         "webrtcLocalTCPAddress": "Local TCP address used for WebRTC traffic.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "How long to wait for the on-demand publisher to start.",
         "runOnDemandCloseAfter": "Stop the on-demand command this long after the last reader leaves.",
         "runOnUnDemand": "Command to run when the on-demand command is stopped.",
-        "runOnReady": "Command to run when the stream is ready to be read.",
-        "runOnReadyRestart": "Restart the command if it exits.",
-        "runOnNotReady": "Command to run when the stream is no longer ready.",
+        "runOnAvailable": "Command to run when the stream becomes available: a source is publishing or a fallback is playing. Stopped when it no longer is.",
+        "runOnAvailableRestart": "Restart the command if it exits.",
+        "runOnUnavailable": "Command to run when the stream is no longer available.",
+        "runOnOnline": "Command to run when the stream comes online: its real source is publishing, not a fallback. Stopped when it goes offline.",
+        "runOnOnlineRestart": "Restart the command if it exits.",
+        "runOnOffline": "Command to run when the stream is no longer online.",
         "runOnRead": "Command to run when a client starts reading this path.",
         "runOnReadRestart": "Restart the command if it exits.",
         "runOnUnread": "Command to run when a client stops reading this path.",
         "runOnRecordSegmentCreate": "Command to run when a recording segment is created.",
-        "runOnRecordSegmentComplete": "Command to run when a recording segment is complete."
+        "runOnRecordSegmentComplete": "Command to run when a recording segment is complete.",
+        "alwaysAvailable": "While nothing is publishing, play an offline segment on repeat so readers stay connected. The stream stays available, not online. Needs alwaysAvailableFile, or alwaysAvailableTracks set in mediamtx.yml. Refused on a regex or all_others entry and together with sourceOnDemand or runOnDemand.",
+        "alwaysAvailableFile": "Path of an MP4 on the MediaMTX server's own filesystem; Connect doesn't upload it. Tracks must be AV1, VP9, H265, H264, Opus, MPEG-4 Audio or LPCM. Can't be combined with alwaysAvailableTracks.",
+        "sourceOnDemand": "Pull the source only while at least one reader is connected. Only for a source MediaMTX pulls from a URL; refused when source is publisher.",
+        "sourceOnDemandStartTimeout": "How long the first reader waits for the source to become available before giving up. MediaMTX's default is 10s.",
+        "sourceOnDemandCloseAfter": "How long the source stays open after the last reader leaves. MediaMTX's default is 10s."
       },
       "toasts": {
         "success": "MediaMTX config saved",

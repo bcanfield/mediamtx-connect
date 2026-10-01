@@ -49,10 +49,8 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(THEME_DEFAULT)
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>('dark')
 
-  // Sync React state to what's stored, and re-assert the resolved theme on the
-  // <html> element. Re-asserting matters when this provider remounts on a locale
-  // switch (the layout is scoped to [locale]): the anti-flash script only runs on
-  // the initial document load, so without this a remount would leave the class stale.
+  // Sync React state to what's stored. The anti-flash script in index.html has
+  // already applied the class; re-asserting it here keeps the two in step.
   useEffect(() => {
     const stored = readStoredTheme()
     const system = getSystemTheme()

@@ -1,8 +1,13 @@
-import type { MediaMtxPath } from './mediamtx'
+import type { SessionProtocol } from '@connect/contract'
+import type { MediaMtxPath, MediaMtxSessionList } from './mediamtx'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
+import { logger } from './logger'
 import { mediaMtxApi, MediaMtxError } from './mediamtx'
 import { latestScreenshotMtimeFor } from './recordings-fs'
 import { router } from './router'
@@ -15,10 +20,15 @@ vi.mock('./logger', () => ({
 }))
 // The real MediaMtxError, so the add handler's `instanceof` narrowing is the
 // one that ships. `mediamtx.ts` imports nothing but types, so loading it here
-// costs nothing.
+// costs nothing. The playback client is real too: the timeline tests stub
+// `fetch` for the playback server, so its URL and 404 handling are the shipped ones.
 vi.mock('./mediamtx', async (importActual) => {
   const actual = await importActual<typeof import('./mediamtx')>()
-  return { mediaMtxApi: vi.fn(), MediaMtxError: actual.MediaMtxError }
+  return {
+    mediaMtxApi: vi.fn(),
+    mediaMtxPlayback: actual.mediaMtxPlayback,
+    MediaMtxError: actual.MediaMtxError,
+  }
 })
 vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
 // The real module, with the snapshot read swappable: one test needs it to fail
@@ -37,6 +47,7 @@ const CONFIG = {
 }
 
 const api = {
+  info: vi.fn(),
   pathsList: vi.fn(),
   pathsGet: vi.fn(),
   configGlobalGet: vi.fn(),
@@ -44,6 +55,11 @@ const api = {
   configPathGet: vi.fn(),
   configPathAdd: vi.fn(),
   configPathPatch: vi.fn(),
+  configPathDefaultsGet: vi.fn(),
+  configGlobalPatch: vi.fn(),
+  configPathDefaultsPatch: vi.fn(),
+  sessionsList: vi.fn(),
+  sessionsKick: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -164,7 +180,7 @@ describe('streams.snapshot', () => {
   it('surfaces a capture failure as an error', async () => {
     vi.mocked(captureSnapshot).mockRejectedValue(new Error('ffmpeg exited 1'))
 
-    await expect(call(router.streams.snapshot, { name: 'front-door' })).rejects.toThrow()
+    await expect(call(router.streams.snapshot, { name: 'front-door' })).rejects.toThrow('Failed to capture snapshot')
   })
 })
 
@@ -226,7 +242,7 @@ describe('streams.list card metadata', () => {
     })
 
     // Rejects rather than resolving: `connection-error` is reserved for MediaMTX.
-    await expect(call(router.streams.list, undefined as never)).rejects.toThrow()
+    await expect(call(router.streams.list, undefined as never)).rejects.toThrow('EIO: i/o error, stat')
   })
 })
 
@@ -415,6 +431,170 @@ describe('config.mediamtx.updatePathConfig', () => {
   })
 })
 
+// The whole-form scopes refuse the same way a path does, and the form needs the
+// reason just as much to put it back on the field.
+describe.each([
+  {
+    proc: 'updateGlobal',
+    method: 'configGlobalPatch',
+    save: () => call(router.config.mediamtx.updateGlobal, {}),
+    fallback: 'Failed to update global config',
+  },
+  {
+    proc: 'updatePathDefaults',
+    method: 'configPathDefaultsPatch',
+    save: () => call(router.config.mediamtx.updatePathDefaults, {}),
+    fallback: 'Failed to update path defaults',
+  },
+] as const)('config.mediamtx.$proc', ({ method, save, fallback }) => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('passes MediaMTX\'s own reason through as BAD_REQUEST on a refused write', async () => {
+    const reason = '\'udpMaxPayloadSize\' must be less than 1472'
+    api[method].mockRejectedValue(new MediaMtxError(400, reason, 'PATCH /config/x/patch'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'BAD_REQUEST',
+      message: reason,
+    })
+  })
+
+  it('stays INTERNAL_SERVER_ERROR when the failure is not a refusal', async () => {
+    api[method].mockRejectedValue(new Error('fetch failed'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: fallback,
+    })
+  })
+})
+
+describe('recordings.timeline', () => {
+  // The playback server is reached over HTTP, not through the mocked API client.
+  const fetchMock = vi.fn<typeof fetch>()
+
+  const DAY = {
+    streamName: 'stream1',
+    start: new Date('2026-03-14T00:00:00Z'),
+    end: new Date('2026-03-15T00:00:00Z'),
+  }
+
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+    vi.stubGlobal('fetch', fetchMock)
+    api.configGlobalGet.mockResolvedValue({ playback: true, playbackAddress: ':9996' })
+    api.pathsGet.mockResolvedValue(wildcardPaths('stream1')[0])
+    api.configPathGet.mockResolvedValue({ recordFormat: 'fmp4' })
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+    vi.unstubAllGlobals()
+  })
+
+  it('is unavailable while the playback server is off', async () => {
+    api.configGlobalGet.mockResolvedValue({ playback: false })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: false, recordFormat: 'fmp4' })
+  })
+
+  // The playback server refuses MPEG-TS outright, so asking it is pointless.
+  it('is unavailable when the path records MPEG-TS, without asking the playback server', async () => {
+    api.configPathGet.mockResolvedValue({ recordFormat: 'mpegts' })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  // A wildcard-backed path has no entry under its own name (ADR 0002).
+  it('reads the format off the entry the runtime path names as its confName', async () => {
+    api.configPathGet.mockImplementation(async (name: string) =>
+      name === 'all_others' ? { recordFormat: 'mpegts' } : null,
+    )
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(api.configPathGet).toHaveBeenCalledWith('all_others')
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+  })
+
+  it('reads the format off path defaults when the path has no runtime path or entry', async () => {
+    api.pathsGet.mockResolvedValue(null)
+    api.configPathGet.mockResolvedValue(null)
+    api.configPathDefaultsGet.mockResolvedValue({ recordFormat: 'mpegts' })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+  })
+
+  // `url` names the api's view of MediaMTX (`mediamtx:9996`), useless to a
+  // browser; the web builds its own from start and duration.
+  it('maps the playback server\'s spans, dropping their url', async () => {
+    fetchMock.mockResolvedValue(Response.json([
+      { start: '2026-03-14T10:00:00Z', duration: 3600, url: 'http://mediamtx:9996/get?path=stream1' },
+      { start: '2026-03-14T14:30:00Z', duration: 90.5, url: 'http://mediamtx:9996/get?path=stream1' },
+    ]))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({
+      status: 'available',
+      spans: [
+        { start: new Date('2026-03-14T10:00:00Z'), duration: 3600 },
+        { start: new Date('2026-03-14T14:30:00Z'), duration: 90.5 },
+      ],
+    })
+  })
+
+  // Same host as the API, on the port `playbackAddress` names.
+  it('asks the playback server for the path between the two instants', async () => {
+    api.configGlobalGet.mockResolvedValue({ playback: true, playbackAddress: ':19996' })
+    fetchMock.mockResolvedValue(Response.json([]))
+
+    await call(router.recordings.timeline, DAY)
+
+    expect(fetchMock.mock.lastCall?.[0]).toBe(
+      'http://127.0.0.1:19996/list?path=stream1&start=2026-03-14T00%3A00%3A00.000Z&end=2026-03-15T00%3A00%3A00.000Z',
+    )
+  })
+
+  // MediaMTX answers 404 for a range with no segments in it.
+  it('is available with no spans when the playback server finds none', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'no recordings found' }, { status: 404 }))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'available', spans: [] })
+  })
+
+  it('passes the playback server\'s own reason through when it refuses', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'authentication failed' }, { status: 401 }))
+
+    await expect(call(router.recordings.timeline, DAY)).rejects.toThrow('authentication failed')
+  })
+
+  it('returns null when the MediaMTX API is unreachable', async () => {
+    api.configGlobalGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toBeNull()
+  })
+})
+
 describe('config.mediamtx.getPathConfig', () => {
   beforeEach(() => {
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
@@ -451,6 +631,100 @@ describe('config.mediamtx.getPathConfig', () => {
     api.pathsGet.mockRejectedValue(new Error('fetch failed'))
 
     const result = await call(router.config.mediamtx.getPathConfig, { name: 'stream1' })
+
+    expect(result).toBeNull()
+  })
+})
+
+describe('config.mediamtx.getPathHealth', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('reports the counters, tracks and sessions of a ready path', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      ready: true,
+      readyTime: '2026-07-16T10:00:00Z',
+      source: { type: 'rtspSession', id: 'a' },
+      readers: [{ type: 'webRTCSession', id: 'b' }, { type: 'hlsMuxer', id: 'c' }],
+      tracks2: [
+        { codec: 'H264', codecProps: { width: 1920, height: 1080 } },
+        { codec: 'MPEG-4 Audio', codecProps: null },
+      ],
+      bytesReceived: 4096,
+      bytesSent: 2048,
+      inboundFramesInError: 7,
+    })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toEqual({
+      status: 'live',
+      readyTime: '2026-07-16T10:00:00Z',
+      publisher: 'rtspSession',
+      readers: ['webRTCSession', 'hlsMuxer'],
+      tracks: [
+        { codec: 'H264', resolution: '1920×1080' },
+        { codec: 'MPEG-4 Audio', resolution: null },
+      ],
+      bytesReceived: 4096,
+      bytesSent: 2048,
+      framesInError: 7,
+    })
+  })
+
+  // Older servers serve the bare codec list and no error counter. Both are
+  // worth degrading for rather than dropping the panel.
+  it('falls back to the bare codec list, and to no error counter', async () => {
+    api.pathsGet.mockResolvedValue({
+      name: 'stream1',
+      ready: true,
+      readyTime: '2026-07-16T10:00:00Z',
+      tracks: ['H264'],
+    })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toMatchObject({
+      status: 'live',
+      tracks: [{ codec: 'H264', resolution: null }],
+      // Not zero: a counter the server never sent is not a counter at zero.
+      framesInError: null,
+      bytesReceived: 0,
+      bytesSent: 0,
+    })
+  })
+
+  it('reports a configured path MediaMTX is not running as idle', async () => {
+    api.pathsGet.mockResolvedValue(null)
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stopped' })
+
+    expect(result).toEqual({ status: 'idle' })
+  })
+
+  // A runtime path exists the moment MediaMTX holds an entry for it; it is
+  // `ready` only once something publishes. Idle, not live with empty counters.
+  it('reports a runtime path that is not ready as idle', async () => {
+    api.pathsGet.mockResolvedValue({ name: 'stream1', ready: false, readyTime: null })
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
+
+    expect(result).toEqual({ status: 'idle' })
+  })
+
+  // Distinct from idle: a server that didn't answer says nothing about whether
+  // the path is up, and the panel says so rather than claiming it is down.
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.pathsGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.config.mediamtx.getPathHealth, { name: 'stream1' })
 
     expect(result).toBeNull()
   })
@@ -496,5 +770,271 @@ describe('config.mediamtx.getPathConnections', () => {
     const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
 
     expect(result).toBeNull()
+  })
+})
+
+describe('sessions.list', () => {
+  const NONE: MediaMtxSessionList = { pageCount: 0, items: [] }
+  let lists: Partial<Record<SessionProtocol, MediaMtxSessionList | Error>>
+
+  beforeEach(() => {
+    lists = {}
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+    api.sessionsList.mockImplementation(async (protocol: SessionProtocol) => {
+      const answer = lists[protocol] ?? NONE
+      if (answer instanceof Error)
+        throw answer
+      return answer
+    })
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('merges every protocol into one list sorted by path, protocol, then created', async () => {
+    lists = {
+      rtsp: {
+        pageCount: 1,
+        items: [
+          { id: 'r2', path: 'stream1', remoteAddr: '10.0.0.2:5000', state: 'read', created: '2026-10-01T10:05:00Z', inboundBytes: 10, outboundBytes: 20, bytesReceived: 999, bytesSent: 999 },
+          { id: 'r1', path: 'stream1', remoteAddr: '10.0.0.1:5000', state: 'publish', created: '2026-10-01T10:00:00Z', inboundBytes: 100, outboundBytes: 0 },
+        ],
+      },
+      srt: {
+        pageCount: 1,
+        items: [{ id: 's1', path: 'stream1', remoteAddr: '10.0.0.3:6000', state: 'read', created: '2026-10-01T09:00:00Z', bytesReceived: 5, bytesSent: 50 }],
+      },
+      hls: {
+        pageCount: 1,
+        items: [{ id: 'h1', path: 'cam', remoteAddr: '10.0.0.4', created: '2026-10-01T11:00:00Z', outboundBytes: 70 }],
+      },
+      webrtc: {
+        pageCount: 1,
+        items: [{ id: 'w1', path: 'stream1', remoteAddr: '10.0.0.5:7000', state: 'read', created: '2026-10-01T08:00:00Z', inboundBytes: 1, outboundBytes: 2 }],
+      },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions).toEqual([
+      { id: 'h1', protocol: 'hls', path: 'cam', remoteAddr: '10.0.0.4', state: 'read', inboundBytes: null, outboundBytes: 70, created: new Date('2026-10-01T11:00:00Z') },
+      { id: 'r1', protocol: 'rtsp', path: 'stream1', remoteAddr: '10.0.0.1:5000', state: 'publish', inboundBytes: 100, outboundBytes: 0, created: new Date('2026-10-01T10:00:00Z') },
+      { id: 'r2', protocol: 'rtsp', path: 'stream1', remoteAddr: '10.0.0.2:5000', state: 'read', inboundBytes: 10, outboundBytes: 20, created: new Date('2026-10-01T10:05:00Z') },
+      { id: 's1', protocol: 'srt', path: 'stream1', remoteAddr: '10.0.0.3:6000', state: 'read', inboundBytes: 5, outboundBytes: 50, created: new Date('2026-10-01T09:00:00Z') },
+      { id: 'w1', protocol: 'webrtc', path: 'stream1', remoteAddr: '10.0.0.5:7000', state: 'read', inboundBytes: 1, outboundBytes: 2, created: new Date('2026-10-01T08:00:00Z') },
+    ])
+  })
+
+  it('lists every protocol on the server', async () => {
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(api.sessionsList.mock.calls.map(([protocol]) => protocol))
+      .toEqual(['rtsp', 'rtsps', 'rtmp', 'rtmps', 'srt', 'webrtc', 'hls'])
+    expect(state.status === 'connected' && state.protocols.every(p => p.status === 'listed')).toBe(true)
+  })
+
+  // MediaMTX doesn't register a disabled protocol's routes at all.
+  it('marks a protocol answering 404 as disabled and still lists the rest', async () => {
+    lists = {
+      rtmps: new MediaMtxError(404, null, 'GET /rtmpsconns/list'),
+      rtsp: { pageCount: 1, items: [{ id: 'r1', path: 'stream1', remoteAddr: 'a', state: 'publish', created: '2026-10-01T10:00:00Z', inboundBytes: 1, outboundBytes: 0 }] },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions.map(s => s.id)).toEqual(['r1'])
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'rtmps'))
+      .toEqual({ protocol: 'rtmps', status: 'disabled', truncated: false })
+  })
+
+  it('marks a protocol failing any other way as failed', async () => {
+    lists = { srt: new MediaMtxError(500, null, 'GET /srtconns/list') }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'srt'))
+      .toEqual({ protocol: 'srt', status: 'failed', truncated: false })
+  })
+
+  it('reports an unreachable MediaMTX when no list got an HTTP answer', async () => {
+    api.sessionsList.mockRejectedValue(new TypeError('fetch failed'))
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state).toEqual({
+      status: 'connection-error',
+      mediaMtxUrl: CONFIG.mediaMtxUrl,
+      mediaMtxApiPort: CONFIG.mediaMtxApiPort,
+    })
+  })
+
+  // A state a newer MediaMTX adds must not fail output validation for the
+  // whole list.
+  it('reads a state it doesn\'t know as idle', async () => {
+    lists = {
+      rtmp: { pageCount: 1, items: [{ id: 'm1', path: 'stream1', remoteAddr: 'a', state: 'handshaking', created: '2026-10-01T10:00:00Z', inboundBytes: 0, outboundBytes: 0 }] },
+    }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.sessions.map(s => s.state)).toEqual(['idle'])
+  })
+
+  it('reports the page size a truncated protocol was cut to', async () => {
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.pageSize).toBe(100)
+  })
+
+  it('flags a protocol with more than one page as truncated', async () => {
+    lists = { webrtc: { pageCount: 3, items: [] } }
+
+    const state = await call(router.sessions.list, undefined as never)
+
+    expect(state.status === 'connected' && state.protocols.find(p => p.protocol === 'webrtc'))
+      .toEqual({ protocol: 'webrtc', status: 'listed', truncated: true })
+  })
+})
+
+describe('sessions.kick', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('kicks the session over its own protocol', async () => {
+    api.sessionsKick.mockResolvedValue(undefined)
+
+    await call(router.sessions.kick, { protocol: 'srt', id: 'abc' })
+
+    expect(api.sessionsKick).toHaveBeenCalledWith('srt', 'abc')
+  })
+
+  it('answers NOT_FOUND when the session had already gone', async () => {
+    api.sessionsKick.mockRejectedValue(new MediaMtxError(404, 'session not found', 'POST /srtconns/kick/abc'))
+
+    await expect(call(router.sessions.kick, { protocol: 'srt', id: 'abc' }))
+      .rejects
+      .toMatchObject({ code: 'NOT_FOUND' })
+  })
+
+  it('answers INTERNAL_SERVER_ERROR on any other failure', async () => {
+    api.sessionsKick.mockRejectedValue(new MediaMtxError(500, null, 'POST /srtconns/kick/abc'))
+
+    await expect(call(router.sessions.kick, { protocol: 'srt', id: 'abc' }))
+      .rejects
+      .toMatchObject({ code: 'INTERNAL_SERVER_ERROR' })
+  })
+})
+
+describe('mediamtx.info', () => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  // MediaMTX sends nanosecond precision; `new Date` keeps the milliseconds.
+  const STARTED = '2026-10-01T14:17:37.190837375Z'
+
+  it('reports the version verbatim, with the start time as a Date', async () => {
+    api.info.mockResolvedValue({ version: 'v1.21.1', started: STARTED })
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toEqual({
+      version: 'v1.21.1',
+      started: new Date('2026-10-01T14:17:37.190Z'),
+      belowMinimum: false,
+    })
+  })
+
+  it.each([
+    { version: 'v1.20.0', belowMinimum: false },
+    { version: 'v1.19.2', belowMinimum: true },
+    { version: 'v0.23.0', belowMinimum: true },
+    { version: 'v1.100.0', belowMinimum: false },
+    // Anything after the patch number is ignored, so a release candidate of the
+    // floor counts as the floor.
+    { version: 'v1.20.0-rc1', belowMinimum: false },
+    // Unparseable: shown as-is, never warned about.
+    { version: 'dev', belowMinimum: false },
+  ])('$version is belowMinimum: $belowMinimum', async ({ version, belowMinimum }) => {
+    api.info.mockResolvedValue({ version, started: STARTED })
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toMatchObject({ version, belowMinimum })
+  })
+
+  // `/v3/info` arrived in v1.15.2. An older server answers 404, which is a
+  // reachable server with no version to show, not an unreachable one.
+  it('reports no version when MediaMTX predates /v3/info', async () => {
+    api.info.mockResolvedValue(null)
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toEqual({ version: null, started: null, belowMinimum: false })
+  })
+
+  it('returns null when MediaMTX is unreachable', async () => {
+    api.info.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toBeNull()
+  })
+
+  // Only a 404 means "no version"; any other refusal is a server we can't read.
+  it('returns null and logs when /v3/info fails with anything but 404', async () => {
+    api.info.mockRejectedValue(new MediaMtxError(500, null, 'GET /info'))
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toBeNull()
+    expect(logger.error).toHaveBeenCalledOnce()
+  })
+})
+
+describe('recordings.listForStream', () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(path.join(tmpdir(), 'list-for-stream-'))
+    mkdirSync(path.join(root, 'recordings', 'cam', 'front'), { recursive: true })
+    writeFileSync(path.join(root, 'recordings', 'cam', 'front', '2026-07-01_10-00-00.mp4'), '')
+    // Somewhere real to escape to, or the test passes on a missing directory.
+    mkdirSync(path.join(root, 'sibling'))
+    writeFileSync(path.join(root, 'sibling', 'secret.mp4'), '')
+    vi.mocked(getAppConfig).mockResolvedValue({
+      ...CONFIG,
+      recordingsDirectory: path.join(root, 'recordings'),
+      screenshotsDirectory: path.join(root, 'screenshots'),
+    })
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('lists a nested MediaMTX path\'s recordings', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: 'cam/front', page: 1, take: 10 })
+
+    expect(result.recordings.map(r => r.name)).toEqual(['2026-07-01_10-00-00.mp4'])
+  })
+
+  it('treats a name that climbs out of the recordings directory as no stream', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: '../sibling', page: 1, take: 10 })
+
+    expect(result).toEqual({ recordings: [], totalCount: 0 })
   })
 })

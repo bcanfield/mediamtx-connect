@@ -62,7 +62,7 @@ exercises HLS. The only playback assertion anywhere in the cross-browser set is
 `recordings.spec.ts:94` — that a `<video>` element becomes visible after clicking
 Play, on a progressive-download MP4. `hls.js`, native HLS, and the hand-rolled
 WHEP client of ADR 0003 are never driven by any test, in any browser. (This is
-already logged as `docs/debt/20260717100437-whep-playback-not-e2e-covered.md`.)
+already logged as debt, since paid by `tests/e2e/playback.spec.ts`.)
 We are paying 68% of the suite for a regression class it does not test.
 
 ### Why the suite is also weak, which is the same problem
@@ -128,8 +128,7 @@ Three things should be preserved carefully, because they are the parts that work
    the real stack and must stay.
 3. **ADR 0004 already diagnosed half of this** and deferred the component layer
    with an explicit payoff trigger. It named `pnpm verify` as the sub-minute
-   preflight an agent could actually run. Neither has been implemented
-   (`docs/debt/20260717154951-enforced-verify-gate-unimplemented.md`).
+   preflight an agent could actually run. Neither has been implemented.
 
 ### The agentic cost
 
@@ -245,8 +244,7 @@ matrix exists.
   this in-process. Move them, and drop the `if (status === 200) … else …`
   branches — in-process the fixture state is known, so assert the 206 and the
   `Content-Range` unconditionally. This also finally covers the Range/206 logic
-  that `docs/debt/20260714231521-vitest-layers-not-ported.md` lists as
-  outstanding.
+  that the migration's unit-layer debt listed as outstanding.
 - **`mediamtx.spec.ts` (8 tests) → delete, replaced by a compose healthcheck.**
   These assert that the fixture is up. That belongs in the CI step that starts
   the fixture, not in the test suite — the existing `curl`-poll loop in
@@ -601,5 +599,5 @@ catches and the chromium PR gate missed (restore that browser to the PR matrix);
 job); or a WHEP/HLS playback spec lands (at which point cross-browser has a real
 justification and should be scoped to that spec rather than to all of `uiSpecs`).
 
-Supersedes the deferred component-layer scope of ADR 0004 and pays down
-`docs/debt/20260714231521-vitest-layers-not-ported.md`.
+Supersedes the deferred component-layer scope of ADR 0004 and pays down the
+unit-layer debt left by the migration.

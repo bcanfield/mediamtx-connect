@@ -37,7 +37,7 @@ test.describe('MediaMTX Path Config Page', () => {
   })
 
   test('should show the path\'s own hooks and not the server-wide ones', async ({ page }) => {
-    await expect(page.getByRole('textbox', { name: 'runOnReady' })).toBeVisible()
+    await expect(page.getByRole('textbox', { name: 'runOnAvailable' })).toBeVisible()
     await expect(page.getByRole('textbox', { name: 'runOnRecordSegmentCreate' })).toBeVisible()
     // runOnConnect/runOnDisconnect fire per client connection, not per path.
     // They're the only genuinely global hooks and stay on the global page.
@@ -65,22 +65,22 @@ test.describe('MediaMTX Path Config Page', () => {
     // unlike a record* write, which leaves the session alone. ffmpeg-test.sh
     // publishes once and never reconnects, so doing this to a fixture stream
     // would delete it for every spec that runs afterwards.
-    const target = 'echo ready'
+    const target = 'echo available'
     await request.post(`${API}/config/paths/add/${HOOK_PATH}`, { data: {} })
     try {
       await page.goto(`/config/mediamtx/paths/${HOOK_PATH}`)
-      const field = page.getByRole('textbox', { name: 'runOnReady' })
+      const field = page.getByRole('textbox', { name: 'runOnAvailable' })
       await field.fill(target)
       await field.blur()
       await page.getByTestId('save-bar').getByRole('button', { name: 'Save to server' }).click()
       await expect(page.getByTestId('save-bar')).toBeHidden()
 
       await page.reload()
-      await expect(page.getByRole('textbox', { name: 'runOnReady' })).toHaveValue(target)
+      await expect(page.getByRole('textbox', { name: 'runOnAvailable' })).toHaveValue(target)
 
       // The same entry ticket 02's path config writes — one object, one write.
       const entry = await (await request.get(`${API}/config/paths/get/${HOOK_PATH}`)).json()
-      expect(entry.runOnReady).toBe(target)
+      expect(entry.runOnAvailable).toBe(target)
     }
     finally {
       await request.delete(`${API}/config/paths/delete/${HOOK_PATH}`)

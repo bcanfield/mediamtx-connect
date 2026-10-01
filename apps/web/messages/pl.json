@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfejs WWW dla MediaMTX. Oglądaj transmisje, przeglądaj nagrania i edytuj konfigurację z przeglądarki."
-  },
   "Forms": {
     "errors": {
       "required": "To pole jest wymagane",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Spróbuj ponownie",
-    "loading": "Ładowanie…",
     "theme": {
-      "lightMode": "Tryb jasny",
-      "darkMode": "Tryb ciemny",
       "switchToLight": "Przełącz na motyw jasny",
       "switchToDark": "Przełącz na motyw ciemny"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "połączono",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "połączono · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} jest starszy niż {minimum}, najstarsza wersja obsługiwana przez Connect. Niektórych ustawień może brakować lub mogą zostać odrzucone."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Na żywo",
       "recordings": "Nagrania",
+      "sessions": "Sesje",
       "appConfig": "Konfiguracja aplikacji",
       "mediamtxConfig": "Konfiguracja MediaMTX",
       "paths": "Ścieżki"
@@ -92,10 +84,6 @@
       "stop": "Zatrzymaj",
       "playAria": "Odtwórz {streamName}",
       "actionsAria": "Akcje transmisji",
-      "stub": {
-        "title": "Jeszcze niezaimplementowane",
-        "description": "Ta akcja jest w planach — została odnotowana."
-      },
       "recordError": {
         "title": "Nie udało się zmienić nagrywania",
         "description": "MediaMTX odrzucił zmianę — nagrywanie tego strumienia pozostało bez zmian."
@@ -117,7 +105,6 @@
         "description": "MediaMTX nie mógł pobrać klatki — strumień może być offline."
       },
       "menu": {
-        "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",
         "takeSnapshot": "Zrób migawkę",
         "record": "Nagrywanie",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiuj adresy URL publikowania",
-        "shareEmbed": "Udostępnij i osadź…",
         "editPathConfig": "Edytuj konfigurację ścieżki",
         "editHooks": "Edytuj hooki"
       }
@@ -184,6 +170,98 @@
       "showing": "Wyświetlanie {from}–{to} z {total}",
       "previous": "Poprzednia strona",
       "next": "Następna strona"
+    },
+    "timeline": {
+      "previousDay": "Poprzedni dzień",
+      "nextDay": "Następny dzień",
+      "trackAria": "Oś czasu 24-godzinna",
+      "spansAria": "Nagrane odcinki",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Odtwórz {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Brak nagrań tego dnia.",
+      "errorTitle": "Nie udało się odczytać osi czasu nagrań",
+      "unreachableTitle": "MediaMTX jest nieosiągalny",
+      "unreachableDescription": "Oś czasu nagrań pochodzi z MediaMTX. Pliki poniżej są czytane z dysku i nadal można je odtworzyć."
+    },
+    "enablePlayback": {
+      "title": "Włącz odtwarzanie nagrań",
+      "playbackOff": "Serwer odtwarzania MediaMTX jest wyłączony.",
+      "notFmp4": "Ten strumień nagrywa w formacie {format}, a serwer odtwarzania czyta tylko fMP4.",
+      "changesIntro": "Connect zmieni te ustawienia:",
+      "changesAria": "Zmiany do wprowadzenia",
+      "olderNote": "Nagrania sprzed tej zmiany pozostają na liście plików poniżej.",
+      "apply": "Zastosuj zmiany",
+      "applying": "Stosowanie…",
+      "refused": "MediaMTX odrzucił zmianę",
+      "override": "Ta ścieżka ustawia <code>recordFormat</code> na {format} we własnej konfiguracji, która nadpisuje domyślne ustawienia ścieżek. Ustaw tam <code>fmp4</code>.",
+      "openPathConfig": "Otwórz konfigurację nagrywania tej ścieżki",
+      "pathDefaultsUnreadable": "Nie udało się odczytać domyślnych ustawień ścieżek z MediaMTX."
+    },
+    "clip": {
+      "title": "Pobierz klip",
+      "rangeAria": "Zakres klipu",
+      "last5Min": "Ostatnie 5 min",
+      "last15Min": "Ostatnie 15 min",
+      "last1Hour": "Ostatnia 1 godz.",
+      "custom": "Własny",
+      "start": "Początek",
+      "durationMinutes": "Czas trwania (min)",
+      "invalidStart": "Wpisz godzinę w formacie GG:MM:SS",
+      "minutesRange": "Pełne minuty, od 1 do 60",
+      "range": "{start} – {end}",
+      "download": "Pobierz",
+      "cancel": "Anuluj",
+      "preparing": "Przygotowywanie klipu…",
+      "progress": "odebrano {received} · {rate}/s",
+      "complete": "Klip pobrany",
+      "failed": "Nie udało się pobrać klipu",
+      "noRecordings": "Brak nagrań w tym zakresie"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesje",
+    "pageSubHeader": "Każdy klient połączony teraz z MediaMTX, publikujący lub odczytujący, przez dowolny protokół.",
+    "summary": "{count, plural, one {# sesja} few {# sesje} many {# sesji} other {# sesji}}",
+    "columns": {
+      "path": "Ścieżka",
+      "protocol": "Protokół",
+      "remoteAddr": "Adres zdalny",
+      "state": "Stan",
+      "bytesIn": "Bajty przychodzące",
+      "bytesOut": "Bajty wychodzące",
+      "uptime": "Czas działania",
+      "actions": "Akcje"
+    },
+    "states": {
+      "idle": "bezczynna",
+      "read": "odczyt",
+      "publish": "publikacja"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (niewłączony na tym serwerze)",
+      "failed": "{protocol} (nie udało się odczytać)",
+      "unlisted": "Nie wyświetlono: {protocols}.",
+      "truncated": "Wyświetlono pierwsze {count, number} sesji {protocol}."
+    },
+    "kick": {
+      "action": "Rozłącz",
+      "confirmTitle": "Rozłączyć klienta {protocol} {remoteAddr} od {path}?",
+      "confirmDescription": "MediaMTX zamknie połączenie teraz. To nie jest blokada: klient może od razu połączyć się ponownie.",
+      "hlsCaveat": "Odtwarzacz HLS w ciągu kilku sekund ponownie pobiera playlistę i dostaje nową sesję, więc to głównie go resetuje.",
+      "cancel": "Anuluj",
+      "confirm": "Rozłącz klienta",
+      "toasts": {
+        "success": "Rozłączono {remoteAddr}",
+        "alreadyGone": "{remoteAddr} był już rozłączony",
+        "errorTitle": "Nie udało się rozłączyć sesji",
+        "errorDescription": "MediaMTX nie przyjął żądania. Spróbuj ponownie."
+      }
+    },
+    "empty": {
+      "title": "Nikt nie jest połączony",
+      "lead": "MediaMTX nie ma teraz żadnych wydawców ani odbiorców."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Konfiguracja MediaMTX",
-      "pageSubHeader": "Globalne ustawienia serwera MediaMTX, zapisywane na serwerze."
+      "pageSubHeader": "Globalne ustawienia serwera MediaMTX, zapisywane na serwerze.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · działa od {started}",
+      "tooOldTitle": "MediaMTX {version} jest starszy niż {minimum}, najstarsza wersja obsługiwana przez Connect.",
+      "tooOldBody": "Niektórych ustawień może brakować lub mogą zostać odrzucone. Pozostałe nadal się wczytują i zapisują."
     },
     "pathDefaults": {
       "pageHeader": "Domyślne ustawienia ścieżek",
@@ -271,6 +353,22 @@
         "unreachable": "Brak odpowiedzi od MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Stan na żywo",
+      "stateLive": "LIVE",
+      "stateIdle": "bezczynna",
+      "idleLead": "W tej chwili nic nie publikuje na tej ścieżce. Ścieżki mediów i liczniki pojawią się, gdy wejdzie na żywo.",
+      "unreachable": "Nie udało się połączyć z MediaMTX, aby odczytać stan tej ścieżki.",
+      "uptime": "Czas działania",
+      "readers": "Odbiorcy",
+      "received": "Odebrano",
+      "sent": "Wysłano",
+      "framesInError": "Klatki z błędami",
+      "tracks": "Ścieżki mediów",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Trwa publikowanie przez {type}",
+      "readerTypes": "Odczyt przez {types}"
+    },
     "pathConfig": {
       "pageHeader": "Konfiguracja ścieżki · {name}",
       "pageSubHeader": "Ustawienia tego strumienia, zapisywane na serwerze.",
@@ -310,6 +408,31 @@
           "success": "Przywrócono dziedziczone ustawienia",
           "errorTitle": "Nie udało się przywrócić dziedziczonych ustawień",
           "errorDescription": "Wpis konfiguracji ścieżki nadal istnieje. Spróbuj ponownie."
+        }
+      },
+      "publishRead": {
+        "title": "Publikowanie i odtwarzanie",
+        "publishTab": "Publikuj",
+        "readTab": "Odtwarzaj",
+        "pullSource": "Ta ścieżka pobiera strumień ze swojego źródła; MediaMTX odrzuca publikujących.",
+        "readFailed": "Nie udało się odczytać adresów nasłuchu serwera.",
+        "noProtocols": "Serwer ma wyłączone wszystkie protokoły dla tego celu.",
+        "copyUrl": "Kopiuj URL {protocol}",
+        "copySnippet": "Kopiuj fragment {client} dla {protocol}",
+        "snippetLabel": "Fragment {client} dla {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publikuje przez WHIP tylko wtedy, gdy wejście ma zarówno ścieżkę wideo, jak i audio."
+        },
+        "links": {
+          "systemPlayer": "Otwórz w odtwarzaczu systemowym",
+          "browserPublish": "Publikuj z przeglądarki",
+          "hlsPage": "Otwórz stronę HLS MediaMTX",
+          "webrtcPage": "Otwórz stronę WebRTC MediaMTX"
+        },
+        "toasts": {
+          "copied": "Skopiowano do schowka",
+          "copyFailedTitle": "Nie udało się skopiować",
+          "copyFailedDescription": "Przeglądarka zablokowała dostęp do schowka. Zaznacz tekst i skopiuj go ręcznie."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Logi",
         "api": "API",
+        "auth": "Uwierzytelnianie",
         "hooks": "Hooki",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Nagrywanie",
         "pathHooks": "Hooki ścieżki",
-        "source": "Źródło"
+        "source": "Źródło",
+        "forward": "Przekazywanie",
+        "resilience": "Odporność"
       },
       "sectionDescriptions": {
         "logging": "Wyjście logów, limity czasu i globalne limity.",
         "api": "API HTTP, którego używa sam MediaMTX Connect.",
+        "auth": "Jak MediaMTX sprawdza, kto może publikować, odbierać lub korzystać z jego API.",
         "hooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach połączeń.",
         "rtsp": "Publikuj i odbieraj transmisje przez RTSP.",
         "rtmp": "Publikuj i odbieraj transmisje przez RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Publikuj i odbieraj transmisje przez SRT.",
         "recording": "Nagrywaj strumienie na dysk.",
         "pathHooks": "Polecenia uruchamiane przez MediaMTX przy zdarzeniach cyklu życia ścieżki.",
-        "source": "Skąd pochodzi strumień tej ścieżki."
+        "source": "Skąd pochodzi strumień tej ścieżki.",
+        "forward": "Ponownie publikuj strumień tej ścieżki na innych serwerach, takich jak YouTube lub Twitch.",
+        "resilience": "Utrzymuj połączenie czytelników, gdy źródło padnie, albo pobieraj źródło tylko wtedy, gdy ktoś ogląda."
       },
       "sectionWarnings": {
-        "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie."
+        "auth": "Zmiana sposobu uwierzytelniania w MediaMTX dotyczy wszystkich klientów, także Connect — błędne ustawienie może odciąć Connect od MediaMTX.",
+        "pathHooks": "Zapisanie hooka restartuje ścieżkę i rozłącza jej źródło publikujące — strumień zniknie, dopóki źródło nie połączy się ponownie.",
+        "resilience": "Zapisanie którejkolwiek z tych opcji restartuje ścieżkę i rozłącza jej wydawcę — strumień zostaje przerwany do ponownego połączenia."
       },
       "enabled": "Włączone",
       "off": "Wyłączone",
@@ -411,6 +542,15 @@
         "passwordAria": "Hasło serwera ICE {index}",
         "removeAria": "Usuń serwer ICE {index}"
       },
+      "forwardDests": {
+        "add": "Dodaj cel",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Cel {index}",
+        "showAria": "Pokaż cel {index}",
+        "hideAria": "Ukryj cel {index}",
+        "removeAria": "Usuń cel {index}",
+        "plaintextNotice": "MediaMTX przechowuje te adresy URL, łącznie z kluczami strumienia, jako zwykły tekst w swojej konfiguracji i zwraca je bez maskowania ze swojego API."
+      },
       "errors": {
         "invalidSource": "MediaMTX nie przyjmie tej wartości. Użyj publisher, redirect, rpiCamera albo adresu URL zaczynającego się od rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// lub wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Limit czasu operacji zapisu.",
         "writeQueueSize": "Rozmiar kolejki wychodzącej na połączenie. Musi być potęgą dwójki.",
         "udpMaxPayloadSize": "Maksymalny rozmiar wychodzących pakietów UDP.",
-        "externalAuthenticationURL": "Adres URL zewnętrznego serwera uwierzytelniania, wywoływanego przy każdym połączeniu.",
         "apiAddress": "Adres nasłuchiwania API HTTP.",
         "metrics": "Udostępnij metryki zgodne z Prometheus.",
         "metricsAddress": "Adres nasłuchiwania punktu końcowego metryk.",
         "pprof": "Udostępnij punkt końcowy profilowania pprof Go.",
         "pprofAddress": "Adres nasłuchiwania punktu końcowego pprof.",
+        "authMethod": "Jak MediaMTX uwierzytelnia klientów: internal (użytkownicy wymienieni w jego konfiguracji), http (zewnętrzny serwer HTTP) lub jwt (tokeny od dostawcy tożsamości).",
+        "authHTTPAddress": "URL, który MediaMTX wywołuje przy każdym żądaniu uwierzytelnienia, gdy authMethod to http. Odpowiedź 2xx zezwala na działanie.",
         "runOnConnect": "Polecenie uruchamiane, gdy klient się łączy.",
         "runOnConnectRestart": "Uruchom polecenie ponownie, jeśli się zakończy.",
         "runOnDisconnect": "Polecenie uruchamiane, gdy klient się rozłącza.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "Zakres IP używany do dostarczania multicast.",
         "multicastRTPPort": "Port pakietów RTP multicast.",
         "multicastRTCPPort": "Port pakietów RTCP multicast.",
-        "protocols": "Protokoły transportowe akceptowane przez serwer RTSP (udp, multicast lub tcp).",
-        "encryption": "Polityka szyfrowania TLS (no, strict lub optional).",
-        "serverKey": "Ścieżka klucza serwera TLS.",
-        "serverCert": "Ścieżka certyfikatu serwera TLS.",
-        "authMethods": "Metody uwierzytelniania akceptowane przez serwer RTSP (basic lub digest).",
+        "rtspTransports": "Protokoły transportowe akceptowane przez serwer RTSP (udp, multicast lub tcp).",
+        "rtspEncryption": "Używaj bezpiecznych wariantów RTSPS, SRTP i SRTCP (no, optional lub strict).",
+        "rtspServerKey": "Ścieżka klucza serwera TLS.",
+        "rtspServerCert": "Ścieżka certyfikatu serwera TLS.",
+        "rtspAuthMethods": "Metody uwierzytelniania akceptowane przez serwer RTSP (basic lub digest).",
         "rtmpAddress": "Adres nasłuchiwania serwera RTMP.",
-        "rtmpEncryption": "Polityka szyfrowania TLS dla RTMP (no, strict lub optional).",
+        "rtmpEncryption": "Polityka szyfrowania TLS dla RTMP (no, optional lub strict).",
         "rtmpsAddress": "Adres nasłuchiwania serwera RTMPS (TLS).",
         "rtmpServerKey": "Ścieżka klucza serwera RTMPS.",
         "rtmpServerCert": "Ścieżka certyfikatu serwera RTMPS.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Minimalny czas trwania każdego segmentu.",
         "hlsPartDuration": "Czas trwania każdej części w trybie niskich opóźnień.",
         "hlsSegmentMaxSize": "Maksymalny rozmiar każdego segmentu.",
-        "hlsAllowOrigin": "Wartość nagłówka Access-Control-Allow-Origin.",
+        "hlsAllowOrigins": "Dozwolone źródła CORS. Symbole wieloznaczne działają, jak w http://*.example.com.",
         "hlsTrustedProxies": "Adresy IP lub sieci proxy umieszczonych przed serwerem HLS.",
         "hlsDirectory": "Zapisuj segmenty na dysku w tym katalogu zamiast w RAM.",
         "webrtcAddress": "Adres nasłuchiwania serwera HTTP WebRTC.",
         "webrtcEncryption": "Udostępniaj WebRTC przez TLS (HTTPS).",
         "webrtcServerKey": "Ścieżka klucza serwera WebRTC.",
         "webrtcServerCert": "Ścieżka certyfikatu serwera WebRTC.",
-        "webrtcAllowOrigin": "Wartość nagłówka Access-Control-Allow-Origin.",
+        "webrtcAllowOrigins": "Dozwolone źródła CORS. Symbole wieloznaczne działają, jak w http://*.example.com. Odtwarzacz Connect w przeglądarce wymaga, by jego własne źródło było dozwolone.",
         "webrtcTrustedProxies": "Adresy IP lub sieci proxy umieszczonych przed serwerem WebRTC.",
         "webrtcLocalUDPAddress": "Lokalny adres UDP używany dla ruchu WebRTC.",
         "webrtcLocalTCPAddress": "Lokalny adres TCP używany dla ruchu WebRTC.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Czas oczekiwania na uruchomienie źródła na żądanie.",
         "runOnDemandCloseAfter": "Zatrzymaj polecenie na żądanie po tym czasie od odejścia ostatniego odbiorcy.",
         "runOnUnDemand": "Polecenie uruchamiane, gdy polecenie na żądanie zostaje zatrzymane.",
-        "runOnReady": "Polecenie uruchamiane, gdy strumień jest gotowy do odbioru.",
-        "runOnReadyRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
-        "runOnNotReady": "Polecenie uruchamiane, gdy strumień przestaje być gotowy.",
+        "runOnAvailable": "Polecenie uruchamiane, gdy strumień staje się dostępny: źródło publikuje lub odtwarzany jest zapas. Zatrzymywane, gdy przestaje być dostępny.",
+        "runOnAvailableRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnUnavailable": "Polecenie uruchamiane, gdy strumień przestaje być dostępny.",
+        "runOnOnline": "Polecenie uruchamiane, gdy strumień przechodzi w tryb online: publikuje jego prawdziwe źródło, a nie zapas. Zatrzymywane, gdy przechodzi w tryb offline.",
+        "runOnOnlineRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
+        "runOnOffline": "Polecenie uruchamiane, gdy strumień przestaje być online.",
         "runOnRead": "Polecenie uruchamiane, gdy klient zaczyna odbierać tę ścieżkę.",
         "runOnReadRestart": "Uruchamiaj ponownie polecenie, gdy zakończy działanie.",
         "runOnUnread": "Polecenie uruchamiane, gdy klient przestaje odbierać tę ścieżkę.",
         "runOnRecordSegmentCreate": "Polecenie uruchamiane, gdy zostanie utworzony segment nagrania.",
-        "runOnRecordSegmentComplete": "Polecenie uruchamiane, gdy segment nagrania zostanie ukończony."
+        "runOnRecordSegmentComplete": "Polecenie uruchamiane, gdy segment nagrania zostanie ukończony.",
+        "alwaysAvailable": "Gdy nic nie publikuje, odtwarza w pętli segment offline, aby czytelnicy pozostali połączeni. Strumień pozostaje available, nie online. Wymaga alwaysAvailableFile lub alwaysAvailableTracks ustawionego w mediamtx.yml. Odrzucane we wpisie regex lub all_others oraz razem z sourceOnDemand lub runOnDemand.",
+        "alwaysAvailableFile": "Ścieżka pliku MP4 w systemie plików samego serwera MediaMTX; Connect go nie przesyła. Ścieżki muszą być w AV1, VP9, H265, H264, Opus, MPEG-4 Audio lub LPCM. Nie można łączyć z alwaysAvailableTracks.",
+        "sourceOnDemand": "Pobieraj źródło tylko wtedy, gdy połączony jest co najmniej jeden czytelnik. Tylko dla źródła, które MediaMTX pobiera z URL; odrzucane, gdy source to publisher.",
+        "sourceOnDemandStartTimeout": "Jak długo pierwszy czytelnik czeka, aż źródło stanie się available, zanim zrezygnuje. Domyślnie w MediaMTX 10s.",
+        "sourceOnDemandCloseAfter": "Jak długo źródło pozostaje otwarte po odejściu ostatniego czytelnika. Domyślnie w MediaMTX 10s."
       },
       "toasts": {
         "success": "Zapisano konfigurację MediaMTX",

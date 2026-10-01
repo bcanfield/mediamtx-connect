@@ -36,6 +36,10 @@ services:
       - '8189:8189/udp' # WebRTC ICE
       - '8890:8890/udp' # SRT
       - '9997:9997' # API
+      # Playback server. The dev/e2e api runs on the host and reaches MediaMTX at
+      # 127.0.0.1; the shipped compose leaves it unpublished, since there the api
+      # reaches mediamtx:9996 over the compose network and proxies it.
+      - '9996:9996' # Playback
 
   # Publishes stream1..5 as wildcard-backed RTSP streams (confName all_others)
   # with a mix of codecs/resolutions/audio. These ride the wildcard on purpose —

@@ -4,7 +4,6 @@ import type { ComponentProps } from 'react'
 import {
   Link as RouterLink,
   useLocation,
-  useNavigate,
 } from '@tanstack/react-router'
 import { createElement } from 'react'
 
@@ -24,12 +23,4 @@ export function Link({
 
 export function usePathname(): string {
   return useLocation({ select: l => l.pathname })
-}
-
-export function useRouter() {
-  const navigate = useNavigate()
-  return {
-    push: (href: string) => navigate({ to: href }),
-    replace: (href: string) => navigate({ to: href, replace: true }),
-  }
 }

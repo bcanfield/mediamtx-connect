@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web interface para sa MediaMTX. Manood ng mga stream, mag-browse ng mga recording, at i-edit ang configuration mula sa iyong browser."
-  },
   "Forms": {
     "errors": {
       "required": "Kinakailangan ang field na ito",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Subukang muli",
-    "loading": "Naglo-load…",
     "theme": {
-      "lightMode": "Light mode",
-      "darkMode": "Dark mode",
       "switchToLight": "Lumipat sa light theme",
       "switchToDark": "Lumipat sa dark theme"
     },
@@ -29,7 +18,9 @@
     },
     "connection": {
       "connected": "nakakonekta",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "nakakonekta · <v>{version}</v>",
+      "tooOld": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect. Maaaring nawawala o tinatanggihan ang ilang setting."
     }
   },
   "Nav": {
@@ -40,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Mga recording",
+      "sessions": "Mga Session",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Mga path"
@@ -92,10 +84,6 @@
       "stop": "Itigil",
       "playAria": "I-play ang {streamName}",
       "actionsAria": "Mga aksyon sa stream",
-      "stub": {
-        "title": "Hindi pa naipapatupad",
-        "description": "Nasa roadmap ang aksyong ito — nai-log na ito."
-      },
       "recordError": {
         "title": "Hindi mabago ang pag-record",
         "description": "Tinanggihan ng MediaMTX ang pagbabago — hindi nagbago ang pag-record ng stream na ito."
@@ -117,7 +105,6 @@
         "description": "Hindi makakuha ng frame ang MediaMTX — maaaring offline ang stream."
       },
       "menu": {
-        "openDetail": "Buksan ang detalye ng stream",
         "viewRecordings": "Tingnan ang mga recording",
         "takeSnapshot": "Kumuha ng snapshot",
         "record": "I-record",
@@ -125,7 +112,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopyahin ang mga publish URL",
-        "shareEmbed": "Ibahagi at i-embed…",
         "editPathConfig": "I-edit ang path config",
         "editHooks": "I-edit ang mga hook"
       }
@@ -184,6 +170,98 @@
       "showing": "Ipinapakita ang {from}–{to} ng {total}",
       "previous": "Nakaraang pahina",
       "next": "Susunod na pahina"
+    },
+    "timeline": {
+      "previousDay": "Nakaraang araw",
+      "nextDay": "Susunod na araw",
+      "trackAria": "24-oras na timeline",
+      "spansAria": "Mga naitalang bahagi",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "I-play ang {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Walang recording sa araw na ito.",
+      "errorTitle": "Hindi mabasa ang timeline ng recording",
+      "unreachableTitle": "Hindi maabot ang MediaMTX",
+      "unreachableDescription": "Galing sa MediaMTX ang timeline ng recording. Binabasa mula sa disk ang mga file sa ibaba at puwede pa ring i-play."
+    },
+    "enablePlayback": {
+      "title": "I-on ang playback ng recording",
+      "playbackOff": "Naka-off ang playback server ng MediaMTX.",
+      "notFmp4": "Nagre-record ang stream na ito sa {format}, at fMP4 lang ang binabasa ng playback server.",
+      "changesIntro": "Babaguhin ng Connect ang mga setting na ito:",
+      "changesAria": "Mga babaguhin",
+      "olderNote": "Mananatili sa listahan ng file sa ibaba ang mga recording bago ang pagbabagong ito.",
+      "apply": "Ilapat ang mga pagbabago",
+      "applying": "Inilalapat…",
+      "refused": "Tinanggihan ng MediaMTX ang pagbabago",
+      "override": "Itinatakda ng path na ito ang <code>recordFormat</code> sa {format} sa sarili nitong path config, na nangingibabaw sa path defaults. Itakda ito sa <code>fmp4</code> doon.",
+      "openPathConfig": "Buksan ang recording config ng path na ito",
+      "pathDefaultsUnreadable": "Hindi mabasa ang path defaults mula sa MediaMTX."
+    },
+    "clip": {
+      "title": "I-download ang clip",
+      "rangeAria": "Saklaw ng clip",
+      "last5Min": "Huling 5 min",
+      "last15Min": "Huling 15 min",
+      "last1Hour": "Huling 1 oras",
+      "custom": "Custom",
+      "start": "Simula",
+      "durationMinutes": "Tagal (min)",
+      "invalidStart": "Ilagay ang oras bilang HH:MM:SS",
+      "minutesRange": "Buong minuto, mula 1 hanggang 60",
+      "range": "{start} – {end}",
+      "download": "I-download",
+      "cancel": "Kanselahin",
+      "preparing": "Inihahanda ang clip…",
+      "progress": "{received} natanggap · {rate}/s",
+      "complete": "Na-download ang clip",
+      "failed": "Nabigo ang pag-download ng clip",
+      "noRecordings": "Walang recording sa saklaw na ito"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Mga Session",
+    "pageSubHeader": "Bawat client na nakakonekta sa MediaMTX ngayon, nagpa-publish o nagbabasa, sa anumang protocol.",
+    "summary": "{count, plural, one {# session} other {# na session}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "Estado",
+      "bytesIn": "Bytes papasok",
+      "bytesOut": "Bytes palabas",
+      "uptime": "Uptime",
+      "actions": "Mga aksyon"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "nagbabasa",
+      "publish": "nagpa-publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (hindi naka-enable sa server na ito)",
+      "failed": "{protocol} (hindi mabasa)",
+      "unlisted": "Hindi nakalista: {protocols}.",
+      "truncated": "Ipinapakita ang unang {count, number} {protocol} na session."
+    },
+    "kick": {
+      "action": "I-kick",
+      "confirmTitle": "I-kick ang {protocol} client na {remoteAddr} mula sa {path}?",
+      "confirmDescription": "Puputulin ng MediaMTX ang koneksyon ngayon. Hindi ito ban: maaaring kumonekta muli agad ang client.",
+      "hlsCaveat": "Humihingi ulit ng playlist ang HLS player sa loob ng ilang segundo at nakakakuha ng bagong session, kaya kadalasan ay nire-reset lang ito.",
+      "cancel": "Kanselahin",
+      "confirm": "I-kick ang client",
+      "toasts": {
+        "success": "Na-kick ang {remoteAddr}",
+        "alreadyGone": "Nakadiskonekta na ang {remoteAddr}",
+        "errorTitle": "Hindi ma-kick ang session",
+        "errorDescription": "Hindi tinanggap ng MediaMTX ang kahilingan. Subukan ulit."
+      }
+    },
+    "empty": {
+      "title": "Walang nakakonekta",
+      "lead": "Walang publisher o reader ang MediaMTX ngayon."
     }
   },
   "Config": {
@@ -194,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX Config",
-      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server."
+      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · tumatakbo mula {started}",
+      "tooOldTitle": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect.",
+      "tooOldBody": "Maaaring nawawala o tinatanggihan ang ilang setting. Naglo-load at nase-save pa rin ang iba."
     },
     "pathDefaults": {
       "pageHeader": "Mga default ng path",
@@ -271,6 +353,22 @@
         "unreachable": "Walang tugon mula sa MediaMTX."
       }
     },
+    "pathHealth": {
+      "title": "Live na kalagayan",
+      "stateLive": "LIVE",
+      "stateIdle": "walang ginagawa",
+      "idleLead": "Wala pang nagpu-publish sa path na ito ngayon. Lalabas ang mga track at counter sa oras na mag-live ito.",
+      "unreachable": "Hindi maabot ang MediaMTX para basahin ang kalagayan ng path na ito.",
+      "uptime": "Oras na aktibo",
+      "readers": "Mga reader",
+      "received": "Natanggap",
+      "sent": "Naipadala",
+      "framesInError": "Mga frame na may error",
+      "tracks": "Mga track",
+      "trackDetail": "{codec} · {resolution}",
+      "publisher": "Nagpa-publish sa pamamagitan ng {type}",
+      "readerTypes": "Binabasa sa pamamagitan ng {types}"
+    },
     "pathConfig": {
       "pageHeader": "Config ng path · {name}",
       "pageSubHeader": "Mga setting ng stream na ito, nakaimbak sa server.",
@@ -310,6 +408,31 @@
           "success": "Naibalik sa minanang mga setting",
           "errorTitle": "Hindi maibalik sa minanang mga setting",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
+        }
+      },
+      "publishRead": {
+        "title": "I-publish at i-play",
+        "publishTab": "I-publish",
+        "readTab": "I-play",
+        "pullSource": "Kinukuha ng path na ito ang stream mula sa source nito; tinatanggihan ng MediaMTX ang mga publisher.",
+        "readFailed": "Hindi mabasa ang mga listen address ng server.",
+        "noProtocols": "Naka-off sa server ang lahat ng protocol para dito.",
+        "copyUrl": "Kopyahin ang {protocol} URL",
+        "copySnippet": "Kopyahin ang {client} snippet para sa {protocol}",
+        "snippetLabel": "{client} snippet para sa {protocol}",
+        "notes": {
+          "whipTracks": "Nagpa-publish lang ang FFmpeg 8 sa WHIP kapag may video at audio track ang input."
+        },
+        "links": {
+          "systemPlayer": "Buksan sa system player",
+          "browserPublish": "I-publish mula sa browser",
+          "hlsPage": "Buksan ang HLS page ng MediaMTX",
+          "webrtcPage": "Buksan ang WebRTC page ng MediaMTX"
+        },
+        "toasts": {
+          "copied": "Nakopya sa clipboard",
+          "copyFailedTitle": "Hindi makopya",
+          "copyFailedDescription": "Hinarang ng browser ang access sa clipboard. Piliin ang text at kopyahin ito nang mano-mano."
         }
       }
     },
@@ -362,6 +485,7 @@
       "sectionTitles": {
         "logging": "Logging",
         "api": "API",
+        "auth": "Authentication",
         "hooks": "Hooks",
         "rtsp": "RTSP",
         "rtmp": "RTMP",
@@ -370,11 +494,14 @@
         "srt": "SRT",
         "recording": "Pag-record",
         "pathHooks": "Hooks ng path",
-        "source": "Pinagmulan"
+        "source": "Pinagmulan",
+        "forward": "Pagpapasa",
+        "resilience": "Katatagan"
       },
       "sectionDescriptions": {
         "logging": "Log output, mga timeout, at mga global na limitasyon.",
         "api": "Ang HTTP API na ginagamit mismo ng MediaMTX Connect.",
+        "auth": "Kung paano sinusuri ng MediaMTX kung sino ang maaaring mag-publish, magbasa o gumamit ng API nito.",
         "hooks": "Mga command na pinapatakbo ng MediaMTX sa mga connection event.",
         "rtsp": "Mag-publish at magbasa ng mga stream sa pamamagitan ng RTSP.",
         "rtmp": "Mag-publish at magbasa ng mga stream sa pamamagitan ng RTMP.",
@@ -383,10 +510,14 @@
         "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
         "recording": "I-record ang mga stream sa disk.",
         "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path.",
-        "source": "Kung saan nanggagaling ang stream ng path na ito."
+        "source": "Kung saan nanggagaling ang stream ng path na ito.",
+        "forward": "Muling i-publish ang stream ng path na ito sa ibang mga server, gaya ng YouTube o Twitch.",
+        "resilience": "Panatilihing nakakonekta ang mga reader kapag nawala ang source, o kunin lang ang source habang may nanonood."
       },
       "sectionWarnings": {
-        "pathHooks": "Ang pag-save ng hook ay nagre-restart sa path at nagdidiskonekta sa publisher nito — mawawala ang stream hanggang muling kumonekta ang publisher."
+        "auth": "Nakakaapekto sa lahat ng client ang pagbabago ng paraan ng pag-authenticate ng MediaMTX, kasama ang Connect — ang maling setting ay maaaring maputol ang Connect sa MediaMTX.",
+        "pathHooks": "Ang pag-save ng hook ay nagre-restart sa path at nagdidiskonekta sa publisher nito — mawawala ang stream hanggang muling kumonekta ang publisher.",
+        "resilience": "Ang pag-save ng alinman dito ay nagre-restart ng path at dinidiskonekta ang publisher nito — mapuputol ang stream hanggang muling kumonekta."
       },
       "enabled": "Naka-enable",
       "off": "Naka-off",
@@ -411,6 +542,15 @@
         "passwordAria": "Password ng ICE server {index}",
         "removeAria": "Alisin ang ICE server {index}"
       },
+      "forwardDests": {
+        "add": "Magdagdag ng destinasyon",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinasyon {index}",
+        "showAria": "Ipakita ang destinasyon {index}",
+        "hideAria": "Itago ang destinasyon {index}",
+        "removeAria": "Alisin ang destinasyon {index}",
+        "plaintextNotice": "Iniimbak ng MediaMTX ang mga URL na ito, kasama ang mga stream key, bilang plain text sa config nito at ibinabalik ang mga ito nang hindi tinatakpan mula sa API nito."
+      },
       "errors": {
         "invalidSource": "Hindi ito tatanggapin ng MediaMTX. Gumamit ng publisher, redirect, rpiCamera, o isang URL na nagsisimula sa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, o wheps://."
       },
@@ -423,12 +563,13 @@
         "writeTimeout": "Timeout para sa mga write operation.",
         "writeQueueSize": "Laki ng outgoing queue bawat koneksyon. Dapat na power of two.",
         "udpMaxPayloadSize": "Maximum na laki ng mga outgoing UDP packet.",
-        "externalAuthenticationURL": "URL ng external authentication server, tinatawag sa bawat koneksyon.",
         "apiAddress": "Listen address ng HTTP API.",
         "metrics": "I-expose ang mga Prometheus-compatible na metric.",
         "metricsAddress": "Listen address ng metrics endpoint.",
         "pprof": "I-expose ang Go pprof profiling endpoint.",
         "pprofAddress": "Listen address ng pprof endpoint.",
+        "authMethod": "Kung paano ina-authenticate ng MediaMTX ang mga client: internal (mga user na nakalista sa config nito), http (isang external na HTTP server) o jwt (mga token mula sa identity provider).",
+        "authHTTPAddress": "URL na tinatawag ng MediaMTX sa bawat authentication request kapag http ang authMethod. Pinapayagan ng 2xx na response ang aksyon.",
         "runOnConnect": "Command na patatakbuhin kapag kumonekta ang isang client.",
         "runOnConnectRestart": "I-restart ang command kapag nag-exit ito.",
         "runOnDisconnect": "Command na patatakbuhin kapag nag-disconnect ang isang client.",
@@ -439,13 +580,13 @@
         "multicastIPRange": "IP range na ginagamit para sa multicast delivery.",
         "multicastRTPPort": "Port para sa mga multicast RTP packet.",
         "multicastRTCPPort": "Port para sa mga multicast RTCP packet.",
-        "protocols": "Mga transport protocol na tinatanggap ng RTSP server (udp, multicast, o tcp).",
-        "encryption": "Patakaran sa TLS encryption (no, strict, o optional).",
-        "serverKey": "Path ng TLS server key.",
-        "serverCert": "Path ng TLS server certificate.",
-        "authMethods": "Mga paraan ng authentication na tinatanggap ng RTSP server (basic o digest).",
+        "rtspTransports": "Mga transport protocol na tinatanggap ng RTSP server (udp, multicast, o tcp).",
+        "rtspEncryption": "Gamitin ang mga secure na variant na RTSPS, SRTP at SRTCP (no, optional o strict).",
+        "rtspServerKey": "Path ng TLS server key.",
+        "rtspServerCert": "Path ng TLS server certificate.",
+        "rtspAuthMethods": "Mga paraan ng authentication na tinatanggap ng RTSP server (basic o digest).",
         "rtmpAddress": "Listen address ng RTMP server.",
-        "rtmpEncryption": "Patakaran sa TLS encryption para sa RTMP (no, strict, o optional).",
+        "rtmpEncryption": "Patakaran sa TLS encryption para sa RTMP (no, optional, o strict).",
         "rtmpsAddress": "Listen address ng RTMPS (TLS) server.",
         "rtmpServerKey": "Path ng RTMPS server key.",
         "rtmpServerCert": "Path ng RTMPS server certificate.",
@@ -459,14 +600,14 @@
         "hlsSegmentDuration": "Minimum na tagal ng bawat segment.",
         "hlsPartDuration": "Tagal ng bawat part sa low-latency mode.",
         "hlsSegmentMaxSize": "Maximum na laki ng bawat segment.",
-        "hlsAllowOrigin": "Value ng Access-Control-Allow-Origin header.",
+        "hlsAllowOrigins": "Mga pinapayagang CORS origin. Gumagana ang mga wildcard, tulad ng http://*.example.com.",
         "hlsTrustedProxies": "Mga IP o network ng mga proxy na nasa harap ng HLS server.",
         "hlsDirectory": "Isulat ang mga segment sa disk sa directory na ito sa halip na sa RAM.",
         "webrtcAddress": "Listen address ng WebRTC HTTP server.",
         "webrtcEncryption": "Ihain ang WebRTC sa TLS (HTTPS).",
         "webrtcServerKey": "Path ng WebRTC server key.",
         "webrtcServerCert": "Path ng WebRTC server certificate.",
-        "webrtcAllowOrigin": "Value ng Access-Control-Allow-Origin header.",
+        "webrtcAllowOrigins": "Mga pinapayagang CORS origin. Gumagana ang mga wildcard, tulad ng http://*.example.com. Kailangang payagan ang sariling origin ng in-browser na player ng Connect.",
         "webrtcTrustedProxies": "Mga IP o network ng mga proxy na nasa harap ng WebRTC server.",
         "webrtcLocalUDPAddress": "Lokal na UDP address na ginagamit para sa WebRTC traffic.",
         "webrtcLocalTCPAddress": "Lokal na TCP address na ginagamit para sa WebRTC traffic.",
@@ -487,14 +628,22 @@
         "runOnDemandStartTimeout": "Gaano katagal hihintayin na magsimula ang on-demand publisher.",
         "runOnDemandCloseAfter": "Ihinto ang on-demand command nang ganito katagal pagkatapos umalis ang huling reader.",
         "runOnUnDemand": "Command na patatakbuhin kapag inihinto ang on-demand command.",
-        "runOnReady": "Command na patatakbuhin kapag handa nang basahin ang stream.",
-        "runOnReadyRestart": "I-restart ang command kapag nag-exit ito.",
-        "runOnNotReady": "Command na patatakbuhin kapag hindi na handa ang stream.",
+        "runOnAvailable": "Command na patatakbuhin kapag naging available ang stream: may source na nagpa-publish o may fallback na pinapatugtog. Hihinto ito kapag hindi na available.",
+        "runOnAvailableRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnUnavailable": "Command na patatakbuhin kapag hindi na available ang stream.",
+        "runOnOnline": "Command na patatakbuhin kapag nag-online ang stream: nagpa-publish ang tunay na source nito, hindi fallback. Hihinto ito kapag nag-offline.",
+        "runOnOnlineRestart": "I-restart ang command kapag nag-exit ito.",
+        "runOnOffline": "Command na patatakbuhin kapag hindi na online ang stream.",
         "runOnRead": "Command na patatakbuhin kapag may client na nagsimulang magbasa ng path na ito.",
         "runOnReadRestart": "I-restart ang command kapag nag-exit ito.",
         "runOnUnread": "Command na patatakbuhin kapag may client na huminto sa pagbabasa ng path na ito.",
         "runOnRecordSegmentCreate": "Command na patatakbuhin kapag nagawa ang isang segment ng recording.",
-        "runOnRecordSegmentComplete": "Command na patatakbuhin kapag kumpleto na ang isang segment ng recording."
+        "runOnRecordSegmentComplete": "Command na patatakbuhin kapag kumpleto na ang isang segment ng recording.",
+        "alwaysAvailable": "Habang walang nagpa-publish, paulit-ulit na pinapatugtog ang isang offline na segment para manatiling nakakonekta ang mga reader. Nananatiling available ang stream, hindi online. Kailangan ng alwaysAvailableFile, o alwaysAvailableTracks na nakatakda sa mediamtx.yml. Tinatanggihan sa regex o all_others na entry at kasabay ng sourceOnDemand o runOnDemand.",
+        "alwaysAvailableFile": "Path ng isang MP4 sa sariling filesystem ng MediaMTX server; hindi ito ina-upload ng Connect. Ang mga track ay dapat AV1, VP9, H265, H264, Opus, MPEG-4 Audio o LPCM. Hindi puwedeng isabay sa alwaysAvailableTracks.",
+        "sourceOnDemand": "Kunin lang ang source habang may kahit isang reader na nakakonekta. Para lang sa source na kinukuha ng MediaMTX mula sa URL; tinatanggihan kapag publisher ang source.",
+        "sourceOnDemandStartTimeout": "Gaano katagal maghihintay ang unang reader na maging available ang source bago sumuko. 10s ang default ng MediaMTX.",
+        "sourceOnDemandCloseAfter": "Gaano katagal mananatiling bukas ang source pagkaalis ng huling reader. 10s ang default ng MediaMTX."
       },
       "toasts": {
         "success": "Na-save ang MediaMTX config",

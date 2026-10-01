@@ -2,6 +2,19 @@ import type { AppConfig } from '@connect/contract'
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 
+// The path under `baseDir`, or null when the segments resolve to the base
+// itself or anywhere outside it. MediaMTX path names never hold `.` or `..`
+// segments, so a name this rejects is no stream at all.
+export function safeJoin(baseDir: string, ...segments: string[]): string | null {
+  const resolved = path.resolve(baseDir, ...segments)
+  return resolved.startsWith(path.resolve(baseDir) + path.sep) ? resolved : null
+}
+
+// What MediaMTX writes for each `recordFormat`: fmp4 → .mp4, mpegts → .ts.
+export function isRecordingSegment(fileName: string): boolean {
+  return !fileName.startsWith('.') && ['.mp4', '.ts'].includes(path.extname(fileName))
+}
+
 export interface StreamSummary {
   count: number
   latestMtime: Date | null
@@ -16,7 +29,9 @@ export function summarizeStreamRecordings(directoryPath: string): Record<string,
 
   for (const dir of directories) {
     const dirPath = path.join(directoryPath, dir)
-    const files = readdirSync(dirPath)
+    // Same dotfile rule as listStreamRecordingFiles, or the index count and
+    // the stream page's total disagree.
+    const files = readdirSync(dirPath).filter(f => !f.startsWith('.'))
     let latestMtime: Date | null = null
     for (const file of files) {
       const stat = statSync(path.join(dirPath, file))

@@ -51,13 +51,13 @@ test.describe('Copy publish URLs', () => {
       await card.getByRole('button', { name: 'Stream actions' }).click()
       await page.getByRole('menuitem', { name: 'Copy publish URLs' }).click()
 
-      // No longer a stub: a success toast rather than "Not implemented yet".
       await expect(page.getByText('Publish URLs copied')).toBeVisible()
-      await expect(page.getByText('Not implemented yet')).toBeHidden()
 
       const clipboard = await page.evaluate(() => navigator.clipboard.readText())
-      // The RTMP URL carries the port the operator configured, not the default.
-      expect(clipboard).toMatch(new RegExp(`^rtmp://.+:${RTMP_PORT}/${STREAM}$`, 'm'))
+      // The RTMP URL carries the port the operator configured, not the default,
+      // on the browser-facing host (REMOTE_MEDIAMTX_URL) rather than the
+      // 127.0.0.1 the API reaches MediaMTX at.
+      expect(clipboard).toMatch(new RegExp(`^rtmp://localhost:${RTMP_PORT}/${STREAM}$`, 'm'))
       expect(clipboard).not.toContain(':1935/')
     }
     finally {

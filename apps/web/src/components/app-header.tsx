@@ -11,10 +11,15 @@ import { cn } from '@/lib/utils'
 const tabs = [
   { key: 'live', href: '/' },
   { key: 'recordings', href: '/recordings' },
+  { key: 'sessions', href: '/sessions' },
   { key: 'appConfig', href: '/config' },
   { key: 'mediamtxConfig', href: '/config/mediamtx/global' },
   { key: 'paths', href: '/config/mediamtx/paths' },
 ] as const
+
+// The divider splits the operational tabs from the config ones, so it sits
+// before the first config tab wherever that lands.
+const FIRST_CONFIG_TAB = 'appConfig'
 
 export function AppHeader() {
   const t = useTranslations('Nav')
@@ -49,12 +54,12 @@ export function AppHeader() {
         aria-label={t('primaryAria')}
         className="mx-auto flex max-w-7xl items-stretch gap-2 overflow-x-auto px-4 sm:gap-4 sm:px-7"
       >
-        {tabs.map((tab, i) => {
+        {tabs.map((tab) => {
           const active = isActiveRoute(pathname, tab.href)
           return (
             <div key={tab.href} className="flex items-stretch gap-2 sm:gap-4">
-              {i === 2 && (
-                <span aria-hidden className="my-3 w-px self-stretch bg-border-subtle" />
+              {tab.key === FIRST_CONFIG_TAB && (
+                <span aria-hidden data-nav-divider className="my-3 w-px self-stretch bg-border-subtle" />
               )}
               <Link
                 href={tab.href}

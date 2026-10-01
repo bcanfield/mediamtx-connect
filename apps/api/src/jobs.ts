@@ -1,4 +1,5 @@
 import cp from 'node:child_process'
+import { randomUUID } from 'node:crypto'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -6,17 +7,19 @@ import cron from 'node-cron'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
 import { mediaMtxApi } from './mediamtx'
+import { isRecordingSegment, safeJoin } from './recordings-fs'
 
 function getSubdirectories(dirPath: string): string[] {
   const files = fs.readdirSync(dirPath).filter(f => !f.startsWith('.'))
   return files.filter(file => fs.statSync(path.join(dirPath, file)).isDirectory())
 }
 
-function getFileNamesWithoutExtension(directoryPath: string): string[] {
-  return fs
-    .readdirSync(directoryPath)
-    .filter(f => !f.startsWith('.'))
-    .map(file => path.parse(file).name)
+// The recording segments in one stream's directory. A segment's thumbnail is
+// `<stem>.png`.
+function segmentFiles(recordingDirectory: string): string[] {
+  if (!fs.existsSync(recordingDirectory))
+    return []
+  return fs.readdirSync(recordingDirectory).filter(isRecordingSegment)
 }
 
 // A permit gate over ffmpeg spawns: acquire before spawning, release on exit.
@@ -53,8 +56,7 @@ function createSpawnGate(limit: number) {
 
 // One ffmpeg per core, with a floor so a single-core host still overlaps two and
 // a ceiling because anything past 8 at once is reasoned, not measured. A 4-core
-// box — what the old flat 4 assumed — still gets 4
-// (docs/debt/20260717153914-snapshot-cap-untuned.md).
+// box — what the old flat 4 assumed — still gets 4.
 const maxSpawnsPerJob = Math.min(8, Math.max(2, os.availableParallelism()))
 
 // Snapshot capture: both the 30s cron and the on-demand mutation acquire here,
@@ -102,14 +104,17 @@ async function generateScreenshot(inputFile: string, outputFile: string): Promis
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish()
     })
-    proc.on('close', () => {
-      logger.info(`Finished generating screenshot ${outputFile}`)
+    proc.on('close', (code) => {
+      if (code === 0)
+        logger.info(`Finished generating screenshot ${outputFile}`)
+      else
+        logger.warn(`ffmpeg exited ${code} generating screenshot ${outputFile}`)
       finish()
     })
   })
 }
 
-// Scan the recordings tree for MP4s without a sibling PNG and spawn ffmpeg to
+// Scan the recordings tree for segments without a same-stem PNG and spawn ffmpeg to
 // grab a first-frame thumbnail. Parallel, bounded by the thumbnail gate, so a
 // large backlog runs in waves instead of spawning every ffmpeg at once.
 export async function generateScreenshots() {
@@ -125,15 +130,20 @@ export async function generateScreenshots() {
       logger.info('Screenshots directory created successfully.')
     }
 
-    const recordings = getFileNamesWithoutExtension(path.join(config.recordingsDirectory, subdirectory))
-    const screenshots = getFileNamesWithoutExtension(streamScreenshotDirectory)
-    const missing = recordings.filter(file => !screenshots.includes(file))
+    const recordingDirectory = path.join(config.recordingsDirectory, subdirectory)
+    const thumbnails = new Set(
+      fs.readdirSync(streamScreenshotDirectory)
+        .filter(f => f.endsWith('.png'))
+        .map(f => path.parse(f).name),
+    )
+    const missing = segmentFiles(recordingDirectory)
+      .filter(file => !thumbnails.has(path.parse(file).name))
 
     logger.info(`${missing.length} recordings without screenshots in: ${subdirectory}`)
 
-    for (const recording of missing) {
-      const inputFile = path.join(config.recordingsDirectory, subdirectory, `${recording}.mp4`)
-      const outputFile = path.join(streamScreenshotDirectory, `${recording}.png`)
+    for (const segment of missing) {
+      const inputFile = path.join(recordingDirectory, segment)
+      const outputFile = path.join(streamScreenshotDirectory, `${path.parse(segment).name}.png`)
       pending.push(generateScreenshot(inputFile, outputFile))
     }
   }
@@ -156,9 +166,17 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
   await captureGate.acquire()
 
   const dir = path.join(screenshotsDirectory, streamName)
-  fs.mkdirSync(dir, { recursive: true })
+  try {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+  catch (err) {
+    captureGate.release()
+    throw err
+  }
   const outputFile = path.join(dir, 'live.png')
-  const tmp = `${outputFile}.tmp`
+  // Unique per capture: the cron and a manual snapshot can capture the same
+  // stream at once, and a shared tmp makes the second rename throw ENOENT.
+  const tmp = `${outputFile}.${randomUUID()}.tmp`
 
   return new Promise((resolve, reject) => {
     // -c:v/-f are explicit because the tmp name has no .png for ffmpeg to sniff.
@@ -200,16 +218,35 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish(() => reject(err))
     })
+    // Nothing in here may throw: an exception in a child-process listener is
+    // uncaught and takes the whole API process down.
+    const fail = (message: string, err?: unknown) => {
+      try {
+        fs.rmSync(tmp, { force: true })
+      }
+      catch (rmErr) {
+        logger.warn({ err: rmErr }, `Could not remove ${tmp}`)
+      }
+      logger.warn({ err }, message)
+      reject(new Error(message, { cause: err }))
+    }
+
     proc.on('close', (code) => {
       finish(() => {
-        if (code === 0) {
-          fs.renameSync(tmp, outputFile)
-          resolve()
+        if (code !== 0) {
+          fail(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
           return
         }
-        fs.rmSync(tmp, { force: true })
-        logger.warn(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
-        reject(new Error(`ffmpeg exited ${code} capturing snapshot for ${streamName}`))
+        // ffmpeg exits 0 without writing anything when the stream ends before
+        // a frame arrives (a path removed mid-capture), so the rename can miss.
+        try {
+          fs.renameSync(tmp, outputFile)
+        }
+        catch (err) {
+          fail(`ffmpeg wrote no frame capturing snapshot for ${streamName}`, err)
+          return
+        }
+        resolve()
       })
     })
   })
@@ -244,6 +281,8 @@ export async function captureLiveSnapshots() {
 // the ffmpeg exit and rejects on failure so the caller can report the outcome.
 export async function captureSnapshot(streamName: string): Promise<void> {
   const config = await getAppConfig()
+  if (!safeJoin(config.screenshotsDirectory, streamName))
+    throw new Error(`No stream named ${streamName}`)
   const globalConf = await mediaMtxApi(config).configGlobalGet()
   await captureFrame(
     streamName,
@@ -252,8 +291,11 @@ export async function captureSnapshot(streamName: string): Promise<void> {
   )
 }
 
-// Deletes screenshots older than 2 days, per stream subdirectory.
-async function cleanupScreenshots() {
+// Deletes files older than 2 days from each stream's screenshots directory,
+// except a recording thumbnail whose segment still exists: MediaMTX's
+// recordDeleteAfter decides how long that lives, and deleting it here only
+// makes generateScreenshots run ffmpeg again on the next sweep.
+export async function cleanupScreenshots() {
   logger.info('Cleaning up screenshots')
   const config = await getAppConfig()
   const streamDirectories = getSubdirectories(config.screenshotsDirectory)
@@ -261,7 +303,10 @@ async function cleanupScreenshots() {
 
   for (const subdirectory of streamDirectories) {
     const dir = path.join(config.screenshotsDirectory, subdirectory)
+    const segments = new Set(segmentFiles(path.join(config.recordingsDirectory, subdirectory)).map(f => path.parse(f).name))
     for (const file of fs.readdirSync(dir).filter(f => !f.startsWith('.'))) {
+      if (file.endsWith('.png') && segments.has(path.parse(file).name))
+        continue
       const filePath = path.join(dir, file)
       const fileStat = fs.statSync(filePath)
       if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {

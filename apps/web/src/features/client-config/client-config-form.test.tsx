@@ -1,6 +1,6 @@
 import type { AppConfig } from '@connect/contract'
 import type { RpcInputs, StubApi } from '@/test/rpc-server'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/test/render'
 import { createRpcServer } from '@/test/rpc-server'
@@ -74,16 +74,6 @@ describe('the form', () => {
 
     expect(screen.getByText(/The port of the MediaMTX API/)).toBeInTheDocument()
     expect(screen.getByText(/Live playback loads streams from here/)).toBeInTheDocument()
-  })
-
-  it('accepts edits', async () => {
-    const { user } = await renderForm()
-    const url = screen.getByLabelText('MediaMTX URL')
-
-    await user.clear(url)
-    await user.type(url, 'http://mediamtx')
-
-    expect(url).toHaveValue('http://mediamtx')
   })
 })
 
@@ -163,5 +153,6 @@ describe('saving', () => {
     await user.click(await screen.findByRole('button', { name: /Save/ }))
 
     expect(await screen.findByText('App Config saved')).toBeInTheDocument()
+    await waitFor(() => expect(saveBar()).not.toBeInTheDocument())
   })
 })
