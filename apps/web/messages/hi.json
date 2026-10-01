@@ -362,6 +362,31 @@
           "errorTitle": "विरासत में मिली सेटिंग्स पर नहीं लौट सके",
           "errorDescription": "पथ की कॉन्फ़िग प्रविष्टि अब भी मौजूद है। फिर से कोशिश करें।"
         }
+      },
+      "publishRead": {
+        "title": "प्रकाशित करें और चलाएँ",
+        "publishTab": "प्रकाशित करें",
+        "readTab": "चलाएँ",
+        "pullSource": "यह पाथ अपने स्रोत से स्ट्रीम खींचता है; MediaMTX प्रकाशकों को अस्वीकार करता है।",
+        "readFailed": "सर्वर के सुनने वाले पते नहीं पढ़े जा सके।",
+        "noProtocols": "सर्वर ने इसके लिए सभी प्रोटोकॉल बंद कर रखे हैं।",
+        "copyUrl": "{protocol} URL कॉपी करें",
+        "copySnippet": "{protocol} के लिए {client} स्निपेट कॉपी करें",
+        "snippetLabel": "{protocol} के लिए {client} स्निपेट",
+        "notes": {
+          "whipTracks": "FFmpeg 8 WHIP पर तभी प्रकाशित करता है जब इनपुट में वीडियो और ऑडियो दोनों ट्रैक हों।"
+        },
+        "links": {
+          "systemPlayer": "सिस्टम प्लेयर में खोलें",
+          "browserPublish": "ब्राउज़र से प्रकाशित करें",
+          "hlsPage": "MediaMTX का HLS पेज खोलें",
+          "webrtcPage": "MediaMTX का WebRTC पेज खोलें"
+        },
+        "toasts": {
+          "copied": "क्लिपबोर्ड पर कॉपी किया गया",
+          "copyFailedTitle": "कॉपी नहीं हो सका",
+          "copyFailedDescription": "ब्राउज़र ने क्लिपबोर्ड एक्सेस रोक दिया। टेक्स्ट चुनें और खुद कॉपी करें।"
+        }
       }
     },
     "saveBar": {

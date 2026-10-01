@@ -362,6 +362,31 @@
           "errorTitle": "Couldn't revert to inherited settings",
           "errorDescription": "The path config entry is still there. Try again."
         }
+      },
+      "publishRead": {
+        "title": "Publish & read",
+        "publishTab": "Publish",
+        "readTab": "Read",
+        "pullSource": "This path pulls from its source; MediaMTX refuses publishers.",
+        "readFailed": "Couldn't read the server's listen addresses.",
+        "noProtocols": "The server has every protocol for this turned off.",
+        "copyUrl": "Copy {protocol} URL",
+        "copySnippet": "Copy the {client} snippet for {protocol}",
+        "snippetLabel": "{client} snippet for {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publishes over WHIP only when the input has both a video and an audio track."
+        },
+        "links": {
+          "systemPlayer": "Open in system player",
+          "browserPublish": "Publish from the browser",
+          "hlsPage": "Open MediaMTX's HLS page",
+          "webrtcPage": "Open MediaMTX's WebRTC page"
+        },
+        "toasts": {
+          "copied": "Copied to the clipboard",
+          "copyFailedTitle": "Couldn't copy",
+          "copyFailedDescription": "The browser blocked clipboard access. Select the text and copy it instead."
+        }
       }
     },
     "saveBar": {

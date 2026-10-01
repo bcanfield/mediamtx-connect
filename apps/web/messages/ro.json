@@ -362,6 +362,31 @@
           "errorTitle": "Nu s-a putut reveni la setările moștenite",
           "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
         }
+      },
+      "publishRead": {
+        "title": "Publicare și redare",
+        "publishTab": "Publicare",
+        "readTab": "Redare",
+        "pullSource": "Această cale preia streamul de la sursa sa; MediaMTX refuză publisherii.",
+        "readFailed": "Nu s-au putut citi adresele de ascultare ale serverului.",
+        "noProtocols": "Serverul are dezactivate toate protocoalele pentru asta.",
+        "copyUrl": "Copiază URL-ul {protocol}",
+        "copySnippet": "Copiază fragmentul {client} pentru {protocol}",
+        "snippetLabel": "Fragment {client} pentru {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publică prin WHIP doar când intrarea are atât o pistă video, cât și una audio."
+        },
+        "links": {
+          "systemPlayer": "Deschide în playerul sistemului",
+          "browserPublish": "Publică din browser",
+          "hlsPage": "Deschide pagina HLS a MediaMTX",
+          "webrtcPage": "Deschide pagina WebRTC a MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiat în clipboard",
+          "copyFailedTitle": "Nu s-a putut copia",
+          "copyFailedDescription": "Browserul a blocat accesul la clipboard. Selectează textul și copiază-l manual."
+        }
       }
     },
     "saveBar": {

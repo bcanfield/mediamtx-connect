@@ -362,6 +362,31 @@
           "errorTitle": "Zurücksetzen auf geerbte Einstellungen fehlgeschlagen",
           "errorDescription": "Der Konfigurationseintrag des Pfads ist noch da. Versuch es erneut."
         }
+      },
+      "publishRead": {
+        "title": "Veröffentlichen & Abspielen",
+        "publishTab": "Veröffentlichen",
+        "readTab": "Abspielen",
+        "pullSource": "Dieser Pfad bezieht den Stream von seiner Quelle; MediaMTX lehnt Publisher ab.",
+        "readFailed": "Die Listen-Adressen des Servers konnten nicht gelesen werden.",
+        "noProtocols": "Der Server hat dafür jedes Protokoll deaktiviert.",
+        "copyUrl": "{protocol}-URL kopieren",
+        "copySnippet": "{client}-Snippet für {protocol} kopieren",
+        "snippetLabel": "{client}-Snippet für {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 veröffentlicht über WHIP nur, wenn die Quelle sowohl eine Video- als auch eine Audiospur hat."
+        },
+        "links": {
+          "systemPlayer": "Im Systemplayer öffnen",
+          "browserPublish": "Aus dem Browser veröffentlichen",
+          "hlsPage": "HLS-Seite von MediaMTX öffnen",
+          "webrtcPage": "WebRTC-Seite von MediaMTX öffnen"
+        },
+        "toasts": {
+          "copied": "In die Zwischenablage kopiert",
+          "copyFailedTitle": "Kopieren fehlgeschlagen",
+          "copyFailedDescription": "Der Browser hat den Zugriff auf die Zwischenablage blockiert. Markiere den Text und kopiere ihn manuell."
+        }
       }
     },
     "saveBar": {

@@ -362,6 +362,31 @@
           "errorTitle": "Perittyihin asetuksiin ei voitu palata",
           "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
         }
+      },
+      "publishRead": {
+        "title": "Julkaise ja toista",
+        "publishTab": "Julkaise",
+        "readTab": "Toista",
+        "pullSource": "Tämä polku hakee striimin lähteestään; MediaMTX hylkää julkaisijat.",
+        "readFailed": "Palvelimen kuunteluosoitteita ei voitu lukea.",
+        "noProtocols": "Palvelin on poistanut käytöstä kaikki tähän liittyvät protokollat.",
+        "copyUrl": "Kopioi {protocol}-URL",
+        "copySnippet": "Kopioi {client}-koodinpätkä protokollalle {protocol}",
+        "snippetLabel": "{client}-koodinpätkä protokollalle {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 julkaisee WHIP:llä vain, kun syötteessä on sekä video- että ääniraita."
+        },
+        "links": {
+          "systemPlayer": "Avaa järjestelmän soittimessa",
+          "browserPublish": "Julkaise selaimesta",
+          "hlsPage": "Avaa MediaMTX:n HLS-sivu",
+          "webrtcPage": "Avaa MediaMTX:n WebRTC-sivu"
+        },
+        "toasts": {
+          "copied": "Kopioitu leikepöydälle",
+          "copyFailedTitle": "Kopiointi epäonnistui",
+          "copyFailedDescription": "Selain esti pääsyn leikepöydälle. Valitse teksti ja kopioi se itse."
+        }
       }
     },
     "saveBar": {

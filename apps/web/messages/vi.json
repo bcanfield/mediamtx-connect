@@ -362,6 +362,31 @@
           "errorTitle": "Không thể trở lại các cài đặt kế thừa",
           "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
         }
+      },
+      "publishRead": {
+        "title": "Phát hành & xem",
+        "publishTab": "Phát hành",
+        "readTab": "Xem",
+        "pullSource": "Đường dẫn này kéo luồng từ nguồn của nó; MediaMTX từ chối bên phát.",
+        "readFailed": "Không đọc được địa chỉ lắng nghe của máy chủ.",
+        "noProtocols": "Máy chủ đã tắt mọi giao thức cho mục này.",
+        "copyUrl": "Sao chép URL {protocol}",
+        "copySnippet": "Sao chép đoạn {client} cho {protocol}",
+        "snippetLabel": "Đoạn {client} cho {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 chỉ phát qua WHIP khi đầu vào có cả track video và track âm thanh."
+        },
+        "links": {
+          "systemPlayer": "Mở bằng trình phát hệ thống",
+          "browserPublish": "Phát từ trình duyệt",
+          "hlsPage": "Mở trang HLS của MediaMTX",
+          "webrtcPage": "Mở trang WebRTC của MediaMTX"
+        },
+        "toasts": {
+          "copied": "Đã sao chép vào bảng nhớ tạm",
+          "copyFailedTitle": "Không sao chép được",
+          "copyFailedDescription": "Trình duyệt đã chặn quyền truy cập bảng nhớ tạm. Hãy chọn văn bản và tự sao chép."
+        }
       }
     },
     "saveBar": {

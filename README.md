@@ -63,7 +63,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - **Snapshots while idle.** A background job keeps a recent frame on every card, with its age on the pill. Need a fresh one now? Take it from the card menu.
 - **Live telemetry.** Codecs, viewer count, and uptime, straight from the path list.
 - **Honest record state.** Cards show whether a stream is *effectively* recording; a state Connect couldn't read says unknown, never off.
-- **Publish URLs on the clipboard.** RTSP, RTMP, and SRT, built from the server's own listen addresses.
+- **Publish URLs on the clipboard.** RTSP, RTMP, and SRT, built from the server's own listen addresses. Each path's page goes further with a publish & read panel: every protocol the server serves, including WHIP, WHEP, HLS and the TLS variants, with copy-ready ffmpeg, GStreamer, OBS, ffplay and VLC snippets.
 
 ### Recordings
 

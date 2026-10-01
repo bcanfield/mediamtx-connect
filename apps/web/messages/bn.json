@@ -362,6 +362,31 @@
           "errorTitle": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফেরা যায়নি",
           "errorDescription": "পাথের কনফিগ এন্ট্রি এখনও রয়েছে। আবার চেষ্টা করুন।"
         }
+      },
+      "publishRead": {
+        "title": "প্রকাশ ও চালান",
+        "publishTab": "প্রকাশ",
+        "readTab": "চালান",
+        "pullSource": "এই পাথ তার উৎস থেকে স্ট্রিম টেনে আনে; MediaMTX প্রকাশকদের প্রত্যাখ্যান করে।",
+        "readFailed": "সার্ভারের শোনার ঠিকানাগুলো পড়া যায়নি।",
+        "noProtocols": "সার্ভার এর জন্য সব প্রোটোকল বন্ধ রেখেছে।",
+        "copyUrl": "{protocol} URL কপি করুন",
+        "copySnippet": "{protocol}-এর জন্য {client} স্নিপেট কপি করুন",
+        "snippetLabel": "{protocol}-এর জন্য {client} স্নিপেট",
+        "notes": {
+          "whipTracks": "ইনপুটে ভিডিও ও অডিও দুটো ট্র্যাকই থাকলে তবেই FFmpeg 8 WHIP-এ প্রকাশ করে।"
+        },
+        "links": {
+          "systemPlayer": "সিস্টেম প্লেয়ারে খুলুন",
+          "browserPublish": "ব্রাউজার থেকে প্রকাশ করুন",
+          "hlsPage": "MediaMTX-এর HLS পেজ খুলুন",
+          "webrtcPage": "MediaMTX-এর WebRTC পেজ খুলুন"
+        },
+        "toasts": {
+          "copied": "ক্লিপবোর্ডে কপি হয়েছে",
+          "copyFailedTitle": "কপি করা যায়নি",
+          "copyFailedDescription": "ব্রাউজার ক্লিপবোর্ড অ্যাক্সেস আটকে দিয়েছে। টেক্সট নির্বাচন করে নিজে কপি করুন।"
+        }
       }
     },
     "saveBar": {

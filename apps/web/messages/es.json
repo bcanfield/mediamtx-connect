@@ -362,6 +362,31 @@
           "errorTitle": "No se pudo volver a los ajustes heredados",
           "errorDescription": "La entrada de configuración de la ruta sigue ahí. Inténtalo de nuevo."
         }
+      },
+      "publishRead": {
+        "title": "Publicar y reproducir",
+        "publishTab": "Publicar",
+        "readTab": "Reproducir",
+        "pullSource": "Esta ruta obtiene el stream de su fuente; MediaMTX rechaza a los publicadores.",
+        "readFailed": "No se pudieron leer las direcciones de escucha del servidor.",
+        "noProtocols": "El servidor tiene desactivados todos los protocolos para esto.",
+        "copyUrl": "Copiar URL de {protocol}",
+        "copySnippet": "Copiar el fragmento de {client} para {protocol}",
+        "snippetLabel": "Fragmento de {client} para {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 solo publica por WHIP si la entrada tiene una pista de vídeo y otra de audio."
+        },
+        "links": {
+          "systemPlayer": "Abrir en el reproductor del sistema",
+          "browserPublish": "Publicar desde el navegador",
+          "hlsPage": "Abrir la página HLS de MediaMTX",
+          "webrtcPage": "Abrir la página WebRTC de MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiado al portapapeles",
+          "copyFailedTitle": "No se pudo copiar",
+          "copyFailedDescription": "El navegador bloqueó el acceso al portapapeles. Selecciona el texto y cópialo manualmente."
+        }
       }
     },
     "saveBar": {

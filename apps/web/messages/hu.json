@@ -362,6 +362,31 @@
           "errorTitle": "Nem sikerült visszaállni az örökölt beállításokra",
           "errorDescription": "Az útvonal konfigurációs bejegyzése továbbra is megvan. Próbáld újra."
         }
+      },
+      "publishRead": {
+        "title": "Közzététel és lejátszás",
+        "publishTab": "Közzététel",
+        "readTab": "Lejátszás",
+        "pullSource": "Ez az útvonal a forrásából húzza a streamet; a MediaMTX elutasítja a közzétevőket.",
+        "readFailed": "Nem sikerült beolvasni a szerver figyelési címeit.",
+        "noProtocols": "A szerveren ehhez minden protokoll ki van kapcsolva.",
+        "copyUrl": "{protocol} URL másolása",
+        "copySnippet": "{client} kódrészlet másolása ehhez: {protocol}",
+        "snippetLabel": "{client} kódrészlet ehhez: {protocol}",
+        "notes": {
+          "whipTracks": "Az FFmpeg 8 csak akkor tesz közzé WHIP-en, ha a bemenetben van videó- és hangsáv is."
+        },
+        "links": {
+          "systemPlayer": "Megnyitás a rendszer lejátszójában",
+          "browserPublish": "Közzététel a böngészőből",
+          "hlsPage": "A MediaMTX HLS-oldalának megnyitása",
+          "webrtcPage": "A MediaMTX WebRTC-oldalának megnyitása"
+        },
+        "toasts": {
+          "copied": "Vágólapra másolva",
+          "copyFailedTitle": "Nem sikerült másolni",
+          "copyFailedDescription": "A böngésző letiltotta a vágólap elérését. Jelöld ki a szöveget, és másold ki kézzel."
+        }
       }
     },
     "saveBar": {

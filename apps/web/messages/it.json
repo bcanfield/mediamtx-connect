@@ -362,6 +362,31 @@
           "errorTitle": "Impossibile ripristinare le impostazioni ereditate",
           "errorDescription": "La voce di configurazione del percorso è ancora presente. Riprova."
         }
+      },
+      "publishRead": {
+        "title": "Pubblica e riproduci",
+        "publishTab": "Pubblica",
+        "readTab": "Riproduci",
+        "pullSource": "Questo percorso preleva lo stream dalla sua sorgente; MediaMTX rifiuta i publisher.",
+        "readFailed": "Impossibile leggere gli indirizzi di ascolto del server.",
+        "noProtocols": "Il server ha disattivato tutti i protocolli per questo.",
+        "copyUrl": "Copia URL {protocol}",
+        "copySnippet": "Copia lo snippet {client} per {protocol}",
+        "snippetLabel": "Snippet {client} per {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 pubblica via WHIP solo se l'input ha sia una traccia video sia una traccia audio."
+        },
+        "links": {
+          "systemPlayer": "Apri nel lettore di sistema",
+          "browserPublish": "Pubblica dal browser",
+          "hlsPage": "Apri la pagina HLS di MediaMTX",
+          "webrtcPage": "Apri la pagina WebRTC di MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiato negli appunti",
+          "copyFailedTitle": "Impossibile copiare",
+          "copyFailedDescription": "Il browser ha bloccato l'accesso agli appunti. Seleziona il testo e copialo a mano."
+        }
       }
     },
     "saveBar": {

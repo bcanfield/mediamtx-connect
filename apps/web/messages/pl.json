@@ -362,6 +362,31 @@
           "errorTitle": "Nie udało się przywrócić dziedziczonych ustawień",
           "errorDescription": "Wpis konfiguracji ścieżki nadal istnieje. Spróbuj ponownie."
         }
+      },
+      "publishRead": {
+        "title": "Publikowanie i odtwarzanie",
+        "publishTab": "Publikuj",
+        "readTab": "Odtwarzaj",
+        "pullSource": "Ta ścieżka pobiera strumień ze swojego źródła; MediaMTX odrzuca publikujących.",
+        "readFailed": "Nie udało się odczytać adresów nasłuchu serwera.",
+        "noProtocols": "Serwer ma wyłączone wszystkie protokoły dla tego celu.",
+        "copyUrl": "Kopiuj URL {protocol}",
+        "copySnippet": "Kopiuj fragment {client} dla {protocol}",
+        "snippetLabel": "Fragment {client} dla {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publikuje przez WHIP tylko wtedy, gdy wejście ma zarówno ścieżkę wideo, jak i audio."
+        },
+        "links": {
+          "systemPlayer": "Otwórz w odtwarzaczu systemowym",
+          "browserPublish": "Publikuj z przeglądarki",
+          "hlsPage": "Otwórz stronę HLS MediaMTX",
+          "webrtcPage": "Otwórz stronę WebRTC MediaMTX"
+        },
+        "toasts": {
+          "copied": "Skopiowano do schowka",
+          "copyFailedTitle": "Nie udało się skopiować",
+          "copyFailedDescription": "Przeglądarka zablokowała dostęp do schowka. Zaznacz tekst i skopiuj go ręcznie."
+        }
       }
     },
     "saveBar": {

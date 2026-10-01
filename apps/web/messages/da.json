@@ -362,6 +362,31 @@
           "errorTitle": "Kunne ikke vende tilbage til nedarvede indstillinger",
           "errorDescription": "Stiens konfigurationspost er der stadig. Prøv igen."
         }
+      },
+      "publishRead": {
+        "title": "Udgiv og afspil",
+        "publishTab": "Udgiv",
+        "readTab": "Afspil",
+        "pullSource": "Denne sti henter streamen fra sin kilde; MediaMTX afviser publishers.",
+        "readFailed": "Kunne ikke læse serverens lytteadresser.",
+        "noProtocols": "Serveren har slået alle protokoller til dette fra.",
+        "copyUrl": "Kopiér {protocol}-URL",
+        "copySnippet": "Kopiér {client}-uddraget til {protocol}",
+        "snippetLabel": "{client}-uddrag til {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 udgiver kun over WHIP, når input har både et video- og et lydspor."
+        },
+        "links": {
+          "systemPlayer": "Åbn i systemafspiller",
+          "browserPublish": "Udgiv fra browseren",
+          "hlsPage": "Åbn MediaMTX' HLS-side",
+          "webrtcPage": "Åbn MediaMTX' WebRTC-side"
+        },
+        "toasts": {
+          "copied": "Kopieret til udklipsholderen",
+          "copyFailedTitle": "Kunne ikke kopiere",
+          "copyFailedDescription": "Browseren blokerede adgang til udklipsholderen. Markér teksten og kopiér den selv."
+        }
       }
     },
     "saveBar": {
