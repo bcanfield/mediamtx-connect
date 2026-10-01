@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "nakakonekta",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "nakakonekta · <v>{version}</v>",
+      "tooOld": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect. Maaaring nawawala o tinatanggihan ang ilang setting."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX Config",
-      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server."
+      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · tumatakbo mula {started}",
+      "tooOldTitle": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect.",
+      "tooOldBody": "Maaaring nawawala o tinatanggihan ang ilang setting. Naglo-load at nase-save pa rin ang iba."
     },
     "pathDefaults": {
       "pageHeader": "Mga default ng path",

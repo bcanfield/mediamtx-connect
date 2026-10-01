@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "เชื่อมต่อแล้ว",
-      "offline": "ออฟไลน์"
+      "offline": "ออฟไลน์",
+      "connectedVersion": "เชื่อมต่อแล้ว · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ"
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "การตั้งค่า MediaMTX",
-      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์"
+      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · ทำงานตั้งแต่ {started}",
+      "tooOldTitle": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ",
+      "tooOldBody": "การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ ส่วนที่เหลือยังโหลดและบันทึกได้ตามปกติ"
     },
     "pathDefaults": {
       "pageHeader": "ค่าเริ่มต้นของพาธ",

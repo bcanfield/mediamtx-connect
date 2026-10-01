@@ -26,6 +26,7 @@ afterEach(() => {
 
 describe('reads', () => {
   it.each([
+    { name: 'info', route: '/v3/info', call: (a: Api) => a.info() },
     { name: 'pathsList', route: '/v3/paths/list', call: (a: Api) => a.pathsList() },
     { name: 'configGlobalGet', route: '/v3/config/global/get', call: (a: Api) => a.configGlobalGet() },
     { name: 'configPathDefaultsGet', route: '/v3/config/pathdefaults/get', call: (a: Api) => a.configPathDefaultsGet() },
@@ -172,6 +173,7 @@ describe('error paths', () => {
   // 404 is a real answer for the per-path reads, not a failure: a
   // wildcard-backed path has no config entry under its own name (ADR 0002).
   it.each([
+    { name: 'info', call: (a: Api) => a.info() },
     { name: 'pathsGet', call: (a: Api) => a.pathsGet('stopped') },
     { name: 'configPathGet', call: (a: Api) => a.configPathGet('stream1') },
   ])('$name answers null on 404', async ({ call }) => {

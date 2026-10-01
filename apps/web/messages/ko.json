@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "연결됨",
-      "offline": "오프라인"
+      "offline": "오프라인",
+      "connectedVersion": "연결됨 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}은(는) Connect가 지원하는 가장 오래된 버전인 {minimum}보다 오래되었습니다. 일부 설정이 누락되거나 거부될 수 있습니다."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 설정",
-      "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다."
+      "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 실행 시작 {started}",
+      "tooOldTitle": "MediaMTX {version}은(는) Connect가 지원하는 가장 오래된 버전인 {minimum}보다 오래되었습니다.",
+      "tooOldBody": "일부 설정이 누락되거나 거부될 수 있습니다. 나머지는 계속 불러오고 저장할 수 있습니다."
     },
     "pathDefaults": {
       "pageHeader": "경로 기본값",
