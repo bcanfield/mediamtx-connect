@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "เชื่อมต่อแล้ว",
-      "offline": "ออฟไลน์"
+      "offline": "ออฟไลน์",
+      "connectedVersion": "เชื่อมต่อแล้ว · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "สด",
       "recordings": "การบันทึก",
+      "sessions": "เซสชัน",
       "appConfig": "การตั้งค่าแอป",
       "mediamtxConfig": "การตั้งค่า MediaMTX",
       "paths": "พาธ"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "ไม่สามารถอ่านค่าเริ่มต้นของพาธจาก MediaMTX ได้"
     }
   },
+  "Sessions": {
+    "pageHeader": "เซสชัน",
+    "pageSubHeader": "ไคลเอนต์ทุกตัวที่เชื่อมต่อกับ MediaMTX อยู่ตอนนี้ ทั้งเผยแพร่และอ่าน ผ่านทุกโปรโตคอล",
+    "summary": "{count, plural, other {# เซสชัน}}",
+    "columns": {
+      "path": "พาธ",
+      "protocol": "โปรโตคอล",
+      "remoteAddr": "ที่อยู่ระยะไกล",
+      "state": "สถานะ",
+      "bytesIn": "ไบต์ขาเข้า",
+      "bytesOut": "ไบต์ขาออก",
+      "uptime": "เวลาทำงาน",
+      "actions": "การดำเนินการ"
+    },
+    "states": {
+      "idle": "ว่าง",
+      "read": "อ่าน",
+      "publish": "เผยแพร่"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ไม่ได้เปิดใช้บนเซิร์ฟเวอร์นี้)",
+      "failed": "{protocol} (อ่านไม่ได้)",
+      "unlisted": "ไม่ได้แสดง: {protocols}",
+      "truncated": "แสดง {count, number} เซสชัน {protocol} แรกเท่านั้น"
+    },
+    "kick": {
+      "action": "เตะออก",
+      "confirmTitle": "เตะไคลเอนต์ {protocol} {remoteAddr} ออกจาก {path} หรือไม่?",
+      "confirmDescription": "MediaMTX จะตัดการเชื่อมต่อทันที นี่ไม่ใช่การแบน ไคลเอนต์เชื่อมต่อใหม่ได้ทันที",
+      "hlsCaveat": "เครื่องเล่น HLS จะขอเพลย์ลิสต์ใหม่ภายในไม่กี่วินาทีและได้เซสชันใหม่ ดังนั้นส่วนใหญ่เป็นแค่การรีเซ็ต",
+      "cancel": "ยกเลิก",
+      "confirm": "เตะไคลเอนต์ออก",
+      "toasts": {
+        "success": "เตะ {remoteAddr} ออกแล้ว",
+        "alreadyGone": "{remoteAddr} ตัดการเชื่อมต่อไปแล้ว",
+        "errorTitle": "เตะเซสชันออกไม่ได้",
+        "errorDescription": "MediaMTX ไม่ยอมรับคำขอ ลองอีกครั้ง"
+      }
+    },
+    "empty": {
+      "title": "ไม่มีใครเชื่อมต่ออยู่",
+      "lead": "ตอนนี้ MediaMTX ไม่มีผู้เผยแพร่หรือผู้อ่าน"
+    }
+  },
   "Config": {
     "invalidConfig": "การตั้งค่าไม่ถูกต้อง",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "การตั้งค่า MediaMTX",
-      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์"
+      "pageSubHeader": "การตั้งค่าเซิร์ฟเวอร์ MediaMTX แบบส่วนกลาง บันทึกไปยังเซิร์ฟเวอร์",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · ทำงานตั้งแต่ {started}",
+      "tooOldTitle": "MediaMTX {version} เก่ากว่า {minimum} ซึ่งเป็นเวอร์ชันเก่าที่สุดที่ Connect รองรับ",
+      "tooOldBody": "การตั้งค่าบางรายการอาจหายไปหรือถูกปฏิเสธ ส่วนที่เหลือยังโหลดและบันทึกได้ตามปกติ"
     },
     "pathDefaults": {
       "pageHeader": "ค่าเริ่มต้นของพาธ",
@@ -336,6 +388,31 @@
           "success": "ย้อนกลับไปใช้การตั้งค่าที่สืบทอดแล้ว",
           "errorTitle": "ย้อนกลับไปใช้การตั้งค่าที่สืบทอดไม่สำเร็จ",
           "errorDescription": "รายการการตั้งค่าของพาธยังอยู่ ลองอีกครั้ง"
+        }
+      },
+      "publishRead": {
+        "title": "เผยแพร่และเล่น",
+        "publishTab": "เผยแพร่",
+        "readTab": "เล่น",
+        "pullSource": "พาธนี้ดึงสตรีมจากต้นทางของตัวเอง MediaMTX จึงปฏิเสธผู้เผยแพร่",
+        "readFailed": "อ่านที่อยู่ที่เซิร์ฟเวอร์รับฟังไม่ได้",
+        "noProtocols": "เซิร์ฟเวอร์ปิดทุกโปรโตคอลสำหรับส่วนนี้",
+        "copyUrl": "คัดลอก URL {protocol}",
+        "copySnippet": "คัดลอกสนิปเป็ต {client} สำหรับ {protocol}",
+        "snippetLabel": "สนิปเป็ต {client} สำหรับ {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 เผยแพร่ผ่าน WHIP ได้เฉพาะเมื่ออินพุตมีทั้งแทร็กวิดีโอและแทร็กเสียง"
+        },
+        "links": {
+          "systemPlayer": "เปิดในเครื่องเล่นของระบบ",
+          "browserPublish": "เผยแพร่จากเบราว์เซอร์",
+          "hlsPage": "เปิดหน้า HLS ของ MediaMTX",
+          "webrtcPage": "เปิดหน้า WebRTC ของ MediaMTX"
+        },
+        "toasts": {
+          "copied": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+          "copyFailedTitle": "คัดลอกไม่สำเร็จ",
+          "copyFailedDescription": "เบราว์เซอร์บล็อกการเข้าถึงคลิปบอร์ด เลือกข้อความแล้วคัดลอกเอง"
         }
       }
     },

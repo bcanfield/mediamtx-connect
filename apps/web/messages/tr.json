@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "bağlı",
-      "offline": "çevrimdışı"
+      "offline": "çevrimdışı",
+      "connectedVersion": "bağlı · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski. Bazı ayarlar eksik olabilir veya reddedilebilir."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Canlı",
       "recordings": "Kayıtlar",
+      "sessions": "Oturumlar",
       "appConfig": "Uygulama yapılandırması",
       "mediamtxConfig": "MediaMTX yapılandırması",
       "paths": "Yollar"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Yol varsayılanları MediaMTX'ten okunamadı."
     }
   },
+  "Sessions": {
+    "pageHeader": "Oturumlar",
+    "pageSubHeader": "Şu anda MediaMTX’e bağlı her istemci, yayın yapan veya okuyan, her protokolde.",
+    "summary": "{count, plural, other {# oturum}}",
+    "columns": {
+      "path": "Yol",
+      "protocol": "Protokol",
+      "remoteAddr": "Uzak adres",
+      "state": "Durum",
+      "bytesIn": "Gelen bayt",
+      "bytesOut": "Giden bayt",
+      "uptime": "Çalışma süresi",
+      "actions": "İşlemler"
+    },
+    "states": {
+      "idle": "boşta",
+      "read": "okuma",
+      "publish": "yayın"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (bu sunucuda etkin değil)",
+      "failed": "{protocol} (okunamadı)",
+      "unlisted": "Listelenmeyenler: {protocols}.",
+      "truncated": "İlk {count, number} {protocol} oturumu gösteriliyor."
+    },
+    "kick": {
+      "action": "At",
+      "confirmTitle": "{protocol} istemcisi {remoteAddr}, {path} yolundan atılsın mı?",
+      "confirmDescription": "MediaMTX bağlantıyı şimdi keser. Bu bir yasak değildir: istemci hemen yeniden bağlanabilir.",
+      "hlsCaveat": "Bir HLS oynatıcı birkaç saniye içinde oynatma listesini yeniden ister ve yeni bir oturum alır, bu yüzden bu çoğunlukla onu yalnızca sıfırlar.",
+      "cancel": "İptal",
+      "confirm": "İstemciyi at",
+      "toasts": {
+        "success": "{remoteAddr} atıldı",
+        "alreadyGone": "{remoteAddr} zaten bağlantıyı kesmişti",
+        "errorTitle": "Oturum atılamadı",
+        "errorDescription": "MediaMTX isteği kabul etmedi. Tekrar deneyin."
+      }
+    },
+    "empty": {
+      "title": "Kimse bağlı değil",
+      "lead": "MediaMTX’in şu anda yayıncısı veya okuyucusu yok."
+    }
+  },
   "Config": {
     "invalidConfig": "Geçersiz yapılandırma",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX yapılandırması",
-      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir."
+      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · çalışma başlangıcı {started}",
+      "tooOldTitle": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski.",
+      "tooOldBody": "Bazı ayarlar eksik olabilir veya reddedilebilir. Geri kalanı yüklenmeye ve kaydedilmeye devam eder."
     },
     "pathDefaults": {
       "pageHeader": "Yol varsayılanları",
@@ -336,6 +388,31 @@
           "success": "Devralınan ayarlara geri dönüldü",
           "errorTitle": "Devralınan ayarlara geri dönülemedi",
           "errorDescription": "Yolun yapılandırma girdisi hâlâ duruyor. Tekrar deneyin."
+        }
+      },
+      "publishRead": {
+        "title": "Yayınla ve oynat",
+        "publishTab": "Yayınla",
+        "readTab": "Oynat",
+        "pullSource": "Bu yol yayını kaynağından çeker; MediaMTX yayıncıları reddeder.",
+        "readFailed": "Sunucunun dinleme adresleri okunamadı.",
+        "noProtocols": "Sunucu bunun için tüm protokolleri kapatmış.",
+        "copyUrl": "{protocol} URL'sini kopyala",
+        "copySnippet": "{protocol} için {client} parçacığını kopyala",
+        "snippetLabel": "{protocol} için {client} parçacığı",
+        "notes": {
+          "whipTracks": "FFmpeg 8, WHIP üzerinden yalnızca girişte hem video hem ses izi olduğunda yayın yapar."
+        },
+        "links": {
+          "systemPlayer": "Sistem oynatıcısında aç",
+          "browserPublish": "Tarayıcıdan yayınla",
+          "hlsPage": "MediaMTX HLS sayfasını aç",
+          "webrtcPage": "MediaMTX WebRTC sayfasını aç"
+        },
+        "toasts": {
+          "copied": "Panoya kopyalandı",
+          "copyFailedTitle": "Kopyalanamadı",
+          "copyFailedDescription": "Tarayıcı pano erişimini engelledi. Metni seçip kendiniz kopyalayın."
         }
       }
     },

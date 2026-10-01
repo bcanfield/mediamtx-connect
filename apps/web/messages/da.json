@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "forbundet",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "forbundet · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} er ældre end {minimum}, den ældste version Connect understøtter. Nogle indstillinger kan mangle eller blive afvist."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Optagelser",
+      "sessions": "Sessioner",
       "appConfig": "Appkonfiguration",
       "mediamtxConfig": "MediaMTX-konfiguration",
       "paths": "Stier"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Kunne ikke læse stiernes standarder fra MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sessioner",
+    "pageSubHeader": "Alle klienter, der er forbundet til MediaMTX lige nu, der publicerer eller læser, over enhver protokol.",
+    "summary": "{count, plural, one {# session} other {# sessioner}}",
+    "columns": {
+      "path": "Sti",
+      "protocol": "Protokol",
+      "remoteAddr": "Fjernadresse",
+      "state": "Tilstand",
+      "bytesIn": "Bytes ind",
+      "bytesOut": "Bytes ud",
+      "uptime": "Oppetid",
+      "actions": "Handlinger"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "læser",
+      "publish": "publicerer"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ikke aktiveret på denne server)",
+      "failed": "{protocol} (kunne ikke læses)",
+      "unlisted": "Ikke vist: {protocols}.",
+      "truncated": "Viser de første {count, number} {protocol}-sessioner."
+    },
+    "kick": {
+      "action": "Smid ud",
+      "confirmTitle": "Smid {protocol}-klienten {remoteAddr} ud fra {path}?",
+      "confirmDescription": "MediaMTX afbryder forbindelsen nu. Det er ikke en udelukkelse: klienten kan genoprette forbindelsen med det samme.",
+      "hlsCaveat": "En HLS-afspiller beder om sin playliste igen inden for sekunder og får en ny session, så dette nulstiller den for det meste bare.",
+      "cancel": "Annuller",
+      "confirm": "Smid klient ud",
+      "toasts": {
+        "success": "{remoteAddr} smidt ud",
+        "alreadyGone": "{remoteAddr} havde allerede afbrudt",
+        "errorTitle": "Kunne ikke smide sessionen ud",
+        "errorDescription": "MediaMTX accepterede ikke handlingen. Prøv igen."
+      }
+    },
+    "empty": {
+      "title": "Ingen er forbundet",
+      "lead": "MediaMTX har ingen udgivere eller læsere lige nu."
+    }
+  },
   "Config": {
     "invalidConfig": "Ugyldig konfiguration",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-konfiguration",
-      "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren."
+      "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · kører siden {started}",
+      "tooOldTitle": "MediaMTX {version} er ældre end {minimum}, den ældste version Connect understøtter.",
+      "tooOldBody": "Nogle indstillinger kan mangle eller blive afvist. Resten indlæses og gemmes stadig."
     },
     "pathDefaults": {
       "pageHeader": "Standardværdier for stier",
@@ -336,6 +388,31 @@
           "success": "Vendt tilbage til nedarvede indstillinger",
           "errorTitle": "Kunne ikke vende tilbage til nedarvede indstillinger",
           "errorDescription": "Stiens konfigurationspost er der stadig. Prøv igen."
+        }
+      },
+      "publishRead": {
+        "title": "Udgiv og afspil",
+        "publishTab": "Udgiv",
+        "readTab": "Afspil",
+        "pullSource": "Denne sti henter streamen fra sin kilde; MediaMTX afviser publishers.",
+        "readFailed": "Kunne ikke læse serverens lytteadresser.",
+        "noProtocols": "Serveren har slået alle protokoller til dette fra.",
+        "copyUrl": "Kopiér {protocol}-URL",
+        "copySnippet": "Kopiér {client}-uddraget til {protocol}",
+        "snippetLabel": "{client}-uddrag til {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 udgiver kun over WHIP, når input har både et video- og et lydspor."
+        },
+        "links": {
+          "systemPlayer": "Åbn i systemafspiller",
+          "browserPublish": "Udgiv fra browseren",
+          "hlsPage": "Åbn MediaMTX' HLS-side",
+          "webrtcPage": "Åbn MediaMTX' WebRTC-side"
+        },
+        "toasts": {
+          "copied": "Kopieret til udklipsholderen",
+          "copyFailedTitle": "Kunne ikke kopiere",
+          "copyFailedDescription": "Browseren blokerede adgang til udklipsholderen. Markér teksten og kopiér den selv."
         }
       }
     },

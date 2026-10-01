@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "已連線",
-      "offline": "離線"
+      "offline": "離線",
+      "connectedVersion": "已連線 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。部分設定可能缺失或遭拒絕。"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "直播",
       "recordings": "錄影",
+      "sessions": "工作階段",
       "appConfig": "應用程式設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "路徑"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "無法從 MediaMTX 讀取路徑預設值。"
     }
   },
+  "Sessions": {
+    "pageHeader": "工作階段",
+    "pageSubHeader": "目前連線到 MediaMTX 的所有用戶端，不論發布或讀取，涵蓋所有通訊協定。",
+    "summary": "{count, plural, other {# 個工作階段}}",
+    "columns": {
+      "path": "路徑",
+      "protocol": "通訊協定",
+      "remoteAddr": "遠端位址",
+      "state": "狀態",
+      "bytesIn": "接收位元組",
+      "bytesOut": "傳送位元組",
+      "uptime": "運作時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "閒置",
+      "read": "讀取",
+      "publish": "發布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此伺服器未啟用）",
+      "failed": "{protocol}（無法讀取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "僅顯示前 {count, number} 個 {protocol} 工作階段。"
+    },
+    "kick": {
+      "action": "踢除",
+      "confirmTitle": "要將 {protocol} 用戶端 {remoteAddr} 從 {path} 踢除嗎？",
+      "confirmDescription": "MediaMTX 會立即中斷連線。這不是封鎖：用戶端可以馬上重新連線。",
+      "hlsCaveat": "HLS 播放器會在幾秒內重新請求播放清單並取得新的工作階段，所以這多半只是重設它。",
+      "cancel": "取消",
+      "confirm": "踢除用戶端",
+      "toasts": {
+        "success": "已踢除 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已經中斷連線",
+        "errorTitle": "無法踢除工作階段",
+        "errorDescription": "MediaMTX 未接受此要求。請再試一次。"
+      }
+    },
+    "empty": {
+      "title": "目前沒有任何連線",
+      "lead": "MediaMTX 目前沒有發布者或讀取者。"
+    }
+  },
   "Config": {
     "invalidConfig": "設定無效",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 設定",
-      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。"
+      "pageSubHeader": "MediaMTX 伺服器的全域設定，儲存至伺服器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 執行起始於 {started}",
+      "tooOldTitle": "MediaMTX {version} 早於 {minimum}，即 Connect 支援的最舊版本。",
+      "tooOldBody": "部分設定可能缺失或遭拒絕。其餘設定仍可正常載入和儲存。"
     },
     "pathDefaults": {
       "pageHeader": "路徑預設值",
@@ -336,6 +388,31 @@
           "success": "已還原為繼承的設定",
           "errorTitle": "無法還原為繼承的設定",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
+        }
+      },
+      "publishRead": {
+        "title": "發佈與播放",
+        "publishTab": "發佈",
+        "readTab": "播放",
+        "pullSource": "此路徑從其來源拉取串流，MediaMTX 會拒絕發佈者。",
+        "readFailed": "無法讀取伺服器的監聽位址。",
+        "noProtocols": "伺服器已關閉此處的所有協定。",
+        "copyUrl": "複製 {protocol} URL",
+        "copySnippet": "複製 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有當輸入同時包含視訊軌和音訊軌時，FFmpeg 8 才能透過 WHIP 發佈。"
+        },
+        "links": {
+          "systemPlayer": "在系統播放器中開啟",
+          "browserPublish": "從瀏覽器發佈",
+          "hlsPage": "開啟 MediaMTX 的 HLS 頁面",
+          "webrtcPage": "開啟 MediaMTX 的 WebRTC 頁面"
+        },
+        "toasts": {
+          "copied": "已複製到剪貼簿",
+          "copyFailedTitle": "無法複製",
+          "copyFailedDescription": "瀏覽器封鎖了剪貼簿存取。請選取文字後手動複製。"
         }
       }
     },

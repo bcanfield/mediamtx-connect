@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "connected",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "connected · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} is older than {minimum}, the oldest version Connect supports. Some settings may be missing or refused."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Recordings",
+      "sessions": "Sessions",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Paths"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Couldn't read path defaults from MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sessions",
+    "pageSubHeader": "Every client connected to MediaMTX right now, publishing or reading, over any protocol.",
+    "summary": "{count, plural, one {# session} other {# sessions}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "State",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes out",
+      "uptime": "Uptime",
+      "actions": "Actions"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "read",
+      "publish": "publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (not enabled on this server)",
+      "failed": "{protocol} (couldn't be read)",
+      "unlisted": "Not listed: {protocols}.",
+      "truncated": "Showing the first {count, number} {protocol} sessions."
+    },
+    "kick": {
+      "action": "Kick",
+      "confirmTitle": "Kick {protocol} client {remoteAddr} from {path}?",
+      "confirmDescription": "MediaMTX drops the connection now. This is not a ban: the client can reconnect straight away.",
+      "hlsCaveat": "An HLS player asks for its playlist again within seconds and gets a new session, so this mostly just resets it.",
+      "cancel": "Cancel",
+      "confirm": "Kick client",
+      "toasts": {
+        "success": "Kicked {remoteAddr}",
+        "alreadyGone": "{remoteAddr} had already disconnected",
+        "errorTitle": "Couldn't kick the session",
+        "errorDescription": "MediaMTX didn't accept the kick. Try again."
+      }
+    },
+    "empty": {
+      "title": "No one is connected",
+      "lead": "MediaMTX has no publishers or readers right now."
+    }
+  },
   "Config": {
     "invalidConfig": "Invalid Config",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX Config",
-      "pageSubHeader": "Global MediaMTX server settings, saved to the server."
+      "pageSubHeader": "Global MediaMTX server settings, saved to the server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · running since {started}",
+      "tooOldTitle": "MediaMTX {version} is older than {minimum}, the oldest version Connect supports.",
+      "tooOldBody": "Some settings may be missing or refused. The rest still load and save."
     },
     "pathDefaults": {
       "pageHeader": "Path Defaults",
@@ -336,6 +388,31 @@
           "success": "Reverted to inherited settings",
           "errorTitle": "Couldn't revert to inherited settings",
           "errorDescription": "The path config entry is still there. Try again."
+        }
+      },
+      "publishRead": {
+        "title": "Publish & read",
+        "publishTab": "Publish",
+        "readTab": "Read",
+        "pullSource": "This path pulls from its source; MediaMTX refuses publishers.",
+        "readFailed": "Couldn't read the server's listen addresses.",
+        "noProtocols": "The server has every protocol for this turned off.",
+        "copyUrl": "Copy {protocol} URL",
+        "copySnippet": "Copy the {client} snippet for {protocol}",
+        "snippetLabel": "{client} snippet for {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publishes over WHIP only when the input has both a video and an audio track."
+        },
+        "links": {
+          "systemPlayer": "Open in system player",
+          "browserPublish": "Publish from the browser",
+          "hlsPage": "Open MediaMTX's HLS page",
+          "webrtcPage": "Open MediaMTX's WebRTC page"
+        },
+        "toasts": {
+          "copied": "Copied to the clipboard",
+          "copyFailedTitle": "Couldn't copy",
+          "copyFailedDescription": "The browser blocked clipboard access. Select the text and copy it instead."
         }
       }
     },

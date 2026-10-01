@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "已连接",
-      "offline": "离线"
+      "offline": "离线",
+      "connectedVersion": "已连接 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。部分设置可能缺失或被拒绝。"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "直播",
       "recordings": "录像",
+      "sessions": "会话",
       "appConfig": "应用配置",
       "mediamtxConfig": "MediaMTX 配置",
       "paths": "路径"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "无法从 MediaMTX 读取路径默认值。"
     }
   },
+  "Sessions": {
+    "pageHeader": "会话",
+    "pageSubHeader": "当前连接到 MediaMTX 的所有客户端，无论发布还是读取，涵盖所有协议。",
+    "summary": "{count, plural, other {# 个会话}}",
+    "columns": {
+      "path": "路径",
+      "protocol": "协议",
+      "remoteAddr": "远程地址",
+      "state": "状态",
+      "bytesIn": "接收字节",
+      "bytesOut": "发送字节",
+      "uptime": "运行时间",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "空闲",
+      "read": "读取",
+      "publish": "发布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此服务器未启用）",
+      "failed": "{protocol}（无法读取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "仅显示前 {count, number} 个 {protocol} 会话。"
+    },
+    "kick": {
+      "action": "踢出",
+      "confirmTitle": "要将 {protocol} 客户端 {remoteAddr} 从 {path} 踢出吗？",
+      "confirmDescription": "MediaMTX 会立即断开连接。这不是封禁：客户端可以立即重新连接。",
+      "hlsCaveat": "HLS 播放器会在几秒内重新请求播放列表并获得新会话，所以这多半只是重置它。",
+      "cancel": "取消",
+      "confirm": "踢出客户端",
+      "toasts": {
+        "success": "已踢出 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已经断开连接",
+        "errorTitle": "无法踢出会话",
+        "errorDescription": "MediaMTX 未接受该请求。请重试。"
+      }
+    },
+    "empty": {
+      "title": "没有任何连接",
+      "lead": "MediaMTX 当前没有发布者或读取者。"
+    }
+  },
   "Config": {
     "invalidConfig": "配置无效",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 配置",
-      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。"
+      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 运行起始于 {started}",
+      "tooOldTitle": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。",
+      "tooOldBody": "部分设置可能缺失或被拒绝。其余设置仍可正常加载和保存。"
     },
     "pathDefaults": {
       "pageHeader": "路径默认设置",
@@ -336,6 +388,31 @@
           "success": "已恢复为继承的设置",
           "errorTitle": "无法恢复为继承的设置",
           "errorDescription": "该路径的配置条目仍然存在。请重试。"
+        }
+      },
+      "publishRead": {
+        "title": "发布与播放",
+        "publishTab": "发布",
+        "readTab": "播放",
+        "pullSource": "此路径从其源拉取流，MediaMTX 会拒绝发布者。",
+        "readFailed": "无法读取服务器的监听地址。",
+        "noProtocols": "服务器已关闭此处的所有协议。",
+        "copyUrl": "复制 {protocol} URL",
+        "copySnippet": "复制 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有当输入同时包含视频轨和音频轨时，FFmpeg 8 才能通过 WHIP 发布。"
+        },
+        "links": {
+          "systemPlayer": "在系统播放器中打开",
+          "browserPublish": "从浏览器发布",
+          "hlsPage": "打开 MediaMTX 的 HLS 页面",
+          "webrtcPage": "打开 MediaMTX 的 WebRTC 页面"
+        },
+        "toasts": {
+          "copied": "已复制到剪贴板",
+          "copyFailedTitle": "无法复制",
+          "copyFailedDescription": "浏览器阻止了剪贴板访问。请选中文本后手动复制。"
         }
       }
     },

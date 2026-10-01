@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "nakakonekta",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "nakakonekta · <v>{version}</v>",
+      "tooOld": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect. Maaaring nawawala o tinatanggihan ang ilang setting."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Mga recording",
+      "sessions": "Mga Session",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Mga path"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Hindi mabasa ang path defaults mula sa MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Mga Session",
+    "pageSubHeader": "Bawat client na nakakonekta sa MediaMTX ngayon, nagpa-publish o nagbabasa, sa anumang protocol.",
+    "summary": "{count, plural, one {# session} other {# na session}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "Estado",
+      "bytesIn": "Bytes papasok",
+      "bytesOut": "Bytes palabas",
+      "uptime": "Uptime",
+      "actions": "Mga aksyon"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "nagbabasa",
+      "publish": "nagpa-publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (hindi naka-enable sa server na ito)",
+      "failed": "{protocol} (hindi mabasa)",
+      "unlisted": "Hindi nakalista: {protocols}.",
+      "truncated": "Ipinapakita ang unang {count, number} {protocol} na session."
+    },
+    "kick": {
+      "action": "I-kick",
+      "confirmTitle": "I-kick ang {protocol} client na {remoteAddr} mula sa {path}?",
+      "confirmDescription": "Puputulin ng MediaMTX ang koneksyon ngayon. Hindi ito ban: maaaring kumonekta muli agad ang client.",
+      "hlsCaveat": "Humihingi ulit ng playlist ang HLS player sa loob ng ilang segundo at nakakakuha ng bagong session, kaya kadalasan ay nire-reset lang ito.",
+      "cancel": "Kanselahin",
+      "confirm": "I-kick ang client",
+      "toasts": {
+        "success": "Na-kick ang {remoteAddr}",
+        "alreadyGone": "Nakadiskonekta na ang {remoteAddr}",
+        "errorTitle": "Hindi ma-kick ang session",
+        "errorDescription": "Hindi tinanggap ng MediaMTX ang kahilingan. Subukan ulit."
+      }
+    },
+    "empty": {
+      "title": "Walang nakakonekta",
+      "lead": "Walang publisher o reader ang MediaMTX ngayon."
+    }
+  },
   "Config": {
     "invalidConfig": "Hindi wastong configuration",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX Config",
-      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server."
+      "pageSubHeader": "Mga global na setting ng MediaMTX server, sine-save sa server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · tumatakbo mula {started}",
+      "tooOldTitle": "Ang MediaMTX {version} ay mas luma kaysa sa {minimum}, ang pinakalumang bersyong sinusuportahan ng Connect.",
+      "tooOldBody": "Maaaring nawawala o tinatanggihan ang ilang setting. Naglo-load at nase-save pa rin ang iba."
     },
     "pathDefaults": {
       "pageHeader": "Mga default ng path",
@@ -336,6 +388,31 @@
           "success": "Naibalik sa minanang mga setting",
           "errorTitle": "Hindi maibalik sa minanang mga setting",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
+        }
+      },
+      "publishRead": {
+        "title": "I-publish at i-play",
+        "publishTab": "I-publish",
+        "readTab": "I-play",
+        "pullSource": "Kinukuha ng path na ito ang stream mula sa source nito; tinatanggihan ng MediaMTX ang mga publisher.",
+        "readFailed": "Hindi mabasa ang mga listen address ng server.",
+        "noProtocols": "Naka-off sa server ang lahat ng protocol para dito.",
+        "copyUrl": "Kopyahin ang {protocol} URL",
+        "copySnippet": "Kopyahin ang {client} snippet para sa {protocol}",
+        "snippetLabel": "{client} snippet para sa {protocol}",
+        "notes": {
+          "whipTracks": "Nagpa-publish lang ang FFmpeg 8 sa WHIP kapag may video at audio track ang input."
+        },
+        "links": {
+          "systemPlayer": "Buksan sa system player",
+          "browserPublish": "I-publish mula sa browser",
+          "hlsPage": "Buksan ang HLS page ng MediaMTX",
+          "webrtcPage": "Buksan ang WebRTC page ng MediaMTX"
+        },
+        "toasts": {
+          "copied": "Nakopya sa clipboard",
+          "copyFailedTitle": "Hindi makopya",
+          "copyFailedDescription": "Hinarang ng browser ang access sa clipboard. Piliin ang text at kopyahin ito nang mano-mano."
         }
       }
     },

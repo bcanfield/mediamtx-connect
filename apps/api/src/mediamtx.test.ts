@@ -26,6 +26,7 @@ afterEach(() => {
 
 describe('reads', () => {
   it.each([
+    { name: 'info', route: '/v3/info', call: (a: Api) => a.info() },
     { name: 'pathsList', route: '/v3/paths/list', call: (a: Api) => a.pathsList() },
     { name: 'configGlobalGet', route: '/v3/config/global/get', call: (a: Api) => a.configGlobalGet() },
     { name: 'configPathDefaultsGet', route: '/v3/config/pathdefaults/get', call: (a: Api) => a.configPathDefaultsGet() },
@@ -115,6 +116,8 @@ describe('writes', () => {
   it.each([
     { name: 'a patch', call: (a: Api) => a.configPathPatch('stream1', { record: true }) },
     { name: 'a delete', call: (a: Api) => a.configPathDelete('stream1') },
+    { name: 'an add', call: (a: Api) => a.configPathAdd('stream1', { record: true }) },
+    { name: 'a kick', call: (a: Api) => a.sessionsKick('rtsp', 'abc') },
   ])('resolves $name against an empty body', async ({ call }) => {
     fetchMock.mockResolvedValue(new Response('', { status: 200 }))
 
@@ -172,6 +175,7 @@ describe('error paths', () => {
   // 404 is a real answer for the per-path reads, not a failure: a
   // wildcard-backed path has no config entry under its own name (ADR 0002).
   it.each([
+    { name: 'info', call: (a: Api) => a.info() },
     { name: 'pathsGet', call: (a: Api) => a.pathsGet('stopped') },
     { name: 'configPathGet', call: (a: Api) => a.configPathGet('stream1') },
   ])('$name answers null on 404', async ({ call }) => {
@@ -186,5 +190,43 @@ describe('error paths', () => {
     await expect(api.configPathGet('stream1'))
       .rejects
       .toThrow('MediaMTX GET /config/paths/get/stream1 responded 500')
+  })
+})
+
+// The legacy names on purpose: 1.20.0, the shipped image, serves only these,
+// and 1.21 still serves them (deprecated) next to the new category routes.
+describe('sessions', () => {
+  it.each([
+    { protocol: 'rtsp', list: '/v3/rtspsessions/list', kick: '/v3/rtspsessions/kick/abc' },
+    { protocol: 'rtsps', list: '/v3/rtspssessions/list', kick: '/v3/rtspssessions/kick/abc' },
+    { protocol: 'rtmp', list: '/v3/rtmpconns/list', kick: '/v3/rtmpconns/kick/abc' },
+    { protocol: 'rtmps', list: '/v3/rtmpsconns/list', kick: '/v3/rtmpsconns/kick/abc' },
+    { protocol: 'srt', list: '/v3/srtconns/list', kick: '/v3/srtconns/kick/abc' },
+    { protocol: 'webrtc', list: '/v3/webrtcsessions/list', kick: '/v3/webrtcsessions/kick/abc' },
+    { protocol: 'hls', list: '/v3/hlssessions/list', kick: '/v3/hlssessions/kick/abc' },
+  ] as const)('$protocol lists off $list and kicks with POST $kick', async ({ protocol, list, kick }) => {
+    fetchMock.mockResolvedValue(jsonResponse({ pageCount: 1, items: [] }))
+    await api.sessionsList(protocol)
+    expect(lastRequest().url).toBe(`http://127.0.0.1:9997${list}`)
+
+    fetchMock.mockResolvedValue(new Response('', { status: 200 }))
+    await expect(api.sessionsKick(protocol, 'abc')).resolves.toBeUndefined()
+    expect(lastRequest()).toEqual({ url: `http://127.0.0.1:9997${kick}`, init: { method: 'POST' } })
+  })
+
+  it('escapes the session id into the kick URL', async () => {
+    fetchMock.mockResolvedValue(new Response('', { status: 200 }))
+
+    await api.sessionsKick('srt', 'a/b c')
+
+    expect(lastRequest().url).toBe('http://127.0.0.1:9997/v3/srtconns/kick/a%2Fb%20c')
+  })
+
+  // A disabled protocol's routes aren't registered; the router tells that
+  // apart from a real failure by this status.
+  it('rejects a list on 404 with the status attached', async () => {
+    fetchMock.mockResolvedValue(new Response('404 page not found', { status: 404 }))
+
+    await expect(api.sessionsList('rtmps')).rejects.toMatchObject({ status: 404, reason: null })
   })
 })

@@ -106,7 +106,7 @@ That spec has now landed — `playback.spec.ts` drives WHEP against live MediaMT
 
 Those two also target **different streams** (`stream1` and `stream2`): `fullyParallel` runs spec *files* concurrently within a project, so pointing both at the same entry would race them across files even though each is serial internally.
 
-Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
+Accessibility: `@axe-core/playwright` smoke check on `/`, `/recordings`, `/sessions`, `/config`, `/config/mediamtx/global`, `/config/mediamtx/path-defaults`, `/config/mediamtx/paths/stream1` (`tests/e2e/a11y.spec.ts`). Asserts zero **serious** or **critical** violations against `wcag2a/aa` + `wcag21a/aa` tags. Lower-impact violations (moderate, minor) are surfaced in the report but don't fail the build.
 
 ## CI gates
 

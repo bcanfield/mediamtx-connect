@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "ligado",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "ligado · <v>{version}</v>",
+      "tooOld": "O MediaMTX {version} é anterior à {minimum}, a versão mais antiga suportada pelo Connect. Algumas definições podem estar em falta ou ser recusadas."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Em direto",
       "recordings": "Gravações",
+      "sessions": "Sessões",
       "appConfig": "Configuração da app",
       "mediamtxConfig": "Configuração do MediaMTX",
       "paths": "Caminhos"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Não foi possível ler as predefinições dos caminhos do MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sessões",
+    "pageSubHeader": "Todos os clientes ligados ao MediaMTX neste momento, a publicar ou a ler, em qualquer protocolo.",
+    "summary": "{count, plural, one {# sessão} other {# sessões}}",
+    "columns": {
+      "path": "Caminho",
+      "protocol": "Protocolo",
+      "remoteAddr": "Endereço remoto",
+      "state": "Estado",
+      "bytesIn": "Bytes recebidos",
+      "bytesOut": "Bytes enviados",
+      "uptime": "Tempo ativo",
+      "actions": "Ações"
+    },
+    "states": {
+      "idle": "inativa",
+      "read": "leitura",
+      "publish": "publicação"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (não ativado neste servidor)",
+      "failed": "{protocol} (não foi possível ler)",
+      "unlisted": "Não listados: {protocols}.",
+      "truncated": "A mostrar as primeiras {count, number} sessões {protocol}."
+    },
+    "kick": {
+      "action": "Expulsar",
+      "confirmTitle": "Expulsar o cliente {protocol} {remoteAddr} de {path}?",
+      "confirmDescription": "O MediaMTX termina a ligação agora. Não é um banimento: o cliente pode voltar a ligar-se de imediato.",
+      "hlsCaveat": "Um leitor HLS volta a pedir a playlist em segundos e obtém uma nova sessão, por isso isto sobretudo apenas o reinicia.",
+      "cancel": "Cancelar",
+      "confirm": "Expulsar cliente",
+      "toasts": {
+        "success": "{remoteAddr} expulso",
+        "alreadyGone": "{remoteAddr} já se tinha desligado",
+        "errorTitle": "Não foi possível expulsar a sessão",
+        "errorDescription": "O MediaMTX não aceitou o pedido. Tente novamente."
+      }
+    },
+    "empty": {
+      "title": "Ninguém está ligado",
+      "lead": "O MediaMTX não tem publicadores nem leitores neste momento."
+    }
+  },
   "Config": {
     "invalidConfig": "Configuração inválida",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Configuração do MediaMTX",
-      "pageSubHeader": "Definições globais do servidor MediaMTX, guardadas no servidor."
+      "pageSubHeader": "Definições globais do servidor MediaMTX, guardadas no servidor.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · em execução desde {started}",
+      "tooOldTitle": "O MediaMTX {version} é anterior à {minimum}, a versão mais antiga suportada pelo Connect.",
+      "tooOldBody": "Algumas definições podem estar em falta ou ser recusadas. As restantes continuam a ser carregadas e guardadas."
     },
     "pathDefaults": {
       "pageHeader": "Predefinições de caminhos",
@@ -336,6 +388,31 @@
           "success": "Voltou às definições herdadas",
           "errorTitle": "Não foi possível voltar às definições herdadas",
           "errorDescription": "A entrada de configuração do caminho continua lá. Tente novamente."
+        }
+      },
+      "publishRead": {
+        "title": "Publicar e reproduzir",
+        "publishTab": "Publicar",
+        "readTab": "Reproduzir",
+        "pullSource": "Este caminho obtém o stream da sua fonte; o MediaMTX recusa publicadores.",
+        "readFailed": "Não foi possível ler os endereços de escuta do servidor.",
+        "noProtocols": "O servidor tem todos os protocolos para isto desativados.",
+        "copyUrl": "Copiar URL {protocol}",
+        "copySnippet": "Copiar o excerto {client} para {protocol}",
+        "snippetLabel": "Excerto {client} para {protocol}",
+        "notes": {
+          "whipTracks": "O FFmpeg 8 só publica por WHIP quando a entrada tem uma faixa de vídeo e uma de áudio."
+        },
+        "links": {
+          "systemPlayer": "Abrir no leitor do sistema",
+          "browserPublish": "Publicar a partir do navegador",
+          "hlsPage": "Abrir a página HLS do MediaMTX",
+          "webrtcPage": "Abrir a página WebRTC do MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiado para a área de transferência",
+          "copyFailedTitle": "Não foi possível copiar",
+          "copyFailedDescription": "O navegador bloqueou o acesso à área de transferência. Selecione o texto e copie-o manualmente."
         }
       }
     },

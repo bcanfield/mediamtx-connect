@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "সংযুক্ত",
-      "offline": "অফলাইন"
+      "offline": "অফলাইন",
+      "connectedVersion": "সংযুক্ত · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ। কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে।"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
+      "sessions": "সেশন",
       "appConfig": "অ্যাপ কনফিগ",
       "mediamtxConfig": "MediaMTX কনফিগ",
       "paths": "পাথ"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "MediaMTX থেকে পাথ ডিফল্ট পড়া যায়নি।"
     }
   },
+  "Sessions": {
+    "pageHeader": "সেশন",
+    "pageSubHeader": "এই মুহূর্তে MediaMTX-এ সংযুক্ত প্রতিটি ক্লায়েন্ট, প্রকাশ বা পাঠ, যেকোনো প্রোটোকলে।",
+    "summary": "{count, plural, one {#টি সেশন} other {#টি সেশন}}",
+    "columns": {
+      "path": "পাথ",
+      "protocol": "প্রোটোকল",
+      "remoteAddr": "দূরবর্তী ঠিকানা",
+      "state": "অবস্থা",
+      "bytesIn": "আগত বাইট",
+      "bytesOut": "বহির্গামী বাইট",
+      "uptime": "আপটাইম",
+      "actions": "কাজ"
+    },
+    "states": {
+      "idle": "নিষ্ক্রিয়",
+      "read": "পাঠ",
+      "publish": "প্রকাশ"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (এই সার্ভারে চালু নেই)",
+      "failed": "{protocol} (পড়া যায়নি)",
+      "unlisted": "তালিকাভুক্ত নয়: {protocols}।",
+      "truncated": "প্রথম {count, number}টি {protocol} সেশন দেখানো হচ্ছে।"
+    },
+    "kick": {
+      "action": "কিক",
+      "confirmTitle": "{path} থেকে {protocol} ক্লায়েন্ট {remoteAddr} কিক করবেন?",
+      "confirmDescription": "MediaMTX এখনই সংযোগটি বিচ্ছিন্ন করবে। এটি নিষেধাজ্ঞা নয়: ক্লায়েন্ট সঙ্গে সঙ্গে আবার সংযুক্ত হতে পারে।",
+      "hlsCaveat": "একটি HLS প্লেয়ার কয়েক সেকেন্ডের মধ্যে আবার প্লেলিস্ট চায় এবং নতুন সেশন পায়, তাই এটি মূলত সেটিকে রিসেট করে।",
+      "cancel": "বাতিল",
+      "confirm": "ক্লায়েন্ট কিক করুন",
+      "toasts": {
+        "success": "{remoteAddr} কিক করা হয়েছে",
+        "alreadyGone": "{remoteAddr} আগেই সংযোগ বিচ্ছিন্ন করেছিল",
+        "errorTitle": "সেশনটি কিক করা যায়নি",
+        "errorDescription": "MediaMTX কিক গ্রহণ করেনি। আবার চেষ্টা করুন।"
+      }
+    },
+    "empty": {
+      "title": "কেউ সংযুক্ত নেই",
+      "lead": "এই মুহূর্তে MediaMTX-এ কোনো প্রকাশক বা পাঠক নেই।"
+    }
+  },
   "Config": {
     "invalidConfig": "অবৈধ কনফিগারেশন",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX কনফিগ",
-      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।"
+      "pageSubHeader": "গ্লোবাল MediaMTX সার্ভার সেটিংস, সার্ভারে সংরক্ষিত হয়।",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · চালু আছে {started}",
+      "tooOldTitle": "MediaMTX {version} {minimum}-এর চেয়ে পুরোনো, যা Connect সমর্থিত সবচেয়ে পুরোনো সংস্করণ।",
+      "tooOldBody": "কিছু সেটিং অনুপস্থিত থাকতে পারে বা প্রত্যাখ্যাত হতে পারে। বাকিগুলো এখনও লোড ও সংরক্ষণ হয়।"
     },
     "pathDefaults": {
       "pageHeader": "পাথের ডিফল্ট",
@@ -336,6 +388,31 @@
           "success": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফিরে আসা হয়েছে",
           "errorTitle": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফেরা যায়নি",
           "errorDescription": "পাথের কনফিগ এন্ট্রি এখনও রয়েছে। আবার চেষ্টা করুন।"
+        }
+      },
+      "publishRead": {
+        "title": "প্রকাশ ও চালান",
+        "publishTab": "প্রকাশ",
+        "readTab": "চালান",
+        "pullSource": "এই পাথ তার উৎস থেকে স্ট্রিম টেনে আনে; MediaMTX প্রকাশকদের প্রত্যাখ্যান করে।",
+        "readFailed": "সার্ভারের শোনার ঠিকানাগুলো পড়া যায়নি।",
+        "noProtocols": "সার্ভার এর জন্য সব প্রোটোকল বন্ধ রেখেছে।",
+        "copyUrl": "{protocol} URL কপি করুন",
+        "copySnippet": "{protocol}-এর জন্য {client} স্নিপেট কপি করুন",
+        "snippetLabel": "{protocol}-এর জন্য {client} স্নিপেট",
+        "notes": {
+          "whipTracks": "ইনপুটে ভিডিও ও অডিও দুটো ট্র্যাকই থাকলে তবেই FFmpeg 8 WHIP-এ প্রকাশ করে।"
+        },
+        "links": {
+          "systemPlayer": "সিস্টেম প্লেয়ারে খুলুন",
+          "browserPublish": "ব্রাউজার থেকে প্রকাশ করুন",
+          "hlsPage": "MediaMTX-এর HLS পেজ খুলুন",
+          "webrtcPage": "MediaMTX-এর WebRTC পেজ খুলুন"
+        },
+        "toasts": {
+          "copied": "ক্লিপবোর্ডে কপি হয়েছে",
+          "copyFailedTitle": "কপি করা যায়নি",
+          "copyFailedDescription": "ব্রাউজার ক্লিপবোর্ড অ্যাক্সেস আটকে দিয়েছে। টেক্সট নির্বাচন করে নিজে কপি করুন।"
         }
       }
     },

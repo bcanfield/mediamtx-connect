@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "conectat",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "conectat · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect. Unele setări pot lipsi sau pot fi refuzate."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Înregistrări",
+      "sessions": "Sesiuni",
       "appConfig": "Configurare aplicație",
       "mediamtxConfig": "Configurare MediaMTX",
       "paths": "Căi"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Valorile implicite ale căilor nu au putut fi citite din MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sesiuni",
+    "pageSubHeader": "Fiecare client conectat acum la MediaMTX, care publică sau citește, prin orice protocol.",
+    "summary": "{count, plural, one {# sesiune} few {# sesiuni} other {# de sesiuni}}",
+    "columns": {
+      "path": "Cale",
+      "protocol": "Protocol",
+      "remoteAddr": "Adresă la distanță",
+      "state": "Stare",
+      "bytesIn": "Octeți intrați",
+      "bytesOut": "Octeți ieșiți",
+      "uptime": "Timp activ",
+      "actions": "Acțiuni"
+    },
+    "states": {
+      "idle": "inactivă",
+      "read": "citire",
+      "publish": "publicare"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (neactivat pe acest server)",
+      "failed": "{protocol} (nu a putut fi citit)",
+      "unlisted": "Nelistate: {protocols}.",
+      "truncated": "Se afișează primele {count, number} de sesiuni {protocol}."
+    },
+    "kick": {
+      "action": "Deconectează",
+      "confirmTitle": "Deconectezi clientul {protocol} {remoteAddr} de la {path}?",
+      "confirmDescription": "MediaMTX închide conexiunea acum. Nu este o interdicție: clientul se poate reconecta imediat.",
+      "hlsCaveat": "Un player HLS cere din nou playlistul în câteva secunde și primește o sesiune nouă, așa că de obicei doar îl resetează.",
+      "cancel": "Anulează",
+      "confirm": "Deconectează clientul",
+      "toasts": {
+        "success": "{remoteAddr} deconectat",
+        "alreadyGone": "{remoteAddr} se deconectase deja",
+        "errorTitle": "Sesiunea nu a putut fi deconectată",
+        "errorDescription": "MediaMTX nu a acceptat cererea. Încearcă din nou."
+      }
+    },
+    "empty": {
+      "title": "Nimeni nu este conectat",
+      "lead": "MediaMTX nu are acum niciun publicator sau cititor."
+    }
+  },
   "Config": {
     "invalidConfig": "Configurație invalidă",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Configurare MediaMTX",
-      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server."
+      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · rulează din {started}",
+      "tooOldTitle": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect.",
+      "tooOldBody": "Unele setări pot lipsi sau pot fi refuzate. Restul se încarcă și se salvează în continuare."
     },
     "pathDefaults": {
       "pageHeader": "Valori implicite pentru căi",
@@ -336,6 +388,31 @@
           "success": "S-a revenit la setările moștenite",
           "errorTitle": "Nu s-a putut reveni la setările moștenite",
           "errorDescription": "Intrarea de configurare a căii este tot acolo. Încearcă din nou."
+        }
+      },
+      "publishRead": {
+        "title": "Publicare și redare",
+        "publishTab": "Publicare",
+        "readTab": "Redare",
+        "pullSource": "Această cale preia streamul de la sursa sa; MediaMTX refuză publisherii.",
+        "readFailed": "Nu s-au putut citi adresele de ascultare ale serverului.",
+        "noProtocols": "Serverul are dezactivate toate protocoalele pentru asta.",
+        "copyUrl": "Copiază URL-ul {protocol}",
+        "copySnippet": "Copiază fragmentul {client} pentru {protocol}",
+        "snippetLabel": "Fragment {client} pentru {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publică prin WHIP doar când intrarea are atât o pistă video, cât și una audio."
+        },
+        "links": {
+          "systemPlayer": "Deschide în playerul sistemului",
+          "browserPublish": "Publică din browser",
+          "hlsPage": "Deschide pagina HLS a MediaMTX",
+          "webrtcPage": "Deschide pagina WebRTC a MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiat în clipboard",
+          "copyFailedTitle": "Nu s-a putut copia",
+          "copyFailedDescription": "Browserul a blocat accesul la clipboard. Selectează textul și copiază-l manual."
         }
       }
     },

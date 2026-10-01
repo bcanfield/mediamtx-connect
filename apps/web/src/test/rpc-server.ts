@@ -31,6 +31,8 @@ const APP_CONFIG = {
 
 export interface StubApi {
   streamsList: () => unknown
+  /** `{version, started, belowMinimum}`, or null when unreachable. Defaults to null. */
+  mediamtxInfo?: () => unknown
   snapshot?: (input: Inputs['streams']['snapshot']) => void
   /** Returning a promise holds the write open, so a test can assert in-flight state. */
   updatePathConfig?: (input: Inputs['config']['mediamtx']['updatePathConfig']) => void | Promise<void>
@@ -61,6 +63,10 @@ export interface StubApi {
   pathDefaults?: () => unknown
   updatePathDefaults?: (input: Inputs['config']['mediamtx']['updatePathDefaults']) => void | Promise<void>
   appConfig?: () => unknown
+  /** Every session — `{status: 'connected', sessions, protocols}` or `{status: 'connection-error', …}`. */
+  sessionsList?: () => unknown
+  /** Rejecting with an `ORPCError('NOT_FOUND')` drives a session that had already gone. */
+  kickSession?: (input: Inputs['sessions']['kick']) => void | Promise<void>
   updateAppConfig?: (input: Inputs['config']['app']['update']) => void
 }
 
@@ -71,10 +77,21 @@ export interface StubApi {
 export function createRpcServer(stub: StubApi) {
   const router = os.router({
     health: os.health.handler(() => ({ status: 'ok' as const, uptime: 0 })),
+    mediamtx: {
+      info: os.mediamtx.info.handler(() => (stub.mediamtxInfo?.() ?? null) as never),
+    },
     streams: {
       list: os.streams.list.handler(() => stub.streamsList() as never),
       snapshot: os.streams.snapshot.handler(({ input }) => {
         stub.snapshot?.(input)
+      }),
+    },
+    sessions: {
+      list: os.sessions.list.handler(
+        () => (stub.sessionsList?.() ?? { status: 'connected', sessions: [], protocols: [], pageSize: 100 }) as never,
+      ),
+      kick: os.sessions.kick.handler(async ({ input }) => {
+        await stub.kickSession?.(input)
       }),
     },
     recordings: {

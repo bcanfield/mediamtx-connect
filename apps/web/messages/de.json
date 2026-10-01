@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "verbunden",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "verbunden · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} ist älter als {minimum}, die älteste von Connect unterstützte Version. Einige Einstellungen fehlen möglicherweise oder werden abgelehnt."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Aufzeichnungen",
+      "sessions": "Sitzungen",
       "appConfig": "App-Konfiguration",
       "mediamtxConfig": "MediaMTX-Konfiguration",
       "paths": "Pfade"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Pfad-Standardwerte konnten nicht von MediaMTX gelesen werden."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sitzungen",
+    "pageSubHeader": "Alle Clients, die gerade mit MediaMTX verbunden sind, veröffentlichend oder lesend, über jedes Protokoll.",
+    "summary": "{count, plural, one {# Sitzung} other {# Sitzungen}}",
+    "columns": {
+      "path": "Pfad",
+      "protocol": "Protokoll",
+      "remoteAddr": "Remote-Adresse",
+      "state": "Status",
+      "bytesIn": "Bytes ein",
+      "bytesOut": "Bytes aus",
+      "uptime": "Laufzeit",
+      "actions": "Aktionen"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "liest",
+      "publish": "veröffentlicht"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (auf diesem Server nicht aktiviert)",
+      "failed": "{protocol} (konnte nicht gelesen werden)",
+      "unlisted": "Nicht aufgeführt: {protocols}.",
+      "truncated": "Es werden die ersten {count, number} {protocol}-Sitzungen angezeigt."
+    },
+    "kick": {
+      "action": "Trennen",
+      "confirmTitle": "{protocol}-Client {remoteAddr} von {path} trennen?",
+      "confirmDescription": "MediaMTX beendet die Verbindung sofort. Das ist keine Sperre: Der Client kann sich gleich wieder verbinden.",
+      "hlsCaveat": "Ein HLS-Player fordert seine Playlist innerhalb von Sekunden erneut an und erhält eine neue Sitzung, daher setzt dies ihn meist nur zurück.",
+      "cancel": "Abbrechen",
+      "confirm": "Client trennen",
+      "toasts": {
+        "success": "{remoteAddr} getrennt",
+        "alreadyGone": "{remoteAddr} war bereits getrennt",
+        "errorTitle": "Sitzung konnte nicht getrennt werden",
+        "errorDescription": "MediaMTX hat das Trennen nicht angenommen. Versuche es erneut."
+      }
+    },
+    "empty": {
+      "title": "Niemand ist verbunden",
+      "lead": "MediaMTX hat gerade keine Publisher oder Leser."
+    }
+  },
   "Config": {
     "invalidConfig": "Ungültige Konfiguration",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-Konfiguration",
-      "pageSubHeader": "Globale MediaMTX-Servereinstellungen, gespeichert auf dem Server."
+      "pageSubHeader": "Globale MediaMTX-Servereinstellungen, gespeichert auf dem Server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · läuft seit {started}",
+      "tooOldTitle": "MediaMTX {version} ist älter als {minimum}, die älteste von Connect unterstützte Version.",
+      "tooOldBody": "Einige Einstellungen fehlen möglicherweise oder werden abgelehnt. Der Rest wird weiterhin geladen und gespeichert."
     },
     "pathDefaults": {
       "pageHeader": "Pfad-Standardwerte",
@@ -336,6 +388,31 @@
           "success": "Auf geerbte Einstellungen zurückgesetzt",
           "errorTitle": "Zurücksetzen auf geerbte Einstellungen fehlgeschlagen",
           "errorDescription": "Der Konfigurationseintrag des Pfads ist noch da. Versuch es erneut."
+        }
+      },
+      "publishRead": {
+        "title": "Veröffentlichen & Abspielen",
+        "publishTab": "Veröffentlichen",
+        "readTab": "Abspielen",
+        "pullSource": "Dieser Pfad bezieht den Stream von seiner Quelle; MediaMTX lehnt Publisher ab.",
+        "readFailed": "Die Listen-Adressen des Servers konnten nicht gelesen werden.",
+        "noProtocols": "Der Server hat dafür jedes Protokoll deaktiviert.",
+        "copyUrl": "{protocol}-URL kopieren",
+        "copySnippet": "{client}-Snippet für {protocol} kopieren",
+        "snippetLabel": "{client}-Snippet für {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 veröffentlicht über WHIP nur, wenn die Quelle sowohl eine Video- als auch eine Audiospur hat."
+        },
+        "links": {
+          "systemPlayer": "Im Systemplayer öffnen",
+          "browserPublish": "Aus dem Browser veröffentlichen",
+          "hlsPage": "HLS-Seite von MediaMTX öffnen",
+          "webrtcPage": "WebRTC-Seite von MediaMTX öffnen"
+        },
+        "toasts": {
+          "copied": "In die Zwischenablage kopiert",
+          "copyFailedTitle": "Kopieren fehlgeschlagen",
+          "copyFailedDescription": "Der Browser hat den Zugriff auf die Zwischenablage blockiert. Markiere den Text und kopiere ihn manuell."
         }
       }
     },

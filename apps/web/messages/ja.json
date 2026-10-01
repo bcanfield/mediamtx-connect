@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "接続済み",
-      "offline": "オフライン"
+      "offline": "オフライン",
+      "connectedVersion": "接続済み · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} は、Connect がサポートする最も古いバージョン {minimum} より古いです。一部の設定が表示されないか、拒否される可能性があります。"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "ライブ",
       "recordings": "録画",
+      "sessions": "セッション",
       "appConfig": "アプリ設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "パス"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "MediaMTX からパス既定値を読み込めませんでした。"
     }
   },
+  "Sessions": {
+    "pageHeader": "セッション",
+    "pageSubHeader": "現在 MediaMTX に接続しているすべてのクライアント（配信・視聴、全プロトコル）。",
+    "summary": "{count, plural, other {# 件のセッション}}",
+    "columns": {
+      "path": "パス",
+      "protocol": "プロトコル",
+      "remoteAddr": "リモートアドレス",
+      "state": "状態",
+      "bytesIn": "受信バイト",
+      "bytesOut": "送信バイト",
+      "uptime": "稼働時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "待機",
+      "read": "視聴",
+      "publish": "配信"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（このサーバーでは無効）",
+      "failed": "{protocol}（読み取れませんでした）",
+      "unlisted": "一覧にないもの: {protocols}。",
+      "truncated": "{protocol} のセッションは最初の {count, number} 件のみ表示しています。"
+    },
+    "kick": {
+      "action": "切断",
+      "confirmTitle": "{path} の {protocol} クライアント {remoteAddr} を切断しますか？",
+      "confirmDescription": "MediaMTX はすぐに接続を切ります。これは禁止ではありません。クライアントはすぐに再接続できます。",
+      "hlsCaveat": "HLS プレーヤーは数秒以内にプレイリストを再取得して新しいセッションになるため、ほぼリセットされるだけです。",
+      "cancel": "キャンセル",
+      "confirm": "クライアントを切断",
+      "toasts": {
+        "success": "{remoteAddr} を切断しました",
+        "alreadyGone": "{remoteAddr} はすでに切断されていました",
+        "errorTitle": "セッションを切断できませんでした",
+        "errorDescription": "MediaMTX が切断を受け付けませんでした。もう一度お試しください。"
+      }
+    },
+    "empty": {
+      "title": "接続しているクライアントはありません",
+      "lead": "現在 MediaMTX には配信者も視聴者もいません。"
+    }
+  },
   "Config": {
     "invalidConfig": "無効な設定",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 設定",
-      "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。"
+      "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 起動日時 {started}",
+      "tooOldTitle": "MediaMTX {version} は、Connect がサポートする最も古いバージョン {minimum} より古いです。",
+      "tooOldBody": "一部の設定が表示されないか、拒否される可能性があります。残りの設定は引き続き読み込みと保存ができます。"
     },
     "pathDefaults": {
       "pageHeader": "パス既定値",
@@ -336,6 +388,31 @@
           "success": "継承した設定に戻しました",
           "errorTitle": "継承した設定に戻せませんでした",
           "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
+        }
+      },
+      "publishRead": {
+        "title": "配信と再生",
+        "publishTab": "配信",
+        "readTab": "再生",
+        "pullSource": "このパスはソースからストリームを取得するため、MediaMTX は配信者を拒否します。",
+        "readFailed": "サーバーの待ち受けアドレスを読み取れませんでした。",
+        "noProtocols": "サーバーではこの用途のプロトコルがすべて無効です。",
+        "copyUrl": "{protocol} の URL をコピー",
+        "copySnippet": "{protocol} 用の {client} スニペットをコピー",
+        "snippetLabel": "{protocol} 用の {client} スニペット",
+        "notes": {
+          "whipTracks": "FFmpeg 8 は、入力に映像トラックと音声トラックの両方がある場合にのみ WHIP で配信します。"
+        },
+        "links": {
+          "systemPlayer": "システムのプレーヤーで開く",
+          "browserPublish": "ブラウザーから配信",
+          "hlsPage": "MediaMTX の HLS ページを開く",
+          "webrtcPage": "MediaMTX の WebRTC ページを開く"
+        },
+        "toasts": {
+          "copied": "クリップボードにコピーしました",
+          "copyFailedTitle": "コピーできませんでした",
+          "copyFailedDescription": "ブラウザーがクリップボードへのアクセスをブロックしました。テキストを選択して手動でコピーしてください。"
         }
       }
     },

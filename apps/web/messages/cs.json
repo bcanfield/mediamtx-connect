@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "připojeno",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "připojeno · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} je starší než {minimum}, nejstarší verze, kterou Connect podporuje. Některá nastavení mohou chybět nebo být odmítnuta."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Živě",
       "recordings": "Záznamy",
+      "sessions": "Relace",
       "appConfig": "Konfigurace aplikace",
       "mediamtxConfig": "Konfigurace MediaMTX",
       "paths": "Cesty"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Výchozí hodnoty cest se z MediaMTX nepodařilo načíst."
     }
   },
+  "Sessions": {
+    "pageHeader": "Relace",
+    "pageSubHeader": "Všichni klienti právě připojení k MediaMTX, publikující i čtoucí, přes jakýkoli protokol.",
+    "summary": "{count, plural, one {# relace} few {# relace} many {# relace} other {# relací}}",
+    "columns": {
+      "path": "Cesta",
+      "protocol": "Protokol",
+      "remoteAddr": "Vzdálená adresa",
+      "state": "Stav",
+      "bytesIn": "Bajty dovnitř",
+      "bytesOut": "Bajty ven",
+      "uptime": "Doba běhu",
+      "actions": "Akce"
+    },
+    "states": {
+      "idle": "nečinná",
+      "read": "čtení",
+      "publish": "publikace"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (na tomto serveru není zapnuto)",
+      "failed": "{protocol} (nelze načíst)",
+      "unlisted": "Nevypsáno: {protocols}.",
+      "truncated": "Zobrazeno prvních {count, number} relací {protocol}."
+    },
+    "kick": {
+      "action": "Odpojit",
+      "confirmTitle": "Odpojit klienta {protocol} {remoteAddr} od {path}?",
+      "confirmDescription": "MediaMTX spojení ihned ukončí. Nejde o zákaz: klient se může hned znovu připojit.",
+      "hlsCaveat": "Přehrávač HLS si během několika sekund znovu vyžádá playlist a získá novou relaci, takže ho to většinou jen resetuje.",
+      "cancel": "Zrušit",
+      "confirm": "Odpojit klienta",
+      "toasts": {
+        "success": "Odpojeno: {remoteAddr}",
+        "alreadyGone": "{remoteAddr} se už odpojil",
+        "errorTitle": "Relaci nelze odpojit",
+        "errorDescription": "MediaMTX odpojení nepřijalo. Zkuste to znovu."
+      }
+    },
+    "empty": {
+      "title": "Nikdo není připojen",
+      "lead": "MediaMTX teď nemá žádné vydavatele ani čtenáře."
+    }
+  },
   "Config": {
     "invalidConfig": "Neplatná konfigurace",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Konfigurace MediaMTX",
-      "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server."
+      "pageSubHeader": "Globální nastavení serveru MediaMTX, ukládané na server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · běží od {started}",
+      "tooOldTitle": "MediaMTX {version} je starší než {minimum}, nejstarší verze, kterou Connect podporuje.",
+      "tooOldBody": "Některá nastavení mohou chybět nebo být odmítnuta. Ostatní se stále načítají a ukládají."
     },
     "pathDefaults": {
       "pageHeader": "Výchozí hodnoty cest",
@@ -336,6 +388,31 @@
           "success": "Vráceno na zděděná nastavení",
           "errorTitle": "Nepodařilo se vrátit zděděná nastavení",
           "errorDescription": "Konfigurační záznam cesty tam pořád je. Zkuste to znovu."
+        }
+      },
+      "publishRead": {
+        "title": "Publikování a přehrávání",
+        "publishTab": "Publikovat",
+        "readTab": "Přehrát",
+        "pullSource": "Tato cesta stahuje stream ze svého zdroje; MediaMTX odmítá publikující.",
+        "readFailed": "Nepodařilo se načíst adresy, na kterých server naslouchá.",
+        "noProtocols": "Server má pro tento účel vypnuté všechny protokoly.",
+        "copyUrl": "Kopírovat URL {protocol}",
+        "copySnippet": "Kopírovat úryvek {client} pro {protocol}",
+        "snippetLabel": "Úryvek {client} pro {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publikuje přes WHIP jen tehdy, když má vstup video i zvukovou stopu."
+        },
+        "links": {
+          "systemPlayer": "Otevřít v systémovém přehrávači",
+          "browserPublish": "Publikovat z prohlížeče",
+          "hlsPage": "Otevřít stránku HLS v MediaMTX",
+          "webrtcPage": "Otevřít stránku WebRTC v MediaMTX"
+        },
+        "toasts": {
+          "copied": "Zkopírováno do schránky",
+          "copyFailedTitle": "Kopírování se nezdařilo",
+          "copyFailedDescription": "Prohlížeč zablokoval přístup ke schránce. Označte text a zkopírujte ho ručně."
         }
       }
     },

@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "підключено",
-      "offline": "офлайн"
+      "offline": "офлайн",
+      "connectedVersion": "підключено · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect. Деякі налаштування можуть бути відсутні або відхилені."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Наживо",
       "recordings": "Записи",
+      "sessions": "Сеанси",
       "appConfig": "Налаштування застосунку",
       "mediamtxConfig": "Конфігурація MediaMTX",
       "paths": "Шляхи"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Не вдалося прочитати типові значення шляхів із MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Сеанси",
+    "pageSubHeader": "Усі клієнти, підключені до MediaMTX зараз, що публікують або читають, за будь-яким протоколом.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанси} many {# сеансів} other {# сеансу}}",
+    "columns": {
+      "path": "Шлях",
+      "protocol": "Протокол",
+      "remoteAddr": "Віддалена адреса",
+      "state": "Стан",
+      "bytesIn": "Байт вхідних",
+      "bytesOut": "Байт вихідних",
+      "uptime": "Час роботи",
+      "actions": "Дії"
+    },
+    "states": {
+      "idle": "простій",
+      "read": "читання",
+      "publish": "публікація"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не ввімкнено на цьому сервері)",
+      "failed": "{protocol} (не вдалося прочитати)",
+      "unlisted": "Не показано: {protocols}.",
+      "truncated": "Показано перші {count, number} сеансів {protocol}."
+    },
+    "kick": {
+      "action": "Відключити",
+      "confirmTitle": "Відключити клієнта {protocol} {remoteAddr} від {path}?",
+      "confirmDescription": "MediaMTX одразу розірве зʼєднання. Це не блокування: клієнт може одразу перепідключитися.",
+      "hlsCaveat": "HLS-плеєр за кілька секунд знову запитує плейлист і отримує новий сеанс, тож це здебільшого лише скидає його.",
+      "cancel": "Скасувати",
+      "confirm": "Відключити клієнта",
+      "toasts": {
+        "success": "{remoteAddr} відключено",
+        "alreadyGone": "{remoteAddr} уже відключився",
+        "errorTitle": "Не вдалося відключити сеанс",
+        "errorDescription": "MediaMTX не прийняв запит. Спробуйте ще раз."
+      }
+    },
+    "empty": {
+      "title": "Ніхто не підключений",
+      "lead": "Зараз у MediaMTX немає ні видавців, ні читачів."
+    }
+  },
   "Config": {
     "invalidConfig": "Недійсна конфігурація",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Конфігурація MediaMTX",
-      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері."
+      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · працює з {started}",
+      "tooOldTitle": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect.",
+      "tooOldBody": "Деякі налаштування можуть бути відсутні або відхилені. Решта, як і раніше, завантажується та зберігається."
     },
     "pathDefaults": {
       "pageHeader": "Типові значення шляхів",
@@ -336,6 +388,31 @@
           "success": "Повернуто до успадкованих налаштувань",
           "errorTitle": "Не вдалося повернути успадковані налаштування",
           "errorDescription": "Запис конфігурації шляху досі на місці. Спробуйте ще раз."
+        }
+      },
+      "publishRead": {
+        "title": "Публікація та перегляд",
+        "publishTab": "Публікація",
+        "readTab": "Перегляд",
+        "pullSource": "Цей шлях забирає потік зі свого джерела; MediaMTX відхиляє тих, хто публікує.",
+        "readFailed": "Не вдалося прочитати адреси, які слухає сервер.",
+        "noProtocols": "На сервері вимкнено всі протоколи для цього.",
+        "copyUrl": "Копіювати URL {protocol}",
+        "copySnippet": "Копіювати фрагмент {client} для {protocol}",
+        "snippetLabel": "Фрагмент {client} для {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 публікує через WHIP, лише якщо вхідний потік має і відео-, і аудіодоріжку."
+        },
+        "links": {
+          "systemPlayer": "Відкрити в системному плеєрі",
+          "browserPublish": "Публікувати з браузера",
+          "hlsPage": "Відкрити HLS-сторінку MediaMTX",
+          "webrtcPage": "Відкрити WebRTC-сторінку MediaMTX"
+        },
+        "toasts": {
+          "copied": "Скопійовано в буфер обміну",
+          "copyFailedTitle": "Не вдалося скопіювати",
+          "copyFailedDescription": "Браузер заблокував доступ до буфера обміну. Виділіть текст і скопіюйте його вручну."
         }
       }
     },

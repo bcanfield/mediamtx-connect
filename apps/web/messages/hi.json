@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "कनेक्टेड",
-      "offline": "ऑफ़लाइन"
+      "offline": "ऑफ़लाइन",
+      "connectedVersion": "कनेक्टेड · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}, {minimum} से पुराना है, जो Connect द्वारा समर्थित सबसे पुराना संस्करण है। कुछ सेटिंग्स गायब हो सकती हैं या अस्वीकार की जा सकती हैं।"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "लाइव",
       "recordings": "रिकॉर्डिंग",
+      "sessions": "सत्र",
       "appConfig": "ऐप कॉन्फ़िगरेशन",
       "mediamtxConfig": "MediaMTX कॉन्फ़िगरेशन",
       "paths": "पथ"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "MediaMTX से पाथ डिफ़ॉल्ट पढ़े नहीं जा सके।"
     }
   },
+  "Sessions": {
+    "pageHeader": "सत्र",
+    "pageSubHeader": "इस समय MediaMTX से जुड़ा हर क्लाइंट, प्रकाशित करते या पढ़ते हुए, किसी भी प्रोटोकॉल पर।",
+    "summary": "{count, plural, one {# सत्र} other {# सत्र}}",
+    "columns": {
+      "path": "पथ",
+      "protocol": "प्रोटोकॉल",
+      "remoteAddr": "रिमोट पता",
+      "state": "स्थिति",
+      "bytesIn": "आने वाले बाइट",
+      "bytesOut": "जाने वाले बाइट",
+      "uptime": "अपटाइम",
+      "actions": "कार्रवाइयाँ"
+    },
+    "states": {
+      "idle": "निष्क्रिय",
+      "read": "पढ़ना",
+      "publish": "प्रकाशित करना"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (इस सर्वर पर सक्षम नहीं)",
+      "failed": "{protocol} (पढ़ा नहीं जा सका)",
+      "unlisted": "सूचीबद्ध नहीं: {protocols}।",
+      "truncated": "पहले {count, number} {protocol} सत्र दिखाए जा रहे हैं।"
+    },
+    "kick": {
+      "action": "निकालें",
+      "confirmTitle": "{protocol} क्लाइंट {remoteAddr} को {path} से निकालें?",
+      "confirmDescription": "MediaMTX अभी कनेक्शन काट देगा। यह प्रतिबंध नहीं है: क्लाइंट तुरंत फिर से जुड़ सकता है।",
+      "hlsCaveat": "HLS प्लेयर कुछ सेकंड में अपनी प्लेलिस्ट फिर माँगता है और नया सत्र पाता है, इसलिए यह ज़्यादातर उसे बस रीसेट करता है।",
+      "cancel": "रद्द करें",
+      "confirm": "क्लाइंट निकालें",
+      "toasts": {
+        "success": "{remoteAddr} को निकाला गया",
+        "alreadyGone": "{remoteAddr} पहले ही डिस्कनेक्ट हो चुका था",
+        "errorTitle": "सत्र नहीं निकाला जा सका",
+        "errorDescription": "MediaMTX ने अनुरोध स्वीकार नहीं किया। फिर से कोशिश करें।"
+      }
+    },
+    "empty": {
+      "title": "कोई जुड़ा नहीं है",
+      "lead": "इस समय MediaMTX पर कोई प्रकाशक या पाठक नहीं है।"
+    }
+  },
   "Config": {
     "invalidConfig": "अमान्य कॉन्फ़िगरेशन",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX कॉन्फ़िगरेशन",
-      "pageSubHeader": "ग्लोबल MediaMTX सर्वर सेटिंग्स, सर्वर पर सहेजी जाती हैं।"
+      "pageSubHeader": "ग्लोबल MediaMTX सर्वर सेटिंग्स, सर्वर पर सहेजी जाती हैं।",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · {started} से चल रहा है",
+      "tooOldTitle": "MediaMTX {version}, {minimum} से पुराना है, जो Connect द्वारा समर्थित सबसे पुराना संस्करण है।",
+      "tooOldBody": "कुछ सेटिंग्स गायब हो सकती हैं या अस्वीकार की जा सकती हैं। बाकी अब भी लोड और सहेजी जाती हैं।"
     },
     "pathDefaults": {
       "pageHeader": "पथ डिफ़ॉल्ट",
@@ -336,6 +388,31 @@
           "success": "विरासत में मिली सेटिंग्स पर लौटा दिया गया",
           "errorTitle": "विरासत में मिली सेटिंग्स पर नहीं लौट सके",
           "errorDescription": "पथ की कॉन्फ़िग प्रविष्टि अब भी मौजूद है। फिर से कोशिश करें।"
+        }
+      },
+      "publishRead": {
+        "title": "प्रकाशित करें और चलाएँ",
+        "publishTab": "प्रकाशित करें",
+        "readTab": "चलाएँ",
+        "pullSource": "यह पाथ अपने स्रोत से स्ट्रीम खींचता है; MediaMTX प्रकाशकों को अस्वीकार करता है।",
+        "readFailed": "सर्वर के सुनने वाले पते नहीं पढ़े जा सके।",
+        "noProtocols": "सर्वर ने इसके लिए सभी प्रोटोकॉल बंद कर रखे हैं।",
+        "copyUrl": "{protocol} URL कॉपी करें",
+        "copySnippet": "{protocol} के लिए {client} स्निपेट कॉपी करें",
+        "snippetLabel": "{protocol} के लिए {client} स्निपेट",
+        "notes": {
+          "whipTracks": "FFmpeg 8 WHIP पर तभी प्रकाशित करता है जब इनपुट में वीडियो और ऑडियो दोनों ट्रैक हों।"
+        },
+        "links": {
+          "systemPlayer": "सिस्टम प्लेयर में खोलें",
+          "browserPublish": "ब्राउज़र से प्रकाशित करें",
+          "hlsPage": "MediaMTX का HLS पेज खोलें",
+          "webrtcPage": "MediaMTX का WebRTC पेज खोलें"
+        },
+        "toasts": {
+          "copied": "क्लिपबोर्ड पर कॉपी किया गया",
+          "copyFailedTitle": "कॉपी नहीं हो सका",
+          "copyFailedDescription": "ब्राउज़र ने क्लिपबोर्ड एक्सेस रोक दिया। टेक्स्ट चुनें और खुद कॉपी करें।"
         }
       }
     },

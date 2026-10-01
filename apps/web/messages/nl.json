@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "verbonden",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "verbonden · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt. Sommige instellingen kunnen ontbreken of worden geweigerd."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Opnames",
+      "sessions": "Sessies",
       "appConfig": "App-configuratie",
       "mediamtxConfig": "MediaMTX-configuratie",
       "paths": "Paden"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Kon de padstandaarden niet uit MediaMTX lezen."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sessies",
+    "pageSubHeader": "Elke client die nu met MediaMTX verbonden is, publicerend of lezend, via elk protocol.",
+    "summary": "{count, plural, one {# sessie} other {# sessies}}",
+    "columns": {
+      "path": "Pad",
+      "protocol": "Protocol",
+      "remoteAddr": "Extern adres",
+      "state": "Status",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes uit",
+      "uptime": "Looptijd",
+      "actions": "Acties"
+    },
+    "states": {
+      "idle": "inactief",
+      "read": "lezen",
+      "publish": "publiceren"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (niet ingeschakeld op deze server)",
+      "failed": "{protocol} (kon niet worden gelezen)",
+      "unlisted": "Niet vermeld: {protocols}.",
+      "truncated": "De eerste {count, number} {protocol}-sessies worden getoond."
+    },
+    "kick": {
+      "action": "Verbreken",
+      "confirmTitle": "{protocol}-client {remoteAddr} loskoppelen van {path}?",
+      "confirmDescription": "MediaMTX verbreekt de verbinding nu. Dit is geen ban: de client kan meteen opnieuw verbinden.",
+      "hlsCaveat": "Een HLS-speler vraagt binnen enkele seconden opnieuw zijn afspeellijst op en krijgt een nieuwe sessie, dus dit reset hem vooral.",
+      "cancel": "Annuleren",
+      "confirm": "Client loskoppelen",
+      "toasts": {
+        "success": "{remoteAddr} losgekoppeld",
+        "alreadyGone": "{remoteAddr} was al losgekoppeld",
+        "errorTitle": "Kon de sessie niet verbreken",
+        "errorDescription": "MediaMTX accepteerde het verzoek niet. Probeer het opnieuw."
+      }
+    },
+    "empty": {
+      "title": "Niemand is verbonden",
+      "lead": "MediaMTX heeft op dit moment geen publishers of lezers."
+    }
+  },
   "Config": {
     "invalidConfig": "Ongeldige configuratie",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-configuratie",
-      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server."
+      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · actief sinds {started}",
+      "tooOldTitle": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt.",
+      "tooOldBody": "Sommige instellingen kunnen ontbreken of worden geweigerd. De rest wordt nog steeds geladen en opgeslagen."
     },
     "pathDefaults": {
       "pageHeader": "Padstandaarden",
@@ -336,6 +388,31 @@
           "success": "Teruggezet naar overgenomen instellingen",
           "errorTitle": "Kan niet terugzetten naar overgenomen instellingen",
           "errorDescription": "De configuratie-invoer van het pad staat er nog. Probeer het opnieuw."
+        }
+      },
+      "publishRead": {
+        "title": "Publiceren & afspelen",
+        "publishTab": "Publiceren",
+        "readTab": "Afspelen",
+        "pullSource": "Dit pad haalt de stream op bij de bron; MediaMTX weigert publishers.",
+        "readFailed": "Kon de luisteradressen van de server niet lezen.",
+        "noProtocols": "De server heeft alle protocollen hiervoor uitgeschakeld.",
+        "copyUrl": "{protocol}-URL kopiëren",
+        "copySnippet": "{client}-fragment voor {protocol} kopiëren",
+        "snippetLabel": "{client}-fragment voor {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publiceert via WHIP alleen als de invoer zowel een video- als een audiospoor heeft."
+        },
+        "links": {
+          "systemPlayer": "Openen in systeemspeler",
+          "browserPublish": "Publiceren vanuit de browser",
+          "hlsPage": "HLS-pagina van MediaMTX openen",
+          "webrtcPage": "WebRTC-pagina van MediaMTX openen"
+        },
+        "toasts": {
+          "copied": "Gekopieerd naar het klembord",
+          "copyFailedTitle": "Kopiëren mislukt",
+          "copyFailedDescription": "De browser blokkeerde toegang tot het klembord. Selecteer de tekst en kopieer hem zelf."
         }
       }
     },

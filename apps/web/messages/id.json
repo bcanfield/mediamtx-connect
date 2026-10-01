@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "terhubung",
-      "offline": "luring"
+      "offline": "luring",
+      "connectedVersion": "terhubung · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} lebih lama dari {minimum}, versi tertua yang didukung Connect. Beberapa pengaturan mungkin tidak ada atau ditolak."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Langsung",
       "recordings": "Rekaman",
+      "sessions": "Sesi",
       "appConfig": "Konfigurasi aplikasi",
       "mediamtxConfig": "Konfigurasi MediaMTX",
       "paths": "Jalur"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Tidak dapat membaca default path dari MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Sesi",
+    "pageSubHeader": "Setiap klien yang terhubung ke MediaMTX saat ini, menerbitkan atau membaca, melalui protokol apa pun.",
+    "summary": "{count, plural, other {# sesi}}",
+    "columns": {
+      "path": "Jalur",
+      "protocol": "Protokol",
+      "remoteAddr": "Alamat jarak jauh",
+      "state": "Status",
+      "bytesIn": "Byte masuk",
+      "bytesOut": "Byte keluar",
+      "uptime": "Waktu aktif",
+      "actions": "Tindakan"
+    },
+    "states": {
+      "idle": "diam",
+      "read": "baca",
+      "publish": "terbit"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (tidak diaktifkan di server ini)",
+      "failed": "{protocol} (tidak dapat dibaca)",
+      "unlisted": "Tidak tercantum: {protocols}.",
+      "truncated": "Menampilkan {count, number} sesi {protocol} pertama."
+    },
+    "kick": {
+      "action": "Keluarkan",
+      "confirmTitle": "Keluarkan klien {protocol} {remoteAddr} dari {path}?",
+      "confirmDescription": "MediaMTX memutus koneksi sekarang. Ini bukan blokir: klien dapat langsung terhubung kembali.",
+      "hlsCaveat": "Pemutar HLS meminta playlist-nya lagi dalam hitungan detik dan mendapat sesi baru, jadi ini sebagian besar hanya meresetnya.",
+      "cancel": "Batal",
+      "confirm": "Keluarkan klien",
+      "toasts": {
+        "success": "{remoteAddr} dikeluarkan",
+        "alreadyGone": "{remoteAddr} sudah terputus",
+        "errorTitle": "Tidak dapat mengeluarkan sesi",
+        "errorDescription": "MediaMTX tidak menerima permintaan itu. Coba lagi."
+      }
+    },
+    "empty": {
+      "title": "Tidak ada yang terhubung",
+      "lead": "MediaMTX tidak memiliki penerbit atau pembaca saat ini."
+    }
+  },
   "Config": {
     "invalidConfig": "Konfigurasi tidak valid",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Konfigurasi MediaMTX",
-      "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server."
+      "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · berjalan sejak {started}",
+      "tooOldTitle": "MediaMTX {version} lebih lama dari {minimum}, versi tertua yang didukung Connect.",
+      "tooOldBody": "Beberapa pengaturan mungkin tidak ada atau ditolak. Sisanya tetap dimuat dan disimpan."
     },
     "pathDefaults": {
       "pageHeader": "Default jalur",
@@ -336,6 +388,31 @@
           "success": "Dikembalikan ke pengaturan warisan",
           "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
           "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
+        }
+      },
+      "publishRead": {
+        "title": "Publikasikan & putar",
+        "publishTab": "Publikasikan",
+        "readTab": "Putar",
+        "pullSource": "Path ini menarik stream dari sumbernya; MediaMTX menolak publisher.",
+        "readFailed": "Tidak dapat membaca alamat listen server.",
+        "noProtocols": "Server mematikan semua protokol untuk ini.",
+        "copyUrl": "Salin URL {protocol}",
+        "copySnippet": "Salin cuplikan {client} untuk {protocol}",
+        "snippetLabel": "Cuplikan {client} untuk {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 hanya memublikasikan lewat WHIP jika input memiliki trek video dan trek audio."
+        },
+        "links": {
+          "systemPlayer": "Buka di pemutar sistem",
+          "browserPublish": "Publikasikan dari browser",
+          "hlsPage": "Buka halaman HLS MediaMTX",
+          "webrtcPage": "Buka halaman WebRTC MediaMTX"
+        },
+        "toasts": {
+          "copied": "Disalin ke clipboard",
+          "copyFailedTitle": "Tidak dapat menyalin",
+          "copyFailedDescription": "Browser memblokir akses clipboard. Pilih teksnya dan salin secara manual."
         }
       }
     },

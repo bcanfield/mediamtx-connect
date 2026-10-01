@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "đã kết nối",
-      "offline": "ngoại tuyến"
+      "offline": "ngoại tuyến",
+      "connectedVersion": "đã kết nối · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} cũ hơn {minimum}, phiên bản cũ nhất mà Connect hỗ trợ. Một số cài đặt có thể bị thiếu hoặc bị từ chối."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Trực tiếp",
       "recordings": "Bản ghi",
+      "sessions": "Phiên",
       "appConfig": "Cấu hình ứng dụng",
       "mediamtxConfig": "Cấu hình MediaMTX",
       "paths": "Đường dẫn"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Không đọc được giá trị mặc định của đường dẫn từ MediaMTX."
     }
   },
+  "Sessions": {
+    "pageHeader": "Phiên",
+    "pageSubHeader": "Mọi máy khách đang kết nối với MediaMTX lúc này, đang phát hoặc đang đọc, qua mọi giao thức.",
+    "summary": "{count, plural, other {# phiên}}",
+    "columns": {
+      "path": "Đường dẫn",
+      "protocol": "Giao thức",
+      "remoteAddr": "Địa chỉ từ xa",
+      "state": "Trạng thái",
+      "bytesIn": "Byte vào",
+      "bytesOut": "Byte ra",
+      "uptime": "Thời gian chạy",
+      "actions": "Thao tác"
+    },
+    "states": {
+      "idle": "rảnh",
+      "read": "đọc",
+      "publish": "phát"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (chưa bật trên máy chủ này)",
+      "failed": "{protocol} (không đọc được)",
+      "unlisted": "Không liệt kê: {protocols}.",
+      "truncated": "Đang hiển thị {count, number} phiên {protocol} đầu tiên."
+    },
+    "kick": {
+      "action": "Ngắt",
+      "confirmTitle": "Ngắt máy khách {protocol} {remoteAddr} khỏi {path}?",
+      "confirmDescription": "MediaMTX sẽ cắt kết nối ngay. Đây không phải lệnh cấm: máy khách có thể kết nối lại ngay.",
+      "hlsCaveat": "Trình phát HLS sẽ yêu cầu lại danh sách phát trong vài giây và nhận phiên mới, nên việc này chủ yếu chỉ đặt lại nó.",
+      "cancel": "Hủy",
+      "confirm": "Ngắt máy khách",
+      "toasts": {
+        "success": "Đã ngắt {remoteAddr}",
+        "alreadyGone": "{remoteAddr} đã ngắt kết nối từ trước",
+        "errorTitle": "Không thể ngắt phiên",
+        "errorDescription": "MediaMTX không chấp nhận yêu cầu. Hãy thử lại."
+      }
+    },
+    "empty": {
+      "title": "Không có ai kết nối",
+      "lead": "Hiện MediaMTX không có người phát hay người đọc nào."
+    }
+  },
   "Config": {
     "invalidConfig": "Cấu hình không hợp lệ",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Cấu hình MediaMTX",
-      "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ."
+      "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · chạy từ {started}",
+      "tooOldTitle": "MediaMTX {version} cũ hơn {minimum}, phiên bản cũ nhất mà Connect hỗ trợ.",
+      "tooOldBody": "Một số cài đặt có thể bị thiếu hoặc bị từ chối. Phần còn lại vẫn tải và lưu được."
     },
     "pathDefaults": {
       "pageHeader": "Giá trị mặc định của đường dẫn",
@@ -336,6 +388,31 @@
           "success": "Đã trở lại các cài đặt kế thừa",
           "errorTitle": "Không thể trở lại các cài đặt kế thừa",
           "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
+        }
+      },
+      "publishRead": {
+        "title": "Phát hành & xem",
+        "publishTab": "Phát hành",
+        "readTab": "Xem",
+        "pullSource": "Đường dẫn này kéo luồng từ nguồn của nó; MediaMTX từ chối bên phát.",
+        "readFailed": "Không đọc được địa chỉ lắng nghe của máy chủ.",
+        "noProtocols": "Máy chủ đã tắt mọi giao thức cho mục này.",
+        "copyUrl": "Sao chép URL {protocol}",
+        "copySnippet": "Sao chép đoạn {client} cho {protocol}",
+        "snippetLabel": "Đoạn {client} cho {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 chỉ phát qua WHIP khi đầu vào có cả track video và track âm thanh."
+        },
+        "links": {
+          "systemPlayer": "Mở bằng trình phát hệ thống",
+          "browserPublish": "Phát từ trình duyệt",
+          "hlsPage": "Mở trang HLS của MediaMTX",
+          "webrtcPage": "Mở trang WebRTC của MediaMTX"
+        },
+        "toasts": {
+          "copied": "Đã sao chép vào bảng nhớ tạm",
+          "copyFailedTitle": "Không sao chép được",
+          "copyFailedDescription": "Trình duyệt đã chặn quyền truy cập bảng nhớ tạm. Hãy chọn văn bản và tự sao chép."
         }
       }
     },

@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "yhdistetty",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "yhdistetty · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio. Jotkin asetukset voivat puuttua tai ne voidaan hylätä."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Suora",
       "recordings": "Tallenteet",
+      "sessions": "Istunnot",
       "appConfig": "Sovelluksen asetukset",
       "mediamtxConfig": "MediaMTX-asetukset",
       "paths": "Polut"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Polkujen oletuksia ei voitu lukea MediaMTX:ltä."
     }
   },
+  "Sessions": {
+    "pageHeader": "Istunnot",
+    "pageSubHeader": "Kaikki MediaMTX:ään juuri nyt yhdistetyt asiakkaat, julkaisevat tai lukevat, millä tahansa protokollalla.",
+    "summary": "{count, plural, one {# istunto} other {# istuntoa}}",
+    "columns": {
+      "path": "Polku",
+      "protocol": "Protokolla",
+      "remoteAddr": "Etäosoite",
+      "state": "Tila",
+      "bytesIn": "Tavuja sisään",
+      "bytesOut": "Tavuja ulos",
+      "uptime": "Käyntiaika",
+      "actions": "Toiminnot"
+    },
+    "states": {
+      "idle": "jouten",
+      "read": "luku",
+      "publish": "julkaisu"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ei käytössä tällä palvelimella)",
+      "failed": "{protocol} (ei voitu lukea)",
+      "unlisted": "Ei listattu: {protocols}.",
+      "truncated": "Näytetään ensimmäiset {count, number} {protocol}-istuntoa."
+    },
+    "kick": {
+      "action": "Katkaise",
+      "confirmTitle": "Katkaistaanko {protocol}-asiakas {remoteAddr} polulta {path}?",
+      "confirmDescription": "MediaMTX katkaisee yhteyden nyt. Tämä ei ole esto: asiakas voi yhdistää heti uudelleen.",
+      "hlsCaveat": "HLS-soitin pyytää soittolistaansa uudelleen sekunneissa ja saa uuden istunnon, joten tämä lähinnä vain nollaa sen.",
+      "cancel": "Peruuta",
+      "confirm": "Katkaise asiakas",
+      "toasts": {
+        "success": "{remoteAddr} katkaistu",
+        "alreadyGone": "{remoteAddr} oli jo katkaissut yhteyden",
+        "errorTitle": "Istuntoa ei voitu katkaista",
+        "errorDescription": "MediaMTX ei hyväksynyt katkaisua. Yritä uudelleen."
+      }
+    },
+    "empty": {
+      "title": "Kukaan ei ole yhdistettynä",
+      "lead": "MediaMTX:llä ei ole nyt julkaisijoita eikä lukijoita."
+    }
+  },
   "Config": {
     "invalidConfig": "Virheellinen asetus",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-asetukset",
-      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle."
+      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · käynnissä alkaen {started}",
+      "tooOldTitle": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio.",
+      "tooOldBody": "Jotkin asetukset voivat puuttua tai ne voidaan hylätä. Muut latautuvat ja tallentuvat edelleen."
     },
     "pathDefaults": {
       "pageHeader": "Polkujen oletusarvot",
@@ -336,6 +388,31 @@
           "success": "Palautettiin perittyihin asetuksiin",
           "errorTitle": "Perittyihin asetuksiin ei voitu palata",
           "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
+        }
+      },
+      "publishRead": {
+        "title": "Julkaise ja toista",
+        "publishTab": "Julkaise",
+        "readTab": "Toista",
+        "pullSource": "Tämä polku hakee striimin lähteestään; MediaMTX hylkää julkaisijat.",
+        "readFailed": "Palvelimen kuunteluosoitteita ei voitu lukea.",
+        "noProtocols": "Palvelin on poistanut käytöstä kaikki tähän liittyvät protokollat.",
+        "copyUrl": "Kopioi {protocol}-URL",
+        "copySnippet": "Kopioi {client}-koodinpätkä protokollalle {protocol}",
+        "snippetLabel": "{client}-koodinpätkä protokollalle {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 julkaisee WHIP:llä vain, kun syötteessä on sekä video- että ääniraita."
+        },
+        "links": {
+          "systemPlayer": "Avaa järjestelmän soittimessa",
+          "browserPublish": "Julkaise selaimesta",
+          "hlsPage": "Avaa MediaMTX:n HLS-sivu",
+          "webrtcPage": "Avaa MediaMTX:n WebRTC-sivu"
+        },
+        "toasts": {
+          "copied": "Kopioitu leikepöydälle",
+          "copyFailedTitle": "Kopiointi epäonnistui",
+          "copyFailedDescription": "Selain esti pääsyn leikepöydälle. Valitse teksti ja kopioi se itse."
         }
       }
     },

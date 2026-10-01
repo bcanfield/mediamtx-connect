@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "csatlakozva",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "csatlakozva · <v>{version}</v>",
+      "tooOld": "A MediaMTX {version} régebbi, mint a {minimum}, a Connect által támogatott legrégebbi verzió. Egyes beállítások hiányozhatnak, vagy elutasításra kerülhetnek."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Élő",
       "recordings": "Felvételek",
+      "sessions": "Munkamenetek",
       "appConfig": "Alkalmazás konfiguráció",
       "mediamtxConfig": "MediaMTX konfiguráció",
       "paths": "Útvonalak"
@@ -196,6 +199,51 @@
       "pathDefaultsUnreadable": "Nem sikerült beolvasni az útvonal-alapértékeket a MediaMTX-ből."
     }
   },
+  "Sessions": {
+    "pageHeader": "Munkamenetek",
+    "pageSubHeader": "Minden kliens, amely most a MediaMTX-hez kapcsolódik, közzétéve vagy olvasva, bármely protokollon.",
+    "summary": "{count, plural, one {# munkamenet} other {# munkamenet}}",
+    "columns": {
+      "path": "Útvonal",
+      "protocol": "Protokoll",
+      "remoteAddr": "Távoli cím",
+      "state": "Állapot",
+      "bytesIn": "Bejövő bájt",
+      "bytesOut": "Kimenő bájt",
+      "uptime": "Futási idő",
+      "actions": "Műveletek"
+    },
+    "states": {
+      "idle": "tétlen",
+      "read": "olvasás",
+      "publish": "közzététel"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (nincs engedélyezve ezen a szerveren)",
+      "failed": "{protocol} (nem sikerült beolvasni)",
+      "unlisted": "Nem listázva: {protocols}.",
+      "truncated": "Az első {count, number} {protocol} munkamenet látható."
+    },
+    "kick": {
+      "action": "Kirúgás",
+      "confirmTitle": "Kirúgod a(z) {protocol} klienst ({remoteAddr}) innen: {path}?",
+      "confirmDescription": "A MediaMTX most bontja a kapcsolatot. Ez nem kitiltás: a kliens azonnal újracsatlakozhat.",
+      "hlsCaveat": "Egy HLS-lejátszó másodperceken belül újra lekéri a lejátszási listát, és új munkamenetet kap, így ez többnyire csak alaphelyzetbe állítja.",
+      "cancel": "Mégse",
+      "confirm": "Kliens kirúgása",
+      "toasts": {
+        "success": "{remoteAddr} kirúgva",
+        "alreadyGone": "{remoteAddr} már lecsatlakozott",
+        "errorTitle": "Nem sikerült kirúgni a munkamenetet",
+        "errorDescription": "A MediaMTX nem fogadta el a kérést. Próbáld újra."
+      }
+    },
+    "empty": {
+      "title": "Senki sem csatlakozik",
+      "lead": "A MediaMTX-nek most nincsenek közzétevői vagy olvasói."
+    }
+  },
   "Config": {
     "invalidConfig": "Érvénytelen konfiguráció",
     "appConfig": {
@@ -204,7 +252,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX konfiguráció",
-      "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve."
+      "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · fut ekkortól: {started}",
+      "tooOldTitle": "A MediaMTX {version} régebbi, mint a {minimum}, a Connect által támogatott legrégebbi verzió.",
+      "tooOldBody": "Egyes beállítások hiányozhatnak, vagy elutasításra kerülhetnek. A többi továbbra is betöltődik és menthető."
     },
     "pathDefaults": {
       "pageHeader": "Útvonalak alapértékei",
@@ -336,6 +388,31 @@
           "success": "Visszaállítva az örökölt beállításokra",
           "errorTitle": "Nem sikerült visszaállni az örökölt beállításokra",
           "errorDescription": "Az útvonal konfigurációs bejegyzése továbbra is megvan. Próbáld újra."
+        }
+      },
+      "publishRead": {
+        "title": "Közzététel és lejátszás",
+        "publishTab": "Közzététel",
+        "readTab": "Lejátszás",
+        "pullSource": "Ez az útvonal a forrásából húzza a streamet; a MediaMTX elutasítja a közzétevőket.",
+        "readFailed": "Nem sikerült beolvasni a szerver figyelési címeit.",
+        "noProtocols": "A szerveren ehhez minden protokoll ki van kapcsolva.",
+        "copyUrl": "{protocol} URL másolása",
+        "copySnippet": "{client} kódrészlet másolása ehhez: {protocol}",
+        "snippetLabel": "{client} kódrészlet ehhez: {protocol}",
+        "notes": {
+          "whipTracks": "Az FFmpeg 8 csak akkor tesz közzé WHIP-en, ha a bemenetben van videó- és hangsáv is."
+        },
+        "links": {
+          "systemPlayer": "Megnyitás a rendszer lejátszójában",
+          "browserPublish": "Közzététel a böngészőből",
+          "hlsPage": "A MediaMTX HLS-oldalának megnyitása",
+          "webrtcPage": "A MediaMTX WebRTC-oldalának megnyitása"
+        },
+        "toasts": {
+          "copied": "Vágólapra másolva",
+          "copyFailedTitle": "Nem sikerült másolni",
+          "copyFailedDescription": "A böngésző letiltotta a vágólap elérését. Jelöld ki a szöveget, és másold ki kézzel."
         }
       }
     },
