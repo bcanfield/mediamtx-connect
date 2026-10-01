@@ -23,6 +23,10 @@ export const ENCRYPTION_MODES = ['no', 'optional', 'strict'] as const
 // How MediaMTX authenticates every client, Connect's own API calls included.
 export const AUTH_METHODS = ['internal', 'http', 'jwt'] as const
 
+// The oldest MediaMTX Connect supports: the version CI's e2e runs against, not
+// the oldest that probably works. Raise it with whatever starts depending on newer.
+export const MEDIAMTX_MIN_VERSION = '1.20.0'
+
 // Key names mirror MediaMTX v1.21.1 GlobalConf; CI runs 1.20.0. Field names
 // match the YAML keys 1:1. The drift e2e lists the keys left out on purpose.
 export const GlobalConfigSchema = z.object({
@@ -382,8 +386,27 @@ export const RecordingSchema = z.object({
 
 export type Recording = z.infer<typeof RecordingSchema>
 
+// MediaMTX's `GET /v3/info`.
+export const MediaMtxInfoSchema = z.object({
+  // Verbatim, e.g. `v1.20.0`. Null when /v3/info answered 404: MediaMTX older
+  // than v1.15.2, where the endpoint first appeared.
+  version: z.string().nullable(),
+  started: z.date().nullable(),
+  // False whenever the version is null or doesn't parse as x.y.z.
+  belowMinimum: z.boolean(),
+})
+
+export type MediaMtxInfo = z.infer<typeof MediaMtxInfoSchema>
+
 export const contract = {
   health: oc.output(HealthSchema),
+  mediamtx: {
+    // Which MediaMTX Connect is talking to. Its own procedure, not part of
+    // `health` (which must answer while MediaMTX is down) or `streams.list`
+    // (polled every 15s, for a value that changes only on restart). `null` is
+    // an unreachable server.
+    info: oc.output(MediaMtxInfoSchema.nullable()),
+  },
   streams: {
     list: oc.output(StreamsStateSchema),
     // Capture a frame for one stream now, off the same RTSP feed the snapshot

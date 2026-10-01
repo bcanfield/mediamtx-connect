@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "συνδεδεμένο",
-      "offline": "εκτός σύνδεσης"
+      "offline": "εκτός σύνδεσης",
+      "connectedVersion": "συνδεδεμένο · <v>{version}</v>",
+      "tooOld": "Το MediaMTX {version} είναι παλαιότερο από το {minimum}, την παλαιότερη έκδοση που υποστηρίζει το Connect. Ορισμένες ρυθμίσεις ενδέχεται να λείπουν ή να απορρίπτονται."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Ρυθμίσεις MediaMTX",
-      "pageSubHeader": "Καθολικές ρυθμίσεις του διακομιστή MediaMTX, αποθηκεύονται στον διακομιστή."
+      "pageSubHeader": "Καθολικές ρυθμίσεις του διακομιστή MediaMTX, αποθηκεύονται στον διακομιστή.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · σε λειτουργία από {started}",
+      "tooOldTitle": "Το MediaMTX {version} είναι παλαιότερο από το {minimum}, την παλαιότερη έκδοση που υποστηρίζει το Connect.",
+      "tooOldBody": "Ορισμένες ρυθμίσεις ενδέχεται να λείπουν ή να απορρίπτονται. Οι υπόλοιπες εξακολουθούν να φορτώνονται και να αποθηκεύονται."
     },
     "pathDefaults": {
       "pageHeader": "Προεπιλογές διαδρομών",

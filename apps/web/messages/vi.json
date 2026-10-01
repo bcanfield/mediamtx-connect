@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "đã kết nối",
-      "offline": "ngoại tuyến"
+      "offline": "ngoại tuyến",
+      "connectedVersion": "đã kết nối · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} cũ hơn {minimum}, phiên bản cũ nhất mà Connect hỗ trợ. Một số cài đặt có thể bị thiếu hoặc bị từ chối."
     }
   },
   "Nav": {
@@ -177,7 +179,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Cấu hình MediaMTX",
-      "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ."
+      "pageSubHeader": "Cài đặt toàn cục của máy chủ MediaMTX, được lưu vào máy chủ.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · chạy từ {started}",
+      "tooOldTitle": "MediaMTX {version} cũ hơn {minimum}, phiên bản cũ nhất mà Connect hỗ trợ.",
+      "tooOldBody": "Một số cài đặt có thể bị thiếu hoặc bị từ chối. Phần còn lại vẫn tải và lưu được."
     },
     "pathDefaults": {
       "pageHeader": "Giá trị mặc định của đường dẫn",
