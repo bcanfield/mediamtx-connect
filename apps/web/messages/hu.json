@@ -31,6 +31,7 @@
     "items": {
       "live": "Élő",
       "recordings": "Felvételek",
+      "sessions": "Munkamenetek",
       "appConfig": "Alkalmazás konfiguráció",
       "mediamtxConfig": "MediaMTX konfiguráció",
       "paths": "Útvonalak"
@@ -169,6 +170,51 @@
       "showing": "Megjelenítve: {from}–{to} / {total}",
       "previous": "Előző oldal",
       "next": "Következő oldal"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Munkamenetek",
+    "pageSubHeader": "Minden kliens, amely most a MediaMTX-hez kapcsolódik, közzétéve vagy olvasva, bármely protokollon.",
+    "summary": "{count, plural, one {# munkamenet} other {# munkamenet}}",
+    "columns": {
+      "path": "Útvonal",
+      "protocol": "Protokoll",
+      "remoteAddr": "Távoli cím",
+      "state": "Állapot",
+      "bytesIn": "Bejövő bájt",
+      "bytesOut": "Kimenő bájt",
+      "uptime": "Futási idő",
+      "actions": "Műveletek"
+    },
+    "states": {
+      "idle": "tétlen",
+      "read": "olvasás",
+      "publish": "közzététel"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (nincs engedélyezve ezen a szerveren)",
+      "failed": "{protocol} (nem sikerült beolvasni)",
+      "unlisted": "Nem listázva: {protocols}.",
+      "truncated": "Az első {count, number} {protocol} munkamenet látható."
+    },
+    "kick": {
+      "action": "Kirúgás",
+      "confirmTitle": "Kirúgod a(z) {protocol} klienst ({remoteAddr}) innen: {path}?",
+      "confirmDescription": "A MediaMTX most bontja a kapcsolatot. Ez nem kitiltás: a kliens azonnal újracsatlakozhat.",
+      "hlsCaveat": "Egy HLS-lejátszó másodperceken belül újra lekéri a lejátszási listát, és új munkamenetet kap, így ez többnyire csak alaphelyzetbe állítja.",
+      "cancel": "Mégse",
+      "confirm": "Kliens kirúgása",
+      "toasts": {
+        "success": "{remoteAddr} kirúgva",
+        "alreadyGone": "{remoteAddr} már lecsatlakozott",
+        "errorTitle": "Nem sikerült kirúgni a munkamenetet",
+        "errorDescription": "A MediaMTX nem fogadta el a kérést. Próbáld újra."
+      }
+    },
+    "empty": {
+      "title": "Senki sem csatlakozik",
+      "lead": "A MediaMTX-nek most nincsenek közzétevői vagy olvasói."
     }
   },
   "Config": {

@@ -31,6 +31,7 @@
     "items": {
       "live": "สด",
       "recordings": "การบันทึก",
+      "sessions": "เซสชัน",
       "appConfig": "การตั้งค่าแอป",
       "mediamtxConfig": "การตั้งค่า MediaMTX",
       "paths": "พาธ"
@@ -169,6 +170,51 @@
       "showing": "แสดง {from}–{to} จาก {total}",
       "previous": "หน้าก่อนหน้า",
       "next": "หน้าถัดไป"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "เซสชัน",
+    "pageSubHeader": "ไคลเอนต์ทุกตัวที่เชื่อมต่อกับ MediaMTX อยู่ตอนนี้ ทั้งเผยแพร่และอ่าน ผ่านทุกโปรโตคอล",
+    "summary": "{count, plural, other {# เซสชัน}}",
+    "columns": {
+      "path": "พาธ",
+      "protocol": "โปรโตคอล",
+      "remoteAddr": "ที่อยู่ระยะไกล",
+      "state": "สถานะ",
+      "bytesIn": "ไบต์ขาเข้า",
+      "bytesOut": "ไบต์ขาออก",
+      "uptime": "เวลาทำงาน",
+      "actions": "การดำเนินการ"
+    },
+    "states": {
+      "idle": "ว่าง",
+      "read": "อ่าน",
+      "publish": "เผยแพร่"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ไม่ได้เปิดใช้บนเซิร์ฟเวอร์นี้)",
+      "failed": "{protocol} (อ่านไม่ได้)",
+      "unlisted": "ไม่ได้แสดง: {protocols}",
+      "truncated": "แสดง {count, number} เซสชัน {protocol} แรกเท่านั้น"
+    },
+    "kick": {
+      "action": "เตะออก",
+      "confirmTitle": "เตะไคลเอนต์ {protocol} {remoteAddr} ออกจาก {path} หรือไม่?",
+      "confirmDescription": "MediaMTX จะตัดการเชื่อมต่อทันที นี่ไม่ใช่การแบน ไคลเอนต์เชื่อมต่อใหม่ได้ทันที",
+      "hlsCaveat": "เครื่องเล่น HLS จะขอเพลย์ลิสต์ใหม่ภายในไม่กี่วินาทีและได้เซสชันใหม่ ดังนั้นส่วนใหญ่เป็นแค่การรีเซ็ต",
+      "cancel": "ยกเลิก",
+      "confirm": "เตะไคลเอนต์ออก",
+      "toasts": {
+        "success": "เตะ {remoteAddr} ออกแล้ว",
+        "alreadyGone": "{remoteAddr} ตัดการเชื่อมต่อไปแล้ว",
+        "errorTitle": "เตะเซสชันออกไม่ได้",
+        "errorDescription": "MediaMTX ไม่ยอมรับคำขอ ลองอีกครั้ง"
+      }
+    },
+    "empty": {
+      "title": "ไม่มีใครเชื่อมต่ออยู่",
+      "lead": "ตอนนี้ MediaMTX ไม่มีผู้เผยแพร่หรือผู้อ่าน"
     }
   },
   "Config": {

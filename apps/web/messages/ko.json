@@ -31,6 +31,7 @@
     "items": {
       "live": "실시간",
       "recordings": "녹화",
+      "sessions": "세션",
       "appConfig": "앱 설정",
       "mediamtxConfig": "MediaMTX 설정",
       "paths": "경로"
@@ -169,6 +170,51 @@
       "showing": "총 {total}개 중 {from}–{to} 표시",
       "previous": "이전 페이지",
       "next": "다음 페이지"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "세션",
+    "pageSubHeader": "지금 MediaMTX에 연결된 모든 클라이언트(게시 또는 읽기, 모든 프로토콜).",
+    "summary": "{count, plural, other {세션 #개}}",
+    "columns": {
+      "path": "경로",
+      "protocol": "프로토콜",
+      "remoteAddr": "원격 주소",
+      "state": "상태",
+      "bytesIn": "수신 바이트",
+      "bytesOut": "송신 바이트",
+      "uptime": "가동 시간",
+      "actions": "작업"
+    },
+    "states": {
+      "idle": "유휴",
+      "read": "읽기",
+      "publish": "게시"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}(이 서버에서 사용 안 함)",
+      "failed": "{protocol}(읽을 수 없음)",
+      "unlisted": "목록에 없음: {protocols}.",
+      "truncated": "{protocol} 세션은 처음 {count, number}개만 표시합니다."
+    },
+    "kick": {
+      "action": "연결 끊기",
+      "confirmTitle": "{path}에서 {protocol} 클라이언트 {remoteAddr}의 연결을 끊을까요?",
+      "confirmDescription": "MediaMTX가 지금 연결을 끊습니다. 차단이 아니므로 클라이언트는 바로 다시 연결할 수 있습니다.",
+      "hlsCaveat": "HLS 플레이어는 몇 초 안에 재생 목록을 다시 요청해 새 세션을 받으므로, 대부분 초기화만 됩니다.",
+      "cancel": "취소",
+      "confirm": "클라이언트 연결 끊기",
+      "toasts": {
+        "success": "{remoteAddr} 연결을 끊었습니다",
+        "alreadyGone": "{remoteAddr}은(는) 이미 연결이 끊겼습니다",
+        "errorTitle": "세션 연결을 끊을 수 없습니다",
+        "errorDescription": "MediaMTX가 요청을 받아들이지 않았습니다. 다시 시도하세요."
+      }
+    },
+    "empty": {
+      "title": "연결된 클라이언트가 없습니다",
+      "lead": "지금 MediaMTX에는 게시자나 시청자가 없습니다."
     }
   },
   "Config": {

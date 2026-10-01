@@ -57,6 +57,10 @@ export interface StubApi {
   pathDefaults?: () => unknown
   updatePathDefaults?: (input: Inputs['config']['mediamtx']['updatePathDefaults']) => void
   appConfig?: () => unknown
+  /** Every session — `{status: 'connected', sessions, protocols}` or `{status: 'connection-error', …}`. */
+  sessionsList?: () => unknown
+  /** Rejecting with an `ORPCError('NOT_FOUND')` drives a session that had already gone. */
+  kickSession?: (input: Inputs['sessions']['kick']) => void | Promise<void>
   updateAppConfig?: (input: Inputs['config']['app']['update']) => void
 }
 
@@ -74,6 +78,14 @@ export function createRpcServer(stub: StubApi) {
       list: os.streams.list.handler(() => stub.streamsList() as never),
       snapshot: os.streams.snapshot.handler(({ input }) => {
         stub.snapshot?.(input)
+      }),
+    },
+    sessions: {
+      list: os.sessions.list.handler(
+        () => (stub.sessionsList?.() ?? { status: 'connected', sessions: [], protocols: [], pageSize: 100 }) as never,
+      ),
+      kick: os.sessions.kick.handler(async ({ input }) => {
+        await stub.kickSession?.(input)
       }),
     },
     recordings: {

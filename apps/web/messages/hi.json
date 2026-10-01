@@ -31,6 +31,7 @@
     "items": {
       "live": "लाइव",
       "recordings": "रिकॉर्डिंग",
+      "sessions": "सत्र",
       "appConfig": "ऐप कॉन्फ़िगरेशन",
       "mediamtxConfig": "MediaMTX कॉन्फ़िगरेशन",
       "paths": "पथ"
@@ -169,6 +170,51 @@
       "showing": "{total} में से {from}–{to} दिखा रहे हैं",
       "previous": "पिछला पृष्ठ",
       "next": "अगला पृष्ठ"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "सत्र",
+    "pageSubHeader": "इस समय MediaMTX से जुड़ा हर क्लाइंट, प्रकाशित करते या पढ़ते हुए, किसी भी प्रोटोकॉल पर।",
+    "summary": "{count, plural, one {# सत्र} other {# सत्र}}",
+    "columns": {
+      "path": "पथ",
+      "protocol": "प्रोटोकॉल",
+      "remoteAddr": "रिमोट पता",
+      "state": "स्थिति",
+      "bytesIn": "आने वाले बाइट",
+      "bytesOut": "जाने वाले बाइट",
+      "uptime": "अपटाइम",
+      "actions": "कार्रवाइयाँ"
+    },
+    "states": {
+      "idle": "निष्क्रिय",
+      "read": "पढ़ना",
+      "publish": "प्रकाशित करना"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (इस सर्वर पर सक्षम नहीं)",
+      "failed": "{protocol} (पढ़ा नहीं जा सका)",
+      "unlisted": "सूचीबद्ध नहीं: {protocols}।",
+      "truncated": "पहले {count, number} {protocol} सत्र दिखाए जा रहे हैं।"
+    },
+    "kick": {
+      "action": "निकालें",
+      "confirmTitle": "{protocol} क्लाइंट {remoteAddr} को {path} से निकालें?",
+      "confirmDescription": "MediaMTX अभी कनेक्शन काट देगा। यह प्रतिबंध नहीं है: क्लाइंट तुरंत फिर से जुड़ सकता है।",
+      "hlsCaveat": "HLS प्लेयर कुछ सेकंड में अपनी प्लेलिस्ट फिर माँगता है और नया सत्र पाता है, इसलिए यह ज़्यादातर उसे बस रीसेट करता है।",
+      "cancel": "रद्द करें",
+      "confirm": "क्लाइंट निकालें",
+      "toasts": {
+        "success": "{remoteAddr} को निकाला गया",
+        "alreadyGone": "{remoteAddr} पहले ही डिस्कनेक्ट हो चुका था",
+        "errorTitle": "सत्र नहीं निकाला जा सका",
+        "errorDescription": "MediaMTX ने अनुरोध स्वीकार नहीं किया। फिर से कोशिश करें।"
+      }
+    },
+    "empty": {
+      "title": "कोई जुड़ा नहीं है",
+      "lead": "इस समय MediaMTX पर कोई प्रकाशक या पाठक नहीं है।"
     }
   },
   "Config": {

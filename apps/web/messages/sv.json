@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Inspelningar",
+      "sessions": "Sessioner",
       "appConfig": "Appkonfiguration",
       "mediamtxConfig": "MediaMTX-konfiguration",
       "paths": "Sökvägar"
@@ -169,6 +170,51 @@
       "showing": "Visar {from}–{to} av {total}",
       "previous": "Föregående sida",
       "next": "Nästa sida"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessioner",
+    "pageSubHeader": "Alla klienter som är anslutna till MediaMTX just nu, som publicerar eller läser, över alla protokoll.",
+    "summary": "{count, plural, one {# session} other {# sessioner}}",
+    "columns": {
+      "path": "Sökväg",
+      "protocol": "Protokoll",
+      "remoteAddr": "Fjärradress",
+      "state": "Tillstånd",
+      "bytesIn": "Byte in",
+      "bytesOut": "Byte ut",
+      "uptime": "Drifttid",
+      "actions": "Åtgärder"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "läser",
+      "publish": "publicerar"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (inte aktiverat på den här servern)",
+      "failed": "{protocol} (kunde inte läsas)",
+      "unlisted": "Inte listade: {protocols}.",
+      "truncated": "Visar de första {count, number} {protocol}-sessionerna."
+    },
+    "kick": {
+      "action": "Sparka ut",
+      "confirmTitle": "Sparka ut {protocol}-klienten {remoteAddr} från {path}?",
+      "confirmDescription": "MediaMTX bryter anslutningen nu. Det är ingen avstängning: klienten kan ansluta igen direkt.",
+      "hlsCaveat": "En HLS-spelare begär sin spellista igen inom några sekunder och får en ny session, så detta återställer den mest.",
+      "cancel": "Avbryt",
+      "confirm": "Sparka ut klient",
+      "toasts": {
+        "success": "{remoteAddr} utsparkad",
+        "alreadyGone": "{remoteAddr} hade redan kopplat från",
+        "errorTitle": "Kunde inte sparka ut sessionen",
+        "errorDescription": "MediaMTX godtog inte begäran. Försök igen."
+      }
+    },
+    "empty": {
+      "title": "Ingen är ansluten",
+      "lead": "MediaMTX har inga publicerare eller läsare just nu."
     }
   },
   "Config": {
