@@ -15,6 +15,6 @@ demo
 docs
 examples
 tests
-test-data
+.scratch
 test-results
 playwright-report
