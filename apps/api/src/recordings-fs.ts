@@ -2,6 +2,19 @@ import type { AppConfig } from '@connect/contract'
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 
+// The path under `baseDir`, or null when the segments resolve to the base
+// itself or anywhere outside it. MediaMTX path names never hold `.` or `..`
+// segments, so a name this rejects is no stream at all.
+export function safeJoin(baseDir: string, ...segments: string[]): string | null {
+  const resolved = path.resolve(baseDir, ...segments)
+  return resolved.startsWith(path.resolve(baseDir) + path.sep) ? resolved : null
+}
+
+// What MediaMTX writes for each `recordFormat`: fmp4 → .mp4, mpegts → .ts.
+export function isRecordingSegment(fileName: string): boolean {
+  return !fileName.startsWith('.') && ['.mp4', '.ts'].includes(path.extname(fileName))
+}
+
 export interface StreamSummary {
   count: number
   latestMtime: Date | null

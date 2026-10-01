@@ -13,6 +13,7 @@ import {
   latestScreenshotMtimeFor,
   latestScreenshotUrlFor,
   listStreamRecordingFiles,
+  safeJoin,
   screenshotUrlFor,
   summarizeStreamRecordings,
 } from './recordings-fs'
@@ -136,8 +137,8 @@ export const router = os.router({
 
     listForStream: os.recordings.listForStream.handler(async ({ input }) => {
       const config = await getAppConfig()
-      const streamDir = path.join(config.recordingsDirectory, input.streamName)
-      if (!fs.existsSync(streamDir))
+      const streamDir = safeJoin(config.recordingsDirectory, input.streamName)
+      if (!streamDir || !fs.existsSync(streamDir))
         return { recordings: [], totalCount: 0 }
 
       const files = listStreamRecordingFiles(config.recordingsDirectory, input.streamName)
@@ -187,6 +188,8 @@ export const router = os.router({
         }
         catch (error) {
           logger.error({ err: error }, 'Failed to update global config')
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update global config' })
         }
       }),
@@ -210,6 +213,8 @@ export const router = os.router({
         }
         catch (error) {
           logger.error({ err: error }, 'Failed to update path defaults')
+          if (error instanceof MediaMtxError && error.reason)
+            throw new ORPCError('BAD_REQUEST', { message: error.reason })
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to update path defaults' })
         }
       }),

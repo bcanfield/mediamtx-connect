@@ -8,6 +8,7 @@ import {
   latestScreenshotPathFor,
   latestScreenshotUrlFor,
   listStreamRecordingFiles,
+  safeJoin,
   screenshotUrlFor,
   summarizeStreamRecordings,
 } from './recordings-fs'
@@ -180,5 +181,32 @@ describe('latestScreenshotMtimeFor', () => {
 
   it('answers null when the stream has no snapshot at all', () => {
     expect(latestScreenshotMtimeFor(config, 'gone')).toBeNull()
+  })
+})
+
+describe('safeJoin', () => {
+  const base = path.join(tmpdir(), 'base')
+
+  it('resolves a stream name under the base', () => {
+    expect(safeJoin(base, 'stream1')).toBe(path.join(base, 'stream1'))
+  })
+
+  it('keeps nested MediaMTX path names', () => {
+    expect(safeJoin(base, 'cam/front', 'a.mp4')).toBe(path.join(base, 'cam', 'front', 'a.mp4'))
+  })
+
+  it('answers null for a name that climbs out of the base', () => {
+    expect(safeJoin(base, '../sibling')).toBeNull()
+  })
+
+  // A plain startsWith(base) would let `/base-other` through.
+  it('answers null for a sibling that shares the base as a prefix', () => {
+    expect(safeJoin(base, '../base-other')).toBeNull()
+  })
+
+  // The base itself is no stream at all.
+  it('answers null for an empty name or the base itself', () => {
+    expect(safeJoin(base, '')).toBeNull()
+    expect(safeJoin(base, '.')).toBeNull()
   })
 })

@@ -1,4 +1,7 @@
 import type { MediaMtxPath } from './mediamtx'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
@@ -44,6 +47,8 @@ const api = {
   configPathGet: vi.fn(),
   configPathAdd: vi.fn(),
   configPathPatch: vi.fn(),
+  configGlobalPatch: vi.fn(),
+  configPathDefaultsPatch: vi.fn(),
 }
 
 /** Every stream is wildcard-backed by `all_others` — the stock setup (ADR 0002). */
@@ -415,6 +420,51 @@ describe('config.mediamtx.updatePathConfig', () => {
   })
 })
 
+// The whole-form scopes refuse the same way a path does, and the form needs the
+// reason just as much to put it back on the field.
+describe.each([
+  {
+    proc: 'updateGlobal',
+    method: 'configGlobalPatch',
+    save: () => call(router.config.mediamtx.updateGlobal, {}),
+    fallback: 'Failed to update global config',
+  },
+  {
+    proc: 'updatePathDefaults',
+    method: 'configPathDefaultsPatch',
+    save: () => call(router.config.mediamtx.updatePathDefaults, {}),
+    fallback: 'Failed to update path defaults',
+  },
+] as const)('config.mediamtx.$proc', ({ method, save, fallback }) => {
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('passes MediaMTX\'s own reason through as BAD_REQUEST on a refused write', async () => {
+    const reason = '\'udpMaxPayloadSize\' must be less than 1472'
+    api[method].mockRejectedValue(new MediaMtxError(400, reason, 'PATCH /config/x/patch'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'BAD_REQUEST',
+      message: reason,
+    })
+  })
+
+  it('stays INTERNAL_SERVER_ERROR when the failure is not a refusal', async () => {
+    api[method].mockRejectedValue(new Error('fetch failed'))
+
+    await expect(save()).rejects.toMatchObject({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: fallback,
+    })
+  })
+})
+
 describe('config.mediamtx.getPathConfig', () => {
   beforeEach(() => {
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
@@ -590,5 +640,39 @@ describe('config.mediamtx.getPathConnections', () => {
     const result = await call(router.config.mediamtx.getPathConnections, { name: 'stream1' })
 
     expect(result).toBeNull()
+  })
+})
+
+describe('recordings.listForStream', () => {
+  let root: string
+
+  beforeEach(() => {
+    root = mkdtempSync(path.join(tmpdir(), 'list-for-stream-'))
+    mkdirSync(path.join(root, 'recordings', 'cam', 'front'), { recursive: true })
+    writeFileSync(path.join(root, 'recordings', 'cam', 'front', '2026-07-01_10-00-00.mp4'), '')
+    // Somewhere real to escape to, or the test passes on a missing directory.
+    mkdirSync(path.join(root, 'sibling'))
+    writeFileSync(path.join(root, 'sibling', 'secret.mp4'), '')
+    vi.mocked(getAppConfig).mockResolvedValue({
+      ...CONFIG,
+      recordingsDirectory: path.join(root, 'recordings'),
+      screenshotsDirectory: path.join(root, 'screenshots'),
+    })
+  })
+
+  afterEach(() => {
+    rmSync(root, { recursive: true, force: true })
+  })
+
+  it('lists a nested MediaMTX path\'s recordings', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: 'cam/front', page: 1, take: 10 })
+
+    expect(result.recordings.map(r => r.name)).toEqual(['2026-07-01_10-00-00.mp4'])
+  })
+
+  it('treats a name that climbs out of the recordings directory as no stream', async () => {
+    const result = await call(router.recordings.listForStream, { streamName: '../sibling', page: 1, take: 10 })
+
+    expect(result).toEqual({ recordings: [], totalCount: 0 })
   })
 })

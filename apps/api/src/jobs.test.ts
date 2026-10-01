@@ -2,16 +2,20 @@ import type { ChildProcess } from 'node:child_process'
 import cp from 'node:child_process'
 import { EventEmitter } from 'node:events'
 import fs from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import {
   __resetSpawnGates,
   captureLiveSnapshots,
   captureSnapshot,
+  cleanupScreenshots,
   generateScreenshots,
   MAX_CONCURRENT_CAPTURES,
   MAX_CONCURRENT_THUMBNAILS,
 } from './jobs'
+import { logger } from './logger'
 import { mediaMtxApi } from './mediamtx'
 
 // Factories (not automock) so the real modules never load — config-store pulls in
@@ -422,5 +426,172 @@ describe('generateScreenshots', () => {
 
     expect(cp.spawn).toHaveBeenCalledTimes(MAX_CONCURRENT_THUMBNAILS + 1)
     expect(argvOf(MAX_CONCURRENT_THUMBNAILS)).toContain('rtsp://127.0.0.1:8554/parking-lot')
+  })
+})
+
+// The cases below run against a real temp tree rather than the fs spies above:
+// they are about which files exist on disk, and a mocked readdir would only
+// assert the mock.
+describe('on a real recordings tree', () => {
+  let root: string
+  let recordings: string
+  let screenshots: string
+
+  /** Create `dir/name` (and its parents), last modified `ageMs` ago. */
+  function touch(dir: string, name: string, ageMs = 0) {
+    fs.mkdirSync(dir, { recursive: true })
+    const filePath = path.join(dir, name)
+    fs.writeFileSync(filePath, '')
+    const when = new Date(Date.now() - ageMs)
+    fs.utimesSync(filePath, when, when)
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    __resetSpawnGates()
+    root = fs.mkdtempSync(path.join(tmpdir(), 'jobs-'))
+    recordings = path.join(root, 'recordings')
+    screenshots = path.join(root, 'screenshots')
+    fs.mkdirSync(recordings)
+    fs.mkdirSync(screenshots)
+    vi.mocked(getAppConfig).mockResolvedValue({
+      ...CONFIG,
+      recordingsDirectory: recordings,
+      screenshotsDirectory: screenshots,
+    })
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+    fs.rmSync(root, { recursive: true, force: true })
+  })
+
+  describe('cleanupScreenshots', () => {
+    const HOUR = 60 * 60 * 1000
+    const THREE_DAYS = 3 * 24 * HOUR
+
+    it('keeps thumbnails whose segment still exists and prunes everything else past 2 days', async () => {
+      touch(path.join(recordings, 's1'), 'old.mp4')
+      touch(path.join(recordings, 's1'), 'old-ts.ts')
+      const shots = path.join(screenshots, 's1')
+      touch(shots, 'old.png', THREE_DAYS)
+      touch(shots, 'old-ts.png', THREE_DAYS)
+      touch(shots, 'gone.png', THREE_DAYS)
+      touch(shots, 'fresh.png', HOUR)
+      touch(shots, 'live.png', THREE_DAYS)
+
+      await cleanupScreenshots()
+
+      expect(fs.readdirSync(shots).sort()).toEqual(['fresh.png', 'old-ts.png', 'old.png'])
+    })
+
+    // Only a PNG is a thumbnail; anything else sharing a segment's stem is litter.
+    it('prunes an old non-PNG file even when it shares a segment\'s stem', async () => {
+      touch(path.join(recordings, 's1'), 'old.mp4')
+      const shots = path.join(screenshots, 's1')
+      touch(shots, 'old.txt', THREE_DAYS)
+
+      await cleanupScreenshots()
+
+      expect(fs.readdirSync(shots)).toEqual([])
+    })
+
+    // A stream can have live captures without ever recording.
+    it('prunes a stream that has no recordings directory', async () => {
+      const shots = path.join(screenshots, 'never-recorded')
+      touch(shots, 'live.png', THREE_DAYS)
+
+      await cleanupScreenshots()
+
+      expect(fs.readdirSync(shots)).toEqual([])
+    })
+  })
+
+  // A fake ffmpeg that exits with `code` on its own, so a job that spawns one
+  // it shouldn't still settles and fails on the assertion, not a timeout.
+  function ffmpegExits(code: number) {
+    vi.spyOn(cp, 'spawn').mockImplementation(() => {
+      const p = fakeProc()
+      void Promise.resolve().then(() => p.emit('close', code))
+      return p as unknown as ChildProcess
+    })
+  }
+
+  describe('generateScreenshots', () => {
+    it('thumbnails an MPEG-TS segment from its real file', async () => {
+      ffmpegExits(0)
+      touch(path.join(recordings, 's1'), 'a.ts')
+
+      await generateScreenshots()
+
+      expect(cp.spawn).toHaveBeenCalledOnce()
+      const argv = argvOf()
+      expect(argv[argv.indexOf('-i') + 1]).toBe(path.join(recordings, 's1', 'a.ts'))
+      expect(argv.at(-1)).toBe(path.join(screenshots, 's1', 'a.png'))
+    })
+
+    it('leaves a segment alone once its thumbnail exists', async () => {
+      ffmpegExits(0)
+      touch(path.join(recordings, 's1'), 'a.ts')
+      touch(path.join(screenshots, 's1'), 'a.png')
+
+      await generateScreenshots()
+
+      expect(cp.spawn).not.toHaveBeenCalled()
+    })
+
+    it('ignores files that are not recording segments', async () => {
+      ffmpegExits(0)
+      touch(path.join(recordings, 's1'), 'notes.txt')
+      // MediaMTX writes the segment it is still recording under a leading dot.
+      touch(path.join(recordings, 's1'), '.partial.mp4')
+
+      await generateScreenshots()
+
+      expect(cp.spawn).not.toHaveBeenCalled()
+    })
+
+    it('logs a failed ffmpeg exit as a failure, naming the thumbnail', async () => {
+      ffmpegExits(1)
+      touch(path.join(recordings, 's1'), 'a.mp4')
+
+      await generateScreenshots()
+
+      const output = path.join(screenshots, 's1', 'a.png')
+      const failures = [...vi.mocked(logger.warn).mock.calls, ...vi.mocked(logger.error).mock.calls]
+      expect(failures.flat().some(arg => typeof arg === 'string' && arg.includes(output))).toBe(true)
+      expect(vi.mocked(logger.info).mock.calls.flat()).not.toContainEqual(expect.stringContaining('Finished generating screenshot'))
+    })
+  })
+
+  describe('captureSnapshot', () => {
+    let configGlobalGet: ReturnType<typeof vi.fn>
+
+    beforeEach(() => {
+      vi.useFakeTimers()
+      configGlobalGet = vi.fn().mockResolvedValue({ rtspAddress: ':8554' })
+      vi.mocked(mediaMtxApi).mockReturnValue({ configGlobalGet } as never)
+      // No frame was really written, so a 0 exit would fail the rename.
+      ffmpegExits(1)
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('rejects a name that climbs out of the screenshots directory before touching anything', async () => {
+      await expect(captureSnapshot('../escaped')).rejects.toThrow('No stream named ../escaped')
+
+      expect(fs.existsSync(path.join(root, 'escaped'))).toBe(false)
+      expect(configGlobalGet).not.toHaveBeenCalled()
+      expect(cp.spawn).not.toHaveBeenCalled()
+    })
+
+    it('still captures a nested MediaMTX path', async () => {
+      await captureSnapshot('cam/front').catch(() => {})
+
+      expect(cp.spawn).toHaveBeenCalledOnce()
+      expect(argvOf()).toContain('rtsp://127.0.0.1:8554/cam/front')
+    })
   })
 })
