@@ -27,34 +27,14 @@ catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.m
 ## Tests
 
 ```bash
-pnpm verify           # lint + typecheck + i18n + unit/component — no Docker, seconds
+pnpm verify           # what CI's Build job runs: lint, typecheck, i18n, unit/component tests, build
 pnpm test:changed     # only tests your edits can reach
 pnpm build            # e2e runs the built single-server
 pnpm test:e2e         # headless, chromium
 pnpm test:e2e:dev     # Playwright UI
 ```
 
-Spec inventory: `docs/FEATURES.md` §15.1. Layers and conventions: `docs/TESTING.md`.
-
-Assert unconditionally. The fixtures are deterministic — `globalSetup` seeds the
-recordings and `scripts/wait-for-mediamtx.mjs` gates the suite on the stream
-fleet being ready — so there is no varying state to defend against:
-
-```ts
-// Good
-await expect(page.locator('[data-testid="stream-summary-card"]')).toHaveCount(3)
-
-// Can't fail: green whether or not the feature works
-const cards = await page.locator('[class*="card"]').count()
-const empty = await page.getByText('No Recordings').isVisible()
-expect(cards > 0 || empty).toBe(true)
-```
-
-> This reverses the "write tests resilient to multiple states" advice that used
-> to live here. It was a reasonable response to asserting against live MediaMTX,
-> but it is what produced 19 tests that passed with the feature broken. A
-> conditional inside a `test()` body is now a lint error; if state genuinely
-> varies, the test belongs in the component layer where it can be pinned.
+Spec inventory: `docs/FEATURES.md` §15.1. Layers and conventions, including why tests must assert unconditionally: `docs/TESTING.md`.
 
 ## App settings storage
 
@@ -62,13 +42,13 @@ There is no database. The five app settings persist in a Zod-validated `config.j
 
 ## Code style
 
-TypeScript, follow surrounding patterns, run `pnpm lint` before committing. Code rules live in `CLAUDE.md`; monorepo conventions in `AGENTS.md`.
+TypeScript, follow surrounding patterns, run `pnpm lint` before committing. Code rules and conventions live in `AGENTS.md`.
 
 ## Pull requests
 
 1. Branch: `git checkout -b feature/my-feature`
-2. `pnpm typecheck && pnpm lint && pnpm i18n:check && pnpm build && pnpm test:e2e`
-3. Update `docs/FEATURES.md` if behavior changed (mandatory — see `CLAUDE.md`)
+2. `pnpm verify && pnpm test:e2e`
+3. Update `docs/FEATURES.md` if behavior changed (mandatory; see `AGENTS.md`)
 4. PR with a clear description, titled per the convention below
 
 ### PR titles

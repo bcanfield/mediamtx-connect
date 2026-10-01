@@ -12,9 +12,9 @@ When you change the codebase:
 - **Change a feature** → update the existing bullet (don't append a new one). Keep file paths current.
 - **Remove a feature** → delete the bullet. Don't leave "removed" tombstones.
 - **Add a route / API / oRPC procedure / schema / cron** → also update the corresponding catalog table (§10 Routing Map, §11 oRPC Procedures, §12 Schemas, §4 Background Jobs).
-- **Add a new feature *domain*** (e.g., auth, storage, analytics) → add a new top-level section, update §19, and reflect it in `CLAUDE.md`'s domain table.
+- **Add a new feature *domain*** (e.g., auth, storage, analytics) → add a new top-level section.
 
-Keep entries factual and present-tense. No roadmap items, no "coming soon." Reserved-but-empty domains live only in §19.
+Keep entries factual and present-tense. No roadmap items, no "coming soon."
 
 Unshipped work lives in GitHub issues, ordered by the pinned roadmap issue (ADR 0007). Never add it here until it's merged.
 
@@ -200,7 +200,7 @@ Sources reviewed at last full audit (2026-10-01): source tree, `README.md`, `doc
 
 ## 5. Health, Observability, and System
 
-- **`GET /api/health`** — JSON health endpoint with config-store readability check; returns 200 healthy or 503 unhealthy. Used by the Docker `HEALTHCHECK`. `apps/api/src/server.ts`
+- **`GET /api/health`** — JSON health endpoint with config-store readability check; returns 200 healthy or 503 unhealthy. Used by the Docker `HEALTHCHECK`. `apps/api/src/health.ts`
 - **Pino logger** — structured logs across the api; a console-backed logger in the web app; `console.*` lint-banned elsewhere. `apps/api/src/logger.ts`, `apps/web/src/lib/logger.ts`
 - **Centralized env loader** — `apps/api/src/env.ts` validates env via t3-env + Zod: the five bootstrap vars (see §4) plus `PORT` (default `3000`), `LOG_LEVEL` (default `info`, consumed by `apps/api/src/logger.ts`), and `NODE_ENV`. The web app has no runtime env — its only build-time read is `import.meta.env.DEV` in `apps/web/src/lib/logger.ts`; everything else flows through the API.
 - **Client data fetching via TanStack Query** — data-driven pages always refetch on mount, so the UI reflects fresh server state.
@@ -217,7 +217,7 @@ Sources reviewed at last full audit (2026-10-01): source tree, `README.md`, `doc
 ## 7. MediaMTX API Integration
 
 - **Hand-rolled typed client** for the endpoints the app uses: `v3/paths/{list,get}`, `v3/config/global/{get,patch}`, `v3/config/pathdefaults/{get,patch}`, `v3/config/paths/{list,get,add,patch,delete}` (fetch-based, shapes mirror MediaMTX v1.11.3 swagger). A non-OK response throws `MediaMtxError`, which carries the status *and* the `error` string out of MediaMTX's own body — the only thing that says why a write was refused (§3.6). `apps/api/src/mediamtx.ts`
-- **Only the api talks to MediaMTX's API** — the browser reaches MediaMTX directly only for HLS playback via `remoteMediaMtxUrl`.
+- **Only the api talks to MediaMTX's API** — the browser reaches MediaMTX directly only for live playback (WHEP and HLS) via `remoteMediaMtxUrl`.
 
 ---
 
@@ -358,7 +358,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **Port 3000** + node-based `HEALTHCHECK` against `/api/health` (30 s interval, 10 s timeout, 3 retries) — no curl in the image.
 
 ### 13.2 Compose stacks
-- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.19.2) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889 (WebRTC/WHEP signalling) / 8189-udp (WebRTC ICE) / 8890-udp (SRT) / 9997 (API)`, dependency ordering. The app container sets all five bootstrap env vars. The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
+- **`docker-compose.yml`** — full prod stack: `mediamtx` (v1.20.0) + `mediamtx-connect`, shared `mtx` bridge network, named volumes for `/data` and `/screenshots`, read-only-mounted `mediamtx.yml`, exposed ports `3000 / 8554 (RTSP) / 1935 (RTMP) / 8888 (HLS) / 8889 (WebRTC/WHEP signalling) / 8189-udp (WebRTC ICE) / 8890-udp (SRT) / 9997 (API)`, dependency ordering. The app container sets all five bootstrap env vars. The host recordings path comes from `${MEDIAMTX_RECORDINGS_DIR}`, which compose resolves against the repo root: set it to an absolute path.
 - **`REMOTE_MEDIAMTX_HOST` — one knob for "the browser isn't on this machine"** — defaults to `127.0.0.1`, so `docker compose up` with no `.env` behaves exactly as before. Setting it in `.env` feeds both halves of the same trap at once: the `mediamtx` service gets `MTX_WEBRTCADDITIONALHOSTS` (MediaMTX's own env override for `webrtcAdditionalHosts` — §13.4) and `mediamtx-connect` gets `REMOTE_MEDIAMTX_URL: http://${REMOTE_MEDIAMTX_HOST}`. Setting the playback URL correctly but not the advertised WebRTC host is precisely the half-configured state where WHEP negotiates, ICE times out, and playback silently falls back to HLS. Compose-only — it is not an app env var (§13.1). On an **existing** deployment it only moves the WebRTC host: `config.json` already exists, so the playback URL must also be changed in `/config` (§3.1, §4). `docker-compose.yml`, `.env.example`
 - **`docker-compose.dev.yml`** — dev variant: MediaMTX on the `bluenviron/mediamtx:*-ffmpeg` image mounting the dev-only **`mediamtx.dev.yml`** (a diverse named-camera fleet generated in-server via `runOnInit`/`runOnDemand`), plus the always-on **`fake-streams`** publisher for the wildcard-backed `stream1..5`. `pnpm dev` starts it; no profile flag. It passes `MTX_WEBRTCADDITIONALHOSTS` to the `mediamtx` service only — in dev the app runs on the host under `pnpm dev` and never sees compose env.
 - **`mediamtx.dev.yml`** — dev-only MediaMTX config that mirrors `mediamtx.yml`'s base settings and adds a diverse stream fleet to exercise the feature surface: multiple codecs (H264 / H265 / M-JPEG), audio (AAC / Opus / none), mixed resolutions and frame rates, always-on vs on-demand (`runOnDemand`) vs offline (no source), named-entry vs wildcard-backed paths, and a per-path `record` override. Not shipped in the image.
@@ -406,7 +406,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`client-config-form.test.tsx`** — the App Config form: a field per key seeded from the server, section headings, the hero playback badge, field descriptions, editability, and the save bar (hidden while pristine, dirty count, Reset restoring values, validation count) plus the save round trip asserting the exact `config.app.update` input. `apps/web/src/features/client-config/client-config-form.test.tsx`
 - **`app-header.test.tsx`** — the primary nav and locale switching against the app's **real** `I18nProvider` (`realI18n` in the harness): the tab inventory, the brand, English by default, switching to Spanish updating `<html lang>` and the nav labels, persistence to `localStorage`, starting in a stored locale, an unsupported stored value falling back, and the current route surviving a switch. `apps/web/src/components/app-header.test.tsx`
 - **`app-header.tab-state.test.ts`** — `isActiveRoute` (`nav-active.ts`) as a pure function in the `logic` project: `/config` matches exactly so the App Config and MediaMTX Config tabs never light together, MediaMTX Config stays active across its sub-routes, recordings matches its detail pages, and a null pathname activates nothing. Its own module because asserting this through a rendered header tests TanStack Link's prefix-matched `aria-current` instead. `apps/web/src/components/app-header.tab-state.test.ts`
-- **Harness** — `src/test/render.tsx` mirrors `main.tsx`'s provider stack (QueryClient, `IntlProvider` with shipped English messages, memory-history router, `ThemeProvider`, `Toaster`) and awaits `router.load()`; `src/test/rpc-server.ts` serves `/rpc/*` through MSW backed by the **real `RPCHandler`** over an `implement(contract)` stub router, so a contract change fails these at typecheck. `renderWithProviders` also takes `realI18n` to swap the fixed English `IntlProvider` for the app's own `I18nProvider`, for the suites that are *about* locale switching. Two Vitest projects (`logic` = node, `component` = happy-dom) in `apps/web/vitest.config.ts`. **215 Vitest tests total** — 73 api + 136 web + 6 scripts. `docs/adr/0005-fast-test-suite.md`
+- **Harness** — `src/test/render.tsx` mirrors `main.tsx`'s provider stack (QueryClient, `IntlProvider` with shipped English messages, memory-history router, `ThemeProvider`, `Toaster`) and awaits `router.load()`; `src/test/rpc-server.ts` serves `/rpc/*` through MSW backed by the **real `RPCHandler`** over an `implement(contract)` stub router, so a contract change fails these at typecheck. `renderWithProviders` also takes `realI18n` to swap the fixed English `IntlProvider` for the app's own `I18nProvider`, for the suites that are *about* locale switching. Two Vitest projects (`logic` = node, `component` = happy-dom) in `apps/web/vitest.config.ts`. `docs/adr/0005-fast-test-suite.md`
 
 ### 15.0.2 Vitest scripts tests (`scripts/*.test.mjs`)
 - **`check-args.test.mjs`** — `pnpm check`'s argument handling: working-tree mode with no arguments, `--since <ref>` scoping to a branch, bare paths passed through as explicit files, and `--since` with nothing (or the next flag) after it producing a named error — asserted both through `parseArgs` and by spawning `check.mjs` and reading its exit code. `scripts/check-args.test.mjs`
@@ -417,9 +417,10 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`a11y.spec.ts`** — axe-core accessibility smoke over six routes. The only spec still opted into the cross-browser projects.
 - **`path-defaults.spec.ts`** — the path-defaults page: Recording + Path Hooks sections, edit + save round-trip against live MediaMTX, restoring what it wrote.
 - **`path-config.spec.ts`** — the per-path page: effective config inherited from the wildcard entry, path-scoped hooks only, `?section=pathHooks` deep link, a hook write, a save that materializes a sparse entry without restarting the session, and a revert through the page that deletes that entry again — which is also how the spec cleans up, so it holds no raw `config/paths/delete` of its own. Plus the unresolved empty state on a name that is neither running nor configured, which needs no fixture setup at all.
+- **`publish-urls.spec.ts`** — "Copy publish URLs" against live MediaMTX: patches `rtmpAddress` to a non-default port and asserts the copied RTMP URL carries it, then restores the old address. Its retrying `patchGlobal` rides out MediaMTX restarting its API listener on config writes.
 - **`record-toggle.spec.ts`** — the card's record toggle: a card reports state inherited from path defaults (the stock setup); stopping one stream materializes its own override while path defaults, the wildcard entry, other cards, and the live session all stay put; starting one that already has an entry patches it in place.
 - **`playback.spec.ts`** — the only test that opens a real peer connection: in LOW-LAT, playing `stream3` negotiates WHEP against live MediaMTX until ICE completes, the card's pill reads `WEBRTC`, and the `<video>` is driven by a `MediaStream` rather than a `src`. With the WHEP POST aborted (a blocked WebRTC port, from the browser's side), the same card falls back to HLS and admits it with the `WEBRTC UNAVAILABLE` pill.
-- **Runner config** (`playwright.config.ts`) — Chromium only by default (**24 tests in 7 files**, down from 56 in 11 before ADR 0005's change 1 was finished); `E2E_ALL_BROWSERS=1` adds Firefox/WebKit/mobile and now matches **only `a11y.spec.ts`**, since the rest of the old UI-spec set is Vitest and `streams.spec.ts`'s remaining test spawns ffmpeg. Set only by the nightly `e2e-nightly.yml`. 1280×720, `workers: '100%'` in CI, 1 retry, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The four specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`, `publish-urls`) stay out of that pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
+- **Runner config** (`playwright.config.ts`) — Chromium only by default; `E2E_ALL_BROWSERS=1` adds Firefox/WebKit/mobile and now matches **only `a11y.spec.ts`**, since the rest of the old UI-spec set is Vitest and `streams.spec.ts`'s remaining test spawns ffmpeg. Set only by the nightly `e2e-nightly.yml`. 1280×720, `workers: '100%'` in CI, 1 retry, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The four specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`, `publish-urls`) stay out of that pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
 
 ### 15.2 Linting & types
 - **ESLint 10 + `@antfu/eslint-config`** (lint + format in one tool) with custom rules:
@@ -496,7 +497,7 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 - **Contribution guide** — `CONTRIBUTING.md`.
 - **Architecture doc** — `docs/ARCHITECTURE.md` (system diagram, layout, stack rationale, responsive policy).
 - **Project conventions** — `AGENTS.md`.
-- **Demo GIF** — `.github/assets/demo.gif` referenced from README.
+- **Demo screenshot** — `.github/assets/demo.png` referenced from README; `demo/` regenerates it.
 
 ---
 
@@ -507,7 +508,7 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 | Monorepo | pnpm workspaces + Turborepo, versions centralized in the pnpm catalog |
 | Frontend | Vite + React 19 + TanStack Router (SPA) |
 | Data fetching | TanStack Query over an oRPC contract (`@connect/contract`) |
-| Backend | Hono on Node 22, bundled with tsdown |
+| Backend | Hono on Node 24 (engines `>=22`), bundled with tsdown |
 | API typing | oRPC contract-first + Zod v4 (zero codegen, native `Date` over the wire) |
 | Language | TypeScript 6.0 (strict, verified against tsc 7) |
 | Styling | Tailwind CSS 4, shadcn/ui (Radix UI) |
@@ -519,7 +520,7 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 | Scheduling | node-cron |
 | Icons | Lucide React |
 | i18n | `use-intl` (client-side locale, 30 languages) |
-| Testing | Playwright (E2E) + Vitest (api unit) |
+| Testing | Vitest (api unit, web logic + component, scripts) + Playwright (E2E) |
 | Linting | ESLint 10 + `@antfu/eslint-config` |
 | Packaging | Docker (turbo-pruned multi-stage, multi-arch, single image) |
 | Release | semantic-release, Renovate |
@@ -534,7 +535,7 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 - Reconfigure the app itself (URLs, mount paths) from the same UI; no container restart needed.
 - Healthcheck endpoint, structured logs, scheduled background jobs, and PWA install — production-ready out of the box.
 - Multi-arch Docker images (amd64/arm64), one-command stand-up via Docker Compose, single-process deploy (API + SPA + media from one container).
-- Dark/light/system theming, responsive grids, mobile nav, accessible Radix primitives, 30 languages.
+- Dark and light themes (following the OS until toggled), responsive grids, mobile nav, accessible Radix primitives, 30 languages.
 - End-to-end type safety from Zod contract to React components with zero codegen.
 - End-to-end test suite, semantic-release pipeline, Renovate-managed deps.
 - Domain-driven feature layout that's prebuilt to absorb future capabilities (auth, storage management, analytics, integrations).
