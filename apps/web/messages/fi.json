@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "yhdistetty",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "yhdistetty · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio. Jotkin asetukset voivat puuttua tai ne voidaan hylätä."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Suora",
       "recordings": "Tallenteet",
+      "sessions": "Istunnot",
       "appConfig": "Sovelluksen asetukset",
       "mediamtxConfig": "MediaMTX-asetukset",
       "paths": "Polut"
@@ -167,6 +170,98 @@
       "showing": "Näytetään {from}–{to} / {total}",
       "previous": "Edellinen sivu",
       "next": "Seuraava sivu"
+    },
+    "timeline": {
+      "previousDay": "Edellinen päivä",
+      "nextDay": "Seuraava päivä",
+      "trackAria": "24 tunnin aikajana",
+      "spansAria": "Tallennetut jaksot",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Toista {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Tältä päivältä ei ole tallenteita.",
+      "errorTitle": "Tallenteiden aikajanaa ei voitu lukea",
+      "unreachableTitle": "MediaMTX ei vastaa",
+      "unreachableDescription": "Tallenteiden aikajana tulee MediaMTX:ltä. Alla olevat tiedostot luetaan levyltä, ja niitä voi yhä toistaa."
+    },
+    "enablePlayback": {
+      "title": "Ota tallenteiden toisto käyttöön",
+      "playbackOff": "MediaMTX:n toistopalvelin on pois päältä.",
+      "notFmp4": "Tämä stream tallentaa muodossa {format}, ja toistopalvelin lukee vain fMP4:ää.",
+      "changesIntro": "Connect muuttaa nämä asetukset:",
+      "changesAria": "Tehtävät muutokset",
+      "olderNote": "Ennen tätä muutosta tehdyt tallenteet jäävät alla olevaan tiedostoluetteloon.",
+      "apply": "Ota muutokset käyttöön",
+      "applying": "Otetaan käyttöön…",
+      "refused": "MediaMTX hylkäsi muutoksen",
+      "override": "Tämä polku asettaa <code>recordFormat</code>:n arvoksi {format} omassa polkukonfiguraatiossaan, joka ohittaa polkujen oletukset. Aseta se siellä arvoon <code>fmp4</code>.",
+      "openPathConfig": "Avaa tämän polun tallennusasetukset",
+      "pathDefaultsUnreadable": "Polkujen oletuksia ei voitu lukea MediaMTX:ltä."
+    },
+    "clip": {
+      "title": "Lataa leike",
+      "rangeAria": "Leikkeen aikaväli",
+      "last5Min": "Viimeiset 5 min",
+      "last15Min": "Viimeiset 15 min",
+      "last1Hour": "Viimeinen 1 h",
+      "custom": "Mukautettu",
+      "start": "Alku",
+      "durationMinutes": "Kesto (min)",
+      "invalidStart": "Anna aika muodossa HH:MM:SS",
+      "minutesRange": "Kokonaisia minuutteja, 1–60",
+      "range": "{start} – {end}",
+      "download": "Lataa",
+      "cancel": "Peruuta",
+      "preparing": "Valmistellaan leikettä…",
+      "progress": "{received} vastaanotettu · {rate}/s",
+      "complete": "Leike ladattu",
+      "failed": "Leikkeen lataus epäonnistui",
+      "noRecordings": "Tällä aikavälillä ei ole tallenteita"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Istunnot",
+    "pageSubHeader": "Kaikki MediaMTX:ään juuri nyt yhdistetyt asiakkaat, julkaisevat tai lukevat, millä tahansa protokollalla.",
+    "summary": "{count, plural, one {# istunto} other {# istuntoa}}",
+    "columns": {
+      "path": "Polku",
+      "protocol": "Protokolla",
+      "remoteAddr": "Etäosoite",
+      "state": "Tila",
+      "bytesIn": "Tavuja sisään",
+      "bytesOut": "Tavuja ulos",
+      "uptime": "Käyntiaika",
+      "actions": "Toiminnot"
+    },
+    "states": {
+      "idle": "jouten",
+      "read": "luku",
+      "publish": "julkaisu"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ei käytössä tällä palvelimella)",
+      "failed": "{protocol} (ei voitu lukea)",
+      "unlisted": "Ei listattu: {protocols}.",
+      "truncated": "Näytetään ensimmäiset {count, number} {protocol}-istuntoa."
+    },
+    "kick": {
+      "action": "Katkaise",
+      "confirmTitle": "Katkaistaanko {protocol}-asiakas {remoteAddr} polulta {path}?",
+      "confirmDescription": "MediaMTX katkaisee yhteyden nyt. Tämä ei ole esto: asiakas voi yhdistää heti uudelleen.",
+      "hlsCaveat": "HLS-soitin pyytää soittolistaansa uudelleen sekunneissa ja saa uuden istunnon, joten tämä lähinnä vain nollaa sen.",
+      "cancel": "Peruuta",
+      "confirm": "Katkaise asiakas",
+      "toasts": {
+        "success": "{remoteAddr} katkaistu",
+        "alreadyGone": "{remoteAddr} oli jo katkaissut yhteyden",
+        "errorTitle": "Istuntoa ei voitu katkaista",
+        "errorDescription": "MediaMTX ei hyväksynyt katkaisua. Yritä uudelleen."
+      }
+    },
+    "empty": {
+      "title": "Kukaan ei ole yhdistettynä",
+      "lead": "MediaMTX:llä ei ole nyt julkaisijoita eikä lukijoita."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-asetukset",
-      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle."
+      "pageSubHeader": "MediaMTX-palvelimen yleiset asetukset, tallennetaan palvelimelle.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · käynnissä alkaen {started}",
+      "tooOldTitle": "MediaMTX {version} on vanhempi kuin {minimum}, vanhin Connectin tukema versio.",
+      "tooOldBody": "Jotkin asetukset voivat puuttua tai ne voidaan hylätä. Muut latautuvat ja tallentuvat edelleen."
     },
     "pathDefaults": {
       "pageHeader": "Polkujen oletusarvot",
@@ -310,6 +409,31 @@
           "errorTitle": "Perittyihin asetuksiin ei voitu palata",
           "errorDescription": "Polun asetusmerkintä on yhä tallella. Yritä uudelleen."
         }
+      },
+      "publishRead": {
+        "title": "Julkaise ja toista",
+        "publishTab": "Julkaise",
+        "readTab": "Toista",
+        "pullSource": "Tämä polku hakee striimin lähteestään; MediaMTX hylkää julkaisijat.",
+        "readFailed": "Palvelimen kuunteluosoitteita ei voitu lukea.",
+        "noProtocols": "Palvelin on poistanut käytöstä kaikki tähän liittyvät protokollat.",
+        "copyUrl": "Kopioi {protocol}-URL",
+        "copySnippet": "Kopioi {client}-koodinpätkä protokollalle {protocol}",
+        "snippetLabel": "{client}-koodinpätkä protokollalle {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 julkaisee WHIP:llä vain, kun syötteessä on sekä video- että ääniraita."
+        },
+        "links": {
+          "systemPlayer": "Avaa järjestelmän soittimessa",
+          "browserPublish": "Julkaise selaimesta",
+          "hlsPage": "Avaa MediaMTX:n HLS-sivu",
+          "webrtcPage": "Avaa MediaMTX:n WebRTC-sivu"
+        },
+        "toasts": {
+          "copied": "Kopioitu leikepöydälle",
+          "copyFailedTitle": "Kopiointi epäonnistui",
+          "copyFailedDescription": "Selain esti pääsyn leikepöydälle. Valitse teksti ja kopioi se itse."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "Tallennus",
         "pathHooks": "Polun hookit",
         "source": "Lähde",
+        "forward": "Edelleenlähetys",
         "resilience": "Vikasietoisuus"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "Tallenna striimit levylle.",
         "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa.",
         "source": "Mistä tämän polun striimi tulee.",
+        "forward": "Julkaise tämän polun stream uudelleen muille palvelimille, kuten YouTubeen tai Twitchiin.",
         "resilience": "Pidä lukijat yhdistettyinä, kun lähde katkeaa, tai hae lähde vain, kun joku katsoo."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "ICE-palvelimen {index} käyttäjänimi",
         "passwordAria": "ICE-palvelimen {index} salasana",
         "removeAria": "Poista ICE-palvelin {index}"
+      },
+      "forwardDests": {
+        "add": "Lisää kohde",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Kohde {index}",
+        "showAria": "Näytä kohde {index}",
+        "hideAria": "Piilota kohde {index}",
+        "removeAria": "Poista kohde {index}",
+        "plaintextNotice": "MediaMTX tallentaa nämä URL-osoitteet stream-avaimineen selväkielisinä asetuksiinsa ja palauttaa ne peittämättöminä API:staan."
       },
       "errors": {
         "invalidSource": "MediaMTX ei hyväksy tätä. Käytä arvoa publisher, redirect tai rpiCamera taikka URL-osoitetta, joka alkaa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// tai wheps://."

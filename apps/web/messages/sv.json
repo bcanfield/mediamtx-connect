@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "ansluten",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "ansluten · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} är äldre än {minimum}, den äldsta versionen som Connect stöder. Vissa inställningar kan saknas eller avvisas."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Inspelningar",
+      "sessions": "Sessioner",
       "appConfig": "Appkonfiguration",
       "mediamtxConfig": "MediaMTX-konfiguration",
       "paths": "Sökvägar"
@@ -167,6 +170,98 @@
       "showing": "Visar {from}–{to} av {total}",
       "previous": "Föregående sida",
       "next": "Nästa sida"
+    },
+    "timeline": {
+      "previousDay": "Föregående dag",
+      "nextDay": "Nästa dag",
+      "trackAria": "Tidslinje för 24 timmar",
+      "spansAria": "Inspelade avsnitt",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Spela {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Inga inspelningar den här dagen.",
+      "errorTitle": "Det gick inte att läsa inspelningstidslinjen",
+      "unreachableTitle": "MediaMTX går inte att nå",
+      "unreachableDescription": "Inspelningstidslinjen kommer från MediaMTX. Filerna nedan läses från disk och går fortfarande att spela."
+    },
+    "enablePlayback": {
+      "title": "Slå på uppspelning av inspelningar",
+      "playbackOff": "MediaMTX:s uppspelningsserver är avstängd.",
+      "notFmp4": "Den här streamen spelar in i {format}, och uppspelningsservern läser bara fMP4.",
+      "changesIntro": "Connect ändrar de här inställningarna:",
+      "changesAria": "Ändringar att göra",
+      "olderNote": "Inspelningar från före den här ändringen finns kvar i fillistan nedan.",
+      "apply": "Verkställ ändringar",
+      "applying": "Verkställer…",
+      "refused": "MediaMTX avvisade ändringen",
+      "override": "Den här sökvägen sätter <code>recordFormat</code> till {format} i sin egen sökvägskonfiguration, som åsidosätter standardvärdena. Ställ in <code>fmp4</code> där.",
+      "openPathConfig": "Öppna inspelningskonfigurationen för den här sökvägen",
+      "pathDefaultsUnreadable": "Det gick inte att läsa sökvägarnas standardvärden från MediaMTX."
+    },
+    "clip": {
+      "title": "Ladda ned klipp",
+      "rangeAria": "Klippets intervall",
+      "last5Min": "Senaste 5 min",
+      "last15Min": "Senaste 15 min",
+      "last1Hour": "Senaste 1 h",
+      "custom": "Anpassat",
+      "start": "Start",
+      "durationMinutes": "Längd (min)",
+      "invalidStart": "Ange en tid som TT:MM:SS",
+      "minutesRange": "Hela minuter, från 1 till 60",
+      "range": "{start} – {end}",
+      "download": "Ladda ned",
+      "cancel": "Avbryt",
+      "preparing": "Förbereder klipp…",
+      "progress": "{received} mottaget · {rate}/s",
+      "complete": "Klipp nedladdat",
+      "failed": "Nedladdningen av klippet misslyckades",
+      "noRecordings": "Inga inspelningar i det här intervallet"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessioner",
+    "pageSubHeader": "Alla klienter som är anslutna till MediaMTX just nu, som publicerar eller läser, över alla protokoll.",
+    "summary": "{count, plural, one {# session} other {# sessioner}}",
+    "columns": {
+      "path": "Sökväg",
+      "protocol": "Protokoll",
+      "remoteAddr": "Fjärradress",
+      "state": "Tillstånd",
+      "bytesIn": "Byte in",
+      "bytesOut": "Byte ut",
+      "uptime": "Drifttid",
+      "actions": "Åtgärder"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "läser",
+      "publish": "publicerar"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (inte aktiverat på den här servern)",
+      "failed": "{protocol} (kunde inte läsas)",
+      "unlisted": "Inte listade: {protocols}.",
+      "truncated": "Visar de första {count, number} {protocol}-sessionerna."
+    },
+    "kick": {
+      "action": "Sparka ut",
+      "confirmTitle": "Sparka ut {protocol}-klienten {remoteAddr} från {path}?",
+      "confirmDescription": "MediaMTX bryter anslutningen nu. Det är ingen avstängning: klienten kan ansluta igen direkt.",
+      "hlsCaveat": "En HLS-spelare begär sin spellista igen inom några sekunder och får en ny session, så detta återställer den mest.",
+      "cancel": "Avbryt",
+      "confirm": "Sparka ut klient",
+      "toasts": {
+        "success": "{remoteAddr} utsparkad",
+        "alreadyGone": "{remoteAddr} hade redan kopplat från",
+        "errorTitle": "Kunde inte sparka ut sessionen",
+        "errorDescription": "MediaMTX godtog inte begäran. Försök igen."
+      }
+    },
+    "empty": {
+      "title": "Ingen är ansluten",
+      "lead": "MediaMTX har inga publicerare eller läsare just nu."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-konfiguration",
-      "pageSubHeader": "Globala MediaMTX-serverinställningar, sparade på servern."
+      "pageSubHeader": "Globala MediaMTX-serverinställningar, sparade på servern.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · körs sedan {started}",
+      "tooOldTitle": "MediaMTX {version} är äldre än {minimum}, den äldsta versionen som Connect stöder.",
+      "tooOldBody": "Vissa inställningar kan saknas eller avvisas. Resten läses fortfarande in och sparas."
     },
     "pathDefaults": {
       "pageHeader": "Standardvärden för sökvägar",
@@ -310,6 +409,31 @@
           "errorTitle": "Kunde inte återgå till ärvda inställningar",
           "errorDescription": "Sökvägens konfigurationspost finns kvar. Försök igen."
         }
+      },
+      "publishRead": {
+        "title": "Publicera och spela upp",
+        "publishTab": "Publicera",
+        "readTab": "Spela upp",
+        "pullSource": "Den här sökvägen hämtar strömmen från sin källa; MediaMTX nekar publicerare.",
+        "readFailed": "Kunde inte läsa serverns lyssningsadresser.",
+        "noProtocols": "Servern har stängt av alla protokoll för detta.",
+        "copyUrl": "Kopiera {protocol}-URL",
+        "copySnippet": "Kopiera {client}-kodsnutten för {protocol}",
+        "snippetLabel": "{client}-kodsnutt för {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publicerar över WHIP bara när indata har både ett video- och ett ljudspår."
+        },
+        "links": {
+          "systemPlayer": "Öppna i systemspelaren",
+          "browserPublish": "Publicera från webbläsaren",
+          "hlsPage": "Öppna MediaMTX HLS-sida",
+          "webrtcPage": "Öppna MediaMTX WebRTC-sida"
+        },
+        "toasts": {
+          "copied": "Kopierat till urklipp",
+          "copyFailedTitle": "Kunde inte kopiera",
+          "copyFailedDescription": "Webbläsaren blockerade åtkomst till urklipp. Markera texten och kopiera den själv."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "Inspelning",
         "pathHooks": "Sökvägshooks",
         "source": "Källa",
+        "forward": "Vidarebefordran",
         "resilience": "Motståndskraft"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "Spela in strömmar till disk.",
         "pathHooks": "Kommandon som MediaMTX kör vid sökvägens egna livscykelhändelser.",
         "source": "Var strömmen för den här sökvägen kommer ifrån.",
+        "forward": "Publicera om den här sökvägens ström till andra servrar, som YouTube eller Twitch.",
         "resilience": "Håll läsare anslutna när källan faller bort, eller hämta källan bara medan någon tittar."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "Användarnamn för ICE-server {index}",
         "passwordAria": "Lösenord för ICE-server {index}",
         "removeAria": "Ta bort ICE-server {index}"
+      },
+      "forwardDests": {
+        "add": "Lägg till mål",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Mål {index}",
+        "showAria": "Visa mål {index}",
+        "hideAria": "Dölj mål {index}",
+        "removeAria": "Ta bort mål {index}",
+        "plaintextNotice": "MediaMTX lagrar dessa URL:er, inklusive strömnycklar, i klartext i sin konfiguration och returnerar dem omaskerade från sitt API."
       },
       "errors": {
         "invalidSource": "MediaMTX godtar inte det här. Använd publisher, redirect, rpiCamera eller en URL som börjar med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."

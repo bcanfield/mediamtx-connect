@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 import { PageLayout } from '@/components/page-layout'
 import { advertisesOnlyLoopback } from '@/lib/playback'
-import { publishTargets } from '@/lib/publish'
+import { publishHost, publishTargets } from '@/lib/publish'
 import { toIceServers } from '@/lib/whep'
 import { orpc } from '@/orpc'
 
@@ -20,20 +20,6 @@ function isConnectedState(
   state: StreamsState | undefined,
 ): state is Extract<StreamsState, { status: 'connected' }> {
   return state?.status === 'connected'
-}
-
-// Publishers connect from the operator's network, so this is the browser-facing
-// MediaMTX URL, never the one the API reaches it at (`http://mediamtx` under
-// docker-compose).
-function publishHost(remoteMediaMtxUrl: string | null): string {
-  if (!remoteMediaMtxUrl)
-    return window.location.hostname
-  try {
-    return new URL(remoteMediaMtxUrl).hostname
-  }
-  catch {
-    return remoteMediaMtxUrl
-  }
 }
 
 export function LiveViewPage() {

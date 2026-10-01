@@ -24,6 +24,8 @@ export interface SectionDef<T extends FieldValues> {
   enableField?: FieldPath<T>
   fields: SectionField<T>[]
   hasIceServers?: boolean
+  // the path's `forward` list, edited by its own row editor
+  hasForwardDests?: boolean
   // sections whose save disrupts live streams; renders sectionWarnings.<id>
   warnsOnSave?: boolean
 }
@@ -237,6 +239,16 @@ const SOURCE_SECTION: SectionDef<PathConfigFormData> = {
   fields: [{ name: 'source', kind: 'text' }],
 }
 
+// Per-path only, like Source: a destination's stream key belongs to one
+// account, so `forward` in path defaults would push every stream to it.
+// Writing `forward` hot-reloads the path rather than restarting it, so unlike
+// the hooks section this one doesn't warn on save.
+const FORWARD_SECTION: SectionDef<PathConfigFormData> = {
+  id: 'forward',
+  fields: [],
+  hasForwardDests: true,
+}
+
 // Path config only: MediaMTX validates path defaults as the `all_others`
 // entry, where it refuses alwaysAvailable outright and refuses sourceOnDemand
 // with the stock `publisher` source. Any of these keys re-creates the path.
@@ -262,7 +274,7 @@ export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathC
         .refine(isValidPathSource, { message: invalidSourceMessage })
         .optional(),
     }),
-    sections: [SOURCE_SECTION, RESILIENCE_SECTION, ...PATH_SECTIONS],
+    sections: [SOURCE_SECTION, FORWARD_SECTION, RESILIENCE_SECTION, ...PATH_SECTIONS],
   }
 }
 
@@ -272,6 +284,8 @@ function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): strin
     names.push(section.enableField)
   if (section.hasIceServers)
     names.push('webrtcICEServers2')
+  if (section.hasForwardDests)
+    names.push('forward')
   return names
 }
 

@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "forbundet",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "forbundet · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} er ældre end {minimum}, den ældste version Connect understøtter. Nogle indstillinger kan mangle eller blive afvist."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Optagelser",
+      "sessions": "Sessioner",
       "appConfig": "Appkonfiguration",
       "mediamtxConfig": "MediaMTX-konfiguration",
       "paths": "Stier"
@@ -167,6 +170,98 @@
       "showing": "Viser {from}–{to} af {total}",
       "previous": "Forrige side",
       "next": "Næste side"
+    },
+    "timeline": {
+      "previousDay": "Forrige dag",
+      "nextDay": "Næste dag",
+      "trackAria": "Tidslinje på 24 timer",
+      "spansAria": "Optagede afsnit",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Afspil {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Ingen optagelser denne dag.",
+      "errorTitle": "Kunne ikke læse optagelsestidslinjen",
+      "unreachableTitle": "MediaMTX kan ikke nås",
+      "unreachableDescription": "Optagelsestidslinjen kommer fra MediaMTX. Filerne nedenfor læses fra disken og kan stadig afspilles."
+    },
+    "enablePlayback": {
+      "title": "Slå afspilning af optagelser til",
+      "playbackOff": "MediaMTX' afspilningsserver er slået fra.",
+      "notFmp4": "Denne stream optager i {format}, og afspilningsserveren læser kun fMP4.",
+      "changesIntro": "Connect ændrer disse indstillinger:",
+      "changesAria": "Ændringer, der foretages",
+      "olderNote": "Optagelser fra før denne ændring bliver i fillisten nedenfor.",
+      "apply": "Anvend ændringer",
+      "applying": "Anvender…",
+      "refused": "MediaMTX afviste ændringen",
+      "override": "Denne sti sætter <code>recordFormat</code> til {format} i sin egen stikonfiguration, som tilsidesætter stiernes standarder. Sæt den til <code>fmp4</code> der.",
+      "openPathConfig": "Åbn optagelseskonfigurationen for denne sti",
+      "pathDefaultsUnreadable": "Kunne ikke læse stiernes standarder fra MediaMTX."
+    },
+    "clip": {
+      "title": "Download klip",
+      "rangeAria": "Klippets interval",
+      "last5Min": "Sidste 5 min",
+      "last15Min": "Sidste 15 min",
+      "last1Hour": "Sidste 1 t",
+      "custom": "Brugerdefineret",
+      "start": "Start",
+      "durationMinutes": "Varighed (min)",
+      "invalidStart": "Angiv et tidspunkt som TT:MM:SS",
+      "minutesRange": "Hele minutter fra 1 til 60",
+      "range": "{start} – {end}",
+      "download": "Download",
+      "cancel": "Annuller",
+      "preparing": "Forbereder klip…",
+      "progress": "{received} modtaget · {rate}/s",
+      "complete": "Klip downloadet",
+      "failed": "Download af klip mislykkedes",
+      "noRecordings": "Ingen optagelser i dette interval"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessioner",
+    "pageSubHeader": "Alle klienter, der er forbundet til MediaMTX lige nu, der publicerer eller læser, over enhver protokol.",
+    "summary": "{count, plural, one {# session} other {# sessioner}}",
+    "columns": {
+      "path": "Sti",
+      "protocol": "Protokol",
+      "remoteAddr": "Fjernadresse",
+      "state": "Tilstand",
+      "bytesIn": "Bytes ind",
+      "bytesOut": "Bytes ud",
+      "uptime": "Oppetid",
+      "actions": "Handlinger"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "læser",
+      "publish": "publicerer"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ikke aktiveret på denne server)",
+      "failed": "{protocol} (kunne ikke læses)",
+      "unlisted": "Ikke vist: {protocols}.",
+      "truncated": "Viser de første {count, number} {protocol}-sessioner."
+    },
+    "kick": {
+      "action": "Smid ud",
+      "confirmTitle": "Smid {protocol}-klienten {remoteAddr} ud fra {path}?",
+      "confirmDescription": "MediaMTX afbryder forbindelsen nu. Det er ikke en udelukkelse: klienten kan genoprette forbindelsen med det samme.",
+      "hlsCaveat": "En HLS-afspiller beder om sin playliste igen inden for sekunder og får en ny session, så dette nulstiller den for det meste bare.",
+      "cancel": "Annuller",
+      "confirm": "Smid klient ud",
+      "toasts": {
+        "success": "{remoteAddr} smidt ud",
+        "alreadyGone": "{remoteAddr} havde allerede afbrudt",
+        "errorTitle": "Kunne ikke smide sessionen ud",
+        "errorDescription": "MediaMTX accepterede ikke handlingen. Prøv igen."
+      }
+    },
+    "empty": {
+      "title": "Ingen er forbundet",
+      "lead": "MediaMTX har ingen udgivere eller læsere lige nu."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-konfiguration",
-      "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren."
+      "pageSubHeader": "Globale MediaMTX-serverindstillinger, gemt på serveren.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · kører siden {started}",
+      "tooOldTitle": "MediaMTX {version} er ældre end {minimum}, den ældste version Connect understøtter.",
+      "tooOldBody": "Nogle indstillinger kan mangle eller blive afvist. Resten indlæses og gemmes stadig."
     },
     "pathDefaults": {
       "pageHeader": "Standardværdier for stier",
@@ -310,6 +409,31 @@
           "errorTitle": "Kunne ikke vende tilbage til nedarvede indstillinger",
           "errorDescription": "Stiens konfigurationspost er der stadig. Prøv igen."
         }
+      },
+      "publishRead": {
+        "title": "Udgiv og afspil",
+        "publishTab": "Udgiv",
+        "readTab": "Afspil",
+        "pullSource": "Denne sti henter streamen fra sin kilde; MediaMTX afviser publishers.",
+        "readFailed": "Kunne ikke læse serverens lytteadresser.",
+        "noProtocols": "Serveren har slået alle protokoller til dette fra.",
+        "copyUrl": "Kopiér {protocol}-URL",
+        "copySnippet": "Kopiér {client}-uddraget til {protocol}",
+        "snippetLabel": "{client}-uddrag til {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 udgiver kun over WHIP, når input har både et video- og et lydspor."
+        },
+        "links": {
+          "systemPlayer": "Åbn i systemafspiller",
+          "browserPublish": "Udgiv fra browseren",
+          "hlsPage": "Åbn MediaMTX' HLS-side",
+          "webrtcPage": "Åbn MediaMTX' WebRTC-side"
+        },
+        "toasts": {
+          "copied": "Kopieret til udklipsholderen",
+          "copyFailedTitle": "Kunne ikke kopiere",
+          "copyFailedDescription": "Browseren blokerede adgang til udklipsholderen. Markér teksten og kopiér den selv."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "Optagelse",
         "pathHooks": "Sti-hooks",
         "source": "Kilde",
+        "forward": "Videresendelse",
         "resilience": "Robusthed"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "Optag streams til disk.",
         "pathHooks": "Kommandoer som MediaMTX kører ved stiens egne livscyklushændelser.",
         "source": "Hvor streamet for denne sti kommer fra.",
+        "forward": "Genudgiv denne stis stream til andre servere, f.eks. YouTube eller Twitch.",
         "resilience": "Hold læsere forbundet, når kilden falder ud, eller hent kun kilden, mens nogen ser med."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "Brugernavn for ICE-server {index}",
         "passwordAria": "Adgangskode for ICE-server {index}",
         "removeAria": "Fjern ICE-server {index}"
+      },
+      "forwardDests": {
+        "add": "Tilføj destination",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destination {index}",
+        "showAria": "Vis destination {index}",
+        "hideAria": "Skjul destination {index}",
+        "removeAria": "Fjern destination {index}",
+        "plaintextNotice": "MediaMTX gemmer disse URL'er, inklusive stream-nøgler, i klartekst i sin konfiguration og returnerer dem uskjulte fra sit API."
       },
       "errors": {
         "invalidSource": "MediaMTX accepterer ikke dette. Brug publisher, redirect, rpiCamera eller en URL, der starter med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."

@@ -63,14 +63,21 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - **Snapshots while idle.** A background job keeps a recent frame on every card, with its age on the pill. Need a fresh one now? Take it from the card menu.
 - **Live telemetry.** Codecs, viewer count, and uptime, straight from the path list.
 - **Honest record state.** Cards show whether a stream is *effectively* recording; a state Connect couldn't read says unknown, never off.
-- **Publish URLs on the clipboard.** RTSP, RTMP, and SRT, built from the server's own listen addresses.
+- **Publish URLs on the clipboard.** RTSP, RTMP, and SRT, built from the server's own listen addresses. Each path's page goes further with a publish & read panel: every protocol the server serves, including WHIP, WHEP, HLS and the TLS variants, with copy-ready ffmpeg, GStreamer, OBS, ffplay and VLC snippets.
 
 ### Recordings
 
+- A day timeline per stream from MediaMTX's playback server: recorded spans and the gaps between them, each one playable. If playback is off, Connect lists the exact config changes it needs and applies them in one click.
+- Clip download: any range up to an hour (or the last 5 min, 15 min or hour) as one plain MP4, stitched across segments by MediaMTX without re-encoding.
 - MP4 or MPEG-TS segments per stream, grouped by day, with auto-generated thumbnails.
 - An inline player that expands in place, seekable over HTTP range requests.
 - Downloads that stream, with live progress and cancel.
 - Press `/` to filter.
+
+### Sessions
+
+- **Everyone connected, in one table.** Publishers and readers over RTSP, RTSPS, RTMP, RTMPS, SRT, WebRTC and HLS, with remote address, bytes in and out, and uptime, refreshed every 5 seconds.
+- **Kick a client** after a confirm. It can reconnect; a kick is not a ban.
 
 ### Configuration, without YAML
 
@@ -80,11 +87,12 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - **Live health on each path's page:** tracks, readers, bytes moved, frames in error and uptime, refreshed every 5 seconds. A path with nothing publishing reads idle, not broken.
 - **Resilience on each path:** an always-available fallback that loops an offline clip while the camera is down, and on-demand pulling that only opens the source while someone watches.
 - **Every `runOn*` hook**, with a warning where saving restarts the path.
+- **Forwarding:** push a path to YouTube, Twitch or another server through MediaMTX's native `forward` list, with stream keys masked and no path restart.
 - **Sparse writes.** Only the keys you changed get sent.
 
 ### Ops
 
-One process for API, SPA, and media · multi-arch · `GET /api/health` · structured logs · installable as a PWA · dark and light · 30 languages · no database.
+One process for API, SPA, and media · multi-arch · `GET /api/health` · MediaMTX version in the header · structured logs · installable as a PWA · dark and light · 30 languages · no database.
 
 ## Environment variables
 
@@ -119,7 +127,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thumbnails it reads off disk.
+Live playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thumbnails: off disk, or recorded spans proxied from MediaMTX's playback server.
 
 ## Docs
 

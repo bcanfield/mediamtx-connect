@@ -414,3 +414,111 @@ describe('resilience', () => {
       .toBeInTheDocument()
   })
 })
+
+// MediaMTX re-publishes a path to every `forward` destination. Its PATCH
+// replaces the list wholesale, so whatever goes out has to be the whole list —
+// including keys only a newer MediaMTX serves, which the form can't edit.
+describe('forwarding', () => {
+  async function renderWithForward(forward: unknown[]) {
+    result = { status: 'resolved', confName: 'stream1', conf: { record: true, forward } }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  async function forwardSection() {
+    const heading = await screen.findByRole('heading', { name: 'Forwarding' })
+    return heading.closest('section')!
+  }
+
+  async function addDestination(user: User, index: number, dest: string) {
+    await user.click(await screen.findByRole('button', { name: 'Add destination' }))
+    await user.type(screen.getByLabelText(`Destination ${index}`), dest)
+    // The form validates on blur, and the new row starts out empty and invalid.
+    await user.tab()
+  }
+
+  async function save(user: User) {
+    await user.click(screen.getByRole('button', { name: 'Save to server' }))
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+  }
+
+  it('saves a new destination as the whole list', async () => {
+    const view = await renderWithForward([])
+
+    await addDestination(view.user, 1, 'rtmp://example.com/live#secretkey')
+    await save(view.user)
+
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      {
+        name: 'stream1',
+        conf: { forward: [{ dest: 'rtmp://example.com/live#secretkey' }] },
+      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  // A slice can't be nulled through MediaMTX's PATCH, and an empty row is a
+  // destination it would try to dial.
+  it('sends an empty list when the last destination is removed', async () => {
+    const view = await renderWithForward([{ dest: 'rtmp://example.com/live#k' }])
+
+    await view.user.click(await screen.findByRole('button', { name: 'Remove destination 1' }))
+    await save(view.user)
+
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      { name: 'stream1', conf: { forward: [] } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  it('sends keys it can\'t edit back unchanged', async () => {
+    const existing = {
+      dest: 'whip://example.com/whip',
+      destFingerprint: 'ab:cd',
+      moqTransport: 'quic',
+      whipBearerToken: '',
+    }
+    const view = await renderWithForward([existing])
+
+    await addDestination(view.user, 2, 'srt://example.com:8890')
+    await save(view.user)
+
+    expect(updatePathConfig.mock.calls[0]?.[0].conf).toEqual({
+      forward: [existing, { dest: 'srt://example.com:8890' }],
+    })
+  })
+
+  // Destinations carry stream keys, and MediaMTX hands them back in full.
+  it('masks a destination until Show is pressed', async () => {
+    const view = await renderWithForward([{ dest: 'rtmp://example.com/live#k' }])
+
+    const input = await screen.findByLabelText('Destination 1')
+    expect(input).toHaveAttribute('type', 'password')
+    expect(input).toHaveAttribute('autocomplete', 'off')
+
+    await view.user.click(screen.getByRole('button', { name: 'Show destination 1' }))
+
+    expect(input).toHaveAttribute('type', 'text')
+    expect(screen.getByRole('button', { name: 'Hide destination 1' })).toBeInTheDocument()
+  })
+
+  // Writing `forward` hot-reloads the path; nothing is restarted.
+  it('warns about plaintext storage, not about a restart', async () => {
+    await renderWithForward([])
+
+    const section = await forwardSection()
+    // The plaintext notice is the section's only note: a restart warning would
+    // be a second one.
+    const notes = within(section).getAllByRole('note')
+    expect(notes).toHaveLength(1)
+    expect(notes[0]).toHaveTextContent(/stores these URLs, stream keys included, in plaintext/)
+  })
+
+  it('places Forwarding and then Resilience directly after Source in the rail', async () => {
+    await renderWithForward([])
+
+    const [rail] = await screen.findAllByRole('navigation', { name: 'Config sections' })
+    expect(rail).toBeDefined()
+    const labels = within(rail!).getAllByRole('button').map(b => b.textContent)
+    expect(labels.slice(0, 3)).toEqual(['Source', 'Forwarding', 'Resilience'])
+  })
+})

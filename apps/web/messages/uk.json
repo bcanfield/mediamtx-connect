@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "підключено",
-      "offline": "офлайн"
+      "offline": "офлайн",
+      "connectedVersion": "підключено · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect. Деякі налаштування можуть бути відсутні або відхилені."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Наживо",
       "recordings": "Записи",
+      "sessions": "Сеанси",
       "appConfig": "Налаштування застосунку",
       "mediamtxConfig": "Конфігурація MediaMTX",
       "paths": "Шляхи"
@@ -167,6 +170,98 @@
       "showing": "Показано {from}–{to} з {total}",
       "previous": "Попередня сторінка",
       "next": "Наступна сторінка"
+    },
+    "timeline": {
+      "previousDay": "Попередній день",
+      "nextDay": "Наступний день",
+      "trackAria": "Шкала часу на 24 години",
+      "spansAria": "Записані проміжки",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Відтворити {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Цього дня записів немає.",
+      "errorTitle": "Не вдалося прочитати шкалу записів",
+      "unreachableTitle": "MediaMTX недоступний",
+      "unreachableDescription": "Шкала записів надходить із MediaMTX. Файли нижче читаються з диска й надалі відтворюються."
+    },
+    "enablePlayback": {
+      "title": "Увімкнути відтворення записів",
+      "playbackOff": "Сервер відтворення MediaMTX вимкнено.",
+      "notFmp4": "Цей потік записується у {format}, а сервер відтворення читає лише fMP4.",
+      "changesIntro": "Connect змінить ці налаштування:",
+      "changesAria": "Зміни",
+      "olderNote": "Записи, зроблені до цієї зміни, залишаться у списку файлів нижче.",
+      "apply": "Застосувати зміни",
+      "applying": "Застосування…",
+      "refused": "MediaMTX відхилив зміну",
+      "override": "Цей шлях задає <code>recordFormat</code> = {format} у власній конфігурації шляху, яка перевизначає типові значення шляхів. Установіть там <code>fmp4</code>.",
+      "openPathConfig": "Відкрити налаштування запису цього шляху",
+      "pathDefaultsUnreadable": "Не вдалося прочитати типові значення шляхів із MediaMTX."
+    },
+    "clip": {
+      "title": "Завантажити фрагмент",
+      "rangeAria": "Діапазон фрагмента",
+      "last5Min": "Останні 5 хв",
+      "last15Min": "Останні 15 хв",
+      "last1Hour": "Остання 1 год",
+      "custom": "Власний",
+      "start": "Початок",
+      "durationMinutes": "Тривалість (хв)",
+      "invalidStart": "Введіть час у форматі ГГ:ХХ:СС",
+      "minutesRange": "Ціле число хвилин, від 1 до 60",
+      "range": "{start} – {end}",
+      "download": "Завантажити",
+      "cancel": "Скасувати",
+      "preparing": "Підготовка фрагмента…",
+      "progress": "отримано {received} · {rate}/с",
+      "complete": "Фрагмент завантажено",
+      "failed": "Не вдалося завантажити фрагмент",
+      "noRecordings": "У цьому діапазоні немає записів"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Сеанси",
+    "pageSubHeader": "Усі клієнти, підключені до MediaMTX зараз, що публікують або читають, за будь-яким протоколом.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанси} many {# сеансів} other {# сеансу}}",
+    "columns": {
+      "path": "Шлях",
+      "protocol": "Протокол",
+      "remoteAddr": "Віддалена адреса",
+      "state": "Стан",
+      "bytesIn": "Байт вхідних",
+      "bytesOut": "Байт вихідних",
+      "uptime": "Час роботи",
+      "actions": "Дії"
+    },
+    "states": {
+      "idle": "простій",
+      "read": "читання",
+      "publish": "публікація"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не ввімкнено на цьому сервері)",
+      "failed": "{protocol} (не вдалося прочитати)",
+      "unlisted": "Не показано: {protocols}.",
+      "truncated": "Показано перші {count, number} сеансів {protocol}."
+    },
+    "kick": {
+      "action": "Відключити",
+      "confirmTitle": "Відключити клієнта {protocol} {remoteAddr} від {path}?",
+      "confirmDescription": "MediaMTX одразу розірве зʼєднання. Це не блокування: клієнт може одразу перепідключитися.",
+      "hlsCaveat": "HLS-плеєр за кілька секунд знову запитує плейлист і отримує новий сеанс, тож це здебільшого лише скидає його.",
+      "cancel": "Скасувати",
+      "confirm": "Відключити клієнта",
+      "toasts": {
+        "success": "{remoteAddr} відключено",
+        "alreadyGone": "{remoteAddr} уже відключився",
+        "errorTitle": "Не вдалося відключити сеанс",
+        "errorDescription": "MediaMTX не прийняв запит. Спробуйте ще раз."
+      }
+    },
+    "empty": {
+      "title": "Ніхто не підключений",
+      "lead": "Зараз у MediaMTX немає ні видавців, ні читачів."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Конфігурація MediaMTX",
-      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері."
+      "pageSubHeader": "Глобальні налаштування сервера MediaMTX, зберігаються на сервері.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · працює з {started}",
+      "tooOldTitle": "MediaMTX {version} старіший за {minimum} — найстарішу версію, яку підтримує Connect.",
+      "tooOldBody": "Деякі налаштування можуть бути відсутні або відхилені. Решта, як і раніше, завантажується та зберігається."
     },
     "pathDefaults": {
       "pageHeader": "Типові значення шляхів",
@@ -310,6 +409,31 @@
           "errorTitle": "Не вдалося повернути успадковані налаштування",
           "errorDescription": "Запис конфігурації шляху досі на місці. Спробуйте ще раз."
         }
+      },
+      "publishRead": {
+        "title": "Публікація та перегляд",
+        "publishTab": "Публікація",
+        "readTab": "Перегляд",
+        "pullSource": "Цей шлях забирає потік зі свого джерела; MediaMTX відхиляє тих, хто публікує.",
+        "readFailed": "Не вдалося прочитати адреси, які слухає сервер.",
+        "noProtocols": "На сервері вимкнено всі протоколи для цього.",
+        "copyUrl": "Копіювати URL {protocol}",
+        "copySnippet": "Копіювати фрагмент {client} для {protocol}",
+        "snippetLabel": "Фрагмент {client} для {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 публікує через WHIP, лише якщо вхідний потік має і відео-, і аудіодоріжку."
+        },
+        "links": {
+          "systemPlayer": "Відкрити в системному плеєрі",
+          "browserPublish": "Публікувати з браузера",
+          "hlsPage": "Відкрити HLS-сторінку MediaMTX",
+          "webrtcPage": "Відкрити WebRTC-сторінку MediaMTX"
+        },
+        "toasts": {
+          "copied": "Скопійовано в буфер обміну",
+          "copyFailedTitle": "Не вдалося скопіювати",
+          "copyFailedDescription": "Браузер заблокував доступ до буфера обміну. Виділіть текст і скопіюйте його вручну."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "Запис",
         "pathHooks": "Хуки шляху",
         "source": "Джерело",
+        "forward": "Пересилання",
         "resilience": "Стійкість"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "Записувати потоки на диск.",
         "pathHooks": "Команди, які MediaMTX виконує під час власних подій життєвого циклу шляху.",
         "source": "Звідки надходить потік цього шляху.",
+        "forward": "Повторно публікувати потік цього шляху на інші сервери, як-от YouTube або Twitch.",
         "resilience": "Тримайте читачів підключеними, коли джерело зникає, або отримуйте джерело лише поки хтось дивиться."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "Ім'я користувача сервера ICE {index}",
         "passwordAria": "Пароль сервера ICE {index}",
         "removeAria": "Видалити сервер ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Додати призначення",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Призначення {index}",
+        "showAria": "Показати призначення {index}",
+        "hideAria": "Сховати призначення {index}",
+        "removeAria": "Вилучити призначення {index}",
+        "plaintextNotice": "MediaMTX зберігає ці URL, разом із ключами потоку, відкритим текстом у своїй конфігурації та повертає їх без маскування через свій API."
       },
       "errors": {
         "invalidSource": "MediaMTX не прийме це значення. Використовуй publisher, redirect, rpiCamera або URL, що починається з rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// чи wheps://."

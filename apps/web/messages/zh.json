@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "已连接",
-      "offline": "离线"
+      "offline": "离线",
+      "connectedVersion": "已连接 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。部分设置可能缺失或被拒绝。"
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "直播",
       "recordings": "录像",
+      "sessions": "会话",
       "appConfig": "应用配置",
       "mediamtxConfig": "MediaMTX 配置",
       "paths": "路径"
@@ -167,6 +170,98 @@
       "showing": "显示第 {from}–{to} 项，共 {total} 项",
       "previous": "上一页",
       "next": "下一页"
+    },
+    "timeline": {
+      "previousDay": "前一天",
+      "nextDay": "后一天",
+      "trackAria": "24 小时时间线",
+      "spansAria": "已录制的时段",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "播放 {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "这一天没有录像。",
+      "errorTitle": "无法读取录像时间线",
+      "unreachableTitle": "无法连接 MediaMTX",
+      "unreachableDescription": "录像时间线来自 MediaMTX。下方文件从磁盘读取，仍可播放。"
+    },
+    "enablePlayback": {
+      "title": "开启录像回放",
+      "playbackOff": "MediaMTX 的回放服务器已关闭。",
+      "notFmp4": "此流以 {format} 录制，而回放服务器只读取 fMP4。",
+      "changesIntro": "Connect 将更改以下设置：",
+      "changesAria": "将要进行的更改",
+      "olderNote": "此更改之前的录像仍保留在下方的文件列表中。",
+      "apply": "应用更改",
+      "applying": "正在应用…",
+      "refused": "MediaMTX 拒绝了此更改",
+      "override": "此路径在其自身的路径配置中将 <code>recordFormat</code> 设为 {format}，覆盖了路径默认值。请在那里将其改为 <code>fmp4</code>。",
+      "openPathConfig": "打开此路径的录像配置",
+      "pathDefaultsUnreadable": "无法从 MediaMTX 读取路径默认值。"
+    },
+    "clip": {
+      "title": "下载片段",
+      "rangeAria": "片段范围",
+      "last5Min": "最近 5 分钟",
+      "last15Min": "最近 15 分钟",
+      "last1Hour": "最近 1 小时",
+      "custom": "自定义",
+      "start": "开始",
+      "durationMinutes": "时长（分钟）",
+      "invalidStart": "请以 HH:MM:SS 格式输入时间",
+      "minutesRange": "整数分钟，1 到 60",
+      "range": "{start} – {end}",
+      "download": "下载",
+      "cancel": "取消",
+      "preparing": "正在准备片段…",
+      "progress": "已接收 {received} · {rate}/秒",
+      "complete": "片段已下载",
+      "failed": "片段下载失败",
+      "noRecordings": "此范围内没有录像"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "会话",
+    "pageSubHeader": "当前连接到 MediaMTX 的所有客户端，无论发布还是读取，涵盖所有协议。",
+    "summary": "{count, plural, other {# 个会话}}",
+    "columns": {
+      "path": "路径",
+      "protocol": "协议",
+      "remoteAddr": "远程地址",
+      "state": "状态",
+      "bytesIn": "接收字节",
+      "bytesOut": "发送字节",
+      "uptime": "运行时间",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "空闲",
+      "read": "读取",
+      "publish": "发布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此服务器未启用）",
+      "failed": "{protocol}（无法读取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "仅显示前 {count, number} 个 {protocol} 会话。"
+    },
+    "kick": {
+      "action": "踢出",
+      "confirmTitle": "要将 {protocol} 客户端 {remoteAddr} 从 {path} 踢出吗？",
+      "confirmDescription": "MediaMTX 会立即断开连接。这不是封禁：客户端可以立即重新连接。",
+      "hlsCaveat": "HLS 播放器会在几秒内重新请求播放列表并获得新会话，所以这多半只是重置它。",
+      "cancel": "取消",
+      "confirm": "踢出客户端",
+      "toasts": {
+        "success": "已踢出 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已经断开连接",
+        "errorTitle": "无法踢出会话",
+        "errorDescription": "MediaMTX 未接受该请求。请重试。"
+      }
+    },
+    "empty": {
+      "title": "没有任何连接",
+      "lead": "MediaMTX 当前没有发布者或读取者。"
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 配置",
-      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。"
+      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 运行起始于 {started}",
+      "tooOldTitle": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。",
+      "tooOldBody": "部分设置可能缺失或被拒绝。其余设置仍可正常加载和保存。"
     },
     "pathDefaults": {
       "pageHeader": "路径默认设置",
@@ -310,6 +409,31 @@
           "errorTitle": "无法恢复为继承的设置",
           "errorDescription": "该路径的配置条目仍然存在。请重试。"
         }
+      },
+      "publishRead": {
+        "title": "发布与播放",
+        "publishTab": "发布",
+        "readTab": "播放",
+        "pullSource": "此路径从其源拉取流，MediaMTX 会拒绝发布者。",
+        "readFailed": "无法读取服务器的监听地址。",
+        "noProtocols": "服务器已关闭此处的所有协议。",
+        "copyUrl": "复制 {protocol} URL",
+        "copySnippet": "复制 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有当输入同时包含视频轨和音频轨时，FFmpeg 8 才能通过 WHIP 发布。"
+        },
+        "links": {
+          "systemPlayer": "在系统播放器中打开",
+          "browserPublish": "从浏览器发布",
+          "hlsPage": "打开 MediaMTX 的 HLS 页面",
+          "webrtcPage": "打开 MediaMTX 的 WebRTC 页面"
+        },
+        "toasts": {
+          "copied": "已复制到剪贴板",
+          "copyFailedTitle": "无法复制",
+          "copyFailedDescription": "浏览器阻止了剪贴板访问。请选中文本后手动复制。"
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "录制",
         "pathHooks": "路径钩子",
         "source": "来源",
+        "forward": "转发",
         "resilience": "容错"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "将流录制到磁盘。",
         "pathHooks": "MediaMTX 在路径自身生命周期事件时运行的命令。",
         "source": "该路径的流来自哪里。",
+        "forward": "将此路径的流重新发布到其他服务器，例如 YouTube 或 Twitch。",
         "resilience": "在源中断时保持读取端连接，或仅在有人观看时拉取源。"
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "ICE 服务器 {index} 的用户名",
         "passwordAria": "ICE 服务器 {index} 的密码",
         "removeAria": "移除 ICE 服务器 {index}"
+      },
+      "forwardDests": {
+        "add": "添加目标",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "目标 {index}",
+        "showAria": "显示目标 {index}",
+        "hideAria": "隐藏目标 {index}",
+        "removeAria": "移除目标 {index}",
+        "plaintextNotice": "MediaMTX 会将这些 URL（包括推流密钥）以明文保存在配置中，并通过其 API 原样返回。"
       },
       "errors": {
         "invalidSource": "MediaMTX 不会接受这个值。请使用 publisher、redirect、rpiCamera，或以 rtsp://、rtsps://、rtmp://、rtmps://、http://、https://、udp://、srt://、whep:// 或 wheps:// 开头的 URL。"

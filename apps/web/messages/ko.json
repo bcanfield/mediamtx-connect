@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "연결됨",
-      "offline": "오프라인"
+      "offline": "오프라인",
+      "connectedVersion": "연결됨 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}은(는) Connect가 지원하는 가장 오래된 버전인 {minimum}보다 오래되었습니다. 일부 설정이 누락되거나 거부될 수 있습니다."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "실시간",
       "recordings": "녹화",
+      "sessions": "세션",
       "appConfig": "앱 설정",
       "mediamtxConfig": "MediaMTX 설정",
       "paths": "경로"
@@ -167,6 +170,98 @@
       "showing": "총 {total}개 중 {from}–{to} 표시",
       "previous": "이전 페이지",
       "next": "다음 페이지"
+    },
+    "timeline": {
+      "previousDay": "이전 날",
+      "nextDay": "다음 날",
+      "trackAria": "24시간 타임라인",
+      "spansAria": "녹화된 구간",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} 재생",
+      "durationParts": "{hours} {minutes}",
+      "empty": "이 날에는 녹화가 없습니다.",
+      "errorTitle": "녹화 타임라인을 읽을 수 없습니다",
+      "unreachableTitle": "MediaMTX에 연결할 수 없습니다",
+      "unreachableDescription": "녹화 타임라인은 MediaMTX에서 가져옵니다. 아래 파일은 디스크에서 읽으며 계속 재생할 수 있습니다."
+    },
+    "enablePlayback": {
+      "title": "녹화 재생 켜기",
+      "playbackOff": "MediaMTX 재생 서버가 꺼져 있습니다.",
+      "notFmp4": "이 스트림은 {format}(으)로 녹화되며, 재생 서버는 fMP4만 읽습니다.",
+      "changesIntro": "Connect가 다음 설정을 변경합니다:",
+      "changesAria": "적용할 변경 사항",
+      "olderNote": "이 변경 이전의 녹화는 아래 파일 목록에 그대로 남습니다.",
+      "apply": "변경 사항 적용",
+      "applying": "적용 중…",
+      "refused": "MediaMTX가 변경을 거부했습니다",
+      "override": "이 경로는 자체 경로 설정에서 <code>recordFormat</code>을(를) {format}(으)로 지정하며, 이는 경로 기본값보다 우선합니다. 그곳에서 <code>fmp4</code>(으)로 설정하세요.",
+      "openPathConfig": "이 경로의 녹화 설정 열기",
+      "pathDefaultsUnreadable": "MediaMTX에서 경로 기본값을 읽을 수 없습니다."
+    },
+    "clip": {
+      "title": "클립 다운로드",
+      "rangeAria": "클립 범위",
+      "last5Min": "최근 5분",
+      "last15Min": "최근 15분",
+      "last1Hour": "최근 1시간",
+      "custom": "사용자 지정",
+      "start": "시작",
+      "durationMinutes": "길이(분)",
+      "invalidStart": "시간을 HH:MM:SS 형식으로 입력하세요",
+      "minutesRange": "1~60 사이의 정수(분)",
+      "range": "{start} – {end}",
+      "download": "다운로드",
+      "cancel": "취소",
+      "preparing": "클립 준비 중…",
+      "progress": "{received} 수신 · {rate}/초",
+      "complete": "클립을 다운로드했습니다",
+      "failed": "클립 다운로드 실패",
+      "noRecordings": "이 범위에 녹화가 없습니다"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "세션",
+    "pageSubHeader": "지금 MediaMTX에 연결된 모든 클라이언트(게시 또는 읽기, 모든 프로토콜).",
+    "summary": "{count, plural, other {세션 #개}}",
+    "columns": {
+      "path": "경로",
+      "protocol": "프로토콜",
+      "remoteAddr": "원격 주소",
+      "state": "상태",
+      "bytesIn": "수신 바이트",
+      "bytesOut": "송신 바이트",
+      "uptime": "가동 시간",
+      "actions": "작업"
+    },
+    "states": {
+      "idle": "유휴",
+      "read": "읽기",
+      "publish": "게시"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}(이 서버에서 사용 안 함)",
+      "failed": "{protocol}(읽을 수 없음)",
+      "unlisted": "목록에 없음: {protocols}.",
+      "truncated": "{protocol} 세션은 처음 {count, number}개만 표시합니다."
+    },
+    "kick": {
+      "action": "연결 끊기",
+      "confirmTitle": "{path}에서 {protocol} 클라이언트 {remoteAddr}의 연결을 끊을까요?",
+      "confirmDescription": "MediaMTX가 지금 연결을 끊습니다. 차단이 아니므로 클라이언트는 바로 다시 연결할 수 있습니다.",
+      "hlsCaveat": "HLS 플레이어는 몇 초 안에 재생 목록을 다시 요청해 새 세션을 받으므로, 대부분 초기화만 됩니다.",
+      "cancel": "취소",
+      "confirm": "클라이언트 연결 끊기",
+      "toasts": {
+        "success": "{remoteAddr} 연결을 끊었습니다",
+        "alreadyGone": "{remoteAddr}은(는) 이미 연결이 끊겼습니다",
+        "errorTitle": "세션 연결을 끊을 수 없습니다",
+        "errorDescription": "MediaMTX가 요청을 받아들이지 않았습니다. 다시 시도하세요."
+      }
+    },
+    "empty": {
+      "title": "연결된 클라이언트가 없습니다",
+      "lead": "지금 MediaMTX에는 게시자나 시청자가 없습니다."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 설정",
-      "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다."
+      "pageSubHeader": "MediaMTX 서버의 전역 설정으로, 서버에 저장됩니다.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 실행 시작 {started}",
+      "tooOldTitle": "MediaMTX {version}은(는) Connect가 지원하는 가장 오래된 버전인 {minimum}보다 오래되었습니다.",
+      "tooOldBody": "일부 설정이 누락되거나 거부될 수 있습니다. 나머지는 계속 불러오고 저장할 수 있습니다."
     },
     "pathDefaults": {
       "pageHeader": "경로 기본값",
@@ -310,6 +409,31 @@
           "errorTitle": "상속된 설정으로 되돌리지 못했습니다",
           "errorDescription": "경로 설정 항목이 그대로 남아 있습니다. 다시 시도하세요."
         }
+      },
+      "publishRead": {
+        "title": "게시 및 재생",
+        "publishTab": "게시",
+        "readTab": "재생",
+        "pullSource": "이 경로는 소스에서 스트림을 가져오므로 MediaMTX가 게시자를 거부합니다.",
+        "readFailed": "서버의 수신 주소를 읽지 못했습니다.",
+        "noProtocols": "서버에서 이 용도의 프로토콜이 모두 꺼져 있습니다.",
+        "copyUrl": "{protocol} URL 복사",
+        "copySnippet": "{protocol}용 {client} 스니펫 복사",
+        "snippetLabel": "{protocol}용 {client} 스니펫",
+        "notes": {
+          "whipTracks": "FFmpeg 8은 입력에 비디오 트랙과 오디오 트랙이 모두 있을 때만 WHIP으로 게시합니다."
+        },
+        "links": {
+          "systemPlayer": "시스템 플레이어에서 열기",
+          "browserPublish": "브라우저에서 게시",
+          "hlsPage": "MediaMTX HLS 페이지 열기",
+          "webrtcPage": "MediaMTX WebRTC 페이지 열기"
+        },
+        "toasts": {
+          "copied": "클립보드에 복사했습니다",
+          "copyFailedTitle": "복사하지 못했습니다",
+          "copyFailedDescription": "브라우저가 클립보드 접근을 차단했습니다. 텍스트를 선택해 직접 복사하세요."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "녹화",
         "pathHooks": "경로 훅",
         "source": "소스",
+        "forward": "전달",
         "resilience": "복원력"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "스트림을 디스크에 녹화합니다.",
         "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령.",
         "source": "이 경로의 스트림이 어디에서 오는지.",
+        "forward": "이 경로의 스트림을 YouTube나 Twitch 같은 다른 서버로 다시 게시합니다.",
         "resilience": "소스가 끊겨도 리더의 연결을 유지하거나, 누군가 시청하는 동안에만 소스를 가져옵니다."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "ICE 서버 {index} 사용자 이름",
         "passwordAria": "ICE 서버 {index} 비밀번호",
         "removeAria": "ICE 서버 {index} 제거"
+      },
+      "forwardDests": {
+        "add": "대상 추가",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "대상 {index}",
+        "showAria": "대상 {index} 표시",
+        "hideAria": "대상 {index} 숨기기",
+        "removeAria": "대상 {index} 제거",
+        "plaintextNotice": "MediaMTX는 스트림 키를 포함한 이 URL들을 설정에 평문으로 저장하며, API에서도 가리지 않고 반환합니다."
       },
       "errors": {
         "invalidSource": "MediaMTX가 이 값을 받아들이지 않습니다. publisher, redirect, rpiCamera 또는 rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, wheps:// 로 시작하는 URL을 사용하세요."

@@ -38,7 +38,8 @@ export function RecordingRow({
   const playing = search.play?.split(',').filter(Boolean) ?? []
   const isOpen = playing.includes(fileName)
 
-  const download = useRecordingDownload(streamName, fileName, {
+  const mediaSrc = `/media/recordings/${encodeURIComponent(streamName)}/${encodeURIComponent(fileName)}`
+  const download = useRecordingDownload(`${mediaSrc}?download`, fileName, {
     onComplete: () => toast.success(t('downloadComplete')),
     onError: () => toast.error(t('downloadFailed')),
   })
@@ -63,7 +64,6 @@ export function RecordingRow({
     minute: '2-digit',
     second: '2-digit',
   })
-  const mediaSrc = `/media/recordings/${encodeURIComponent(streamName)}/${encodeURIComponent(fileName)}`
   const showThumbnail = screenshotUrl && !thumbnailError
 
   return (

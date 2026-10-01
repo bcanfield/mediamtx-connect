@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "connesso",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "connesso · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} è precedente a {minimum}, la versione più vecchia supportata da Connect. Alcune impostazioni potrebbero mancare o essere rifiutate."
     }
   },
   "Nav": {
@@ -29,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Registrazioni",
+      "sessions": "Sessioni",
       "appConfig": "Config dell'app",
       "mediamtxConfig": "Config MediaMTX",
       "paths": "Percorsi"
@@ -167,6 +170,98 @@
       "showing": "Visualizzazione {from}–{to} di {total}",
       "previous": "Pagina precedente",
       "next": "Pagina successiva"
+    },
+    "timeline": {
+      "previousDay": "Giorno precedente",
+      "nextDay": "Giorno successivo",
+      "trackAria": "Timeline di 24 ore",
+      "spansAria": "Intervalli registrati",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Riproduci {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Nessuna registrazione in questo giorno.",
+      "errorTitle": "Impossibile leggere la timeline delle registrazioni",
+      "unreachableTitle": "MediaMTX non è raggiungibile",
+      "unreachableDescription": "La timeline delle registrazioni proviene da MediaMTX. I file qui sotto sono letti dal disco e si possono ancora riprodurre."
+    },
+    "enablePlayback": {
+      "title": "Attiva la riproduzione delle registrazioni",
+      "playbackOff": "Il server di riproduzione di MediaMTX è disattivato.",
+      "notFmp4": "Questo stream registra in {format} e il server di riproduzione legge solo fMP4.",
+      "changesIntro": "Connect modificherà queste impostazioni:",
+      "changesAria": "Modifiche da applicare",
+      "olderNote": "Le registrazioni precedenti a questa modifica restano nell'elenco dei file qui sotto.",
+      "apply": "Applica modifiche",
+      "applying": "Applicazione…",
+      "refused": "MediaMTX ha rifiutato la modifica",
+      "override": "Questo path imposta <code>recordFormat</code> a {format} nella propria configurazione, che prevale sui valori predefiniti dei path. Impostalo a <code>fmp4</code> lì.",
+      "openPathConfig": "Apri la configurazione di registrazione di questo path",
+      "pathDefaultsUnreadable": "Impossibile leggere i valori predefiniti dei path da MediaMTX."
+    },
+    "clip": {
+      "title": "Scarica clip",
+      "rangeAria": "Intervallo della clip",
+      "last5Min": "Ultimi 5 min",
+      "last15Min": "Ultimi 15 min",
+      "last1Hour": "Ultima 1 h",
+      "custom": "Personalizzato",
+      "start": "Inizio",
+      "durationMinutes": "Durata (min)",
+      "invalidStart": "Inserisci un orario come HH:MM:SS",
+      "minutesRange": "Minuti interi, da 1 a 60",
+      "range": "{start} – {end}",
+      "download": "Scarica",
+      "cancel": "Annulla",
+      "preparing": "Preparazione della clip…",
+      "progress": "{received} ricevuti · {rate}/s",
+      "complete": "Clip scaricata",
+      "failed": "Download della clip non riuscito",
+      "noRecordings": "Nessuna registrazione in questo intervallo"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessioni",
+    "pageSubHeader": "Ogni client connesso a MediaMTX in questo momento, in pubblicazione o in lettura, su qualsiasi protocollo.",
+    "summary": "{count, plural, one {# sessione} other {# sessioni}}",
+    "columns": {
+      "path": "Percorso",
+      "protocol": "Protocollo",
+      "remoteAddr": "Indirizzo remoto",
+      "state": "Stato",
+      "bytesIn": "Byte in entrata",
+      "bytesOut": "Byte in uscita",
+      "uptime": "Tempo attivo",
+      "actions": "Azioni"
+    },
+    "states": {
+      "idle": "inattiva",
+      "read": "lettura",
+      "publish": "pubblicazione"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (non abilitato su questo server)",
+      "failed": "{protocol} (impossibile leggere)",
+      "unlisted": "Non elencati: {protocols}.",
+      "truncated": "Sono mostrate le prime {count, number} sessioni {protocol}."
+    },
+    "kick": {
+      "action": "Espelli",
+      "confirmTitle": "Espellere il client {protocol} {remoteAddr} da {path}?",
+      "confirmDescription": "MediaMTX chiude subito la connessione. Non è un ban: il client può riconnettersi immediatamente.",
+      "hlsCaveat": "Un player HLS richiede di nuovo la playlist in pochi secondi e ottiene una nuova sessione, quindi questo per lo più lo reimposta.",
+      "cancel": "Annulla",
+      "confirm": "Espelli client",
+      "toasts": {
+        "success": "{remoteAddr} espulso",
+        "alreadyGone": "{remoteAddr} si era già disconnesso",
+        "errorTitle": "Impossibile espellere la sessione",
+        "errorDescription": "MediaMTX non ha accettato la richiesta. Riprova."
+      }
+    },
+    "empty": {
+      "title": "Nessuno è connesso",
+      "lead": "MediaMTX non ha publisher né lettori in questo momento."
     }
   },
   "Config": {
@@ -177,7 +272,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Config MediaMTX",
-      "pageSubHeader": "Impostazioni globali del server MediaMTX, salvate sul server."
+      "pageSubHeader": "Impostazioni globali del server MediaMTX, salvate sul server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · in esecuzione dal {started}",
+      "tooOldTitle": "MediaMTX {version} è precedente a {minimum}, la versione più vecchia supportata da Connect.",
+      "tooOldBody": "Alcune impostazioni potrebbero mancare o essere rifiutate. Le altre si caricano e si salvano comunque."
     },
     "pathDefaults": {
       "pageHeader": "Valori predefiniti dei percorsi",
@@ -310,6 +409,31 @@
           "errorTitle": "Impossibile ripristinare le impostazioni ereditate",
           "errorDescription": "La voce di configurazione del percorso è ancora presente. Riprova."
         }
+      },
+      "publishRead": {
+        "title": "Pubblica e riproduci",
+        "publishTab": "Pubblica",
+        "readTab": "Riproduci",
+        "pullSource": "Questo percorso preleva lo stream dalla sua sorgente; MediaMTX rifiuta i publisher.",
+        "readFailed": "Impossibile leggere gli indirizzi di ascolto del server.",
+        "noProtocols": "Il server ha disattivato tutti i protocolli per questo.",
+        "copyUrl": "Copia URL {protocol}",
+        "copySnippet": "Copia lo snippet {client} per {protocol}",
+        "snippetLabel": "Snippet {client} per {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 pubblica via WHIP solo se l'input ha sia una traccia video sia una traccia audio."
+        },
+        "links": {
+          "systemPlayer": "Apri nel lettore di sistema",
+          "browserPublish": "Pubblica dal browser",
+          "hlsPage": "Apri la pagina HLS di MediaMTX",
+          "webrtcPage": "Apri la pagina WebRTC di MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiato negli appunti",
+          "copyFailedTitle": "Impossibile copiare",
+          "copyFailedDescription": "Il browser ha bloccato l'accesso agli appunti. Seleziona il testo e copialo a mano."
+        }
       }
     },
     "saveBar": {
@@ -371,6 +495,7 @@
         "recording": "Registrazione",
         "pathHooks": "Hooks del percorso",
         "source": "Sorgente",
+        "forward": "Inoltro",
         "resilience": "Resilienza"
       },
       "sectionDescriptions": {
@@ -386,6 +511,7 @@
         "recording": "Registra i flussi su disco.",
         "pathHooks": "Comandi che MediaMTX esegue sugli eventi del ciclo di vita di un percorso.",
         "source": "Da dove arriva lo stream di questo percorso.",
+        "forward": "Ripubblica lo stream di questo percorso su altri server, come YouTube o Twitch.",
         "resilience": "Mantieni connessi i lettori quando la sorgente cade, oppure preleva la sorgente solo mentre qualcuno guarda."
       },
       "sectionWarnings": {
@@ -415,6 +541,15 @@
         "usernameAria": "Nome utente del server ICE {index}",
         "passwordAria": "Password del server ICE {index}",
         "removeAria": "Rimuovi il server ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Aggiungi destinazione",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinazione {index}",
+        "showAria": "Mostra destinazione {index}",
+        "hideAria": "Nascondi destinazione {index}",
+        "removeAria": "Rimuovi destinazione {index}",
+        "plaintextNotice": "MediaMTX salva questi URL, chiavi di stream comprese, in chiaro nella sua configurazione e li restituisce senza oscurarli dalla sua API."
       },
       "errors": {
         "invalidSource": "MediaMTX non accetterà questo valore. Usa publisher, redirect, rpiCamera o un URL che inizi con rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// o wheps://."
