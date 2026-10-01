@@ -6,10 +6,11 @@ import { createRpcServer } from '@/test/rpc-server'
 import { MediaMTXConfigPage } from './mediamtx-config-page'
 
 const mediamtxInfo = vi.fn<() => unknown>()
+const globalConfig = vi.fn<() => unknown>(() => ({ logLevel: 'info' }))
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', hlsAddress: ':8888', remoteMediaMtxUrl: null, streams: [] }),
-  globalConfig: () => ({ logLevel: 'info' }),
+  globalConfig,
   mediamtxInfo,
 }
 const server = createRpcServer(stub)
@@ -21,6 +22,7 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 afterEach(() => {
   server.resetHandlers()
   vi.clearAllMocks()
+  globalConfig.mockImplementation(() => ({ logLevel: 'info' }))
 })
 afterAll(() => server.close())
 
@@ -54,5 +56,17 @@ describe('the global config page', () => {
     expect(await formHeading()).toBeInTheDocument()
     expect(mediamtxInfo).toHaveBeenCalled()
     expect(screen.queryByText(/running since/)).not.toBeInTheDocument()
+  })
+
+  // The version is cached for a minute and shared with the header, so a server
+  // that went down since still has one in the cache. It isn't shown.
+  it('shows no version line or banner while MediaMTX is unreachable', async () => {
+    mediamtxInfo.mockReturnValue({ version: 'v1.19.2', started: STARTED, belowMinimum: true })
+    globalConfig.mockImplementation(() => null)
+    await renderWithProviders(<MediaMTXConfigPage />)
+
+    expect(await screen.findByText('Invalid Config')).toBeInTheDocument()
+    expect(mediamtxInfo).toHaveBeenCalled()
+    expect(screen.queryAllByText(/v1\.19\.2/)).toHaveLength(0)
   })
 })

@@ -23,13 +23,12 @@ export const ENCRYPTION_MODES = ['no', 'optional', 'strict'] as const
 // How MediaMTX authenticates every client, Connect's own API calls included.
 export const AUTH_METHODS = ['internal', 'http', 'jwt'] as const
 
-// Key names mirror MediaMTX v1.21.1 GlobalConf; CI runs 1.20.0. Field names
-// match the YAML keys 1:1. The drift e2e lists the keys left out on purpose.
-//
-// That CI version is also the oldest MediaMTX Connect supports, not the oldest
-// that probably works. Raise it with whatever starts depending on newer.
+// The oldest MediaMTX Connect supports: the version CI's e2e runs against, not
+// the oldest that probably works. Raise it with whatever starts depending on newer.
 export const MEDIAMTX_MIN_VERSION = '1.20.0'
 
+// Key names mirror MediaMTX v1.21.1 GlobalConf; CI runs 1.20.0. Field names
+// match the YAML keys 1:1. The drift e2e lists the keys left out on purpose.
 export const GlobalConfigSchema = z.object({
   logLevel: z.string().optional(),
   logDestinations: z.array(z.string()).optional(),

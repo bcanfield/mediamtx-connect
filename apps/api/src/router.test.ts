@@ -3,6 +3,7 @@ import { call } from '@orpc/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
+import { logger } from './logger'
 import { mediaMtxApi, MediaMtxError } from './mediamtx'
 import { latestScreenshotMtimeFor } from './recordings-fs'
 import { router } from './router'
@@ -700,5 +701,15 @@ describe('mediamtx.info', () => {
     const result = await call(router.mediamtx.info, undefined as never)
 
     expect(result).toBeNull()
+  })
+
+  // Only a 404 means "no version"; any other refusal is a server we can't read.
+  it('returns null and logs when /v3/info fails with anything but 404', async () => {
+    api.info.mockRejectedValue(new MediaMtxError(500, null, 'GET /info'))
+
+    const result = await call(router.mediamtx.info, undefined as never)
+
+    expect(result).toBeNull()
+    expect(logger.error).toHaveBeenCalledOnce()
   })
 })

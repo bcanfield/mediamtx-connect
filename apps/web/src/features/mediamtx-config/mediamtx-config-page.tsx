@@ -22,7 +22,9 @@ export function MediaMTXConfigPage({ section }: { section?: string }) {
   const info = useQuery({ ...orpc.mediamtx.info.queryOptions(), staleTime: 60_000 })
   const updateGlobalConfig = useMutation(orpc.config.mediamtx.updateGlobal.mutationOptions())
 
-  const version = info.data?.version
+  // Gated on the config read, not just the info query: that one is cached for
+  // a minute, so it can still hold the version of a server that has since gone.
+  const version = globalConf.data ? info.data?.version : null
   const started = info.data?.started
 
   return (
