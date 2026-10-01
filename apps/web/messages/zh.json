@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "已连接",
-      "offline": "离线"
+      "offline": "离线",
+      "connectedVersion": "已连接 · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。部分设置可能缺失或被拒绝。"
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 配置",
-      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。"
+      "pageSubHeader": "MediaMTX 服务器的全局设置，保存到服务器。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 运行起始于 {started}",
+      "tooOldTitle": "MediaMTX {version} 早于 {minimum}，即 Connect 支持的最旧版本。",
+      "tooOldBody": "部分设置可能缺失或被拒绝。其余设置仍可正常加载和保存。"
     },
     "pathDefaults": {
       "pageHeader": "路径默认设置",

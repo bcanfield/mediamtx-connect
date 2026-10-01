@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "接続済み",
-      "offline": "オフライン"
+      "offline": "オフライン",
+      "connectedVersion": "接続済み · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} は、Connect がサポートする最も古いバージョン {minimum} より古いです。一部の設定が表示されないか、拒否される可能性があります。"
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX 設定",
-      "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。"
+      "pageSubHeader": "MediaMTX サーバーのグローバル設定。サーバーに保存されます。",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · 起動日時 {started}",
+      "tooOldTitle": "MediaMTX {version} は、Connect がサポートする最も古いバージョン {minimum} より古いです。",
+      "tooOldBody": "一部の設定が表示されないか、拒否される可能性があります。残りの設定は引き続き読み込みと保存ができます。"
     },
     "pathDefaults": {
       "pageHeader": "パス既定値",

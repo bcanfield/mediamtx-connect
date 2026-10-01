@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "verbonden",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "verbonden · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt. Sommige instellingen kunnen ontbreken of worden geweigerd."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX-configuratie",
-      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server."
+      "pageSubHeader": "Globale MediaMTX-serverinstellingen, opgeslagen op de server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · actief sinds {started}",
+      "tooOldTitle": "MediaMTX {version} is ouder dan {minimum}, de oudste versie die Connect ondersteunt.",
+      "tooOldBody": "Sommige instellingen kunnen ontbreken of worden geweigerd. De rest wordt nog steeds geladen en opgeslagen."
     },
     "pathDefaults": {
       "pageHeader": "Padstandaarden",

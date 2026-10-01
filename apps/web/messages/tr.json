@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "bağlı",
-      "offline": "çevrimdışı"
+      "offline": "çevrimdışı",
+      "connectedVersion": "bağlı · <v>{version}</v>",
+      "tooOld": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski. Bazı ayarlar eksik olabilir veya reddedilebilir."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX yapılandırması",
-      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir."
+      "pageSubHeader": "Genel MediaMTX sunucu ayarları, sunucuya kaydedilir.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · çalışma başlangıcı {started}",
+      "tooOldTitle": "MediaMTX {version}, Connect’in desteklediği en eski sürüm olan {minimum} sürümünden daha eski.",
+      "tooOldBody": "Bazı ayarlar eksik olabilir veya reddedilebilir. Geri kalanı yüklenmeye ve kaydedilmeye devam eder."
     },
     "pathDefaults": {
       "pageHeader": "Yol varsayılanları",

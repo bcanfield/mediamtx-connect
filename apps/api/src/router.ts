@@ -3,7 +3,7 @@ import type { MediaMtxPath, MediaMtxSession } from './mediamtx'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { contract, SESSION_PROTOCOLS } from '@connect/contract'
+import { contract, MEDIAMTX_MIN_VERSION, SESSION_PROTOCOLS } from '@connect/contract'
 import { implement, ORPCError } from '@orpc/server'
 import { getAppConfig, updateAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
@@ -81,11 +81,51 @@ function toSession(protocol: SessionProtocol, item: MediaMtxSession): Session {
   }
 }
 
+// `v1.19.2` → [1, 19, 2]. Anything after the patch number (`-rc1`) is ignored;
+// a version that doesn't start with x.y.z (`dev`) has no parts to compare.
+function versionParts(version: string): [number, number, number] | null {
+  const match = /^v?(\d+)\.(\d+)\.(\d+)/.exec(version)
+  return match ? [Number(match[1]), Number(match[2]), Number(match[3])] : null
+}
+
+function isBelowMinimum(version: string): boolean {
+  const parts = versionParts(version)
+  const floor = versionParts(MEDIAMTX_MIN_VERSION)
+  if (!parts || !floor)
+    return false
+  const [major, minor, patch] = parts
+  const [minMajor, minMinor, minPatch] = floor
+  if (major !== minMajor)
+    return major < minMajor
+  if (minor !== minMinor)
+    return minor < minMinor
+  return patch < minPatch
+}
+
 export const router = os.router({
   health: os.health.handler(() => ({
     status: 'ok' as const,
     uptime: process.uptime(),
   })),
+
+  mediamtx: {
+    info: os.mediamtx.info.handler(async () => {
+      const config = await getAppConfig()
+      try {
+        const info = await mediaMtxApi(config).info()
+        const version = info?.version ?? null
+        return {
+          version,
+          started: info?.started ? new Date(info.started) : null,
+          belowMinimum: version !== null && isBelowMinimum(version),
+        }
+      }
+      catch (error) {
+        logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
+        return null
+      }
+    }),
+  },
 
   streams: {
     snapshot: os.streams.snapshot.handler(async ({ input }) => {

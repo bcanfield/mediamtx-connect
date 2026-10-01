@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "подключено",
-      "offline": "офлайн"
+      "offline": "офлайн",
+      "connectedVersion": "подключено · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} старше, чем {minimum} — самая старая версия, которую поддерживает Connect. Некоторые настройки могут отсутствовать или отклоняться."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Конфигурация MediaMTX",
-      "pageSubHeader": "Глобальные настройки сервера MediaMTX, сохраняются на сервере."
+      "pageSubHeader": "Глобальные настройки сервера MediaMTX, сохраняются на сервере.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · работает с {started}",
+      "tooOldTitle": "MediaMTX {version} старше, чем {minimum} — самая старая версия, которую поддерживает Connect.",
+      "tooOldBody": "Некоторые настройки могут отсутствовать или отклоняться. Остальные по-прежнему загружаются и сохраняются."
     },
     "pathDefaults": {
       "pageHeader": "Значения по умолчанию для путей",

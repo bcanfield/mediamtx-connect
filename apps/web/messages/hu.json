@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "csatlakozva",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "csatlakozva · <v>{version}</v>",
+      "tooOld": "A MediaMTX {version} régebbi, mint a {minimum}, a Connect által támogatott legrégebbi verzió. Egyes beállítások hiányozhatnak, vagy elutasításra kerülhetnek."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "MediaMTX konfiguráció",
-      "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve."
+      "pageSubHeader": "A MediaMTX szerver globális beállításai, a szerverre mentve.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · fut ekkortól: {started}",
+      "tooOldTitle": "A MediaMTX {version} régebbi, mint a {minimum}, a Connect által támogatott legrégebbi verzió.",
+      "tooOldBody": "Egyes beállítások hiányozhatnak, vagy elutasításra kerülhetnek. A többi továbbra is betöltődik és menthető."
     },
     "pathDefaults": {
       "pageHeader": "Útvonalak alapértékei",

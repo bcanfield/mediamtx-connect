@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "conectat",
-      "offline": "offline"
+      "offline": "offline",
+      "connectedVersion": "conectat · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect. Unele setări pot lipsi sau pot fi refuzate."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Configurare MediaMTX",
-      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server."
+      "pageSubHeader": "Setările globale ale serverului MediaMTX, salvate pe server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · rulează din {started}",
+      "tooOldTitle": "MediaMTX {version} este mai vechi decât {minimum}, cea mai veche versiune acceptată de Connect.",
+      "tooOldBody": "Unele setări pot lipsi sau pot fi refuzate. Restul se încarcă și se salvează în continuare."
     },
     "pathDefaults": {
       "pageHeader": "Valori implicite pentru căi",

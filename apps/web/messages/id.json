@@ -18,7 +18,9 @@
     },
     "connection": {
       "connected": "terhubung",
-      "offline": "luring"
+      "offline": "luring",
+      "connectedVersion": "terhubung · <v>{version}</v>",
+      "tooOld": "MediaMTX {version} lebih lama dari {minimum}, versi tertua yang didukung Connect. Beberapa pengaturan mungkin tidak ada atau ditolak."
     }
   },
   "Nav": {
@@ -223,7 +225,11 @@
     },
     "mediamtxConfig": {
       "pageHeader": "Konfigurasi MediaMTX",
-      "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server."
+      "pageSubHeader": "Pengaturan global server MediaMTX, disimpan ke server.",
+      "version": "MediaMTX {version}",
+      "versionSince": "MediaMTX {version} · berjalan sejak {started}",
+      "tooOldTitle": "MediaMTX {version} lebih lama dari {minimum}, versi tertua yang didukung Connect.",
+      "tooOldBody": "Beberapa pengaturan mungkin tidak ada atau ditolak. Sisanya tetap dimuat dan disimpan."
     },
     "pathDefaults": {
       "pageHeader": "Default jalur",
