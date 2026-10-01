@@ -202,6 +202,41 @@ export const PathConnectionsSchema = z.object({
 
 export type PathConnections = z.infer<typeof PathConnectionsSchema>
 
+// One track of a live path. `codec` is MediaMTX's own name for it ("H264",
+// "MPEG-4 Audio"); `resolution` comes from `tracks2`'s codec properties, so it
+// is null for audio tracks and for servers that only serve the older `tracks`.
+export const PathTrackSchema = z.object({
+  codec: z.string(),
+  resolution: z.string().nullable(),
+})
+
+export type PathTrack = z.infer<typeof PathTrackSchema>
+
+// What a path is doing right now, as opposed to what it is configured to do —
+// the stored config alone never says whether a camera is actually working.
+// `idle` covers both a path MediaMTX isn't running and one it is running but
+// that isn't ready: neither is an error, and both have no counters to show.
+export const PathHealthSchema = z.discriminatedUnion('status', [
+  z.object({ status: z.literal('idle') }),
+  z.object({
+    status: z.literal('live'),
+    // When the path went ready — what uptime is measured from.
+    readyTime: z.string().nullable(),
+    // Same session types as `PathConnectionsSchema`.
+    publisher: z.string().nullable(),
+    readers: z.array(z.string()),
+    tracks: z.array(PathTrackSchema),
+    // Cumulative since the path went ready, both directions.
+    bytesReceived: z.number(),
+    bytesSent: z.number(),
+    // `inboundFramesInError` — a flaky camera's tell. Null on MediaMTX versions
+    // that don't serve it, which is not the same answer as zero.
+    framesInError: z.number().nullable(),
+  }),
+])
+
+export type PathHealth = z.infer<typeof PathHealthSchema>
+
 // One row of the paths catalog: a *config entry*, not a runtime path. A regex
 // entry backs many runtime paths and a wildcard-backed path has no entry at
 // all, so this list and the live stream grid are different populations.
@@ -363,6 +398,11 @@ export const contract = {
       updatePathConfig: oc
         .input(z.object({ name: z.string().min(1), conf: PathConfigSchema }))
         .output(z.void()),
+      // One path's live runtime health, polled while its detail page is open.
+      // `null` is an unreachable server; a path that isn't running is `idle`.
+      getPathHealth: oc
+        .input(z.object({ name: z.string().min(1) }))
+        .output(PathHealthSchema.nullable()),
       // What a delete would cut off. `null` is an unreachable server, not an
       // idle path — a warning we couldn't build is not a path with nothing on it.
       getPathConnections: oc
