@@ -92,10 +92,6 @@
       "stop": "หยุด",
       "playAria": "เล่น {streamName}",
       "actionsAria": "การดำเนินการของสตรีม",
-      "stub": {
-        "title": "ยังไม่พร้อมใช้งาน",
-        "description": "การดำเนินการนี้อยู่ในแผนงาน — มีการบันทึกไว้แล้ว"
-      },
       "recordError": {
         "title": "ไม่สามารถเปลี่ยนการบันทึกได้",
         "description": "MediaMTX ปฏิเสธการเปลี่ยนแปลง — สถานะการบันทึกของสตรีมนี้ไม่เปลี่ยนแปลง"
@@ -117,7 +113,6 @@
         "description": "MediaMTX ไม่สามารถจับเฟรมได้ — สตรีมอาจออฟไลน์อยู่"
       },
       "menu": {
-        "openDetail": "เปิดรายละเอียดสตรีม",
         "viewRecordings": "ดูการบันทึก",
         "takeSnapshot": "ถ่ายสแนปช็อต",
         "record": "บันทึก",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "คัดลอก URL สำหรับเผยแพร่",
-        "shareEmbed": "แชร์และฝัง…",
         "editPathConfig": "แก้ไขการตั้งค่าพาธ",
         "editHooks": "แก้ไข hooks"
       }

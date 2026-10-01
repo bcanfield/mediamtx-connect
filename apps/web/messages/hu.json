@@ -92,10 +92,6 @@
       "stop": "Leállítás",
       "playAria": "{streamName} lejátszása",
       "actionsAria": "Folyam műveletek",
-      "stub": {
-        "title": "Még nincs megvalósítva",
-        "description": "Ez a művelet szerepel a tervekben — feljegyeztük."
-      },
       "recordError": {
         "title": "A felvétel módosítása nem sikerült",
         "description": "A MediaMTX elutasította a módosítást – ennek a streamnek a felvétele változatlan."
@@ -117,7 +113,6 @@
         "description": "A MediaMTX nem tudott képkockát rögzíteni — az adatfolyam offline lehet."
       },
       "menu": {
-        "openDetail": "Folyam részleteinek megnyitása",
         "viewRecordings": "Felvételek megtekintése",
         "takeSnapshot": "Pillanatkép készítése",
         "record": "Felvétel",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Közzétételi URL-ek másolása",
-        "shareEmbed": "Megosztás és beágyazás…",
         "editPathConfig": "Útvonal-konfiguráció szerkesztése",
         "editHooks": "Hookok szerkesztése"
       }

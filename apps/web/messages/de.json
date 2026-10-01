@@ -92,10 +92,6 @@
       "stop": "Stopp",
       "playAria": "{streamName} wiedergeben",
       "actionsAria": "Stream-Aktionen",
-      "stub": {
-        "title": "Noch nicht implementiert",
-        "description": "Diese Aktion steht auf der Roadmap — sie wurde protokolliert."
-      },
       "recordError": {
         "title": "Aufnahme konnte nicht geändert werden",
         "description": "MediaMTX hat die Änderung abgelehnt – die Aufnahme dieses Streams ist unverändert."
@@ -117,7 +113,6 @@
         "description": "MediaMTX konnte kein Bild aufnehmen – der Stream ist möglicherweise offline."
       },
       "menu": {
-        "openDetail": "Stream-Detail öffnen",
         "viewRecordings": "Aufzeichnungen ansehen",
         "takeSnapshot": "Schnappschuss aufnehmen",
         "record": "Aufzeichnen",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Publish-URLs kopieren",
-        "shareEmbed": "Teilen & einbetten…",
         "editPathConfig": "Pfad-Konfiguration bearbeiten",
         "editHooks": "Hooks bearbeiten"
       }

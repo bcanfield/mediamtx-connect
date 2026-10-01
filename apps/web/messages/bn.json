@@ -92,10 +92,6 @@
       "stop": "বন্ধ করুন",
       "playAria": "{streamName} চালান",
       "actionsAria": "স্ট্রিম অ্যাকশন",
-      "stub": {
-        "title": "এখনও বাস্তবায়িত হয়নি",
-        "description": "এই অ্যাকশনটি রোডম্যাপে আছে — এটি লগ করা হয়েছে।"
-      },
       "recordError": {
         "title": "রেকর্ডিং পরিবর্তন করা যায়নি",
         "description": "MediaMTX পরিবর্তনটি প্রত্যাখ্যান করেছে — এই স্ট্রিমের রেকর্ডিং অপরিবর্তিত রয়েছে।"
@@ -117,7 +113,6 @@
         "description": "MediaMTX একটি ফ্রেম নিতে পারেনি — স্ট্রিমটি অফলাইন থাকতে পারে।"
       },
       "menu": {
-        "openDetail": "স্ট্রিমের বিস্তারিত খুলুন",
         "viewRecordings": "রেকর্ডিং দেখুন",
         "takeSnapshot": "স্ন্যাপশট নিন",
         "record": "রেকর্ড",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "পাবলিশ URL কপি করুন",
-        "shareEmbed": "শেয়ার ও এম্বেড…",
         "editPathConfig": "পাথ কনফিগ সম্পাদনা করুন",
         "editHooks": "Hooks সম্পাদনা করুন"
       }

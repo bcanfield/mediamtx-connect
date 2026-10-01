@@ -92,10 +92,6 @@
       "stop": "Stop",
       "playAria": "Play {streamName}",
       "actionsAria": "Stream actions",
-      "stub": {
-        "title": "Not implemented yet",
-        "description": "This action is on the roadmap — it was logged."
-      },
       "recordError": {
         "title": "Couldn't change recording",
         "description": "MediaMTX rejected the change — this stream's recording is unchanged."
@@ -117,7 +113,6 @@
         "description": "MediaMTX couldn't grab a frame — the stream may be offline."
       },
       "menu": {
-        "openDetail": "Open stream detail",
         "viewRecordings": "View recordings",
         "takeSnapshot": "Take snapshot",
         "record": "Record",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copy publish URLs",
-        "shareEmbed": "Share & embed…",
         "editPathConfig": "Edit path config",
         "editHooks": "Edit hooks"
       }

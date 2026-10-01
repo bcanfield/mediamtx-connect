@@ -92,10 +92,6 @@
       "stop": "Stopp",
       "playAria": "Spela upp {streamName}",
       "actionsAria": "Strömåtgärder",
-      "stub": {
-        "title": "Inte implementerat än",
-        "description": "Denna åtgärd finns på färdplanen — den har loggats."
-      },
       "recordError": {
         "title": "Det gick inte att ändra inspelningen",
         "description": "MediaMTX avvisade ändringen – inspelningen för den här strömmen är oförändrad."
@@ -117,7 +113,6 @@
         "description": "MediaMTX kunde inte fånga en bild – strömmen kan vara offline."
       },
       "menu": {
-        "openDetail": "Öppna strömdetaljer",
         "viewRecordings": "Visa inspelningar",
         "takeSnapshot": "Ta ögonblicksbild",
         "record": "Spela in",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiera publicerings-URL:er",
-        "shareEmbed": "Dela & bädda in…",
         "editPathConfig": "Redigera sökvägskonfiguration",
         "editHooks": "Redigera hooks"
       }

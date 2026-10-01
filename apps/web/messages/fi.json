@@ -92,10 +92,6 @@
       "stop": "Pysäytä",
       "playAria": "Toista {streamName}",
       "actionsAria": "Striimin toiminnot",
-      "stub": {
-        "title": "Ei vielä toteutettu",
-        "description": "Tämä toiminto on suunnitelmissa — se kirjattiin."
-      },
       "recordError": {
         "title": "Tallennuksen muuttaminen epäonnistui",
         "description": "MediaMTX hylkäsi muutoksen – tämän striimin tallennus on ennallaan."
@@ -117,7 +113,6 @@
         "description": "MediaMTX ei saanut ruutua — striimi voi olla offline-tilassa."
       },
       "menu": {
-        "openDetail": "Avaa striimin tiedot",
         "viewRecordings": "Näytä tallenteet",
         "takeSnapshot": "Ota tilannekuva",
         "record": "Tallenna",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopioi julkaisu-URL:t",
-        "shareEmbed": "Jaa ja upota…",
         "editPathConfig": "Muokkaa polun asetuksia",
         "editHooks": "Muokkaa hookeja"
       }

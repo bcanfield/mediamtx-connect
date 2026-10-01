@@ -92,10 +92,6 @@
       "stop": "Остановить",
       "playAria": "Воспроизвести {streamName}",
       "actionsAria": "Действия с трансляцией",
-      "stub": {
-        "title": "Ещё не реализовано",
-        "description": "Это действие в дорожной карте — оно зафиксировано."
-      },
       "recordError": {
         "title": "Не удалось изменить запись",
         "description": "MediaMTX отклонил изменение — состояние записи этого потока не изменилось."
@@ -117,7 +113,6 @@
         "description": "MediaMTX не смог получить кадр — возможно, поток офлайн."
       },
       "menu": {
-        "openDetail": "Открыть страницу трансляции",
         "viewRecordings": "Смотреть записи",
         "takeSnapshot": "Сделать снимок",
         "record": "Запись",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Скопировать URL публикации",
-        "shareEmbed": "Поделиться и встроить…",
         "editPathConfig": "Изменить конфигурацию пути",
         "editHooks": "Изменить хуки"
       }

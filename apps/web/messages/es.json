@@ -92,10 +92,6 @@
       "stop": "Detener",
       "playAria": "Reproducir {streamName}",
       "actionsAria": "Acciones de transmisión",
-      "stub": {
-        "title": "Aún no implementado",
-        "description": "Esta acción está en la hoja de ruta — se ha registrado."
-      },
       "recordError": {
         "title": "No se pudo cambiar la grabación",
         "description": "MediaMTX rechazó el cambio: la grabación de este stream no se ha modificado."
@@ -117,7 +113,6 @@
         "description": "MediaMTX no pudo obtener un fotograma: puede que el stream esté desconectado."
       },
       "menu": {
-        "openDetail": "Abrir detalle de la transmisión",
         "viewRecordings": "Ver grabaciones",
         "takeSnapshot": "Tomar captura",
         "record": "Grabar",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Copiar URLs de publicación",
-        "shareEmbed": "Compartir e insertar…",
         "editPathConfig": "Editar configuración del path",
         "editHooks": "Editar hooks"
       }

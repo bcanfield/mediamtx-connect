@@ -92,10 +92,6 @@
       "stop": "Зупинити",
       "playAria": "Відтворити {streamName}",
       "actionsAria": "Дії з трансляцією",
-      "stub": {
-        "title": "Ще не реалізовано",
-        "description": "Ця дія в дорожній карті — її зафіксовано."
-      },
       "recordError": {
         "title": "Не вдалося змінити запис",
         "description": "MediaMTX відхилив зміну — стан запису цього потоку не змінився."
@@ -117,7 +113,6 @@
         "description": "MediaMTX не зміг отримати кадр — потік може бути офлайн."
       },
       "menu": {
-        "openDetail": "Відкрити сторінку трансляції",
         "viewRecordings": "Переглянути записи",
         "takeSnapshot": "Зробити знімок",
         "record": "Запис",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Скопіювати URL публікації",
-        "shareEmbed": "Поділитися та вбудувати…",
         "editPathConfig": "Змінити конфігурацію шляху",
         "editHooks": "Змінити хуки"
       }

@@ -92,10 +92,6 @@
       "stop": "중지",
       "playAria": "{streamName} 재생",
       "actionsAria": "스트림 작업",
-      "stub": {
-        "title": "아직 구현되지 않았습니다",
-        "description": "이 작업은 로드맵에 있습니다 — 기록되었습니다."
-      },
       "recordError": {
         "title": "녹화를 변경할 수 없습니다",
         "description": "MediaMTX가 변경을 거부했습니다 — 이 스트림의 녹화 상태는 그대로입니다."
@@ -117,7 +113,6 @@
         "description": "MediaMTX가 프레임을 가져오지 못했습니다 — 스트림이 오프라인일 수 있습니다."
       },
       "menu": {
-        "openDetail": "스트림 상세 열기",
         "viewRecordings": "녹화 보기",
         "takeSnapshot": "스냅샷 찍기",
         "record": "녹화",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "게시 URL 복사",
-        "shareEmbed": "공유 및 임베드…",
         "editPathConfig": "경로 설정 편집",
         "editHooks": "훅 편집"
       }

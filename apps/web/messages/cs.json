@@ -92,10 +92,6 @@
       "stop": "Zastavit",
       "playAria": "Přehrát {streamName}",
       "actionsAria": "Akce streamu",
-      "stub": {
-        "title": "Zatím neimplementováno",
-        "description": "Tato akce je v plánu — byla zaznamenána."
-      },
       "recordError": {
         "title": "Nahrávání se nepodařilo změnit",
         "description": "MediaMTX změnu odmítl — nahrávání tohoto streamu zůstalo beze změny."
@@ -117,7 +113,6 @@
         "description": "MediaMTX nedokázal zachytit snímek — stream může být offline."
       },
       "menu": {
-        "openDetail": "Otevřít detail streamu",
         "viewRecordings": "Zobrazit záznamy",
         "takeSnapshot": "Pořídit snímek",
         "record": "Nahrávání",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopírovat publikační URL",
-        "shareEmbed": "Sdílet a vložit…",
         "editPathConfig": "Upravit konfiguraci cesty",
         "editHooks": "Upravit hooky"
       }

@@ -92,10 +92,6 @@
       "stop": "停止",
       "playAria": "{streamName} を再生",
       "actionsAria": "ストリームの操作",
-      "stub": {
-        "title": "未実装です",
-        "description": "この操作はロードマップにあります — 記録されました。"
-      },
       "recordError": {
         "title": "録画を変更できませんでした",
         "description": "MediaMTX が変更を拒否しました — このストリームの録画状態は変わっていません。"
@@ -117,7 +113,6 @@
         "description": "MediaMTX がフレームを取得できませんでした — ストリームがオフラインの可能性があります。"
       },
       "menu": {
-        "openDetail": "ストリーム詳細を開く",
         "viewRecordings": "録画を表示",
         "takeSnapshot": "スナップショットを撮る",
         "record": "録画",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "配信用 URL をコピー",
-        "shareEmbed": "共有と埋め込み…",
         "editPathConfig": "パス設定を編集",
         "editHooks": "フックを編集"
       }

@@ -92,10 +92,6 @@
       "stop": "Dừng",
       "playAria": "Phát {streamName}",
       "actionsAria": "Hành động trên luồng",
-      "stub": {
-        "title": "Chưa được triển khai",
-        "description": "Hành động này nằm trong lộ trình — đã được ghi nhận."
-      },
       "recordError": {
         "title": "Không thể thay đổi ghi hình",
         "description": "MediaMTX đã từ chối thay đổi — trạng thái ghi hình của luồng này không đổi."
@@ -117,7 +113,6 @@
         "description": "MediaMTX không thể lấy khung hình — luồng có thể đang ngoại tuyến."
       },
       "menu": {
-        "openDetail": "Mở chi tiết luồng",
         "viewRecordings": "Xem bản ghi",
         "takeSnapshot": "Chụp ảnh nhanh",
         "record": "Ghi hình",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Sao chép URL đẩy luồng",
-        "shareEmbed": "Chia sẻ & nhúng…",
         "editPathConfig": "Chỉnh sửa cấu hình đường dẫn",
         "editHooks": "Chỉnh sửa hook"
       }

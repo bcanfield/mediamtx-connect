@@ -92,10 +92,6 @@
       "stop": "Zatrzymaj",
       "playAria": "Odtwórz {streamName}",
       "actionsAria": "Akcje transmisji",
-      "stub": {
-        "title": "Jeszcze niezaimplementowane",
-        "description": "Ta akcja jest w planach — została odnotowana."
-      },
       "recordError": {
         "title": "Nie udało się zmienić nagrywania",
         "description": "MediaMTX odrzucił zmianę — nagrywanie tego strumienia pozostało bez zmian."
@@ -117,7 +113,6 @@
         "description": "MediaMTX nie mógł pobrać klatki — strumień może być offline."
       },
       "menu": {
-        "openDetail": "Otwórz szczegóły transmisji",
         "viewRecordings": "Zobacz nagrania",
         "takeSnapshot": "Zrób migawkę",
         "record": "Nagrywanie",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiuj adresy URL publikowania",
-        "shareEmbed": "Udostępnij i osadź…",
         "editPathConfig": "Edytuj konfigurację ścieżki",
         "editHooks": "Edytuj hooki"
       }

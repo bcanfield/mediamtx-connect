@@ -92,10 +92,6 @@
       "stop": "Stop",
       "playAria": "Afspil {streamName}",
       "actionsAria": "Streamhandlinger",
-      "stub": {
-        "title": "Ikke implementeret endnu",
-        "description": "Denne handling er på køreplanen — den er blevet logget."
-      },
       "recordError": {
         "title": "Optagelsen kunne ikke ændres",
         "description": "MediaMTX afviste ændringen – optagelsen for dette stream er uændret."
@@ -117,7 +113,6 @@
         "description": "MediaMTX kunne ikke hente et billede – streamen er muligvis offline."
       },
       "menu": {
-        "openDetail": "Åbn streamdetaljer",
         "viewRecordings": "Vis optagelser",
         "takeSnapshot": "Tag øjebliksbillede",
         "record": "Optag",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopiér publicerings-URL'er",
-        "shareEmbed": "Del & indlejr…",
         "editPathConfig": "Rediger stikonfiguration",
         "editHooks": "Rediger hooks"
       }

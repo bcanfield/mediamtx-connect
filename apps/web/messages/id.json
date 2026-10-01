@@ -92,10 +92,6 @@
       "stop": "Hentikan",
       "playAria": "Putar {streamName}",
       "actionsAria": "Tindakan aliran",
-      "stub": {
-        "title": "Belum diimplementasikan",
-        "description": "Tindakan ini ada di peta jalan — sudah dicatat."
-      },
       "recordError": {
         "title": "Tidak dapat mengubah perekaman",
         "description": "MediaMTX menolak perubahan — perekaman stream ini tidak berubah."
@@ -117,7 +113,6 @@
         "description": "MediaMTX tidak dapat mengambil bingkai — stream mungkin sedang offline."
       },
       "menu": {
-        "openDetail": "Buka detail aliran",
         "viewRecordings": "Lihat rekaman",
         "takeSnapshot": "Ambil snapshot",
         "record": "Rekam",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Salin URL publikasi",
-        "shareEmbed": "Bagikan & sematkan…",
         "editPathConfig": "Ubah konfigurasi path",
         "editHooks": "Ubah hooks"
       }

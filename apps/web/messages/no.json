@@ -92,10 +92,6 @@
       "stop": "Stopp",
       "playAria": "Spill av {streamName}",
       "actionsAria": "Strømhandlinger",
-      "stub": {
-        "title": "Ikke implementert ennå",
-        "description": "Denne handlingen står på veikartet — den er logget."
-      },
       "recordError": {
         "title": "Kunne ikke endre opptak",
         "description": "MediaMTX avviste endringen – opptaket for denne strømmen er uendret."
@@ -117,7 +113,6 @@
         "description": "MediaMTX kunne ikke hente et bilde – strømmen er kanskje frakoblet."
       },
       "menu": {
-        "openDetail": "Åpne strømdetaljer",
         "viewRecordings": "Vis opptak",
         "takeSnapshot": "Ta øyeblikksbilde",
         "record": "Ta opp",
@@ -125,7 +120,6 @@
         "recordOff": "OFF",
         "recordUnknown": "UNKNOWN",
         "copyPublishUrls": "Kopier publiserings-URL-er",
-        "shareEmbed": "Del & bygg inn…",
         "editPathConfig": "Rediger banekonfigurasjon",
         "editHooks": "Rediger hooks"
       }
