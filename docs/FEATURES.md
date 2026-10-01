@@ -270,8 +270,6 @@ Sources reviewed at last full audit: source tree, `README.md`, `ARCHITECTURE.md`
 - **Radix-based UI primitives** — keyboard nav, focus management, ARIA wired in via shadcn/ui.
 - **Internationalization (i18n)** — `use-intl` (next-intl's framework-agnostic core). Supported locales (30 total): `en` (default); plus `es`, `zh` (Simplified), `it`, `de`, `ru`, `fr`, `pt`, `ja`, `pl`, `ko`, `tr`, `nl`, `cs`, `zh-tw` (Traditional Chinese), `pt-br` (Brazilian Portuguese), `id`, `ro`, `sv`, `da`, `no`, `fi`, `el`, `hu`, `uk`, `vi`, `tl`, `th`, `hi`, `bn`. The locale is a client-side setting (persisted in `localStorage('locale')`, initialized from `navigator.languages`) — URLs carry no locale prefix. English messages are bundled eagerly; other locales lazy-load as their own chunks. `<html lang>` is set on switch. Date / time / relative-time formatting uses `useFormatter` for locale-aware output. `apps/web/src/i18n/provider.tsx`, `apps/web/src/i18n/locales.ts`, `apps/web/messages/{locale}.json`
 - **Locale switcher** — header icon button opening a searchable combobox (Popover + Command). Type to filter the 30 languages; the list is height-capped and scrolls so it never runs off screen. Sits next to ModeToggle, preserves the current route when switching. `apps/web/src/components/locale-switcher.tsx`
-- **Localized README** — `README.md` (English source, at repo root) + `docs/i18n/README.{locale}.md` for every other supported locale. Each carries a centered language strip with flag emoji + native name (current locale bolded). Developer-facing docs (this file, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CLAUDE.md`, etc.) intentionally remain English-only.
-- **README translation staleness guard** — `docs/i18n/.translation-status.json` records the source `README.md` hash plus per-locale "last synced at hash" entries. `scripts/readme-i18n-check.mjs` (run via `pnpm i18n:check`) fails CI when the source hash drifts from any locale's recorded hash or when a locale README file is missing. It also compares each locale README's structure against the source — heading outline, per-fenced-block language and line count, and every backticked literal — so a lockstep hash bump can't pass off stale content as synced.
 - **Translation onboarding & guard** — `docs/I18N.md` documents the full "add a new language" workflow and translation policy. `scripts/i18n-check.mjs` (run via `pnpm i18n:check`) compares every non-English locale against `apps/web/messages/en.json` and fails when keys are missing or extra. Wired into CI alongside `lint` / `typecheck`.
 
 ---
@@ -439,12 +437,10 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
 | `pnpm lint` / `lint:fix` | ESLint check / autofix. |
-| `pnpm i18n:check` | Message-key parity + README translation staleness (runs both checks below). |
-| `pnpm i18n:check:messages` | Message-key parity only (`scripts/i18n-check.mjs`). |
-| `pnpm i18n:check:readme` | README translation staleness only (`scripts/readme-i18n-check.mjs`). |
+| `pnpm i18n:check` | Message-key parity across all locales (`scripts/i18n-check.mjs`). |
 | `pnpm test` | Vitest unit + component suites across packages (turbo), then the root `scripts` project. |
 | `pnpm test:scripts` | Vitest over `scripts/` only (`--dir scripts`) — repo tooling turbo can't see. |
-| `pnpm check` | **The inner loop (~4s).** Lints only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue or README moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `--since` with no ref (or with the next flag after it) is an error and exits 1 rather than silently degrading to working-tree mode. `scripts/check.mjs` |
+| `pnpm check` | **The inner loop (~4s).** Lints only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `--since` with no ref (or with the next flag after it) is an error and exits 1 rather than silently degrading to working-tree mode. `scripts/check.mjs` |
 | `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + typecheck + i18n:check + test + **build**. No Docker, no browsers. Also what smallhours runs against an agent's work before opening its PR. |
 | `pnpm test:changed` | Only tests reachable from your edits (`vitest --changed`); bypasses the turbo cache since git state isn't hashed. |
 | `pnpm test:watch` | Vitest watch mode across packages. |
@@ -455,7 +451,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 ### 15.4 Helper scripts (`scripts/`)
 - **`seed-fixtures.mjs`** — cross-platform Node script (no deps, no ffmpeg) that copies the committed `tests/fixtures/{recordings,screenshots}` into a `--target` dir (default `<repo>/.dev-data`) if empty. Runs as the first step of the `pnpm dev` chain and via Playwright `globalSetup` for e2e. Idempotent — never clobbers a dir that already has content.
 - **`wait-for-mediamtx.mjs`** — gates the E2E suites on the fixture fleet (`stream1..5` + `front-door`) being published **and** `ready`, not merely on the API answering. Shared by `ci.yml` and `e2e-nightly.yml`; replaces the old `mediamtx.spec.ts`, which asserted the same things as eight test failures instead of one named error.
-- **`i18n-check.mjs` / `readme-i18n-check.mjs`** — the two i18n CI guards.
+- **`i18n-check.mjs`** — the i18n key-parity CI guard.
 - **`check.mjs`** — the inner-loop runner behind `pnpm check` (see §15.3). Its argument parsing lives in **`check-args.mjs`** so it can be tested without running the checks it drives; `check-args.test.mjs` covers the three modes and the `--since`-without-a-ref error.
 
 ### 15.5 Agent environment (`.smallhours.yml`)
