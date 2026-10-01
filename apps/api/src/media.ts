@@ -4,6 +4,7 @@ import { Readable } from 'node:stream'
 import { Hono } from 'hono'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
+import { mediaMtxApi, MediaMtxError, mediaMtxPlayback } from './mediamtx'
 import { latestScreenshotPathFor } from './recordings-fs'
 
 // Binary/streaming endpoints — screenshots and recordings. JSON lives in the
@@ -90,4 +91,33 @@ media.get('/recordings/:streamName/:file', async (c) => {
   }
 
   return streamResponse(filePath, { ...headers, 'Content-Length': String(size) })
+})
+
+// RFC 3339 with an explicit offset: what MediaMTX's /get parses `start` as.
+const RFC3339 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/i
+
+// A recorded span off MediaMTX's playback server, as one fMP4. Proxied rather
+// than linked: the compose stack doesn't publish 9996, a direct request would
+// be cross-origin, and playback credentials stay server-side. No cap on
+// `duration` — a span can be hours long, so the body is streamed, never buffered.
+media.get('/playback/get', async (c) => {
+  const path = c.req.query('path')
+  const start = c.req.query('start')
+  const duration = Number(c.req.query('duration'))
+  if (!path || !start || !RFC3339.test(start) || Number.isNaN(Date.parse(start)) || !(duration > 0))
+    return c.text('Expected path, an RFC 3339 start and a positive duration', 400)
+
+  const config = await getAppConfig()
+  try {
+    const global = await mediaMtxApi(config).configGlobalGet()
+    const upstream = await mediaMtxPlayback(config, global.playbackAddress)
+      .get({ path, start, duration, format: 'fmp4' })
+    return new Response(upstream.body, { headers: { 'Content-Type': 'video/mp4' } })
+  }
+  catch (error) {
+    if (error instanceof MediaMtxError && error.status === 404)
+      return c.text('Recording not found', 404)
+    logger.error({ err: error, path }, 'Failed to proxy recording playback')
+    return c.text('Could not reach MediaMTX\'s playback server', 502)
+  }
 })

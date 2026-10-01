@@ -135,3 +135,89 @@ describe('latest screenshot route', () => {
     expect(miss.headers.get('cache-control')).toBe('no-store')
   })
 })
+
+describe('recording playback proxy', () => {
+  // Two upstreams: the v3 API for `playbackAddress`, then the playback server.
+  const fetchMock = vi.fn<typeof fetch>()
+
+  function upstream(playback: () => Response | Promise<Response>) {
+    fetchMock.mockImplementation(async (url) => {
+      if (String(url).includes(':9997/v3/config/global/get'))
+        return Response.json({ playback: true, playbackAddress: ':9996' })
+      return playback()
+    })
+  }
+
+  /** The URL the proxy asked the playback server for. */
+  function playbackRequest(): string | undefined {
+    return fetchMock.mock.calls.map(([url]) => String(url)).find(url => url.includes(':9996/'))
+  }
+
+  const VALID = '/playback/get?path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=60'
+
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.stubGlobal('fetch', fetchMock)
+    upstream(() => new Response('fmp4-bytes', { status: 200 }))
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+    vi.unstubAllGlobals()
+  })
+
+  it('streams the playback server\'s fMP4 back as video/mp4', async () => {
+    const res = await media.request(VALID)
+
+    expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toBe('video/mp4')
+    expect(await res.text()).toBe('fmp4-bytes')
+  })
+
+  it('asks for fMP4 with the path, start and duration encoded', async () => {
+    await media.request('/playback/get?path=cam%2Fone%20two&start=2026-03-14T10%3A00%3A00%2B01%3A00&duration=90.5')
+
+    expect(playbackRequest()).toBe(
+      'http://127.0.0.1:9996/get?path=cam%2Fone+two&start=2026-03-14T10%3A00%3A00%2B01%3A00&duration=90.5&format=fmp4',
+    )
+  })
+
+  // A span can be hours long; only #349's mp4 downloads get a cap.
+  it('forwards a two-hour duration uncapped', async () => {
+    await media.request('/playback/get?path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=7200')
+
+    expect(new URL(playbackRequest()!).searchParams.get('duration')).toBe('7200')
+  })
+
+  it.each([
+    { name: 'no path', query: 'start=2026-03-14T10%3A00%3A00Z&duration=60' },
+    { name: 'no start', query: 'path=stream1&duration=60' },
+    { name: 'a start that is not RFC 3339', query: 'path=stream1&start=yesterday&duration=60' },
+    { name: 'a start that is no real time', query: 'path=stream1&start=2026-13-45T10%3A00%3A00Z&duration=60' },
+    { name: 'a start with no offset', query: 'path=stream1&start=2026-03-14T10%3A00%3A00&duration=60' },
+    { name: 'no duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z' },
+    { name: 'a duration that is not a number', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=abc' },
+    { name: 'a zero duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=0' },
+  ])('answers 400 for $name without asking MediaMTX', async ({ query }) => {
+    const res = await media.request(`/playback/get?${query}`)
+
+    expect(res.status).toBe(400)
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('answers 404 when the playback server has nothing in that range', async () => {
+    upstream(() => Response.json({ error: 'no recordings found' }, { status: 404 }))
+
+    const res = await media.request(VALID)
+
+    expect(res.status).toBe(404)
+  })
+
+  it('answers 502 when the playback server refuses the connection', async () => {
+    upstream(() => Promise.reject(new TypeError('fetch failed', { cause: { code: 'ECONNREFUSED' } })))
+
+    const res = await media.request(VALID)
+
+    expect(res.status).toBe(502)
+  })
+})

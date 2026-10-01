@@ -167,6 +167,33 @@
       "showing": "Viser {from}–{to} af {total}",
       "previous": "Forrige side",
       "next": "Næste side"
+    },
+    "timeline": {
+      "previousDay": "Forrige dag",
+      "nextDay": "Næste dag",
+      "trackAria": "Tidslinje på 24 timer",
+      "spansAria": "Optagede afsnit",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Afspil {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Ingen optagelser denne dag.",
+      "errorTitle": "Kunne ikke læse optagelsestidslinjen",
+      "unreachableTitle": "MediaMTX kan ikke nås",
+      "unreachableDescription": "Optagelsestidslinjen kommer fra MediaMTX. Filerne nedenfor læses fra disken og kan stadig afspilles."
+    },
+    "enablePlayback": {
+      "title": "Slå afspilning af optagelser til",
+      "playbackOff": "MediaMTX' afspilningsserver er slået fra.",
+      "notFmp4": "Denne stream optager i {format}, og afspilningsserveren læser kun fMP4.",
+      "changesIntro": "Connect ændrer disse indstillinger:",
+      "changesAria": "Ændringer, der foretages",
+      "olderNote": "Optagelser fra før denne ændring bliver i fillisten nedenfor.",
+      "apply": "Anvend ændringer",
+      "applying": "Anvender…",
+      "refused": "MediaMTX afviste ændringen",
+      "override": "Denne sti sætter <code>recordFormat</code> til {format} i sin egen stikonfiguration, som tilsidesætter stiernes standarder. Sæt den til <code>fmp4</code> der.",
+      "openPathConfig": "Åbn optagelseskonfigurationen for denne sti",
+      "pathDefaultsUnreadable": "Kunne ikke læse stiernes standarder fra MediaMTX."
     }
   },
   "Config": {

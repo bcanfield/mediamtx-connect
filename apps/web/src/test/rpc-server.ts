@@ -49,11 +49,17 @@ export interface StubApi {
   recordingStreams?: () => unknown
   /** A page of recordings for one stream. Defaults to none. */
   recordingsForStream?: (input: Inputs['recordings']['listForStream']) => unknown
+  /**
+   * One stream's recorded spans for a range — `{status: 'available', spans}`,
+   * `{status: 'unavailable', …}`, or null. Defaults to a day with none.
+   * Throwing an `ORPCError` is how a test drives a playback server that refused.
+   */
+  recordingsTimeline?: (input: Inputs['recordings']['timeline']) => unknown
   /** Server-wide MediaMTX config, or null when it can't be read. */
   globalConfig?: () => unknown
-  updateGlobalConfig?: (input: Inputs['config']['mediamtx']['updateGlobal']) => void
+  updateGlobalConfig?: (input: Inputs['config']['mediamtx']['updateGlobal']) => void | Promise<void>
   pathDefaults?: () => unknown
-  updatePathDefaults?: (input: Inputs['config']['mediamtx']['updatePathDefaults']) => void
+  updatePathDefaults?: (input: Inputs['config']['mediamtx']['updatePathDefaults']) => void | Promise<void>
   appConfig?: () => unknown
   updateAppConfig?: (input: Inputs['config']['app']['update']) => void
 }
@@ -79,6 +85,11 @@ export function createRpcServer(stub: StubApi) {
         ({ input }) =>
           (stub.recordingsForStream?.(input) ?? { recordings: [], totalCount: 0 }) as never,
       ),
+      // Not `??`: a stub answering `null` is driving the unreachable branch.
+      timeline: os.recordings.timeline.handler(
+        ({ input }) =>
+          (stub.recordingsTimeline ? stub.recordingsTimeline(input) : { status: 'available', spans: [] }) as never,
+      ),
     },
     config: {
       app: {
@@ -92,14 +103,14 @@ export function createRpcServer(stub: StubApi) {
         getGlobal: os.config.mediamtx.getGlobal.handler(
           () => (stub.globalConfig?.() ?? null) as never,
         ),
-        updateGlobal: os.config.mediamtx.updateGlobal.handler(({ input }) => {
-          stub.updateGlobalConfig?.(input)
+        updateGlobal: os.config.mediamtx.updateGlobal.handler(async ({ input }) => {
+          await stub.updateGlobalConfig?.(input)
         }),
         getPathDefaults: os.config.mediamtx.getPathDefaults.handler(
           () => (stub.pathDefaults?.() ?? null) as never,
         ),
-        updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(({ input }) => {
-          stub.updatePathDefaults?.(input)
+        updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(async ({ input }) => {
+          await stub.updatePathDefaults?.(input)
         }),
         listPaths: os.config.mediamtx.listPaths.handler(
           () => (stub.pathsCatalog?.() ?? { status: 'connected', paths: [] }) as never,

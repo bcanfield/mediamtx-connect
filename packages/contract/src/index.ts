@@ -101,6 +101,10 @@ export const GlobalConfigSchema = z.object({
     .optional(),
   srt: z.boolean().optional(),
   srtAddress: z.string().optional(),
+  // MediaMTX's playback server, which the recording timeline reads. No rows on
+  // the global config page: the timeline's guided card is where these change.
+  playback: z.boolean().optional(),
+  playbackAddress: z.string().optional(),
 })
 
 export type GlobalConfig = z.infer<typeof GlobalConfigSchema>
@@ -365,6 +369,35 @@ export const RecordingSchema = z.object({
 
 export type Recording = z.infer<typeof RecordingSchema>
 
+// One continuous run of recording segments, as MediaMTX's playback server
+// indexes them. Its `url` is dropped on purpose: MediaMTX builds it from the
+// Host header of the request, which is the api's, not the browser's.
+export const RecordingSpanSchema = z.object({
+  start: z.date(),
+  // Seconds.
+  duration: z.number(),
+})
+
+export type RecordingSpan = z.infer<typeof RecordingSpanSchema>
+
+// The playback server reads a path only when `playback` is on and the path
+// records fMP4. `unavailable` says which of the two is missing so the page can
+// offer to fix it; `recordFormat` is the path's effective value, null when it
+// can't be resolved.
+export const RecordingTimelineSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('unavailable'),
+    playbackEnabled: z.boolean(),
+    recordFormat: z.string().nullable(),
+  }),
+  z.object({
+    status: z.literal('available'),
+    spans: z.array(RecordingSpanSchema),
+  }),
+])
+
+export type RecordingTimeline = z.infer<typeof RecordingTimelineSchema>
+
 export const contract = {
   health: oc.output(HealthSchema),
   streams: {
@@ -390,6 +423,11 @@ export const contract = {
           totalCount: z.number().int(),
         }),
       ),
+    // One stream's recorded spans between two instants, off MediaMTX's playback
+    // server. `null` is an unreachable MediaMTX API, as on the other reads.
+    timeline: oc
+      .input(z.object({ streamName: z.string().min(1), start: z.date(), end: z.date() }))
+      .output(RecordingTimelineSchema.nullable()),
   },
   config: {
     app: {

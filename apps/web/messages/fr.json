@@ -167,6 +167,33 @@
       "showing": "Affichage de {from}–{to} sur {total}",
       "previous": "Page précédente",
       "next": "Page suivante"
+    },
+    "timeline": {
+      "previousDay": "Jour précédent",
+      "nextDay": "Jour suivant",
+      "trackAria": "Frise de 24 heures",
+      "spansAria": "Plages enregistrées",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Lire {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Aucun enregistrement ce jour-là.",
+      "errorTitle": "Impossible de lire la frise des enregistrements",
+      "unreachableTitle": "MediaMTX est injoignable",
+      "unreachableDescription": "La frise des enregistrements provient de MediaMTX. Les fichiers ci-dessous sont lus sur le disque et restent lisibles."
+    },
+    "enablePlayback": {
+      "title": "Activer la lecture des enregistrements",
+      "playbackOff": "Le serveur de lecture de MediaMTX est désactivé.",
+      "notFmp4": "Ce flux enregistre en {format}, et le serveur de lecture ne lit que le fMP4.",
+      "changesIntro": "Connect va modifier ces paramètres :",
+      "changesAria": "Modifications à appliquer",
+      "olderNote": "Les enregistrements antérieurs à ce changement restent dans la liste des fichiers ci-dessous.",
+      "apply": "Appliquer les modifications",
+      "applying": "Application…",
+      "refused": "MediaMTX a refusé la modification",
+      "override": "Ce chemin définit <code>recordFormat</code> à {format} dans sa propre configuration, qui remplace les valeurs par défaut des chemins. Réglez-le sur <code>fmp4</code> à cet endroit.",
+      "openPathConfig": "Ouvrir la configuration d'enregistrement de ce chemin",
+      "pathDefaultsUnreadable": "Impossible de lire les valeurs par défaut des chemins depuis MediaMTX."
     }
   },
   "Config": {

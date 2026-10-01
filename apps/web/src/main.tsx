@@ -70,6 +70,8 @@ const streamRecordingsRoute = createRoute({
     ...playSearch(search),
     page: Number(search.page) >= 1 ? Number(search.page) : undefined,
     take: Number(search.take) >= 1 ? Number(search.take) : undefined,
+    // The recording timeline's day, read as browser-local. Absent means today.
+    day: typeof search.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(search.day) ? search.day : undefined,
   }),
 })
 

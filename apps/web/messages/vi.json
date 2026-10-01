@@ -167,6 +167,33 @@
       "showing": "Hiển thị {from}–{to} trong {total}",
       "previous": "Trang trước",
       "next": "Trang sau"
+    },
+    "timeline": {
+      "previousDay": "Ngày trước",
+      "nextDay": "Ngày sau",
+      "trackAria": "Dòng thời gian 24 giờ",
+      "spansAria": "Các đoạn đã ghi",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Phát {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Không có bản ghi nào trong ngày này.",
+      "errorTitle": "Không đọc được dòng thời gian bản ghi",
+      "unreachableTitle": "Không kết nối được MediaMTX",
+      "unreachableDescription": "Dòng thời gian bản ghi lấy từ MediaMTX. Các tệp bên dưới được đọc từ ổ đĩa và vẫn phát được."
+    },
+    "enablePlayback": {
+      "title": "Bật phát lại bản ghi",
+      "playbackOff": "Máy chủ phát lại của MediaMTX đang tắt.",
+      "notFmp4": "Luồng này ghi ở định dạng {format}, còn máy chủ phát lại chỉ đọc fMP4.",
+      "changesIntro": "Connect sẽ thay đổi các cài đặt sau:",
+      "changesAria": "Các thay đổi sẽ thực hiện",
+      "olderNote": "Các bản ghi trước thay đổi này vẫn nằm trong danh sách tệp bên dưới.",
+      "apply": "Áp dụng thay đổi",
+      "applying": "Đang áp dụng…",
+      "refused": "MediaMTX đã từ chối thay đổi",
+      "override": "Đường dẫn này đặt <code>recordFormat</code> thành {format} trong cấu hình riêng, ghi đè giá trị mặc định của đường dẫn. Hãy đặt thành <code>fmp4</code> ở đó.",
+      "openPathConfig": "Mở cấu hình ghi của đường dẫn này",
+      "pathDefaultsUnreadable": "Không đọc được giá trị mặc định của đường dẫn từ MediaMTX."
     }
   },
   "Config": {

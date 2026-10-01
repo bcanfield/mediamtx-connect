@@ -167,6 +167,33 @@
       "showing": "Menampilkan {from}–{to} dari {total}",
       "previous": "Halaman sebelumnya",
       "next": "Halaman berikutnya"
+    },
+    "timeline": {
+      "previousDay": "Hari sebelumnya",
+      "nextDay": "Hari berikutnya",
+      "trackAria": "Linimasa 24 jam",
+      "spansAria": "Rentang yang terekam",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Putar {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Tidak ada rekaman pada hari ini.",
+      "errorTitle": "Tidak dapat membaca linimasa rekaman",
+      "unreachableTitle": "MediaMTX tidak dapat dijangkau",
+      "unreachableDescription": "Linimasa rekaman berasal dari MediaMTX. File di bawah dibaca dari disk dan tetap bisa diputar."
+    },
+    "enablePlayback": {
+      "title": "Aktifkan pemutaran rekaman",
+      "playbackOff": "Server pemutaran MediaMTX mati.",
+      "notFmp4": "Stream ini merekam dalam {format}, dan server pemutaran hanya membaca fMP4.",
+      "changesIntro": "Connect akan mengubah pengaturan ini:",
+      "changesAria": "Perubahan yang akan dibuat",
+      "olderNote": "Rekaman sebelum perubahan ini tetap ada di daftar file di bawah.",
+      "apply": "Terapkan perubahan",
+      "applying": "Menerapkan…",
+      "refused": "MediaMTX menolak perubahan",
+      "override": "Path ini mengatur <code>recordFormat</code> ke {format} di konfigurasi path-nya sendiri, yang menimpa default path. Ubah menjadi <code>fmp4</code> di sana.",
+      "openPathConfig": "Buka konfigurasi rekaman path ini",
+      "pathDefaultsUnreadable": "Tidak dapat membaca default path dari MediaMTX."
     }
   },
   "Config": {

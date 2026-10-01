@@ -167,6 +167,33 @@
       "showing": "Viser {from}–{to} av {total}",
       "previous": "Forrige side",
       "next": "Neste side"
+    },
+    "timeline": {
+      "previousDay": "Forrige dag",
+      "nextDay": "Neste dag",
+      "trackAria": "Tidslinje på 24 timer",
+      "spansAria": "Innspilte perioder",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Spill av {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Ingen opptak denne dagen.",
+      "errorTitle": "Kunne ikke lese opptakstidslinjen",
+      "unreachableTitle": "MediaMTX kan ikke nås",
+      "unreachableDescription": "Opptakstidslinjen kommer fra MediaMTX. Filene nedenfor leses fra disk og kan fortsatt spilles av."
+    },
+    "enablePlayback": {
+      "title": "Slå på avspilling av opptak",
+      "playbackOff": "Avspillingsserveren til MediaMTX er av.",
+      "notFmp4": "Denne strømmen tar opp i {format}, og avspillingsserveren leser bare fMP4.",
+      "changesIntro": "Connect endrer disse innstillingene:",
+      "changesAria": "Endringer som gjøres",
+      "olderNote": "Opptak fra før denne endringen blir liggende i fillisten nedenfor.",
+      "apply": "Bruk endringer",
+      "applying": "Bruker…",
+      "refused": "MediaMTX avviste endringen",
+      "override": "Denne stien setter <code>recordFormat</code> til {format} i sin egen stikonfigurasjon, som overstyrer standardverdiene for stier. Sett den til <code>fmp4</code> der.",
+      "openPathConfig": "Åpne opptakskonfigurasjonen for denne stien",
+      "pathDefaultsUnreadable": "Kunne ikke lese standardverdiene for stier fra MediaMTX."
     }
   },
   "Config": {

@@ -167,6 +167,33 @@
       "showing": "{total} में से {from}–{to} दिखा रहे हैं",
       "previous": "पिछला पृष्ठ",
       "next": "अगला पृष्ठ"
+    },
+    "timeline": {
+      "previousDay": "पिछला दिन",
+      "nextDay": "अगला दिन",
+      "trackAria": "24 घंटे की टाइमलाइन",
+      "spansAria": "रिकॉर्ड किए गए हिस्से",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} चलाएँ",
+      "durationParts": "{hours} {minutes}",
+      "empty": "इस दिन कोई रिकॉर्डिंग नहीं है।",
+      "errorTitle": "रिकॉर्डिंग टाइमलाइन पढ़ी नहीं जा सकी",
+      "unreachableTitle": "MediaMTX तक नहीं पहुँचा जा सकता",
+      "unreachableDescription": "रिकॉर्डिंग टाइमलाइन MediaMTX से आती है। नीचे की फ़ाइलें डिस्क से पढ़ी जाती हैं और अब भी चलती हैं।"
+    },
+    "enablePlayback": {
+      "title": "रिकॉर्डिंग प्लेबैक चालू करें",
+      "playbackOff": "MediaMTX का प्लेबैक सर्वर बंद है।",
+      "notFmp4": "यह स्ट्रीम {format} में रिकॉर्ड करती है, और प्लेबैक सर्वर केवल fMP4 पढ़ता है।",
+      "changesIntro": "Connect ये सेटिंग बदलेगा:",
+      "changesAria": "किए जाने वाले बदलाव",
+      "olderNote": "इस बदलाव से पहले की रिकॉर्डिंग नीचे फ़ाइल सूची में बनी रहती हैं।",
+      "apply": "बदलाव लागू करें",
+      "applying": "लागू हो रहा है…",
+      "refused": "MediaMTX ने बदलाव अस्वीकार कर दिया",
+      "override": "यह पाथ अपनी पाथ कॉन्फ़िग में <code>recordFormat</code> को {format} पर सेट करता है, जो पाथ डिफ़ॉल्ट को ओवरराइड करता है। वहाँ इसे <code>fmp4</code> पर सेट करें।",
+      "openPathConfig": "इस पाथ की रिकॉर्डिंग कॉन्फ़िग खोलें",
+      "pathDefaultsUnreadable": "MediaMTX से पाथ डिफ़ॉल्ट पढ़े नहीं जा सके।"
     }
   },
   "Config": {

@@ -167,6 +167,33 @@
       "showing": "Se afișează {from}–{to} din {total}",
       "previous": "Pagina anterioară",
       "next": "Pagina următoare"
+    },
+    "timeline": {
+      "previousDay": "Ziua anterioară",
+      "nextDay": "Ziua următoare",
+      "trackAria": "Cronologie de 24 de ore",
+      "spansAria": "Intervale înregistrate",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Redă {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Nicio înregistrare în această zi.",
+      "errorTitle": "Cronologia înregistrărilor nu a putut fi citită",
+      "unreachableTitle": "MediaMTX nu este accesibil",
+      "unreachableDescription": "Cronologia înregistrărilor vine de la MediaMTX. Fișierele de mai jos sunt citite de pe disc și pot fi redate în continuare."
+    },
+    "enablePlayback": {
+      "title": "Activează redarea înregistrărilor",
+      "playbackOff": "Serverul de redare MediaMTX este oprit.",
+      "notFmp4": "Acest stream înregistrează în {format}, iar serverul de redare citește doar fMP4.",
+      "changesIntro": "Connect va modifica aceste setări:",
+      "changesAria": "Modificări de aplicat",
+      "olderNote": "Înregistrările dinainte de această modificare rămân în lista de fișiere de mai jos.",
+      "apply": "Aplică modificările",
+      "applying": "Se aplică…",
+      "refused": "MediaMTX a refuzat modificarea",
+      "override": "Această cale setează <code>recordFormat</code> la {format} în propria configurație, care suprascrie valorile implicite ale căilor. Setează-l acolo la <code>fmp4</code>.",
+      "openPathConfig": "Deschide configurația de înregistrare a acestei căi",
+      "pathDefaultsUnreadable": "Valorile implicite ale căilor nu au putut fi citite din MediaMTX."
     }
   },
   "Config": {

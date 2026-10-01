@@ -167,6 +167,33 @@
       "showing": "{total}-এর মধ্যে {from}–{to} দেখানো হচ্ছে",
       "previous": "আগের পৃষ্ঠা",
       "next": "পরের পৃষ্ঠা"
+    },
+    "timeline": {
+      "previousDay": "আগের দিন",
+      "nextDay": "পরের দিন",
+      "trackAria": "২৪ ঘণ্টার টাইমলাইন",
+      "spansAria": "রেকর্ড করা অংশ",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} চালান",
+      "durationParts": "{hours} {minutes}",
+      "empty": "এই দিনে কোনো রেকর্ডিং নেই।",
+      "errorTitle": "রেকর্ডিং টাইমলাইন পড়া যায়নি",
+      "unreachableTitle": "MediaMTX-এ পৌঁছানো যাচ্ছে না",
+      "unreachableDescription": "রেকর্ডিং টাইমলাইন MediaMTX থেকে আসে। নিচের ফাইলগুলো ডিস্ক থেকে পড়া হয় এবং এখনও চালানো যায়।"
+    },
+    "enablePlayback": {
+      "title": "রেকর্ডিং প্লেব্যাক চালু করুন",
+      "playbackOff": "MediaMTX-এর প্লেব্যাক সার্ভার বন্ধ আছে।",
+      "notFmp4": "এই স্ট্রিম {format}-এ রেকর্ড করে, আর প্লেব্যাক সার্ভার শুধু fMP4 পড়ে।",
+      "changesIntro": "Connect এই সেটিংগুলো বদলাবে:",
+      "changesAria": "যে পরিবর্তনগুলো করা হবে",
+      "olderNote": "এই পরিবর্তনের আগের রেকর্ডিংগুলো নিচের ফাইল তালিকায় থেকে যাবে।",
+      "apply": "পরিবর্তন প্রয়োগ করুন",
+      "applying": "প্রয়োগ করা হচ্ছে…",
+      "refused": "MediaMTX পরিবর্তনটি প্রত্যাখ্যান করেছে",
+      "override": "এই পাথ নিজের পাথ কনফিগে <code>recordFormat</code> কে {format} এ সেট করে, যা পাথ ডিফল্টকে ওভাররাইড করে। সেখানে এটি <code>fmp4</code> এ সেট করুন।",
+      "openPathConfig": "এই পাথের রেকর্ডিং কনফিগ খুলুন",
+      "pathDefaultsUnreadable": "MediaMTX থেকে পাথ ডিফল্ট পড়া যায়নি।"
     }
   },
   "Config": {

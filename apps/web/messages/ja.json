@@ -167,6 +167,33 @@
       "showing": "{total} 件中 {from}–{to} 件を表示",
       "previous": "前のページ",
       "next": "次のページ"
+    },
+    "timeline": {
+      "previousDay": "前の日",
+      "nextDay": "次の日",
+      "trackAria": "24 時間タイムライン",
+      "spansAria": "録画された区間",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} を再生",
+      "durationParts": "{hours} {minutes}",
+      "empty": "この日の録画はありません。",
+      "errorTitle": "録画タイムラインを読み込めませんでした",
+      "unreachableTitle": "MediaMTX に接続できません",
+      "unreachableDescription": "録画タイムラインは MediaMTX から取得します。下のファイルはディスクから読み込まれ、引き続き再生できます。"
+    },
+    "enablePlayback": {
+      "title": "録画の再生をオンにする",
+      "playbackOff": "MediaMTX の再生サーバーがオフです。",
+      "notFmp4": "このストリームは {format} で録画されていますが、再生サーバーが読めるのは fMP4 だけです。",
+      "changesIntro": "Connect は次の設定を変更します:",
+      "changesAria": "適用する変更",
+      "olderNote": "この変更より前の録画は、下のファイル一覧に残ります。",
+      "apply": "変更を適用",
+      "applying": "適用中…",
+      "refused": "MediaMTX が変更を拒否しました",
+      "override": "このパスは自身のパス設定で <code>recordFormat</code> を {format} にしており、パス既定値より優先されます。そちらで <code>fmp4</code> に設定してください。",
+      "openPathConfig": "このパスの録画設定を開く",
+      "pathDefaultsUnreadable": "MediaMTX からパス既定値を読み込めませんでした。"
     }
   },
   "Config": {

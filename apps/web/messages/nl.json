@@ -167,6 +167,33 @@
       "showing": "{from}–{to} van {total} weergegeven",
       "previous": "Vorige pagina",
       "next": "Volgende pagina"
+    },
+    "timeline": {
+      "previousDay": "Vorige dag",
+      "nextDay": "Volgende dag",
+      "trackAria": "Tijdlijn van 24 uur",
+      "spansAria": "Opgenomen stukken",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} afspelen",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Geen opnames op deze dag.",
+      "errorTitle": "Kon de opnametijdlijn niet lezen",
+      "unreachableTitle": "MediaMTX is onbereikbaar",
+      "unreachableDescription": "De opnametijdlijn komt van MediaMTX. De bestanden hieronder worden van schijf gelezen en spelen nog af."
+    },
+    "enablePlayback": {
+      "title": "Opname-afspelen inschakelen",
+      "playbackOff": "De afspeelserver van MediaMTX staat uit.",
+      "notFmp4": "Deze stream neemt op in {format}, en de afspeelserver leest alleen fMP4.",
+      "changesIntro": "Connect wijzigt deze instellingen:",
+      "changesAria": "Door te voeren wijzigingen",
+      "olderNote": "Opnames van vóór deze wijziging blijven in de bestandslijst hieronder.",
+      "apply": "Wijzigingen toepassen",
+      "applying": "Toepassen…",
+      "refused": "MediaMTX heeft de wijziging geweigerd",
+      "override": "Dit pad zet <code>recordFormat</code> op {format} in zijn eigen padconfiguratie, die de padstandaarden overschrijft. Zet het daar op <code>fmp4</code>.",
+      "openPathConfig": "Opnameconfiguratie van dit pad openen",
+      "pathDefaultsUnreadable": "Kon de padstandaarden niet uit MediaMTX lezen."
     }
   },
   "Config": {

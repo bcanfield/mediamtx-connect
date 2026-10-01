@@ -167,6 +167,33 @@
       "showing": "Megjelenítve: {from}–{to} / {total}",
       "previous": "Előző oldal",
       "next": "Következő oldal"
+    },
+    "timeline": {
+      "previousDay": "Előző nap",
+      "nextDay": "Következő nap",
+      "trackAria": "24 órás idővonal",
+      "spansAria": "Rögzített szakaszok",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} lejátszása",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Ezen a napon nincs felvétel.",
+      "errorTitle": "Nem sikerült beolvasni a felvételek idővonalát",
+      "unreachableTitle": "A MediaMTX nem érhető el",
+      "unreachableDescription": "A felvételek idővonala a MediaMTX-ből jön. Az alábbi fájlok lemezről olvasódnak, és továbbra is lejátszhatók."
+    },
+    "enablePlayback": {
+      "title": "Felvétellejátszás bekapcsolása",
+      "playbackOff": "A MediaMTX lejátszószervere ki van kapcsolva.",
+      "notFmp4": "Ez a stream {format} formátumban rögzít, a lejátszószerver pedig csak fMP4-et olvas.",
+      "changesIntro": "A Connect ezeket a beállításokat módosítja:",
+      "changesAria": "Elvégzendő módosítások",
+      "olderNote": "A módosítás előtti felvételek az alábbi fájllistában maradnak.",
+      "apply": "Módosítások alkalmazása",
+      "applying": "Alkalmazás…",
+      "refused": "A MediaMTX elutasította a módosítást",
+      "override": "Ez az útvonal a saját konfigurációjában {format} értékre állítja a(z) <code>recordFormat</code> kulcsot, ami felülírja az útvonal-alapértékeket. Ott állítsa <code>fmp4</code> értékre.",
+      "openPathConfig": "Az útvonal felvételi beállításainak megnyitása",
+      "pathDefaultsUnreadable": "Nem sikerült beolvasni az útvonal-alapértékeket a MediaMTX-ből."
     }
   },
   "Config": {

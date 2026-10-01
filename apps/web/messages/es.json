@@ -167,6 +167,33 @@
       "showing": "Mostrando {from}–{to} de {total}",
       "previous": "Página anterior",
       "next": "Página siguiente"
+    },
+    "timeline": {
+      "previousDay": "Día anterior",
+      "nextDay": "Día siguiente",
+      "trackAria": "Línea de tiempo de 24 horas",
+      "spansAria": "Tramos grabados",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Reproducir {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "No hay grabaciones este día.",
+      "errorTitle": "No se pudo leer la línea de tiempo de grabaciones",
+      "unreachableTitle": "MediaMTX no está disponible",
+      "unreachableDescription": "La línea de tiempo de grabaciones viene de MediaMTX. Los archivos de abajo se leen del disco y se pueden reproducir."
+    },
+    "enablePlayback": {
+      "title": "Activar la reproducción de grabaciones",
+      "playbackOff": "El servidor de reproducción de MediaMTX está desactivado.",
+      "notFmp4": "Este stream graba en {format} y el servidor de reproducción solo lee fMP4.",
+      "changesIntro": "Connect cambiará estos ajustes:",
+      "changesAria": "Cambios a aplicar",
+      "olderNote": "Las grabaciones anteriores a este cambio siguen en la lista de archivos de abajo.",
+      "apply": "Aplicar cambios",
+      "applying": "Aplicando…",
+      "refused": "MediaMTX rechazó el cambio",
+      "override": "Este path define <code>recordFormat</code> como {format} en su propia configuración, que prevalece sobre los valores por defecto de los paths. Cámbialo a <code>fmp4</code> allí.",
+      "openPathConfig": "Abrir la configuración de grabación de este path",
+      "pathDefaultsUnreadable": "No se pudieron leer los valores por defecto de los paths desde MediaMTX."
     }
   },
   "Config": {

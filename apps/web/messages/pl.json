@@ -167,6 +167,33 @@
       "showing": "Wyświetlanie {from}–{to} z {total}",
       "previous": "Poprzednia strona",
       "next": "Następna strona"
+    },
+    "timeline": {
+      "previousDay": "Poprzedni dzień",
+      "nextDay": "Następny dzień",
+      "trackAria": "Oś czasu 24-godzinna",
+      "spansAria": "Nagrane odcinki",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Odtwórz {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Brak nagrań tego dnia.",
+      "errorTitle": "Nie udało się odczytać osi czasu nagrań",
+      "unreachableTitle": "MediaMTX jest nieosiągalny",
+      "unreachableDescription": "Oś czasu nagrań pochodzi z MediaMTX. Pliki poniżej są czytane z dysku i nadal można je odtworzyć."
+    },
+    "enablePlayback": {
+      "title": "Włącz odtwarzanie nagrań",
+      "playbackOff": "Serwer odtwarzania MediaMTX jest wyłączony.",
+      "notFmp4": "Ten strumień nagrywa w formacie {format}, a serwer odtwarzania czyta tylko fMP4.",
+      "changesIntro": "Connect zmieni te ustawienia:",
+      "changesAria": "Zmiany do wprowadzenia",
+      "olderNote": "Nagrania sprzed tej zmiany pozostają na liście plików poniżej.",
+      "apply": "Zastosuj zmiany",
+      "applying": "Stosowanie…",
+      "refused": "MediaMTX odrzucił zmianę",
+      "override": "Ta ścieżka ustawia <code>recordFormat</code> na {format} we własnej konfiguracji, która nadpisuje domyślne ustawienia ścieżek. Ustaw tam <code>fmp4</code>.",
+      "openPathConfig": "Otwórz konfigurację nagrywania tej ścieżki",
+      "pathDefaultsUnreadable": "Nie udało się odczytać domyślnych ustawień ścieżek z MediaMTX."
     }
   },
   "Config": {
