@@ -72,6 +72,11 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - Downloads that stream, with live progress and cancel.
 - Press `/` to filter.
 
+### Sessions
+
+- **Everyone connected, in one table.** Publishers and readers over RTSP, RTSPS, RTMP, RTMPS, SRT, WebRTC and HLS, with remote address, bytes in and out, and uptime, refreshed every 5 seconds.
+- **Kick a client** after a confirm. It can reconnect; a kick is not a ban.
+
 ### Configuration, without YAML
 
 - **The whole server config:** 65 typed, validated controls across Logging, API, Hooks, RTSP, RTMP, HLS, WebRTC, and SRT.

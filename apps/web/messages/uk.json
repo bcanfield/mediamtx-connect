@@ -29,6 +29,7 @@
     "items": {
       "live": "Наживо",
       "recordings": "Записи",
+      "sessions": "Сеанси",
       "appConfig": "Налаштування застосунку",
       "mediamtxConfig": "Конфігурація MediaMTX",
       "paths": "Шляхи"
@@ -167,6 +168,51 @@
       "showing": "Показано {from}–{to} з {total}",
       "previous": "Попередня сторінка",
       "next": "Наступна сторінка"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Сеанси",
+    "pageSubHeader": "Усі клієнти, підключені до MediaMTX зараз, що публікують або читають, за будь-яким протоколом.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанси} many {# сеансів} other {# сеансу}}",
+    "columns": {
+      "path": "Шлях",
+      "protocol": "Протокол",
+      "remoteAddr": "Віддалена адреса",
+      "state": "Стан",
+      "bytesIn": "Байт вхідних",
+      "bytesOut": "Байт вихідних",
+      "uptime": "Час роботи",
+      "actions": "Дії"
+    },
+    "states": {
+      "idle": "простій",
+      "read": "читання",
+      "publish": "публікація"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не ввімкнено на цьому сервері)",
+      "failed": "{protocol} (не вдалося прочитати)",
+      "unlisted": "Не показано: {protocols}.",
+      "truncated": "Показано перші 100 сеансів {protocol}."
+    },
+    "kick": {
+      "action": "Відключити",
+      "confirmTitle": "Відключити клієнта {protocol} {remoteAddr} від {path}?",
+      "confirmDescription": "MediaMTX одразу розірве зʼєднання. Це не блокування: клієнт може одразу перепідключитися.",
+      "hlsCaveat": "HLS-плеєр за кілька секунд знову запитує плейлист і отримує новий сеанс, тож це здебільшого лише скидає його.",
+      "cancel": "Скасувати",
+      "confirm": "Відключити клієнта",
+      "toasts": {
+        "success": "{remoteAddr} відключено",
+        "alreadyGone": "{remoteAddr} уже відключився",
+        "errorTitle": "Не вдалося відключити сеанс",
+        "errorDescription": "MediaMTX не прийняв запит. Спробуйте ще раз."
+      }
+    },
+    "empty": {
+      "title": "Ніхто не підключений",
+      "lead": "Зараз у MediaMTX немає ні видавців, ні читачів."
     }
   },
   "Config": {

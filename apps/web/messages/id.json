@@ -29,6 +29,7 @@
     "items": {
       "live": "Langsung",
       "recordings": "Rekaman",
+      "sessions": "Sesi",
       "appConfig": "Konfigurasi aplikasi",
       "mediamtxConfig": "Konfigurasi MediaMTX",
       "paths": "Jalur"
@@ -167,6 +168,51 @@
       "showing": "Menampilkan {from}–{to} dari {total}",
       "previous": "Halaman sebelumnya",
       "next": "Halaman berikutnya"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesi",
+    "pageSubHeader": "Setiap klien yang terhubung ke MediaMTX saat ini, menerbitkan atau membaca, melalui protokol apa pun.",
+    "summary": "{count, plural, other {# sesi}}",
+    "columns": {
+      "path": "Jalur",
+      "protocol": "Protokol",
+      "remoteAddr": "Alamat jarak jauh",
+      "state": "Status",
+      "bytesIn": "Byte masuk",
+      "bytesOut": "Byte keluar",
+      "uptime": "Waktu aktif",
+      "actions": "Tindakan"
+    },
+    "states": {
+      "idle": "diam",
+      "read": "baca",
+      "publish": "terbit"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (tidak diaktifkan di server ini)",
+      "failed": "{protocol} (tidak dapat dibaca)",
+      "unlisted": "Tidak tercantum: {protocols}.",
+      "truncated": "Menampilkan 100 sesi {protocol} pertama."
+    },
+    "kick": {
+      "action": "Keluarkan",
+      "confirmTitle": "Keluarkan klien {protocol} {remoteAddr} dari {path}?",
+      "confirmDescription": "MediaMTX memutus koneksi sekarang. Ini bukan blokir: klien dapat langsung terhubung kembali.",
+      "hlsCaveat": "Pemutar HLS meminta playlist-nya lagi dalam hitungan detik dan mendapat sesi baru, jadi ini sebagian besar hanya meresetnya.",
+      "cancel": "Batal",
+      "confirm": "Keluarkan klien",
+      "toasts": {
+        "success": "{remoteAddr} dikeluarkan",
+        "alreadyGone": "{remoteAddr} sudah terputus",
+        "errorTitle": "Tidak dapat mengeluarkan sesi",
+        "errorDescription": "MediaMTX tidak menerima permintaan itu. Coba lagi."
+      }
+    },
+    "empty": {
+      "title": "Tidak ada yang terhubung",
+      "lead": "MediaMTX tidak memiliki penerbit atau pembaca saat ini."
     }
   },
   "Config": {

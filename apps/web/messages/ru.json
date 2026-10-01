@@ -29,6 +29,7 @@
     "items": {
       "live": "Эфир",
       "recordings": "Записи",
+      "sessions": "Сеансы",
       "appConfig": "Настройки приложения",
       "mediamtxConfig": "Конфигурация MediaMTX",
       "paths": "Пути"
@@ -167,6 +168,51 @@
       "showing": "Показано {from}–{to} из {total}",
       "previous": "Предыдущая страница",
       "next": "Следующая страница"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Сеансы",
+    "pageSubHeader": "Все клиенты, подключённые к MediaMTX прямо сейчас, публикующие или читающие, по любому протоколу.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанса} many {# сеансов} other {# сеанса}}",
+    "columns": {
+      "path": "Путь",
+      "protocol": "Протокол",
+      "remoteAddr": "Удалённый адрес",
+      "state": "Состояние",
+      "bytesIn": "Байт входящих",
+      "bytesOut": "Байт исходящих",
+      "uptime": "Время работы",
+      "actions": "Действия"
+    },
+    "states": {
+      "idle": "простой",
+      "read": "чтение",
+      "publish": "публикация"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не включён на этом сервере)",
+      "failed": "{protocol} (не удалось прочитать)",
+      "unlisted": "Не показаны: {protocols}.",
+      "truncated": "Показаны первые 100 сеансов {protocol}."
+    },
+    "kick": {
+      "action": "Отключить",
+      "confirmTitle": "Отключить клиента {protocol} {remoteAddr} от {path}?",
+      "confirmDescription": "MediaMTX сразу разорвёт соединение. Это не блокировка: клиент может сразу переподключиться.",
+      "hlsCaveat": "HLS-плеер в течение нескольких секунд снова запрашивает плейлист и получает новый сеанс, так что это по сути лишь сбрасывает его.",
+      "cancel": "Отмена",
+      "confirm": "Отключить клиента",
+      "toasts": {
+        "success": "{remoteAddr} отключён",
+        "alreadyGone": "{remoteAddr} уже отключился",
+        "errorTitle": "Не удалось отключить сеанс",
+        "errorDescription": "MediaMTX не принял запрос. Попробуйте ещё раз."
+      }
+    },
+    "empty": {
+      "title": "Никто не подключён",
+      "lead": "Сейчас у MediaMTX нет ни издателей, ни читателей."
     }
   },
   "Config": {

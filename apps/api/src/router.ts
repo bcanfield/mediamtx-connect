@@ -1,9 +1,9 @@
-import type { PathTrack, RecordState } from '@connect/contract'
-import type { MediaMtxPath } from './mediamtx'
+import type { PathTrack, RecordState, Session, SessionProtocol, SessionProtocolStatus } from '@connect/contract'
+import type { MediaMtxPath, MediaMtxSession } from './mediamtx'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { contract } from '@connect/contract'
+import { contract, SESSION_PROTOCOLS } from '@connect/contract'
 import { implement, ORPCError } from '@orpc/server'
 import { getAppConfig, updateAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
@@ -50,6 +50,24 @@ function tracksOf(runtime: MediaMtxPath): PathTrack[] {
     }))
   }
   return (runtime.tracks ?? []).map(codec => ({ codec, resolution: null }))
+}
+
+// Folds one protocol's session into the shared row. SRT keeps its real
+// counters in `bytesReceived`/`bytesSent` (deprecated aliases everywhere else),
+// and an HLS session has no inbound counter and no state: it only ever reads.
+function toSession(protocol: SessionProtocol, item: MediaMtxSession): Session {
+  return {
+    id: item.id ?? '',
+    protocol,
+    path: item.path ?? '',
+    remoteAddr: item.remoteAddr ?? '',
+    state: protocol === 'hls' ? 'read' : item.state as Session['state'],
+    inboundBytes: protocol === 'hls'
+      ? null
+      : (protocol === 'srt' ? item.bytesReceived : item.inboundBytes) ?? 0,
+    outboundBytes: (protocol === 'srt' ? item.bytesSent : item.outboundBytes) ?? 0,
+    created: new Date(item.created ?? 0),
+  }
 }
 
 export const router = os.router({
@@ -116,6 +134,62 @@ export const router = os.router({
         })),
         hlsAddress: live.hlsAddress,
         remoteMediaMtxUrl: config.remoteMediaMtxUrl,
+      }
+    }),
+  },
+
+  sessions: {
+    // Seven list calls per poll, one per protocol, each its own failure domain:
+    // a protocol whose server is off answers 404 and the rest still list.
+    list: os.sessions.list.handler(async () => {
+      const config = await getAppConfig()
+      const api = mediaMtxApi(config)
+      const results = await Promise.allSettled(SESSION_PROTOCOLS.map(protocol => api.sessionsList(protocol)))
+
+      // Only no HTTP answer at all means MediaMTX is unreachable.
+      if (results.every(r => r.status === 'rejected' && !(r.reason instanceof MediaMtxError))) {
+        logger.error({ err: (results[0] as PromiseRejectedResult).reason }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
+        return {
+          status: 'connection-error' as const,
+          mediaMtxUrl: config.mediaMtxUrl,
+          mediaMtxApiPort: config.mediaMtxApiPort,
+        }
+      }
+
+      const sessions: Session[] = []
+      const protocols: SessionProtocolStatus[] = SESSION_PROTOCOLS.map((protocol, i) => {
+        const result = results[i]!
+        if (result.status === 'rejected') {
+          if (result.reason instanceof MediaMtxError && result.reason.status === 404)
+            return { protocol, status: 'disabled', truncated: false }
+          logger.error({ err: result.reason, protocol }, 'Failed to list sessions')
+          return { protocol, status: 'failed', truncated: false }
+        }
+        sessions.push(...(result.value.items ?? []).map(item => toSession(protocol, item)))
+        return { protocol, status: 'listed', truncated: (result.value.pageCount ?? 0) > 1 }
+      })
+
+      // A stable order, so rows don't reshuffle between polls.
+      sessions.sort((a, b) =>
+        a.path.localeCompare(b.path)
+        || SESSION_PROTOCOLS.indexOf(a.protocol) - SESSION_PROTOCOLS.indexOf(b.protocol)
+        || a.created.getTime() - b.created.getTime(),
+      )
+
+      return { status: 'connected' as const, sessions, protocols }
+    }),
+
+    kick: os.sessions.kick.handler(async ({ input }) => {
+      const config = await getAppConfig()
+      logger.info({ protocol: input.protocol, id: input.id }, 'Kicking session')
+      try {
+        await mediaMtxApi(config).sessionsKick(input.protocol, input.id)
+      }
+      catch (error) {
+        if (error instanceof MediaMtxError && error.status === 404)
+          throw new ORPCError('NOT_FOUND', { message: 'Session already disconnected' })
+        logger.error({ err: error }, 'Failed to kick session')
+        throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to kick session' })
       }
     }),
   },

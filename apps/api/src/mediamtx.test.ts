@@ -188,3 +188,41 @@ describe('error paths', () => {
       .toThrow('MediaMTX GET /config/paths/get/stream1 responded 500')
   })
 })
+
+// The legacy names on purpose: 1.20.0, the shipped image, serves only these,
+// and 1.21 still serves them (deprecated) next to the new category routes.
+describe('sessions', () => {
+  it.each([
+    { protocol: 'rtsp', list: '/v3/rtspsessions/list', kick: '/v3/rtspsessions/kick/abc' },
+    { protocol: 'rtsps', list: '/v3/rtspssessions/list', kick: '/v3/rtspssessions/kick/abc' },
+    { protocol: 'rtmp', list: '/v3/rtmpconns/list', kick: '/v3/rtmpconns/kick/abc' },
+    { protocol: 'rtmps', list: '/v3/rtmpsconns/list', kick: '/v3/rtmpsconns/kick/abc' },
+    { protocol: 'srt', list: '/v3/srtconns/list', kick: '/v3/srtconns/kick/abc' },
+    { protocol: 'webrtc', list: '/v3/webrtcsessions/list', kick: '/v3/webrtcsessions/kick/abc' },
+    { protocol: 'hls', list: '/v3/hlssessions/list', kick: '/v3/hlssessions/kick/abc' },
+  ] as const)('$protocol lists off $list and kicks with POST $kick', async ({ protocol, list, kick }) => {
+    fetchMock.mockResolvedValue(jsonResponse({ pageCount: 1, items: [] }))
+    await api.sessionsList(protocol)
+    expect(lastRequest().url).toBe(`http://127.0.0.1:9997${list}`)
+
+    fetchMock.mockResolvedValue(new Response('', { status: 200 }))
+    await expect(api.sessionsKick(protocol, 'abc')).resolves.toBeUndefined()
+    expect(lastRequest()).toEqual({ url: `http://127.0.0.1:9997${kick}`, init: { method: 'POST' } })
+  })
+
+  it('escapes the session id into the kick URL', async () => {
+    fetchMock.mockResolvedValue(new Response('', { status: 200 }))
+
+    await api.sessionsKick('srt', 'a/b c')
+
+    expect(lastRequest().url).toBe('http://127.0.0.1:9997/v3/srtconns/kick/a%2Fb%20c')
+  })
+
+  // A disabled protocol's routes aren't registered; the router tells that
+  // apart from a real failure by this status.
+  it('rejects a list on 404 with the status attached', async () => {
+    fetchMock.mockResolvedValue(new Response('404 page not found', { status: 404 }))
+
+    await expect(api.sessionsList('rtmps')).rejects.toMatchObject({ status: 404, reason: null })
+  })
+})

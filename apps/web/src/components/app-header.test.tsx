@@ -54,6 +54,7 @@ describe('primary navigation', () => {
     expect(links.map(a => a.getAttribute('href'))).toEqual([
       '/',
       '/recordings',
+      '/sessions',
       '/config',
       '/config/mediamtx/global',
       '/config/mediamtx/paths',
@@ -69,10 +70,21 @@ describe('primary navigation', () => {
     expect(within(nav()).getAllByRole('link').map(a => a.textContent)).toEqual([
       'Live',
       'Recordings',
+      'Sessions',
       'App Config',
       'MediaMTX Config',
       'Paths',
     ])
+  })
+
+  // Operational tabs on one side, config tabs on the other. The divider is
+  // keyed off the first config tab, so a tab added before it can't move it.
+  it('draws the divider right before App Config', async () => {
+    await renderHeader()
+
+    const appConfig = within(nav()).getByRole('link', { name: 'App Config' })
+    expect(appConfig.previousElementSibling).toHaveAttribute('data-nav-divider')
+    expect(nav().querySelectorAll('[data-nav-divider]')).toHaveLength(1)
   })
 
   it('shows the brand and a link home', async () => {

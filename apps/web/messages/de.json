@@ -29,6 +29,7 @@
     "items": {
       "live": "Live",
       "recordings": "Aufzeichnungen",
+      "sessions": "Sitzungen",
       "appConfig": "App-Konfiguration",
       "mediamtxConfig": "MediaMTX-Konfiguration",
       "paths": "Pfade"
@@ -167,6 +168,51 @@
       "showing": "Zeige {from}–{to} von {total}",
       "previous": "Vorherige Seite",
       "next": "Nächste Seite"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sitzungen",
+    "pageSubHeader": "Alle Clients, die gerade mit MediaMTX verbunden sind, veröffentlichend oder lesend, über jedes Protokoll.",
+    "summary": "{count, plural, one {# Sitzung} other {# Sitzungen}}",
+    "columns": {
+      "path": "Pfad",
+      "protocol": "Protokoll",
+      "remoteAddr": "Remote-Adresse",
+      "state": "Status",
+      "bytesIn": "Bytes ein",
+      "bytesOut": "Bytes aus",
+      "uptime": "Laufzeit",
+      "actions": "Aktionen"
+    },
+    "states": {
+      "idle": "inaktiv",
+      "read": "liest",
+      "publish": "veröffentlicht"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (auf diesem Server nicht aktiviert)",
+      "failed": "{protocol} (konnte nicht gelesen werden)",
+      "unlisted": "Nicht aufgeführt: {protocols}.",
+      "truncated": "Es werden die ersten 100 {protocol}-Sitzungen angezeigt."
+    },
+    "kick": {
+      "action": "Trennen",
+      "confirmTitle": "{protocol}-Client {remoteAddr} von {path} trennen?",
+      "confirmDescription": "MediaMTX beendet die Verbindung sofort. Das ist keine Sperre: Der Client kann sich gleich wieder verbinden.",
+      "hlsCaveat": "Ein HLS-Player fordert seine Playlist innerhalb von Sekunden erneut an und erhält eine neue Sitzung, daher setzt dies ihn meist nur zurück.",
+      "cancel": "Abbrechen",
+      "confirm": "Client trennen",
+      "toasts": {
+        "success": "{remoteAddr} getrennt",
+        "alreadyGone": "{remoteAddr} war bereits getrennt",
+        "errorTitle": "Sitzung konnte nicht getrennt werden",
+        "errorDescription": "MediaMTX hat das Trennen nicht angenommen. Versuche es erneut."
+      }
+    },
+    "empty": {
+      "title": "Niemand ist verbunden",
+      "lead": "MediaMTX hat gerade keine Publisher oder Leser."
     }
   },
   "Config": {

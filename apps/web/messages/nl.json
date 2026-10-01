@@ -29,6 +29,7 @@
     "items": {
       "live": "Live",
       "recordings": "Opnames",
+      "sessions": "Sessies",
       "appConfig": "App-configuratie",
       "mediamtxConfig": "MediaMTX-configuratie",
       "paths": "Paden"
@@ -167,6 +168,51 @@
       "showing": "{from}–{to} van {total} weergegeven",
       "previous": "Vorige pagina",
       "next": "Volgende pagina"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessies",
+    "pageSubHeader": "Elke client die nu met MediaMTX verbonden is, publicerend of lezend, via elk protocol.",
+    "summary": "{count, plural, one {# sessie} other {# sessies}}",
+    "columns": {
+      "path": "Pad",
+      "protocol": "Protocol",
+      "remoteAddr": "Extern adres",
+      "state": "Status",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes uit",
+      "uptime": "Looptijd",
+      "actions": "Acties"
+    },
+    "states": {
+      "idle": "inactief",
+      "read": "lezen",
+      "publish": "publiceren"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (niet ingeschakeld op deze server)",
+      "failed": "{protocol} (kon niet worden gelezen)",
+      "unlisted": "Niet vermeld: {protocols}.",
+      "truncated": "De eerste 100 {protocol}-sessies worden getoond."
+    },
+    "kick": {
+      "action": "Verbreken",
+      "confirmTitle": "{protocol}-client {remoteAddr} loskoppelen van {path}?",
+      "confirmDescription": "MediaMTX verbreekt de verbinding nu. Dit is geen ban: de client kan meteen opnieuw verbinden.",
+      "hlsCaveat": "Een HLS-speler vraagt binnen enkele seconden opnieuw zijn afspeellijst op en krijgt een nieuwe sessie, dus dit reset hem vooral.",
+      "cancel": "Annuleren",
+      "confirm": "Client loskoppelen",
+      "toasts": {
+        "success": "{remoteAddr} losgekoppeld",
+        "alreadyGone": "{remoteAddr} was al losgekoppeld",
+        "errorTitle": "Kon de sessie niet verbreken",
+        "errorDescription": "MediaMTX accepteerde het verzoek niet. Probeer het opnieuw."
+      }
+    },
+    "empty": {
+      "title": "Niemand is verbonden",
+      "lead": "MediaMTX heeft op dit moment geen publishers of lezers."
     }
   },
   "Config": {

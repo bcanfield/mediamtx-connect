@@ -29,6 +29,7 @@
     "items": {
       "live": "Direct",
       "recordings": "Enregistrements",
+      "sessions": "Sessions",
       "appConfig": "Config de l'app",
       "mediamtxConfig": "Config MediaMTX",
       "paths": "Chemins"
@@ -167,6 +168,51 @@
       "showing": "Affichage de {from}–{to} sur {total}",
       "previous": "Page précédente",
       "next": "Page suivante"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessions",
+    "pageSubHeader": "Tous les clients connectés à MediaMTX en ce moment, en publication ou en lecture, sur tous les protocoles.",
+    "summary": "{count, plural, one {# session} other {# sessions}}",
+    "columns": {
+      "path": "Chemin",
+      "protocol": "Protocole",
+      "remoteAddr": "Adresse distante",
+      "state": "État",
+      "bytesIn": "Octets entrants",
+      "bytesOut": "Octets sortants",
+      "uptime": "Durée",
+      "actions": "Actions"
+    },
+    "states": {
+      "idle": "inactive",
+      "read": "lecture",
+      "publish": "publication"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (non activé sur ce serveur)",
+      "failed": "{protocol} (lecture impossible)",
+      "unlisted": "Non listés : {protocols}.",
+      "truncated": "Affichage des 100 premières sessions {protocol}."
+    },
+    "kick": {
+      "action": "Expulser",
+      "confirmTitle": "Expulser le client {protocol} {remoteAddr} de {path} ?",
+      "confirmDescription": "MediaMTX coupe la connexion maintenant. Ce n’est pas un bannissement : le client peut se reconnecter aussitôt.",
+      "hlsCaveat": "Un lecteur HLS redemande sa playlist en quelques secondes et obtient une nouvelle session, donc cela le réinitialise surtout.",
+      "cancel": "Annuler",
+      "confirm": "Expulser le client",
+      "toasts": {
+        "success": "{remoteAddr} expulsé",
+        "alreadyGone": "{remoteAddr} s’était déjà déconnecté",
+        "errorTitle": "Impossible d’expulser la session",
+        "errorDescription": "MediaMTX n’a pas accepté l’expulsion. Réessayez."
+      }
+    },
+    "empty": {
+      "title": "Personne n’est connecté",
+      "lead": "MediaMTX n’a aucun éditeur ni lecteur pour le moment."
     }
   },
   "Config": {

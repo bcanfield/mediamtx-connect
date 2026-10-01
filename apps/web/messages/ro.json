@@ -29,6 +29,7 @@
     "items": {
       "live": "Live",
       "recordings": "Înregistrări",
+      "sessions": "Sesiuni",
       "appConfig": "Configurare aplicație",
       "mediamtxConfig": "Configurare MediaMTX",
       "paths": "Căi"
@@ -167,6 +168,51 @@
       "showing": "Se afișează {from}–{to} din {total}",
       "previous": "Pagina anterioară",
       "next": "Pagina următoare"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesiuni",
+    "pageSubHeader": "Fiecare client conectat acum la MediaMTX, care publică sau citește, prin orice protocol.",
+    "summary": "{count, plural, one {# sesiune} few {# sesiuni} other {# de sesiuni}}",
+    "columns": {
+      "path": "Cale",
+      "protocol": "Protocol",
+      "remoteAddr": "Adresă la distanță",
+      "state": "Stare",
+      "bytesIn": "Octeți intrați",
+      "bytesOut": "Octeți ieșiți",
+      "uptime": "Timp activ",
+      "actions": "Acțiuni"
+    },
+    "states": {
+      "idle": "inactivă",
+      "read": "citire",
+      "publish": "publicare"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (neactivat pe acest server)",
+      "failed": "{protocol} (nu a putut fi citit)",
+      "unlisted": "Nelistate: {protocols}.",
+      "truncated": "Se afișează primele 100 de sesiuni {protocol}."
+    },
+    "kick": {
+      "action": "Deconectează",
+      "confirmTitle": "Deconectezi clientul {protocol} {remoteAddr} de la {path}?",
+      "confirmDescription": "MediaMTX închide conexiunea acum. Nu este o interdicție: clientul se poate reconecta imediat.",
+      "hlsCaveat": "Un player HLS cere din nou playlistul în câteva secunde și primește o sesiune nouă, așa că de obicei doar îl resetează.",
+      "cancel": "Anulează",
+      "confirm": "Deconectează clientul",
+      "toasts": {
+        "success": "{remoteAddr} deconectat",
+        "alreadyGone": "{remoteAddr} se deconectase deja",
+        "errorTitle": "Sesiunea nu a putut fi deconectată",
+        "errorDescription": "MediaMTX nu a acceptat cererea. Încearcă din nou."
+      }
+    },
+    "empty": {
+      "title": "Nimeni nu este conectat",
+      "lead": "MediaMTX nu are acum niciun publicator sau cititor."
     }
   },
   "Config": {

@@ -52,6 +52,20 @@ describe('the recordings tab', () => {
   })
 })
 
+describe('the sessions tab', () => {
+  it('is active on /sessions and nowhere else', () => {
+    expect(isActiveRoute('/sessions', '/sessions')).toBe(true)
+    expect(isActiveRoute('/', '/sessions')).toBe(false)
+    expect(isActiveRoute('/recordings', '/sessions')).toBe(false)
+  })
+
+  it('leaves the neighbouring tabs dark on /sessions', () => {
+    expect(isActiveRoute('/sessions', '/')).toBe(false)
+    expect(isActiveRoute('/sessions', '/recordings')).toBe(false)
+    expect(isActiveRoute('/sessions', '/config')).toBe(false)
+  })
+})
+
 describe('an unresolved pathname', () => {
   it('activates nothing', () => {
     // usePathname can be null before the router settles; a `null` that matched

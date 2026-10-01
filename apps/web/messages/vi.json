@@ -29,6 +29,7 @@
     "items": {
       "live": "Trực tiếp",
       "recordings": "Bản ghi",
+      "sessions": "Phiên",
       "appConfig": "Cấu hình ứng dụng",
       "mediamtxConfig": "Cấu hình MediaMTX",
       "paths": "Đường dẫn"
@@ -167,6 +168,51 @@
       "showing": "Hiển thị {from}–{to} trong {total}",
       "previous": "Trang trước",
       "next": "Trang sau"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Phiên",
+    "pageSubHeader": "Mọi máy khách đang kết nối với MediaMTX lúc này, đang phát hoặc đang đọc, qua mọi giao thức.",
+    "summary": "{count, plural, other {# phiên}}",
+    "columns": {
+      "path": "Đường dẫn",
+      "protocol": "Giao thức",
+      "remoteAddr": "Địa chỉ từ xa",
+      "state": "Trạng thái",
+      "bytesIn": "Byte vào",
+      "bytesOut": "Byte ra",
+      "uptime": "Thời gian chạy",
+      "actions": "Thao tác"
+    },
+    "states": {
+      "idle": "rảnh",
+      "read": "đọc",
+      "publish": "phát"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (chưa bật trên máy chủ này)",
+      "failed": "{protocol} (không đọc được)",
+      "unlisted": "Không liệt kê: {protocols}.",
+      "truncated": "Đang hiển thị 100 phiên {protocol} đầu tiên."
+    },
+    "kick": {
+      "action": "Ngắt",
+      "confirmTitle": "Ngắt máy khách {protocol} {remoteAddr} khỏi {path}?",
+      "confirmDescription": "MediaMTX sẽ cắt kết nối ngay. Đây không phải lệnh cấm: máy khách có thể kết nối lại ngay.",
+      "hlsCaveat": "Trình phát HLS sẽ yêu cầu lại danh sách phát trong vài giây và nhận phiên mới, nên việc này chủ yếu chỉ đặt lại nó.",
+      "cancel": "Hủy",
+      "confirm": "Ngắt máy khách",
+      "toasts": {
+        "success": "Đã ngắt {remoteAddr}",
+        "alreadyGone": "{remoteAddr} đã ngắt kết nối từ trước",
+        "errorTitle": "Không thể ngắt phiên",
+        "errorDescription": "MediaMTX không chấp nhận yêu cầu. Hãy thử lại."
+      }
+    },
+    "empty": {
+      "title": "Không có ai kết nối",
+      "lead": "Hiện MediaMTX không có người phát hay người đọc nào."
     }
   },
   "Config": {

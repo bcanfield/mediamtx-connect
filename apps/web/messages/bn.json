@@ -29,6 +29,7 @@
     "items": {
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
+      "sessions": "সেশন",
       "appConfig": "অ্যাপ কনফিগ",
       "mediamtxConfig": "MediaMTX কনফিগ",
       "paths": "পাথ"
@@ -167,6 +168,51 @@
       "showing": "{total}-এর মধ্যে {from}–{to} দেখানো হচ্ছে",
       "previous": "আগের পৃষ্ঠা",
       "next": "পরের পৃষ্ঠা"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "সেশন",
+    "pageSubHeader": "এই মুহূর্তে MediaMTX-এ সংযুক্ত প্রতিটি ক্লায়েন্ট, প্রকাশ বা পাঠ, যেকোনো প্রোটোকলে।",
+    "summary": "{count, plural, one {#টি সেশন} other {#টি সেশন}}",
+    "columns": {
+      "path": "পাথ",
+      "protocol": "প্রোটোকল",
+      "remoteAddr": "দূরবর্তী ঠিকানা",
+      "state": "অবস্থা",
+      "bytesIn": "আগত বাইট",
+      "bytesOut": "বহির্গামী বাইট",
+      "uptime": "আপটাইম",
+      "actions": "কাজ"
+    },
+    "states": {
+      "idle": "নিষ্ক্রিয়",
+      "read": "পাঠ",
+      "publish": "প্রকাশ"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (এই সার্ভারে চালু নেই)",
+      "failed": "{protocol} (পড়া যায়নি)",
+      "unlisted": "তালিকাভুক্ত নয়: {protocols}।",
+      "truncated": "প্রথম 100টি {protocol} সেশন দেখানো হচ্ছে।"
+    },
+    "kick": {
+      "action": "কিক",
+      "confirmTitle": "{path} থেকে {protocol} ক্লায়েন্ট {remoteAddr} কিক করবেন?",
+      "confirmDescription": "MediaMTX এখনই সংযোগটি বিচ্ছিন্ন করবে। এটি নিষেধাজ্ঞা নয়: ক্লায়েন্ট সঙ্গে সঙ্গে আবার সংযুক্ত হতে পারে।",
+      "hlsCaveat": "একটি HLS প্লেয়ার কয়েক সেকেন্ডের মধ্যে আবার প্লেলিস্ট চায় এবং নতুন সেশন পায়, তাই এটি মূলত সেটিকে রিসেট করে।",
+      "cancel": "বাতিল",
+      "confirm": "ক্লায়েন্ট কিক করুন",
+      "toasts": {
+        "success": "{remoteAddr} কিক করা হয়েছে",
+        "alreadyGone": "{remoteAddr} আগেই সংযোগ বিচ্ছিন্ন করেছিল",
+        "errorTitle": "সেশনটি কিক করা যায়নি",
+        "errorDescription": "MediaMTX কিক গ্রহণ করেনি। আবার চেষ্টা করুন।"
+      }
+    },
+    "empty": {
+      "title": "কেউ সংযুক্ত নেই",
+      "lead": "এই মুহূর্তে MediaMTX-এ কোনো প্রকাশক বা পাঠক নেই।"
     }
   },
   "Config": {

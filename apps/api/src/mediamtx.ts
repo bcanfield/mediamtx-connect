@@ -1,4 +1,4 @@
-import type { AppConfig, GlobalConfig, PathConfig, PathDefaults } from '@connect/contract'
+import type { AppConfig, GlobalConfig, PathConfig, PathDefaults, SessionProtocol } from '@connect/contract'
 
 // Minimal hand-rolled client for the handful of MediaMTX endpoints this app
 // uses (of the full v3 API). Shapes mirror MediaMTX v1.11.3 swagger.
@@ -55,6 +55,41 @@ export type MediaMtxPathCreate = PathConfig & {
   rtspTransport?: string
 }
 
+// One session or conn off any protocol's list, with only the fields we read.
+// Which byte counters are real differs by protocol: SRT counts in
+// `bytesReceived`/`bytesSent`, the rest in `inboundBytes`/`outboundBytes` (their
+// `bytes*` are deprecated aliases). HLS sessions have no `state` and no inbound.
+export interface MediaMtxSession {
+  id?: string
+  created?: string
+  remoteAddr?: string
+  state?: string
+  path?: string
+  inboundBytes?: number
+  outboundBytes?: number
+  bytesReceived?: number
+  bytesSent?: number
+}
+
+export interface MediaMtxSessionList {
+  pageCount?: number
+  items?: MediaMtxSession[]
+}
+
+// The legacy route names: v1.20.0, the shipped image, serves only these, and
+// v1.21 still serves them next to its new category routes. RTSP is `sessions`,
+// not `conns` — only a session carries a path and state, and only it kicks.
+// HLS is sessions (one per reader), not muxers.
+const SESSION_ROUTES: Record<SessionProtocol, string> = {
+  rtsp: '/rtspsessions',
+  rtsps: '/rtspssessions',
+  rtmp: '/rtmpconns',
+  rtmps: '/rtmpsconns',
+  srt: '/srtconns',
+  webrtc: '/webrtcsessions',
+  hls: '/hlssessions',
+}
+
 // MediaMTX answers a rejected write with `{"error": "..."}`. That reason — a
 // name already in use, a source it can't parse — is the only thing that says
 // what to change, so it rides along on the throw instead of being flattened
@@ -84,7 +119,7 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     const res = await fetch(`${base}${route}`, init)
     if (!res.ok)
       throw new MediaMtxError(res.status, await errorReason(res), `${init?.method ?? 'GET'} ${route}`)
-    if (res.status === 204 || init?.method === 'PATCH' || init?.method === 'DELETE')
+    if (res.status === 204 || (init?.method !== undefined && init.method !== 'GET'))
       return undefined as T
     return await res.json() as T
   }
@@ -144,5 +179,13 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
     // covers it. 404 when there is no entry under this name.
     configPathDelete: (name: string) =>
       request<void>(`/config/paths/delete/${encodeURIComponent(name)}`, { method: 'DELETE' }),
+
+    // First page only (MediaMTX's default, 100 items). A disabled protocol
+    // isn't routed at all, so its list rejects with a 404 MediaMtxError.
+    sessionsList: (protocol: SessionProtocol) =>
+      request<MediaMtxSessionList>(`${SESSION_ROUTES[protocol]}/list`),
+    // 404 when the session has already gone.
+    sessionsKick: (protocol: SessionProtocol, id: string) =>
+      request<void>(`${SESSION_ROUTES[protocol]}/kick/${encodeURIComponent(id)}`, { method: 'POST' }),
   }
 }

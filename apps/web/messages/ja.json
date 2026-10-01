@@ -29,6 +29,7 @@
     "items": {
       "live": "ライブ",
       "recordings": "録画",
+      "sessions": "セッション",
       "appConfig": "アプリ設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "パス"
@@ -167,6 +168,51 @@
       "showing": "{total} 件中 {from}–{to} 件を表示",
       "previous": "前のページ",
       "next": "次のページ"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "セッション",
+    "pageSubHeader": "現在 MediaMTX に接続しているすべてのクライアント（配信・視聴、全プロトコル）。",
+    "summary": "{count, plural, other {# 件のセッション}}",
+    "columns": {
+      "path": "パス",
+      "protocol": "プロトコル",
+      "remoteAddr": "リモートアドレス",
+      "state": "状態",
+      "bytesIn": "受信バイト",
+      "bytesOut": "送信バイト",
+      "uptime": "稼働時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "待機",
+      "read": "視聴",
+      "publish": "配信"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（このサーバーでは無効）",
+      "failed": "{protocol}（読み取れませんでした）",
+      "unlisted": "一覧にないもの: {protocols}。",
+      "truncated": "{protocol} のセッションは最初の 100 件のみ表示しています。"
+    },
+    "kick": {
+      "action": "切断",
+      "confirmTitle": "{path} の {protocol} クライアント {remoteAddr} を切断しますか？",
+      "confirmDescription": "MediaMTX はすぐに接続を切ります。これは禁止ではありません。クライアントはすぐに再接続できます。",
+      "hlsCaveat": "HLS プレーヤーは数秒以内にプレイリストを再取得して新しいセッションになるため、ほぼリセットされるだけです。",
+      "cancel": "キャンセル",
+      "confirm": "クライアントを切断",
+      "toasts": {
+        "success": "{remoteAddr} を切断しました",
+        "alreadyGone": "{remoteAddr} はすでに切断されていました",
+        "errorTitle": "セッションを切断できませんでした",
+        "errorDescription": "MediaMTX が切断を受け付けませんでした。もう一度お試しください。"
+      }
+    },
+    "empty": {
+      "title": "接続しているクライアントはありません",
+      "lead": "現在 MediaMTX には配信者も視聴者もいません。"
     }
   },
   "Config": {

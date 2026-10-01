@@ -29,6 +29,7 @@
     "items": {
       "live": "直播",
       "recordings": "录像",
+      "sessions": "会话",
       "appConfig": "应用配置",
       "mediamtxConfig": "MediaMTX 配置",
       "paths": "路径"
@@ -167,6 +168,51 @@
       "showing": "显示第 {from}–{to} 项，共 {total} 项",
       "previous": "上一页",
       "next": "下一页"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "会话",
+    "pageSubHeader": "当前连接到 MediaMTX 的所有客户端，无论发布还是读取，涵盖所有协议。",
+    "summary": "{count, plural, other {# 个会话}}",
+    "columns": {
+      "path": "路径",
+      "protocol": "协议",
+      "remoteAddr": "远程地址",
+      "state": "状态",
+      "bytesIn": "接收字节",
+      "bytesOut": "发送字节",
+      "uptime": "运行时间",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "空闲",
+      "read": "读取",
+      "publish": "发布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此服务器未启用）",
+      "failed": "{protocol}（无法读取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "仅显示前 100 个 {protocol} 会话。"
+    },
+    "kick": {
+      "action": "踢出",
+      "confirmTitle": "要将 {protocol} 客户端 {remoteAddr} 从 {path} 踢出吗？",
+      "confirmDescription": "MediaMTX 会立即断开连接。这不是封禁：客户端可以立即重新连接。",
+      "hlsCaveat": "HLS 播放器会在几秒内重新请求播放列表并获得新会话，所以这多半只是重置它。",
+      "cancel": "取消",
+      "confirm": "踢出客户端",
+      "toasts": {
+        "success": "已踢出 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已经断开连接",
+        "errorTitle": "无法踢出会话",
+        "errorDescription": "MediaMTX 未接受该请求。请重试。"
+      }
+    },
+    "empty": {
+      "title": "没有任何连接",
+      "lead": "MediaMTX 当前没有发布者或读取者。"
     }
   },
   "Config": {

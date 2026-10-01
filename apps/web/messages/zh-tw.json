@@ -29,6 +29,7 @@
     "items": {
       "live": "直播",
       "recordings": "錄影",
+      "sessions": "工作階段",
       "appConfig": "應用程式設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "路徑"
@@ -167,6 +168,51 @@
       "showing": "顯示第 {from}–{to} 項，共 {total} 項",
       "previous": "上一頁",
       "next": "下一頁"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "工作階段",
+    "pageSubHeader": "目前連線到 MediaMTX 的所有用戶端，不論發布或讀取，涵蓋所有通訊協定。",
+    "summary": "{count, plural, other {# 個工作階段}}",
+    "columns": {
+      "path": "路徑",
+      "protocol": "通訊協定",
+      "remoteAddr": "遠端位址",
+      "state": "狀態",
+      "bytesIn": "接收位元組",
+      "bytesOut": "傳送位元組",
+      "uptime": "運作時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "閒置",
+      "read": "讀取",
+      "publish": "發布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此伺服器未啟用）",
+      "failed": "{protocol}（無法讀取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "僅顯示前 100 個 {protocol} 工作階段。"
+    },
+    "kick": {
+      "action": "踢除",
+      "confirmTitle": "要將 {protocol} 用戶端 {remoteAddr} 從 {path} 踢除嗎？",
+      "confirmDescription": "MediaMTX 會立即中斷連線。這不是封鎖：用戶端可以馬上重新連線。",
+      "hlsCaveat": "HLS 播放器會在幾秒內重新請求播放清單並取得新的工作階段，所以這多半只是重設它。",
+      "cancel": "取消",
+      "confirm": "踢除用戶端",
+      "toasts": {
+        "success": "已踢除 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已經中斷連線",
+        "errorTitle": "無法踢除工作階段",
+        "errorDescription": "MediaMTX 未接受此要求。請再試一次。"
+      }
+    },
+    "empty": {
+      "title": "目前沒有任何連線",
+      "lead": "MediaMTX 目前沒有發布者或讀取者。"
     }
   },
   "Config": {

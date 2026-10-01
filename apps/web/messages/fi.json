@@ -29,6 +29,7 @@
     "items": {
       "live": "Suora",
       "recordings": "Tallenteet",
+      "sessions": "Istunnot",
       "appConfig": "Sovelluksen asetukset",
       "mediamtxConfig": "MediaMTX-asetukset",
       "paths": "Polut"
@@ -167,6 +168,51 @@
       "showing": "Näytetään {from}–{to} / {total}",
       "previous": "Edellinen sivu",
       "next": "Seuraava sivu"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Istunnot",
+    "pageSubHeader": "Kaikki MediaMTX:ään juuri nyt yhdistetyt asiakkaat, julkaisevat tai lukevat, millä tahansa protokollalla.",
+    "summary": "{count, plural, one {# istunto} other {# istuntoa}}",
+    "columns": {
+      "path": "Polku",
+      "protocol": "Protokolla",
+      "remoteAddr": "Etäosoite",
+      "state": "Tila",
+      "bytesIn": "Tavuja sisään",
+      "bytesOut": "Tavuja ulos",
+      "uptime": "Käyntiaika",
+      "actions": "Toiminnot"
+    },
+    "states": {
+      "idle": "jouten",
+      "read": "luku",
+      "publish": "julkaisu"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (ei käytössä tällä palvelimella)",
+      "failed": "{protocol} (ei voitu lukea)",
+      "unlisted": "Ei listattu: {protocols}.",
+      "truncated": "Näytetään ensimmäiset 100 {protocol}-istuntoa."
+    },
+    "kick": {
+      "action": "Katkaise",
+      "confirmTitle": "Katkaistaanko {protocol}-asiakas {remoteAddr} polulta {path}?",
+      "confirmDescription": "MediaMTX katkaisee yhteyden nyt. Tämä ei ole esto: asiakas voi yhdistää heti uudelleen.",
+      "hlsCaveat": "HLS-soitin pyytää soittolistaansa uudelleen sekunneissa ja saa uuden istunnon, joten tämä lähinnä vain nollaa sen.",
+      "cancel": "Peruuta",
+      "confirm": "Katkaise asiakas",
+      "toasts": {
+        "success": "{remoteAddr} katkaistu",
+        "alreadyGone": "{remoteAddr} oli jo katkaissut yhteyden",
+        "errorTitle": "Istuntoa ei voitu katkaista",
+        "errorDescription": "MediaMTX ei hyväksynyt katkaisua. Yritä uudelleen."
+      }
+    },
+    "empty": {
+      "title": "Kukaan ei ole yhdistettynä",
+      "lead": "MediaMTX:llä ei ole nyt julkaisijoita eikä lukijoita."
     }
   },
   "Config": {
