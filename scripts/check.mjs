@@ -46,11 +46,11 @@ function changedFiles() {
   if (explicit.length)
     return explicit
   if (since)
-    return git('diff', '--name-only', `${since}...HEAD`)
+    return git('diff', '--name-only', '--diff-filter=d', `${since}...HEAD`)
   // Working tree: tracked modifications plus untracked files. A new file that
   // has never been added is exactly the one most likely to have a lint error.
   return [
-    ...git('diff', '--name-only', 'HEAD'),
+    ...git('diff', '--name-only', '--diff-filter=d', 'HEAD'),
     ...git('ls-files', '--others', '--exclude-standard'),
   ]
 }
