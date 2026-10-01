@@ -17,9 +17,10 @@ import {
 let root: string
 let config: AppConfig
 
+// atime is pinned to the epoch so a helper that read it instead of mtime fails.
 function writeAt(filePath: string, mtime: string) {
   writeFileSync(filePath, '')
-  utimesSync(filePath, new Date(mtime), new Date(mtime))
+  utimesSync(filePath, new Date(0), new Date(mtime))
 }
 
 beforeAll(() => {

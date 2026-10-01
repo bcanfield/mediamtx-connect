@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { mediaMtxApi } from './mediamtx'
+import { mediaMtxApi, MediaMtxError } from './mediamtx'
 
 // The client is nothing but URL composition, method/header choice and error
 // mapping, so `fetch` is stubbed rather than a MediaMTX being booted.
@@ -147,6 +147,26 @@ describe('error paths', () => {
     await expect(api.configGlobalPatch({ rtmpAddress: ':1936' }))
       .rejects
       .toThrow('MediaMTX PATCH /config/global/patch responded 400')
+  })
+
+  it('carries MediaMTX\'s own reason on a rejected write', async () => {
+    fetchMock.mockResolvedValue(new Response(JSON.stringify({ error: 'path already exists' }), { status: 400 }))
+
+    const error = await api.configPathAdd('stream1', { record: true }).catch((e: unknown) => e)
+
+    expect(error).toBeInstanceOf(MediaMtxError)
+    expect(error).toMatchObject({
+      status: 400,
+      reason: 'path already exists',
+      message: 'MediaMTX POST /config/paths/add/stream1 responded 400: path already exists',
+    })
+  })
+
+  // A proxy in front of MediaMTX can answer with its own HTML error page.
+  it('claims no reason when the error body is not MediaMTX JSON', async () => {
+    fetchMock.mockResolvedValue(new Response('<html>Bad Gateway</html>', { status: 502 }))
+
+    await expect(api.pathsList()).rejects.toMatchObject({ status: 502, reason: null })
   })
 
   // 404 is a real answer for the per-path reads, not a failure: a
