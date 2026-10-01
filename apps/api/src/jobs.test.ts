@@ -580,7 +580,7 @@ describe('on a real recordings tree', () => {
     })
 
     it('rejects a name that climbs out of the screenshots directory before touching anything', async () => {
-      await expect(captureSnapshot('../escaped')).rejects.toThrow(Error)
+      await expect(captureSnapshot('../escaped')).rejects.toThrow('No stream named ../escaped')
 
       expect(fs.existsSync(path.join(root, 'escaped'))).toBe(false)
       expect(configGlobalGet).not.toHaveBeenCalled()

@@ -14,12 +14,12 @@ function getSubdirectories(dirPath: string): string[] {
   return files.filter(file => fs.statSync(path.join(dirPath, file)).isDirectory())
 }
 
-// Stems of the recording segments in one stream's directory. A segment's
-// thumbnail is `<stem>.png`.
-function segmentStems(recordingDirectory: string): Set<string> {
+// The recording segments in one stream's directory. A segment's thumbnail is
+// `<stem>.png`.
+function segmentFiles(recordingDirectory: string): string[] {
   if (!fs.existsSync(recordingDirectory))
-    return new Set()
-  return new Set(fs.readdirSync(recordingDirectory).filter(isRecordingSegment).map(f => path.parse(f).name))
+    return []
+  return fs.readdirSync(recordingDirectory).filter(isRecordingSegment)
 }
 
 // A permit gate over ffmpeg spawns: acquire before spawning, release on exit.
@@ -136,8 +136,7 @@ export async function generateScreenshots() {
         .filter(f => f.endsWith('.png'))
         .map(f => path.parse(f).name),
     )
-    const missing = fs.readdirSync(recordingDirectory)
-      .filter(isRecordingSegment)
+    const missing = segmentFiles(recordingDirectory)
       .filter(file => !thumbnails.has(path.parse(file).name))
 
     logger.info(`${missing.length} recordings without screenshots in: ${subdirectory}`)
@@ -279,7 +278,7 @@ export async function cleanupScreenshots() {
 
   for (const subdirectory of streamDirectories) {
     const dir = path.join(config.screenshotsDirectory, subdirectory)
-    const segments = segmentStems(path.join(config.recordingsDirectory, subdirectory))
+    const segments = new Set(segmentFiles(path.join(config.recordingsDirectory, subdirectory)).map(f => path.parse(f).name))
     for (const file of fs.readdirSync(dir).filter(f => !f.startsWith('.'))) {
       if (file.endsWith('.png') && segments.has(path.parse(file).name))
         continue
