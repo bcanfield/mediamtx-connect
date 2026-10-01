@@ -513,6 +513,18 @@ describe('recordings.timeline', () => {
     expect(fetchMock).not.toHaveBeenCalled()
   })
 
+  // A wildcard-backed path has no entry under its own name (ADR 0002).
+  it('reads the format off the entry the runtime path names as its confName', async () => {
+    api.configPathGet.mockImplementation(async (name: string) =>
+      name === 'all_others' ? { recordFormat: 'mpegts' } : null,
+    )
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(api.configPathGet).toHaveBeenCalledWith('all_others')
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+  })
+
   it('reads the format off path defaults when the path has no runtime path or entry', async () => {
     api.pathsGet.mockResolvedValue(null)
     api.configPathGet.mockResolvedValue(null)

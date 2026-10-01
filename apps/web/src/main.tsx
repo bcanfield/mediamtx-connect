@@ -20,6 +20,7 @@ import { PathDefaultsPage } from '@/features/mediamtx-config/path-defaults-page'
 import { PathsCatalogPage } from '@/features/mediamtx-config/paths-catalog-page'
 import { RecordingsIndexPage } from '@/features/recordings/recordings-index-page'
 import { StreamRecordingsPage } from '@/features/recordings/stream-recordings-page'
+import { DAY_PATTERN } from '@/features/recordings/timeline-day'
 import { LiveViewPage } from '@/features/streams/live-view-page'
 import { I18nProvider } from '@/i18n/provider'
 
@@ -71,7 +72,7 @@ const streamRecordingsRoute = createRoute({
     page: Number(search.page) >= 1 ? Number(search.page) : undefined,
     take: Number(search.take) >= 1 ? Number(search.take) : undefined,
     // The recording timeline's day, read as browser-local. Absent means today.
-    day: typeof search.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(search.day) ? search.day : undefined,
+    day: typeof search.day === 'string' && DAY_PATTERN.test(search.day) ? search.day : undefined,
   }),
 })
 

@@ -198,6 +198,8 @@ describe('recording playback proxy', () => {
     { name: 'no duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z' },
     { name: 'a duration that is not a number', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=abc' },
     { name: 'a zero duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=0' },
+    { name: 'an infinite duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=Infinity' },
+    { name: 'a duration that overflows to infinity', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=1e999' },
   ])('answers 400 for $name without asking MediaMTX', async ({ query }) => {
     const res = await media.request(`/playback/get?${query}`)
 

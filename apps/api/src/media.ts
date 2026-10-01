@@ -104,7 +104,7 @@ media.get('/playback/get', async (c) => {
   const path = c.req.query('path')
   const start = c.req.query('start')
   const duration = Number(c.req.query('duration'))
-  if (!path || !start || !RFC3339.test(start) || Number.isNaN(Date.parse(start)) || !(duration > 0))
+  if (!path || !start || !RFC3339.test(start) || Number.isNaN(Date.parse(start)) || !Number.isFinite(duration) || duration <= 0)
     return c.text('Expected path, an RFC 3339 start and a positive duration', 400)
 
   const config = await getAppConfig()

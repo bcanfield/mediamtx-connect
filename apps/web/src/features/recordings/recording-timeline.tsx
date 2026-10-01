@@ -15,7 +15,6 @@ import { PlaybackEnableCard } from './playback-enable-card'
 import { RecordingPlayer } from './recording-player'
 
 const DAY_FORMAT = 'YYYY-MM-DD'
-const DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const TRACK_HOURS = [0, 6, 12, 18, 24]
 
 // What a span plays from: the api's proxy of MediaMTX's /get, never the
@@ -37,9 +36,7 @@ export function RecordingTimelineSection({ streamName }: { streamName: string })
   const queryClient = useQueryClient()
   const search = useSearch({ strict: false }) as { day?: string }
   // dayjs reads a bare date as local midnight, unlike `new Date()`.
-  const day = search.day && DAY_PATTERN.test(search.day) && dayjs(search.day).isValid()
-    ? dayjs(search.day)
-    : dayjs().startOf('day')
+  const day = search.day ? dayjs(search.day) : dayjs().startOf('day')
 
   const input = { streamName, start: day.toDate(), end: day.add(1, 'day').toDate() }
   const timeline = useQuery(orpc.recordings.timeline.queryOptions({ input }))
