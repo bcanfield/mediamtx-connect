@@ -31,6 +31,7 @@
     "items": {
       "live": "Эфир",
       "recordings": "Записи",
+      "sessions": "Сеансы",
       "appConfig": "Настройки приложения",
       "mediamtxConfig": "Конфигурация MediaMTX",
       "paths": "Пути"
@@ -169,6 +170,98 @@
       "showing": "Показано {from}–{to} из {total}",
       "previous": "Предыдущая страница",
       "next": "Следующая страница"
+    },
+    "timeline": {
+      "previousDay": "Предыдущий день",
+      "nextDay": "Следующий день",
+      "trackAria": "Шкала времени на 24 часа",
+      "spansAria": "Записанные интервалы",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Воспроизвести {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "В этот день записей нет.",
+      "errorTitle": "Не удалось прочитать шкалу записей",
+      "unreachableTitle": "MediaMTX недоступен",
+      "unreachableDescription": "Шкала записей берётся из MediaMTX. Файлы ниже читаются с диска и по-прежнему воспроизводятся."
+    },
+    "enablePlayback": {
+      "title": "Включить воспроизведение записей",
+      "playbackOff": "Сервер воспроизведения MediaMTX выключен.",
+      "notFmp4": "Этот поток записывается в {format}, а сервер воспроизведения читает только fMP4.",
+      "changesIntro": "Connect изменит эти настройки:",
+      "changesAria": "Изменения",
+      "olderNote": "Записи, сделанные до этого изменения, остаются в списке файлов ниже.",
+      "apply": "Применить изменения",
+      "applying": "Применение…",
+      "refused": "MediaMTX отклонил изменение",
+      "override": "Этот путь задаёт <code>recordFormat</code> = {format} в собственной конфигурации пути, которая переопределяет значения пути по умолчанию. Установите там <code>fmp4</code>.",
+      "openPathConfig": "Открыть настройки записи этого пути",
+      "pathDefaultsUnreadable": "Не удалось прочитать значения пути по умолчанию из MediaMTX."
+    },
+    "clip": {
+      "title": "Скачать фрагмент",
+      "rangeAria": "Диапазон фрагмента",
+      "last5Min": "Последние 5 мин",
+      "last15Min": "Последние 15 мин",
+      "last1Hour": "Последний 1 ч",
+      "custom": "Свой",
+      "start": "Начало",
+      "durationMinutes": "Длительность (мин)",
+      "invalidStart": "Введите время в формате ЧЧ:ММ:СС",
+      "minutesRange": "Целое число минут, от 1 до 60",
+      "range": "{start} – {end}",
+      "download": "Скачать",
+      "cancel": "Отмена",
+      "preparing": "Подготовка фрагмента…",
+      "progress": "получено {received} · {rate}/с",
+      "complete": "Фрагмент скачан",
+      "failed": "Не удалось скачать фрагмент",
+      "noRecordings": "В этом диапазоне нет записей"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Сеансы",
+    "pageSubHeader": "Все клиенты, подключённые к MediaMTX прямо сейчас, публикующие или читающие, по любому протоколу.",
+    "summary": "{count, plural, one {# сеанс} few {# сеанса} many {# сеансов} other {# сеанса}}",
+    "columns": {
+      "path": "Путь",
+      "protocol": "Протокол",
+      "remoteAddr": "Удалённый адрес",
+      "state": "Состояние",
+      "bytesIn": "Байт входящих",
+      "bytesOut": "Байт исходящих",
+      "uptime": "Время работы",
+      "actions": "Действия"
+    },
+    "states": {
+      "idle": "простой",
+      "read": "чтение",
+      "publish": "публикация"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (не включён на этом сервере)",
+      "failed": "{protocol} (не удалось прочитать)",
+      "unlisted": "Не показаны: {protocols}.",
+      "truncated": "Показаны первые {count, number} сеансов {protocol}."
+    },
+    "kick": {
+      "action": "Отключить",
+      "confirmTitle": "Отключить клиента {protocol} {remoteAddr} от {path}?",
+      "confirmDescription": "MediaMTX сразу разорвёт соединение. Это не блокировка: клиент может сразу переподключиться.",
+      "hlsCaveat": "HLS-плеер в течение нескольких секунд снова запрашивает плейлист и получает новый сеанс, так что это по сути лишь сбрасывает его.",
+      "cancel": "Отмена",
+      "confirm": "Отключить клиента",
+      "toasts": {
+        "success": "{remoteAddr} отключён",
+        "alreadyGone": "{remoteAddr} уже отключился",
+        "errorTitle": "Не удалось отключить сеанс",
+        "errorDescription": "MediaMTX не принял запрос. Попробуйте ещё раз."
+      }
+    },
+    "empty": {
+      "title": "Никто не подключён",
+      "lead": "Сейчас у MediaMTX нет ни издателей, ни читателей."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Возврат к унаследованным настройкам выполнен",
           "errorTitle": "Не удалось вернуть унаследованные настройки",
           "errorDescription": "Запись конфигурации пути на месте. Попробуйте ещё раз."
+        }
+      },
+      "publishRead": {
+        "title": "Публикация и просмотр",
+        "publishTab": "Публикация",
+        "readTab": "Просмотр",
+        "pullSource": "Этот путь забирает поток из своего источника; MediaMTX отклоняет публикующих.",
+        "readFailed": "Не удалось прочитать адреса, которые слушает сервер.",
+        "noProtocols": "На сервере отключены все протоколы для этого.",
+        "copyUrl": "Копировать URL {protocol}",
+        "copySnippet": "Копировать фрагмент {client} для {protocol}",
+        "snippetLabel": "Фрагмент {client} для {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 публикует по WHIP, только если во входном потоке есть и видео-, и аудиодорожка."
+        },
+        "links": {
+          "systemPlayer": "Открыть в системном плеере",
+          "browserPublish": "Публиковать из браузера",
+          "hlsPage": "Открыть HLS-страницу MediaMTX",
+          "webrtcPage": "Открыть WebRTC-страницу MediaMTX"
+        },
+        "toasts": {
+          "copied": "Скопировано в буфер обмена",
+          "copyFailedTitle": "Не удалось скопировать",
+          "copyFailedDescription": "Браузер заблокировал доступ к буферу обмена. Выделите текст и скопируйте его вручную."
         }
       }
     },

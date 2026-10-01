@@ -31,6 +31,7 @@
     "items": {
       "live": "লাইভ",
       "recordings": "রেকর্ডিং",
+      "sessions": "সেশন",
       "appConfig": "অ্যাপ কনফিগ",
       "mediamtxConfig": "MediaMTX কনফিগ",
       "paths": "পাথ"
@@ -169,6 +170,98 @@
       "showing": "{total}-এর মধ্যে {from}–{to} দেখানো হচ্ছে",
       "previous": "আগের পৃষ্ঠা",
       "next": "পরের পৃষ্ঠা"
+    },
+    "timeline": {
+      "previousDay": "আগের দিন",
+      "nextDay": "পরের দিন",
+      "trackAria": "২৪ ঘণ্টার টাইমলাইন",
+      "spansAria": "রেকর্ড করা অংশ",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} চালান",
+      "durationParts": "{hours} {minutes}",
+      "empty": "এই দিনে কোনো রেকর্ডিং নেই।",
+      "errorTitle": "রেকর্ডিং টাইমলাইন পড়া যায়নি",
+      "unreachableTitle": "MediaMTX-এ পৌঁছানো যাচ্ছে না",
+      "unreachableDescription": "রেকর্ডিং টাইমলাইন MediaMTX থেকে আসে। নিচের ফাইলগুলো ডিস্ক থেকে পড়া হয় এবং এখনও চালানো যায়।"
+    },
+    "enablePlayback": {
+      "title": "রেকর্ডিং প্লেব্যাক চালু করুন",
+      "playbackOff": "MediaMTX-এর প্লেব্যাক সার্ভার বন্ধ আছে।",
+      "notFmp4": "এই স্ট্রিম {format}-এ রেকর্ড করে, আর প্লেব্যাক সার্ভার শুধু fMP4 পড়ে।",
+      "changesIntro": "Connect এই সেটিংগুলো বদলাবে:",
+      "changesAria": "যে পরিবর্তনগুলো করা হবে",
+      "olderNote": "এই পরিবর্তনের আগের রেকর্ডিংগুলো নিচের ফাইল তালিকায় থেকে যাবে।",
+      "apply": "পরিবর্তন প্রয়োগ করুন",
+      "applying": "প্রয়োগ করা হচ্ছে…",
+      "refused": "MediaMTX পরিবর্তনটি প্রত্যাখ্যান করেছে",
+      "override": "এই পাথ নিজের পাথ কনফিগে <code>recordFormat</code> কে {format} এ সেট করে, যা পাথ ডিফল্টকে ওভাররাইড করে। সেখানে এটি <code>fmp4</code> এ সেট করুন।",
+      "openPathConfig": "এই পাথের রেকর্ডিং কনফিগ খুলুন",
+      "pathDefaultsUnreadable": "MediaMTX থেকে পাথ ডিফল্ট পড়া যায়নি।"
+    },
+    "clip": {
+      "title": "ক্লিপ ডাউনলোড",
+      "rangeAria": "ক্লিপের পরিসর",
+      "last5Min": "শেষ ৫ মিনিট",
+      "last15Min": "শেষ ১৫ মিনিট",
+      "last1Hour": "শেষ ১ ঘণ্টা",
+      "custom": "কাস্টম",
+      "start": "শুরু",
+      "durationMinutes": "সময়কাল (মিনিট)",
+      "invalidStart": "সময় HH:MM:SS আকারে লিখুন",
+      "minutesRange": "পূর্ণ মিনিট, ১ থেকে ৬০",
+      "range": "{start} – {end}",
+      "download": "ডাউনলোড",
+      "cancel": "বাতিল",
+      "preparing": "ক্লিপ প্রস্তুত হচ্ছে…",
+      "progress": "{received} প্রাপ্ত · {rate}/সে",
+      "complete": "ক্লিপ ডাউনলোড হয়েছে",
+      "failed": "ক্লিপ ডাউনলোড ব্যর্থ হয়েছে",
+      "noRecordings": "এই পরিসরে কোনো রেকর্ডিং নেই"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "সেশন",
+    "pageSubHeader": "এই মুহূর্তে MediaMTX-এ সংযুক্ত প্রতিটি ক্লায়েন্ট, প্রকাশ বা পাঠ, যেকোনো প্রোটোকলে।",
+    "summary": "{count, plural, one {#টি সেশন} other {#টি সেশন}}",
+    "columns": {
+      "path": "পাথ",
+      "protocol": "প্রোটোকল",
+      "remoteAddr": "দূরবর্তী ঠিকানা",
+      "state": "অবস্থা",
+      "bytesIn": "আগত বাইট",
+      "bytesOut": "বহির্গামী বাইট",
+      "uptime": "আপটাইম",
+      "actions": "কাজ"
+    },
+    "states": {
+      "idle": "নিষ্ক্রিয়",
+      "read": "পাঠ",
+      "publish": "প্রকাশ"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (এই সার্ভারে চালু নেই)",
+      "failed": "{protocol} (পড়া যায়নি)",
+      "unlisted": "তালিকাভুক্ত নয়: {protocols}।",
+      "truncated": "প্রথম {count, number}টি {protocol} সেশন দেখানো হচ্ছে।"
+    },
+    "kick": {
+      "action": "কিক",
+      "confirmTitle": "{path} থেকে {protocol} ক্লায়েন্ট {remoteAddr} কিক করবেন?",
+      "confirmDescription": "MediaMTX এখনই সংযোগটি বিচ্ছিন্ন করবে। এটি নিষেধাজ্ঞা নয়: ক্লায়েন্ট সঙ্গে সঙ্গে আবার সংযুক্ত হতে পারে।",
+      "hlsCaveat": "একটি HLS প্লেয়ার কয়েক সেকেন্ডের মধ্যে আবার প্লেলিস্ট চায় এবং নতুন সেশন পায়, তাই এটি মূলত সেটিকে রিসেট করে।",
+      "cancel": "বাতিল",
+      "confirm": "ক্লায়েন্ট কিক করুন",
+      "toasts": {
+        "success": "{remoteAddr} কিক করা হয়েছে",
+        "alreadyGone": "{remoteAddr} আগেই সংযোগ বিচ্ছিন্ন করেছিল",
+        "errorTitle": "সেশনটি কিক করা যায়নি",
+        "errorDescription": "MediaMTX কিক গ্রহণ করেনি। আবার চেষ্টা করুন।"
+      }
+    },
+    "empty": {
+      "title": "কেউ সংযুক্ত নেই",
+      "lead": "এই মুহূর্তে MediaMTX-এ কোনো প্রকাশক বা পাঠক নেই।"
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফিরে আসা হয়েছে",
           "errorTitle": "উত্তরাধিকারসূত্রে পাওয়া সেটিংসে ফেরা যায়নি",
           "errorDescription": "পাথের কনফিগ এন্ট্রি এখনও রয়েছে। আবার চেষ্টা করুন।"
+        }
+      },
+      "publishRead": {
+        "title": "প্রকাশ ও চালান",
+        "publishTab": "প্রকাশ",
+        "readTab": "চালান",
+        "pullSource": "এই পাথ তার উৎস থেকে স্ট্রিম টেনে আনে; MediaMTX প্রকাশকদের প্রত্যাখ্যান করে।",
+        "readFailed": "সার্ভারের শোনার ঠিকানাগুলো পড়া যায়নি।",
+        "noProtocols": "সার্ভার এর জন্য সব প্রোটোকল বন্ধ রেখেছে।",
+        "copyUrl": "{protocol} URL কপি করুন",
+        "copySnippet": "{protocol}-এর জন্য {client} স্নিপেট কপি করুন",
+        "snippetLabel": "{protocol}-এর জন্য {client} স্নিপেট",
+        "notes": {
+          "whipTracks": "ইনপুটে ভিডিও ও অডিও দুটো ট্র্যাকই থাকলে তবেই FFmpeg 8 WHIP-এ প্রকাশ করে।"
+        },
+        "links": {
+          "systemPlayer": "সিস্টেম প্লেয়ারে খুলুন",
+          "browserPublish": "ব্রাউজার থেকে প্রকাশ করুন",
+          "hlsPage": "MediaMTX-এর HLS পেজ খুলুন",
+          "webrtcPage": "MediaMTX-এর WebRTC পেজ খুলুন"
+        },
+        "toasts": {
+          "copied": "ক্লিপবোর্ডে কপি হয়েছে",
+          "copyFailedTitle": "কপি করা যায়নি",
+          "copyFailedDescription": "ব্রাউজার ক্লিপবোর্ড অ্যাক্সেস আটকে দিয়েছে। টেক্সট নির্বাচন করে নিজে কপি করুন।"
         }
       }
     },

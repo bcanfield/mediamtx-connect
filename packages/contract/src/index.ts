@@ -105,6 +105,10 @@ export const GlobalConfigSchema = z.object({
     .optional(),
   srt: z.boolean().optional(),
   srtAddress: z.string().optional(),
+  // MediaMTX's playback server, which the recording timeline reads. No rows on
+  // the global config page: the timeline's guided card is where these change.
+  playback: z.boolean().optional(),
+  playbackAddress: z.string().optional(),
 })
 
 export type GlobalConfig = z.infer<typeof GlobalConfigSchema>
@@ -367,6 +371,59 @@ export const StreamsStateSchema = z.discriminatedUnion('status', [
 
 export type StreamsState = z.infer<typeof StreamsStateSchema>
 
+// The protocols whose sessions MediaMTX lists and can kick. MoQ is left out:
+// it is off by default.
+export const SESSION_PROTOCOLS = ['rtsp', 'rtsps', 'rtmp', 'rtmps', 'srt', 'webrtc', 'hls'] as const
+
+export type SessionProtocol = (typeof SESSION_PROTOCOLS)[number]
+
+// One client connected to MediaMTX, publisher or reader, folded into one row
+// shape across protocols (CONTEXT.md calls RTMP/SRT "conns" sessions too).
+export const SessionSchema = z.object({
+  // MediaMTX's own id — what its kick endpoint takes.
+  id: z.string(),
+  protocol: z.enum(SESSION_PROTOCOLS),
+  path: z.string(),
+  remoteAddr: z.string(),
+  state: z.enum(['idle', 'read', 'publish']),
+  // Null for HLS: MediaMTX counts nothing inbound on an HLS session.
+  inboundBytes: z.number().nullable(),
+  outboundBytes: z.number(),
+  created: z.date(),
+})
+
+export type Session = z.infer<typeof SessionSchema>
+
+// How one protocol's list call went. `disabled` is MediaMTX answering 404: it
+// doesn't register a protocol's routes when that server is off.
+export const SessionProtocolStatusSchema = z.object({
+  protocol: z.enum(SESSION_PROTOCOLS),
+  status: z.enum(['listed', 'disabled', 'failed']),
+  // MediaMTX had more than its first page; only that page is shown.
+  truncated: z.boolean(),
+})
+
+export type SessionProtocolStatus = z.infer<typeof SessionProtocolStatusSchema>
+
+// `connection-error` only when no protocol got an HTTP answer at all. One
+// protocol failing is that protocol's status, never the whole page.
+export const SessionsStateSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('connection-error'),
+    mediaMtxUrl: z.string(),
+    mediaMtxApiPort: z.number(),
+  }),
+  z.object({
+    status: z.literal('connected'),
+    sessions: z.array(SessionSchema),
+    protocols: z.array(SessionProtocolStatusSchema),
+    // How many sessions a truncated protocol was cut to.
+    pageSize: z.number().int(),
+  }),
+])
+
+export type SessionsState = z.infer<typeof SessionsStateSchema>
+
 export const RecordingStreamSummarySchema = z.object({
   name: z.string(),
   count: z.number().int(),
@@ -385,6 +442,35 @@ export const RecordingSchema = z.object({
 })
 
 export type Recording = z.infer<typeof RecordingSchema>
+
+// One continuous run of recording segments, as MediaMTX's playback server
+// indexes them. Its `url` is dropped on purpose: MediaMTX builds it from the
+// Host header of the request, which is the api's, not the browser's.
+export const RecordingSpanSchema = z.object({
+  start: z.date(),
+  // Seconds.
+  duration: z.number(),
+})
+
+export type RecordingSpan = z.infer<typeof RecordingSpanSchema>
+
+// The playback server reads a path only when `playback` is on and the path
+// records fMP4. `unavailable` says which of the two is missing so the page can
+// offer to fix it; `recordFormat` is the path's effective value, null when it
+// can't be resolved.
+export const RecordingTimelineSchema = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('unavailable'),
+    playbackEnabled: z.boolean(),
+    recordFormat: z.string().nullable(),
+  }),
+  z.object({
+    status: z.literal('available'),
+    spans: z.array(RecordingSpanSchema),
+  }),
+])
+
+export type RecordingTimeline = z.infer<typeof RecordingTimelineSchema>
 
 // MediaMTX's `GET /v3/info`.
 export const MediaMtxInfoSchema = z.object({
@@ -414,6 +500,16 @@ export const contract = {
     // fails so the card can surface it; concurrency is bounded server-side.
     snapshot: oc.input(z.object({ name: z.string().min(1) })).output(z.void()),
   },
+  sessions: {
+    // Every session on the server, first page per protocol, sorted by path,
+    // protocol, then created.
+    list: oc.output(SessionsStateSchema),
+    // Disconnects one session. The client can reconnect; this is not a ban.
+    // NOT_FOUND when the session had already gone.
+    kick: oc
+      .input(z.object({ protocol: z.enum(SESSION_PROTOCOLS), id: z.string().min(1) }))
+      .output(z.void()),
+  },
   recordings: {
     listStreams: oc.output(z.array(RecordingStreamSummarySchema)),
     listForStream: oc
@@ -430,6 +526,11 @@ export const contract = {
           totalCount: z.number().int(),
         }),
       ),
+    // One stream's recorded spans between two instants, off MediaMTX's playback
+    // server. `null` is an unreachable MediaMTX API, as on the other reads.
+    timeline: oc
+      .input(z.object({ streamName: z.string().min(1), start: z.date(), end: z.date() }))
+      .output(RecordingTimelineSchema.nullable()),
   },
   config: {
     app: {

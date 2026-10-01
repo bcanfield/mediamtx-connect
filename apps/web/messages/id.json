@@ -31,6 +31,7 @@
     "items": {
       "live": "Langsung",
       "recordings": "Rekaman",
+      "sessions": "Sesi",
       "appConfig": "Konfigurasi aplikasi",
       "mediamtxConfig": "Konfigurasi MediaMTX",
       "paths": "Jalur"
@@ -169,6 +170,98 @@
       "showing": "Menampilkan {from}–{to} dari {total}",
       "previous": "Halaman sebelumnya",
       "next": "Halaman berikutnya"
+    },
+    "timeline": {
+      "previousDay": "Hari sebelumnya",
+      "nextDay": "Hari berikutnya",
+      "trackAria": "Linimasa 24 jam",
+      "spansAria": "Rentang yang terekam",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Putar {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Tidak ada rekaman pada hari ini.",
+      "errorTitle": "Tidak dapat membaca linimasa rekaman",
+      "unreachableTitle": "MediaMTX tidak dapat dijangkau",
+      "unreachableDescription": "Linimasa rekaman berasal dari MediaMTX. File di bawah dibaca dari disk dan tetap bisa diputar."
+    },
+    "enablePlayback": {
+      "title": "Aktifkan pemutaran rekaman",
+      "playbackOff": "Server pemutaran MediaMTX mati.",
+      "notFmp4": "Stream ini merekam dalam {format}, dan server pemutaran hanya membaca fMP4.",
+      "changesIntro": "Connect akan mengubah pengaturan ini:",
+      "changesAria": "Perubahan yang akan dibuat",
+      "olderNote": "Rekaman sebelum perubahan ini tetap ada di daftar file di bawah.",
+      "apply": "Terapkan perubahan",
+      "applying": "Menerapkan…",
+      "refused": "MediaMTX menolak perubahan",
+      "override": "Path ini mengatur <code>recordFormat</code> ke {format} di konfigurasi path-nya sendiri, yang menimpa default path. Ubah menjadi <code>fmp4</code> di sana.",
+      "openPathConfig": "Buka konfigurasi rekaman path ini",
+      "pathDefaultsUnreadable": "Tidak dapat membaca default path dari MediaMTX."
+    },
+    "clip": {
+      "title": "Unduh klip",
+      "rangeAria": "Rentang klip",
+      "last5Min": "5 mnt terakhir",
+      "last15Min": "15 mnt terakhir",
+      "last1Hour": "1 jam terakhir",
+      "custom": "Kustom",
+      "start": "Mulai",
+      "durationMinutes": "Durasi (mnt)",
+      "invalidStart": "Masukkan waktu sebagai HH:MM:SS",
+      "minutesRange": "Menit bulat, dari 1 sampai 60",
+      "range": "{start} – {end}",
+      "download": "Unduh",
+      "cancel": "Batal",
+      "preparing": "Menyiapkan klip…",
+      "progress": "{received} diterima · {rate}/dtk",
+      "complete": "Klip diunduh",
+      "failed": "Gagal mengunduh klip",
+      "noRecordings": "Tidak ada rekaman dalam rentang ini"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sesi",
+    "pageSubHeader": "Setiap klien yang terhubung ke MediaMTX saat ini, menerbitkan atau membaca, melalui protokol apa pun.",
+    "summary": "{count, plural, other {# sesi}}",
+    "columns": {
+      "path": "Jalur",
+      "protocol": "Protokol",
+      "remoteAddr": "Alamat jarak jauh",
+      "state": "Status",
+      "bytesIn": "Byte masuk",
+      "bytesOut": "Byte keluar",
+      "uptime": "Waktu aktif",
+      "actions": "Tindakan"
+    },
+    "states": {
+      "idle": "diam",
+      "read": "baca",
+      "publish": "terbit"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (tidak diaktifkan di server ini)",
+      "failed": "{protocol} (tidak dapat dibaca)",
+      "unlisted": "Tidak tercantum: {protocols}.",
+      "truncated": "Menampilkan {count, number} sesi {protocol} pertama."
+    },
+    "kick": {
+      "action": "Keluarkan",
+      "confirmTitle": "Keluarkan klien {protocol} {remoteAddr} dari {path}?",
+      "confirmDescription": "MediaMTX memutus koneksi sekarang. Ini bukan blokir: klien dapat langsung terhubung kembali.",
+      "hlsCaveat": "Pemutar HLS meminta playlist-nya lagi dalam hitungan detik dan mendapat sesi baru, jadi ini sebagian besar hanya meresetnya.",
+      "cancel": "Batal",
+      "confirm": "Keluarkan klien",
+      "toasts": {
+        "success": "{remoteAddr} dikeluarkan",
+        "alreadyGone": "{remoteAddr} sudah terputus",
+        "errorTitle": "Tidak dapat mengeluarkan sesi",
+        "errorDescription": "MediaMTX tidak menerima permintaan itu. Coba lagi."
+      }
+    },
+    "empty": {
+      "title": "Tidak ada yang terhubung",
+      "lead": "MediaMTX tidak memiliki penerbit atau pembaca saat ini."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Dikembalikan ke pengaturan warisan",
           "errorTitle": "Tidak bisa kembali ke pengaturan warisan",
           "errorDescription": "Entri konfigurasi jalur masih ada. Coba lagi."
+        }
+      },
+      "publishRead": {
+        "title": "Publikasikan & putar",
+        "publishTab": "Publikasikan",
+        "readTab": "Putar",
+        "pullSource": "Path ini menarik stream dari sumbernya; MediaMTX menolak publisher.",
+        "readFailed": "Tidak dapat membaca alamat listen server.",
+        "noProtocols": "Server mematikan semua protokol untuk ini.",
+        "copyUrl": "Salin URL {protocol}",
+        "copySnippet": "Salin cuplikan {client} untuk {protocol}",
+        "snippetLabel": "Cuplikan {client} untuk {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 hanya memublikasikan lewat WHIP jika input memiliki trek video dan trek audio."
+        },
+        "links": {
+          "systemPlayer": "Buka di pemutar sistem",
+          "browserPublish": "Publikasikan dari browser",
+          "hlsPage": "Buka halaman HLS MediaMTX",
+          "webrtcPage": "Buka halaman WebRTC MediaMTX"
+        },
+        "toasts": {
+          "copied": "Disalin ke clipboard",
+          "copyFailedTitle": "Tidak dapat menyalin",
+          "copyFailedDescription": "Browser memblokir akses clipboard. Pilih teksnya dan salin secara manual."
         }
       }
     },

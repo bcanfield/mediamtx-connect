@@ -31,6 +31,7 @@
     "items": {
       "live": "ライブ",
       "recordings": "録画",
+      "sessions": "セッション",
       "appConfig": "アプリ設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "パス"
@@ -169,6 +170,98 @@
       "showing": "{total} 件中 {from}–{to} 件を表示",
       "previous": "前のページ",
       "next": "次のページ"
+    },
+    "timeline": {
+      "previousDay": "前の日",
+      "nextDay": "次の日",
+      "trackAria": "24 時間タイムライン",
+      "spansAria": "録画された区間",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} を再生",
+      "durationParts": "{hours} {minutes}",
+      "empty": "この日の録画はありません。",
+      "errorTitle": "録画タイムラインを読み込めませんでした",
+      "unreachableTitle": "MediaMTX に接続できません",
+      "unreachableDescription": "録画タイムラインは MediaMTX から取得します。下のファイルはディスクから読み込まれ、引き続き再生できます。"
+    },
+    "enablePlayback": {
+      "title": "録画の再生をオンにする",
+      "playbackOff": "MediaMTX の再生サーバーがオフです。",
+      "notFmp4": "このストリームは {format} で録画されていますが、再生サーバーが読めるのは fMP4 だけです。",
+      "changesIntro": "Connect は次の設定を変更します:",
+      "changesAria": "適用する変更",
+      "olderNote": "この変更より前の録画は、下のファイル一覧に残ります。",
+      "apply": "変更を適用",
+      "applying": "適用中…",
+      "refused": "MediaMTX が変更を拒否しました",
+      "override": "このパスは自身のパス設定で <code>recordFormat</code> を {format} にしており、パス既定値より優先されます。そちらで <code>fmp4</code> に設定してください。",
+      "openPathConfig": "このパスの録画設定を開く",
+      "pathDefaultsUnreadable": "MediaMTX からパス既定値を読み込めませんでした。"
+    },
+    "clip": {
+      "title": "クリップをダウンロード",
+      "rangeAria": "クリップの範囲",
+      "last5Min": "直近 5 分",
+      "last15Min": "直近 15 分",
+      "last1Hour": "直近 1 時間",
+      "custom": "カスタム",
+      "start": "開始",
+      "durationMinutes": "長さ（分）",
+      "invalidStart": "時刻を HH:MM:SS の形式で入力してください",
+      "minutesRange": "1〜60 の整数（分）",
+      "range": "{start} – {end}",
+      "download": "ダウンロード",
+      "cancel": "キャンセル",
+      "preparing": "クリップを準備しています…",
+      "progress": "{received} 受信 · {rate}/秒",
+      "complete": "クリップをダウンロードしました",
+      "failed": "クリップのダウンロードに失敗しました",
+      "noRecordings": "この範囲に録画はありません"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "セッション",
+    "pageSubHeader": "現在 MediaMTX に接続しているすべてのクライアント（配信・視聴、全プロトコル）。",
+    "summary": "{count, plural, other {# 件のセッション}}",
+    "columns": {
+      "path": "パス",
+      "protocol": "プロトコル",
+      "remoteAddr": "リモートアドレス",
+      "state": "状態",
+      "bytesIn": "受信バイト",
+      "bytesOut": "送信バイト",
+      "uptime": "稼働時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "待機",
+      "read": "視聴",
+      "publish": "配信"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（このサーバーでは無効）",
+      "failed": "{protocol}（読み取れませんでした）",
+      "unlisted": "一覧にないもの: {protocols}。",
+      "truncated": "{protocol} のセッションは最初の {count, number} 件のみ表示しています。"
+    },
+    "kick": {
+      "action": "切断",
+      "confirmTitle": "{path} の {protocol} クライアント {remoteAddr} を切断しますか？",
+      "confirmDescription": "MediaMTX はすぐに接続を切ります。これは禁止ではありません。クライアントはすぐに再接続できます。",
+      "hlsCaveat": "HLS プレーヤーは数秒以内にプレイリストを再取得して新しいセッションになるため、ほぼリセットされるだけです。",
+      "cancel": "キャンセル",
+      "confirm": "クライアントを切断",
+      "toasts": {
+        "success": "{remoteAddr} を切断しました",
+        "alreadyGone": "{remoteAddr} はすでに切断されていました",
+        "errorTitle": "セッションを切断できませんでした",
+        "errorDescription": "MediaMTX が切断を受け付けませんでした。もう一度お試しください。"
+      }
+    },
+    "empty": {
+      "title": "接続しているクライアントはありません",
+      "lead": "現在 MediaMTX には配信者も視聴者もいません。"
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "継承した設定に戻しました",
           "errorTitle": "継承した設定に戻せませんでした",
           "errorDescription": "パスの設定エントリはまだ残っています。もう一度お試しください。"
+        }
+      },
+      "publishRead": {
+        "title": "配信と再生",
+        "publishTab": "配信",
+        "readTab": "再生",
+        "pullSource": "このパスはソースからストリームを取得するため、MediaMTX は配信者を拒否します。",
+        "readFailed": "サーバーの待ち受けアドレスを読み取れませんでした。",
+        "noProtocols": "サーバーではこの用途のプロトコルがすべて無効です。",
+        "copyUrl": "{protocol} の URL をコピー",
+        "copySnippet": "{protocol} 用の {client} スニペットをコピー",
+        "snippetLabel": "{protocol} 用の {client} スニペット",
+        "notes": {
+          "whipTracks": "FFmpeg 8 は、入力に映像トラックと音声トラックの両方がある場合にのみ WHIP で配信します。"
+        },
+        "links": {
+          "systemPlayer": "システムのプレーヤーで開く",
+          "browserPublish": "ブラウザーから配信",
+          "hlsPage": "MediaMTX の HLS ページを開く",
+          "webrtcPage": "MediaMTX の WebRTC ページを開く"
+        },
+        "toasts": {
+          "copied": "クリップボードにコピーしました",
+          "copyFailedTitle": "コピーできませんでした",
+          "copyFailedDescription": "ブラウザーがクリップボードへのアクセスをブロックしました。テキストを選択して手動でコピーしてください。"
         }
       }
     },

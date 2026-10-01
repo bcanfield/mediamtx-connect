@@ -31,6 +31,7 @@
     "items": {
       "live": "直播",
       "recordings": "錄影",
+      "sessions": "工作階段",
       "appConfig": "應用程式設定",
       "mediamtxConfig": "MediaMTX 設定",
       "paths": "路徑"
@@ -169,6 +170,98 @@
       "showing": "顯示第 {from}–{to} 項，共 {total} 項",
       "previous": "上一頁",
       "next": "下一頁"
+    },
+    "timeline": {
+      "previousDay": "前一天",
+      "nextDay": "後一天",
+      "trackAria": "24 小時時間軸",
+      "spansAria": "已錄製的時段",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "播放 {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "這一天沒有錄影。",
+      "errorTitle": "無法讀取錄影時間軸",
+      "unreachableTitle": "無法連線至 MediaMTX",
+      "unreachableDescription": "錄影時間軸來自 MediaMTX。下方檔案從磁碟讀取，仍可播放。"
+    },
+    "enablePlayback": {
+      "title": "開啟錄影回放",
+      "playbackOff": "MediaMTX 的回放伺服器已關閉。",
+      "notFmp4": "此串流以 {format} 錄製，而回放伺服器只讀取 fMP4。",
+      "changesIntro": "Connect 將變更以下設定：",
+      "changesAria": "即將進行的變更",
+      "olderNote": "此變更之前的錄影仍保留在下方的檔案清單中。",
+      "apply": "套用變更",
+      "applying": "正在套用…",
+      "refused": "MediaMTX 拒絕了此變更",
+      "override": "此路徑在自身的路徑設定中將 <code>recordFormat</code> 設為 {format}，覆寫了路徑預設值。請在那裡將其改為 <code>fmp4</code>。",
+      "openPathConfig": "開啟此路徑的錄影設定",
+      "pathDefaultsUnreadable": "無法從 MediaMTX 讀取路徑預設值。"
+    },
+    "clip": {
+      "title": "下載片段",
+      "rangeAria": "片段範圍",
+      "last5Min": "最近 5 分鐘",
+      "last15Min": "最近 15 分鐘",
+      "last1Hour": "最近 1 小時",
+      "custom": "自訂",
+      "start": "開始",
+      "durationMinutes": "長度（分鐘）",
+      "invalidStart": "請以 HH:MM:SS 格式輸入時間",
+      "minutesRange": "整數分鐘，1 到 60",
+      "range": "{start} – {end}",
+      "download": "下載",
+      "cancel": "取消",
+      "preparing": "正在準備片段…",
+      "progress": "已接收 {received} · {rate}/秒",
+      "complete": "片段已下載",
+      "failed": "片段下載失敗",
+      "noRecordings": "此範圍內沒有錄影"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "工作階段",
+    "pageSubHeader": "目前連線到 MediaMTX 的所有用戶端，不論發布或讀取，涵蓋所有通訊協定。",
+    "summary": "{count, plural, other {# 個工作階段}}",
+    "columns": {
+      "path": "路徑",
+      "protocol": "通訊協定",
+      "remoteAddr": "遠端位址",
+      "state": "狀態",
+      "bytesIn": "接收位元組",
+      "bytesOut": "傳送位元組",
+      "uptime": "運作時間",
+      "actions": "操作"
+    },
+    "states": {
+      "idle": "閒置",
+      "read": "讀取",
+      "publish": "發布"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol}（此伺服器未啟用）",
+      "failed": "{protocol}（無法讀取）",
+      "unlisted": "未列出：{protocols}。",
+      "truncated": "僅顯示前 {count, number} 個 {protocol} 工作階段。"
+    },
+    "kick": {
+      "action": "踢除",
+      "confirmTitle": "要將 {protocol} 用戶端 {remoteAddr} 從 {path} 踢除嗎？",
+      "confirmDescription": "MediaMTX 會立即中斷連線。這不是封鎖：用戶端可以馬上重新連線。",
+      "hlsCaveat": "HLS 播放器會在幾秒內重新請求播放清單並取得新的工作階段，所以這多半只是重設它。",
+      "cancel": "取消",
+      "confirm": "踢除用戶端",
+      "toasts": {
+        "success": "已踢除 {remoteAddr}",
+        "alreadyGone": "{remoteAddr} 已經中斷連線",
+        "errorTitle": "無法踢除工作階段",
+        "errorDescription": "MediaMTX 未接受此要求。請再試一次。"
+      }
+    },
+    "empty": {
+      "title": "目前沒有任何連線",
+      "lead": "MediaMTX 目前沒有發布者或讀取者。"
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "已還原為繼承的設定",
           "errorTitle": "無法還原為繼承的設定",
           "errorDescription": "該路徑的設定項目仍然存在。請再試一次。"
+        }
+      },
+      "publishRead": {
+        "title": "發佈與播放",
+        "publishTab": "發佈",
+        "readTab": "播放",
+        "pullSource": "此路徑從其來源拉取串流，MediaMTX 會拒絕發佈者。",
+        "readFailed": "無法讀取伺服器的監聽位址。",
+        "noProtocols": "伺服器已關閉此處的所有協定。",
+        "copyUrl": "複製 {protocol} URL",
+        "copySnippet": "複製 {protocol} 的 {client} 片段",
+        "snippetLabel": "{protocol} 的 {client} 片段",
+        "notes": {
+          "whipTracks": "只有當輸入同時包含視訊軌和音訊軌時，FFmpeg 8 才能透過 WHIP 發佈。"
+        },
+        "links": {
+          "systemPlayer": "在系統播放器中開啟",
+          "browserPublish": "從瀏覽器發佈",
+          "hlsPage": "開啟 MediaMTX 的 HLS 頁面",
+          "webrtcPage": "開啟 MediaMTX 的 WebRTC 頁面"
+        },
+        "toasts": {
+          "copied": "已複製到剪貼簿",
+          "copyFailedTitle": "無法複製",
+          "copyFailedDescription": "瀏覽器封鎖了剪貼簿存取。請選取文字後手動複製。"
         }
       }
     },

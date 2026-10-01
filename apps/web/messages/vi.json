@@ -31,6 +31,7 @@
     "items": {
       "live": "Trực tiếp",
       "recordings": "Bản ghi",
+      "sessions": "Phiên",
       "appConfig": "Cấu hình ứng dụng",
       "mediamtxConfig": "Cấu hình MediaMTX",
       "paths": "Đường dẫn"
@@ -169,6 +170,98 @@
       "showing": "Hiển thị {from}–{to} trong {total}",
       "previous": "Trang trước",
       "next": "Trang sau"
+    },
+    "timeline": {
+      "previousDay": "Ngày trước",
+      "nextDay": "Ngày sau",
+      "trackAria": "Dòng thời gian 24 giờ",
+      "spansAria": "Các đoạn đã ghi",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Phát {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Không có bản ghi nào trong ngày này.",
+      "errorTitle": "Không đọc được dòng thời gian bản ghi",
+      "unreachableTitle": "Không kết nối được MediaMTX",
+      "unreachableDescription": "Dòng thời gian bản ghi lấy từ MediaMTX. Các tệp bên dưới được đọc từ ổ đĩa và vẫn phát được."
+    },
+    "enablePlayback": {
+      "title": "Bật phát lại bản ghi",
+      "playbackOff": "Máy chủ phát lại của MediaMTX đang tắt.",
+      "notFmp4": "Luồng này ghi ở định dạng {format}, còn máy chủ phát lại chỉ đọc fMP4.",
+      "changesIntro": "Connect sẽ thay đổi các cài đặt sau:",
+      "changesAria": "Các thay đổi sẽ thực hiện",
+      "olderNote": "Các bản ghi trước thay đổi này vẫn nằm trong danh sách tệp bên dưới.",
+      "apply": "Áp dụng thay đổi",
+      "applying": "Đang áp dụng…",
+      "refused": "MediaMTX đã từ chối thay đổi",
+      "override": "Đường dẫn này đặt <code>recordFormat</code> thành {format} trong cấu hình riêng, ghi đè giá trị mặc định của đường dẫn. Hãy đặt thành <code>fmp4</code> ở đó.",
+      "openPathConfig": "Mở cấu hình ghi của đường dẫn này",
+      "pathDefaultsUnreadable": "Không đọc được giá trị mặc định của đường dẫn từ MediaMTX."
+    },
+    "clip": {
+      "title": "Tải clip xuống",
+      "rangeAria": "Khoảng thời gian clip",
+      "last5Min": "5 phút gần nhất",
+      "last15Min": "15 phút gần nhất",
+      "last1Hour": "1 giờ gần nhất",
+      "custom": "Tùy chỉnh",
+      "start": "Bắt đầu",
+      "durationMinutes": "Thời lượng (phút)",
+      "invalidStart": "Nhập thời gian dạng HH:MM:SS",
+      "minutesRange": "Số phút nguyên, từ 1 đến 60",
+      "range": "{start} – {end}",
+      "download": "Tải xuống",
+      "cancel": "Hủy",
+      "preparing": "Đang chuẩn bị clip…",
+      "progress": "Đã nhận {received} · {rate}/giây",
+      "complete": "Đã tải clip xuống",
+      "failed": "Tải clip xuống thất bại",
+      "noRecordings": "Không có bản ghi nào trong khoảng này"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Phiên",
+    "pageSubHeader": "Mọi máy khách đang kết nối với MediaMTX lúc này, đang phát hoặc đang đọc, qua mọi giao thức.",
+    "summary": "{count, plural, other {# phiên}}",
+    "columns": {
+      "path": "Đường dẫn",
+      "protocol": "Giao thức",
+      "remoteAddr": "Địa chỉ từ xa",
+      "state": "Trạng thái",
+      "bytesIn": "Byte vào",
+      "bytesOut": "Byte ra",
+      "uptime": "Thời gian chạy",
+      "actions": "Thao tác"
+    },
+    "states": {
+      "idle": "rảnh",
+      "read": "đọc",
+      "publish": "phát"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (chưa bật trên máy chủ này)",
+      "failed": "{protocol} (không đọc được)",
+      "unlisted": "Không liệt kê: {protocols}.",
+      "truncated": "Đang hiển thị {count, number} phiên {protocol} đầu tiên."
+    },
+    "kick": {
+      "action": "Ngắt",
+      "confirmTitle": "Ngắt máy khách {protocol} {remoteAddr} khỏi {path}?",
+      "confirmDescription": "MediaMTX sẽ cắt kết nối ngay. Đây không phải lệnh cấm: máy khách có thể kết nối lại ngay.",
+      "hlsCaveat": "Trình phát HLS sẽ yêu cầu lại danh sách phát trong vài giây và nhận phiên mới, nên việc này chủ yếu chỉ đặt lại nó.",
+      "cancel": "Hủy",
+      "confirm": "Ngắt máy khách",
+      "toasts": {
+        "success": "Đã ngắt {remoteAddr}",
+        "alreadyGone": "{remoteAddr} đã ngắt kết nối từ trước",
+        "errorTitle": "Không thể ngắt phiên",
+        "errorDescription": "MediaMTX không chấp nhận yêu cầu. Hãy thử lại."
+      }
+    },
+    "empty": {
+      "title": "Không có ai kết nối",
+      "lead": "Hiện MediaMTX không có người phát hay người đọc nào."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Đã trở lại các cài đặt kế thừa",
           "errorTitle": "Không thể trở lại các cài đặt kế thừa",
           "errorDescription": "Mục cấu hình của đường dẫn vẫn còn. Hãy thử lại."
+        }
+      },
+      "publishRead": {
+        "title": "Phát hành & xem",
+        "publishTab": "Phát hành",
+        "readTab": "Xem",
+        "pullSource": "Đường dẫn này kéo luồng từ nguồn của nó; MediaMTX từ chối bên phát.",
+        "readFailed": "Không đọc được địa chỉ lắng nghe của máy chủ.",
+        "noProtocols": "Máy chủ đã tắt mọi giao thức cho mục này.",
+        "copyUrl": "Sao chép URL {protocol}",
+        "copySnippet": "Sao chép đoạn {client} cho {protocol}",
+        "snippetLabel": "Đoạn {client} cho {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 chỉ phát qua WHIP khi đầu vào có cả track video và track âm thanh."
+        },
+        "links": {
+          "systemPlayer": "Mở bằng trình phát hệ thống",
+          "browserPublish": "Phát từ trình duyệt",
+          "hlsPage": "Mở trang HLS của MediaMTX",
+          "webrtcPage": "Mở trang WebRTC của MediaMTX"
+        },
+        "toasts": {
+          "copied": "Đã sao chép vào bảng nhớ tạm",
+          "copyFailedTitle": "Không sao chép được",
+          "copyFailedDescription": "Trình duyệt đã chặn quyền truy cập bảng nhớ tạm. Hãy chọn văn bản và tự sao chép."
         }
       }
     },

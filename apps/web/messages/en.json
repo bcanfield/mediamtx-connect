@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Recordings",
+      "sessions": "Sessions",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Paths"
@@ -169,6 +170,98 @@
       "showing": "Showing {from}–{to} of {total}",
       "previous": "Previous page",
       "next": "Next page"
+    },
+    "timeline": {
+      "previousDay": "Previous day",
+      "nextDay": "Next day",
+      "trackAria": "24-hour timeline",
+      "spansAria": "Recorded spans",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Play {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "No recordings on this day.",
+      "errorTitle": "Could not read the recording timeline",
+      "unreachableTitle": "MediaMTX is unreachable",
+      "unreachableDescription": "The recording timeline comes from MediaMTX. The files below are read from disk and still play."
+    },
+    "enablePlayback": {
+      "title": "Turn on recording playback",
+      "playbackOff": "MediaMTX's playback server is off.",
+      "notFmp4": "This stream records in {format}, and the playback server reads only fMP4.",
+      "changesIntro": "Connect will change these settings:",
+      "changesAria": "Changes to make",
+      "olderNote": "Recordings made before this change stay in the file list below.",
+      "apply": "Apply changes",
+      "applying": "Applying…",
+      "refused": "MediaMTX refused the change",
+      "override": "This path sets <code>recordFormat</code> to {format} in its own path config, which overrides path defaults. Set it to <code>fmp4</code> there.",
+      "openPathConfig": "Open this path's recording config",
+      "pathDefaultsUnreadable": "Couldn't read path defaults from MediaMTX."
+    },
+    "clip": {
+      "title": "Download clip",
+      "rangeAria": "Clip range",
+      "last5Min": "Last 5 min",
+      "last15Min": "Last 15 min",
+      "last1Hour": "Last 1 h",
+      "custom": "Custom",
+      "start": "Start",
+      "durationMinutes": "Duration (min)",
+      "invalidStart": "Enter a time as HH:MM:SS",
+      "minutesRange": "Whole minutes, from 1 to 60",
+      "range": "{start} – {end}",
+      "download": "Download",
+      "cancel": "Cancel",
+      "preparing": "Preparing clip…",
+      "progress": "{received} received · {rate}/s",
+      "complete": "Clip downloaded",
+      "failed": "Clip download failed",
+      "noRecordings": "No recordings in this range"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessions",
+    "pageSubHeader": "Every client connected to MediaMTX right now, publishing or reading, over any protocol.",
+    "summary": "{count, plural, one {# session} other {# sessions}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "State",
+      "bytesIn": "Bytes in",
+      "bytesOut": "Bytes out",
+      "uptime": "Uptime",
+      "actions": "Actions"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "read",
+      "publish": "publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (not enabled on this server)",
+      "failed": "{protocol} (couldn't be read)",
+      "unlisted": "Not listed: {protocols}.",
+      "truncated": "Showing the first {count, number} {protocol} sessions."
+    },
+    "kick": {
+      "action": "Kick",
+      "confirmTitle": "Kick {protocol} client {remoteAddr} from {path}?",
+      "confirmDescription": "MediaMTX drops the connection now. This is not a ban: the client can reconnect straight away.",
+      "hlsCaveat": "An HLS player asks for its playlist again within seconds and gets a new session, so this mostly just resets it.",
+      "cancel": "Cancel",
+      "confirm": "Kick client",
+      "toasts": {
+        "success": "Kicked {remoteAddr}",
+        "alreadyGone": "{remoteAddr} had already disconnected",
+        "errorTitle": "Couldn't kick the session",
+        "errorDescription": "MediaMTX didn't accept the kick. Try again."
+      }
+    },
+    "empty": {
+      "title": "No one is connected",
+      "lead": "MediaMTX has no publishers or readers right now."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Reverted to inherited settings",
           "errorTitle": "Couldn't revert to inherited settings",
           "errorDescription": "The path config entry is still there. Try again."
+        }
+      },
+      "publishRead": {
+        "title": "Publish & read",
+        "publishTab": "Publish",
+        "readTab": "Read",
+        "pullSource": "This path pulls from its source; MediaMTX refuses publishers.",
+        "readFailed": "Couldn't read the server's listen addresses.",
+        "noProtocols": "The server has every protocol for this turned off.",
+        "copyUrl": "Copy {protocol} URL",
+        "copySnippet": "Copy the {client} snippet for {protocol}",
+        "snippetLabel": "{client} snippet for {protocol}",
+        "notes": {
+          "whipTracks": "FFmpeg 8 publishes over WHIP only when the input has both a video and an audio track."
+        },
+        "links": {
+          "systemPlayer": "Open in system player",
+          "browserPublish": "Publish from the browser",
+          "hlsPage": "Open MediaMTX's HLS page",
+          "webrtcPage": "Open MediaMTX's WebRTC page"
+        },
+        "toasts": {
+          "copied": "Copied to the clipboard",
+          "copyFailedTitle": "Couldn't copy",
+          "copyFailedDescription": "The browser blocked clipboard access. Select the text and copy it instead."
         }
       }
     },

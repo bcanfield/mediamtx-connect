@@ -31,6 +31,7 @@
     "items": {
       "live": "Ao vivo",
       "recordings": "Gravações",
+      "sessions": "Sessões",
       "appConfig": "Configuração do app",
       "mediamtxConfig": "Configuração do MediaMTX",
       "paths": "Caminhos"
@@ -169,6 +170,98 @@
       "showing": "Mostrando {from}–{to} de {total}",
       "previous": "Página anterior",
       "next": "Próxima página"
+    },
+    "timeline": {
+      "previousDay": "Dia anterior",
+      "nextDay": "Próximo dia",
+      "trackAria": "Linha do tempo de 24 horas",
+      "spansAria": "Trechos gravados",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Reproduzir {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Nenhuma gravação neste dia.",
+      "errorTitle": "Não foi possível ler a linha do tempo das gravações",
+      "unreachableTitle": "O MediaMTX está inacessível",
+      "unreachableDescription": "A linha do tempo das gravações vem do MediaMTX. Os arquivos abaixo são lidos do disco e continuam reproduzindo."
+    },
+    "enablePlayback": {
+      "title": "Ativar a reprodução de gravações",
+      "playbackOff": "O servidor de reprodução do MediaMTX está desligado.",
+      "notFmp4": "Este stream grava em {format}, e o servidor de reprodução só lê fMP4.",
+      "changesIntro": "O Connect vai alterar estas configurações:",
+      "changesAria": "Alterações a fazer",
+      "olderNote": "As gravações anteriores a esta alteração continuam na lista de arquivos abaixo.",
+      "apply": "Aplicar alterações",
+      "applying": "Aplicando…",
+      "refused": "O MediaMTX recusou a alteração",
+      "override": "Este caminho define <code>recordFormat</code> como {format} na própria configuração, que sobrepõe os padrões de caminho. Mude para <code>fmp4</code> lá.",
+      "openPathConfig": "Abrir a configuração de gravação deste caminho",
+      "pathDefaultsUnreadable": "Não foi possível ler os padrões de caminho do MediaMTX."
+    },
+    "clip": {
+      "title": "Baixar clipe",
+      "rangeAria": "Intervalo do clipe",
+      "last5Min": "Últimos 5 min",
+      "last15Min": "Últimos 15 min",
+      "last1Hour": "Última 1 h",
+      "custom": "Personalizado",
+      "start": "Início",
+      "durationMinutes": "Duração (min)",
+      "invalidStart": "Informe um horário como HH:MM:SS",
+      "minutesRange": "Minutos inteiros, de 1 a 60",
+      "range": "{start} – {end}",
+      "download": "Baixar",
+      "cancel": "Cancelar",
+      "preparing": "Preparando o clipe…",
+      "progress": "{received} recebidos · {rate}/s",
+      "complete": "Clipe baixado",
+      "failed": "Falha ao baixar o clipe",
+      "noRecordings": "Nenhuma gravação neste intervalo"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Sessões",
+    "pageSubHeader": "Todos os clientes conectados ao MediaMTX agora, publicando ou lendo, em qualquer protocolo.",
+    "summary": "{count, plural, one {# sessão} other {# sessões}}",
+    "columns": {
+      "path": "Caminho",
+      "protocol": "Protocolo",
+      "remoteAddr": "Endereço remoto",
+      "state": "Estado",
+      "bytesIn": "Bytes recebidos",
+      "bytesOut": "Bytes enviados",
+      "uptime": "Tempo ativo",
+      "actions": "Ações"
+    },
+    "states": {
+      "idle": "ociosa",
+      "read": "leitura",
+      "publish": "publicação"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (não habilitado neste servidor)",
+      "failed": "{protocol} (não foi possível ler)",
+      "unlisted": "Não listados: {protocols}.",
+      "truncated": "Mostrando as primeiras {count, number} sessões {protocol}."
+    },
+    "kick": {
+      "action": "Expulsar",
+      "confirmTitle": "Expulsar o cliente {protocol} {remoteAddr} de {path}?",
+      "confirmDescription": "O MediaMTX encerra a conexão agora. Não é um banimento: o cliente pode se reconectar na hora.",
+      "hlsCaveat": "Um player HLS pede a playlist de novo em segundos e recebe uma nova sessão, então isso basicamente só o reinicia.",
+      "cancel": "Cancelar",
+      "confirm": "Expulsar cliente",
+      "toasts": {
+        "success": "{remoteAddr} expulso",
+        "alreadyGone": "{remoteAddr} já tinha se desconectado",
+        "errorTitle": "Não foi possível expulsar a sessão",
+        "errorDescription": "O MediaMTX não aceitou a solicitação. Tente novamente."
+      }
+    },
+    "empty": {
+      "title": "Ninguém está conectado",
+      "lead": "O MediaMTX não tem publicadores nem leitores agora."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Voltou às configurações herdadas",
           "errorTitle": "Não foi possível voltar às configurações herdadas",
           "errorDescription": "A entrada de configuração do caminho ainda está lá. Tente de novo."
+        }
+      },
+      "publishRead": {
+        "title": "Publicar e reproduzir",
+        "publishTab": "Publicar",
+        "readTab": "Reproduzir",
+        "pullSource": "Este caminho puxa o stream da sua fonte; o MediaMTX recusa publicadores.",
+        "readFailed": "Não foi possível ler os endereços de escuta do servidor.",
+        "noProtocols": "O servidor está com todos os protocolos para isso desativados.",
+        "copyUrl": "Copiar URL {protocol}",
+        "copySnippet": "Copiar o trecho {client} para {protocol}",
+        "snippetLabel": "Trecho {client} para {protocol}",
+        "notes": {
+          "whipTracks": "O FFmpeg 8 só publica via WHIP quando a entrada tem uma faixa de vídeo e uma de áudio."
+        },
+        "links": {
+          "systemPlayer": "Abrir no player do sistema",
+          "browserPublish": "Publicar pelo navegador",
+          "hlsPage": "Abrir a página HLS do MediaMTX",
+          "webrtcPage": "Abrir a página WebRTC do MediaMTX"
+        },
+        "toasts": {
+          "copied": "Copiado para a área de transferência",
+          "copyFailedTitle": "Não foi possível copiar",
+          "copyFailedDescription": "O navegador bloqueou o acesso à área de transferência. Selecione o texto e copie manualmente."
         }
       }
     },

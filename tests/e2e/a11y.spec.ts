@@ -4,6 +4,7 @@ import { expect, test } from '@playwright/test'
 const pages = [
   { name: 'Streams', path: '/' },
   { name: 'Recordings', path: '/recordings' },
+  { name: 'Sessions', path: '/sessions' },
   { name: 'Client Config', path: '/config' },
   { name: 'MediaMTX Global Config', path: '/config/mediamtx/global' },
   { name: 'MediaMTX Path Defaults', path: '/config/mediamtx/path-defaults' },

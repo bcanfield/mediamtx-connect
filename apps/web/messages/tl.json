@@ -31,6 +31,7 @@
     "items": {
       "live": "Live",
       "recordings": "Mga recording",
+      "sessions": "Mga Session",
       "appConfig": "App Config",
       "mediamtxConfig": "MediaMTX Config",
       "paths": "Mga path"
@@ -169,6 +170,98 @@
       "showing": "Ipinapakita ang {from}–{to} ng {total}",
       "previous": "Nakaraang pahina",
       "next": "Susunod na pahina"
+    },
+    "timeline": {
+      "previousDay": "Nakaraang araw",
+      "nextDay": "Susunod na araw",
+      "trackAria": "24-oras na timeline",
+      "spansAria": "Mga naitalang bahagi",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "I-play ang {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Walang recording sa araw na ito.",
+      "errorTitle": "Hindi mabasa ang timeline ng recording",
+      "unreachableTitle": "Hindi maabot ang MediaMTX",
+      "unreachableDescription": "Galing sa MediaMTX ang timeline ng recording. Binabasa mula sa disk ang mga file sa ibaba at puwede pa ring i-play."
+    },
+    "enablePlayback": {
+      "title": "I-on ang playback ng recording",
+      "playbackOff": "Naka-off ang playback server ng MediaMTX.",
+      "notFmp4": "Nagre-record ang stream na ito sa {format}, at fMP4 lang ang binabasa ng playback server.",
+      "changesIntro": "Babaguhin ng Connect ang mga setting na ito:",
+      "changesAria": "Mga babaguhin",
+      "olderNote": "Mananatili sa listahan ng file sa ibaba ang mga recording bago ang pagbabagong ito.",
+      "apply": "Ilapat ang mga pagbabago",
+      "applying": "Inilalapat…",
+      "refused": "Tinanggihan ng MediaMTX ang pagbabago",
+      "override": "Itinatakda ng path na ito ang <code>recordFormat</code> sa {format} sa sarili nitong path config, na nangingibabaw sa path defaults. Itakda ito sa <code>fmp4</code> doon.",
+      "openPathConfig": "Buksan ang recording config ng path na ito",
+      "pathDefaultsUnreadable": "Hindi mabasa ang path defaults mula sa MediaMTX."
+    },
+    "clip": {
+      "title": "I-download ang clip",
+      "rangeAria": "Saklaw ng clip",
+      "last5Min": "Huling 5 min",
+      "last15Min": "Huling 15 min",
+      "last1Hour": "Huling 1 oras",
+      "custom": "Custom",
+      "start": "Simula",
+      "durationMinutes": "Tagal (min)",
+      "invalidStart": "Ilagay ang oras bilang HH:MM:SS",
+      "minutesRange": "Buong minuto, mula 1 hanggang 60",
+      "range": "{start} – {end}",
+      "download": "I-download",
+      "cancel": "Kanselahin",
+      "preparing": "Inihahanda ang clip…",
+      "progress": "{received} natanggap · {rate}/s",
+      "complete": "Na-download ang clip",
+      "failed": "Nabigo ang pag-download ng clip",
+      "noRecordings": "Walang recording sa saklaw na ito"
+    }
+  },
+  "Sessions": {
+    "pageHeader": "Mga Session",
+    "pageSubHeader": "Bawat client na nakakonekta sa MediaMTX ngayon, nagpa-publish o nagbabasa, sa anumang protocol.",
+    "summary": "{count, plural, one {# session} other {# na session}}",
+    "columns": {
+      "path": "Path",
+      "protocol": "Protocol",
+      "remoteAddr": "Remote address",
+      "state": "Estado",
+      "bytesIn": "Bytes papasok",
+      "bytesOut": "Bytes palabas",
+      "uptime": "Uptime",
+      "actions": "Mga aksyon"
+    },
+    "states": {
+      "idle": "idle",
+      "read": "nagbabasa",
+      "publish": "nagpa-publish"
+    },
+    "noCounter": "—",
+    "protocols": {
+      "disabled": "{protocol} (hindi naka-enable sa server na ito)",
+      "failed": "{protocol} (hindi mabasa)",
+      "unlisted": "Hindi nakalista: {protocols}.",
+      "truncated": "Ipinapakita ang unang {count, number} {protocol} na session."
+    },
+    "kick": {
+      "action": "I-kick",
+      "confirmTitle": "I-kick ang {protocol} client na {remoteAddr} mula sa {path}?",
+      "confirmDescription": "Puputulin ng MediaMTX ang koneksyon ngayon. Hindi ito ban: maaaring kumonekta muli agad ang client.",
+      "hlsCaveat": "Humihingi ulit ng playlist ang HLS player sa loob ng ilang segundo at nakakakuha ng bagong session, kaya kadalasan ay nire-reset lang ito.",
+      "cancel": "Kanselahin",
+      "confirm": "I-kick ang client",
+      "toasts": {
+        "success": "Na-kick ang {remoteAddr}",
+        "alreadyGone": "Nakadiskonekta na ang {remoteAddr}",
+        "errorTitle": "Hindi ma-kick ang session",
+        "errorDescription": "Hindi tinanggap ng MediaMTX ang kahilingan. Subukan ulit."
+      }
+    },
+    "empty": {
+      "title": "Walang nakakonekta",
+      "lead": "Walang publisher o reader ang MediaMTX ngayon."
     }
   },
   "Config": {
@@ -315,6 +408,31 @@
           "success": "Naibalik sa minanang mga setting",
           "errorTitle": "Hindi maibalik sa minanang mga setting",
           "errorDescription": "Nandiyan pa rin ang config entry ng path. Subukan ulit."
+        }
+      },
+      "publishRead": {
+        "title": "I-publish at i-play",
+        "publishTab": "I-publish",
+        "readTab": "I-play",
+        "pullSource": "Kinukuha ng path na ito ang stream mula sa source nito; tinatanggihan ng MediaMTX ang mga publisher.",
+        "readFailed": "Hindi mabasa ang mga listen address ng server.",
+        "noProtocols": "Naka-off sa server ang lahat ng protocol para dito.",
+        "copyUrl": "Kopyahin ang {protocol} URL",
+        "copySnippet": "Kopyahin ang {client} snippet para sa {protocol}",
+        "snippetLabel": "{client} snippet para sa {protocol}",
+        "notes": {
+          "whipTracks": "Nagpa-publish lang ang FFmpeg 8 sa WHIP kapag may video at audio track ang input."
+        },
+        "links": {
+          "systemPlayer": "Buksan sa system player",
+          "browserPublish": "I-publish mula sa browser",
+          "hlsPage": "Buksan ang HLS page ng MediaMTX",
+          "webrtcPage": "Buksan ang WebRTC page ng MediaMTX"
+        },
+        "toasts": {
+          "copied": "Nakopya sa clipboard",
+          "copyFailedTitle": "Hindi makopya",
+          "copyFailedDescription": "Hinarang ng browser ang access sa clipboard. Piliin ang text at kopyahin ito nang mano-mano."
         }
       }
     },
