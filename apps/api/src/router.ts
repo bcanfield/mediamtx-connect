@@ -13,6 +13,7 @@ import {
   latestScreenshotMtimeFor,
   latestScreenshotUrlFor,
   listStreamRecordingFiles,
+  safeJoin,
   screenshotUrlFor,
   summarizeStreamRecordings,
 } from './recordings-fs'
@@ -136,8 +137,8 @@ export const router = os.router({
 
     listForStream: os.recordings.listForStream.handler(async ({ input }) => {
       const config = await getAppConfig()
-      const streamDir = path.join(config.recordingsDirectory, input.streamName)
-      if (!fs.existsSync(streamDir))
+      const streamDir = safeJoin(config.recordingsDirectory, input.streamName)
+      if (!streamDir || !fs.existsSync(streamDir))
         return { recordings: [], totalCount: 0 }
 
       const files = listStreamRecordingFiles(config.recordingsDirectory, input.streamName)

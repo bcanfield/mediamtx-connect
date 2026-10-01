@@ -5,15 +5,15 @@ import { Hono } from 'hono'
 import { getAppConfig } from './config-store'
 import { logger } from './logger'
 import { mediaMtxApi, MediaMtxError, mediaMtxPlayback } from './mediamtx'
-import { latestScreenshotPathFor } from './recordings-fs'
+import { latestScreenshotPathFor, safeJoin } from './recordings-fs'
 
 // Binary/streaming endpoints — screenshots and recordings. JSON lives in the
 // oRPC router; files live here.
 export const media = new Hono()
 
-function safeJoin(baseDir: string, ...segments: string[]): string | null {
-  const resolved = path.resolve(baseDir, ...segments)
-  return resolved.startsWith(path.resolve(baseDir) + path.sep) ? resolved : null
+const recordingContentTypes: Record<string, string> = {
+  '.mp4': 'video/mp4',
+  '.ts': 'video/mp2t',
 }
 
 function streamResponse(filePath: string, headers: Record<string, string>, status = 200, opts?: { start: number, end: number }) {
@@ -67,7 +67,7 @@ media.get('/recordings/:streamName/:file', async (c) => {
   }
 
   const headers: Record<string, string> = {
-    'Content-Type': 'video/mp4',
+    'Content-Type': recordingContentTypes[path.extname(filePath)] ?? 'application/octet-stream',
     'Accept-Ranges': 'bytes',
   }
   if (c.req.query('download') !== undefined)
