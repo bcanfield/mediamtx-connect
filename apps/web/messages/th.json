@@ -432,7 +432,7 @@
         "rtspServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ TLS",
         "rtspAuthMethods": "วิธียืนยันตัวตนที่เซิร์ฟเวอร์ RTSP ยอมรับ (basic หรือ digest)",
         "rtmpAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMP",
-        "rtmpEncryption": "นโยบายการเข้ารหัส TLS สำหรับ RTMP (no, strict หรือ optional)",
+        "rtmpEncryption": "นโยบายการเข้ารหัส TLS สำหรับ RTMP (no, optional หรือ strict)",
         "rtmpsAddress": "ที่อยู่รับฟังของเซิร์ฟเวอร์ RTMPS (TLS)",
         "rtmpServerKey": "พาธของคีย์เซิร์ฟเวอร์ RTMPS",
         "rtmpServerCert": "พาธของใบรับรองเซิร์ฟเวอร์ RTMPS",

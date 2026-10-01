@@ -432,7 +432,7 @@
         "rtspServerCert": "A TLS szervertanúsítvány elérési útja.",
         "rtspAuthMethods": "Az RTSP szerver által elfogadott hitelesítési módszerek (basic vagy digest).",
         "rtmpAddress": "Az RTMP szerver figyelési címe.",
-        "rtmpEncryption": "TLS titkosítási szabályzat RTMP-hez (no, strict vagy optional).",
+        "rtmpEncryption": "TLS titkosítási szabályzat RTMP-hez (no, optional vagy strict).",
         "rtmpsAddress": "Az RTMPS (TLS) szerver figyelési címe.",
         "rtmpServerKey": "Az RTMPS szerverkulcs elérési útja.",
         "rtmpServerCert": "Az RTMPS szervertanúsítvány elérési útja.",

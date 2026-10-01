@@ -34,7 +34,7 @@ export const GlobalConfigSchema = z.object({
   writeQueueSize: z.coerce.number().optional(),
   udpMaxPayloadSize: z.coerce.number().optional(),
   authMethod: z.enum(AUTH_METHODS).optional(),
-  // Read only while authMethod is `http`.
+  // Used only when authMethod is `http`.
   authHTTPAddress: z.string().optional(),
   api: z.boolean().optional(),
   apiAddress: z.string().optional(),

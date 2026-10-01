@@ -432,7 +432,7 @@
         "rtspServerCert": "Calea certificatului serverului TLS.",
         "rtspAuthMethods": "Metodele de autentificare acceptate de serverul RTSP (basic sau digest).",
         "rtmpAddress": "Adresa de ascultare a serverului RTMP.",
-        "rtmpEncryption": "Politica de criptare TLS pentru RTMP (no, strict sau optional).",
+        "rtmpEncryption": "Politica de criptare TLS pentru RTMP (no, optional sau strict).",
         "rtmpsAddress": "Adresa de ascultare a serverului RTMPS (TLS).",
         "rtmpServerKey": "Calea cheii serverului RTMPS.",
         "rtmpServerCert": "Calea certificatului serverului RTMPS.",

@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS 服务器证书的路径。",
         "rtspAuthMethods": "RTSP 服务器接受的认证方式（basic 或 digest）。",
         "rtmpAddress": "RTMP 服务器的监听地址。",
-        "rtmpEncryption": "RTMP 的 TLS 加密策略（no、strict 或 optional）。",
+        "rtmpEncryption": "RTMP 的 TLS 加密策略（no、optional 或 strict）。",
         "rtmpsAddress": "RTMPS（TLS）服务器的监听地址。",
         "rtmpServerKey": "RTMPS 服务器密钥的路径。",
         "rtmpServerCert": "RTMPS 服务器证书的路径。",

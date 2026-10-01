@@ -432,7 +432,7 @@
         "rtspServerCert": "Path ng TLS server certificate.",
         "rtspAuthMethods": "Mga paraan ng authentication na tinatanggap ng RTSP server (basic o digest).",
         "rtmpAddress": "Listen address ng RTMP server.",
-        "rtmpEncryption": "Patakaran sa TLS encryption para sa RTMP (no, strict, o optional).",
+        "rtmpEncryption": "Patakaran sa TLS encryption para sa RTMP (no, optional, o strict).",
         "rtmpsAddress": "Listen address ng RTMPS (TLS) server.",
         "rtmpServerKey": "Path ng RTMPS server key.",
         "rtmpServerCert": "Path ng RTMPS server certificate.",

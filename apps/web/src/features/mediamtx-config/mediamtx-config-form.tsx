@@ -307,45 +307,14 @@ function ConfigSection<T extends FieldValues>({
           )
         : (
             <div className="flex flex-col">
-              {section.fields.map(field =>
-                field.kind === 'switch'
-                  ? (
-                      <SwitchFieldRow
-                        key={field.name}
-                        control={control}
-                        name={field.name}
-                        inheritedValues={inheritedValues}
-                      />
-                    )
-                  : field.kind === 'list'
-                    ? (
-                        <ListFieldRow
-                          key={field.name}
-                          control={control}
-                          name={field.name}
-                          inheritedValues={inheritedValues}
-                        />
-                      )
-                    : field.kind === 'enum'
-                      ? (
-                          <EnumFieldRow
-                            key={field.name}
-                            control={control}
-                            name={field.name}
-                            options={field.options}
-                            inheritedValues={inheritedValues}
-                          />
-                        )
-                      : (
-                          <TextFieldRow
-                            key={field.name}
-                            control={control}
-                            name={field.name}
-                            kind={field.kind === 'number' ? 'number' : 'text'}
-                            inheritedValues={inheritedValues}
-                          />
-                        ),
-              )}
+              {section.fields.map(field => (
+                <FieldRow
+                  key={field.name}
+                  field={field}
+                  control={control}
+                  inheritedValues={inheritedValues}
+                />
+              ))}
               {/* webrtcICEServers2 exists only on the global scope. */}
               {section.hasIceServers && (
                 <IceServersRows control={control as unknown as Control<GlobalConfigFormData>} />
@@ -354,6 +323,41 @@ function ConfigSection<T extends FieldValues>({
           )}
     </section>
   )
+}
+
+function FieldRow<T extends FieldValues>({
+  field,
+  control,
+  inheritedValues,
+}: {
+  field: SectionDef<T>['fields'][number]
+  control: Control<T>
+  inheritedValues?: Record<string, unknown>
+}) {
+  switch (field.kind) {
+    case 'switch':
+      return <SwitchFieldRow control={control} name={field.name} inheritedValues={inheritedValues} />
+    case 'list':
+      return <ListFieldRow control={control} name={field.name} inheritedValues={inheritedValues} />
+    case 'enum':
+      return (
+        <EnumFieldRow
+          control={control}
+          name={field.name}
+          options={field.options}
+          inheritedValues={inheritedValues}
+        />
+      )
+    default:
+      return (
+        <TextFieldRow
+          control={control}
+          name={field.name}
+          kind={field.kind}
+          inheritedValues={inheritedValues}
+        />
+      )
+  }
 }
 
 function SectionEnableSwitch<T extends FieldValues>({

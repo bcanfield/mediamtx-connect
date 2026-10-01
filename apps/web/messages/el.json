@@ -432,7 +432,7 @@
         "rtspServerCert": "Διαδρομή του πιστοποιητικού διακομιστή TLS.",
         "rtspAuthMethods": "Μέθοδοι αυθεντικοποίησης που δέχεται ο διακομιστής RTSP (basic ή digest).",
         "rtmpAddress": "Διεύθυνση ακρόασης του διακομιστή RTMP.",
-        "rtmpEncryption": "Πολιτική κρυπτογράφησης TLS για RTMP (no, strict ή optional).",
+        "rtmpEncryption": "Πολιτική κρυπτογράφησης TLS για RTMP (no, optional ή strict).",
         "rtmpsAddress": "Διεύθυνση ακρόασης του διακομιστή RTMPS (TLS).",
         "rtmpServerKey": "Διαδρομή του κλειδιού διακομιστή RTMPS.",
         "rtmpServerCert": "Διαδρομή του πιστοποιητικού διακομιστή RTMPS.",

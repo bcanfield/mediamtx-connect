@@ -432,7 +432,7 @@
         "rtspServerCert": "Đường dẫn chứng chỉ máy chủ TLS.",
         "rtspAuthMethods": "Phương thức xác thực được máy chủ RTSP chấp nhận (basic hoặc digest).",
         "rtmpAddress": "Địa chỉ lắng nghe của máy chủ RTMP.",
-        "rtmpEncryption": "Chính sách mã hóa TLS cho RTMP (no, strict hoặc optional).",
+        "rtmpEncryption": "Chính sách mã hóa TLS cho RTMP (no, optional hoặc strict).",
         "rtmpsAddress": "Địa chỉ lắng nghe của máy chủ RTMPS (TLS).",
         "rtmpServerKey": "Đường dẫn khóa máy chủ RTMPS.",
         "rtmpServerCert": "Đường dẫn chứng chỉ máy chủ RTMPS.",

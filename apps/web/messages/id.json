@@ -432,7 +432,7 @@
         "rtspServerCert": "Jalur sertifikat server TLS.",
         "rtspAuthMethods": "Metode autentikasi yang diterima server RTSP (basic atau digest).",
         "rtmpAddress": "Alamat dengar server RTMP.",
-        "rtmpEncryption": "Kebijakan enkripsi TLS untuk RTMP (no, strict, atau optional).",
+        "rtmpEncryption": "Kebijakan enkripsi TLS untuk RTMP (no, optional, atau strict).",
         "rtmpsAddress": "Alamat dengar server RTMPS (TLS).",
         "rtmpServerKey": "Jalur kunci server RTMPS.",
         "rtmpServerCert": "Jalur sertifikat server RTMPS.",

@@ -432,7 +432,7 @@
         "rtspServerCert": "Sti til TLS-serverens certifikat.",
         "rtspAuthMethods": "Autentificeringsmetoder som RTSP-serveren accepterer (basic eller digest).",
         "rtmpAddress": "Lytteadresse for RTMP-serveren.",
-        "rtmpEncryption": "TLS-krypteringspolitik for RTMP (no, strict eller optional).",
+        "rtmpEncryption": "TLS-krypteringspolitik for RTMP (no, optional eller strict).",
         "rtmpsAddress": "Lytteadresse for RTMPS-serveren (TLS).",
         "rtmpServerKey": "Sti til RTMPS-serverens nøgle.",
         "rtmpServerCert": "Sti til RTMPS-serverens certifikat.",

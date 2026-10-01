@@ -432,7 +432,7 @@
         "rtspServerCert": "Path of the TLS server certificate.",
         "rtspAuthMethods": "Authentication methods accepted by the RTSP server (basic or digest).",
         "rtmpAddress": "Listen address of the RTMP server.",
-        "rtmpEncryption": "TLS encryption policy for RTMP (no, strict or optional).",
+        "rtmpEncryption": "TLS encryption policy for RTMP (no, optional or strict).",
         "rtmpsAddress": "Listen address of the RTMPS (TLS) server.",
         "rtmpServerKey": "Path of the RTMPS server key.",
         "rtmpServerCert": "Path of the RTMPS server certificate.",

@@ -432,7 +432,7 @@
         "rtspServerCert": "Ścieżka certyfikatu serwera TLS.",
         "rtspAuthMethods": "Metody uwierzytelniania akceptowane przez serwer RTSP (basic lub digest).",
         "rtmpAddress": "Adres nasłuchiwania serwera RTMP.",
-        "rtmpEncryption": "Polityka szyfrowania TLS dla RTMP (no, strict lub optional).",
+        "rtmpEncryption": "Polityka szyfrowania TLS dla RTMP (no, optional lub strict).",
         "rtmpsAddress": "Adres nasłuchiwania serwera RTMPS (TLS).",
         "rtmpServerKey": "Ścieżka klucza serwera RTMPS.",
         "rtmpServerCert": "Ścieżka certyfikatu serwera RTMPS.",

@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS सर्वर प्रमाणपत्र का पाथ।",
         "rtspAuthMethods": "RTSP सर्वर द्वारा स्वीकृत प्रमाणीकरण विधियाँ (basic या digest)।",
         "rtmpAddress": "RTMP सर्वर का लिसन पता।",
-        "rtmpEncryption": "RTMP के लिए TLS एन्क्रिप्शन नीति (no, strict या optional)।",
+        "rtmpEncryption": "RTMP के लिए TLS एन्क्रिप्शन नीति (no, optional या strict)।",
         "rtmpsAddress": "RTMPS (TLS) सर्वर का लिसन पता।",
         "rtmpServerKey": "RTMPS सर्वर कुंजी का पाथ।",
         "rtmpServerCert": "RTMPS सर्वर प्रमाणपत्र का पाथ।",

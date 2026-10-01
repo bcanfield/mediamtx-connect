@@ -432,7 +432,7 @@
         "rtspServerCert": "Pad van het TLS-servercertificaat.",
         "rtspAuthMethods": "Authenticatiemethoden die de RTSP-server accepteert (basic of digest).",
         "rtmpAddress": "Luisteradres van de RTMP-server.",
-        "rtmpEncryption": "TLS-versleutelingsbeleid voor RTMP (no, strict of optional).",
+        "rtmpEncryption": "TLS-versleutelingsbeleid voor RTMP (no, optional of strict).",
         "rtmpsAddress": "Luisteradres van de RTMPS-server (TLS).",
         "rtmpServerKey": "Pad van de RTMPS-serversleutel.",
         "rtmpServerCert": "Pad van het RTMPS-servercertificaat.",

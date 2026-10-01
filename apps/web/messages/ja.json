@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS サーバー証明書のパス。",
         "rtspAuthMethods": "RTSP サーバーが受け付ける認証方式(basic または digest)。",
         "rtmpAddress": "RTMP サーバーのリッスンアドレス。",
-        "rtmpEncryption": "RTMP の TLS 暗号化ポリシー(no、strict、optional)。",
+        "rtmpEncryption": "RTMP の TLS 暗号化ポリシー(no、optional、strict)。",
         "rtmpsAddress": "RTMPS(TLS)サーバーのリッスンアドレス。",
         "rtmpServerKey": "RTMPS サーバーキーのパス。",
         "rtmpServerCert": "RTMPS サーバー証明書のパス。",

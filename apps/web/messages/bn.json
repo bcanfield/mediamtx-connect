@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS সার্ভার সার্টিফিকেটের পাথ।",
         "rtspAuthMethods": "RTSP সার্ভার যে প্রমাণীকরণ পদ্ধতি গ্রহণ করে (basic বা digest)।",
         "rtmpAddress": "RTMP সার্ভারের লিসেন ঠিকানা।",
-        "rtmpEncryption": "RTMP-এর জন্য TLS এনক্রিপশন নীতি (no, strict বা optional)।",
+        "rtmpEncryption": "RTMP-এর জন্য TLS এনক্রিপশন নীতি (no, optional বা strict)।",
         "rtmpsAddress": "RTMPS (TLS) সার্ভারের লিসেন ঠিকানা।",
         "rtmpServerKey": "RTMPS সার্ভার কী-এর পাথ।",
         "rtmpServerCert": "RTMPS সার্ভার সার্টিফিকেটের পাথ।",

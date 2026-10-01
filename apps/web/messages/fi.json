@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS-palvelinvarmenteen polku.",
         "rtspAuthMethods": "RTSP-palvelimen hyväksymät todennusmenetelmät (basic tai digest).",
         "rtmpAddress": "RTMP-palvelimen kuunteluosoite.",
-        "rtmpEncryption": "TLS-salauskäytäntö RTMP:lle (no, strict tai optional).",
+        "rtmpEncryption": "TLS-salauskäytäntö RTMP:lle (no, optional tai strict).",
         "rtmpsAddress": "RTMPS (TLS) -palvelimen kuunteluosoite.",
         "rtmpServerKey": "RTMPS-palvelinavaimen polku.",
         "rtmpServerCert": "RTMPS-palvelinvarmenteen polku.",

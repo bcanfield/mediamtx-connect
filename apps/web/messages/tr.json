@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS sunucu sertifikasının yolu.",
         "rtspAuthMethods": "RTSP sunucusunun kabul ettiği kimlik doğrulama yöntemleri (basic veya digest).",
         "rtmpAddress": "RTMP sunucusunun dinleme adresi.",
-        "rtmpEncryption": "RTMP için TLS şifreleme politikası (no, strict veya optional).",
+        "rtmpEncryption": "RTMP için TLS şifreleme politikası (no, optional veya strict).",
         "rtmpsAddress": "RTMPS (TLS) sunucusunun dinleme adresi.",
         "rtmpServerKey": "RTMPS sunucu anahtarının yolu.",
         "rtmpServerCert": "RTMPS sunucu sertifikasının yolu.",

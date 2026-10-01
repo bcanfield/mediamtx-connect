@@ -1,6 +1,10 @@
+// E2E because it needs a live MediaMTX: the config keys a real server of the
+// version CI runs actually serves, which no stub can answer. Read-only; it
+// writes nothing to MediaMTX.
 import type { APIRequestContext } from '@playwright/test'
 import { expect, test } from '@playwright/test'
-// Relative on purpose: the root package doesn't depend on @connect/contract.
+// Exception to "import by name": tests/e2e isn't a workspace package, and
+// depending on @connect/contract from the root would change the lockfile.
 import { GlobalConfigSchema, PathConfigSchema } from '../../packages/contract/src/index'
 
 const API = 'http://localhost:9997/v3'

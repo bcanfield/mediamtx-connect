@@ -432,7 +432,7 @@
         "rtspServerCert": "Шлях до сертифіката TLS-сервера.",
         "rtspAuthMethods": "Методи автентифікації, які приймає сервер RTSP (basic або digest).",
         "rtmpAddress": "Адреса прослуховування сервера RTMP.",
-        "rtmpEncryption": "Політика TLS-шифрування для RTMP (no, strict або optional).",
+        "rtmpEncryption": "Політика TLS-шифрування для RTMP (no, optional або strict).",
         "rtmpsAddress": "Адреса прослуховування сервера RTMPS (TLS).",
         "rtmpServerKey": "Шлях до ключа сервера RTMPS.",
         "rtmpServerCert": "Шлях до сертифіката сервера RTMPS.",

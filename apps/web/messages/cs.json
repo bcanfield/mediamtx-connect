@@ -432,7 +432,7 @@
         "rtspServerCert": "Cesta k certifikátu serveru TLS.",
         "rtspAuthMethods": "Metody ověřování přijímané serverem RTSP (basic nebo digest).",
         "rtmpAddress": "Adresa naslouchání serveru RTMP.",
-        "rtmpEncryption": "Zásada šifrování TLS pro RTMP (no, strict nebo optional).",
+        "rtmpEncryption": "Zásada šifrování TLS pro RTMP (no, optional nebo strict).",
         "rtmpsAddress": "Adresa naslouchání serveru RTMPS (TLS).",
         "rtmpServerKey": "Cesta ke klíči serveru RTMPS.",
         "rtmpServerCert": "Cesta k certifikátu serveru RTMPS.",

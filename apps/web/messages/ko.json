@@ -432,7 +432,7 @@
         "rtspServerCert": "TLS 서버 인증서의 경로.",
         "rtspAuthMethods": "RTSP 서버가 허용하는 인증 방식(basic 또는 digest).",
         "rtmpAddress": "RTMP 서버의 수신 주소.",
-        "rtmpEncryption": "RTMP의 TLS 암호화 정책(no, strict 또는 optional).",
+        "rtmpEncryption": "RTMP의 TLS 암호화 정책(no, optional 또는 strict).",
         "rtmpsAddress": "RTMPS(TLS) 서버의 수신 주소.",
         "rtmpServerKey": "RTMPS 서버 키의 경로.",
         "rtmpServerCert": "RTMPS 서버 인증서의 경로.",
