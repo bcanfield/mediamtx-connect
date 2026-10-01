@@ -208,7 +208,9 @@ describe('publishEndpoints and readEndpoints', () => {
     }]))
     expect(shape).toEqual({
       'RTSP': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer rtsp://h:8554/cam'] },
-      'RTSPS': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer rtsps://h:8322/cam'] },
+      // VLC can't read RTSPS (MediaMTX docs/4-read/10-vlc.md), and it is the
+      // usual system handler, so neither the snippet nor the link is offered.
+      'RTSPS': { clients: ['ffmpeg', 'ffplay'], links: [] },
       'RTMP': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
       'RTMPS': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
       'SRT': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer srt://h:8890?streamid=read:cam'] },

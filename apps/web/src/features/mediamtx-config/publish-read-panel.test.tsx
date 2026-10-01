@@ -11,10 +11,16 @@ import { PublishReadPanel } from './publish-read-panel'
 // the composition the page does on top of `lib/publish.ts`: which host, which
 // tab, which note, and that a copy button copies what it shows.
 let global: unknown = { rtmpAddress: ':11935' }
+// Set to make the global config read fail outright rather than answer null.
+let globalFails = false
 
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
-  globalConfig: () => global,
+  globalConfig: () => {
+    if (globalFails)
+      throw new Error('MediaMTX is down')
+    return global
+  },
   appConfig: () => ({
     // Deliberately distinct hosts: the API's internal one must never leak.
     mediaMtxUrl: 'http://mediamtx',
@@ -32,6 +38,7 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 afterEach(() => {
   server.resetHandlers()
   global = { rtmpAddress: ':11935' }
+  globalFails = false
   vi.restoreAllMocks()
 })
 afterAll(() => server.close())
@@ -98,6 +105,16 @@ it('says so when the server\'s listen addresses could not be read', async () => 
 
   expect(await screen.findByText(/Couldn't read the server's listen addresses/)).toBeInTheDocument()
   expect(screen.queryByRole('tab')).not.toBeInTheDocument()
+})
+
+// Not the same as a null answer, but just as unknown: default-port URLs here
+// would look right and point at the wrong place.
+it('says so when the read of the listen addresses fails outright', async () => {
+  globalFails = true
+  await renderWithProviders(<PublishReadPanel name="cam" source={undefined} />)
+
+  expect(await screen.findByText(/Couldn't read the server's listen addresses/)).toBeInTheDocument()
+  expect(screen.queryByText('rtsp://cam.lan:8554/cam')).not.toBeInTheDocument()
 })
 
 describe('copying', () => {

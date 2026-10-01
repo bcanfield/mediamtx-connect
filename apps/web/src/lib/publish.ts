@@ -231,8 +231,10 @@ export function readEndpoints(host: string, path: string, global: GlobalConfig |
   // `rtsp://` and `srt://` have OS handlers (VLC registers both); `rtmp://` mostly doesn't.
   if (on.rtsp)
     endpoints.push({ protocol: 'RTSP', url: urls.rtsp, snippets: playerSnippets(urls.rtsp, true), links: [{ kind: 'systemPlayer', href: urls.rtsp }] })
+  // VLC can't read RTSPS (MediaMTX docs/4-read/10-vlc.md), and VLC is the
+  // usual handler a system-player link would land in.
   if (on.rtsps)
-    endpoints.push({ protocol: 'RTSPS', url: urls.rtsps, snippets: playerSnippets(urls.rtsps, true), links: [{ kind: 'systemPlayer', href: urls.rtsps }] })
+    endpoints.push({ protocol: 'RTSPS', url: urls.rtsps, snippets: playerSnippets(urls.rtsps, true).filter(s => s.client !== 'VLC'), links: [] })
   if (on.rtmp)
     endpoints.push({ protocol: 'RTMP', url: urls.rtmp, snippets: playerSnippets(urls.rtmp, true), links: [] })
   if (on.rtmps)

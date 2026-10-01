@@ -29,7 +29,9 @@ export function PublishReadPanel({ name, source }: { name: string, source: strin
       <header className="border-b px-4 py-2.5">
         <h2 className="text-control font-medium">{t('title')}</h2>
       </header>
-      {global.data === null
+      {/* A failed read is as unknown as a null one, and default ports here
+          would look right while pointing at the wrong place. */}
+      {global.isError || global.data === null
         ? <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('readFailed')}</p>
         : (
             <Tabs defaultValue="publish" className="px-4 py-3.5">

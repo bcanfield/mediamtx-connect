@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
 
-// A ready fixture stream. Read-only: nothing here writes config, so it can run
-// alongside the specs that do.
+// An available fixture stream. Read-only: nothing here writes config, so it can
+// run alongside the specs that do. It needs a live MediaMTX because of the HLS
+// test: the playlist only exists once MediaMTX's real HLS muxer is remuxing the
+// fixture's ffmpeg feed, and no stub can prove the URL we print is served.
 const STREAM = 'stream3'
 
 test.describe('Publish & read panel', () => {
@@ -19,7 +21,9 @@ test.describe('Publish & read panel', () => {
 
   test('reads HLS from a URL MediaMTX actually serves', async ({ page, request }) => {
     await page.getByRole('tab', { name: 'Read' }).click()
-    const hls = page.locator('section').filter({ has: page.getByRole('heading', { name: 'HLS', exact: true }) })
+    // Scoped to the tab panel: the outer panel <section> also contains the HLS
+    // heading, so an unscoped match would hit several `code` elements.
+    const hls = page.getByRole('tabpanel').locator('section', { has: page.getByRole('heading', { name: 'HLS', exact: true }) })
     const url = await hls.locator('code').textContent()
     expect(url).toBe(`http://localhost:8888/${STREAM}/index.m3u8`)
 
@@ -28,7 +32,7 @@ test.describe('Publish & read panel', () => {
     await expect.poll(async () => {
       try {
         const response = await request.get(url!)
-        return response.ok() ? (await response.text()).slice(0, 7) : response.status()
+        return response.status() === 200 ? (await response.text()).slice(0, 7) : response.status()
       }
       catch {
         return 'unreachable'
