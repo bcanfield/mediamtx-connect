@@ -495,7 +495,8 @@
         "recording": "녹화",
         "pathHooks": "경로 훅",
         "source": "소스",
-        "forward": "전달"
+        "forward": "전달",
+        "resilience": "복원력"
       },
       "sectionDescriptions": {
         "logging": "로그 출력, 타임아웃 및 전역 제한.",
@@ -510,11 +511,13 @@
         "recording": "스트림을 디스크에 녹화합니다.",
         "pathHooks": "경로 자체의 수명 주기 이벤트 시 MediaMTX가 실행하는 명령.",
         "source": "이 경로의 스트림이 어디에서 오는지.",
-        "forward": "이 경로의 스트림을 YouTube나 Twitch 같은 다른 서버로 다시 게시합니다."
+        "forward": "이 경로의 스트림을 YouTube나 Twitch 같은 다른 서버로 다시 게시합니다.",
+        "resilience": "소스가 끊겨도 리더의 연결을 유지하거나, 누군가 시청하는 동안에만 소스를 가져옵니다."
       },
       "sectionWarnings": {
         "auth": "MediaMTX의 인증 방식을 바꾸면 Connect를 포함한 모든 클라이언트에 적용됩니다. 잘못된 설정은 Connect를 MediaMTX에서 차단할 수 있습니다.",
-        "pathHooks": "훅을 저장하면 경로가 다시 시작되고 게시자의 연결이 끊깁니다. 게시자가 다시 연결될 때까지 스트림이 중단됩니다."
+        "pathHooks": "훅을 저장하면 경로가 다시 시작되고 게시자의 연결이 끊깁니다. 게시자가 다시 연결될 때까지 스트림이 중단됩니다.",
+        "resilience": "이 중 하나라도 저장하면 경로가 다시 시작되고 퍼블리셔 연결이 끊깁니다 — 다시 연결될 때까지 스트림이 끊깁니다."
       },
       "enabled": "활성화됨",
       "off": "꺼짐",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "명령이 종료되면 다시 실행합니다.",
         "runOnUnread": "클라이언트가 이 경로의 시청을 중지할 때 실행할 명령.",
         "runOnRecordSegmentCreate": "녹화 세그먼트가 생성될 때 실행할 명령.",
-        "runOnRecordSegmentComplete": "녹화 세그먼트가 완료될 때 실행할 명령."
+        "runOnRecordSegmentComplete": "녹화 세그먼트가 완료될 때 실행할 명령.",
+        "alwaysAvailable": "아무것도 게시하지 않는 동안 오프라인 세그먼트를 반복 재생해 리더의 연결을 유지합니다. 스트림은 available 상태로 남지만 online은 아닙니다. alwaysAvailableFile 또는 mediamtx.yml에 설정된 alwaysAvailableTracks가 필요합니다. 정규식 또는 all_others 항목과 sourceOnDemand 또는 runOnDemand와 함께 쓰면 거부됩니다.",
+        "alwaysAvailableFile": "MediaMTX 서버 자체 파일 시스템에 있는 MP4의 경로입니다. Connect는 업로드하지 않습니다. 트랙은 AV1, VP9, H265, H264, Opus, MPEG-4 Audio 또는 LPCM이어야 합니다. alwaysAvailableTracks와 함께 쓸 수 없습니다.",
+        "sourceOnDemand": "리더가 하나 이상 연결된 동안에만 소스를 가져옵니다. MediaMTX가 URL에서 가져오는 소스에만 해당하며, source가 publisher이면 거부됩니다.",
+        "sourceOnDemandStartTimeout": "첫 번째 리더가 포기하기 전에 소스가 available 상태가 되기를 기다리는 시간입니다. MediaMTX 기본값은 10s입니다.",
+        "sourceOnDemandCloseAfter": "마지막 리더가 떠난 뒤 소스를 열어 두는 시간입니다. MediaMTX 기본값은 10s입니다."
       },
       "toasts": {
         "success": "MediaMTX 설정이 저장되었습니다",

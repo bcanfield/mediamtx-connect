@@ -495,7 +495,8 @@
         "recording": "Optagelse",
         "pathHooks": "Sti-hooks",
         "source": "Kilde",
-        "forward": "Videresendelse"
+        "forward": "Videresendelse",
+        "resilience": "Robusthed"
       },
       "sectionDescriptions": {
         "logging": "Logoutput, timeouts og globale grænser.",
@@ -510,11 +511,13 @@
         "recording": "Optag streams til disk.",
         "pathHooks": "Kommandoer som MediaMTX kører ved stiens egne livscyklushændelser.",
         "source": "Hvor streamet for denne sti kommer fra.",
-        "forward": "Genudgiv denne stis stream til andre servere, f.eks. YouTube eller Twitch."
+        "forward": "Genudgiv denne stis stream til andre servere, f.eks. YouTube eller Twitch.",
+        "resilience": "Hold læsere forbundet, når kilden falder ud, eller hent kun kilden, mens nogen ser med."
       },
       "sectionWarnings": {
         "auth": "Ændrer du, hvordan MediaMTX godkender, gælder det alle klienter, også Connect — en forkert indstilling kan afskære Connect fra MediaMTX.",
-        "pathHooks": "At gemme et hook genstarter stien og afbryder dens udgiver — streamen falder ud, indtil udgiveren forbinder igen."
+        "pathHooks": "At gemme et hook genstarter stien og afbryder dens udgiver — streamen falder ud, indtil udgiveren forbinder igen.",
+        "resilience": "Når du gemmer en af disse indstillinger, genstartes stien, og dens publisher afbrydes — streamen falder ud, indtil den forbinder igen."
       },
       "enabled": "Aktiveret",
       "off": "Fra",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "Genstart kommandoen, hvis den afsluttes.",
         "runOnUnread": "Kommando der køres, når en klient holder op med at læse denne sti.",
         "runOnRecordSegmentCreate": "Kommando der køres, når et optagelsessegment oprettes.",
-        "runOnRecordSegmentComplete": "Kommando der køres, når et optagelsessegment er færdigt."
+        "runOnRecordSegmentComplete": "Kommando der køres, når et optagelsessegment er færdigt.",
+        "alwaysAvailable": "Mens intet publicerer, afspilles et offline-segment i løkke, så læsere forbliver forbundet. Streamen forbliver available, ikke online. Kræver alwaysAvailableFile eller alwaysAvailableTracks sat i mediamtx.yml. Afvises på en regex- eller all_others-post og sammen med sourceOnDemand eller runOnDemand.",
+        "alwaysAvailableFile": "Sti til en MP4 på MediaMTX-serverens eget filsystem; Connect uploader den ikke. Spor skal være AV1, VP9, H265, H264, Opus, MPEG-4 Audio eller LPCM. Kan ikke kombineres med alwaysAvailableTracks.",
+        "sourceOnDemand": "Hent kun kilden, mens mindst én læser er forbundet. Kun for en kilde, MediaMTX henter fra en URL; afvises, når source er publisher.",
+        "sourceOnDemandStartTimeout": "Hvor længe den første læser venter på, at kilden bliver available, før den giver op. MediaMTX' standard er 10s.",
+        "sourceOnDemandCloseAfter": "Hvor længe kilden forbliver åben, efter den sidste læser er gået. MediaMTX' standard er 10s."
       },
       "toasts": {
         "success": "MediaMTX-konfigurationen er gemt",

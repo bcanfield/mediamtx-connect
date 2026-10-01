@@ -495,7 +495,8 @@
         "recording": "Recording",
         "pathHooks": "Path Hooks",
         "source": "Source",
-        "forward": "Forwarding"
+        "forward": "Forwarding",
+        "resilience": "Resilience"
       },
       "sectionDescriptions": {
         "logging": "Log output, timeouts and global limits.",
@@ -510,11 +511,13 @@
         "recording": "Record streams to disk.",
         "pathHooks": "Commands MediaMTX runs on a path's own lifecycle events.",
         "source": "Where this path's stream comes from.",
-        "forward": "Re-publish this path's stream to other servers, such as YouTube or Twitch."
+        "forward": "Re-publish this path's stream to other servers, such as YouTube or Twitch.",
+        "resilience": "Keep readers connected when the source drops, or pull the source only while someone watches."
       },
       "sectionWarnings": {
         "auth": "Changing how MediaMTX authenticates applies to every client, Connect included — a wrong setting can cut Connect off from MediaMTX.",
-        "pathHooks": "Saving a hook restarts the path and disconnects its publisher — the stream drops until it reconnects."
+        "pathHooks": "Saving a hook restarts the path and disconnects its publisher — the stream drops until it reconnects.",
+        "resilience": "Saving any of these restarts the path and disconnects its publisher — the stream drops until it reconnects."
       },
       "enabled": "Enabled",
       "off": "Off",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "Restart the command if it exits.",
         "runOnUnread": "Command to run when a client stops reading this path.",
         "runOnRecordSegmentCreate": "Command to run when a recording segment is created.",
-        "runOnRecordSegmentComplete": "Command to run when a recording segment is complete."
+        "runOnRecordSegmentComplete": "Command to run when a recording segment is complete.",
+        "alwaysAvailable": "While nothing is publishing, play an offline segment on repeat so readers stay connected. The stream stays available, not online. Needs alwaysAvailableFile, or alwaysAvailableTracks set in mediamtx.yml. Refused on a regex or all_others entry and together with sourceOnDemand or runOnDemand.",
+        "alwaysAvailableFile": "Path of an MP4 on the MediaMTX server's own filesystem; Connect doesn't upload it. Tracks must be AV1, VP9, H265, H264, Opus, MPEG-4 Audio or LPCM. Can't be combined with alwaysAvailableTracks.",
+        "sourceOnDemand": "Pull the source only while at least one reader is connected. Only for a source MediaMTX pulls from a URL; refused when source is publisher.",
+        "sourceOnDemandStartTimeout": "How long the first reader waits for the source to become available before giving up. MediaMTX's default is 10s.",
+        "sourceOnDemandCloseAfter": "How long the source stays open after the last reader leaves. MediaMTX's default is 10s."
       },
       "toasts": {
         "success": "MediaMTX config saved",

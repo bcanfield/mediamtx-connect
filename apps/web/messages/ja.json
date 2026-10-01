@@ -495,7 +495,8 @@
         "recording": "録画",
         "pathHooks": "パスフック",
         "source": "ソース",
-        "forward": "転送"
+        "forward": "転送",
+        "resilience": "耐障害性"
       },
       "sectionDescriptions": {
         "logging": "ログ出力、タイムアウト、グローバル制限。",
@@ -510,11 +511,13 @@
         "recording": "ストリームをディスクに録画します。",
         "pathHooks": "パス自身のライフサイクルイベント時に MediaMTX が実行するコマンド。",
         "source": "このパスのストリームがどこから来るか。",
-        "forward": "このパスのストリームを YouTube や Twitch などの別のサーバーへ再配信します。"
+        "forward": "このパスのストリームを YouTube や Twitch などの別のサーバーへ再配信します。",
+        "resilience": "ソースが途切れても読み取り側の接続を維持する、または誰かが視聴している間だけソースを取得します。"
       },
       "sectionWarnings": {
         "auth": "MediaMTX の認証方式を変更すると Connect を含む全クライアントに影響します。設定を誤ると Connect が MediaMTX から切り離されることがあります。",
-        "pathHooks": "フックを保存するとパスが再起動し、パブリッシャーの接続が切れます。再接続するまでストリームは停止します。"
+        "pathHooks": "フックを保存するとパスが再起動し、パブリッシャーの接続が切れます。再接続するまでストリームは停止します。",
+        "resilience": "これらのいずれかを保存するとパスが再起動し、パブリッシャーが切断されます — 再接続されるまでストリームは途切れます。"
       },
       "enabled": "有効",
       "off": "オフ",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "コマンドが終了した場合に再起動します。",
         "runOnUnread": "クライアントがこのパスの視聴を停止したときに実行するコマンド。",
         "runOnRecordSegmentCreate": "録画セグメントが作成されたときに実行するコマンド。",
-        "runOnRecordSegmentComplete": "録画セグメントが完了したときに実行するコマンド。"
+        "runOnRecordSegmentComplete": "録画セグメントが完了したときに実行するコマンド。",
+        "alwaysAvailable": "何もパブリッシュしていない間、オフラインのセグメントをループ再生して読み取り側の接続を維持します。ストリームは available のままで、online にはなりません。alwaysAvailableFile、または mediamtx.yml で設定された alwaysAvailableTracks が必要です。正規表現や all_others のエントリ、sourceOnDemand・runOnDemand との併用は拒否されます。",
+        "alwaysAvailableFile": "MediaMTX サーバー自身のファイルシステム上にある MP4 のパス。Connect はアップロードしません。トラックは AV1、VP9、H265、H264、Opus、MPEG-4 Audio、LPCM のいずれかである必要があります。alwaysAvailableTracks とは併用できません。",
+        "sourceOnDemand": "読み取り側が 1 つ以上接続している間だけソースを取得します。MediaMTX が URL から取得するソース専用で、source が publisher の場合は拒否されます。",
+        "sourceOnDemandStartTimeout": "最初の読み取り側がソースが available になるのを待ってから諦めるまでの時間。MediaMTX の既定値は 10s です。",
+        "sourceOnDemandCloseAfter": "最後の読み取り側が離れた後、ソースを開いたままにする時間。MediaMTX の既定値は 10s です。"
       },
       "toasts": {
         "success": "MediaMTX 設定を保存しました",

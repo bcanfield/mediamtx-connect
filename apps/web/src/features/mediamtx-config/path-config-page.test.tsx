@@ -360,6 +360,61 @@ describe('a name with nothing to resolve', () => {
   })
 })
 
+// MediaMTX's own answers to a camera that drops or one that eats bandwidth. Any
+// of these keys re-creates the path on save, so the write has to stay sparse.
+describe('resilience', () => {
+  async function renderPulledPath() {
+    result = {
+      status: 'resolved',
+      confName: 'stream1',
+      conf: {
+        source: 'rtsp://cam.lan:554/live',
+        alwaysAvailable: false,
+        alwaysAvailableFile: '',
+        sourceOnDemand: false,
+        sourceOnDemandStartTimeout: '10s',
+        sourceOnDemandCloseAfter: '10s',
+      },
+    }
+    const view = await renderWithProviders(<PathConfigPage name="stream1" />)
+    await screen.findByRole('heading', { name: 'Path Config · stream1' })
+    return view
+  }
+
+  it('saves on-demand pulling as the path\'s own override and nothing else', async () => {
+    const view = await renderPulledPath()
+
+    await view.user.click(await screen.findByRole('switch', { name: 'sourceOnDemand' }))
+    const closeAfter = screen.getByLabelText('sourceOnDemandCloseAfter')
+    await view.user.clear(closeAfter)
+    await view.user.type(closeAfter, '30s')
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
+    expect(updatePathConfig).toHaveBeenCalledWith(
+      {
+        name: 'stream1',
+        conf: { sourceOnDemand: true, sourceOnDemandCloseAfter: '30s' },
+      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
+    )
+  })
+
+  // With no file MediaMTX falls back to alwaysAvailableTracks, which Connect
+  // doesn't edit, and names that key in the refusal.
+  it('puts the missing-fallback refusal on the alwaysAvailable switch', async () => {
+    rejection = new ORPCError('BAD_REQUEST', {
+      message: '\'alwaysAvailableTracks\' must contain at least one track',
+    })
+    const view = await renderPulledPath()
+
+    await view.user.click(await screen.findByRole('switch', { name: 'alwaysAvailable' }))
+    await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
+
+    expect(await within(screen.getByTestId('field-alwaysAvailable')).findByText(/must contain at least one track/))
+      .toBeInTheDocument()
+  })
+})
+
 // MediaMTX re-publishes a path to every `forward` destination. Its PATCH
 // replaces the list wholesale, so whatever goes out has to be the whole list —
 // including keys only a newer MediaMTX serves, which the form can't edit.
@@ -458,12 +513,12 @@ describe('forwarding', () => {
     expect(notes[0]).toHaveTextContent(/stores these URLs, stream keys included, in plaintext/)
   })
 
-  it('places Forwarding directly after Source in the rail', async () => {
+  it('places Forwarding and then Resilience directly after Source in the rail', async () => {
     await renderWithForward([])
 
     const [rail] = await screen.findAllByRole('navigation', { name: 'Config sections' })
     expect(rail).toBeDefined()
     const labels = within(rail!).getAllByRole('button').map(b => b.textContent)
-    expect(labels.slice(0, 2)).toEqual(['Source', 'Forwarding'])
+    expect(labels.slice(0, 3)).toEqual(['Source', 'Forwarding', 'Resilience'])
   })
 })

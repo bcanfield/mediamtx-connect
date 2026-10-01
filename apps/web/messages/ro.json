@@ -495,7 +495,8 @@
         "recording": "Înregistrare",
         "pathHooks": "Hook-uri de cale",
         "source": "Sursă",
-        "forward": "Redirecționare"
+        "forward": "Redirecționare",
+        "resilience": "Reziliență"
       },
       "sectionDescriptions": {
         "logging": "Ieșirea jurnalelor, timpii limită și limitele globale.",
@@ -510,11 +511,13 @@
         "recording": "Înregistrează fluxurile pe disc.",
         "pathHooks": "Comenzi pe care MediaMTX le rulează la evenimentele din ciclul de viață al căii.",
         "source": "De unde vine fluxul acestei căi.",
-        "forward": "Republică fluxul acestei căi pe alte servere, precum YouTube sau Twitch."
+        "forward": "Republică fluxul acestei căi pe alte servere, precum YouTube sau Twitch.",
+        "resilience": "Păstrează cititorii conectați când sursa cade sau preia sursa doar cât timp se uită cineva."
       },
       "sectionWarnings": {
         "auth": "Schimbarea modului în care MediaMTX autentifică se aplică tuturor clienților, inclusiv Connect — o setare greșită poate izola Connect de MediaMTX.",
-        "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează."
+        "pathHooks": "Salvarea unui hook repornește calea și deconectează sursa care publică — fluxul se întrerupe până când aceasta se reconectează.",
+        "resilience": "Salvarea oricăreia dintre aceste setări repornește calea și deconectează publisherul — streamul se întrerupe până la reconectare."
       },
       "enabled": "Activat",
       "off": "Dezactivat",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "Repornește comanda dacă se încheie.",
         "runOnUnread": "Comandă de rulat când un client încetează să citească această cale.",
         "runOnRecordSegmentCreate": "Comandă de rulat când este creat un segment de înregistrare.",
-        "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet."
+        "runOnRecordSegmentComplete": "Comandă de rulat când un segment de înregistrare este complet.",
+        "alwaysAvailable": "Cât timp nimic nu publică, redă în buclă un segment offline ca cititorii să rămână conectați. Streamul rămâne available, nu online. Necesită alwaysAvailableFile sau alwaysAvailableTracks setat în mediamtx.yml. Refuzat pe o intrare regex sau all_others și împreună cu sourceOnDemand sau runOnDemand.",
+        "alwaysAvailableFile": "Calea unui MP4 pe sistemul de fișiere al serverului MediaMTX însuși; Connect nu îl încarcă. Pistele trebuie să fie AV1, VP9, H265, H264, Opus, MPEG-4 Audio sau LPCM. Nu se poate combina cu alwaysAvailableTracks.",
+        "sourceOnDemand": "Preia sursa doar cât timp cel puțin un cititor este conectat. Doar pentru o sursă pe care MediaMTX o preia de la un URL; refuzat când source este publisher.",
+        "sourceOnDemandStartTimeout": "Cât așteaptă primul cititor ca sursa să devină available înainte să renunțe. Valoarea implicită MediaMTX este 10s.",
+        "sourceOnDemandCloseAfter": "Cât rămâne deschisă sursa după ce pleacă ultimul cititor. Valoarea implicită MediaMTX este 10s."
       },
       "toasts": {
         "success": "Configurarea MediaMTX a fost salvată",

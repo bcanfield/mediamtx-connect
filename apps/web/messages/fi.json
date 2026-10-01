@@ -495,7 +495,8 @@
         "recording": "Tallennus",
         "pathHooks": "Polun hookit",
         "source": "Lähde",
-        "forward": "Edelleenlähetys"
+        "forward": "Edelleenlähetys",
+        "resilience": "Vikasietoisuus"
       },
       "sectionDescriptions": {
         "logging": "Lokitulostus, aikakatkaisut ja yleiset rajat.",
@@ -510,11 +511,13 @@
         "recording": "Tallenna striimit levylle.",
         "pathHooks": "Komennot, jotka MediaMTX suorittaa polun omissa elinkaaritapahtumissa.",
         "source": "Mistä tämän polun striimi tulee.",
-        "forward": "Julkaise tämän polun stream uudelleen muille palvelimille, kuten YouTubeen tai Twitchiin."
+        "forward": "Julkaise tämän polun stream uudelleen muille palvelimille, kuten YouTubeen tai Twitchiin.",
+        "resilience": "Pidä lukijat yhdistettyinä, kun lähde katkeaa, tai hae lähde vain, kun joku katsoo."
       },
       "sectionWarnings": {
         "auth": "MediaMTX:n todennustavan muuttaminen koskee kaikkia asiakkaita, myös Connectia — väärä asetus voi katkaista Connectin yhteyden MediaMTX:ään.",
-        "pathHooks": "Hookin tallentaminen käynnistää polun uudelleen ja katkaisee sen julkaisijan yhteyden — striimi katkeaa, kunnes julkaisija yhdistää uudelleen."
+        "pathHooks": "Hookin tallentaminen käynnistää polun uudelleen ja katkaisee sen julkaisijan yhteyden — striimi katkeaa, kunnes julkaisija yhdistää uudelleen.",
+        "resilience": "Minkä tahansa näistä tallentaminen käynnistää polun uudelleen ja katkaisee sen julkaisijan — striimi katkeaa, kunnes julkaisija yhdistää uudelleen."
       },
       "enabled": "Käytössä",
       "off": "Pois",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "Käynnistä komento uudelleen, jos se päättyy.",
         "runOnUnread": "Komento, joka suoritetaan, kun asiakas lopettaa tämän polun lukemisen.",
         "runOnRecordSegmentCreate": "Komento, joka suoritetaan, kun tallennussegmentti luodaan.",
-        "runOnRecordSegmentComplete": "Komento, joka suoritetaan, kun tallennussegmentti on valmis."
+        "runOnRecordSegmentComplete": "Komento, joka suoritetaan, kun tallennussegmentti on valmis.",
+        "alwaysAvailable": "Kun mikään ei julkaise, toistetaan offline-segmenttiä silmukassa, jotta lukijat pysyvät yhdistettyinä. Striimi pysyy available-tilassa, ei online-tilassa. Vaatii alwaysAvailableFile-asetuksen tai mediamtx.yml-tiedostossa asetetun alwaysAvailableTracks-asetuksen. Hylätään regex- tai all_others-merkinnässä sekä yhdessä sourceOnDemandin tai runOnDemandin kanssa.",
+        "alwaysAvailableFile": "MP4-tiedoston polku MediaMTX-palvelimen omassa tiedostojärjestelmässä; Connect ei lataa sitä. Raitojen on oltava AV1, VP9, H265, H264, Opus, MPEG-4 Audio tai LPCM. Ei yhdistettävissä alwaysAvailableTracksin kanssa.",
+        "sourceOnDemand": "Hae lähde vain, kun vähintään yksi lukija on yhdistettynä. Vain lähteelle, jonka MediaMTX hakee URL-osoitteesta; hylätään, kun source on publisher.",
+        "sourceOnDemandStartTimeout": "Kuinka kauan ensimmäinen lukija odottaa lähteen muuttumista available-tilaan ennen luovuttamista. MediaMTX:n oletus on 10s.",
+        "sourceOnDemandCloseAfter": "Kuinka kauan lähde pysyy auki viimeisen lukijan lähdettyä. MediaMTX:n oletus on 10s."
       },
       "toasts": {
         "success": "MediaMTX-asetukset tallennettu",

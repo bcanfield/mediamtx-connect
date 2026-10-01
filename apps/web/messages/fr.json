@@ -495,7 +495,8 @@
         "recording": "Enregistrement",
         "pathHooks": "Hooks de chemin",
         "source": "Source",
-        "forward": "Transfert"
+        "forward": "Transfert",
+        "resilience": "Résilience"
       },
       "sectionDescriptions": {
         "logging": "Sortie des journaux, délais d'expiration et limites globales.",
@@ -510,11 +511,13 @@
         "recording": "Enregistre les flux sur le disque.",
         "pathHooks": "Commandes que MediaMTX exécute lors des événements de cycle de vie d'un chemin.",
         "source": "D’où provient le flux de ce chemin.",
-        "forward": "Republier le flux de ce chemin vers d'autres serveurs, comme YouTube ou Twitch."
+        "forward": "Republier le flux de ce chemin vers d'autres serveurs, comme YouTube ou Twitch.",
+        "resilience": "Garder les lecteurs connectés quand la source tombe, ou ne tirer la source que pendant que quelqu'un regarde."
       },
       "sectionWarnings": {
         "auth": "Modifier la façon dont MediaMTX authentifie s'applique à tous les clients, Connect compris : un mauvais réglage peut couper Connect de MediaMTX.",
-        "pathHooks": "Enregistrer un hook redémarre le chemin et déconnecte son émetteur : le flux s'interrompt jusqu'à ce qu'il se reconnecte."
+        "pathHooks": "Enregistrer un hook redémarre le chemin et déconnecte son émetteur : le flux s'interrompt jusqu'à ce qu'il se reconnecte.",
+        "resilience": "Enregistrer l'un de ces réglages redémarre le chemin et déconnecte son éditeur — le flux s'interrompt jusqu'à sa reconnexion."
       },
       "enabled": "Activé",
       "off": "Désactivé",
@@ -635,7 +638,12 @@
         "runOnReadRestart": "Relance la commande si elle se termine.",
         "runOnUnread": "Commande à exécuter lorsqu'un client arrête de lire ce chemin.",
         "runOnRecordSegmentCreate": "Commande à exécuter lorsqu'un segment d'enregistrement est créé.",
-        "runOnRecordSegmentComplete": "Commande à exécuter lorsqu'un segment d'enregistrement est terminé."
+        "runOnRecordSegmentComplete": "Commande à exécuter lorsqu'un segment d'enregistrement est terminé.",
+        "alwaysAvailable": "Tant que rien ne publie, lit en boucle un segment hors ligne pour que les lecteurs restent connectés. Le flux reste available, pas online. Nécessite alwaysAvailableFile, ou alwaysAvailableTracks défini dans mediamtx.yml. Refusé sur une entrée regex ou all_others et avec sourceOnDemand ou runOnDemand.",
+        "alwaysAvailableFile": "Chemin d'un MP4 sur le système de fichiers du serveur MediaMTX lui-même ; Connect ne le téléverse pas. Les pistes doivent être en AV1, VP9, H265, H264, Opus, MPEG-4 Audio ou LPCM. Incompatible avec alwaysAvailableTracks.",
+        "sourceOnDemand": "Ne tirer la source que tant qu'au moins un lecteur est connecté. Uniquement pour une source que MediaMTX tire d'une URL ; refusé quand source vaut publisher.",
+        "sourceOnDemandStartTimeout": "Durée pendant laquelle le premier lecteur attend que la source devienne available avant d'abandonner. Valeur par défaut de MediaMTX : 10s.",
+        "sourceOnDemandCloseAfter": "Durée pendant laquelle la source reste ouverte après le départ du dernier lecteur. Valeur par défaut de MediaMTX : 10s."
       },
       "toasts": {
         "success": "Config MediaMTX enregistrée",

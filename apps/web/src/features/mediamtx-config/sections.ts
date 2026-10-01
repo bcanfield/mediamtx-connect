@@ -249,6 +249,21 @@ const FORWARD_SECTION: SectionDef<PathConfigFormData> = {
   hasForwardDests: true,
 }
 
+// Path config only: MediaMTX validates path defaults as the `all_others`
+// entry, where it refuses alwaysAvailable outright and refuses sourceOnDemand
+// with the stock `publisher` source. Any of these keys re-creates the path.
+const RESILIENCE_SECTION: SectionDef<PathConfigFormData> = {
+  id: 'resilience',
+  warnsOnSave: true,
+  fields: [
+    { name: 'alwaysAvailable', kind: 'switch' },
+    { name: 'alwaysAvailableFile', kind: 'text' },
+    { name: 'sourceOnDemand', kind: 'switch' },
+    { name: 'sourceOnDemandStartTimeout', kind: 'text' },
+    { name: 'sourceOnDemandCloseAfter', kind: 'text' },
+  ],
+}
+
 // Built rather than declared like the other scopes: the source rule mirrors
 // MediaMTX's own whitelist, and the message it fails with is localized.
 export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathConfigFormData> {
@@ -259,7 +274,7 @@ export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathC
         .refine(isValidPathSource, { message: invalidSourceMessage })
         .optional(),
     }),
-    sections: [SOURCE_SECTION, FORWARD_SECTION, ...PATH_SECTIONS],
+    sections: [SOURCE_SECTION, FORWARD_SECTION, RESILIENCE_SECTION, ...PATH_SECTIONS],
   }
 }
 
