@@ -3,7 +3,7 @@
 **Date:** 2026-07-17
 **Status:** Superseded (2026-10-01). Only mechanism 2 was built.
 
-**Superseded 2026-10-01.** This ADR existed to make *unreviewed* agent-loop PRs safe to
+**Superseded 2026-10-01.** This ADR existed to make *unreviewed* PRs from the CI agent loop safe to
 merge. The loop has been removed, so every PR now gets a human review. What still holds:
 `pnpm verify` mirrors the CI `Build` job, and the `protect-release-branches` ruleset
 requires `Build`, `E2E Tests` and `Docker image smoke`. Mechanisms 1 (coverage floor,
@@ -52,7 +52,7 @@ Shift regression confidence from *discipline* to *enforced measurement*. The wor
 3. **A `FEATURES.md` gate keyed to the conventional-commit PR title.** When a PR's ~~contains a `feat:` commit~~ **title** matches `^feat(\(…\))?!?:` but its diff does not change `docs/FEATURES.md`, **fail**. `feat:` already *means* "a user-visible feature" (it drives the minor release via `semantic-release`), which is exactly what `FEATURES.md`'s maintenance contract says must be documented — so the trigger is a near-zero-false-positive signal that needs no path list to maintain. It **fails**, never warns: a warning is the ignorable suggestion an autonomous self-reviewer scrolls past. The escape hatch is honest and self-correcting — if it isn't really a feature the title was mistyped (fixing that also fixes the changelog); mislabeling `feat:`→`fix:` to dodge the gate also mislabels the release, so the incentive points the right way. No bypass label: an agent that can name its own exemption has defeated the gate.
    - **The title, not the commits.** `main` is squash-merged, so the PR title *is* the commit subject semantic-release parses; branch commits are agent-authored intermediate state that nothing downstream reads.
    - ~~fail the `build` job~~ **It runs in the `pr-title` job, not `build`.** `build` carries `if: github.event.action != 'edited'`, and `test`/`image-smoke` inherit or copy that guard, so a retitle skips all three — and GitHub counts a skipped required check as satisfied. A title-keyed gate inside `build` is therefore bypassable by opening as `chore:`, going green, and retitling to `feat:` before merge. `pr-title` already re-runs on `edited`, which is the only job that closes that hole.
-   - **That job must join the required contexts.** `pr-title` is not required today, so its failure blocks the smallhours loop but not a human merge. Adding it is a repo-settings change, outside the tree and outside what an agent can do — the same class of dependency as the precondition. Rename the job *before* adding it, never after: the context string is the job's `name`.
+   - **That job must join the required contexts.** `pr-title` is not required today, so its failure blocks the CI agent loop but not a human merge. Adding it is a repo-settings change, outside the tree and outside what an agent can do — the same class of dependency as the precondition. Rename the job *before* adding it, never after: the context string is the job's `name`.
 
 Scope is deliberately the fast, high-leverage layer. The component/form test layer (jsdom + Testing Library) is **deferred**, not decided against — see the payoff trigger. A local pre-push hook is **dropped** from scope entirely: its enforcement job is now covered by branch protection and its fast-feedback job by `pnpm verify`, so it would be tracking a phantom.
 

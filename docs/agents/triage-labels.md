@@ -14,8 +14,3 @@ When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the 
 
 Edit the right-hand column to match whatever vocabulary you actually use.
 
-## System-owned states
-
-`agent-working` and `in-review` are applied and removed by the smallhours loop only.
-Never hand-apply them during triage: removing or adding one by hand is
-a signal to the system (cancellation / state drift), not bookkeeping.

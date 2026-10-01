@@ -435,12 +435,12 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm dev:stop` | Stop the dev Docker stack (MediaMTX + fake streams). |
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
-| `pnpm lint` / `lint:fix` | ESLint check / autofix. |
+| `pnpm lint` / `lint:fix` | ESLint check / fix. |
 | `pnpm i18n:check` | Message-key parity across all locales (`scripts/i18n-check.mjs`). |
 | `pnpm test` | Vitest unit + component suites across packages (turbo), then the root `scripts` project. |
 | `pnpm test:scripts` | Vitest over `scripts/` only (`--dir scripts`) — repo tooling turbo can't see. |
 | `pnpm check` | **The inner loop (~4s).** Lints only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `--since` with no ref (or with the next flag after it) is an error and exits 1 rather than silently degrading to working-tree mode. `scripts/check.mjs` |
-| `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + typecheck + i18n:check + test + **build**. No Docker, no browsers. Also what smallhours runs against an agent's work before opening its PR. |
+| `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + typecheck + i18n:check + test + **build**. No Docker, no browsers. |
 | `pnpm test:changed` | Only tests reachable from your edits (`vitest --changed`); bypasses the turbo cache since git state isn't hashed. |
 | `pnpm test:watch` | Vitest watch mode across packages. |
 | `pnpm test:e2e` | Playwright suite (needs a prior build). |
@@ -453,32 +453,6 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **`i18n-check.mjs`** — the i18n key-parity CI guard.
 - **`check.mjs`** — the inner-loop runner behind `pnpm check` (see §15.3). Its argument parsing lives in **`check-args.mjs`** so it can be tested without running the checks it drives; `check-args.test.mjs` covers the three modes and the `--since`-without-a-ref error.
 
-### 15.5 Agent environment (`.smallhours.yml`)
-
-The smallhours loop implements issues in a sandboxed CI job where **nothing is
-installed**, so without configuration an agent writes code it cannot compile or
-test and CI is the first thing that ever runs its work. Three keys close that:
-
-- **`npm_allowed: true`** — the agent's sandbox may reach `registry.npmjs.org`, so
-  it can `pnpm install` and can resolve a library an issue calls for. Install
-  lifecycle scripts stay disabled, which costs nothing here: pnpm 11 denies build
-  scripts by default and `pnpm-workspace.yaml` has no `allowBuilds` map.
-- **`sandbox.filesystem.allowWrite`** — the package store and caches
-  (`~/.local/share/pnpm`, `~/.local/state/pnpm`, `~/.cache`, `~/.npm`). Registry
-  egress alone is not enough: the sandbox permits writes to the working directory
-  and `$TMPDIR` only, so without this an install resolves and then fails to write.
-  More paths than one machine uses, since pnpm's store location varies by platform
-  and volume and corepack needs its own cache.
-- **`verify: pnpm verify`** with **`verify_reentries: 2`** — run after the agent
-  stops and before its PR opens; a failure re-enters the agent with the output, so
-  a lint or type error costs ~11s instead of a full CI round trip plus one of
-  `attempt_cap`'s auto-fix attempts. A gate still red after its re-entries pushes
-  anyway and says so on the PR, leaving CI the backstop it already was.
-
-E2E is deliberately **not** in the gate: the agent phase has no Docker MediaMTX, no
-Playwright browsers and no ffmpeg, and cannot bind a local port. `AGENTS.md` tells
-the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
-
 ---
 
 ## 16. CI / Release / Repo Hygiene
@@ -487,7 +461,7 @@ the agent so. Toolkit side: `bcanfield/smallhours` ADR 0008.
 - **Docker publishing** (`.github/workflows/docker.yml`) — multi-arch `bcanfield/mediamtx-connect` + GHCR on release.
 - **Nightly release train** (`.github/workflows/release.yml`) — a scheduled run at ~07:00 `America/New_York` releases whatever landed overnight, so merges arriving around the clock produce one version, one changelog entry, and one multi-arch image build per day rather than one per merge. Refuses to run unless the latest CI run on `main` is green — checked as "latest completed run on `main`", not "the run for HEAD", because `@semantic-release/git` pushes the changelog commit with `[skip ci]`. `workflow_dispatch` triggers an out-of-band release.
 - **`semantic-release`** — `release.config.js` automates semver, changelog, and GitHub releases. `CHANGELOG.md` is auto-maintained. Both the commit analyzer and the notes generator run the `conventionalcommits` preset, which is held at 9.x (see `pnpm-workspace.yaml`, and the `allowedVersions` rule in `renovate.json`): 10.x targets a newer `conventional-changelog-writer` than semantic-release bundles and silently emits release notes with a header and no commit sections.
-- **PR title check** — a `Conventional commit format` job inside `ci.yml` (not its own workflow) rejects PR titles that aren't conventional commits, since `main` is squash-merged and the title is the commit subject semantic-release parses. It lives in CI because the smallhours agent loop gates on this workflow by name, so a title failure has to fail *CI* for the loop to see it and auto-fix it. `edited` is in the `pull_request` trigger so a retitle re-checks without a new commit; Build/E2E/image-smoke skip that event. Convention documented in `CONTRIBUTING.md` § PR titles.
+- **PR title check** — a `Conventional commit format` job inside `ci.yml` (not its own workflow) rejects PR titles that aren't conventional commits, since `main` is squash-merged and the title is the commit subject semantic-release parses. `edited` is in the `pull_request` trigger so a retitle re-checks without a new commit; Build/E2E/image-smoke skip that event. Convention documented in `CONTRIBUTING.md` § PR titles.
 - **Renovate** — `renovate.json` batches dependency updates into one nightly PR. Branch creation is limited to a 00:00–06:00 `America/New_York` window; minor/patch/pin/digest updates group into a single "all non-major dependencies" PR that automerges once CI is green. Kept out of that group and left for review: 0.x minor bumps (semver-breaking) and majors, with GitHub Actions majors collapsed into one "github actions major" PR. Majors additionally require `dependencyDashboardApproval` — they queue as checkboxes on the Dependency Dashboard issue and only open a PR once ticked, so a backlog of majors can't flood the PR list overnight. A repo-wide `minimumReleaseAge` of 3 days holds every update back until the release has been on the registry that long — a supply-chain buffer, and the thing that keeps Renovate from proposing a version the pnpm gate below would reject.
 - **pnpm supply-chain policies** (`pnpm-workspace.yaml`) — `pnpm install` verifies every lockfile entry before installing, and CI runs it with `--frozen-lockfile`, so a rejected entry fails the build. `trustPolicy: no-downgrade` blocks packages that lose provenance relative to a version already trusted (`trustPolicyExclude` carries a narrow, commented exception for two 2023-era `semver` republishes). pnpm's built-in `minimumReleaseAge` additionally rejects anything published in the last 24 hours, measured against install time — which is why Renovate's 3-day floor has to stay above it.
 - **Renovate auto-approve** (`.github/workflows/renovate-approve.yml`) — `main` requires an approving review, which Renovate cannot supply itself. This approves `renovate[bot]` PRs with `GITHUB_TOKEN` so automerge can proceed; CI remains the gate. Skips PRs that already carry a live `github-actions[bot]` approval, and `workflow_dispatch` sweeps open PRs that predate a given run.
