@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX-এর জন্য ওয়েব ইন্টারফেস। আপনার ব্রাউজার থেকে স্ট্রিম দেখুন, রেকর্ডিং ব্রাউজ করুন এবং কনফিগারেশন সম্পাদনা করুন।"
-  },
   "Forms": {
     "errors": {
       "required": "এই ক্ষেত্রটি আবশ্যক",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "আবার চেষ্টা করুন",
-    "loading": "লোড হচ্ছে…",
     "theme": {
-      "lightMode": "লাইট মোড",
-      "darkMode": "ডার্ক মোড",
       "switchToLight": "লাইট থিমে স্যুইচ করুন",
       "switchToDark": "ডার্ক থিমে স্যুইচ করুন"
     },

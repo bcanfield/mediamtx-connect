@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX için web arayüzü. Akışları izleyin, kayıtlara göz atın ve yapılandırmayı tarayıcıdan düzenleyin."
-  },
   "Forms": {
     "errors": {
       "required": "Bu alan zorunludur",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Tekrar dene",
-    "loading": "Yükleniyor…",
     "theme": {
-      "lightMode": "Açık mod",
-      "darkMode": "Koyu mod",
       "switchToLight": "Açık temaya geç",
       "switchToDark": "Koyu temaya geç"
     },

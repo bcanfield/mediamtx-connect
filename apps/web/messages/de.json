@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web-Oberfläche für MediaMTX. Streams ansehen, Aufzeichnungen durchsuchen und die Konfiguration im Browser bearbeiten."
-  },
   "Forms": {
     "errors": {
       "required": "Dieses Feld ist erforderlich",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Wiederholen",
-    "loading": "Wird geladen…",
     "theme": {
-      "lightMode": "Heller Modus",
-      "darkMode": "Dunkler Modus",
       "switchToLight": "Zum hellen Design wechseln",
       "switchToDark": "Zum dunklen Design wechseln"
     },

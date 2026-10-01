@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web UI for MediaMTX. Watch streams, browse recordings, and edit config from your browser."
-  },
   "Forms": {
     "errors": {
       "required": "This field is required",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Retry",
-    "loading": "Loading…",
     "theme": {
-      "lightMode": "Light mode",
-      "darkMode": "Dark mode",
       "switchToLight": "Switch to light theme",
       "switchToDark": "Switch to dark theme"
     },

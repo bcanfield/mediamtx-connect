@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web-käyttöliittymä MediaMTX:lle. Katso striimejä, selaa tallenteita ja muokkaa asetuksia selaimessasi."
-  },
   "Forms": {
     "errors": {
       "required": "Tämä kenttä on pakollinen",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Yritä uudelleen",
-    "loading": "Ladataan…",
     "theme": {
-      "lightMode": "Vaalea tila",
-      "darkMode": "Tumma tila",
       "switchToLight": "Vaihda vaaleaan teemaan",
       "switchToDark": "Vaihda tummaan teemaan"
     },

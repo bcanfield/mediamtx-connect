@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Διαδικτυακή διεπαφή για το MediaMTX. Παρακολουθήστε ροές, περιηγηθείτε σε εγγραφές και επεξεργαστείτε τις ρυθμίσεις από τον περιηγητή σας."
-  },
   "Forms": {
     "errors": {
       "required": "Αυτό το πεδίο είναι υποχρεωτικό",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Επανάληψη",
-    "loading": "Φόρτωση…",
     "theme": {
-      "lightMode": "Φωτεινή λειτουργία",
-      "darkMode": "Σκοτεινή λειτουργία",
       "switchToLight": "Αλλαγή σε φωτεινό θέμα",
       "switchToDark": "Αλλαγή σε σκοτεινό θέμα"
     },

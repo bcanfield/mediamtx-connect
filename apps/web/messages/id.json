@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Antarmuka web untuk MediaMTX. Tonton aliran, telusuri rekaman, dan ubah konfigurasi dari peramban Anda."
-  },
   "Forms": {
     "errors": {
       "required": "Bidang ini wajib diisi",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Coba lagi",
-    "loading": "Memuat…",
     "theme": {
-      "lightMode": "Mode terang",
-      "darkMode": "Mode gelap",
       "switchToLight": "Beralih ke tema terang",
       "switchToDark": "Beralih ke tema gelap"
     },

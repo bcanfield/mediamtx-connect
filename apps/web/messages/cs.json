@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webové rozhraní pro MediaMTX. Sledujte streamy, procházejte záznamy a upravujte konfiguraci z prohlížeče."
-  },
   "Forms": {
     "errors": {
       "required": "Toto pole je povinné",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Zkusit znovu",
-    "loading": "Načítání…",
     "theme": {
-      "lightMode": "Světlý režim",
-      "darkMode": "Tmavý režim",
       "switchToLight": "Přepnout na světlý motiv",
       "switchToDark": "Přepnout na tmavý motiv"
     },

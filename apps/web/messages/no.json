@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webgrensesnitt for MediaMTX. Se strømmer, bla gjennom opptak og rediger konfigurasjon fra nettleseren din."
-  },
   "Forms": {
     "errors": {
       "required": "Dette feltet er obligatorisk",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Prøv igjen",
-    "loading": "Laster…",
     "theme": {
-      "lightMode": "Lyst modus",
-      "darkMode": "Mørkt modus",
       "switchToLight": "Bytt til lyst tema",
       "switchToDark": "Bytt til mørkt tema"
     },

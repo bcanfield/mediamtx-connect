@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX के लिए वेब इंटरफ़ेस। अपने ब्राउज़र से स्ट्रीम देखें, रिकॉर्डिंग ब्राउज़ करें और कॉन्फ़िगरेशन संपादित करें।"
-  },
   "Forms": {
     "errors": {
       "required": "यह फ़ील्ड आवश्यक है",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "पुनः प्रयास करें",
-    "loading": "लोड हो रहा है…",
     "theme": {
-      "lightMode": "लाइट मोड",
-      "darkMode": "डार्क मोड",
       "switchToLight": "लाइट थीम पर स्विच करें",
       "switchToDark": "डार्क थीम पर स्विच करें"
     },

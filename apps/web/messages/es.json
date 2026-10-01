@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfaz web para MediaMTX. Mira transmisiones, explora grabaciones y edita la configuración desde tu navegador."
-  },
   "Forms": {
     "errors": {
       "required": "Este campo es obligatorio",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Reintentar",
-    "loading": "Cargando…",
     "theme": {
-      "lightMode": "Modo claro",
-      "darkMode": "Modo oscuro",
       "switchToLight": "Cambiar a tema claro",
       "switchToDark": "Cambiar a tema oscuro"
     },

@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Web interface para sa MediaMTX. Manood ng mga stream, mag-browse ng mga recording, at i-edit ang configuration mula sa iyong browser."
-  },
   "Forms": {
     "errors": {
       "required": "Kinakailangan ang field na ito",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Subukang muli",
-    "loading": "Naglo-load…",
     "theme": {
-      "lightMode": "Light mode",
-      "darkMode": "Dark mode",
       "switchToLight": "Lumipat sa light theme",
       "switchToDark": "Lumipat sa dark theme"
     },

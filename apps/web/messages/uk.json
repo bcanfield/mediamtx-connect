@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Веб-інтерфейс для MediaMTX. Дивіться трансляції, переглядайте записи та редагуйте конфігурацію в браузері."
-  },
   "Forms": {
     "errors": {
       "required": "Це поле обов'язкове",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Повторити",
-    "loading": "Завантаження…",
     "theme": {
-      "lightMode": "Світла тема",
-      "darkMode": "Темна тема",
       "switchToLight": "Перемкнути на світлу тему",
       "switchToDark": "Перемкнути на темну тему"
     },

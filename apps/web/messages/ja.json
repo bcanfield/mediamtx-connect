@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX のウェブインターフェース。ブラウザでストリームを視聴し、録画を閲覧し、設定を編集できます。"
-  },
   "Forms": {
     "errors": {
       "required": "この項目は必須です",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "再試行",
-    "loading": "読み込み中…",
     "theme": {
-      "lightMode": "ライトモード",
-      "darkMode": "ダークモード",
       "switchToLight": "ライトテーマに切り替え",
       "switchToDark": "ダークテーマに切り替え"
     },

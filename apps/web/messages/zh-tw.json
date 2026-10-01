@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "MediaMTX 的網頁介面。在瀏覽器中觀看串流、瀏覽錄影並編輯設定。"
-  },
   "Forms": {
     "errors": {
       "required": "此欄位為必填",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "重試",
-    "loading": "載入中…",
     "theme": {
-      "lightMode": "淺色模式",
-      "darkMode": "深色模式",
       "switchToLight": "切換為淺色佈景主題",
       "switchToDark": "切換為深色佈景主題"
     },

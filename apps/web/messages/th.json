@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "เว็บอินเทอร์เฟซสำหรับ MediaMTX ดูสตรีม เรียกดูการบันทึก และแก้ไขการตั้งค่าจากเบราว์เซอร์ของคุณ"
-  },
   "Forms": {
     "errors": {
       "required": "ต้องกรอกฟิลด์นี้",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "ลองอีกครั้ง",
-    "loading": "กำลังโหลด…",
     "theme": {
-      "lightMode": "โหมดสว่าง",
-      "darkMode": "โหมดมืด",
       "switchToLight": "สลับเป็นธีมสว่าง",
       "switchToDark": "สลับเป็นธีมมืด"
     },

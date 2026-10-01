@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webes felület a MediaMTX-hez. Nézzen folyamokat, böngésszen felvételek között, és szerkessze a konfigurációt a böngészőből."
-  },
   "Forms": {
     "errors": {
       "required": "Ez a mező kötelező",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Újra",
-    "loading": "Betöltés…",
     "theme": {
-      "lightMode": "Világos mód",
-      "darkMode": "Sötét mód",
       "switchToLight": "Váltás világos témára",
       "switchToDark": "Váltás sötét témára"
     },

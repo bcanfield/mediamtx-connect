@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Webinterface voor MediaMTX. Bekijk streams, blader door opnames en bewerk de configuratie vanuit je browser."
-  },
   "Forms": {
     "errors": {
       "required": "Dit veld is verplicht",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Opnieuw proberen",
-    "loading": "Laden…",
     "theme": {
-      "lightMode": "Lichte modus",
-      "darkMode": "Donkere modus",
       "switchToLight": "Schakel naar licht thema",
       "switchToDark": "Schakel naar donker thema"
     },

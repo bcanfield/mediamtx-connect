@@ -1,12 +1,4 @@
 {
-  "App": {
-    "name": "MediaMTX Connect"
-  },
-  "Metadata": {
-    "titleDefault": "MediaMTX Connect",
-    "titleTemplate": "%s | MediaMTX Connect",
-    "description": "Interfață web pentru MediaMTX. Vizionați fluxuri, răsfoiți înregistrări și editați configurația din browser."
-  },
   "Forms": {
     "errors": {
       "required": "Acest câmp este obligatoriu",
@@ -15,10 +7,7 @@
   },
   "Common": {
     "retry": "Reîncearcă",
-    "loading": "Se încarcă…",
     "theme": {
-      "lightMode": "Mod luminos",
-      "darkMode": "Mod întunecat",
       "switchToLight": "Comută la tema luminoasă",
       "switchToDark": "Comută la tema întunecată"
     },
