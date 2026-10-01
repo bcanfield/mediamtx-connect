@@ -1,6 +1,6 @@
 # Domain context
 
-MediaMTX Connect is a web UI for operating a MediaMTX server. These are the words the code, issues and docs use for MediaMTX's concepts.
+MediaMTX Connect is a web UI for operating a MediaMTX server. These are the words to use for MediaMTX's concepts in new code, UI copy, issues and docs. Older code still says `ready` where this glossary says available.
 
 ## Language
 
@@ -71,7 +71,7 @@ One file MediaMTX writes while recording a path. A recording is a run of segment
 _Avoid_: clip (a clip is a user-chosen time range), file
 
 **Recording playback**:
-Watching recorded segments, served by MediaMTX's playback server. Not the same as viewing a stream live.
+Watching recorded segments, as opposed to viewing a stream live. MediaMTX's own playback server is one source of it.
 _Avoid_: playback (unqualified), replay
 
 **Snapshot**:

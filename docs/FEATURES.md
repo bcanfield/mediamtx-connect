@@ -501,9 +501,9 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 ## 18. Capability Highlights (TL;DR for product/marketing)
 
-- Watch every MediaMTX stream live in the browser (HLS) without installing anything.
+- Watch every MediaMTX stream live in the browser (WebRTC, falling back to HLS) without installing anything.
 - Browse, preview, play, and download recordings, with auto-generated thumbnails and seek-capable streaming.
-- Edit *every* MediaMTX server-config option from a typed, validated web form — no YAML required.
+- Edit 65 MediaMTX server settings, path defaults and per-path config from typed, validated web forms, with no YAML.
 - Reconfigure the app itself (URLs, mount paths) from the same UI; no container restart needed.
 - Healthcheck endpoint, structured logs, scheduled background jobs, and PWA install — production-ready out of the box.
 - Multi-arch Docker images (amd64/arm64), one-command stand-up via Docker Compose, single-process deploy (API + SPA + media from one container).

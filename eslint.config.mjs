@@ -44,9 +44,9 @@ export default antfu(
     // i18n: user-visible strings live in apps/web/messages/*.json — see
     // docs/I18N.md. Bans hardcoded JSX text and translatable
     // string props in feature and shared component code. Excludes shadcn
-    // primitives, MediaMTX field labels (intentionally English to mirror
-    // MediaMTX docs), and the locale-switcher (language names are not
-    // translated).
+    // primitives and the locale-switcher (language names are not translated).
+    // MediaMTX field labels pass because they render the config key verbatim
+    // from a variable, never as a literal.
     files: ['apps/web/src/features/**/*.tsx', 'apps/web/src/components/**/*.tsx'],
     ignores: [
       '**/*.test.tsx',

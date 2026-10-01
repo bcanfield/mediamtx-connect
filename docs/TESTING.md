@@ -75,7 +75,7 @@ Neither needs Docker or the E2E stack.
 - **A test you haven't seen fail isn't a test.** Break the line it covers and confirm it goes red before moving on.
 - **E2E stays in `tests/e2e/`.**
 - **One assertion theme per `test()`**. Multiple `expect`s are fine; multiple unrelated behaviors are not.
-- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `recording-card`, `stream-summary-card`, `recording-row`, `save-bar`).
+- **Use `getByRole` over `getByTestId`.** No `data-testid` unless there is no accessible alternative (existing: `stream-card`, `stream-summary-card`, `recording-row`, `save-bar`, `source-preview`, and `field-<key>` on config rows).
 - **Scope an assertion when the same string appears twice.** A card's "7 recordings" chip and the toolbar's "7 recordings" summary both match a bare `getByText`, and the unscoped version passes on the toolbar alone while the chip is missing. Use `within()` or `toHaveTextContent` on the element you mean.
 - **Don't assert on a library's behaviour and call it ours.** TanStack Link sets its own prefix-matched `aria-current`, so asserting the current tab through a rendered header tests Link, not `isActiveRoute`. Pure routing rules live in their own module with a `logic`-project test — that is why `nav-active.ts` exists apart from `app-header.tsx`.
 - **A `.test.ts` under `apps/web/src` runs in the `logic` project, in node.** Importing a `.tsx` module from one drags React, the router and the orpc client into a node environment, and the failure is a wall of `socket hang up`. Extract the pure function instead.

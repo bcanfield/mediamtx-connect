@@ -27,7 +27,7 @@ Connect aims to be the ideal companion to MediaMTX. When you weigh, triage or pr
 ## Conventions the tooling doesn't check
 
 - Boring over clever: the mainstream way, three similar lines over a clever helper, no defensive fallbacks for things that can't happen.
-- Comments are one-line notes to a coworker, and only when the *why* isn't obvious from the code.
+- Comments are short notes to a coworker, and only when the *why* isn't obvious from the code.
 - Third-party versions live in the pnpm catalog (`pnpm-workspace.yaml`), referenced as `catalog:`. Renovate bumps them; leave versions alone in feature work.
 - Import workspace packages by name (`@connect/contract`), never by relative path across packages. There's no root tsconfig; every package extends `@connect/typescript-config/base.json`.
 - Forms use React Hook Form + Zod, with schemas from `@connect/contract`.

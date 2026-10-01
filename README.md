@@ -3,7 +3,7 @@
 <h1>MediaMTX Connect</h1>
 
 <p><strong>The web UI for <a href="https://github.com/bluenviron/mediamtx">MediaMTX</a>.</strong><br>
-Watch live streams, browse recordings, edit any config key — from your browser.</p>
+Watch live streams, browse recordings, and edit your MediaMTX config from the browser.</p>
 
 <p>
   <a href="https://github.com/bcanfield/mediamtx-connect/actions"><img src="https://img.shields.io/github/actions/workflow/status/bcanfield/mediamtx-connect/ci.yml?branch=main&label=CI&style=flat-square" alt="CI"></a>
