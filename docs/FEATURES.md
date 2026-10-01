@@ -225,7 +225,7 @@ Sources reviewed at last full audit (2026-10-01): source tree, `README.md`, `doc
 
 ### 8.1 shadcn/ui primitives (`apps/web/src/components/ui/`)
 - Layout / nav: Breadcrumb.
-- Content: Card, AspectRatio, Progress, Badge.
+- Content: AspectRatio, Progress, Badge.
 - Inputs: Button, Input, Textarea, Switch, Label, ToggleGroup, Toggle.
 - Surfaces: Popover, DropdownMenu, Dialog, Command.
 - Form: RHF integration (FormField, FormControl, FormMessage, FormDescription, FormItem, FormLabel).
@@ -248,7 +248,7 @@ Sources reviewed at last full audit (2026-10-01): source tree, `README.md`, `doc
 - **`cn`** — Tailwind class merger. `apps/web/src/lib/utils.ts`
 - **`logger`** — browser console wrapper. `apps/web/src/lib/logger.ts`
 - **`orpc`** — typed `ContractRouterClient` + TanStack Query utils; the only way the web app calls the JSON API. `apps/web/src/orpc.ts`
-- **`@/i18n/navigation`** — `href`-based `Link`/`usePathname`/`useRouter` compat layer over TanStack Router, preserving the old component surface. `apps/web/src/i18n/navigation.ts`
+- **`@/i18n/navigation`** — `href`-based `Link`/`usePathname` compat layer over TanStack Router, preserving the old component surface. `apps/web/src/i18n/navigation.ts`
 
 ### 8.4 Recordings filesystem helpers
 - **`summarizeStreamRecordings` / `listStreamRecordingFiles` / screenshot path, URL and mtime helpers** — api-side fs helpers used by the recordings procedures, the media routes, and the card's snapshot age (§1.2.2). `apps/api/src/recordings-fs.ts`

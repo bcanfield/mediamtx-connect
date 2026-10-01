@@ -28,7 +28,7 @@ function initialLocale(): Locale {
   return detectLocale()
 }
 
-export const LocaleContext = createContext<{
+const LocaleContext = createContext<{
   locale: Locale
   setLocale: (locale: Locale) => void
 }>({ locale: defaultLocale, setLocale: () => {} })

@@ -7,9 +7,9 @@ export type PlaybackMode = 'auto' | 'low-lat' | 'compat'
 /** The transport a player ended up on — the honest answer, not the request. */
 export type PlaybackProtocol = 'webrtc' | 'hls'
 
-export const PLAYBACK_MODES: PlaybackMode[] = ['auto', 'low-lat', 'compat']
+const PLAYBACK_MODES: PlaybackMode[] = ['auto', 'low-lat', 'compat']
 export const PLAYBACK_MODE_KEY = 'playbackMode'
-export const DEFAULT_PLAYBACK_MODE: PlaybackMode = 'auto'
+const DEFAULT_PLAYBACK_MODE: PlaybackMode = 'auto'
 
 export function isPlaybackMode(value: unknown): value is PlaybackMode {
   return PLAYBACK_MODES.includes(value as PlaybackMode)
