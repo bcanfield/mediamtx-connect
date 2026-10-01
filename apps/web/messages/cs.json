@@ -170,6 +170,33 @@
       "showing": "Zobrazeno {from}–{to} z {total}",
       "previous": "Předchozí stránka",
       "next": "Další stránka"
+    },
+    "timeline": {
+      "previousDay": "Předchozí den",
+      "nextDay": "Následující den",
+      "trackAria": "24hodinová časová osa",
+      "spansAria": "Nahrané úseky",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Přehrát {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Tento den nejsou žádné nahrávky.",
+      "errorTitle": "Časovou osu nahrávek se nepodařilo načíst",
+      "unreachableTitle": "MediaMTX je nedostupný",
+      "unreachableDescription": "Časová osa nahrávek pochází z MediaMTX. Soubory níže se čtou z disku a dají se dál přehrávat."
+    },
+    "enablePlayback": {
+      "title": "Zapnout přehrávání nahrávek",
+      "playbackOff": "Server pro přehrávání v MediaMTX je vypnutý.",
+      "notFmp4": "Tento stream nahrává ve formátu {format} a server pro přehrávání čte jen fMP4.",
+      "changesIntro": "Connect změní tato nastavení:",
+      "changesAria": "Změny k provedení",
+      "olderNote": "Nahrávky pořízené před touto změnou zůstanou v seznamu souborů níže.",
+      "apply": "Použít změny",
+      "applying": "Provádí se…",
+      "refused": "MediaMTX změnu odmítl",
+      "override": "Tato cesta nastavuje <code>recordFormat</code> na {format} ve vlastní konfiguraci, která přepisuje výchozí hodnoty cest. Nastavte tam <code>fmp4</code>.",
+      "openPathConfig": "Otevřít konfiguraci nahrávání této cesty",
+      "pathDefaultsUnreadable": "Výchozí hodnoty cest se z MediaMTX nepodařilo načíst."
     }
   },
   "Sessions": {

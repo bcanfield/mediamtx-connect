@@ -170,6 +170,33 @@
       "showing": "{total} sonuçtan {from}–{to} gösteriliyor",
       "previous": "Önceki sayfa",
       "next": "Sonraki sayfa"
+    },
+    "timeline": {
+      "previousDay": "Önceki gün",
+      "nextDay": "Sonraki gün",
+      "trackAria": "24 saatlik zaman çizelgesi",
+      "spansAria": "Kaydedilen aralıklar",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} oynat",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Bu günde kayıt yok.",
+      "errorTitle": "Kayıt zaman çizelgesi okunamadı",
+      "unreachableTitle": "MediaMTX'e ulaşılamıyor",
+      "unreachableDescription": "Kayıt zaman çizelgesi MediaMTX'ten gelir. Aşağıdaki dosyalar diskten okunur ve oynatılmaya devam eder."
+    },
+    "enablePlayback": {
+      "title": "Kayıt oynatmayı aç",
+      "playbackOff": "MediaMTX'in oynatma sunucusu kapalı.",
+      "notFmp4": "Bu yayın {format} biçiminde kaydediyor ve oynatma sunucusu yalnızca fMP4 okur.",
+      "changesIntro": "Connect şu ayarları değiştirecek:",
+      "changesAria": "Yapılacak değişiklikler",
+      "olderNote": "Bu değişiklikten önceki kayıtlar aşağıdaki dosya listesinde kalır.",
+      "apply": "Değişiklikleri uygula",
+      "applying": "Uygulanıyor…",
+      "refused": "MediaMTX değişikliği reddetti",
+      "override": "Bu yol kendi yol yapılandırmasında <code>recordFormat</code> değerini {format} olarak ayarlıyor ve bu, yol varsayılanlarını geçersiz kılıyor. Orada <code>fmp4</code> olarak ayarlayın.",
+      "openPathConfig": "Bu yolun kayıt yapılandırmasını aç",
+      "pathDefaultsUnreadable": "Yol varsayılanları MediaMTX'ten okunamadı."
     }
   },
   "Sessions": {

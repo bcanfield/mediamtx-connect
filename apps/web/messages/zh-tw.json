@@ -170,6 +170,33 @@
       "showing": "顯示第 {from}–{to} 項，共 {total} 項",
       "previous": "上一頁",
       "next": "下一頁"
+    },
+    "timeline": {
+      "previousDay": "前一天",
+      "nextDay": "後一天",
+      "trackAria": "24 小時時間軸",
+      "spansAria": "已錄製的時段",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "播放 {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "這一天沒有錄影。",
+      "errorTitle": "無法讀取錄影時間軸",
+      "unreachableTitle": "無法連線至 MediaMTX",
+      "unreachableDescription": "錄影時間軸來自 MediaMTX。下方檔案從磁碟讀取，仍可播放。"
+    },
+    "enablePlayback": {
+      "title": "開啟錄影回放",
+      "playbackOff": "MediaMTX 的回放伺服器已關閉。",
+      "notFmp4": "此串流以 {format} 錄製，而回放伺服器只讀取 fMP4。",
+      "changesIntro": "Connect 將變更以下設定：",
+      "changesAria": "即將進行的變更",
+      "olderNote": "此變更之前的錄影仍保留在下方的檔案清單中。",
+      "apply": "套用變更",
+      "applying": "正在套用…",
+      "refused": "MediaMTX 拒絕了此變更",
+      "override": "此路徑在自身的路徑設定中將 <code>recordFormat</code> 設為 {format}，覆寫了路徑預設值。請在那裡將其改為 <code>fmp4</code>。",
+      "openPathConfig": "開啟此路徑的錄影設定",
+      "pathDefaultsUnreadable": "無法從 MediaMTX 讀取路徑預設值。"
     }
   },
   "Sessions": {

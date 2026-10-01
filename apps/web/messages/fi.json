@@ -170,6 +170,33 @@
       "showing": "Näytetään {from}–{to} / {total}",
       "previous": "Edellinen sivu",
       "next": "Seuraava sivu"
+    },
+    "timeline": {
+      "previousDay": "Edellinen päivä",
+      "nextDay": "Seuraava päivä",
+      "trackAria": "24 tunnin aikajana",
+      "spansAria": "Tallennetut jaksot",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Toista {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Tältä päivältä ei ole tallenteita.",
+      "errorTitle": "Tallenteiden aikajanaa ei voitu lukea",
+      "unreachableTitle": "MediaMTX ei vastaa",
+      "unreachableDescription": "Tallenteiden aikajana tulee MediaMTX:ltä. Alla olevat tiedostot luetaan levyltä, ja niitä voi yhä toistaa."
+    },
+    "enablePlayback": {
+      "title": "Ota tallenteiden toisto käyttöön",
+      "playbackOff": "MediaMTX:n toistopalvelin on pois päältä.",
+      "notFmp4": "Tämä stream tallentaa muodossa {format}, ja toistopalvelin lukee vain fMP4:ää.",
+      "changesIntro": "Connect muuttaa nämä asetukset:",
+      "changesAria": "Tehtävät muutokset",
+      "olderNote": "Ennen tätä muutosta tehdyt tallenteet jäävät alla olevaan tiedostoluetteloon.",
+      "apply": "Ota muutokset käyttöön",
+      "applying": "Otetaan käyttöön…",
+      "refused": "MediaMTX hylkäsi muutoksen",
+      "override": "Tämä polku asettaa <code>recordFormat</code>:n arvoksi {format} omassa polkukonfiguraatiossaan, joka ohittaa polkujen oletukset. Aseta se siellä arvoon <code>fmp4</code>.",
+      "openPathConfig": "Avaa tämän polun tallennusasetukset",
+      "pathDefaultsUnreadable": "Polkujen oletuksia ei voitu lukea MediaMTX:ltä."
     }
   },
   "Sessions": {

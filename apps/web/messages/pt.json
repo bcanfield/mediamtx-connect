@@ -170,6 +170,33 @@
       "showing": "A mostrar {from}–{to} de {total}",
       "previous": "Página anterior",
       "next": "Página seguinte"
+    },
+    "timeline": {
+      "previousDay": "Dia anterior",
+      "nextDay": "Dia seguinte",
+      "trackAria": "Linha temporal de 24 horas",
+      "spansAria": "Intervalos gravados",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Reproduzir {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Não há gravações neste dia.",
+      "errorTitle": "Não foi possível ler a linha temporal das gravações",
+      "unreachableTitle": "O MediaMTX está inacessível",
+      "unreachableDescription": "A linha temporal das gravações vem do MediaMTX. Os ficheiros abaixo são lidos do disco e continuam a reproduzir."
+    },
+    "enablePlayback": {
+      "title": "Ativar a reprodução de gravações",
+      "playbackOff": "O servidor de reprodução do MediaMTX está desligado.",
+      "notFmp4": "Este stream grava em {format} e o servidor de reprodução só lê fMP4.",
+      "changesIntro": "O Connect vai alterar estas definições:",
+      "changesAria": "Alterações a fazer",
+      "olderNote": "As gravações anteriores a esta alteração continuam na lista de ficheiros abaixo.",
+      "apply": "Aplicar alterações",
+      "applying": "A aplicar…",
+      "refused": "O MediaMTX recusou a alteração",
+      "override": "Este caminho define <code>recordFormat</code> como {format} na sua própria configuração, que se sobrepõe às predefinições dos caminhos. Altere-o para <code>fmp4</code> aí.",
+      "openPathConfig": "Abrir a configuração de gravação deste caminho",
+      "pathDefaultsUnreadable": "Não foi possível ler as predefinições dos caminhos do MediaMTX."
     }
   },
   "Sessions": {

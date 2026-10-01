@@ -170,6 +170,33 @@
       "showing": "Visar {from}–{to} av {total}",
       "previous": "Föregående sida",
       "next": "Nästa sida"
+    },
+    "timeline": {
+      "previousDay": "Föregående dag",
+      "nextDay": "Nästa dag",
+      "trackAria": "Tidslinje för 24 timmar",
+      "spansAria": "Inspelade avsnitt",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Spela {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Inga inspelningar den här dagen.",
+      "errorTitle": "Det gick inte att läsa inspelningstidslinjen",
+      "unreachableTitle": "MediaMTX går inte att nå",
+      "unreachableDescription": "Inspelningstidslinjen kommer från MediaMTX. Filerna nedan läses från disk och går fortfarande att spela."
+    },
+    "enablePlayback": {
+      "title": "Slå på uppspelning av inspelningar",
+      "playbackOff": "MediaMTX:s uppspelningsserver är avstängd.",
+      "notFmp4": "Den här streamen spelar in i {format}, och uppspelningsservern läser bara fMP4.",
+      "changesIntro": "Connect ändrar de här inställningarna:",
+      "changesAria": "Ändringar att göra",
+      "olderNote": "Inspelningar från före den här ändringen finns kvar i fillistan nedan.",
+      "apply": "Verkställ ändringar",
+      "applying": "Verkställer…",
+      "refused": "MediaMTX avvisade ändringen",
+      "override": "Den här sökvägen sätter <code>recordFormat</code> till {format} i sin egen sökvägskonfiguration, som åsidosätter standardvärdena. Ställ in <code>fmp4</code> där.",
+      "openPathConfig": "Öppna inspelningskonfigurationen för den här sökvägen",
+      "pathDefaultsUnreadable": "Det gick inte att läsa sökvägarnas standardvärden från MediaMTX."
     }
   },
   "Sessions": {

@@ -67,6 +67,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 
 ### Recordings
 
+- A day timeline per stream from MediaMTX's playback server: recorded spans and the gaps between them, each one playable. If playback is off, Connect lists the exact config changes it needs and applies them in one click.
 - MP4 or MPEG-TS segments per stream, grouped by day, with auto-generated thumbnails.
 - An inline player that expands in place, seekable over HTTP range requests.
 - Downloads that stream, with live progress and cancel.
@@ -123,7 +124,7 @@ Browser ──HLS / WebRTC (WHEP)───────────────�
 recordings/ + screenshots/  ◀────────────────────  MP4 segments
 ```
 
-Playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thumbnails it reads off disk.
+Live playback is browser-to-MediaMTX. Connect moves JSON, plus the recordings and thumbnails: off disk, or recorded spans proxied from MediaMTX's playback server.
 
 ## Docs
 

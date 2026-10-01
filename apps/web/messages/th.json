@@ -170,6 +170,33 @@
       "showing": "แสดง {from}–{to} จาก {total}",
       "previous": "หน้าก่อนหน้า",
       "next": "หน้าถัดไป"
+    },
+    "timeline": {
+      "previousDay": "วันก่อนหน้า",
+      "nextDay": "วันถัดไป",
+      "trackAria": "ไทม์ไลน์ 24 ชั่วโมง",
+      "spansAria": "ช่วงที่บันทึกไว้",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "เล่น {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "ไม่มีการบันทึกในวันนี้",
+      "errorTitle": "ไม่สามารถอ่านไทม์ไลน์การบันทึกได้",
+      "unreachableTitle": "ไม่สามารถเชื่อมต่อ MediaMTX ได้",
+      "unreachableDescription": "ไทม์ไลน์การบันทึกมาจาก MediaMTX ไฟล์ด้านล่างอ่านจากดิสก์และยังเล่นได้"
+    },
+    "enablePlayback": {
+      "title": "เปิดการเล่นไฟล์บันทึก",
+      "playbackOff": "เซิร์ฟเวอร์เล่นซ้ำของ MediaMTX ปิดอยู่",
+      "notFmp4": "สตรีมนี้บันทึกเป็น {format} แต่เซิร์ฟเวอร์เล่นซ้ำอ่านได้เฉพาะ fMP4",
+      "changesIntro": "Connect จะเปลี่ยนการตั้งค่าเหล่านี้:",
+      "changesAria": "การเปลี่ยนแปลงที่จะทำ",
+      "olderNote": "ไฟล์บันทึกก่อนการเปลี่ยนแปลงนี้ยังอยู่ในรายการไฟล์ด้านล่าง",
+      "apply": "ใช้การเปลี่ยนแปลง",
+      "applying": "กำลังใช้…",
+      "refused": "MediaMTX ปฏิเสธการเปลี่ยนแปลง",
+      "override": "พาธนี้ตั้งค่า <code>recordFormat</code> เป็น {format} ในการตั้งค่าพาธของตัวเอง ซึ่งแทนที่ค่าเริ่มต้นของพาธ ให้ตั้งเป็น <code>fmp4</code> ที่นั่น",
+      "openPathConfig": "เปิดการตั้งค่าการบันทึกของพาธนี้",
+      "pathDefaultsUnreadable": "ไม่สามารถอ่านค่าเริ่มต้นของพาธจาก MediaMTX ได้"
     }
   },
   "Sessions": {

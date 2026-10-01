@@ -170,6 +170,33 @@
       "showing": "Показано {from}–{to} из {total}",
       "previous": "Предыдущая страница",
       "next": "Следующая страница"
+    },
+    "timeline": {
+      "previousDay": "Предыдущий день",
+      "nextDay": "Следующий день",
+      "trackAria": "Шкала времени на 24 часа",
+      "spansAria": "Записанные интервалы",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Воспроизвести {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "В этот день записей нет.",
+      "errorTitle": "Не удалось прочитать шкалу записей",
+      "unreachableTitle": "MediaMTX недоступен",
+      "unreachableDescription": "Шкала записей берётся из MediaMTX. Файлы ниже читаются с диска и по-прежнему воспроизводятся."
+    },
+    "enablePlayback": {
+      "title": "Включить воспроизведение записей",
+      "playbackOff": "Сервер воспроизведения MediaMTX выключен.",
+      "notFmp4": "Этот поток записывается в {format}, а сервер воспроизведения читает только fMP4.",
+      "changesIntro": "Connect изменит эти настройки:",
+      "changesAria": "Изменения",
+      "olderNote": "Записи, сделанные до этого изменения, остаются в списке файлов ниже.",
+      "apply": "Применить изменения",
+      "applying": "Применение…",
+      "refused": "MediaMTX отклонил изменение",
+      "override": "Этот путь задаёт <code>recordFormat</code> = {format} в собственной конфигурации пути, которая переопределяет значения пути по умолчанию. Установите там <code>fmp4</code>.",
+      "openPathConfig": "Открыть настройки записи этого пути",
+      "pathDefaultsUnreadable": "Не удалось прочитать значения пути по умолчанию из MediaMTX."
     }
   },
   "Sessions": {

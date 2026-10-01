@@ -170,6 +170,33 @@
       "showing": "Ipinapakita ang {from}–{to} ng {total}",
       "previous": "Nakaraang pahina",
       "next": "Susunod na pahina"
+    },
+    "timeline": {
+      "previousDay": "Nakaraang araw",
+      "nextDay": "Susunod na araw",
+      "trackAria": "24-oras na timeline",
+      "spansAria": "Mga naitalang bahagi",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "I-play ang {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Walang recording sa araw na ito.",
+      "errorTitle": "Hindi mabasa ang timeline ng recording",
+      "unreachableTitle": "Hindi maabot ang MediaMTX",
+      "unreachableDescription": "Galing sa MediaMTX ang timeline ng recording. Binabasa mula sa disk ang mga file sa ibaba at puwede pa ring i-play."
+    },
+    "enablePlayback": {
+      "title": "I-on ang playback ng recording",
+      "playbackOff": "Naka-off ang playback server ng MediaMTX.",
+      "notFmp4": "Nagre-record ang stream na ito sa {format}, at fMP4 lang ang binabasa ng playback server.",
+      "changesIntro": "Babaguhin ng Connect ang mga setting na ito:",
+      "changesAria": "Mga babaguhin",
+      "olderNote": "Mananatili sa listahan ng file sa ibaba ang mga recording bago ang pagbabagong ito.",
+      "apply": "Ilapat ang mga pagbabago",
+      "applying": "Inilalapat…",
+      "refused": "Tinanggihan ng MediaMTX ang pagbabago",
+      "override": "Itinatakda ng path na ito ang <code>recordFormat</code> sa {format} sa sarili nitong path config, na nangingibabaw sa path defaults. Itakda ito sa <code>fmp4</code> doon.",
+      "openPathConfig": "Buksan ang recording config ng path na ito",
+      "pathDefaultsUnreadable": "Hindi mabasa ang path defaults mula sa MediaMTX."
     }
   },
   "Sessions": {

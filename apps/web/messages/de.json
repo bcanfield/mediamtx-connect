@@ -170,6 +170,33 @@
       "showing": "Zeige {from}–{to} von {total}",
       "previous": "Vorherige Seite",
       "next": "Nächste Seite"
+    },
+    "timeline": {
+      "previousDay": "Vorheriger Tag",
+      "nextDay": "Nächster Tag",
+      "trackAria": "24-Stunden-Zeitleiste",
+      "spansAria": "Aufgezeichnete Abschnitte",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "{span} abspielen",
+      "durationParts": "{hours} {minutes}",
+      "empty": "An diesem Tag gibt es keine Aufnahmen.",
+      "errorTitle": "Aufnahme-Zeitleiste konnte nicht gelesen werden",
+      "unreachableTitle": "MediaMTX ist nicht erreichbar",
+      "unreachableDescription": "Die Aufnahme-Zeitleiste kommt von MediaMTX. Die Dateien unten werden von der Festplatte gelesen und lassen sich weiter abspielen."
+    },
+    "enablePlayback": {
+      "title": "Aufnahme-Wiedergabe einschalten",
+      "playbackOff": "Der Wiedergabeserver von MediaMTX ist aus.",
+      "notFmp4": "Dieser Stream nimmt in {format} auf, der Wiedergabeserver liest nur fMP4.",
+      "changesIntro": "Connect ändert diese Einstellungen:",
+      "changesAria": "Anstehende Änderungen",
+      "olderNote": "Aufnahmen von vor dieser Änderung bleiben in der Dateiliste unten.",
+      "apply": "Änderungen anwenden",
+      "applying": "Wird angewendet…",
+      "refused": "MediaMTX hat die Änderung abgelehnt",
+      "override": "Dieser Pfad setzt <code>recordFormat</code> in seiner eigenen Pfadkonfiguration auf {format}, was die Pfad-Standardwerte überschreibt. Stelle es dort auf <code>fmp4</code>.",
+      "openPathConfig": "Aufnahmekonfiguration dieses Pfads öffnen",
+      "pathDefaultsUnreadable": "Pfad-Standardwerte konnten nicht von MediaMTX gelesen werden."
     }
   },
   "Sessions": {

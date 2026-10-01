@@ -8,7 +8,7 @@ import { implement, ORPCError } from '@orpc/server'
 import { getAppConfig, updateAppConfig } from './config-store'
 import { captureSnapshot } from './jobs'
 import { logger } from './logger'
-import { mediaMtxApi, MediaMtxError } from './mediamtx'
+import { mediaMtxApi, MediaMtxError, mediaMtxPlayback } from './mediamtx'
 import {
   latestScreenshotMtimeFor,
   latestScreenshotUrlFor,
@@ -280,6 +280,50 @@ export const router = os.router({
       })
 
       return { recordings, totalCount: files.length }
+    }),
+
+    // The playback server answers only with `playback` on and a path recording
+    // fMP4, so both are read first and a missing one is reported, not queried.
+    // The format is the path's effective one: its runtime path's entry, its own
+    // entry, or path defaults when it has neither (ADR 0002).
+    timeline: os.recordings.timeline.handler(async ({ input }) => {
+      const config = await getAppConfig()
+      const api = mediaMtxApi(config)
+
+      let global: Awaited<ReturnType<typeof api.configGlobalGet>>
+      let recordFormat: string | null
+      try {
+        global = await api.configGlobalGet()
+        const runtime = await api.pathsGet(input.streamName)
+        const conf = await api.configPathGet(runtime?.confName ?? input.streamName)
+          ?? await api.configPathDefaultsGet()
+        recordFormat = conf.recordFormat ?? null
+      }
+      catch (error) {
+        logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
+        return null
+      }
+
+      const playbackEnabled = global.playback ?? false
+      if (!playbackEnabled || recordFormat !== 'fmp4')
+        return { status: 'unavailable' as const, playbackEnabled, recordFormat }
+
+      try {
+        const spans = await mediaMtxPlayback(config, global.playbackAddress)
+          .list(input.streamName, input.start, input.end)
+        return {
+          status: 'available' as const,
+          spans: spans.map(span => ({ start: new Date(span.start), duration: span.duration })),
+        }
+      }
+      catch (error) {
+        logger.error({ err: error }, 'Failed to list recordings from the playback server')
+        throw new ORPCError('BAD_GATEWAY', {
+          message: error instanceof MediaMtxError && error.reason
+            ? error.reason
+            : 'Could not reach MediaMTX\'s playback server',
+        })
+      }
     }),
   },
 

@@ -20,10 +20,15 @@ vi.mock('./logger', () => ({
 }))
 // The real MediaMtxError, so the add handler's `instanceof` narrowing is the
 // one that ships. `mediamtx.ts` imports nothing but types, so loading it here
-// costs nothing.
+// costs nothing. The playback client is real too: the timeline tests stub
+// `fetch` for the playback server, so its URL and 404 handling are the shipped ones.
 vi.mock('./mediamtx', async (importActual) => {
   const actual = await importActual<typeof import('./mediamtx')>()
-  return { mediaMtxApi: vi.fn(), MediaMtxError: actual.MediaMtxError }
+  return {
+    mediaMtxApi: vi.fn(),
+    mediaMtxPlayback: actual.mediaMtxPlayback,
+    MediaMtxError: actual.MediaMtxError,
+  }
 })
 vi.mock('./jobs', () => ({ captureSnapshot: vi.fn() }))
 // The real module, with the snapshot read swappable: one test needs it to fail
@@ -50,6 +55,7 @@ const api = {
   configPathGet: vi.fn(),
   configPathAdd: vi.fn(),
   configPathPatch: vi.fn(),
+  configPathDefaultsGet: vi.fn(),
   configGlobalPatch: vi.fn(),
   configPathDefaultsPatch: vi.fn(),
   sessionsList: vi.fn(),
@@ -467,6 +473,125 @@ describe.each([
       code: 'INTERNAL_SERVER_ERROR',
       message: fallback,
     })
+  })
+})
+
+describe('recordings.timeline', () => {
+  // The playback server is reached over HTTP, not through the mocked API client.
+  const fetchMock = vi.fn<typeof fetch>()
+
+  const DAY = {
+    streamName: 'stream1',
+    start: new Date('2026-03-14T00:00:00Z'),
+    end: new Date('2026-03-15T00:00:00Z'),
+  }
+
+  beforeEach(() => {
+    vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
+    vi.mocked(mediaMtxApi).mockReturnValue(api as unknown as ReturnType<typeof mediaMtxApi>)
+    vi.stubGlobal('fetch', fetchMock)
+    api.configGlobalGet.mockResolvedValue({ playback: true, playbackAddress: ':9996' })
+    api.pathsGet.mockResolvedValue(wildcardPaths('stream1')[0])
+    api.configPathGet.mockResolvedValue({ recordFormat: 'fmp4' })
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
+    vi.unstubAllGlobals()
+  })
+
+  it('is unavailable while the playback server is off', async () => {
+    api.configGlobalGet.mockResolvedValue({ playback: false })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: false, recordFormat: 'fmp4' })
+  })
+
+  // The playback server refuses MPEG-TS outright, so asking it is pointless.
+  it('is unavailable when the path records MPEG-TS, without asking the playback server', async () => {
+    api.configPathGet.mockResolvedValue({ recordFormat: 'mpegts' })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  // A wildcard-backed path has no entry under its own name (ADR 0002).
+  it('reads the format off the entry the runtime path names as its confName', async () => {
+    api.configPathGet.mockImplementation(async (name: string) =>
+      name === 'all_others' ? { recordFormat: 'mpegts' } : null,
+    )
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(api.configPathGet).toHaveBeenCalledWith('all_others')
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+  })
+
+  it('reads the format off path defaults when the path has no runtime path or entry', async () => {
+    api.pathsGet.mockResolvedValue(null)
+    api.configPathGet.mockResolvedValue(null)
+    api.configPathDefaultsGet.mockResolvedValue({ recordFormat: 'mpegts' })
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'unavailable', playbackEnabled: true, recordFormat: 'mpegts' })
+  })
+
+  // `url` names the api's view of MediaMTX (`mediamtx:9996`), useless to a
+  // browser; the web builds its own from start and duration.
+  it('maps the playback server\'s spans, dropping their url', async () => {
+    fetchMock.mockResolvedValue(Response.json([
+      { start: '2026-03-14T10:00:00Z', duration: 3600, url: 'http://mediamtx:9996/get?path=stream1' },
+      { start: '2026-03-14T14:30:00Z', duration: 90.5, url: 'http://mediamtx:9996/get?path=stream1' },
+    ]))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({
+      status: 'available',
+      spans: [
+        { start: new Date('2026-03-14T10:00:00Z'), duration: 3600 },
+        { start: new Date('2026-03-14T14:30:00Z'), duration: 90.5 },
+      ],
+    })
+  })
+
+  // Same host as the API, on the port `playbackAddress` names.
+  it('asks the playback server for the path between the two instants', async () => {
+    api.configGlobalGet.mockResolvedValue({ playback: true, playbackAddress: ':19996' })
+    fetchMock.mockResolvedValue(Response.json([]))
+
+    await call(router.recordings.timeline, DAY)
+
+    expect(fetchMock.mock.lastCall?.[0]).toBe(
+      'http://127.0.0.1:19996/list?path=stream1&start=2026-03-14T00%3A00%3A00.000Z&end=2026-03-15T00%3A00%3A00.000Z',
+    )
+  })
+
+  // MediaMTX answers 404 for a range with no segments in it.
+  it('is available with no spans when the playback server finds none', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'no recordings found' }, { status: 404 }))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toEqual({ status: 'available', spans: [] })
+  })
+
+  it('passes the playback server\'s own reason through when it refuses', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'authentication failed' }, { status: 401 }))
+
+    await expect(call(router.recordings.timeline, DAY)).rejects.toThrow('authentication failed')
+  })
+
+  it('returns null when the MediaMTX API is unreachable', async () => {
+    api.configGlobalGet.mockRejectedValue(new Error('fetch failed'))
+
+    const result = await call(router.recordings.timeline, DAY)
+
+    expect(result).toBeNull()
   })
 })
 

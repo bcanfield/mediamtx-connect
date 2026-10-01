@@ -197,3 +197,54 @@ export function mediaMtxApi(config: Pick<AppConfig, 'mediaMtxUrl' | 'mediaMtxApi
       request<void>(`${SESSION_ROUTES[protocol]}/kick/${encodeURIComponent(id)}`, { method: 'POST' }),
   }
 }
+
+// One continuous run of recording segments, as the playback server's /list
+// serves it. `url` is built from the Host header of *our* request, so it names
+// a host only the api can reach.
+export interface MediaMtxPlaybackSpan {
+  start: string
+  duration: number
+  url?: string
+}
+
+// MediaMTX listen addresses are `host:port` with the host usually empty
+// (`:9996`). The api reaches MediaMTX on `mediaMtxUrl`, so only the port is kept.
+function portOf(address: string | undefined, fallback: number): number {
+  const port = Number.parseInt(address?.split(':').pop() ?? '', 10)
+  return Number.isNaN(port) ? fallback : port
+}
+
+// MediaMTX's playback server: a separate listener from the v3 API, indexing a
+// path's recording segments into spans and serving any span as one fMP4. Its
+// address comes from global config, so the caller reads that first.
+export function mediaMtxPlayback(config: Pick<AppConfig, 'mediaMtxUrl'>, playbackAddress: string | undefined) {
+  const base = `${config.mediaMtxUrl}:${portOf(playbackAddress, 9996)}`
+
+  return {
+    // 404 is the playback server's answer for a range with no segments in it.
+    list: async (path: string, start: Date, end: Date): Promise<MediaMtxPlaybackSpan[]> => {
+      const query = new URLSearchParams({ path, start: start.toISOString(), end: end.toISOString() })
+      const res = await fetch(`${base}/list?${query}`)
+      if (res.status === 404)
+        return []
+      if (!res.ok)
+        throw new MediaMtxError(res.status, await errorReason(res), 'GET /list')
+      return await res.json() as MediaMtxPlaybackSpan[]
+    },
+
+    // The OK response itself, so the caller can stream its body: a span can be
+    // hours of video. `start` is passed through as the RFC 3339 string it came as.
+    get: async (params: { path: string, start: string, duration: number, format: 'fmp4' | 'mp4' }): Promise<Response> => {
+      const query = new URLSearchParams({
+        path: params.path,
+        start: params.start,
+        duration: String(params.duration),
+        format: params.format,
+      })
+      const res = await fetch(`${base}/get?${query}`)
+      if (!res.ok)
+        throw new MediaMtxError(res.status, await errorReason(res), 'GET /get')
+      return res
+    },
+  }
+}

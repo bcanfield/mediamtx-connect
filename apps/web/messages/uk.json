@@ -170,6 +170,33 @@
       "showing": "Показано {from}–{to} з {total}",
       "previous": "Попередня сторінка",
       "next": "Наступна сторінка"
+    },
+    "timeline": {
+      "previousDay": "Попередній день",
+      "nextDay": "Наступний день",
+      "trackAria": "Шкала часу на 24 години",
+      "spansAria": "Записані проміжки",
+      "span": "{start} – {end} · {duration}",
+      "playSpanAria": "Відтворити {span}",
+      "durationParts": "{hours} {minutes}",
+      "empty": "Цього дня записів немає.",
+      "errorTitle": "Не вдалося прочитати шкалу записів",
+      "unreachableTitle": "MediaMTX недоступний",
+      "unreachableDescription": "Шкала записів надходить із MediaMTX. Файли нижче читаються з диска й надалі відтворюються."
+    },
+    "enablePlayback": {
+      "title": "Увімкнути відтворення записів",
+      "playbackOff": "Сервер відтворення MediaMTX вимкнено.",
+      "notFmp4": "Цей потік записується у {format}, а сервер відтворення читає лише fMP4.",
+      "changesIntro": "Connect змінить ці налаштування:",
+      "changesAria": "Зміни",
+      "olderNote": "Записи, зроблені до цієї зміни, залишаться у списку файлів нижче.",
+      "apply": "Застосувати зміни",
+      "applying": "Застосування…",
+      "refused": "MediaMTX відхилив зміну",
+      "override": "Цей шлях задає <code>recordFormat</code> = {format} у власній конфігурації шляху, яка перевизначає типові значення шляхів. Установіть там <code>fmp4</code>.",
+      "openPathConfig": "Відкрити налаштування запису цього шляху",
+      "pathDefaultsUnreadable": "Не вдалося прочитати типові значення шляхів із MediaMTX."
     }
   },
   "Sessions": {

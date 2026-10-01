@@ -14,9 +14,6 @@ const API = 'http://localhost:9997/v3'
 // Covers v1.21.1, so Renovate's bump past CI's 1.20.0 stays green.
 const DELIBERATELY_UNMODELED = {
   global: [
-    // #344
-    'playback',
-    'playbackAddress',
     // A later auth ticket. authInternalUsers needs its own editor.
     'authInternalUsers',
     'authHTTPExclude',
