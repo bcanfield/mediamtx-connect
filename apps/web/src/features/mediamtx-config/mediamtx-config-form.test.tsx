@@ -149,3 +149,24 @@ describe('allow-origin lists', () => {
     expect(onSave.mock.calls[0]![1]).toEqual({ [name]: ['https://a.lan', 'https://b.lan'] })
   })
 })
+
+// A destination's stream key belongs to one account, so `forward` is edited per
+// path and never from path defaults, where it would push every stream to it.
+describe('forwarding scope', () => {
+  it('is a section of a path\'s own config', async () => {
+    await renderWithProviders(
+      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Forwarding' })).toBeInTheDocument()
+  })
+
+  it('is not a section of path defaults', async () => {
+    await renderWithProviders(
+      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Recording' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Forwarding' })).not.toBeInTheDocument()
+  })
+})

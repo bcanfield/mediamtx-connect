@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Εγγραφή",
         "pathHooks": "Hooks διαδρομής",
-        "source": "Πηγή"
+        "source": "Πηγή",
+        "forward": "Προώθηση"
       },
       "sectionDescriptions": {
         "logging": "Έξοδος καταγραφής, χρονικά όρια και καθολικά όρια.",
@@ -384,7 +385,8 @@
         "srt": "Δημοσίευση και ανάγνωση ροών μέσω SRT.",
         "recording": "Εγγραφή ροών στον δίσκο.",
         "pathHooks": "Εντολές που εκτελεί το MediaMTX στα συμβάντα κύκλου ζωής της ίδιας της διαδρομής.",
-        "source": "Από πού προέρχεται η ροή αυτής της διαδρομής."
+        "source": "Από πού προέρχεται η ροή αυτής της διαδρομής.",
+        "forward": "Αναδημοσιεύστε τη ροή αυτής της διαδρομής σε άλλους διακομιστές, όπως YouTube ή Twitch."
       },
       "sectionWarnings": {
         "auth": "Η αλλαγή του τρόπου πιστοποίησης στο MediaMTX ισχύει για όλους τους πελάτες, και για το Connect — μια λανθασμένη ρύθμιση μπορεί να αποκόψει το Connect από το MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Όνομα χρήστη διακομιστή ICE {index}",
         "passwordAria": "Κωδικός πρόσβασης διακομιστή ICE {index}",
         "removeAria": "Αφαίρεση διακομιστή ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Προσθήκη προορισμού",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Προορισμός {index}",
+        "showAria": "Εμφάνιση προορισμού {index}",
+        "hideAria": "Απόκρυψη προορισμού {index}",
+        "removeAria": "Αφαίρεση προορισμού {index}",
+        "plaintextNotice": "Το MediaMTX αποθηκεύει αυτές τις διευθύνσεις URL, μαζί με τα κλειδιά ροής, ως απλό κείμενο στη διαμόρφωσή του και τις επιστρέφει χωρίς απόκρυψη από το API του."
       },
       "errors": {
         "invalidSource": "Το MediaMTX δεν θα το δεχτεί αυτό. Χρησιμοποίησε publisher, redirect, rpiCamera ή ένα URL που ξεκινά με rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// ή wheps://."

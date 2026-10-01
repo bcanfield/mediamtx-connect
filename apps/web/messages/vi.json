@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Ghi hình",
         "pathHooks": "Hooks đường dẫn",
-        "source": "Nguồn"
+        "source": "Nguồn",
+        "forward": "Chuyển tiếp"
       },
       "sectionDescriptions": {
         "logging": "Đầu ra nhật ký, thời gian chờ và giới hạn toàn cục.",
@@ -384,7 +385,8 @@
         "srt": "Đẩy và xem luồng qua SRT.",
         "recording": "Ghi luồng xuống đĩa.",
         "pathHooks": "Các lệnh MediaMTX chạy khi có sự kiện vòng đời của chính đường dẫn.",
-        "source": "Luồng của path này đến từ đâu."
+        "source": "Luồng của path này đến từ đâu.",
+        "forward": "Phát lại luồng của đường dẫn này tới các máy chủ khác, như YouTube hoặc Twitch."
       },
       "sectionWarnings": {
         "auth": "Thay đổi cách MediaMTX xác thực áp dụng cho mọi máy khách, kể cả Connect — một thiết lập sai có thể cắt Connect khỏi MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Tên người dùng của máy chủ ICE {index}",
         "passwordAria": "Mật khẩu của máy chủ ICE {index}",
         "removeAria": "Xóa máy chủ ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Thêm đích",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Đích {index}",
+        "showAria": "Hiện đích {index}",
+        "hideAria": "Ẩn đích {index}",
+        "removeAria": "Xóa đích {index}",
+        "plaintextNotice": "MediaMTX lưu các URL này, kể cả khóa luồng, dưới dạng văn bản thuần trong cấu hình và trả về nguyên vẹn từ API của nó."
       },
       "errors": {
         "invalidSource": "MediaMTX sẽ không chấp nhận giá trị này. Hãy dùng publisher, redirect, rpiCamera hoặc một URL bắt đầu bằng rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// hoặc wheps://."

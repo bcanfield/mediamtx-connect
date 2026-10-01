@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Запис",
         "pathHooks": "Хуки шляху",
-        "source": "Джерело"
+        "source": "Джерело",
+        "forward": "Пересилання"
       },
       "sectionDescriptions": {
         "logging": "Вивід журналів, тайм-аути та глобальні обмеження.",
@@ -384,7 +385,8 @@
         "srt": "Публікація та читання трансляцій через SRT.",
         "recording": "Записувати потоки на диск.",
         "pathHooks": "Команди, які MediaMTX виконує під час власних подій життєвого циклу шляху.",
-        "source": "Звідки надходить потік цього шляху."
+        "source": "Звідки надходить потік цього шляху.",
+        "forward": "Повторно публікувати потік цього шляху на інші сервери, як-от YouTube або Twitch."
       },
       "sectionWarnings": {
         "auth": "Зміна способу автентифікації в MediaMTX стосується всіх клієнтів, зокрема Connect — неправильне налаштування може відрізати Connect від MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Ім'я користувача сервера ICE {index}",
         "passwordAria": "Пароль сервера ICE {index}",
         "removeAria": "Видалити сервер ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Додати призначення",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Призначення {index}",
+        "showAria": "Показати призначення {index}",
+        "hideAria": "Сховати призначення {index}",
+        "removeAria": "Вилучити призначення {index}",
+        "plaintextNotice": "MediaMTX зберігає ці URL, разом із ключами потоку, відкритим текстом у своїй конфігурації та повертає їх без маскування через свій API."
       },
       "errors": {
         "invalidSource": "MediaMTX не прийме це значення. Використовуй publisher, redirect, rpiCamera або URL, що починається з rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// чи wheps://."

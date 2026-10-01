@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Felvétel",
         "pathHooks": "Útvonal hookok",
-        "source": "Forrás"
+        "source": "Forrás",
+        "forward": "Továbbítás"
       },
       "sectionDescriptions": {
         "logging": "Naplókimenet, időkorlátok és globális korlátok.",
@@ -384,7 +385,8 @@
         "srt": "Folyamok közzététele és fogadása SRT-n keresztül.",
         "recording": "Streamek rögzítése lemezre.",
         "pathHooks": "Parancsok, amelyeket a MediaMTX az útvonal saját életciklus-eseményeinél futtat.",
-        "source": "Honnan érkezik ennek az útvonalnak a streamje."
+        "source": "Honnan érkezik ennek az útvonalnak a streamje.",
+        "forward": "Az útvonal streamjének újraközzététele más szervereken, például a YouTube-on vagy a Twitchen."
       },
       "sectionWarnings": {
         "auth": "A MediaMTX hitelesítési módjának módosítása minden kliensre vonatkozik, a Connectre is — egy hibás beállítás levághatja a Connectet a MediaMTX-ről.",
@@ -412,6 +414,15 @@
         "usernameAria": "{index}. ICE szerver felhasználóneve",
         "passwordAria": "{index}. ICE szerver jelszava",
         "removeAria": "{index}. ICE szerver eltávolítása"
+      },
+      "forwardDests": {
+        "add": "Cél hozzáadása",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "{index}. cél",
+        "showAria": "{index}. cél megjelenítése",
+        "hideAria": "{index}. cél elrejtése",
+        "removeAria": "{index}. cél eltávolítása",
+        "plaintextNotice": "A MediaMTX ezeket az URL-eket a streamkulcsokkal együtt egyszerű szövegként tárolja a konfigurációjában, és kitakarás nélkül adja vissza az API-jából."
       },
       "errors": {
         "invalidSource": "A MediaMTX ezt nem fogadja el. Használd a publisher, redirect vagy rpiCamera értéket, illetve egy rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// vagy wheps:// kezdetű URL-t."

@@ -79,6 +79,7 @@ Every path MediaMTX knows, in a 2–4 column grid.
 - **A paths catalog** with live and regex badges, a guided "add an RTSP camera" form, and revert or delete for any path's own entry (with a warning if someone is connected).
 - **Live health on each path's page:** tracks, readers, bytes moved, frames in error and uptime, refreshed every 5 seconds. A path with nothing publishing reads idle, not broken.
 - **Every `runOn*` hook**, with a warning where saving restarts the path.
+- **Forwarding:** push a path to YouTube, Twitch or another server through MediaMTX's native `forward` list, with stream keys masked and no path restart.
 - **Sparse writes.** Only the keys you changed get sent.
 
 ### Ops

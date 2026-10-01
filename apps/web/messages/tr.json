@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Kayıt",
         "pathHooks": "Yol Hook’ları",
-        "source": "Kaynak"
+        "source": "Kaynak",
+        "forward": "Yönlendirme"
       },
       "sectionDescriptions": {
         "logging": "Günlük çıktısı, zaman aşımları ve genel sınırlar.",
@@ -384,7 +385,8 @@
         "srt": "SRT üzerinden akış yayınlayın ve okuyun.",
         "recording": "Akışları diske kaydeder.",
         "pathHooks": "MediaMTX’in yolun kendi yaşam döngüsü olaylarında çalıştırdığı komutlar.",
-        "source": "Bu yolun akışının nereden geldiği."
+        "source": "Bu yolun akışının nereden geldiği.",
+        "forward": "Bu yolun akışını YouTube veya Twitch gibi başka sunuculara yeniden yayınlayın."
       },
       "sectionWarnings": {
         "auth": "MediaMTX'in kimlik doğrulama biçimini değiştirmek Connect dahil tüm istemcileri etkiler — yanlış bir ayar Connect'in MediaMTX ile bağlantısını kesebilir.",
@@ -412,6 +414,15 @@
         "usernameAria": "ICE sunucusu {index} kullanıcı adı",
         "passwordAria": "ICE sunucusu {index} parolası",
         "removeAria": "ICE sunucusu {index} kaldır"
+      },
+      "forwardDests": {
+        "add": "Hedef ekle",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Hedef {index}",
+        "showAria": "Hedef {index} göster",
+        "hideAria": "Hedef {index} gizle",
+        "removeAria": "Hedef {index} kaldır",
+        "plaintextNotice": "MediaMTX bu URL'leri, akış anahtarları dahil, yapılandırmasında düz metin olarak saklar ve API'sinden maskelemeden döndürür."
       },
       "errors": {
         "invalidSource": "MediaMTX bunu kabul etmez. publisher, redirect, rpiCamera ya da rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// veya wheps:// ile başlayan bir URL kullan."

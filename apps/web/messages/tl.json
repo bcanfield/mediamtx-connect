@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Pag-record",
         "pathHooks": "Hooks ng path",
-        "source": "Pinagmulan"
+        "source": "Pinagmulan",
+        "forward": "Pagpapasa"
       },
       "sectionDescriptions": {
         "logging": "Log output, mga timeout, at mga global na limitasyon.",
@@ -384,7 +385,8 @@
         "srt": "Mag-publish at magbasa ng mga stream sa pamamagitan ng SRT.",
         "recording": "I-record ang mga stream sa disk.",
         "pathHooks": "Mga command na pinapatakbo ng MediaMTX sa mga lifecycle event ng mismong path.",
-        "source": "Kung saan nanggagaling ang stream ng path na ito."
+        "source": "Kung saan nanggagaling ang stream ng path na ito.",
+        "forward": "Muling i-publish ang stream ng path na ito sa ibang mga server, gaya ng YouTube o Twitch."
       },
       "sectionWarnings": {
         "auth": "Nakakaapekto sa lahat ng client ang pagbabago ng paraan ng pag-authenticate ng MediaMTX, kasama ang Connect — ang maling setting ay maaaring maputol ang Connect sa MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Username ng ICE server {index}",
         "passwordAria": "Password ng ICE server {index}",
         "removeAria": "Alisin ang ICE server {index}"
+      },
+      "forwardDests": {
+        "add": "Magdagdag ng destinasyon",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Destinasyon {index}",
+        "showAria": "Ipakita ang destinasyon {index}",
+        "hideAria": "Itago ang destinasyon {index}",
+        "removeAria": "Alisin ang destinasyon {index}",
+        "plaintextNotice": "Iniimbak ng MediaMTX ang mga URL na ito, kasama ang mga stream key, bilang plain text sa config nito at ibinabalik ang mga ito nang hindi tinatakpan mula sa API nito."
       },
       "errors": {
         "invalidSource": "Hindi ito tatanggapin ng MediaMTX. Gumamit ng publisher, redirect, rpiCamera, o isang URL na nagsisimula sa rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, o wheps://."

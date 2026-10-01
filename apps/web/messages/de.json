@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Aufzeichnung",
         "pathHooks": "Pfad-Hooks",
-        "source": "Quelle"
+        "source": "Quelle",
+        "forward": "Weiterleitung"
       },
       "sectionDescriptions": {
         "logging": "Log-Ausgabe, Timeouts und globale Grenzwerte.",
@@ -384,7 +385,8 @@
         "srt": "Streams über SRT veröffentlichen und lesen.",
         "recording": "Streams auf die Festplatte aufzeichnen.",
         "pathHooks": "Befehle, die MediaMTX bei den Lebenszyklus-Ereignissen eines Pfads ausführt.",
-        "source": "Woher der Stream dieses Pfads kommt."
+        "source": "Woher der Stream dieses Pfads kommt.",
+        "forward": "Den Stream dieses Pfads erneut an andere Server veröffentlichen, etwa YouTube oder Twitch."
       },
       "sectionWarnings": {
         "auth": "Eine geänderte Authentifizierung in MediaMTX gilt für alle Clients, auch für Connect — eine falsche Einstellung kann Connect von MediaMTX trennen.",
@@ -412,6 +414,15 @@
         "usernameAria": "Benutzername von ICE-Server {index}",
         "passwordAria": "Passwort von ICE-Server {index}",
         "removeAria": "ICE-Server {index} entfernen"
+      },
+      "forwardDests": {
+        "add": "Ziel hinzufügen",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Ziel {index}",
+        "showAria": "Ziel {index} anzeigen",
+        "hideAria": "Ziel {index} ausblenden",
+        "removeAria": "Ziel {index} entfernen",
+        "plaintextNotice": "MediaMTX speichert diese URLs samt Stream-Schlüsseln im Klartext in seiner Konfiguration und gibt sie unverschleiert über seine API zurück."
       },
       "errors": {
         "invalidSource": "MediaMTX akzeptiert diesen Wert nicht. Verwende publisher, redirect, rpiCamera oder eine URL, die mit rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// oder wheps:// beginnt."

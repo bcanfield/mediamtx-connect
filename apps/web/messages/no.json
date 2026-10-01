@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Opptak",
         "pathHooks": "Sti-hooks",
-        "source": "Kilde"
+        "source": "Kilde",
+        "forward": "Videresending"
       },
       "sectionDescriptions": {
         "logging": "Loggutdata, tidsavbrudd og globale grenser.",
@@ -384,7 +385,8 @@
         "srt": "Publiser og les strømmer over SRT.",
         "recording": "Ta opp strømmer til disk.",
         "pathHooks": "Kommandoer MediaMTX kjører ved stiens egne livssyklushendelser.",
-        "source": "Hvor strømmen til denne stien kommer fra."
+        "source": "Hvor strømmen til denne stien kommer fra.",
+        "forward": "Publiser denne stiens strøm på nytt til andre servere, som YouTube eller Twitch."
       },
       "sectionWarnings": {
         "auth": "Å endre hvordan MediaMTX autentiserer gjelder alle klienter, også Connect — en feil innstilling kan kutte Connect fra MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Brukernavn for ICE-server {index}",
         "passwordAria": "Passord for ICE-server {index}",
         "removeAria": "Fjern ICE-server {index}"
+      },
+      "forwardDests": {
+        "add": "Legg til mål",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Mål {index}",
+        "showAria": "Vis mål {index}",
+        "hideAria": "Skjul mål {index}",
+        "removeAria": "Fjern mål {index}",
+        "plaintextNotice": "MediaMTX lagrer disse URL-ene, inkludert strømnøkler, i klartekst i konfigurasjonen sin og returnerer dem uskjult fra API-et sitt."
       },
       "errors": {
         "invalidSource": "MediaMTX godtar ikke dette. Bruk publisher, redirect, rpiCamera eller en URL som starter med rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// eller wheps://."

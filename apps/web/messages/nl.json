@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Opnemen",
         "pathHooks": "Pad-hooks",
-        "source": "Bron"
+        "source": "Bron",
+        "forward": "Doorsturen"
       },
       "sectionDescriptions": {
         "logging": "Loguitvoer, time-outs en globale limieten.",
@@ -384,7 +385,8 @@
         "srt": "Streams publiceren en lezen via SRT.",
         "recording": "Neem streams op naar schijf.",
         "pathHooks": "Opdrachten die MediaMTX uitvoert bij de levenscyclusgebeurtenissen van een pad zelf.",
-        "source": "Waar de stream van dit pad vandaan komt."
+        "source": "Waar de stream van dit pad vandaan komt.",
+        "forward": "Publiceer de stream van dit pad opnieuw naar andere servers, zoals YouTube of Twitch."
       },
       "sectionWarnings": {
         "auth": "Een andere manier van authenticeren in MediaMTX geldt voor alle clients, ook Connect — een verkeerde instelling kan Connect van MediaMTX afsluiten.",
@@ -412,6 +414,15 @@
         "usernameAria": "Gebruikersnaam van ICE-server {index}",
         "passwordAria": "Wachtwoord van ICE-server {index}",
         "removeAria": "ICE-server {index} verwijderen"
+      },
+      "forwardDests": {
+        "add": "Bestemming toevoegen",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Bestemming {index}",
+        "showAria": "Bestemming {index} tonen",
+        "hideAria": "Bestemming {index} verbergen",
+        "removeAria": "Bestemming {index} verwijderen",
+        "plaintextNotice": "MediaMTX slaat deze URL's, inclusief streamsleutels, als platte tekst op in zijn configuratie en geeft ze onafgeschermd terug via zijn API."
       },
       "errors": {
         "invalidSource": "MediaMTX accepteert dit niet. Gebruik publisher, redirect, rpiCamera of een URL die begint met rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep:// of wheps://."

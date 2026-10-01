@@ -370,7 +370,8 @@
         "srt": "SRT",
         "recording": "Perekaman",
         "pathHooks": "Hooks Jalur",
-        "source": "Sumber"
+        "source": "Sumber",
+        "forward": "Penerusan"
       },
       "sectionDescriptions": {
         "logging": "Keluaran log, batas waktu, dan batas global.",
@@ -384,7 +385,8 @@
         "srt": "Publikasikan dan baca aliran melalui SRT.",
         "recording": "Rekam aliran ke disk.",
         "pathHooks": "Perintah yang dijalankan MediaMTX pada peristiwa siklus hidup jalur itu sendiri.",
-        "source": "Dari mana stream path ini berasal."
+        "source": "Dari mana stream path ini berasal.",
+        "forward": "Terbitkan ulang stream jalur ini ke server lain, seperti YouTube atau Twitch."
       },
       "sectionWarnings": {
         "auth": "Mengubah cara MediaMTX mengautentikasi berlaku untuk semua klien, termasuk Connect — pengaturan yang salah dapat memutus Connect dari MediaMTX.",
@@ -412,6 +414,15 @@
         "usernameAria": "Nama pengguna server ICE {index}",
         "passwordAria": "Kata sandi server ICE {index}",
         "removeAria": "Hapus server ICE {index}"
+      },
+      "forwardDests": {
+        "add": "Tambah tujuan",
+        "placeholder": "rtmp://live.example.com/app/stream-key",
+        "destAria": "Tujuan {index}",
+        "showAria": "Tampilkan tujuan {index}",
+        "hideAria": "Sembunyikan tujuan {index}",
+        "removeAria": "Hapus tujuan {index}",
+        "plaintextNotice": "MediaMTX menyimpan URL ini, termasuk kunci stream, sebagai teks biasa di konfigurasinya dan mengembalikannya tanpa disamarkan dari API-nya."
       },
       "errors": {
         "invalidSource": "MediaMTX tidak akan menerima nilai ini. Gunakan publisher, redirect, rpiCamera, atau URL yang diawali rtsp://, rtsps://, rtmp://, rtmps://, http://, https://, udp://, srt://, whep://, atau wheps://."
