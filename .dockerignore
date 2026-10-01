@@ -6,7 +6,6 @@ apps/api/public
 .git
 .github
 .vscode
-.agents
 .playwright-mcp
 .pnpm-store
 Dockerfile
