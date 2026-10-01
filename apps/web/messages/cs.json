@@ -207,6 +207,8 @@
       "custom": "Vlastní",
       "start": "Začátek",
       "durationMinutes": "Délka (min)",
+      "invalidStart": "Zadejte čas ve tvaru HH:MM:SS",
+      "minutesRange": "Celé minuty, od 1 do 60",
       "range": "{start} – {end}",
       "download": "Stáhnout",
       "cancel": "Zrušit",

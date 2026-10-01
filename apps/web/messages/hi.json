@@ -207,6 +207,8 @@
       "custom": "कस्टम",
       "start": "शुरुआत",
       "durationMinutes": "अवधि (मिनट)",
+      "invalidStart": "समय HH:MM:SS के रूप में दर्ज करें",
+      "minutesRange": "पूरे मिनट, 1 से 60 तक",
       "range": "{start} – {end}",
       "download": "डाउनलोड करें",
       "cancel": "रद्द करें",

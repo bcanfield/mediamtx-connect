@@ -207,6 +207,8 @@
       "custom": "カスタム",
       "start": "開始",
       "durationMinutes": "長さ（分）",
+      "invalidStart": "時刻を HH:MM:SS の形式で入力してください",
+      "minutesRange": "1〜60 の整数（分）",
       "range": "{start} – {end}",
       "download": "ダウンロード",
       "cancel": "キャンセル",

@@ -207,6 +207,8 @@
       "custom": "Anpassat",
       "start": "Start",
       "durationMinutes": "Längd (min)",
+      "invalidStart": "Ange en tid som TT:MM:SS",
+      "minutesRange": "Hela minuter, från 1 till 60",
       "range": "{start} – {end}",
       "download": "Ladda ned",
       "cancel": "Avbryt",

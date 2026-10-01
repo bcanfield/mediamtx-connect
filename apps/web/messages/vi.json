@@ -207,6 +207,8 @@
       "custom": "Tùy chỉnh",
       "start": "Bắt đầu",
       "durationMinutes": "Thời lượng (phút)",
+      "invalidStart": "Nhập thời gian dạng HH:MM:SS",
+      "minutesRange": "Số phút nguyên, từ 1 đến 60",
       "range": "{start} – {end}",
       "download": "Tải xuống",
       "cancel": "Hủy",

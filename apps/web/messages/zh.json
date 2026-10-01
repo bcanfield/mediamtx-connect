@@ -207,6 +207,8 @@
       "custom": "自定义",
       "start": "开始",
       "durationMinutes": "时长（分钟）",
+      "invalidStart": "请以 HH:MM:SS 格式输入时间",
+      "minutesRange": "整数分钟，1 到 60",
       "range": "{start} – {end}",
       "download": "下载",
       "cancel": "取消",

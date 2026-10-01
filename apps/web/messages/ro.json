@@ -207,6 +207,8 @@
       "custom": "Personalizat",
       "start": "Început",
       "durationMinutes": "Durată (min)",
+      "invalidStart": "Introduceți o oră ca HH:MM:SS",
+      "minutesRange": "Minute întregi, de la 1 la 60",
       "range": "{start} – {end}",
       "download": "Descarcă",
       "cancel": "Anulează",

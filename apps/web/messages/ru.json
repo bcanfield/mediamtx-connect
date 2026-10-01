@@ -207,6 +207,8 @@
       "custom": "Свой",
       "start": "Начало",
       "durationMinutes": "Длительность (мин)",
+      "invalidStart": "Введите время в формате ЧЧ:ММ:СС",
+      "minutesRange": "Целое число минут, от 1 до 60",
       "range": "{start} – {end}",
       "download": "Скачать",
       "cancel": "Отмена",

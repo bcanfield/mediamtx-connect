@@ -207,6 +207,8 @@
       "custom": "กำหนดเอง",
       "start": "เริ่ม",
       "durationMinutes": "ระยะเวลา (นาที)",
+      "invalidStart": "ป้อนเวลาเป็น HH:MM:SS",
+      "minutesRange": "จำนวนนาทีเต็ม ตั้งแต่ 1 ถึง 60",
       "range": "{start} – {end}",
       "download": "ดาวน์โหลด",
       "cancel": "ยกเลิก",

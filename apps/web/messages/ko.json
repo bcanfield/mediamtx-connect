@@ -207,6 +207,8 @@
       "custom": "사용자 지정",
       "start": "시작",
       "durationMinutes": "길이(분)",
+      "invalidStart": "시간을 HH:MM:SS 형식으로 입력하세요",
+      "minutesRange": "1~60 사이의 정수(분)",
       "range": "{start} – {end}",
       "download": "다운로드",
       "cancel": "취소",

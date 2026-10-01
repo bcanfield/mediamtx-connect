@@ -207,6 +207,8 @@
       "custom": "Custom",
       "start": "Simula",
       "durationMinutes": "Tagal (min)",
+      "invalidStart": "Ilagay ang oras bilang HH:MM:SS",
+      "minutesRange": "Buong minuto, mula 1 hanggang 60",
       "range": "{start} – {end}",
       "download": "I-download",
       "cancel": "Kanselahin",

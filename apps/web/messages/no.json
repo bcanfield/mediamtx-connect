@@ -207,6 +207,8 @@
       "custom": "Egendefinert",
       "start": "Start",
       "durationMinutes": "Varighet (min)",
+      "invalidStart": "Skriv inn et klokkeslett som TT:MM:SS",
+      "minutesRange": "Hele minutter, fra 1 til 60",
       "range": "{start} – {end}",
       "download": "Last ned",
       "cancel": "Avbryt",

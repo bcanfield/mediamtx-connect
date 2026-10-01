@@ -207,6 +207,8 @@
       "custom": "Benutzerdefiniert",
       "start": "Beginn",
       "durationMinutes": "Dauer (Min.)",
+      "invalidStart": "Zeit als HH:MM:SS eingeben",
+      "minutesRange": "Ganze Minuten von 1 bis 60",
       "range": "{start} – {end}",
       "download": "Herunterladen",
       "cancel": "Abbrechen",

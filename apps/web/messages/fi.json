@@ -207,6 +207,8 @@
       "custom": "Mukautettu",
       "start": "Alku",
       "durationMinutes": "Kesto (min)",
+      "invalidStart": "Anna aika muodossa HH:MM:SS",
+      "minutesRange": "Kokonaisia minuutteja, 1–60",
       "range": "{start} – {end}",
       "download": "Lataa",
       "cancel": "Peruuta",

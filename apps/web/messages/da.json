@@ -207,6 +207,8 @@
       "custom": "Brugerdefineret",
       "start": "Start",
       "durationMinutes": "Varighed (min)",
+      "invalidStart": "Angiv et tidspunkt som TT:MM:SS",
+      "minutesRange": "Hele minutter fra 1 til 60",
       "range": "{start} – {end}",
       "download": "Download",
       "cancel": "Annuller",

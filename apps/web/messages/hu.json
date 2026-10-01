@@ -207,6 +207,8 @@
       "custom": "Egyéni",
       "start": "Kezdés",
       "durationMinutes": "Időtartam (perc)",
+      "invalidStart": "Adja meg az időt ÓÓ:PP:MM formában",
+      "minutesRange": "Egész percek, 1 és 60 között",
       "range": "{start} – {end}",
       "download": "Letöltés",
       "cancel": "Mégse",

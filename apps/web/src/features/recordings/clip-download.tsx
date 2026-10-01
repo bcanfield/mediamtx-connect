@@ -1,34 +1,30 @@
 import type { RecordingSpan } from '@connect/contract'
 import type { ReactNode } from 'react'
 import type { ClipPreset, ClipRange } from './clip-range'
+import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useFormatter, useTranslations } from 'use-intl'
 
 import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { formatBytes } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
+import { buildClipSchema, CLIP_START } from './clip-download.schemas'
 import { CLIP_PRESETS, clipFileName, clipRange } from './clip-range'
 import { useRecordingDownload } from './use-recording-download'
 
 const PRESET_LABELS = { 300: 'last5Min', 900: 'last15Min', 3600: 'last1Hour' } as const
-const TIME = /^(\d{2}):(\d{2})(?::(\d{2}))?$/
-
-// `time` is what <input type="time" step="1"> gives: HH:MM:SS, or HH:MM on
-// browsers that drop zero seconds. Read on the selected browser-local day.
-function customRange(day: Date, time: string, minutes: string): ClipRange | null {
-  const match = TIME.exec(time)
-  const whole = Number(minutes)
-  if (!match || !Number.isInteger(whole) || whole < 1 || whole > 60)
-    return null
-  const [, hours, mins, secs = '0'] = match
+// A valid custom start and duration, read on the selected browser-local day.
+function customRange(day: Date, values: { start: string, minutes: number }): ClipRange {
+  const [, hours, mins, secs = '0'] = CLIP_START.exec(values.start)!
   const start = dayjs(day).hour(Number(hours)).minute(Number(mins)).second(Number(secs)).toDate()
-  return { start, duration: whole * 60 }
+  return { start, duration: values.minutes * 60 }
 }
 
 // A plain MP4 off MediaMTX's playback server, through the api's proxy: it
@@ -52,16 +48,32 @@ export function ClipDownload({ streamName, day, spans, selected }: {
   selected: RecordingSpan | null
 }) {
   const t = useTranslations('Recordings.clip')
+  const tForms = useTranslations('Forms.errors')
   const format = useFormatter()
   const [choice, setChoice] = useState<ClipPreset | 'custom'>(300)
-  // null until the user types, so the prefill follows the span in the player.
-  const [startTime, setStartTime] = useState<string | null>(null)
-  const [minutes, setMinutes] = useState('5')
 
-  const defaultStart = dayjs((selected ?? spans.at(-1)!).start).format('HH:mm:ss')
-  const range = choice === 'custom'
-    ? customRange(day, startTime ?? defaultStart, minutes)
-    : clipRange(spans, choice)
+  const schema = buildClipSchema({
+    required: tForms('required'),
+    invalidStart: t('invalidStart'),
+    minutesRange: t('minutesRange'),
+  })
+  const form = useForm({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+    // `values` with keepDirtyValues: the start follows the span in the player
+    // until the user types one.
+    values: { start: dayjs((selected ?? spans.at(-1)!).start).format('HH:mm:ss'), minutes: 5 },
+    resetOptions: { keepDirtyValues: true },
+  })
+  // Parsed here rather than read from formState.isValid, which settles a
+  // render after the value it describes.
+  const custom = schema.safeParse(form.watch())
+
+  let range: ClipRange | null = null
+  if (choice !== 'custom')
+    range = clipRange(spans, choice)
+  else if (custom.success)
+    range = customRange(day, custom.data)
 
   const download = useRecordingDownload(
     range ? clipUrl(streamName, range) : '',
@@ -103,34 +115,44 @@ export function ClipDownload({ streamName, day, spans, selected }: {
           </ChoiceButton>
         </div>
         {choice === 'custom' && (
-          <div className="flex flex-wrap gap-3">
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="clip-start" className="text-label text-mute">{t('start')}</Label>
-              <Input
-                id="clip-start"
-                type="time"
-                step={1}
-                required
-                className="w-36 font-mono tabular-nums"
-                value={startTime ?? defaultStart}
-                onChange={event => setStartTime(event.target.value)}
+          <Form {...form}>
+            <div className="flex flex-wrap items-start gap-3">
+              <FormField
+                control={form.control}
+                name="start"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-label text-mute">{t('start')}</FormLabel>
+                    <FormControl>
+                      <Input type="time" step={1} className="w-36 font-mono tabular-nums" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="minutes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-label text-mute">{t('durationMinutes')}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={1}
+                        max={60}
+                        step={1}
+                        className="w-24 font-mono tabular-nums"
+                        {...field}
+                        value={String(field.value ?? '')}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="clip-minutes" className="text-label text-mute">{t('durationMinutes')}</Label>
-              <Input
-                id="clip-minutes"
-                type="number"
-                min={1}
-                max={60}
-                step={1}
-                required
-                className="w-24 font-mono tabular-nums"
-                value={minutes}
-                onChange={event => setMinutes(event.target.value)}
-              />
-            </div>
-          </div>
+          </Form>
         )}
       </fieldset>
       <div className="flex items-center justify-between gap-3">

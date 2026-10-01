@@ -207,6 +207,8 @@
       "custom": "Aangepast",
       "start": "Begin",
       "durationMinutes": "Duur (min)",
+      "invalidStart": "Voer een tijd in als UU:MM:SS",
+      "minutesRange": "Hele minuten, van 1 tot 60",
       "range": "{start} – {end}",
       "download": "Downloaden",
       "cancel": "Annuleren",

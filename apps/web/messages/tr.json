@@ -207,6 +207,8 @@
       "custom": "Özel",
       "start": "Başlangıç",
       "durationMinutes": "Süre (dk)",
+      "invalidStart": "Saati SS:DD:sn biçiminde girin",
+      "minutesRange": "Tam dakika, 1 ile 60 arası",
       "range": "{start} – {end}",
       "download": "İndir",
       "cancel": "İptal",

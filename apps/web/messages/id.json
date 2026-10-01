@@ -207,6 +207,8 @@
       "custom": "Kustom",
       "start": "Mulai",
       "durationMinutes": "Durasi (mnt)",
+      "invalidStart": "Masukkan waktu sebagai HH:MM:SS",
+      "minutesRange": "Menit bulat, dari 1 sampai 60",
       "range": "{start} – {end}",
       "download": "Unduh",
       "cancel": "Batal",

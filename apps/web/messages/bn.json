@@ -207,6 +207,8 @@
       "custom": "কাস্টম",
       "start": "শুরু",
       "durationMinutes": "সময়কাল (মিনিট)",
+      "invalidStart": "সময় HH:MM:SS আকারে লিখুন",
+      "minutesRange": "পূর্ণ মিনিট, ১ থেকে ৬০",
       "range": "{start} – {end}",
       "download": "ডাউনলোড",
       "cancel": "বাতিল",

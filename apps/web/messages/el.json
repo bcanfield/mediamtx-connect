@@ -207,6 +207,8 @@
       "custom": "Προσαρμοσμένο",
       "start": "Έναρξη",
       "durationMinutes": "Διάρκεια (λεπ.)",
+      "invalidStart": "Εισαγάγετε ώρα ως ΩΩ:ΛΛ:ΔΔ",
+      "minutesRange": "Ακέραια λεπτά, από 1 έως 60",
       "range": "{start} – {end}",
       "download": "Λήψη",
       "cancel": "Ακύρωση",

@@ -207,6 +207,8 @@
       "custom": "Personalizado",
       "start": "Inicio",
       "durationMinutes": "Duración (min)",
+      "invalidStart": "Introduce una hora como HH:MM:SS",
+      "minutesRange": "Minutos enteros, de 1 a 60",
       "range": "{start} – {end}",
       "download": "Descargar",
       "cancel": "Cancelar",

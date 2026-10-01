@@ -207,6 +207,8 @@
       "custom": "Własny",
       "start": "Początek",
       "durationMinutes": "Czas trwania (min)",
+      "invalidStart": "Wpisz godzinę w formacie GG:MM:SS",
+      "minutesRange": "Pełne minuty, od 1 do 60",
       "range": "{start} – {end}",
       "download": "Pobierz",
       "cancel": "Anuluj",

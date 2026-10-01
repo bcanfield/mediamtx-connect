@@ -207,6 +207,8 @@
       "custom": "Власний",
       "start": "Початок",
       "durationMinutes": "Тривалість (хв)",
+      "invalidStart": "Введіть час у форматі ГГ:ХХ:СС",
+      "minutesRange": "Ціле число хвилин, від 1 до 60",
       "range": "{start} – {end}",
       "download": "Завантажити",
       "cancel": "Скасувати",

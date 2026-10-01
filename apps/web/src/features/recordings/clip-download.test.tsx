@@ -109,14 +109,25 @@ describe('a custom range', () => {
     expect(screen.getByLabelText('Start')).toHaveValue('09:00:15')
   })
 
-  it('won\'t download more than an hour', async () => {
+  it.each(['61', '0', '1.5'])('won\'t download %s minutes', async (value) => {
     const { user } = await renderClip()
 
     await user.click(screen.getByRole('button', { name: 'Custom' }))
     const minutes = screen.getByLabelText('Duration (min)')
     await user.clear(minutes)
-    await user.type(minutes, '61')
+    await user.type(minutes, value)
 
+    expect(await screen.findByText('Whole minutes, from 1 to 60')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled()
+  })
+
+  it('won\'t download without a start time', async () => {
+    const { user } = await renderClip()
+
+    await user.click(screen.getByRole('button', { name: 'Custom' }))
+    fireEvent.change(screen.getByLabelText('Start'), { target: { value: '' } })
+
+    expect(await screen.findByText('This field is required')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled()
   })
 })
