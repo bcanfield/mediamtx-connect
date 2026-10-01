@@ -17,11 +17,14 @@ const DEST_URL = `rtsp://localhost:8554/${DST}`
 
 // MediaMTX restarts its API listener on any config write, which drops pooled
 // sockets mid-request (see patchGlobal in publish-urls.spec.ts). Every raw call
-// here retries until it gets a fresh one.
-async function untilOk(send: () => Promise<{ ok: () => boolean }>) {
+// here retries until it gets a fresh one. A retry can follow a call that landed
+// but whose answer was dropped, so `alsoDone` names the status that means the
+// earlier attempt already did the job.
+async function untilOk(send: () => Promise<{ ok: () => boolean, status: () => number }>, alsoDone?: number) {
   await expect.poll(async () => {
     try {
-      return (await send()).ok()
+      const res = await send()
+      return res.ok() || res.status() === alsoDone
     }
     catch {
       return false
@@ -52,20 +55,23 @@ async function isReady(request: APIRequestContext, name: string) {
 
 test.describe('Forwarding', () => {
   test('forwards a path to a destination and stops when it is removed, without a restart', async ({ page, request }) => {
+    // Left over from an earlier run that died before its `finally`.
+    await untilOk(() => request.delete(`${API}/config/paths/delete/${SRC}`), 404)
+    // 400 is "path already exists": an earlier attempt landed.
     await untilOk(() => request.post(`${API}/config/paths/add/${SRC}`, {
       data: {
         runOnInit: 'ffmpeg -re -f lavfi -i testsrc=size=640x360:rate=15 -c:v libx264 -preset ultrafast -pix_fmt yuv420p -g 30 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH',
         runOnInitRestart: true,
       },
-    }))
+    }), 400)
     try {
       await expect.poll(() => isReady(request, SRC), { timeout: 30_000 }).toBe(true)
       const readyTimeOf = async () => {
         const path = await runtimePath(request, SRC)
         return path === 'gone' ? null : path?.readyTime
       }
-      const readyTime = await readyTimeOf()
-      expect(readyTime).toBeTruthy()
+      let readyTime: string | null | undefined
+      await expect.poll(async () => (readyTime = await readyTimeOf())).toBeTruthy()
 
       await page.goto(`/config/mediamtx/paths/${SRC}`)
       await page.getByRole('button', { name: 'Add destination' }).click()
@@ -86,7 +92,7 @@ test.describe('Forwarding', () => {
       await expect.poll(() => isReady(request, DST), { timeout: 20_000 }).toBe(false)
     }
     finally {
-      await untilOk(() => request.delete(`${API}/config/paths/delete/${SRC}`))
+      await untilOk(() => request.delete(`${API}/config/paths/delete/${SRC}`), 404)
     }
   })
 })
