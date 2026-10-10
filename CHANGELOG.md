@@ -1,3 +1,9 @@
+## [2.6.4](https://github.com/bcanfield/mediamtx-connect/compare/2.6.3...2.6.4) (2026-10-10)
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#375](https://github.com/bcanfield/mediamtx-connect/issues/375)) ([a3fb2ce](https://github.com/bcanfield/mediamtx-connect/commit/a3fb2ce8f8f1c5dbddbd083f067475a557a13e0a))
+
 ## [2.6.3](https://github.com/bcanfield/mediamtx-connect/compare/2.6.2...2.6.3) (2026-10-07)
 
 ### Bug Fixes
