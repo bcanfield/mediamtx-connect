@@ -26,17 +26,11 @@ function dir(name: string, prod: string) {
 
 export const env = createEnv({
   server: {
-    NODE_ENV: z
-      .enum(['development', 'production', 'test'])
-      .default('development'),
+    NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
     PORT: z.coerce.number().int().default(3000),
-    LOG_LEVEL: z
-      .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'])
-      .default('info'),
+    LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
     DATA_DIR: dir('data', '/data'),
-    BACKEND_SERVER_MEDIAMTX_URL: z
-      .string()
-      .default(isProduction ? 'http://mediamtx' : 'http://127.0.0.1'),
+    BACKEND_SERVER_MEDIAMTX_URL: z.string().default(isProduction ? 'http://mediamtx' : 'http://127.0.0.1'),
     MEDIAMTX_API_PORT: z.string().default('9997'),
     REMOTE_MEDIAMTX_URL: z.string().default('http://localhost'),
     MEDIAMTX_RECORDINGS_DIR: dir('recordings', '/recordings'),

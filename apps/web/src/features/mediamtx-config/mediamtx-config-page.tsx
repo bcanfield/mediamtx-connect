@@ -2,11 +2,9 @@ import { MEDIAMTX_MIN_VERSION } from '@connect/contract'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { PageLayout } from '@/components/page-layout'
 import { StatusPanel } from '@/components/status-panel'
 import { orpc } from '@/orpc'
-
 import { MediaMTXConfigForm } from './mediamtx-config-form'
 import { globalScope } from './sections'
 
@@ -28,11 +26,7 @@ export function MediaMTXConfigPage({ section }: { section?: string }) {
   const started = info.data?.started
 
   return (
-    <PageLayout
-      width="wide"
-      header={t('mediamtxConfig.pageHeader')}
-      subHeader={t('mediamtxConfig.pageSubHeader')}
-    >
+    <PageLayout width="wide" header={t('mediamtxConfig.pageHeader')} subHeader={t('mediamtxConfig.pageSubHeader')}>
       {version && (
         <p className="mb-4 font-mono text-meta text-muted-foreground">
           {started
@@ -53,18 +47,17 @@ export function MediaMTXConfigPage({ section }: { section?: string }) {
           description={t('mediamtxConfig.tooOldBody')}
         />
       )}
-      {globalConf.isSuccess && (
-        globalConf.data
-          ? (
-              <MediaMTXConfigForm
-                scope={scope}
-                conf={globalConf.data}
-                initialSection={section}
-                onSave={values => updateGlobalConfig.mutateAsync(values)}
-              />
-            )
-          : <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
-      )}
+      {globalConf.isSuccess &&
+        (globalConf.data ? (
+          <MediaMTXConfigForm
+            scope={scope}
+            conf={globalConf.data}
+            initialSection={section}
+            onSave={values => updateGlobalConfig.mutateAsync(values)}
+          />
+        ) : (
+          <div className="text-control text-muted-foreground">{t('invalidConfig')}</div>
+        ))}
     </PageLayout>
   )
 }

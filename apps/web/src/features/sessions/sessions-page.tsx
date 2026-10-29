@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { PageLayout } from '@/components/page-layout'
 import { Button } from '@/components/ui/button'
 import {
@@ -56,16 +55,14 @@ export function SessionsPage() {
       )}
       {state?.status === 'connected' && (
         <div className="flex flex-col gap-4">
-          {state.sessions.length === 0
-            ? <EmptyPanel />
-            : (
-                <>
-                  <p className="text-control text-muted-foreground">
-                    {t('summary', { count: state.sessions.length })}
-                  </p>
-                  <SessionsTable sessions={state.sessions} />
-                </>
-              )}
+          {state.sessions.length === 0 ? (
+            <EmptyPanel />
+          ) : (
+            <>
+              <p className="text-control text-muted-foreground">{t('summary', { count: state.sessions.length })}</p>
+              <SessionsTable sessions={state.sessions} />
+            </>
+          )}
           <ProtocolNotes protocols={state.protocols} pageSize={state.pageSize} />
         </div>
       )}
@@ -82,13 +79,27 @@ function SessionsTable({ sessions }: { sessions: Session[] }) {
       <table className="w-full text-control">
         <thead>
           <tr className="border-b bg-card text-left text-meta text-muted-foreground">
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columns.path')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columns.protocol')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columns.remoteAddr')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columns.state')}</th>
-            <th scope="col" className="px-4 py-2.5 text-right font-medium">{t('columns.bytesIn')}</th>
-            <th scope="col" className="px-4 py-2.5 text-right font-medium">{t('columns.bytesOut')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columns.uptime')}</th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columns.path')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columns.protocol')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columns.remoteAddr')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columns.state')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 text-right font-medium">
+              {t('columns.bytesIn')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 text-right font-medium">
+              {t('columns.bytesOut')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columns.uptime')}
+            </th>
             <th scope="col" className="px-4 py-2.5 font-medium">
               <span className="sr-only">{t('columns.actions')}</span>
             </th>
@@ -128,12 +139,9 @@ function KickDialog({ session }: { session: Session }) {
     try {
       await kick.mutateAsync({ protocol: session.protocol, id: session.id })
       toast.success(t('toasts.success', { remoteAddr }))
-    }
-    catch (error) {
-      if (error instanceof ORPCError && error.code === 'NOT_FOUND')
-        toast.info(t('toasts.alreadyGone', { remoteAddr }))
-      else
-        toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
+    } catch (error) {
+      if (error instanceof ORPCError && error.code === 'NOT_FOUND') toast.info(t('toasts.alreadyGone', { remoteAddr }))
+      else toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
     }
     setOpen(false)
     await queryClient.invalidateQueries({ queryKey: orpc.sessions.list.key() })
@@ -142,7 +150,9 @@ function KickDialog({ session }: { session: Session }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button type="button" size="sm" variant="outline">{t('action')}</Button>
+        <Button type="button" size="sm" variant="outline">
+          {t('action')}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -153,12 +163,12 @@ function KickDialog({ session }: { session: Session }) {
         </DialogHeader>
         {/* An HLS player re-requests its playlist straight away and gets a
             new session, so the kick mostly just resets it. */}
-        {session.protocol === 'hls' && (
-          <p className="text-meta text-muted-foreground">{t('hlsCaveat')}</p>
-        )}
+        {session.protocol === 'hls' && <p className="text-meta text-muted-foreground">{t('hlsCaveat')}</p>}
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="ghost">{t('cancel')}</Button>
+            <Button type="button" variant="ghost">
+              {t('cancel')}
+            </Button>
           </DialogClose>
           <Button type="button" variant="destructive" disabled={kick.isPending} onClick={confirm}>
             {t('confirm')}
@@ -171,7 +181,7 @@ function KickDialog({ session }: { session: Session }) {
 
 // A protocol we didn't list is not a protocol with nobody on it, so the page
 // says which ones are missing from the table and why.
-function ProtocolNotes({ protocols, pageSize }: { protocols: SessionProtocolStatus[], pageSize: number }) {
+function ProtocolNotes({ protocols, pageSize }: { protocols: SessionProtocolStatus[]; pageSize: number }) {
   const t = useTranslations('Sessions.protocols')
   const format = useFormatter()
   const unlisted = protocols
@@ -179,8 +189,7 @@ function ProtocolNotes({ protocols, pageSize }: { protocols: SessionProtocolStat
     .map(p => t(p.status === 'disabled' ? 'disabled' : 'failed', { protocol: PROTOCOL_LABELS[p.protocol] }))
   const truncated = protocols.filter(p => p.truncated)
 
-  if (unlisted.length === 0 && truncated.length === 0)
-    return null
+  if (unlisted.length === 0 && truncated.length === 0) return null
 
   return (
     <div className="flex flex-col gap-1 text-meta text-muted-foreground">

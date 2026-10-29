@@ -2,7 +2,6 @@ import type { RecordingStreamSummary } from '@connect/contract'
 import { ArrowRight, CircleDashed, Search } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
-
 import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Input } from '@/components/ui/input'
@@ -16,11 +15,9 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey)
-        return
+      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return
       const target = event.target as HTMLElement
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
-        return
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return
       event.preventDefault()
       inputRef.current?.focus()
     }
@@ -30,8 +27,7 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q)
-      return streams
+    if (!q) return streams
     return streams.filter(s => s.name.toLowerCase().includes(q))
   }, [query, streams])
 
@@ -64,24 +60,18 @@ export function RecordingsIndexView({ streams }: { streams: RecordingStreamSumma
         </div>
       </div>
 
-      {filtered.length === 0
-        ? (
-            <div className="mx-auto my-14 w-full max-w-md rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
-              <h2 className="text-section font-semibold tracking-title">
-                {t('empty.noMatchingTitle')}
-              </h2>
-              <p className="mt-1.5 text-lead text-muted-foreground">
-                {t('empty.noMatchingDescription', { query })}
-              </p>
-            </div>
-          )
-        : (
-            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map(stream => (
-                <StreamSummaryCard key={stream.name} stream={stream} />
-              ))}
-            </div>
-          )}
+      {filtered.length === 0 ? (
+        <div className="mx-auto my-14 w-full max-w-md rounded-panel border border-dashed border-border-hover px-8 py-12 text-center">
+          <h2 className="text-section font-semibold tracking-title">{t('empty.noMatchingTitle')}</h2>
+          <p className="mt-1.5 text-lead text-muted-foreground">{t('empty.noMatchingDescription', { query })}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map(stream => (
+            <StreamSummaryCard key={stream.name} stream={stream} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -97,23 +87,24 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
     <Link
       href={`/recordings/${stream.name}`}
       data-testid="stream-summary-card"
-      className={cn(mediaCardShell, 'group focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20')}
+      className={cn(
+        mediaCardShell,
+        'group focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+      )}
     >
       <AspectRatio ratio={16 / 9} className="relative overflow-hidden bg-black">
-        {showThumbnail
-          ? (
-              <img
-                alt=""
-                onError={() => setThumbnailError(true)}
-                src={stream.screenshotUrl!}
-                className="size-full object-cover"
-              />
-            )
-          : (
-              <div className="flex size-full items-center justify-center bg-hatch">
-                <CircleDashed className="size-6 text-faint" />
-              </div>
-            )}
+        {showThumbnail ? (
+          <img
+            alt=""
+            onError={() => setThumbnailError(true)}
+            src={stream.screenshotUrl!}
+            className="size-full object-cover"
+          />
+        ) : (
+          <div className="flex size-full items-center justify-center bg-hatch">
+            <CircleDashed className="size-6 text-faint" />
+          </div>
+        )}
 
         {stream.latestMtime && (
           <span className="absolute right-2.5 top-2.5 rounded-full bg-black/75 px-2 py-0.5 font-mono text-micro text-white/80">
@@ -139,10 +130,7 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
             </p>
           )}
         </div>
-        <ArrowRight
-          aria-hidden
-          className="size-4 shrink-0 text-faint transition-colors group-hover:text-foreground"
-        />
+        <ArrowRight aria-hidden className="size-4 shrink-0 text-faint transition-colors group-hover:text-foreground" />
       </div>
     </Link>
   )

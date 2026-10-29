@@ -16,36 +16,28 @@ const noop = vi.fn(async () => {})
 
 describe('path hooks save warning', () => {
   it('warns on the per-path scope', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Path Hooks' })).toBeInTheDocument()
     expect(screen.getByText(WARNING)).toBeInTheDocument()
   })
 
   it('warns on the path-defaults scope', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Path Hooks' })).toBeInTheDocument()
     expect(screen.getByText(WARNING)).toBeInTheDocument()
   })
 
   it('leaves the Recording section unwarned', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{ record: true }} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{ record: true }} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Recording' })).toBeInTheDocument()
     expect(screen.getAllByText(WARNING)).toHaveLength(1)
   })
 
   it('leaves the global hooks section unwarned', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={{}} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Hooks' })).toBeInTheDocument()
     expect(screen.queryByText(WARNING)).not.toBeInTheDocument()
@@ -128,12 +120,9 @@ describe('path hooks', () => {
     ['per-path', pathConfigScope('nope')],
     ['path-defaults', PATH_DEFAULTS_SCOPE],
   ])('renders the available and online hooks on the %s scope', async (_, scope) => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={scope} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={scope} conf={{}} onSave={noop} />)
 
-    for (const name of PATH_HOOKS)
-      expect(screen.getByRole('textbox', { name })).toBeInTheDocument()
+    for (const name of PATH_HOOKS) expect(screen.getByRole('textbox', { name })).toBeInTheDocument()
     expect(screen.getByRole('switch', { name: 'runOnOnlineRestart' })).toBeInTheDocument()
     expect(screen.getByText(WARNING)).toBeInTheDocument()
   })
@@ -142,27 +131,31 @@ describe('path hooks', () => {
 // MediaMTX validates path defaults as the `all_others` entry and refuses both
 // switches there, so the section is only offered where a save can succeed.
 describe('resilience', () => {
-  const KEYS = ['alwaysAvailable', 'alwaysAvailableFile', 'sourceOnDemand', 'sourceOnDemandStartTimeout', 'sourceOnDemandCloseAfter']
+  const KEYS = [
+    'alwaysAvailable',
+    'alwaysAvailableFile',
+    'sourceOnDemand',
+    'sourceOnDemandStartTimeout',
+    'sourceOnDemandCloseAfter',
+  ]
 
   it('renders the five keys with the restart warning on the per-path scope', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />)
 
     const section = screen.getByRole('heading', { name: 'Resilience' }).closest('section')!
-    expect(within(section).getAllByTestId(/^field-/).map(row => row.dataset.testid))
-      .toEqual(KEYS.map(key => `field-${key}`))
+    expect(
+      within(section)
+        .getAllByTestId(/^field-/)
+        .map(row => row.dataset.testid),
+    ).toEqual(KEYS.map(key => `field-${key}`))
     expect(within(section).getByText(/Saving any of these restarts the path/)).toBeInTheDocument()
   })
 
   it('leaves it off the path-defaults scope', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />)
 
     expect(screen.queryByRole('heading', { name: 'Resilience' })).not.toBeInTheDocument()
-    for (const key of KEYS)
-      expect(screen.queryByTestId(`field-${key}`)).not.toBeInTheDocument()
+    for (const key of KEYS) expect(screen.queryByTestId(`field-${key}`)).not.toBeInTheDocument()
   })
 })
 
@@ -172,9 +165,7 @@ describe('enum fields', () => {
   const served = { rtspEncryption: 'no', rtmpEncryption: 'optional', authMethod: 'internal' } as const
 
   it.each(Object.entries(served))('shows the served %s as the selected choice', async (name, value) => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={noop} />)
 
     const group = screen.getByRole('radiogroup', { name })
     expect(within(group).getByRole('radio', { name: value })).toBeChecked()
@@ -186,24 +177,17 @@ describe('enum fields', () => {
     ['authMethod', 'http'],
   ])('saves another %s choice', async (name, next) => {
     const onSave = vi.fn<(values: unknown, changed: unknown) => Promise<void>>(async () => {})
-    const view = await renderWithProviders(
-      <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={onSave} />,
-    )
+    const view = await renderWithProviders(<MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={onSave} />)
 
     await view.user.click(within(screen.getByRole('radiogroup', { name })).getByRole('radio', { name: next }))
     await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
 
     await vi.waitFor(() => expect(onSave).toHaveBeenCalled())
-    expect(onSave.mock.calls[0]).toEqual([
-      expect.objectContaining({ [name]: next }),
-      { [name]: next },
-    ])
+    expect(onSave.mock.calls[0]).toEqual([expect.objectContaining({ [name]: next }), { [name]: next }])
   })
 
   it('keeps the choice when the selected option is pressed again', async () => {
-    const view = await renderWithProviders(
-      <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={noop} />,
-    )
+    const view = await renderWithProviders(<MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={served} onSave={noop} />)
 
     const group = screen.getByRole('radiogroup', { name: 'rtspEncryption' })
     await view.user.click(within(group).getByRole('radio', { name: 'no' }))
@@ -214,7 +198,7 @@ describe('enum fields', () => {
 })
 
 describe('allow-origin lists', () => {
-  it.each(['hlsAllowOrigins', 'webrtcAllowOrigins'])('round-trips %s as a one-line list', async (name) => {
+  it.each(['hlsAllowOrigins', 'webrtcAllowOrigins'])('round-trips %s as a one-line list', async name => {
     const onSave = vi.fn<(values: unknown, changed: unknown) => Promise<void>>(async () => {})
     const view = await renderWithProviders(
       <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={{ [name]: ['*'] }} onSave={onSave} />,
@@ -232,7 +216,7 @@ describe('allow-origin lists', () => {
     expect(onSave.mock.calls[0]![0]).toEqual(expect.objectContaining({ [name]: ['*'] }))
   })
 
-  it.each(['hlsAllowOrigins', 'webrtcAllowOrigins'])('takes one %s entry per line', async (name) => {
+  it.each(['hlsAllowOrigins', 'webrtcAllowOrigins'])('takes one %s entry per line', async name => {
     const onSave = vi.fn<(values: unknown, changed: unknown) => Promise<void>>(async () => {})
     const view = await renderWithProviders(
       <MediaMTXConfigForm scope={GLOBAL_SCOPE} conf={{ [name]: ['https://a.lan'] }} onSave={onSave} />,
@@ -249,18 +233,14 @@ describe('allow-origin lists', () => {
 // A destination's stream key belongs to one account, so `forward` is edited per
 // path and never from path defaults, where it would push every stream to it.
 describe('forwarding scope', () => {
-  it('is a section of a path\'s own config', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />,
-    )
+  it("is a section of a path's own config", async () => {
+    await renderWithProviders(<MediaMTXConfigForm scope={pathConfigScope('nope')} conf={{}} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Forwarding' })).toBeInTheDocument()
   })
 
   it('is not a section of path defaults', async () => {
-    await renderWithProviders(
-      <MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />,
-    )
+    await renderWithProviders(<MediaMTXConfigForm scope={PATH_DEFAULTS_SCOPE} conf={{}} onSave={noop} />)
 
     expect(screen.getByRole('heading', { name: 'Recording' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Forwarding' })).not.toBeInTheDocument()

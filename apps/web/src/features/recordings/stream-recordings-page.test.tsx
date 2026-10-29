@@ -52,22 +52,20 @@ let refuseGlobal: string | null = null
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
   recordingsForStream: () => {
-    if (fail)
-      throw new Error('recordings directory unreadable')
+    if (fail) throw new Error('recordings directory unreadable')
     return { recordings, totalCount }
   },
-  recordingsTimeline: (input) => {
+  recordingsTimeline: input => {
     timelineInputs.push(input)
     return timeline()
   },
   pathDefaults: () => pathDefaults,
-  updatePathDefaults: (input) => {
+  updatePathDefaults: input => {
     writes.push(['updatePathDefaults', input])
   },
-  updateGlobalConfig: (input) => {
+  updateGlobalConfig: input => {
     writes.push(['updateGlobal', input])
-    if (refuseGlobal)
-      throw new ORPCError('BAD_REQUEST', { message: refuseGlobal })
+    if (refuseGlobal) throw new ORPCError('BAD_REQUEST', { message: refuseGlobal })
   },
 }
 
@@ -100,18 +98,13 @@ describe('the breadcrumb', () => {
     await renderPage()
 
     const crumb = screen.getByRole('navigation', { name: 'breadcrumb' })
-    expect(within(crumb).getByRole('link', { name: 'Recordings' })).toHaveAttribute(
-      'href',
-      '/recordings',
-    )
+    expect(within(crumb).getByRole('link', { name: 'Recordings' })).toHaveAttribute('href', '/recordings')
   })
 
   it('shows the current stream as the trailing crumb', async () => {
     await renderPage('front-door')
 
-    expect(
-      within(screen.getByRole('navigation', { name: 'breadcrumb' })).getByText('front-door'),
-    ).toBeInTheDocument()
+    expect(within(screen.getByRole('navigation', { name: 'breadcrumb' })).getByText('front-door')).toBeInTheDocument()
   })
 
   it('renders for a stream with no recordings at all', async () => {
@@ -151,10 +144,7 @@ describe('the recording list', () => {
     // old recording locatable at a glance.
     const headings = screen.getAllByRole('heading', { level: 2 })
     expect(headings).toHaveLength(2)
-    expect(headings.map(h => h.textContent)).toEqual([
-      'Sat, March 14, 2026',
-      'Sun, March 15, 2026',
-    ])
+    expect(headings.map(h => h.textContent)).toEqual(['Sat, March 14, 2026', 'Sun, March 15, 2026'])
   })
 
   it('puts same-day recordings under one heading', async () => {
@@ -239,11 +229,13 @@ describe('the day timeline', () => {
 
     await user.click(screen.getByRole('button', { name: 'Previous day' }))
 
-    await waitFor(() => expect(timelineInputs.at(-1)).toEqual({
-      streamName: 'stream1',
-      start: new Date(2026, 2, 13),
-      end: new Date(2026, 2, 14),
-    }))
+    await waitFor(() =>
+      expect(timelineInputs.at(-1)).toEqual({
+        streamName: 'stream1',
+        start: new Date(2026, 2, 13),
+        end: new Date(2026, 2, 14),
+      }),
+    )
   })
 
   it('steps forward to the next local day', async () => {
@@ -251,14 +243,16 @@ describe('the day timeline', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next day' }))
 
-    await waitFor(() => expect(timelineInputs.at(-1)).toEqual({
-      streamName: 'stream1',
-      start: new Date(2026, 2, 15),
-      end: new Date(2026, 2, 16),
-    }))
+    await waitFor(() =>
+      expect(timelineInputs.at(-1)).toEqual({
+        streamName: 'stream1',
+        start: new Date(2026, 2, 15),
+        end: new Date(2026, 2, 16),
+      }),
+    )
   })
 
-  it('plays a span through the api\'s playback proxy', async () => {
+  it("plays a span through the api's playback proxy", async () => {
     const { user, container } = await renderDay()
 
     await user.click(screen.getByRole('button', { name: /^10:00:00 AM – 11:00:00 AM/ }))
@@ -283,7 +277,7 @@ describe('the day timeline', () => {
 
   // Streamed fMP4 reports an infinite duration, so the span's own length is
   // the only one there is.
-  it('shows the span\'s length in the player\'s time readout', async () => {
+  it("shows the span's length in the player's time readout", async () => {
     const { user } = await renderDay()
 
     await user.click(screen.getByRole('button', { name: /^02:30:00 PM – 04:00:00 PM/ }))
@@ -291,7 +285,7 @@ describe('the day timeline', () => {
     expect(await screen.findByText('90:00')).toBeInTheDocument()
   })
 
-  it('shows the playback server\'s own reason when it refuses', async () => {
+  it("shows the playback server's own reason when it refuses", async () => {
     timeline = () => {
       throw new ORPCError('BAD_GATEWAY', { message: 'authentication failed' })
     }
@@ -341,18 +335,19 @@ describe('the guided playback card', () => {
   // defaults go first.
   it('writes path defaults first, then turns playback on, and shows the timeline', async () => {
     const { user } = await renderCard()
-    timeline = () => (writes.length === 2
-      ? { status: 'available', spans: [TEN_TO_ELEVEN] }
-      : OFF)
+    timeline = () => (writes.length === 2 ? { status: 'available', spans: [TEN_TO_ELEVEN] } : OFF)
 
     await user.click(screen.getByRole('button', { name: 'Apply changes' }))
 
     expect(await screen.findByRole('list', { name: 'Recorded spans' })).toBeInTheDocument()
     expect(writes).toEqual([
-      ['updatePathDefaults', {
-        recordFormat: 'fmp4',
-        recordPath: '/recordings/%path/%Y-%m-%d_%H-%M-%S-%f',
-      } satisfies RpcInputs['config']['mediamtx']['updatePathDefaults']],
+      [
+        'updatePathDefaults',
+        {
+          recordFormat: 'fmp4',
+          recordPath: '/recordings/%path/%Y-%m-%d_%H-%M-%S-%f',
+        } satisfies RpcInputs['config']['mediamtx']['updatePathDefaults'],
+      ],
       ['updateGlobal', { playback: true } satisfies RpcInputs['config']['mediamtx']['updateGlobal']],
     ])
   })
@@ -364,19 +359,21 @@ describe('the guided playback card', () => {
 
     await user.click(await screen.findByRole('button', { name: 'Apply changes' }))
 
-    await waitFor(() => expect(writes).toEqual([
-      ['updatePathDefaults', { recordPath: '/recordings/%path/%Y-%m-%d_%H-%M-%S-%f' }],
-      ['updateGlobal', { playback: true }],
-    ]))
+    await waitFor(() =>
+      expect(writes).toEqual([
+        ['updatePathDefaults', { recordPath: '/recordings/%path/%Y-%m-%d_%H-%M-%S-%f' }],
+        ['updateGlobal', { playback: true }],
+      ]),
+    )
   })
 
-  it('shows MediaMTX\'s reason when it refuses, and claims nothing', async () => {
-    refuseGlobal = '\'recordPath\' must contain %f'
+  it("shows MediaMTX's reason when it refuses, and claims nothing", async () => {
+    refuseGlobal = "'recordPath' must contain %f"
     const { user } = await renderCard()
 
     await user.click(screen.getByRole('button', { name: 'Apply changes' }))
 
-    expect(await screen.findByText('\'recordPath\' must contain %f')).toBeInTheDocument()
+    expect(await screen.findByText("'recordPath' must contain %f")).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Turn on recording playback' })).toBeInTheDocument()
     expect(screen.queryByRole('list', { name: 'Recorded spans' })).not.toBeInTheDocument()
   })
@@ -387,7 +384,7 @@ describe('the guided playback card', () => {
     timeline = () => OFF
     await renderPage('stream1', '/?day=2026-03-14')
 
-    const link = await screen.findByRole('link', { name: 'Open this path\'s recording config' })
+    const link = await screen.findByRole('link', { name: "Open this path's recording config" })
     expect(link).toHaveAttribute('href', '/config/mediamtx/paths/stream1?section=recording')
     expect(screen.queryByRole('button', { name: 'Apply changes' })).not.toBeInTheDocument()
     expect(writes).toEqual([])

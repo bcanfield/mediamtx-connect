@@ -38,7 +38,8 @@ describe('connection status', () => {
     mediamtxInfo.mockReturnValue({ version: 'v1.19.2', started: STARTED, belowMinimum: true })
     await renderWithProviders(<ConnectionStatus />)
 
-    const tooOld = 'MediaMTX v1.19.2 is older than v1.20.0, the oldest version Connect supports. Some settings may be missing or refused.'
+    const tooOld =
+      'MediaMTX v1.19.2 is older than v1.20.0, the oldest version Connect supports. Some settings may be missing or refused.'
     const version = await screen.findByTitle(tooOld)
     expect(version).toHaveTextContent('v1.19.2')
     expect(version).toHaveClass('text-warning')

@@ -35,7 +35,7 @@ afterEach(() => {
 function slowResponse() {
   let controller!: ReadableStreamDefaultController<Uint8Array>
   const body = new ReadableStream<Uint8Array>({
-    start: (c) => {
+    start: c => {
       controller = c
     },
   })
@@ -65,7 +65,9 @@ describe('presets', () => {
     await user.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(() => expect(saved).toEqual(['stream1_2026-03-14_15-55-20.mp4']))
-    expect(requested()).toBe('/media/playback/get?path=stream1&start=2026-03-14T15%3A55%3A20.000Z&duration=300&format=mp4')
+    expect(requested()).toBe(
+      '/media/playback/get?path=stream1&start=2026-03-14T15%3A55%3A20.000Z&duration=300&format=mp4',
+    )
   })
 
   it('downloads the last hour', async () => {
@@ -74,7 +76,11 @@ describe('presets', () => {
     await user.click(screen.getByRole('button', { name: 'Last 1 h' }))
     await user.click(screen.getByRole('button', { name: 'Download' }))
 
-    await waitFor(() => expect(requested()).toBe('/media/playback/get?path=stream1&start=2026-03-14T15%3A00%3A20.000Z&duration=3600&format=mp4'))
+    await waitFor(() =>
+      expect(requested()).toBe(
+        '/media/playback/get?path=stream1&start=2026-03-14T15%3A00%3A20.000Z&duration=3600&format=mp4',
+      ),
+    )
   })
 })
 
@@ -90,7 +96,11 @@ describe('a custom range', () => {
     await user.type(minutes, '2')
     await user.click(screen.getByRole('button', { name: 'Download' }))
 
-    await waitFor(() => expect(requested()).toBe('/media/playback/get?path=stream1&start=2026-03-14T10%3A15%3A30.000Z&duration=120&format=mp4'))
+    await waitFor(() =>
+      expect(requested()).toBe(
+        '/media/playback/get?path=stream1&start=2026-03-14T10%3A15%3A30.000Z&duration=120&format=mp4',
+      ),
+    )
   })
 
   it('starts at the latest span when nothing is playing', async () => {
@@ -109,7 +119,7 @@ describe('a custom range', () => {
     expect(screen.getByLabelText('Start')).toHaveValue('09:00:15')
   })
 
-  it.each(['61', '0', '1.5'])('won\'t download %s minutes', async (value) => {
+  it.each(['61', '0', '1.5'])("won't download %s minutes", async value => {
     const { user } = await renderClip()
 
     await user.click(screen.getByRole('button', { name: 'Custom' }))
@@ -121,7 +131,7 @@ describe('a custom range', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled()
   })
 
-  it('won\'t download without a start time', async () => {
+  it("won't download without a start time", async () => {
     const { user } = await renderClip()
 
     await user.click(screen.getByRole('button', { name: 'Custom' }))
@@ -173,7 +183,7 @@ describe('failures', () => {
   })
 
   it('reports any other failure', async () => {
-    fetchMock.mockResolvedValue(new Response('Could not reach MediaMTX\'s playback server', { status: 502 }))
+    fetchMock.mockResolvedValue(new Response("Could not reach MediaMTX's playback server", { status: 502 }))
     const { user } = await renderClip()
 
     await user.click(screen.getByRole('button', { name: 'Download' }))

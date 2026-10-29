@@ -21,7 +21,7 @@ describe('health endpoint', () => {
     vi.mocked(getAppConfig).mockResolvedValue(CONFIG)
 
     const res = await health.request('/health')
-    const body = await res.json() as { status: string, timestamp: string, error?: string }
+    const body = (await res.json()) as { status: string; timestamp: string; error?: string }
 
     expect(res.status).toBe(200)
     expect(body.status).toBe('healthy')
@@ -35,7 +35,7 @@ describe('health endpoint', () => {
     vi.mocked(getAppConfig).mockRejectedValue(new Error('config.json is corrupt'))
 
     const res = await health.request('/health')
-    const body = await res.json() as { status: string, timestamp: string, error?: string }
+    const body = (await res.json()) as { status: string; timestamp: string; error?: string }
 
     expect(res.status).toBe(503)
     expect(body.status).toBe('unhealthy')

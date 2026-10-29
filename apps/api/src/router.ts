@@ -28,11 +28,9 @@ const os = implement(contract)
 async function recordStateFor(api: ReturnType<typeof mediaMtxApi>, confName: string): Promise<RecordState> {
   try {
     const conf = await api.configPathGet(confName)
-    if (conf?.record === undefined)
-      return 'unknown'
+    if (conf?.record === undefined) return 'unknown'
     return conf.record ? 'on' : 'off'
-  }
-  catch (error) {
+  } catch (error) {
     logger.error({ err: error, confName }, 'Failed to read record state for config entry')
     return 'unknown'
   }
@@ -45,9 +43,7 @@ function tracksOf(runtime: MediaMtxPath): PathTrack[] {
   if (runtime.tracks2) {
     return runtime.tracks2.map(({ codec, codecProps }) => ({
       codec: codec ?? '',
-      resolution: codecProps?.width && codecProps.height
-        ? `${codecProps.width}×${codecProps.height}`
-        : null,
+      resolution: codecProps?.width && codecProps.height ? `${codecProps.width}×${codecProps.height}` : null,
     }))
   }
   return (runtime.tracks ?? []).map(codec => ({ codec, resolution: null }))
@@ -64,18 +60,15 @@ const SESSION_STATES: readonly string[] = ['idle', 'read', 'publish']
 function toSession(protocol: SessionProtocol, item: MediaMtxSession): Session {
   // A state a later MediaMTX adds reads as idle rather than failing output
   // validation for every row on the page.
-  const state = protocol === 'hls'
-    ? 'read'
-    : SESSION_STATES.includes(item.state ?? '') ? item.state as Session['state'] : 'idle'
+  const state =
+    protocol === 'hls' ? 'read' : SESSION_STATES.includes(item.state ?? '') ? (item.state as Session['state']) : 'idle'
   return {
     id: item.id,
     protocol,
     path: item.path,
     remoteAddr: item.remoteAddr,
     state,
-    inboundBytes: protocol === 'hls'
-      ? null
-      : (protocol === 'srt' ? item.bytesReceived : item.inboundBytes) ?? 0,
+    inboundBytes: protocol === 'hls' ? null : ((protocol === 'srt' ? item.bytesReceived : item.inboundBytes) ?? 0),
     outboundBytes: (protocol === 'srt' ? item.bytesSent : item.outboundBytes) ?? 0,
     created: new Date(item.created),
   }
@@ -91,14 +84,11 @@ function versionParts(version: string): [number, number, number] | null {
 function isBelowMinimum(version: string): boolean {
   const parts = versionParts(version)
   const floor = versionParts(MEDIAMTX_MIN_VERSION)
-  if (!parts || !floor)
-    return false
+  if (!parts || !floor) return false
   const [major, minor, patch] = parts
   const [minMajor, minMinor, minPatch] = floor
-  if (major !== minMajor)
-    return major < minMajor
-  if (minor !== minMinor)
-    return minor < minMinor
+  if (major !== minMajor) return major < minMajor
+  if (minor !== minMinor) return minor < minMinor
   return patch < minPatch
 }
 
@@ -119,8 +109,7 @@ export const router = os.router({
           started: info?.started ? new Date(info.started) : null,
           belowMinimum: version !== null && isBelowMinimum(version),
         }
-      }
-      catch (error) {
+      } catch (error) {
         logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
         return null
       }
@@ -131,8 +120,7 @@ export const router = os.router({
     snapshot: os.streams.snapshot.handler(async ({ input }) => {
       try {
         await captureSnapshot(input.name)
-      }
-      catch (error) {
+      } catch (error) {
         logger.error({ err: error }, `Failed to capture snapshot for ${input.name}`)
         throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to capture snapshot' })
       }
@@ -145,15 +133,11 @@ export const router = os.router({
       // The only failure domain that means "MediaMTX is unreachable" — these two
       // calls and nothing else. Record-state reads and snapshot mtimes below
       // report their own failures instead of blanking the grid.
-      let live: { items: MediaMtxPath[], hlsAddress: string }
+      let live: { items: MediaMtxPath[]; hlsAddress: string }
       try {
-        const [paths, globalConf] = await Promise.all([
-          api.pathsList(),
-          api.configGlobalGet(),
-        ])
+        const [paths, globalConf] = await Promise.all([api.pathsList(), api.configGlobalGet()])
         live = { items: paths.items ?? [], hlsAddress: globalConf.hlsAddress ?? '' }
-      }
-      catch (error) {
+      } catch (error) {
         logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
         return {
           status: 'connection-error' as const,
@@ -199,7 +183,10 @@ export const router = os.router({
 
       // Only no HTTP answer at all means MediaMTX is unreachable.
       if (results.every(r => r.status === 'rejected' && !(r.reason instanceof MediaMtxError))) {
-        logger.error({ err: (results[0] as PromiseRejectedResult).reason }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
+        logger.error(
+          { err: (results[0] as PromiseRejectedResult).reason },
+          `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`,
+        )
         return {
           status: 'connection-error' as const,
           mediaMtxUrl: config.mediaMtxUrl,
@@ -221,10 +208,11 @@ export const router = os.router({
       })
 
       // A stable order, so rows don't reshuffle between polls.
-      sessions.sort((a, b) =>
-        a.path.localeCompare(b.path)
-        || SESSION_PROTOCOLS.indexOf(a.protocol) - SESSION_PROTOCOLS.indexOf(b.protocol)
-        || a.created.getTime() - b.created.getTime(),
+      sessions.sort(
+        (a, b) =>
+          a.path.localeCompare(b.path) ||
+          SESSION_PROTOCOLS.indexOf(a.protocol) - SESSION_PROTOCOLS.indexOf(b.protocol) ||
+          a.created.getTime() - b.created.getTime(),
       )
 
       return { status: 'connected' as const, sessions, protocols, pageSize: SESSIONS_PAGE_SIZE }
@@ -235,8 +223,7 @@ export const router = os.router({
       logger.info({ protocol: input.protocol, id: input.id }, 'Kicking session')
       try {
         await mediaMtxApi(config).sessionsKick(input.protocol, input.id)
-      }
-      catch (error) {
+      } catch (error) {
         if (error instanceof MediaMtxError && error.status === 404)
           throw new ORPCError('NOT_FOUND', { message: 'Session already disconnected' })
         logger.error({ err: error }, 'Failed to kick session')
@@ -262,14 +249,13 @@ export const router = os.router({
     listForStream: os.recordings.listForStream.handler(async ({ input }) => {
       const config = await getAppConfig()
       const streamDir = safeJoin(config.recordingsDirectory, input.streamName)
-      if (!streamDir || !fs.existsSync(streamDir))
-        return { recordings: [], totalCount: 0 }
+      if (!streamDir || !fs.existsSync(streamDir)) return { recordings: [], totalCount: 0 }
 
       const files = listStreamRecordingFiles(config.recordingsDirectory, input.streamName)
       const startIndex = (input.page - 1) * input.take
       const pageFiles = files.slice(startIndex, startIndex + input.take)
 
-      const recordings = pageFiles.map((name) => {
+      const recordings = pageFiles.map(name => {
         const stat = fs.statSync(path.join(streamDir, name))
         return {
           name,
@@ -295,11 +281,10 @@ export const router = os.router({
       try {
         global = await api.configGlobalGet()
         const runtime = await api.pathsGet(input.streamName)
-        const conf = await api.configPathGet(runtime?.confName ?? input.streamName)
-          ?? await api.configPathDefaultsGet()
+        const conf =
+          (await api.configPathGet(runtime?.confName ?? input.streamName)) ?? (await api.configPathDefaultsGet())
         recordFormat = conf.recordFormat ?? null
-      }
-      catch (error) {
+      } catch (error) {
         logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
         return null
       }
@@ -309,19 +294,22 @@ export const router = os.router({
         return { status: 'unavailable' as const, playbackEnabled, recordFormat }
 
       try {
-        const spans = await mediaMtxPlayback(config, global.playbackAddress)
-          .list(input.streamName, input.start, input.end)
+        const spans = await mediaMtxPlayback(config, global.playbackAddress).list(
+          input.streamName,
+          input.start,
+          input.end,
+        )
         return {
           status: 'available' as const,
           spans: spans.map(span => ({ start: new Date(span.start), duration: span.duration })),
         }
-      }
-      catch (error) {
+      } catch (error) {
         logger.error({ err: error }, 'Failed to list recordings from the playback server')
         throw new ORPCError('BAD_GATEWAY', {
-          message: error instanceof MediaMtxError && error.reason
-            ? error.reason
-            : 'Could not reach MediaMTX\'s playback server',
+          message:
+            error instanceof MediaMtxError && error.reason
+              ? error.reason
+              : "Could not reach MediaMTX's playback server",
         })
       }
     }),
@@ -341,8 +329,7 @@ export const router = os.router({
         const config = await getAppConfig()
         try {
           return await mediaMtxApi(config).configGlobalGet()
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
           return null
         }
@@ -353,8 +340,7 @@ export const router = os.router({
         logger.info('Updating global config')
         try {
           await mediaMtxApi(config).configGlobalPatch(input)
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, 'Failed to update global config')
           if (error instanceof MediaMtxError && error.reason)
             throw new ORPCError('BAD_REQUEST', { message: error.reason })
@@ -366,8 +352,7 @@ export const router = os.router({
         const config = await getAppConfig()
         try {
           return await mediaMtxApi(config).configPathDefaultsGet()
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
           return null
         }
@@ -378,8 +363,7 @@ export const router = os.router({
         logger.info('Updating path defaults')
         try {
           await mediaMtxApi(config).configPathDefaultsPatch(input)
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, 'Failed to update path defaults')
           if (error instanceof MediaMtxError && error.reason)
             throw new ORPCError('BAD_REQUEST', { message: error.reason })
@@ -397,12 +381,10 @@ export const router = os.router({
           const [entries, runtime] = await Promise.all([api.configPathsList(), api.pathsList()])
           // A runtime path names the entry backing it, so a regex entry is live
           // whenever any of the paths it covers is (ADR 0002).
-          const readyConfNames = new Set(
-            (runtime.items ?? []).filter(p => p.ready).map(p => p.confName ?? ''),
-          )
+          const readyConfNames = new Set((runtime.items ?? []).filter(p => p.ready).map(p => p.confName ?? ''))
           return {
             status: 'connected' as const,
-            paths: (entries.items ?? []).map((entry) => {
+            paths: (entries.items ?? []).map(entry => {
               const name = entry.name ?? ''
               return {
                 name,
@@ -412,8 +394,7 @@ export const router = os.router({
               }
             }),
           }
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}:${config.mediaMtxApiPort}`)
           return {
             status: 'connection-error' as const,
@@ -434,8 +415,7 @@ export const router = os.router({
             source: input.source,
             rtspTransport: input.rtspTransport,
           })
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, 'Failed to add path')
           // A rejected create is the user's to fix, and only MediaMTX knows
           // which part it disliked — pass its own words through.
@@ -459,11 +439,9 @@ export const router = os.router({
           // Neither lookup landed: no runtime path to read a confName off, and
           // no entry under the path's own name. Nothing to resolve — MediaMTX
           // won't say which wildcard entry would cover a name it isn't running.
-          if (!conf)
-            return { status: 'unresolved' as const }
+          if (!conf) return { status: 'unresolved' as const }
           return { status: 'resolved' as const, confName, conf }
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
           return null
         }
@@ -479,13 +457,11 @@ export const router = os.router({
           const existing = await api.configPathGet(input.name)
           if (existing) {
             await api.configPathPatch(input.name, input.conf)
-          }
-          else {
+          } else {
             logger.info({ path: input.name }, 'Materializing path config entry')
             await api.configPathAdd(input.name, input.conf)
           }
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, 'Failed to update path config')
           // A refused write is the operator's to fix, and MediaMTX's reason
           // names the key it disliked — the form puts it back on that field.
@@ -502,8 +478,7 @@ export const router = os.router({
         const config = await getAppConfig()
         try {
           const runtime = await mediaMtxApi(config).pathsGet(input.name)
-          if (!runtime?.ready)
-            return { status: 'idle' as const }
+          if (!runtime?.ready) return { status: 'idle' as const }
           return {
             status: 'live' as const,
             readyTime: runtime.readyTime ?? null,
@@ -514,8 +489,7 @@ export const router = os.router({
             bytesSent: runtime.bytesSent ?? 0,
             framesInError: runtime.inboundFramesInError ?? null,
           }
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
           return null
         }
@@ -531,8 +505,7 @@ export const router = os.router({
             publisher: runtime?.source?.type ?? null,
             readers: (runtime?.readers ?? []).map(reader => reader.type ?? ''),
           }
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, `Error reaching MediaMTX at: ${config.mediaMtxUrl}`)
           return null
         }
@@ -545,8 +518,7 @@ export const router = os.router({
         logger.info({ path: input.name }, 'Deleting path config entry')
         try {
           await mediaMtxApi(config).configPathDelete(input.name)
-        }
-        catch (error) {
+        } catch (error) {
           logger.error({ err: error }, 'Failed to delete path config')
           throw new ORPCError('INTERNAL_SERVER_ERROR', { message: 'Failed to delete path config' })
         }

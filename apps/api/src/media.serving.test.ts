@@ -17,10 +17,7 @@ vi.mock('./logger', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }))
 
-const fixtures = path.join(
-  fileURLToPath(new URL('../../../', import.meta.url)),
-  'tests/fixtures',
-)
+const fixtures = path.join(fileURLToPath(new URL('../../../', import.meta.url)), 'tests/fixtures')
 
 const CONFIG = {
   mediaMtxUrl: 'http://127.0.0.1',
@@ -173,9 +170,7 @@ describe('screenshots', () => {
 describe('path traversal', () => {
   it('refuses to serve a real file outside the recordings directory', async () => {
     // Resolves to <fixtures>/screenshots/stream1/<png>, which is on disk.
-    const res = await media.request(
-      '/recordings/..%2Fscreenshots/stream1%2F2024-01-15_10-30-00.png',
-    )
+    const res = await media.request('/recordings/..%2Fscreenshots/stream1%2F2024-01-15_10-30-00.png')
 
     expect(res.status).toBe(404)
   })

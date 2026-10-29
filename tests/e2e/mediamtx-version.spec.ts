@@ -7,16 +7,17 @@ test('the header shows the version MediaMTX reports', async ({ page, request }) 
   // Polled, not read once: other specs' config writes restart MediaMTX's API
   // listener (see publish-urls.spec.ts), so a single read can hit it mid-restart.
   let version = ''
-  await expect.poll(async () => {
-    try {
-      const res = await request.get('http://localhost:9997/v3/info')
-      version = res.ok() ? (await res.json() as { version?: string }).version ?? '' : ''
-    }
-    catch {
-      version = ''
-    }
-    return version
-  }).not.toBe('')
+  await expect
+    .poll(async () => {
+      try {
+        const res = await request.get('http://localhost:9997/v3/info')
+        version = res.ok() ? (((await res.json()) as { version?: string }).version ?? '') : ''
+      } catch {
+        version = ''
+      }
+      return version
+    })
+    .not.toBe('')
 
   await page.goto('/')
 

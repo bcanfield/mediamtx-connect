@@ -1,5 +1,4 @@
 import { useTranslations } from 'use-intl'
-
 import { ConnectionStatus } from '@/components/connection-status'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import { ModeToggle } from '@/components/mode-toggle'
@@ -37,8 +36,7 @@ export function AppHeader() {
             {t('logoMark')}
           </span>
           <span className="truncate text-sm">
-            <span className="font-medium">{t('brandPrimary')}</span>
-            {' '}
+            <span className="font-medium">{t('brandPrimary')}</span>{' '}
             <span className="font-normal text-mute">{t('brandSecondary')}</span>
           </span>
         </Link>
@@ -54,7 +52,7 @@ export function AppHeader() {
         aria-label={t('primaryAria')}
         className="mx-auto flex max-w-7xl items-stretch gap-2 overflow-x-auto px-4 sm:gap-4 sm:px-7"
       >
-        {tabs.map((tab) => {
+        {tabs.map(tab => {
           const active = isActiveRoute(pathname, tab.href)
           return (
             <div key={tab.href} className="flex items-stretch gap-2 sm:gap-4">

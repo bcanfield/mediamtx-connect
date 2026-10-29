@@ -9,17 +9,13 @@ interface FormFieldContextValue<
   name: TName
 }
 
-export const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue,
-)
+export const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue)
 
 interface FormItemContextValue {
   id: string
 }
 
-export const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue,
-)
+export const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue)
 
 export function useFormField() {
   const fieldContext = React.use(FormFieldContext)

@@ -28,12 +28,7 @@ const FLEET = [stream('stream1'), stream('stream2'), stream('front-door')]
 
 function renderView(streams: Stream[] = FLEET, path = '/') {
   return renderWithProviders(
-    <LiveStreamsView
-      streams={streams}
-      hlsAddress=":8888"
-      remoteMediaMtxUrl="http://localhost"
-      publishTargets={[]}
-    />,
+    <LiveStreamsView streams={streams} hlsAddress=":8888" remoteMediaMtxUrl="http://localhost" publishTargets={[]} />,
     { path },
   )
 }
@@ -48,8 +43,7 @@ describe('the grid', () => {
     await renderView()
 
     expect(cards()).toHaveLength(3)
-    for (const name of ['stream1', 'stream2', 'front-door'])
-      expect(screen.getByText(name)).toBeInTheDocument()
+    for (const name of ['stream1', 'stream2', 'front-door']) expect(screen.getByText(name)).toBeInTheDocument()
   })
 
   it('renders nothing but the toolbar when the fleet is empty', async () => {

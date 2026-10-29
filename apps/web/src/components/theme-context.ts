@@ -1,5 +1,4 @@
 import type { ResolvedTheme, Theme } from './theme-config'
-
 import { createContext, use } from 'react'
 
 export interface ThemeContextValue {

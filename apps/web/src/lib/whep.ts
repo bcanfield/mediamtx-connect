@@ -19,16 +19,17 @@ const CONNECT_TIMEOUT_MS = 8000
 export function toIceServers(entries: IceServerEntry[] = []): RTCIceServer[] {
   return entries
     .filter(entry => entry.url)
-    .map(entry => (entry.username
-      ? { urls: entry.url!, username: entry.username, credential: entry.password ?? '' }
-      : { urls: entry.url! }))
+    .map(entry =>
+      entry.username
+        ? { urls: entry.url!, username: entry.username, credential: entry.password ?? '' }
+        : { urls: entry.url! },
+    )
 }
 
 export function gatherCandidates(pc: RTCPeerConnection, timeoutMs = ICE_GATHER_TIMEOUT_MS): Promise<void> {
-  if (pc.iceGatheringState === 'complete')
-    return Promise.resolve()
+  if (pc.iceGatheringState === 'complete') return Promise.resolve()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const listener = new AbortController()
     let timer: ReturnType<typeof setTimeout>
     const done = () => {
@@ -36,10 +37,13 @@ export function gatherCandidates(pc: RTCPeerConnection, timeoutMs = ICE_GATHER_T
       clearTimeout(timer)
       resolve()
     }
-    pc.addEventListener('icegatheringstatechange', () => {
-      if (pc.iceGatheringState === 'complete')
-        done()
-    }, { signal: listener.signal })
+    pc.addEventListener(
+      'icegatheringstatechange',
+      () => {
+        if (pc.iceGatheringState === 'complete') done()
+      },
+      { signal: listener.signal },
+    )
     timer = setTimeout(done, timeoutMs)
   })
 }
@@ -61,8 +65,7 @@ export async function negotiateWhep(
     body: pc.localDescription?.sdp ?? offer.sdp,
   })
 
-  if (!response.ok)
-    throw new Error(`whep offer rejected with ${response.status}`)
+  if (!response.ok) throw new Error(`whep offer rejected with ${response.status}`)
 
   await pc.setRemoteDescription({ type: 'answer', sdp: await response.text() })
 
@@ -71,8 +74,7 @@ export async function negotiateWhep(
 }
 
 export function waitForConnected(pc: RTCPeerConnection, timeoutMs = CONNECT_TIMEOUT_MS): Promise<void> {
-  if (pc.connectionState === 'connected')
-    return Promise.resolve()
+  if (pc.connectionState === 'connected') return Promise.resolve()
 
   return new Promise((resolve, reject) => {
     const listener = new AbortController()
@@ -80,17 +82,18 @@ export function waitForConnected(pc: RTCPeerConnection, timeoutMs = CONNECT_TIME
     const settle = (error?: Error) => {
       listener.abort()
       clearTimeout(timer)
-      if (error)
-        reject(error)
-      else
-        resolve()
+      if (error) reject(error)
+      else resolve()
     }
-    pc.addEventListener('connectionstatechange', () => {
-      if (pc.connectionState === 'connected')
-        settle()
-      else if (pc.connectionState === 'failed' || pc.connectionState === 'closed')
-        settle(new Error(`webrtc connection ${pc.connectionState}`))
-    }, { signal: listener.signal })
+    pc.addEventListener(
+      'connectionstatechange',
+      () => {
+        if (pc.connectionState === 'connected') settle()
+        else if (pc.connectionState === 'failed' || pc.connectionState === 'closed')
+          settle(new Error(`webrtc connection ${pc.connectionState}`))
+      },
+      { signal: listener.signal },
+    )
     timer = setTimeout(() => settle(new Error('webrtc connection timed out')), timeoutMs)
   })
 }
@@ -102,13 +105,10 @@ export async function closeWhepSession(
   fetchImpl: typeof fetch = fetch,
 ): Promise<void> {
   try {
-    if (resourceUrl)
-      await fetchImpl(resourceUrl, { method: 'DELETE' })
-  }
-  catch {
+    if (resourceUrl) await fetchImpl(resourceUrl, { method: 'DELETE' })
+  } catch {
     // the session times out server-side on its own
-  }
-  finally {
+  } finally {
     pc.close()
   }
 }

@@ -35,10 +35,9 @@ const stub: StubApi = {
   pathDefaults: () => defaults,
   pathConnections: () => connections,
   deletePathConfig,
-  updatePathConfig: (input) => {
+  updatePathConfig: input => {
     updatePathConfig(input)
-    if (rejection)
-      throw rejection
+    if (rejection) throw rejection
   },
 }
 
@@ -87,9 +86,9 @@ describe('revert to inherited', () => {
     await view.user.click(screen.getByRole('button', { name: 'Revert' }))
 
     expect(await screen.findByText('Reverted to inherited settings')).toBeInTheDocument()
-    expect(deletePathConfig).toHaveBeenCalledWith(
-      { name: 'stream1' } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'],
-    )
+    expect(deletePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+    } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'])
   })
 
   it('leaves the entry alone when the confirm is cancelled', async () => {
@@ -121,9 +120,9 @@ describe('path deletion', () => {
     await view.user.click(await screen.findByRole('button', { name: 'Delete' }))
 
     expect(await screen.findByText('Deleted stream1')).toBeInTheDocument()
-    expect(deletePathConfig).toHaveBeenCalledWith(
-      { name: 'stream1' } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'],
-    )
+    expect(deletePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+    } satisfies RpcInputs['config']['mediamtx']['deletePathConfig'])
     expect(view.router.state.location.pathname).toBe('/config/mediamtx/paths')
   })
 
@@ -142,7 +141,7 @@ describe('path deletion', () => {
   // Confirming before the answer lands would skip the warning entirely.
   it('holds the confirm until it knows what is connected', async () => {
     let land!: () => void
-    connections = new Promise((resolve) => {
+    connections = new Promise(resolve => {
       land = () => resolve({ publisher: 'rtspSession', readers: [] })
     })
     const view = await renderPage('stream1')
@@ -225,7 +224,7 @@ describe('inherited vs overridden', () => {
 
   // Nothing to compare against is not the same as nothing overridden, so an
   // unreadable path-defaults scope marks no field either way.
-  it('marks nothing when path defaults can\'t be read', async () => {
+  it("marks nothing when path defaults can't be read", async () => {
     const { queryClient } = await renderAgainstDefaults({ record: true, recordPath: './recordings/%path/%Y' }, null)
 
     expect(await screen.findByLabelText('recordPath')).toBeInTheDocument()
@@ -255,7 +254,7 @@ describe('editing the source', () => {
     await user.tab()
   }
 
-  it('saves the new source as the path\'s own override', async () => {
+  it("saves the new source as the path's own override", async () => {
     const view = await renderWithSource('rtsp://old.lan:554/live')
 
     await retypeSource(view.user, 'rtsp://new.lan:554/live')
@@ -263,12 +262,10 @@ describe('editing the source', () => {
 
     await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
     // Only the key that changed: everything else keeps tracking path defaults.
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      {
-        name: 'stream1',
-        conf: { source: 'rtsp://new.lan:554/live' },
-      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { source: 'rtsp://new.lan:554/live' },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 
   // The write is only half of it: a value the page then reads back as the old
@@ -296,8 +293,9 @@ describe('editing the source', () => {
 
     await retypeSource(view.user, 'rtsp:/old.lan/live')
 
-    expect(await within(screen.getByTestId('field-source')).findByText(/MediaMTX won't accept this/))
-      .toBeInTheDocument()
+    expect(
+      await within(screen.getByTestId('field-source')).findByText(/MediaMTX won't accept this/),
+    ).toBeInTheDocument()
     await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
     expect(updatePathConfig).not.toHaveBeenCalled()
   })
@@ -316,15 +314,14 @@ describe('editing the source', () => {
   // still has to land on the field that caused it rather than in a toast.
   it('puts a server-side rejection on the field that caused it', async () => {
     rejection = new ORPCError('BAD_REQUEST', {
-      message: 'invalid source: \'srt://cam.lan:8890\'',
+      message: "invalid source: 'srt://cam.lan:8890'",
     })
     const view = await renderWithSource('rtsp://old.lan:554/live')
 
     await retypeSource(view.user, 'srt://cam.lan:8890')
     await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
 
-    expect(await within(screen.getByTestId('field-source')).findByText(/invalid source/))
-      .toBeInTheDocument()
+    expect(await within(screen.getByTestId('field-source')).findByText(/invalid source/)).toBeInTheDocument()
   })
 
   // Path defaults holds no `source`, so there is no inherited value for one to
@@ -334,12 +331,9 @@ describe('editing the source', () => {
     await renderWithSource('rtsp://old.lan:554/live')
 
     expect(await screen.findByLabelText('source')).toBeInTheDocument()
-    expect(within(screen.getByTestId('field-source')).queryByText(/Inherited|Overridden/))
-      .not
-      .toBeInTheDocument()
+    expect(within(screen.getByTestId('field-source')).queryByText(/Inherited|Overridden/)).not.toBeInTheDocument()
     // The keys path defaults does hold are still marked.
-    expect(within(screen.getByTestId('field-recordPath')).getByText(/Inherited|Overridden/))
-      .toBeInTheDocument()
+    expect(within(screen.getByTestId('field-recordPath')).getByText(/Inherited|Overridden/)).toBeInTheDocument()
   })
 })
 
@@ -349,8 +343,10 @@ describe('a name with nothing to resolve', () => {
     await renderWithProviders(<PathConfigPage name="ghost" />)
 
     expect(await screen.findByText(/No config to show for/)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Open path defaults' }))
-      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
+    expect(screen.getByRole('link', { name: 'Open path defaults' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/path-defaults',
+    )
     expect(screen.queryByText('Invalid Config')).not.toBeInTheDocument()
     // Nothing is shown, so neither the "settings for this stream" promise nor
     // an offer to undo overrides would be true.
@@ -381,7 +377,7 @@ describe('resilience', () => {
     return view
   }
 
-  it('saves on-demand pulling as the path\'s own override and nothing else', async () => {
+  it("saves on-demand pulling as the path's own override and nothing else", async () => {
     const view = await renderPulledPath()
 
     await view.user.click(await screen.findByRole('switch', { name: 'sourceOnDemand' }))
@@ -391,27 +387,26 @@ describe('resilience', () => {
     await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
 
     await vi.waitFor(() => expect(updatePathConfig).toHaveBeenCalled())
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      {
-        name: 'stream1',
-        conf: { sourceOnDemand: true, sourceOnDemandCloseAfter: '30s' },
-      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { sourceOnDemand: true, sourceOnDemandCloseAfter: '30s' },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 
   // With no file MediaMTX falls back to alwaysAvailableTracks, which Connect
   // doesn't edit, and names that key in the refusal.
   it('puts the missing-fallback refusal on the alwaysAvailable switch', async () => {
     rejection = new ORPCError('BAD_REQUEST', {
-      message: '\'alwaysAvailableTracks\' must contain at least one track',
+      message: "'alwaysAvailableTracks' must contain at least one track",
     })
     const view = await renderPulledPath()
 
     await view.user.click(await screen.findByRole('switch', { name: 'alwaysAvailable' }))
     await view.user.click(screen.getByRole('button', { name: 'Save to server' }))
 
-    expect(await within(screen.getByTestId('field-alwaysAvailable')).findByText(/must contain at least one track/))
-      .toBeInTheDocument()
+    expect(
+      await within(screen.getByTestId('field-alwaysAvailable')).findByText(/must contain at least one track/),
+    ).toBeInTheDocument()
   })
 })
 
@@ -449,12 +444,10 @@ describe('forwarding', () => {
     await addDestination(view.user, 1, 'rtmp://example.com/live#secretkey')
     await save(view.user)
 
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      {
-        name: 'stream1',
-        conf: { forward: [{ dest: 'rtmp://example.com/live#secretkey' }] },
-      } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { forward: [{ dest: 'rtmp://example.com/live#secretkey' }] },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 
   // A slice can't be nulled through MediaMTX's PATCH, and an empty row is a
@@ -465,12 +458,13 @@ describe('forwarding', () => {
     await view.user.click(await screen.findByRole('button', { name: 'Remove destination 1' }))
     await save(view.user)
 
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      { name: 'stream1', conf: { forward: [] } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { forward: [] },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 
-  it('sends keys it can\'t edit back unchanged', async () => {
+  it("sends keys it can't edit back unchanged", async () => {
     const existing = {
       dest: 'whip://example.com/whip',
       destFingerprint: 'ab:cd',
@@ -518,7 +512,9 @@ describe('forwarding', () => {
 
     const [rail] = await screen.findAllByRole('navigation', { name: 'Config sections' })
     expect(rail).toBeDefined()
-    const labels = within(rail!).getAllByRole('button').map(b => b.textContent)
+    const labels = within(rail!)
+      .getAllByRole('button')
+      .map(b => b.textContent)
     expect(labels.slice(0, 3)).toEqual(['Source', 'Forwarding', 'Resilience'])
   })
 })

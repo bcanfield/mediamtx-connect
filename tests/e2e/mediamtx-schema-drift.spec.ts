@@ -151,18 +151,18 @@ const DELIBERATELY_UNMODELED = {
 // Polling retries on a fresh one (see patchGlobal in publish-urls.spec.ts).
 async function servedKeys(request: APIRequestContext, endpoint: string): Promise<string[]> {
   let keys: string[] = []
-  await expect.poll(async () => {
-    try {
-      const res = await request.get(`${API}${endpoint}`)
-      if (!res.ok())
+  await expect
+    .poll(async () => {
+      try {
+        const res = await request.get(`${API}${endpoint}`)
+        if (!res.ok()) return false
+        keys = Object.keys(await res.json())
+        return true
+      } catch {
         return false
-      keys = Object.keys(await res.json())
-      return true
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+      }
+    })
+    .toBe(true)
   return keys
 }
 
@@ -187,23 +187,13 @@ function expectNoDrift(served: string[], modeled: string[], allowlisted: string[
 test.describe('MediaMTX schema drift', () => {
   test('global config matches what MediaMTX serves', async ({ request }) => {
     const served = await servedKeys(request, '/config/global/get')
-    expectNoDrift(
-      served,
-      Object.keys(GlobalConfigSchema.shape),
-      DELIBERATELY_UNMODELED.global,
-      'global',
-    )
+    expectNoDrift(served, Object.keys(GlobalConfigSchema.shape), DELIBERATELY_UNMODELED.global, 'global')
   })
 
   // MediaMTX serves `source` from path defaults too, so this scope compares
   // against the per-path schema, which is path defaults plus `source`.
   test('path defaults match what MediaMTX serves', async ({ request }) => {
     const served = await servedKeys(request, '/config/pathdefaults/get')
-    expectNoDrift(
-      served,
-      Object.keys(PathConfigSchema.shape),
-      DELIBERATELY_UNMODELED.pathDefaults,
-      'pathDefaults',
-    )
+    expectNoDrift(served, Object.keys(PathConfigSchema.shape), DELIBERATELY_UNMODELED.pathDefaults, 'pathDefaults')
   })
 })

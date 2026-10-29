@@ -14,14 +14,15 @@ const API = 'http://localhost:9997/v3'
 // polling also rides out the moment the listener is down mid-restart. The patch
 // is idempotent, so re-sending it is safe.
 async function patchGlobal(request: APIRequestContext, data: Record<string, unknown>) {
-  await expect.poll(async () => {
-    try {
-      return (await request.patch(`${API}/config/global/patch`, { data })).ok()
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+  await expect
+    .poll(async () => {
+      try {
+        return (await request.patch(`${API}/config/global/patch`, { data })).ok()
+      } catch {
+        return false
+      }
+    })
+    .toBe(true)
 }
 
 // Any ready stream — copying a card's publish URLs reads nothing from the
@@ -59,8 +60,7 @@ test.describe('Copy publish URLs', () => {
       // 127.0.0.1 the API reaches MediaMTX at.
       expect(clipboard).toMatch(new RegExp(`^rtmp://localhost:${RTMP_PORT}/${STREAM}$`, 'm'))
       expect(clipboard).not.toContain(':1935/')
-    }
-    finally {
+    } finally {
       await patchGlobal(request, { rtmpAddress: before.rtmpAddress ?? ':1935' })
     }
   })

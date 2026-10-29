@@ -1,5 +1,5 @@
 module.exports = {
-  // eslint-disable-next-line no-template-curly-in-string
+  // oxlint-disable-next-line no-template-curly-in-string
   tagFormat: '${version}',
   branches: [
     'main',

@@ -6,16 +6,18 @@ import { getAppConfig } from './config-store'
 // it without booting the server (server.ts runs main() at import).
 export const health = new Hono()
 
-health.get('/health', async (c) => {
+health.get('/health', async c => {
   try {
     await getAppConfig()
     return c.json({ status: 'healthy', timestamp: new Date().toISOString() })
-  }
-  catch (error) {
-    return c.json({
-      status: 'unhealthy',
-      timestamp: new Date().toISOString(),
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }, 503)
+  } catch (error) {
+    return c.json(
+      {
+        status: 'unhealthy',
+        timestamp: new Date().toISOString(),
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      503,
+    )
   }
 })

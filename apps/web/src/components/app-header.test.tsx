@@ -41,7 +41,10 @@ async function renderHeader(path = '/') {
 }
 
 /** Open the switcher and choose a language by its native name. */
-async function switchTo(user: ReturnType<typeof renderHeader> extends Promise<infer R> ? R extends { user: infer U } ? U : never : never, language: string) {
+async function switchTo(
+  user: ReturnType<typeof renderHeader> extends Promise<infer R> ? (R extends { user: infer U } ? U : never) : never,
+  language: string,
+) {
   await user.click(screen.getByRole('button', { name: 'Switch language' }))
   await user.click(await screen.findByRole('option', { name: language }))
 }
@@ -67,14 +70,11 @@ describe('primary navigation', () => {
     // Which tab reads as current is `isActiveRoute`'s job and is covered in
     // app-header.tab-state.test.ts — asserting aria-current here would be
     // asserting TanStack Link's prefix matching, not ours.
-    expect(within(nav()).getAllByRole('link').map(a => a.textContent)).toEqual([
-      'Live',
-      'Recordings',
-      'Sessions',
-      'App Config',
-      'MediaMTX Config',
-      'Paths',
-    ])
+    expect(
+      within(nav())
+        .getAllByRole('link')
+        .map(a => a.textContent),
+    ).toEqual(['Live', 'Recordings', 'Sessions', 'App Config', 'MediaMTX Config', 'Paths'])
   })
 
   // Operational tabs on one side, config tabs on the other. The divider is
@@ -145,10 +145,7 @@ describe('locale switching', () => {
 
     // Switching locale must not navigate: the nav hrefs are locale-independent,
     // and a switch that reset you to `/` would lose your place.
-    expect(within(nav()).getByRole('link', { name: 'Configuración de la app' })).toHaveAttribute(
-      'href',
-      '/config',
-    )
+    expect(within(nav()).getByRole('link', { name: 'Configuración de la app' })).toHaveAttribute('href', '/config')
   })
 
   it('ignores a stored value that is not a supported locale', async () => {

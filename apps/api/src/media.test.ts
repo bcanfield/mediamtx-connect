@@ -12,7 +12,7 @@ vi.mock('./logger', () => ({
 }))
 // Keep the rest of node:fs real; only the calls media.ts makes are faked.
 vi.mock('node:fs', async importActual => ({
-  ...await importActual<typeof import('node:fs')>(),
+  ...(await importActual<typeof import('node:fs')>()),
   existsSync: vi.fn(),
   readdirSync: vi.fn(),
   createReadStream: vi.fn(),
@@ -85,10 +85,7 @@ describe('latest screenshot route', () => {
 
   it('ignores non-png files when falling back', async () => {
     existsOnly('/shots/stream1')
-    vi.mocked(readdirSync).mockReturnValue([
-      '2026-07-16_09-00-00.png',
-      'zzz-not-an-image.txt',
-    ] as never)
+    vi.mocked(readdirSync).mockReturnValue(['2026-07-16_09-00-00.png', 'zzz-not-an-image.txt'] as never)
 
     await media.request('/screenshots/stream1/latest')
 
@@ -141,7 +138,7 @@ describe('recording playback proxy', () => {
   const fetchMock = vi.fn<typeof fetch>()
 
   function upstream(playback: () => Response | Promise<Response>) {
-    fetchMock.mockImplementation(async (url) => {
+    fetchMock.mockImplementation(async url => {
       if (String(url).includes(':9997/v3/config/global/get'))
         return Response.json({ playback: true, playbackAddress: ':9996' })
       return playback()
@@ -166,7 +163,7 @@ describe('recording playback proxy', () => {
     vi.unstubAllGlobals()
   })
 
-  it('streams the playback server\'s fMP4 back as video/mp4', async () => {
+  it("streams the playback server's fMP4 back as video/mp4", async () => {
     const res = await media.request(VALID)
 
     expect(res.status).toBe(200)
@@ -196,7 +193,9 @@ describe('recording playback proxy', () => {
   })
 
   it('accepts exactly one hour of MP4', async () => {
-    const res = await media.request('/playback/get?path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3600&format=mp4')
+    const res = await media.request(
+      '/playback/get?path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3600&format=mp4',
+    )
 
     expect(res.status).toBe(200)
   })
@@ -211,9 +210,18 @@ describe('recording playback proxy', () => {
     { name: 'a duration that is not a number', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=abc' },
     { name: 'a zero duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=0' },
     { name: 'an infinite duration', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=Infinity' },
-    { name: 'a duration that overflows to infinity', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=1e999' },
-    { name: 'a format MediaMTX cannot mux', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=60&format=avi' },
-    { name: 'an MP4 longer than an hour', query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3601&format=mp4' },
+    {
+      name: 'a duration that overflows to infinity',
+      query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=1e999',
+    },
+    {
+      name: 'a format MediaMTX cannot mux',
+      query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=60&format=avi',
+    },
+    {
+      name: 'an MP4 longer than an hour',
+      query: 'path=stream1&start=2026-03-14T10%3A00%3A00Z&duration=3601&format=mp4',
+    },
   ])('answers 400 for $name without asking MediaMTX', async ({ query }) => {
     const res = await media.request(`/playback/get?${query}`)
 

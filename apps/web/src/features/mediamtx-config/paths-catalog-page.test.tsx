@@ -37,7 +37,13 @@ describe('paths catalog', () => {
 
     expect(await screen.findByText('2 configured paths')).toBeInTheDocument()
     const rows = screen.getAllByRole('row').slice(1)
-    expect(rows.map(row => within(row).getAllByRole('cell').map(c => c.textContent))).toEqual([
+    expect(
+      rows.map(row =>
+        within(row)
+          .getAllByRole('cell')
+          .map(c => c.textContent),
+      ),
+    ).toEqual([
       ['front-door', 'rtsp://cam.lan/stream', 'idle'],
       ['garage', 'publisher', 'idle'],
     ])
@@ -74,16 +80,20 @@ describe('paths catalog', () => {
     catalog = { status: 'connected', paths: [entry({ name: 'front-door' })] }
     await renderWithProviders(<PathsCatalogPage />)
 
-    expect(await screen.findByRole('link', { name: 'front-door' }))
-      .toHaveAttribute('href', '/config/mediamtx/paths/front-door')
+    expect(await screen.findByRole('link', { name: 'front-door' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/paths/front-door',
+    )
   })
 
   it('offers the guided add from the header', async () => {
     catalog = { status: 'connected', paths: [entry({})] }
     await renderWithProviders(<PathsCatalogPage />)
 
-    expect(await screen.findByRole('link', { name: 'Add RTSP path' }))
-      .toHaveAttribute('href', '/config/mediamtx/add-path')
+    expect(await screen.findByRole('link', { name: 'Add RTSP path' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/add-path',
+    )
   })
 
   it('leaves the regex badge off a plain entry', async () => {
@@ -100,7 +110,7 @@ describe('paths catalog', () => {
     catalog = { status: 'connection-error', mediaMtxUrl: 'http://127.0.0.1', mediaMtxApiPort: 9997 }
     await renderWithProviders(<PathsCatalogPage />)
 
-    expect(await screen.findByText('Can\'t reach MediaMTX')).toBeInTheDocument()
+    expect(await screen.findByText("Can't reach MediaMTX")).toBeInTheDocument()
     expect(screen.getByText('http://127.0.0.1:9997')).toBeInTheDocument()
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
     expect(screen.queryByText('No paths are configured')).not.toBeInTheDocument()
@@ -111,7 +121,9 @@ describe('paths catalog', () => {
     await renderWithProviders(<PathsCatalogPage />)
 
     expect(await screen.findByText('No paths are configured')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Open path defaults' }))
-      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
+    expect(screen.getByRole('link', { name: 'Open path defaults' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/path-defaults',
+    )
   })
 })

@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "semi": false,
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "sortImports": {
+    "groups": [
+      "type-import",
+      ["type-parent", "type-sibling", "type-index", "type-internal"],
+      "value-builtin",
+      "value-external",
+      "value-internal",
+      ["value-parent", "value-sibling", "value-index"],
+      "unknown"
+    ],
+    "newlinesBetween": false
+  },
+  "ignorePatterns": ["**/*.md", "**/*.css", "**/*.html", "demo/**", "apps/api/public/**"]
+}

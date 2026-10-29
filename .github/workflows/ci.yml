@@ -103,14 +103,14 @@ jobs:
       - name: Restore Turborepo cache
         uses: actions/cache@v6
         with:
-          path: |
-            .turbo
-            .eslintcache
+          path: .turbo
           key: turbo-${{ runner.os }}-build-${{ github.sha }}
           restore-keys: |
             turbo-${{ runner.os }}-build-
       - name: Lint
         run: pnpm lint
+      - name: Format
+        run: pnpm format:check
       - name: Typecheck
         run: pnpm typecheck
       - name: i18n key parity + README translation sync

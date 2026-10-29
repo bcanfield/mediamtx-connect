@@ -29,7 +29,11 @@ describe('reads', () => {
     { name: 'info', route: '/v3/info', call: (a: Api) => a.info() },
     { name: 'pathsList', route: '/v3/paths/list', call: (a: Api) => a.pathsList() },
     { name: 'configGlobalGet', route: '/v3/config/global/get', call: (a: Api) => a.configGlobalGet() },
-    { name: 'configPathDefaultsGet', route: '/v3/config/pathdefaults/get', call: (a: Api) => a.configPathDefaultsGet() },
+    {
+      name: 'configPathDefaultsGet',
+      route: '/v3/config/pathdefaults/get',
+      call: (a: Api) => a.configPathDefaultsGet(),
+    },
     { name: 'configPathsList', route: '/v3/config/paths/list', call: (a: Api) => a.configPathsList() },
     { name: 'pathsGet', route: '/v3/paths/get/stream1', call: (a: Api) => a.pathsGet('stream1') },
     { name: 'configPathGet', route: '/v3/config/paths/get/stream1', call: (a: Api) => a.configPathGet('stream1') },
@@ -147,12 +151,12 @@ describe('error paths', () => {
   it('names the method when a write fails', async () => {
     fetchMock.mockResolvedValue(new Response('', { status: 400 }))
 
-    await expect(api.configGlobalPatch({ rtmpAddress: ':1936' }))
-      .rejects
-      .toThrow('MediaMTX PATCH /config/global/patch responded 400')
+    await expect(api.configGlobalPatch({ rtmpAddress: ':1936' })).rejects.toThrow(
+      'MediaMTX PATCH /config/global/patch responded 400',
+    )
   })
 
-  it('carries MediaMTX\'s own reason on a rejected write', async () => {
+  it("carries MediaMTX's own reason on a rejected write", async () => {
     fetchMock.mockResolvedValue(new Response(JSON.stringify({ error: 'path already exists' }), { status: 400 }))
 
     const error = await api.configPathAdd('stream1', { record: true }).catch((e: unknown) => e)
@@ -187,9 +191,7 @@ describe('error paths', () => {
   it('still rejects a per-path read on a non-404 failure', async () => {
     fetchMock.mockResolvedValue(new Response('', { status: 500 }))
 
-    await expect(api.configPathGet('stream1'))
-      .rejects
-      .toThrow('MediaMTX GET /config/paths/get/stream1 responded 500')
+    await expect(api.configPathGet('stream1')).rejects.toThrow('MediaMTX GET /config/paths/get/stream1 responded 500')
   })
 })
 

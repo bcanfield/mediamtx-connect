@@ -1,24 +1,15 @@
 import type { StreamsState } from '@connect/contract'
 import { useQueries } from '@tanstack/react-query'
 import { useMemo } from 'react'
-
 import { PageLayout } from '@/components/page-layout'
 import { advertisesOnlyLoopback } from '@/lib/playback'
 import { publishHost, publishTargets } from '@/lib/publish'
 import { toIceServers } from '@/lib/whep'
 import { orpc } from '@/orpc'
-
 import { LiveStreamsView } from './live-streams-view'
-import {
-  PlaybackUrlBanner,
-  ServerUnreachablePanel,
-  WebrtcHostBanner,
-  ZeroStreamsPanel,
-} from './live-view-states'
+import { PlaybackUrlBanner, ServerUnreachablePanel, WebrtcHostBanner, ZeroStreamsPanel } from './live-view-states'
 
-function isConnectedState(
-  state: StreamsState | undefined,
-): state is Extract<StreamsState, { status: 'connected' }> {
+function isConnectedState(state: StreamsState | undefined): state is Extract<StreamsState, { status: 'connected' }> {
   return state?.status === 'connected'
 }
 
@@ -27,10 +18,7 @@ export function LiveViewPage() {
   // than from streams.list: they're server-wide, the contract already carries
   // them here, and WHEP needs no per-stream surface of its own.
   const [streamsQuery, globalQuery] = useQueries({
-    queries: [
-      orpc.streams.list.queryOptions(),
-      orpc.config.mediamtx.getGlobal.queryOptions(),
-    ],
+    queries: [orpc.streams.list.queryOptions(), orpc.config.mediamtx.getGlobal.queryOptions()],
   })
   const state = streamsQuery.data
 
@@ -40,13 +28,11 @@ export function LiveViewPage() {
 
   // A stream published over any protocol can be read over WebRTC, but only if
   // the server actually serves it — `webrtc: false` means HLS is the only path.
-  const webrtcAddress = globalQuery.data?.webrtc === false
-    ? undefined
-    : globalQuery.data?.webrtcAddress
+  const webrtcAddress = globalQuery.data?.webrtc === false ? undefined : globalQuery.data?.webrtcAddress
   // Nothing to fix when the server serves no WebRTC at all, so this rides the
   // same resolved address the players do.
-  const loopbackWebrtcHosts = Boolean(webrtcAddress)
-    && advertisesOnlyLoopback(globalQuery.data?.webrtcAdditionalHosts, window.location.hostname)
+  const loopbackWebrtcHosts =
+    Boolean(webrtcAddress) && advertisesOnlyLoopback(globalQuery.data?.webrtcAdditionalHosts, window.location.hostname)
   // Stable identity: the player's effect keys on this, and a fresh array every
   // render would renegotiate WHEP on every poll.
   const iceServers = useMemo(
@@ -67,9 +53,7 @@ export function LiveViewPage() {
         />
       )}
 
-      {connected && !hasStreams && (
-        <ZeroStreamsPanel targets={targets} />
-      )}
+      {connected && !hasStreams && <ZeroStreamsPanel targets={targets} />}
 
       {connected && hasStreams && (
         <>

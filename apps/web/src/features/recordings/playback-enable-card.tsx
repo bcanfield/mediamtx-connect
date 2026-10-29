@@ -1,7 +1,6 @@
 import type { PathDefaults } from '@connect/contract'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
@@ -17,10 +16,8 @@ interface Change {
 // Only the keys that aren't there yet.
 function pathDefaultsPatch(defaults: PathDefaults): PathDefaults {
   const patch: PathDefaults = {}
-  if (defaults.recordFormat !== 'fmp4')
-    patch.recordFormat = 'fmp4'
-  if (!defaults.recordPath?.includes('%f'))
-    patch.recordPath = `${defaults.recordPath ?? ''}-%f`
+  if (defaults.recordFormat !== 'fmp4') patch.recordFormat = 'fmp4'
+  if (!defaults.recordPath?.includes('%f')) patch.recordPath = `${defaults.recordPath ?? ''}-%f`
   return patch
 }
 
@@ -48,10 +45,8 @@ export function PlaybackEnableCard({
   const apply = useMutation({
     // Path defaults first: MediaMTX refuses `playback` while recordPath lacks %f.
     mutationFn: async (patch: PathDefaults) => {
-      if (Object.keys(patch).length > 0)
-        await updatePathDefaults.mutateAsync(patch)
-      if (!playbackEnabled)
-        await updateGlobal.mutateAsync({ playback: true })
+      if (Object.keys(patch).length > 0) await updatePathDefaults.mutateAsync(patch)
+      if (!playbackEnabled) await updateGlobal.mutateAsync({ playback: true })
       await onEnabled()
     },
   })
@@ -60,7 +55,9 @@ export function PlaybackEnableCard({
   const overridden = recordFormat !== null && recordFormat !== 'fmp4' && defaults?.recordFormat === 'fmp4'
   const patch = defaults ? pathDefaultsPatch(defaults) : {}
   const changes: Change[] = [
-    ...(patch.recordFormat ? [{ key: 'recordFormat', from: defaults?.recordFormat ?? '', to: patch.recordFormat }] : []),
+    ...(patch.recordFormat
+      ? [{ key: 'recordFormat', from: defaults?.recordFormat ?? '', to: patch.recordFormat }]
+      : []),
     ...(patch.recordPath ? [{ key: 'recordPath', from: defaults?.recordPath ?? '', to: patch.recordPath }] : []),
     ...(playbackEnabled ? [] : [{ key: 'playback', from: 'false', to: 'true' }]),
   ]
@@ -71,9 +68,7 @@ export function PlaybackEnableCard({
 
       <ul className="list-disc space-y-1 pl-5 text-meta text-muted-foreground">
         {!playbackEnabled && <li>{t('playbackOff')}</li>}
-        {recordFormat !== null && recordFormat !== 'fmp4' && (
-          <li>{t('notFmp4', { format: recordFormat })}</li>
-        )}
+        {recordFormat !== null && recordFormat !== 'fmp4' && <li>{t('notFmp4', { format: recordFormat })}</li>}
       </ul>
 
       {pathDefaults.isSuccess && !defaults && (

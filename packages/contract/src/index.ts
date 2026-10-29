@@ -165,22 +165,12 @@ export type PathDefaultsFormData = z.input<typeof PathDefaultsSchema>
 // typo is caught by the form instead of coming back as a refused PATCH.
 const PATH_SOURCE_KEYWORDS = ['publisher', 'redirect', 'rpiCamera']
 
-const PATH_SOURCE_URL_SCHEMES = [
-  'rtsp',
-  'rtsps',
-  'rtmp',
-  'rtmps',
-  'http',
-  'https',
-  'udp',
-  'srt',
-  'whep',
-  'wheps',
-]
+const PATH_SOURCE_URL_SCHEMES = ['rtsp', 'rtsps', 'rtmp', 'rtmps', 'http', 'https', 'udp', 'srt', 'whep', 'wheps']
 
 export function isValidPathSource(source: string): boolean {
-  return PATH_SOURCE_KEYWORDS.includes(source)
-    || PATH_SOURCE_URL_SCHEMES.some(scheme => source.startsWith(`${scheme}://`))
+  return (
+    PATH_SOURCE_KEYWORDS.includes(source) || PATH_SOURCE_URL_SCHEMES.some(scheme => source.startsWith(`${scheme}://`))
+  )
 }
 
 // One entry of a path's `forward` list: MediaMTX re-publishes the path's
@@ -515,9 +505,7 @@ export const contract = {
     list: oc.output(SessionsStateSchema),
     // Disconnects one session. The client can reconnect; this is not a ban.
     // NOT_FOUND when the session had already gone.
-    kick: oc
-      .input(z.object({ protocol: z.enum(SESSION_PROTOCOLS), id: z.string().min(1) }))
-      .output(z.void()),
+    kick: oc.input(z.object({ protocol: z.enum(SESSION_PROTOCOLS), id: z.string().min(1) })).output(z.void()),
   },
   recordings: {
     listStreams: oc.output(z.array(RecordingStreamSummarySchema)),
@@ -554,29 +542,19 @@ export const contract = {
       // Every configured path, with the live server's view of which are up.
       listPaths: oc.output(PathCatalogStateSchema),
       addPath: oc.input(AddPathInputSchema).output(z.void()),
-      getPathConfig: oc
-        .input(z.object({ name: z.string().min(1) }))
-        .output(PathConfigResultSchema.nullable()),
+      getPathConfig: oc.input(z.object({ name: z.string().min(1) })).output(PathConfigResultSchema.nullable()),
       // `conf` carries only the keys the operator changed: MediaMTX stores it
       // as a sparse override, so everything omitted keeps tracking defaults.
-      updatePathConfig: oc
-        .input(z.object({ name: z.string().min(1), conf: PathConfigSchema }))
-        .output(z.void()),
+      updatePathConfig: oc.input(z.object({ name: z.string().min(1), conf: PathConfigSchema })).output(z.void()),
       // One path's live runtime health, polled while its detail page is open.
       // `null` is an unreachable server; a path that isn't running is `idle`.
-      getPathHealth: oc
-        .input(z.object({ name: z.string().min(1) }))
-        .output(PathHealthSchema.nullable()),
+      getPathHealth: oc.input(z.object({ name: z.string().min(1) })).output(PathHealthSchema.nullable()),
       // What a delete would cut off. `null` is an unreachable server, not an
       // idle path — a warning we couldn't build is not a path with nothing on it.
-      getPathConnections: oc
-        .input(z.object({ name: z.string().min(1) }))
-        .output(PathConnectionsSchema.nullable()),
+      getPathConnections: oc.input(z.object({ name: z.string().min(1) })).output(PathConnectionsSchema.nullable()),
       // Removes the path's own entry. A path that a wildcard entry still covers
       // goes back to tracking it; one whose entry was the path is gone.
-      deletePathConfig: oc
-        .input(z.object({ name: z.string().min(1) }))
-        .output(z.void()),
+      deletePathConfig: oc.input(z.object({ name: z.string().min(1) })).output(z.void()),
     },
   },
 }

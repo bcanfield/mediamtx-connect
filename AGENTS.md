@@ -9,7 +9,7 @@ Connect aims to be the ideal companion to MediaMTX. When you weigh, triage or pr
 ## Commands
 
 - `pnpm dev`: zero-config dev stack (seeds `.dev-data/`, starts MediaMTX + fake streams in Docker, web :5173, api :3000). `pnpm dev:stop` stops Docker.
-- `pnpm check`: the inner loop (~4s). Lint, typecheck and tests scoped to what you changed. Run it after every edit.
+- `pnpm check`: the inner loop (~4s). Lint, format check, typecheck and tests scoped to what you changed. Run it after every edit.
 - `pnpm verify`: the gate (~11s warm). Exactly what CI's Build job runs. Run it before every push.
 - `pnpm test:e2e`: Playwright against the built server and a live MediaMTX. Needs `pnpm build`, Docker and ffmpeg. Run it when you touch UI flows or MediaMTX writes.
 - Use `pnpm` only, from the repo root.

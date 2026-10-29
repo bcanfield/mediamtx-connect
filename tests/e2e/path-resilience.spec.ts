@@ -12,15 +12,16 @@ async function mediamtx(
   done: (response: APIResponse) => boolean = response => response.ok(),
 ): Promise<APIResponse> {
   let response: APIResponse | undefined
-  await expect.poll(async () => {
-    try {
-      response = await send()
-      return done(response)
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+  await expect
+    .poll(async () => {
+      try {
+        response = await send()
+        return done(response)
+      } catch {
+        return false
+      }
+    })
+    .toBe(true)
   return response!
 }
 
@@ -65,19 +66,21 @@ test.describe('Path resilience', () => {
       await saveButton(page).click()
       await expect(page.getByTestId('save-bar')).toBeHidden()
 
-      await expect.poll(async () => {
-        const entry = await (await mediamtx(() => request.get(`${API}/config/paths/get/${pulled}`))).json()
-        return [entry.sourceOnDemand, entry.sourceOnDemandCloseAfter]
-      }).toEqual([true, '30s'])
+      await expect
+        .poll(async () => {
+          const entry = await (await mediamtx(() => request.get(`${API}/config/paths/get/${pulled}`))).json()
+          return [entry.sourceOnDemand, entry.sourceOnDemandCloseAfter]
+        })
+        .toEqual([true, '30s'])
 
       await page.goto(`/config/mediamtx/paths/${published}`)
       await page.getByRole('switch', { name: 'alwaysAvailable' }).click()
       await saveButton(page).click()
 
-      await expect(page.getByTestId('field-alwaysAvailable'))
-        .toContainText('\'alwaysAvailableTracks\' must contain at least one track')
-    }
-    finally {
+      await expect(page.getByTestId('field-alwaysAvailable')).toContainText(
+        "'alwaysAvailableTracks' must contain at least one track",
+      )
+    } finally {
       // Independent, so one failed cleanup can't leave the other path behind.
       const cleanups = await Promise.allSettled([deletePath(request, pulled), deletePath(request, published)])
       expect(cleanups.filter(cleanup => cleanup.status === 'rejected')).toEqual([])

@@ -2,14 +2,6 @@ minimumReleaseAgeExcludePrune: true
 
 trustPolicy: no-downgrade
 
-# semver 5.7.2/6.3.1 (2023 maintenance-line republishes, pulled in transitively
-# via @babel/core) predate provenance; the later 7.x line has it, so pnpm's
-# no-downgrade check flags them. Not a takeover — scoped exception, not a
-# blanket policy relaxation.
-trustPolicyExclude:
-  - semver@5.7.2
-  - semver@6.3.1
-
 shellEmulator: true
 
 packages:
@@ -23,9 +15,8 @@ allowBuilds:
 # Single source of truth for third-party versions (pnpm catalogs).
 # Packages reference these as "catalog:"; bump versions here only.
 catalog:
-  '@antfu/eslint-config': ^9.1.0
   '@axe-core/playwright': ^4.11.3
-  '@eslint-react/eslint-plugin': ^5.14.10
+  '@e18e/eslint-plugin': ^0.8.1
   '@hono/node-server': ^2.0.9
   '@hookform/resolvers': ^5.2.2
   '@orpc/client': ^1.14.8
@@ -57,15 +48,20 @@ catalog:
   # semantic-release ships writer 9.
   conventional-changelog-conventionalcommits: ^9.3.1
   dayjs: ^1.11.19
-  eslint: ^10.7.0
-  eslint-plugin-react-hooks: ^7.1.1
-  eslint-plugin-react-refresh: ^0.5.3
+  eslint-plugin-antfu: ^3.3.1
+  eslint-plugin-n: ^18.5.0
+  eslint-plugin-perfectionist: ^5.13.0
+  eslint-plugin-regexp: ^3.3.1
   happy-dom: ^20.11.1
   hls.js: ^1.6.15
   hono: ^4.12.30
   lucide-react: ^1.0.0
   msw: ^2.15.0
   node-cron: ^4.2.1
+  oxfmt: ^0.75.0
+  oxlint: ^1.90.0
+  oxlint-plugin-eslint: ^1.90.0
+  oxlint-tsgolint: ^7.0.2005
   pino: ^10.2.1
   radix-ui: ^1.4.3
   react: ^19.2.7
@@ -79,15 +75,11 @@ catalog:
   tsx: ^4.23.1
   turbo: ^2.10.5
   tw-animate-css: ^1.4.0
-  # Held at 6.0 — the final JS-based line and the bridge to the native 7.0
-  # compiler: it errors on anything 7.0 drops. 7.0 ships no programmatic API,
-  # so typescript-eslint (peer <6.1.0) crashes under it; the API arrives in 7.1.
-  # Bump to ^7 once typescript-eslint ships support. All three packages are
-  # verified to typecheck clean under 7.0.2 already, so it should be this line
-  # alone. If the wait ever gets painful, `@typescript/typescript6` (bin `tsc6`,
-  # re-exports the 6.0 API) is the supported side-by-side path — but it means
-  # linting and typechecking against two different type systems.
-  typescript: ^6.0.3
+  # 7.0 is the native Go compiler and ships no JS API (that arrives in 7.1).
+  # Nothing here needs one: tsc only typechecks, and oxlint's type-aware rules
+  # run on tsgolint's own typescript-go (ADR 0008). Check any new tool that
+  # imports `typescript` against it.
+  typescript: ^7.0.2
   use-intl: ^4.11.1
   vite: ^8.1.4
   vitest: ^4.1.10

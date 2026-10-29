@@ -23,20 +23,26 @@ test.describe('Publish & read panel', () => {
     await page.getByRole('tab', { name: 'Read' }).click()
     // Scoped to the tab panel: the outer panel <section> also contains the HLS
     // heading, so an unscoped match would hit several `code` elements.
-    const hls = page.getByRole('tabpanel').locator('section', { has: page.getByRole('heading', { name: 'HLS', exact: true }) })
+    const hls = page
+      .getByRole('tabpanel')
+      .locator('section', { has: page.getByRole('heading', { name: 'HLS', exact: true }) })
     const url = await hls.locator('code').textContent()
     expect(url).toBe(`http://localhost:8888/${STREAM}/index.m3u8`)
 
     // The muxer starts on the first request, so the first answers can be slow
     // or a brief 404.
-    await expect.poll(async () => {
-      try {
-        const response = await request.get(url!)
-        return response.status() === 200 ? (await response.text()).slice(0, 7) : response.status()
-      }
-      catch {
-        return 'unreachable'
-      }
-    }, { timeout: 30_000 }).toBe('#EXTM3U')
+    await expect
+      .poll(
+        async () => {
+          try {
+            const response = await request.get(url!)
+            return response.status() === 200 ? (await response.text()).slice(0, 7) : response.status()
+          } catch {
+            return 'unreachable'
+          }
+        },
+        { timeout: 30_000 },
+      )
+      .toBe('#EXTM3U')
   })
 })

@@ -32,8 +32,7 @@ export function whepUrlFor(
   webrtcAddress: string | undefined,
   streamName: string,
 ): string | null {
-  if (!remoteMediaMtxUrl || !webrtcAddress)
-    return null
+  if (!remoteMediaMtxUrl || !webrtcAddress) return null
   return `${remoteMediaMtxUrl}${webrtcAddress}/${encodeURIComponent(streamName)}/whep`
 }
 
@@ -42,7 +41,12 @@ const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '::1'])
 // `window.location.hostname` brackets an IPv6 literal (`[::1]`); a config value
 // doesn't, so strip them before comparing.
 function isLoopback(host: string): boolean {
-  return LOOPBACK_HOSTS.has(host.trim().toLowerCase().replace(/^\[|\]$/g, ''))
+  return LOOPBACK_HOSTS.has(
+    host
+      .trim()
+      .toLowerCase()
+      .replace(/^\[|\]$/g, ''),
+  )
 }
 
 /**
@@ -53,18 +57,13 @@ function isLoopback(host: string): boolean {
  * An empty list makes no claim — bare-metal MediaMTX riding
  * `webrtcIPsFromInterfaces` works fine with one — so it never trips.
  */
-export function advertisesOnlyLoopback(
-  additionalHosts: string[] | undefined,
-  browserHostname: string,
-): boolean {
-  if (!additionalHosts?.length)
-    return false
+export function advertisesOnlyLoopback(additionalHosts: string[] | undefined, browserHostname: string): boolean {
+  if (!additionalHosts?.length) return false
   return additionalHosts.every(isLoopback) && !isLoopback(browserHostname)
 }
 
 /** Which transport to try first. Failing over to HLS afterwards is the player's job. */
 export function resolveTransport(mode: PlaybackMode, whepUrl: string | null): PlaybackProtocol {
-  if (mode === 'compat' || !whepUrl)
-    return 'hls'
+  if (mode === 'compat' || !whepUrl) return 'hls'
   return 'webrtc'
 }

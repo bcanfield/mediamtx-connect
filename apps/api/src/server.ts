@@ -22,8 +22,7 @@ app.use('/rpc/*', async (c, next) => {
   const { matched, response } = await rpcHandler.handle(c.req.raw, {
     prefix: '/rpc',
   })
-  if (matched)
-    return c.newResponse(response.body, response)
+  if (matched) return c.newResponse(response.body, response)
   await next()
 })
 
@@ -36,12 +35,12 @@ mountSpa(app, fileURLToPath(new URL('../public', import.meta.url)))
 async function main() {
   await bootstrapConfig()
   startJobs()
-  serve({ fetch: app.fetch, port: env.PORT }, (info) => {
+  serve({ fetch: app.fetch, port: env.PORT }, info => {
     logger.info(`api listening on http://localhost:${info.port}`)
   })
 }
 
-main().catch((error) => {
+main().catch(error => {
   logger.error({ err: error }, 'Failed to start server')
   process.exit(1)
 })

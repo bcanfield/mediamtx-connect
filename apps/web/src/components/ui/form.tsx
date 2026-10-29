@@ -1,16 +1,8 @@
 import type { Label as LabelPrimitive } from 'radix-ui'
-import type {
-  ControllerProps,
-  FieldPath,
-  FieldValues,
-} from 'react-hook-form'
+import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form'
 import { Slot } from 'radix-ui'
 import * as React from 'react'
-import {
-  Controller,
-  FormProvider,
-} from 'react-hook-form'
-
+import { Controller, FormProvider } from 'react-hook-form'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { FormFieldContext, FormItemContext, useFormField } from './form-context'
@@ -20,9 +12,7 @@ const Form = FormProvider
 function FormField<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-  ...props
-}: ControllerProps<TFieldValues, TName>) {
+>({ ...props }: ControllerProps<TFieldValues, TName>) {
   return (
     <FormFieldContext value={{ name: props.name }}>
       <Controller {...props} />
@@ -35,19 +25,12 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 
   return (
     <FormItemContext value={{ id }}>
-      <div
-        data-slot="form-item"
-        className={cn('space-y-1.5', className)}
-        {...props}
-      />
+      <div data-slot="form-item" className={cn('space-y-1.5', className)} {...props} />
     </FormItemContext>
   )
 }
 
-function FormLabel({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField()
 
   return (
@@ -68,11 +51,7 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
     <Slot.Root
       data-slot="form-control"
       id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
+      aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
       aria-invalid={!!error}
       {...props}
     />
@@ -112,12 +91,4 @@ function FormMessage({ className, children, ...props }: React.ComponentProps<'p'
   )
 }
 
-export {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-}
+export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage }

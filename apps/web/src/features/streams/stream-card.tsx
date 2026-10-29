@@ -1,14 +1,12 @@
 import type { RecordState } from '@connect/contract'
 import type { PlaybackMode, PlaybackProtocol } from '@/lib/playback'
 import type { PublishTarget } from '@/lib/publish'
-
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { MoreHorizontal, Play } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
-
 import { mediaCardShell } from '@/components/media-card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Button } from '@/components/ui/button'
@@ -55,7 +53,8 @@ export interface StreamCardProps {
   snapshotMtime?: Date | null
 }
 
-const overlayPill = 'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-micro font-medium uppercase tracking-[0.07em]'
+const overlayPill =
+  'inline-flex items-center rounded-full border bg-black/75 px-2.5 py-1 font-mono text-micro font-medium uppercase tracking-[0.07em]'
 const overlayPillLive = cn(overlayPill, 'gap-1.5 border-live/35 text-live-foreground')
 const overlayPillNeutral = cn(overlayPill, 'border-white/15 text-white/90')
 // The overlay always sits on black video, so these are fixed rather than themed.
@@ -112,13 +111,10 @@ export function StreamCard({
   const isLive = playing.includes(streamName)
 
   const togglePlay = () => {
-    if (playDisabled)
-      return
-    const updated = isLive
-      ? playing.filter(s => s !== streamName)
-      : [...playing, streamName]
+    if (playDisabled) return
+    const updated = isLive ? playing.filter(s => s !== streamName) : [...playing, streamName]
 
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({
         ...prev,
@@ -137,8 +133,7 @@ export function StreamCard({
   const toggleRecord = async () => {
     try {
       await updatePathConfig.mutateAsync({ name: streamName, conf: { record: shownRecordState === 'off' } })
-    }
-    catch {
+    } catch {
       toast.error(t('recordError.title'), { description: t('recordError.description') })
     }
   }
@@ -148,8 +143,7 @@ export function StreamCard({
     try {
       await navigator.clipboard.writeText(text)
       toast.success(t('copyPublish.title'), { description: t('copyPublish.description') })
-    }
-    catch {
+    } catch {
       toast.error(t('copyPublishError.title'), { description: t('copyPublishError.description') })
     }
   }
@@ -163,8 +157,7 @@ export function StreamCard({
       setSnapshotVersion(v => v + 1)
       await queryClient.invalidateQueries({ queryKey: orpc.streams.list.queryKey() })
       toast.success(t('snapshotSuccess.title'), { description: t('snapshotSuccess.description') })
-    }
-    catch {
+    } catch {
       toast.error(t('snapshotError.title'), { description: t('snapshotError.description') })
     }
   }
@@ -180,64 +173,49 @@ export function StreamCard({
   const telemetry = viewers !== undefined ? t('viewers', { count: viewers }) : undefined
 
   return (
-    <div
-      data-testid="stream-card"
-      className={cn(mediaCardShell, playDisabled && 'opacity-75')}
-    >
+    <div data-testid="stream-card" className={cn(mediaCardShell, playDisabled && 'opacity-75')}>
       <AspectRatio ratio={16 / 9} className="group relative overflow-hidden bg-black">
-        {isLive
-          ? (
-              <VideoPlayer
-                hlsUrl={hlsUrlFor(remoteMediaMtxUrl, hlsAddress ?? '', streamName)}
-                whepUrl={whepUrlFor(remoteMediaMtxUrl, webrtcAddress, streamName)}
-                mode={playbackMode}
-                iceServers={iceServers}
-                onProtocolChange={setProtocol}
-              />
-            )
-          : thumbnailError
-            ? (
-                <div className="size-full bg-hatch">
-                  <span className="absolute inset-x-0 bottom-3 px-4 text-center font-mono text-label text-faint">
-                    {t('noSnapshot')}
-                  </span>
-                </div>
-              )
-            : (
-                <img
-                  alt=""
-                  onError={() => setThumbnailError(true)}
-                  src={`/media/screenshots/${encodeURIComponent(streamName)}/latest${snapshotVersion > 0 ? `?v=${snapshotVersion}` : ''}`}
-                  className="size-full object-cover"
-                />
-              )}
+        {isLive ? (
+          <VideoPlayer
+            hlsUrl={hlsUrlFor(remoteMediaMtxUrl, hlsAddress ?? '', streamName)}
+            whepUrl={whepUrlFor(remoteMediaMtxUrl, webrtcAddress, streamName)}
+            mode={playbackMode}
+            iceServers={iceServers}
+            onProtocolChange={setProtocol}
+          />
+        ) : thumbnailError ? (
+          <div className="size-full bg-hatch">
+            <span className="absolute inset-x-0 bottom-3 px-4 text-center font-mono text-label text-faint">
+              {t('noSnapshot')}
+            </span>
+          </div>
+        ) : (
+          <img
+            alt=""
+            onError={() => setThumbnailError(true)}
+            src={`/media/screenshots/${encodeURIComponent(streamName)}/latest${snapshotVersion > 0 ? `?v=${snapshotVersion}` : ''}`}
+            className="size-full object-cover"
+          />
+        )}
 
         {/* top-left: status pills */}
         <div className="absolute left-2.5 top-2.5 flex items-center gap-1.5">
-          {isLive
-            ? (
-                <>
-                  <span className={overlayPillLive}>
-                    <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-live motion-reduce:animate-none" />
-                    {t('live')}
-                  </span>
-                  <span className={overlayPillNeutral}>
-                    {protocol ? protocolLabel[protocol] : t('protocolConnecting')}
-                  </span>
-                  {fellBackFromLowLat && (
-                    <span className={overlayPillWarn}>
-                      {t('protocolFellBack')}
-                    </span>
-                  )}
-                </>
-              )
-            : !thumbnailError && (
-                <span className={overlayPillNeutral}>
-                  {snapshotMtime
-                    ? t('snapshotWithAge', { age: format.relativeTime(snapshotMtime, now) })
-                    : t('snapshot')}
-                </span>
-              )}
+          {isLive ? (
+            <>
+              <span className={overlayPillLive}>
+                <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-live motion-reduce:animate-none" />
+                {t('live')}
+              </span>
+              <span className={overlayPillNeutral}>{protocol ? protocolLabel[protocol] : t('protocolConnecting')}</span>
+              {fellBackFromLowLat && <span className={overlayPillWarn}>{t('protocolFellBack')}</span>}
+            </>
+          ) : (
+            !thumbnailError && (
+              <span className={overlayPillNeutral}>
+                {snapshotMtime ? t('snapshotWithAge', { age: format.relativeTime(snapshotMtime, now) }) : t('snapshot')}
+              </span>
+            )
+          )}
         </div>
 
         {/* bottom scrim behind chips */}
@@ -261,9 +239,7 @@ export function StreamCard({
 
         {/* bottom-right: telemetry */}
         {telemetry && (
-          <span className="absolute bottom-2.5 right-2.5 font-mono text-label text-white/70">
-            {telemetry}
-          </span>
+          <span className="absolute bottom-2.5 right-2.5 font-mono text-label text-white/70">{telemetry}</span>
         )}
 
         {/* idle: centered play affordance */}
@@ -293,7 +269,9 @@ export function StreamCard({
             {/* Unknown gets a hollow dot of its own: reading as OFF would claim
                 the stream isn't recording while MediaMTX may be writing files. */}
             {shownRecordState !== 'off' && (
-              <span className={cn('whitespace-nowrap', shownRecordState === 'on' ? 'text-live-foreground' : 'text-warning')}>
+              <span
+                className={cn('whitespace-nowrap', shownRecordState === 'on' ? 'text-live-foreground' : 'text-warning')}
+              >
                 {' '}
                 {shownRecordState === 'on' ? t('recIndicator') : t('recIndicatorUnknown')}
               </span>
@@ -314,12 +292,7 @@ export function StreamCard({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-7.5"
-                aria-label={t('actionsAria')}
-              >
+              <Button variant="outline" size="icon" className="size-7.5" aria-label={t('actionsAria')}>
                 <MoreHorizontal className="size-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -331,11 +304,12 @@ export function StreamCard({
                 {t('menu.takeSnapshot')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={toggleRecord} disabled={recordState === 'unknown' || updatePathConfig.isPending}>
+              <DropdownMenuItem
+                onClick={toggleRecord}
+                disabled={recordState === 'unknown' || updatePathConfig.isPending}
+              >
                 <span className="flex-1">{t('menu.record')}</span>
-                <span className="font-mono text-micro uppercase text-faint">
-                  {recordLabel[shownRecordState]}
-                </span>
+                <span className="font-mono text-micro uppercase text-faint">{recordLabel[shownRecordState]}</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={copyPublishUrls} disabled={publishTargets.length === 0}>
                 {t('menu.copyPublishUrls')}

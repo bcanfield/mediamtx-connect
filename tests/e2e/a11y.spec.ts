@@ -18,13 +18,9 @@ for (const { name, path } of pages) {
     await page.goto(path)
     await page.waitForLoadState('networkidle')
 
-    const result = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze()
+    const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
 
-    const blocking = result.violations.filter(v =>
-      v.impact === 'serious' || v.impact === 'critical',
-    )
+    const blocking = result.violations.filter(v => v.impact === 'serious' || v.impact === 'critical')
 
     expect(blocking, JSON.stringify(blocking, null, 2)).toEqual([])
   })

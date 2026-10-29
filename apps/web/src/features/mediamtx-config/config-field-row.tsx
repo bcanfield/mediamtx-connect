@@ -2,13 +2,7 @@ import type { ChangeEvent } from 'react'
 import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { useFormState } from 'react-hook-form'
 import { useTranslations } from 'use-intl'
-
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
@@ -88,8 +82,7 @@ export function InheritanceMarker({
   value: unknown
 }) {
   const t = useTranslations('Config.mediamtxForm.inheritance')
-  if (!inheritedValues || !(name in inheritedValues))
-    return null
+  if (!inheritedValues || !(name in inheritedValues)) return null
 
   const inherited = sameValue(value, inheritedValues[name])
   return (
@@ -108,8 +101,7 @@ export function InheritanceMarker({
 // Both sides come off the same schema, so identity covers everything but the
 // list fields.
 function sameValue(a: unknown, b: unknown): boolean {
-  if (Array.isArray(a) && Array.isArray(b))
-    return a.length === b.length && a.every((item, i) => item === b[i])
+  if (Array.isArray(a) && Array.isArray(b)) return a.length === b.length && a.every((item, i) => item === b[i])
   return a === b
 }
 
@@ -181,11 +173,7 @@ export function SwitchFieldRow<T extends FieldValues>({
         >
           <FormItem className="space-y-1.5">
             <FormControl>
-              <Switch
-                checked={field.value === true}
-                onCheckedChange={field.onChange}
-                aria-label={name}
-              />
+              <Switch checked={field.value === true} onCheckedChange={field.onChange} aria-label={name} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -225,10 +213,10 @@ export function ListFieldRow<T extends FieldValues>({
                 {...field}
                 aria-label={name}
                 className="min-h-16 font-mono text-control"
-                value={toTextarea(field.value as string[] | undefined)}
+                value={toTextarea(field.value)}
                 onChange={e => field.onChange(fromTextarea(e))}
                 onBlur={() => {
-                  field.onChange(cleanLines(field.value as string[] | undefined))
+                  field.onChange(cleanLines(field.value))
                   field.onBlur()
                 }}
               />

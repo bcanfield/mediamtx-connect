@@ -26,9 +26,8 @@ export function parseArgs(args) {
 // i18n:check also guards the translated READMEs, so an edit to README.md, to a
 // docs/i18n/README.<locale>.md or to their sync hashes has to run it too.
 export function touchesI18n(files) {
-  return files.some(f =>
-    f.startsWith('apps/web/messages/')
-    || f.startsWith('docs/i18n/')
-    || /(?:^|\/)README(?:\.[a-z-]+)?\.md$/.test(f),
+  return files.some(
+    f =>
+      f.startsWith('apps/web/messages/') || f.startsWith('docs/i18n/') || /(?:^|\/)README(?:\.[a-z-]+)?\.md$/.test(f),
   )
 }

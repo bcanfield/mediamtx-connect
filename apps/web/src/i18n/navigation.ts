@@ -1,10 +1,7 @@
 // Compat layer over TanStack Router matching the old next-intl navigation
 // surface, so ported components keep their `href`-based Link and usePathname.
 import type { ComponentProps } from 'react'
-import {
-  Link as RouterLink,
-  useLocation,
-} from '@tanstack/react-router'
+import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import { createElement } from 'react'
 
 // TanStack types `search` off a literal `to`; this shim's `to` is a plain

@@ -24,8 +24,11 @@ beforeEach(() => {
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-const ALL_LISTED = ['rtsp', 'rtsps', 'rtmp', 'rtmps', 'srt', 'webrtc', 'hls']
-  .map(protocol => ({ protocol, status: 'listed', truncated: false }))
+const ALL_LISTED = ['rtsp', 'rtsps', 'rtmp', 'rtmps', 'srt', 'webrtc', 'hls'].map(protocol => ({
+  protocol,
+  status: 'listed',
+  truncated: false,
+}))
 
 function session(overrides: Record<string, unknown>) {
   return {
@@ -51,35 +54,55 @@ describe('sessions page', () => {
   it('renders one row per session', async () => {
     sessions = connected([
       session({ id: 'a1' }),
-      session({ id: 'h1', protocol: 'hls', path: 'stream3', remoteAddr: '10.0.0.9', state: 'read', inboundBytes: null, outboundBytes: 1048576 }),
+      session({
+        id: 'h1',
+        protocol: 'hls',
+        path: 'stream3',
+        remoteAddr: '10.0.0.9',
+        state: 'read',
+        inboundBytes: null,
+        outboundBytes: 1048576,
+      }),
     ])
     await renderWithProviders(<SessionsPage />)
 
     await screen.findByText('2 sessions')
     const rows = screen.getAllByRole('row').slice(1)
-    expect(rows.map(row => within(row).getAllByRole('cell').slice(0, 6).map(c => c.textContent))).toEqual([
+    expect(
+      rows.map(row =>
+        within(row)
+          .getAllByRole('cell')
+          .slice(0, 6)
+          .map(c => c.textContent),
+      ),
+    ).toEqual([
       ['stream1', 'RTSP', '172.18.0.4:51234', 'publish', '2 kB', '0 byte'],
       ['stream3', 'HLS', '10.0.0.9', 'read', '—', '1 MB'],
     ])
   })
 
   it('names a protocol MediaMTX has not enabled', async () => {
-    sessions = connected([session({})], [
-      ...ALL_LISTED.filter(p => p.protocol !== 'rtmps' && p.protocol !== 'srt'),
-      { protocol: 'rtmps', status: 'disabled', truncated: false },
-      { protocol: 'srt', status: 'failed', truncated: false },
-    ])
+    sessions = connected(
+      [session({})],
+      [
+        ...ALL_LISTED.filter(p => p.protocol !== 'rtmps' && p.protocol !== 'srt'),
+        { protocol: 'rtmps', status: 'disabled', truncated: false },
+        { protocol: 'srt', status: 'failed', truncated: false },
+      ],
+    )
     await renderWithProviders(<SessionsPage />)
 
-    expect(await screen.findByText('Not listed: RTMPS (not enabled on this server), SRT (couldn\'t be read).')).toBeInTheDocument()
+    expect(
+      await screen.findByText("Not listed: RTMPS (not enabled on this server), SRT (couldn't be read)."),
+    ).toBeInTheDocument()
   })
 
-  it('says when a protocol\'s list was cut at the first page', async () => {
+  it("says when a protocol's list was cut at the first page", async () => {
     sessions = {
-      ...connected([session({})], [
-        ...ALL_LISTED.filter(p => p.protocol !== 'webrtc'),
-        { protocol: 'webrtc', status: 'listed', truncated: true },
-      ]),
+      ...connected(
+        [session({})],
+        [...ALL_LISTED.filter(p => p.protocol !== 'webrtc'), { protocol: 'webrtc', status: 'listed', truncated: true }],
+      ),
       pageSize: 2500,
     }
     await renderWithProviders(<SessionsPage />)
@@ -92,7 +115,7 @@ describe('sessions page', () => {
     sessions = { status: 'connection-error', mediaMtxUrl: 'http://127.0.0.1', mediaMtxApiPort: 9997 }
     await renderWithProviders(<SessionsPage />)
 
-    expect(await screen.findByText('Can\'t reach MediaMTX')).toBeInTheDocument()
+    expect(await screen.findByText("Can't reach MediaMTX")).toBeInTheDocument()
     expect(screen.getByText('http://127.0.0.1:9997')).toBeInTheDocument()
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
     expect(screen.queryByText('No one is connected')).not.toBeInTheDocument()
@@ -154,6 +177,6 @@ describe('kicking a session', () => {
     await view.user.click(await screen.findByRole('button', { name: 'Kick' }))
     await view.user.click(await screen.findByRole('button', { name: 'Kick client' }))
 
-    expect(await screen.findByText('Couldn\'t kick the session')).toBeInTheDocument()
+    expect(await screen.findByText("Couldn't kick the session")).toBeInTheDocument()
   })
 })

@@ -5,7 +5,6 @@ import { TriangleAlertIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
-
 import { PageLayout } from '@/components/page-layout'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,13 +19,12 @@ import {
 } from '@/components/ui/dialog'
 import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
-
 import { MediaMTXConfigForm } from './mediamtx-config-form'
 import { PathHealthPanel } from './path-health-panel'
 import { PublishReadPanel } from './publish-read-panel'
 import { pathConfigScope } from './sections'
 
-export function PathConfigPage({ name, section }: { name: string, section?: string }) {
+export function PathConfigPage({ name, section }: { name: string; section?: string }) {
   const t = useTranslations('Config')
   const queryClient = useQueryClient()
   // The form re-arms its scroll spy whenever the scope's identity changes.
@@ -62,14 +60,12 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
       actions={
         // Both act on the path's own entry, and there is none to act on while
         // the path is still tracking a wildcard one.
-        effective && !inheritedFrom
-          ? (
-              <div className="flex items-center gap-2">
-                <RevertToInherited name={name} queryKey={options.queryKey} />
-                <DeletePath name={name} />
-              </div>
-            )
-          : null
+        effective && !inheritedFrom ? (
+          <div className="flex items-center gap-2">
+            <RevertToInherited name={name} queryKey={options.queryKey} />
+            <DeletePath name={name} />
+          </div>
+        ) : null
       }
     >
       {/* Above the editor and independent of it: health is runtime state, and a
@@ -77,9 +73,7 @@ export function PathConfigPage({ name, section }: { name: string, section?: stri
       <PathHealthPanel name={name} />
       {/* Unresolved too: a name nothing publishes to yet is exactly when the
           publish URL is needed. It has no source, so it counts as a publisher. */}
-      {(effective || unresolved) && (
-        <PublishReadPanel name={name} source={effective?.conf.source} />
-      )}
+      {(effective || unresolved) && <PublishReadPanel name={name} source={effective?.conf.source} />}
       {effective && (
         <MediaMTXConfigForm
           // Reverting swaps every value for the inherited one, and the
@@ -154,8 +148,7 @@ function DeletePath({ name }: { name: string }) {
       // The catalog we are about to land on is now one row shorter.
       await queryClient.invalidateQueries()
       await navigate({ to: '/config/mediamtx/paths' })
-    }
-    catch {
+    } catch {
       toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
     }
   }
@@ -163,28 +156,24 @@ function DeletePath({ name }: { name: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button type="button" variant="destructive">{t('action')}</Button>
+        <Button type="button" variant="destructive">
+          {t('action')}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('confirmTitle', { name })}</DialogTitle>
           <DialogDescription>{t('confirmDescription')}</DialogDescription>
         </DialogHeader>
-        {checking && (
-          <p className="text-meta text-muted-foreground">{t('checking')}</p>
-        )}
-        {!checking && attached === null && (
-          <p className="text-meta text-muted-foreground">{t('checkFailed')}</p>
-        )}
+        {checking && <p className="text-meta text-muted-foreground">{t('checking')}</p>}
+        {!checking && attached === null && <p className="text-meta text-muted-foreground">{t('checkFailed')}</p>}
         {!checking && attached && (attached.publisher || attached.readers.length > 0) && (
           <div className="flex flex-col gap-1.5 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
             <span className="flex items-center gap-2 font-medium text-foreground">
               <TriangleAlertIcon aria-hidden className="size-3.5 shrink-0 text-warning" />
               {t('active.title')}
             </span>
-            {attached.publisher && (
-              <span>{t('active.publisher', { type: attached.publisher })}</span>
-            )}
+            {attached.publisher && <span>{t('active.publisher', { type: attached.publisher })}</span>}
             {attached.readers.length > 0 && (
               <span>{t('active.readers', { count: attached.readers.length, types: readerTypes })}</span>
             )}
@@ -193,7 +182,9 @@ function DeletePath({ name }: { name: string }) {
         )}
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="ghost">{t('cancel')}</Button>
+            <Button type="button" variant="ghost">
+              {t('cancel')}
+            </Button>
           </DialogClose>
           <Button
             type="button"
@@ -211,7 +202,7 @@ function DeletePath({ name }: { name: string }) {
 
 // Deleting the path's own entry is the only way back to pure inheritance, and
 // it drops every override in one click — hence the confirm.
-function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonly unknown[] }) {
+function RevertToInherited({ name, queryKey }: { name: string; queryKey: readonly unknown[] }) {
   const t = useTranslations('Config.pathConfig.revert')
   const queryClient = useQueryClient()
   const deletePathConfig = useMutation(orpc.config.mediamtx.deletePathConfig.mutationOptions())
@@ -224,8 +215,7 @@ function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonl
       toast.success(t('toasts.success'))
       // Every value on the page came from the entry that just went away.
       await queryClient.invalidateQueries({ queryKey })
-    }
-    catch {
+    } catch {
       toast.error(t('toasts.errorTitle'), { description: t('toasts.errorDescription') })
     }
   }
@@ -233,7 +223,9 @@ function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonl
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline">{t('action')}</Button>
+        <Button type="button" variant="outline">
+          {t('action')}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -242,14 +234,11 @@ function RevertToInherited({ name, queryKey }: { name: string, queryKey: readonl
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="ghost">{t('cancel')}</Button>
+            <Button type="button" variant="ghost">
+              {t('cancel')}
+            </Button>
           </DialogClose>
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={revert}
-            disabled={deletePathConfig.isPending}
-          >
+          <Button type="button" variant="destructive" onClick={revert} disabled={deletePathConfig.isPending}>
             {t('confirm')}
           </Button>
         </DialogFooter>

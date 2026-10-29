@@ -8,11 +8,8 @@
 // `/config` and `/config/mediamtx/*` are adjacent tabs, and a prefix rule lights
 // both of them on every MediaMTX config page.
 export function isActiveRoute(pathname: string | null, href: string) {
-  if (!pathname)
-    return false
-  if (href === '/')
-    return pathname === '/'
-  if (href === '/config')
-    return pathname === '/config'
+  if (!pathname) return false
+  if (href === '/') return pathname === '/'
+  if (href === '/config') return pathname === '/config'
   return pathname.startsWith(href)
 }

@@ -19,30 +19,31 @@ type Scope = 'global' | 'pathdefaults'
 // moves rtmpAddress), so a pooled socket can be dead on arrival. Retrying gets
 // a fresh one. Both writes are idempotent.
 async function patch(request: APIRequestContext, scope: Scope, data: Record<string, unknown>) {
-  await expect.poll(async () => {
-    try {
-      return (await request.patch(`${API}/config/${scope}/patch`, { data })).ok()
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+  await expect
+    .poll(async () => {
+      try {
+        return (await request.patch(`${API}/config/${scope}/patch`, { data })).ok()
+      } catch {
+        return false
+      }
+    })
+    .toBe(true)
 }
 
 async function read(request: APIRequestContext, scope: Scope): Promise<Record<string, unknown>> {
   let body: Record<string, unknown> = {}
-  await expect.poll(async () => {
-    try {
-      const res = await request.get(`${API}/config/${scope}/get`)
-      if (!res.ok())
+  await expect
+    .poll(async () => {
+      try {
+        const res = await request.get(`${API}/config/${scope}/get`)
+        if (!res.ok()) return false
+        body = await res.json()
+        return true
+      } catch {
         return false
-      body = await res.json()
-      return true
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+      }
+    })
+    .toBe(true)
   return body
 }
 
@@ -52,8 +53,7 @@ async function spansSince(request: APIRequestContext, since: Date): Promise<numb
   try {
     const res = await request.get(`${PLAYBACK}/list`, { params: { path: STREAM, start: since.toISOString() } })
     return res.ok() ? (await res.json()).length : 0
-  }
-  catch {
+  } catch {
     return 0
   }
 }
@@ -115,14 +115,18 @@ test.describe('Recording timeline', () => {
       // range maths).
       const clip = page.getByRole('region', { name: 'Download clip' })
       await clip.getByRole('button', { name: 'Last 5 min' }).click()
-      const clipResponse = page.waitForResponse(r => r.url().includes('/media/playback/get?') && r.url().includes('format=mp4'))
+      const clipResponse = page.waitForResponse(
+        r => r.url().includes('/media/playback/get?') && r.url().includes('format=mp4'),
+      )
       const download = page.waitForEvent('download')
       await clip.getByRole('button', { name: 'Download' }).click()
       expect((await clipResponse).status()).toBe(200)
       expect((await clipResponse).headers()['content-type']).toBe('video/mp4')
       const saved = await download
-      expect(saved.suggestedFilename()).toMatch(new RegExp(`^${STREAM}_\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}\\.mp4$`))
-      const bytes = await readFile((await saved.path())!)
+      expect(saved.suggestedFilename()).toMatch(
+        new RegExp(`^${STREAM}_\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}\\.mp4$`),
+      )
+      const bytes = await readFile(await saved.path())
       expect(bytes.subarray(4, 8).toString('ascii')).toBe('ftyp')
       // More than ftyp + moov alone (well under 2 kB): stream4's HEVC keyframe
       // at 540p is several kB by itself.
@@ -131,8 +135,7 @@ test.describe('Recording timeline', () => {
       // The <video> may still be streaming that span through the api, and the
       // restore below closes the playback server under it.
       await page.goto('about:blank')
-    }
-    finally {
+    } finally {
       // Playback first: MediaMTX refuses a recordPath without %f while it's on.
       // recordFormat is left alone: the card only writes it when it isn't fmp4,
       // and the only other spec that writes it (path-config) restores its own.

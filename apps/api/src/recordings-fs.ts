@@ -35,8 +35,7 @@ export function summarizeStreamRecordings(directoryPath: string): Record<string,
     let latestMtime: Date | null = null
     for (const file of files) {
       const stat = statSync(path.join(dirPath, file))
-      if (!latestMtime || stat.mtime > latestMtime)
-        latestMtime = stat.mtime
+      if (!latestMtime || stat.mtime > latestMtime) latestMtime = stat.mtime
     }
     summary[dir] = { count: files.length, latestMtime }
   }
@@ -68,14 +67,15 @@ export function screenshotUrlFor(config: AppConfig, streamName: string, recordin
 // "latest".
 export function latestScreenshotPathFor(config: AppConfig, streamName: string): string | null {
   const dir = path.join(config.screenshotsDirectory, streamName)
-  if (!existsSync(dir))
-    return null
+  if (!existsSync(dir)) return null
 
   const live = path.join(dir, 'live.png')
-  if (existsSync(live))
-    return live
+  if (existsSync(live)) return live
 
-  const latest = readdirSync(dir).filter(f => f.endsWith('.png')).sort().at(-1)
+  const latest = readdirSync(dir)
+    .filter(f => f.endsWith('.png'))
+    .sort()
+    .at(-1)
   return latest ? path.join(dir, latest) : null
 }
 

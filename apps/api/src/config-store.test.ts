@@ -23,11 +23,11 @@ vi.mock('./logger', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }))
 vi.mock('node:fs', async importActual => ({
-  ...await importActual<typeof import('node:fs')>(),
+  ...(await importActual<typeof import('node:fs')>()),
   existsSync: vi.fn(),
 }))
 vi.mock('node:fs/promises', async importActual => ({
-  ...await importActual<typeof import('node:fs/promises')>(),
+  ...(await importActual<typeof import('node:fs/promises')>()),
   mkdir: vi.fn(),
   readFile: vi.fn(),
   rename: vi.fn(),
@@ -55,8 +55,7 @@ function driftWarning() {
 /** When a mock first ran, for asserting call order. Throws if it never ran. */
 function firstCallOrder(mock: { mock: { invocationCallOrder: number[] } }): number {
   const [order] = mock.mock.invocationCallOrder
-  if (order === undefined)
-    throw new Error('expected the mock to have been called, but it never was')
+  if (order === undefined) throw new Error('expected the mock to have been called, but it never was')
   return order
 }
 

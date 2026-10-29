@@ -16,12 +16,17 @@ const recordingContentTypes: Record<string, string> = {
   '.ts': 'video/mp2t',
 }
 
-function streamResponse(filePath: string, headers: Record<string, string>, status = 200, opts?: { start: number, end: number }) {
+function streamResponse(
+  filePath: string,
+  headers: Record<string, string>,
+  status = 200,
+  opts?: { start: number; end: number },
+) {
   const nodeStream = opts ? createReadStream(filePath, opts) : createReadStream(filePath)
   return new Response(Readable.toWeb(nodeStream) as ReadableStream, { status, headers })
 }
 
-media.get('/screenshots/:streamName/latest', async (c) => {
+media.get('/screenshots/:streamName/latest', async c => {
   const config = await getAppConfig()
   const streamName = c.req.param('streamName')
   // Only for its verdict: the resolver joins the name itself, and a `..` in it
@@ -30,8 +35,7 @@ media.get('/screenshots/:streamName/latest', async (c) => {
     return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
 
   const filePath = latestScreenshotPathFor(config, streamName)
-  if (!filePath)
-    return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
+  if (!filePath) return c.text('Screenshot not found', 404, { 'Cache-Control': 'no-store' })
 
   return streamResponse(filePath, {
     'Content-Type': 'image/png',
@@ -39,7 +43,7 @@ media.get('/screenshots/:streamName/latest', async (c) => {
   })
 })
 
-media.get('/screenshots/:streamName/:file', async (c) => {
+media.get('/screenshots/:streamName/:file', async c => {
   const config = await getAppConfig()
   const filePath = safeJoin(config.screenshotsDirectory, c.req.param('streamName'), c.req.param('file'))
   if (!filePath || !filePath.endsWith('.png') || !existsSync(filePath))
@@ -51,17 +55,15 @@ media.get('/screenshots/:streamName/:file', async (c) => {
   })
 })
 
-media.get('/recordings/:streamName/:file', async (c) => {
+media.get('/recordings/:streamName/:file', async c => {
   const config = await getAppConfig()
   const filePath = safeJoin(config.recordingsDirectory, c.req.param('streamName'), c.req.param('file'))
-  if (!filePath || !existsSync(filePath))
-    return c.text('Recording not found', 404)
+  if (!filePath || !existsSync(filePath)) return c.text('Recording not found', 404)
 
   let size: number
   try {
     size = statSync(filePath).size
-  }
-  catch (error) {
+  } catch (error) {
     logger.error({ err: error }, `Failed to stat recording ${filePath}`)
     return c.text('Recording not found', 404)
   }
@@ -83,11 +85,16 @@ media.get('/recordings/:streamName/:file', async (c) => {
     if (start >= size || start > end)
       return c.text('Range not satisfiable', 416, { 'Content-Range': `bytes */${size}` })
 
-    return streamResponse(filePath, {
-      ...headers,
-      'Content-Range': `bytes ${start}-${end}/${size}`,
-      'Content-Length': String(end - start + 1),
-    }, 206, { start, end })
+    return streamResponse(
+      filePath,
+      {
+        ...headers,
+        'Content-Range': `bytes ${start}-${end}/${size}`,
+        'Content-Length': String(end - start + 1),
+      },
+      206,
+      { start, end },
+    )
   }
 
   return streamResponse(filePath, { ...headers, 'Content-Length': String(size) })
@@ -103,29 +110,31 @@ const RFC3339 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d
 // (a span can be hours long) and streamed, never buffered. MP4 is capped at an
 // hour because MediaMTX indexes the whole range in memory before the first
 // byte, and the browser buffers the whole clip to save it.
-media.get('/playback/get', async (c) => {
+media.get('/playback/get', async c => {
   const path = c.req.query('path')
   const start = c.req.query('start')
   const duration = Number(c.req.query('duration'))
   const format = c.req.query('format') ?? 'fmp4'
-  if (!path || !start || !RFC3339.test(start) || Number.isNaN(Date.parse(start)) || !Number.isFinite(duration) || duration <= 0)
+  if (
+    !path ||
+    !start ||
+    !RFC3339.test(start) ||
+    Number.isNaN(Date.parse(start)) ||
+    !Number.isFinite(duration) ||
+    duration <= 0
+  )
     return c.text('Expected path, an RFC 3339 start and a positive duration', 400)
-  if (format !== 'fmp4' && format !== 'mp4')
-    return c.text('Expected format fmp4 or mp4', 400)
-  if (format === 'mp4' && duration > 3600)
-    return c.text('An MP4 clip can be at most 3600 seconds long', 400)
+  if (format !== 'fmp4' && format !== 'mp4') return c.text('Expected format fmp4 or mp4', 400)
+  if (format === 'mp4' && duration > 3600) return c.text('An MP4 clip can be at most 3600 seconds long', 400)
 
   const config = await getAppConfig()
   try {
     const global = await mediaMtxApi(config).configGlobalGet()
-    const upstream = await mediaMtxPlayback(config, global.playbackAddress)
-      .get({ path, start, duration, format })
+    const upstream = await mediaMtxPlayback(config, global.playbackAddress).get({ path, start, duration, format })
     return new Response(upstream.body, { headers: { 'Content-Type': 'video/mp4' } })
-  }
-  catch (error) {
-    if (error instanceof MediaMtxError && error.status === 404)
-      return c.text('Recording not found', 404)
+  } catch (error) {
+    if (error instanceof MediaMtxError && error.status === 404) return c.text('Recording not found', 404)
     logger.error({ err: error, path }, 'Failed to proxy recording playback')
-    return c.text('Could not reach MediaMTX\'s playback server', 502)
+    return c.text("Could not reach MediaMTX's playback server", 502)
   }
 })

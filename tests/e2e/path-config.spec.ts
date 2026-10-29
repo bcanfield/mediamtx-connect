@@ -36,7 +36,7 @@ test.describe('MediaMTX Path Config Page', () => {
     await expect(page.getByRole('textbox', { name: 'recordPath' })).not.toBeEmpty()
   })
 
-  test('should show the path\'s own hooks and not the server-wide ones', async ({ page }) => {
+  test("should show the path's own hooks and not the server-wide ones", async ({ page }) => {
     await expect(page.getByRole('textbox', { name: 'runOnAvailable' })).toBeVisible()
     await expect(page.getByRole('textbox', { name: 'runOnRecordSegmentCreate' })).toBeVisible()
     // runOnConnect/runOnDisconnect fire per client connection, not per path.
@@ -81,8 +81,7 @@ test.describe('MediaMTX Path Config Page', () => {
       // The same entry ticket 02's path config writes — one object, one write.
       const entry = await (await request.get(`${API}/config/paths/get/${HOOK_PATH}`)).json()
       expect(entry.runOnAvailable).toBe(target)
-    }
-    finally {
+    } finally {
       await request.delete(`${API}/config/paths/delete/${HOOK_PATH}`)
     }
   })
@@ -127,8 +126,7 @@ test.describe('MediaMTX Path Config Page', () => {
       await page.reload()
       await expect(page.getByRole('textbox', { name: 'recordFormat' })).toHaveValue(nextFormat)
       await expect(page.getByRole('textbox', { name: 'recordDeleteAfter' })).toHaveValue(target)
-    }
-    finally {
+    } finally {
       await request.patch(`${API}/config/pathdefaults/patch`, {
         data: { recordFormat: defaults.recordFormat },
       })
@@ -157,11 +155,11 @@ test.describe('MediaMTX Path Config Page', () => {
   test('should report an honest empty state for a name it cannot resolve', async ({ page }) => {
     await page.goto(`/config/mediamtx/paths/${UNRESOLVED_PATH}`)
 
-    await expect(
-      page.getByRole('heading', { name: `No config to show for “${UNRESOLVED_PATH}”` }),
-    ).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Open path defaults' }))
-      .toHaveAttribute('href', '/config/mediamtx/path-defaults')
+    await expect(page.getByRole('heading', { name: `No config to show for “${UNRESOLVED_PATH}”` })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Open path defaults' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/path-defaults',
+    )
     // The dead-end this replaces: "Invalid Config" read as a broken app.
     await expect(page.getByText('Invalid Config')).toHaveCount(0)
   })

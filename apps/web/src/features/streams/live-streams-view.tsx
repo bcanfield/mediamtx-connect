@@ -1,15 +1,12 @@
 import type { Stream } from '@connect/contract'
 import type { PlaybackMode } from '@/lib/playback'
 import type { PublishTarget } from '@/lib/publish'
-
 import { useSearch } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslations } from 'use-intl'
-
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { isPlaybackMode, PLAYBACK_MODE_KEY, readPlaybackMode } from '@/lib/playback'
 import { cn } from '@/lib/utils'
-
 import { StreamCard } from './stream-card'
 
 type Density = '2' | '3' | '4'
@@ -23,8 +20,8 @@ const densityClass: Record<Density, string> = {
 }
 
 const segmentedGroup = 'gap-0.5 rounded-md border border-input p-0.5'
-const segmentedItem
-  = 'h-6 min-w-7 rounded-sm px-2 font-mono text-label font-medium uppercase tracking-[0.06em] text-mute first:rounded-l-sm last:rounded-r-sm hover:text-foreground data-[state=on]:bg-accent data-[state=on]:text-foreground'
+const segmentedItem =
+  'h-6 min-w-7 rounded-sm px-2 font-mono text-label font-medium uppercase tracking-[0.06em] text-mute first:rounded-l-sm last:rounded-r-sm hover:text-foreground data-[state=on]:bg-accent data-[state=on]:text-foreground'
 
 export function LiveStreamsView({
   streams,
@@ -52,15 +49,13 @@ export function LiveStreamsView({
   const [playbackMode, setPlaybackMode] = useState<PlaybackMode>(readPlaybackMode)
 
   const updateDensity = (value: string) => {
-    if (value !== '2' && value !== '3' && value !== '4')
-      return
+    if (value !== '2' && value !== '3' && value !== '4') return
     setDensity(value)
     window.localStorage.setItem(DENSITY_KEY, value)
   }
 
   const updatePlaybackMode = (value: string) => {
-    if (!isPlaybackMode(value))
-      return
+    if (!isPlaybackMode(value)) return
     setPlaybackMode(value)
     window.localStorage.setItem(PLAYBACK_MODE_KEY, value)
   }
@@ -70,9 +65,7 @@ export function LiveStreamsView({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-control text-muted-foreground">
-          {t('summary', { count: streams.length, live: liveCount })}
-        </p>
+        <p className="text-control text-muted-foreground">{t('summary', { count: streams.length, live: liveCount })}</p>
 
         <div className="flex items-center gap-2">
           <ToggleGroup

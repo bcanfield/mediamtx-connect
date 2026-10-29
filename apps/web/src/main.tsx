@@ -1,14 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {
-  createRootRoute,
-  createRoute,
-  createRouter,
-  Outlet,
-  RouterProvider,
-} from '@tanstack/react-router'
+import { createRootRoute, createRoute, createRouter, Outlet, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-
 import { AppHeader } from '@/components/app-header'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
@@ -24,7 +17,6 @@ import { DAY_PATTERN } from '@/features/recordings/timeline-day'
 import { SessionsPage } from '@/features/sessions/sessions-page'
 import { LiveViewPage } from '@/features/streams/live-view-page'
 import { I18nProvider } from '@/i18n/provider'
-
 import './globals.css'
 
 const rootRoute = createRootRoute({
@@ -160,8 +152,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootElement = document.getElementById('root')
-if (!rootElement)
-  throw new Error('missing #root')
+if (!rootElement) throw new Error('missing #root')
 
 createRoot(rootElement).render(
   <StrictMode>

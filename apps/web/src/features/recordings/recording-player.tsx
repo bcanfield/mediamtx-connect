@@ -2,12 +2,10 @@ import { Pause, Play } from 'lucide-react'
 import { Slider } from 'radix-ui'
 import { useRef, useState } from 'react'
 import { useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
 
 function formatClock(seconds: number): string {
-  if (!Number.isFinite(seconds))
-    return '0:00'
+  if (!Number.isFinite(seconds)) return '0:00'
   const m = Math.floor(seconds / 60)
   const s = Math.floor(seconds % 60)
   return `${m}:${String(s).padStart(2, '0')}`
@@ -16,7 +14,7 @@ function formatClock(seconds: number): string {
 // Custom seekbar per board 2c: 3px track, blue fill, white knob.
 // `fallbackDuration` (seconds) is for a source that can't say how long it is:
 // MediaMTX's playback server streams fMP4, which reports an infinite duration.
-export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallbackDuration?: number }) {
+export function RecordingPlayer({ src, fallbackDuration }: { src: string; fallbackDuration?: number }) {
   const t = useTranslations('Recordings.player')
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(true)
@@ -25,18 +23,14 @@ export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallba
 
   const togglePlay = () => {
     const video = videoRef.current
-    if (!video)
-      return
-    if (video.paused)
-      video.play()
-    else
-      video.pause()
+    if (!video) return
+    if (video.paused) void video.play()
+    else video.pause()
   }
 
   const seek = ([value]: number[]) => {
     const video = videoRef.current
-    if (!video || value === undefined)
-      return
+    if (!video || value === undefined) return
     video.currentTime = value
     setCurrentTime(value)
   }
@@ -53,7 +47,7 @@ export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallba
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onTimeUpdate={e => setCurrentTime(e.currentTarget.currentTime)}
-        onLoadedMetadata={(e) => {
+        onLoadedMetadata={e => {
           const reported = e.currentTarget.duration
           setDuration(Number.isFinite(reported) ? reported : (fallbackDuration ?? 0))
         }}
@@ -67,13 +61,13 @@ export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallba
           onClick={togglePlay}
           aria-label={playing ? t('pause') : t('play')}
         >
-          {playing
-            ? <Pause aria-hidden className="size-3.5 fill-current" />
-            : <Play aria-hidden className="size-3.5 fill-current" />}
+          {playing ? (
+            <Pause aria-hidden className="size-3.5 fill-current" />
+          ) : (
+            <Play aria-hidden className="size-3.5 fill-current" />
+          )}
         </Button>
-        <span className="font-mono text-label tabular-nums text-white/70">
-          {formatClock(currentTime)}
-        </span>
+        <span className="font-mono text-label tabular-nums text-white/70">{formatClock(currentTime)}</span>
         <Slider.Root
           value={[currentTime]}
           max={Math.max(duration, 0.01)}
@@ -87,9 +81,7 @@ export function RecordingPlayer({ src, fallbackDuration }: { src: string, fallba
           </Slider.Track>
           <Slider.Thumb className="block size-3 rounded-full bg-white shadow focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" />
         </Slider.Root>
-        <span className="font-mono text-label tabular-nums text-white/70">
-          {formatClock(duration)}
-        </span>
+        <span className="font-mono text-label tabular-nums text-white/70">{formatClock(duration)}</span>
       </div>
     </div>
   )

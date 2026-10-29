@@ -32,13 +32,10 @@ describe('the stream grid', () => {
     expect(screen.getByText('stream1')).toBeInTheDocument()
   })
 
-  it('links each card to that stream\'s detail page', async () => {
+  it("links each card to that stream's detail page", async () => {
     await renderWithProviders(<RecordingsIndexView streams={[summary('stream1')]} />)
 
-    expect(screen.getByRole('link', { name: /stream1/ })).toHaveAttribute(
-      'href',
-      '/recordings/stream1',
-    )
+    expect(screen.getByRole('link', { name: /stream1/ })).toHaveAttribute('href', '/recordings/stream1')
   })
 
   it('says how many recordings a stream has', async () => {
@@ -59,24 +56,17 @@ describe('the stream grid', () => {
 
   it('shows the thumbnail when one exists', async () => {
     await renderWithProviders(
-      <RecordingsIndexView
-        streams={[summary('stream1', { screenshotUrl: '/api/screenshots/stream1/latest.png' })]}
-      />,
+      <RecordingsIndexView streams={[summary('stream1', { screenshotUrl: '/api/screenshots/stream1/latest.png' })]} />,
     )
 
-    expect(screen.getByRole('presentation')).toHaveAttribute(
-      'src',
-      '/api/screenshots/stream1/latest.png',
-    )
+    expect(screen.getByRole('presentation')).toHaveAttribute('src', '/api/screenshots/stream1/latest.png')
   })
 })
 
 describe('the toolbar summary', () => {
   it('totals the streams and their recordings', async () => {
     await renderWithProviders(
-      <RecordingsIndexView
-        streams={[summary('stream1', { count: 2 }), summary('stream2', { count: 5 })]}
-      />,
+      <RecordingsIndexView streams={[summary('stream1', { count: 2 }), summary('stream2', { count: 5 })]} />,
     )
 
     expect(screen.getByText('2 streams · 7 recordings')).toBeInTheDocument()
@@ -113,10 +103,7 @@ describe('the client-side filter', () => {
   it('explains an empty result instead of rendering a bare grid', async () => {
     const { user } = await renderWithProviders(<RecordingsIndexView streams={THREE} />)
 
-    await user.type(
-      screen.getByRole('searchbox', { name: 'Filter streams' }),
-      'definitely-no-such-stream',
-    )
+    await user.type(screen.getByRole('searchbox', { name: 'Filter streams' }), 'definitely-no-such-stream')
 
     expect(cards()).toHaveLength(0)
     expect(screen.getByRole('heading', { name: 'No matching streams' })).toBeInTheDocument()
