@@ -14,9 +14,9 @@ import { z } from 'zod'
 // Field names are MediaMTX config keys verbatim, and are rendered
 // untranslated in every scope below (docs/I18N.md). So are enum options, which
 // come from the contract's constants.
-type SectionField<T extends FieldValues>
-  = | { name: FieldPath<T>, kind: 'text' | 'number' | 'switch' | 'list' }
-    | { name: FieldPath<T>, kind: 'enum', options: readonly string[] }
+type SectionField<T extends FieldValues> =
+  | { name: FieldPath<T>; kind: 'text' | 'number' | 'switch' | 'list' }
+  | { name: FieldPath<T>; kind: 'enum'; options: readonly string[] }
 
 export interface SectionDef<T extends FieldValues> {
   id: string
@@ -142,9 +142,7 @@ const GLOBAL_SECTIONS: SectionDef<GlobalConfigFormData>[] = [
   {
     id: 'srt',
     enableField: 'srt',
-    fields: [
-      { name: 'srtAddress', kind: 'text' },
-    ],
+    fields: [{ name: 'srtAddress', kind: 'text' }],
   },
 ]
 
@@ -206,18 +204,19 @@ export interface ConfigScope<T extends FieldValues> {
 // and refuses 0 for all of them (`udpMaxPayloadSize: 0` makes it exit), while
 // the contract's coerce would turn a cleared input into exactly that 0. The
 // form holds the input's raw string, so '' is caught here, before coercion.
-export function globalScope({ required, mustBePositive }: {
+export function globalScope({
+  required,
+  mustBePositive,
+}: {
   required: string
   mustBePositive: string
 }): ConfigScope<GlobalConfigFormData> {
-  const positiveNumber = z
-    .coerce
+  const positiveNumber = z.coerce
     .string()
     .min(1, { message: required })
     .pipe(z.coerce.number<string>().gt(0, { message: mustBePositive }))
     .optional()
-  const numberFields = GLOBAL_SECTIONS
-    .flatMap(section => section.fields)
+  const numberFields = GLOBAL_SECTIONS.flatMap(section => section.fields)
     .filter(field => field.kind === 'number')
     .map(field => [field.name, positiveNumber])
   return {
@@ -269,10 +268,7 @@ const RESILIENCE_SECTION: SectionDef<PathConfigFormData> = {
 export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathConfigFormData> {
   return {
     schema: PathConfigSchema.extend({
-      source: z
-        .string()
-        .refine(isValidPathSource, { message: invalidSourceMessage })
-        .optional(),
+      source: z.string().refine(isValidPathSource, { message: invalidSourceMessage }).optional(),
     }),
     sections: [SOURCE_SECTION, FORWARD_SECTION, RESILIENCE_SECTION, ...PATH_SECTIONS],
   }
@@ -280,12 +276,9 @@ export function pathConfigScope(invalidSourceMessage: string): ConfigScope<PathC
 
 function sectionFieldNames<T extends FieldValues>(section: SectionDef<T>): string[] {
   const names: string[] = section.fields.map(f => f.name)
-  if (section.enableField)
-    names.push(section.enableField)
-  if (section.hasIceServers)
-    names.push('webrtcICEServers2')
-  if (section.hasForwardDests)
-    names.push('forward')
+  if (section.enableField) names.push(section.enableField)
+  if (section.hasIceServers) names.push('webrtcICEServers2')
+  if (section.hasForwardDests) names.push('forward')
   return names
 }
 

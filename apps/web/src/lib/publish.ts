@@ -18,12 +18,10 @@ const DEFAULT_PORTS = {
 // (`http://mediamtx` under docker-compose). Only the hostname: each protocol
 // brings its own port.
 export function publishHost(remoteMediaMtxUrl: string | null): string {
-  if (!remoteMediaMtxUrl)
-    return window.location.hostname
+  if (!remoteMediaMtxUrl) return window.location.hostname
   try {
     return new URL(remoteMediaMtxUrl).hostname
-  }
-  catch {
+  } catch {
     return remoteMediaMtxUrl
   }
 }
@@ -39,11 +37,9 @@ export interface PublishTarget {
 // (`:8554`). We keep the configured port and pair it with the browser-facing
 // host, so an operator who changed a listen address is pointed at the right one.
 function portOf(address: string | undefined, fallback: number): number {
-  if (!address)
-    return fallback
+  if (!address) return fallback
   const colon = address.lastIndexOf(':')
-  if (colon === -1)
-    return fallback
+  if (colon === -1) return fallback
   const port = Number.parseInt(address.slice(colon + 1), 10)
   return Number.isNaN(port) ? fallback : port
 }
@@ -62,7 +58,10 @@ export function publishTargets(host: string, global: GlobalConfig | null | undef
   if (global?.rtmp !== false)
     targets.push({ protocol: 'RTMP', prefix: `rtmp://${host}:${portOf(global?.rtmpAddress, DEFAULT_PORTS.rtmp)}/` })
   if (global?.srt !== false)
-    targets.push({ protocol: 'SRT', prefix: `srt://${host}:${portOf(global?.srtAddress, DEFAULT_PORTS.srt)}?streamid=publish:` })
+    targets.push({
+      protocol: 'SRT',
+      prefix: `srt://${host}:${portOf(global?.srtAddress, DEFAULT_PORTS.srt)}?streamid=publish:`,
+    })
   return targets
 }
 
@@ -177,9 +176,19 @@ export function publishEndpoints(host: string, path: string, global: GlobalConfi
   if (on.rtsps)
     endpoints.push({ protocol: 'RTSPS', url: urls.rtsps, snippets: [ffmpegPublish('rtsp', urls.rtsps)], links: [] })
   if (on.rtmp)
-    endpoints.push({ protocol: 'RTMP', url: urls.rtmp, snippets: [ffmpegPublish('flv', urls.rtmp), obs('Custom...', urls.rtmp, true)], links: [] })
+    endpoints.push({
+      protocol: 'RTMP',
+      url: urls.rtmp,
+      snippets: [ffmpegPublish('flv', urls.rtmp), obs('Custom...', urls.rtmp, true)],
+      links: [],
+    })
   if (on.rtmps)
-    endpoints.push({ protocol: 'RTMPS', url: urls.rtmps, snippets: [ffmpegPublish('flv', urls.rtmps), obs('Custom...', urls.rtmps, true)], links: [] })
+    endpoints.push({
+      protocol: 'RTMPS',
+      url: urls.rtmps,
+      snippets: [ffmpegPublish('flv', urls.rtmps), obs('Custom...', urls.rtmps, true)],
+      links: [],
+    })
   if (on.srt) {
     endpoints.push({
       protocol: 'SRT',
@@ -218,7 +227,7 @@ export function publishEndpoints(host: string, path: string, global: GlobalConfi
 // Shapes from MediaMTX's docs/4-read.
 function playerSnippets(url: string, withFfmpeg: boolean): Snippet[] {
   return [
-    ...withFfmpeg ? [{ client: 'ffmpeg', text: `ffmpeg -i ${url} -c copy out.mp4` }] : [],
+    ...(withFfmpeg ? [{ client: 'ffmpeg', text: `ffmpeg -i ${url} -c copy out.mp4` }] : []),
     { client: 'ffplay', text: `ffplay ${url}` },
     { client: 'VLC', text: `vlc ${url}` },
   ]
@@ -230,20 +239,45 @@ export function readEndpoints(host: string, path: string, global: GlobalConfig |
   const endpoints: Endpoint[] = []
   // `rtsp://` and `srt://` have OS handlers (VLC registers both); `rtmp://` mostly doesn't.
   if (on.rtsp)
-    endpoints.push({ protocol: 'RTSP', url: urls.rtsp, snippets: playerSnippets(urls.rtsp, true), links: [{ kind: 'systemPlayer', href: urls.rtsp }] })
+    endpoints.push({
+      protocol: 'RTSP',
+      url: urls.rtsp,
+      snippets: playerSnippets(urls.rtsp, true),
+      links: [{ kind: 'systemPlayer', href: urls.rtsp }],
+    })
   // VLC can't read RTSPS (MediaMTX docs/4-read/10-vlc.md), and VLC is the
   // usual handler a system-player link would land in.
   if (on.rtsps)
-    endpoints.push({ protocol: 'RTSPS', url: urls.rtsps, snippets: playerSnippets(urls.rtsps, true).filter(s => s.client !== 'VLC'), links: [] })
+    endpoints.push({
+      protocol: 'RTSPS',
+      url: urls.rtsps,
+      snippets: playerSnippets(urls.rtsps, true).filter(s => s.client !== 'VLC'),
+      links: [],
+    })
   if (on.rtmp)
     endpoints.push({ protocol: 'RTMP', url: urls.rtmp, snippets: playerSnippets(urls.rtmp, true), links: [] })
   if (on.rtmps)
     endpoints.push({ protocol: 'RTMPS', url: urls.rtmps, snippets: playerSnippets(urls.rtmps, true), links: [] })
   if (on.srt)
-    endpoints.push({ protocol: 'SRT', url: urls.srtRead, snippets: playerSnippets(`'${urls.srtRead}'`, true), links: [{ kind: 'systemPlayer', href: urls.srtRead }] })
+    endpoints.push({
+      protocol: 'SRT',
+      url: urls.srtRead,
+      snippets: playerSnippets(`'${urls.srtRead}'`, true),
+      links: [{ kind: 'systemPlayer', href: urls.srtRead }],
+    })
   if (on.hls)
-    endpoints.push({ protocol: 'HLS', url: `${urls.hlsBase}/index.m3u8`, snippets: playerSnippets(`${urls.hlsBase}/index.m3u8`, false), links: [{ kind: 'hlsPage', href: urls.hlsBase }] })
+    endpoints.push({
+      protocol: 'HLS',
+      url: `${urls.hlsBase}/index.m3u8`,
+      snippets: playerSnippets(`${urls.hlsBase}/index.m3u8`, false),
+      links: [{ kind: 'hlsPage', href: urls.hlsBase }],
+    })
   if (on.webrtc)
-    endpoints.push({ protocol: 'WebRTC (WHEP)', url: `${urls.webrtcBase}/whep`, snippets: [], links: [{ kind: 'webrtcPage', href: urls.webrtcBase }] })
+    endpoints.push({
+      protocol: 'WebRTC (WHEP)',
+      url: `${urls.webrtcBase}/whep`,
+      snippets: [],
+      links: [{ kind: 'webrtcPage', href: urls.webrtcBase }],
+    })
   return endpoints
 }

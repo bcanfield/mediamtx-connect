@@ -55,7 +55,7 @@ function procPerSpawn(): FakeProc[] {
 }
 
 function mockMediaMtx(
-  items: Array<{ name?: string, ready?: boolean }>,
+  items: Array<{ name?: string; ready?: boolean }>,
   globalConf: { rtspAddress?: string } = { rtspAddress: ':8554' },
 ) {
   vi.mocked(mediaMtxApi).mockReturnValue({
@@ -78,8 +78,7 @@ function enoent(syscall: string, file: string) {
 
 /** Drain the microtask queue so gated spawns run — fake timers don't touch it. */
 async function flushMicrotasks() {
-  for (let i = 0; i < 10; i++)
-    await Promise.resolve()
+  for (let i = 0; i < 10; i++) await Promise.resolve()
 }
 
 describe('captureLiveSnapshots', () => {
@@ -214,8 +213,7 @@ describe('captureLiveSnapshots', () => {
     // One active capture both errors and closes; a double release would free two
     // slots and spawn both queued captures.
     const [first] = procs
-    if (!first)
-      throw new Error('expected a spawned capture process')
+    if (!first) throw new Error('expected a spawned capture process')
     first.emit('error', new Error('ENOENT'))
     first.emit('close', null)
     await flushMicrotasks()
@@ -234,9 +232,11 @@ describe('captureLiveSnapshots', () => {
       return p as unknown as ChildProcess
     })
     const renamed = new Set<string>()
-    vi.mocked(fs.renameSync).mockImplementation((from) => {
+    vi.mocked(fs.renameSync).mockImplementation(from => {
       if (renamed.has(String(from)))
-        throw Object.assign(new Error(`ENOENT: no such file or directory, rename '${String(from)}'`), { code: 'ENOENT' })
+        throw Object.assign(new Error(`ENOENT: no such file or directory, rename '${String(from)}'`), {
+          code: 'ENOENT',
+        })
       renamed.add(String(from))
     })
 
@@ -244,8 +244,7 @@ describe('captureLiveSnapshots', () => {
     const manual = captureSnapshot('stream1')
     await flushMicrotasks()
     const [cron, onDemand] = procs
-    if (!cron || !onDemand)
-      throw new Error('expected two spawned capture processes')
+    if (!cron || !onDemand) throw new Error('expected two spawned capture processes')
 
     cron.emit('close', 0)
     onDemand.emit('close', 0)
@@ -258,7 +257,7 @@ describe('captureLiveSnapshots', () => {
     // A path torn down mid-capture: ffmpeg connects, gets no frame and still
     // exits 0. The rename used to throw inside the 'close' listener, an
     // uncaught exception that took the API process down.
-    vi.mocked(fs.renameSync).mockImplementation((from) => {
+    vi.mocked(fs.renameSync).mockImplementation(from => {
       throw enoent('rename', String(from))
     })
     await captureLiveSnapshots()
@@ -270,7 +269,7 @@ describe('captureLiveSnapshots', () => {
     expect(fs.rmSync).toHaveBeenCalledWith(argvOf().at(-1), { force: true })
   })
 
-  it('does not crash when discarding a failed capture\'s tmp file throws', async () => {
+  it("does not crash when discarding a failed capture's tmp file throws", async () => {
     vi.mocked(fs.rmSync).mockImplementation(() => {
       throw Object.assign(new Error('EACCES: permission denied'), { code: 'EACCES' })
     })
@@ -279,9 +278,9 @@ describe('captureLiveSnapshots', () => {
     expect(() => proc.emit('close', 1)).not.toThrow()
   })
 
-  it('releases one slot when a capture\'s rename fails', async () => {
+  it("releases one slot when a capture's rename fails", async () => {
     const procs = procPerSpawn()
-    vi.mocked(fs.renameSync).mockImplementation((from) => {
+    vi.mocked(fs.renameSync).mockImplementation(from => {
       throw enoent('rename', String(from))
     })
     const names = Array.from({ length: MAX_CONCURRENT_CAPTURES }, (_, i) => `s${i}`)
@@ -383,7 +382,7 @@ describe('captureSnapshot on demand', () => {
   })
 
   it('rejects, naming the stream, when ffmpeg exits 0 without writing a frame', async () => {
-    vi.mocked(fs.renameSync).mockImplementation((from) => {
+    vi.mocked(fs.renameSync).mockImplementation(from => {
       throw enoent('rename', String(from))
     })
     const done = captureSnapshot('parking-lot')
@@ -439,15 +438,7 @@ describe('generateScreenshots', () => {
     await flushMicrotasks()
 
     expect(cp.spawn).toHaveBeenCalledOnce()
-    expect(argvOf()).toEqual([
-      '-ss',
-      '00:00:00',
-      '-i',
-      '/rec/cam1/r1.mp4',
-      '-frames:v',
-      '1',
-      '/shots/cam1/r1.png',
-    ])
+    expect(argvOf()).toEqual(['-ss', '00:00:00', '-i', '/rec/cam1/r1.mp4', '-frames:v', '1', '/shots/cam1/r1.png'])
   })
 
   it('never runs more ffmpeg at once than the thumbnail cap', async () => {
@@ -565,7 +556,7 @@ describe('on a real recordings tree', () => {
     })
 
     // Only a PNG is a thumbnail; anything else sharing a segment's stem is litter.
-    it('prunes an old non-PNG file even when it shares a segment\'s stem', async () => {
+    it("prunes an old non-PNG file even when it shares a segment's stem", async () => {
       touch(path.join(recordings, 's1'), 'old.mp4')
       const shots = path.join(screenshots, 's1')
       touch(shots, 'old.txt', THREE_DAYS)
@@ -639,7 +630,9 @@ describe('on a real recordings tree', () => {
       const output = path.join(screenshots, 's1', 'a.png')
       const failures = [...vi.mocked(logger.warn).mock.calls, ...vi.mocked(logger.error).mock.calls]
       expect(failures.flat().some(arg => typeof arg === 'string' && arg.includes(output))).toBe(true)
-      expect(vi.mocked(logger.info).mock.calls.flat()).not.toContainEqual(expect.stringContaining('Finished generating screenshot'))
+      expect(vi.mocked(logger.info).mock.calls.flat()).not.toContainEqual(
+        expect.stringContaining('Finished generating screenshot'),
+      )
     })
   })
 

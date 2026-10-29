@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from 'vitest'
-
 import { publishEndpoints, publishHost, publishTargets, publishUrl, readEndpoints } from './publish'
 
 describe('publishTargets', () => {
@@ -123,10 +122,12 @@ describe('publishEndpoints and readEndpoints', () => {
   ])('drops exactly the %s blocks when the server disables it', (toggle, publishGone, readGone) => {
     const allPublish = protocolsOf(publishEndpoints('h', 'cam', null))
     const allRead = protocolsOf(readEndpoints('h', 'cam', null))
-    expect(protocolsOf(publishEndpoints('h', 'cam', { [toggle]: false })))
-      .toEqual(allPublish.filter(p => !publishGone.includes(p)))
-    expect(protocolsOf(readEndpoints('h', 'cam', { [toggle]: false })))
-      .toEqual(allRead.filter(p => !readGone.includes(p)))
+    expect(protocolsOf(publishEndpoints('h', 'cam', { [toggle]: false }))).toEqual(
+      allPublish.filter(p => !publishGone.includes(p)),
+    )
+    expect(protocolsOf(readEndpoints('h', 'cam', { [toggle]: false }))).toEqual(
+      allRead.filter(p => !readGone.includes(p)),
+    )
   })
 
   it.each([
@@ -152,8 +153,7 @@ describe('publishEndpoints and readEndpoints', () => {
   })
 
   it('switches HLS and WebRTC to https when their encryption is on', () => {
-    expect(urlsOf(readEndpoints('h', 'cam', { hlsEncryption: true })))
-      .toContain('https://h:8888/cam/index.m3u8')
+    expect(urlsOf(readEndpoints('h', 'cam', { hlsEncryption: true }))).toContain('https://h:8888/cam/index.m3u8')
     const webrtc = { webrtcEncryption: true }
     expect(urlsOf(publishEndpoints('h', 'cam', webrtc))).toContain('https://h:8889/cam/whip')
     expect(urlsOf(readEndpoints('h', 'cam', webrtc))).toContain('https://h:8889/cam/whep')
@@ -169,17 +169,14 @@ describe('publishEndpoints and readEndpoints', () => {
     const endpoints = [...publishEndpoints('h', 'cams/front', global), ...readEndpoints('h', 'cams/front', global)]
     for (const endpoint of endpoints) {
       expect(endpoint.url).toContain('cams/front')
-      for (const snippet of endpoint.snippets)
-        expect(snippet.text).toContain('cams/front')
-      for (const link of endpoint.links)
-        expect(link.href).toContain('cams/front')
+      for (const snippet of endpoint.snippets) expect(snippet.text).toContain('cams/front')
+      for (const link of endpoint.links) expect(link.href).toContain('cams/front')
     }
   })
 
   it('embeds the displayed URL in every snippet', () => {
     for (const endpoint of [...publishEndpoints('h', 'cam', null), ...readEndpoints('h', 'cam', null)]) {
-      for (const snippet of endpoint.snippets)
-        expect(snippet.text).toContain(endpoint.url)
+      for (const snippet of endpoint.snippets) expect(snippet.text).toContain(endpoint.url)
     }
   })
 
@@ -193,28 +190,35 @@ describe('publishEndpoints and readEndpoints', () => {
     expect(byProtocol.RTMP?.[1]?.text).toBe('Service: Custom...\nServer: rtmp://h:1935/cam\nStream key:')
     expect(byProtocol.SRT?.map(s => s.client)).toEqual(['ffmpeg', 'GStreamer'])
     // Quoted: the `&` would otherwise background the command in a shell.
-    expect(byProtocol.SRT?.[0]?.text).toContain('-c copy -f mpegts \'srt://h:8890?streamid=publish:cam&pkt_size=1316\'')
+    expect(byProtocol.SRT?.[0]?.text).toContain("-c copy -f mpegts 'srt://h:8890?streamid=publish:cam&pkt_size=1316'")
     expect(byProtocol.SRT?.[1]?.text).toContain('srtsink')
     expect(byProtocol['WebRTC (WHIP)']?.map(s => s.client)).toEqual(['ffmpeg', 'OBS'])
-    expect(byProtocol['WebRTC (WHIP)']?.[0]?.text).toContain('-c:a libopus -ar 48000 -ac 2 -b:a 128k -f whip http://h:8889/cam/whip')
+    expect(byProtocol['WebRTC (WHIP)']?.[0]?.text).toContain(
+      '-c:a libopus -ar 48000 -ac 2 -b:a 128k -f whip http://h:8889/cam/whip',
+    )
     expect(byProtocol['WebRTC (WHIP)']?.[1]?.text).toBe('Service: WHIP\nServer: http://h:8889/cam/whip')
   })
 
   it('offers the read clients and links each protocol supports', () => {
     const endpoints = readEndpoints('h', 'cam', { rtspEncryption: 'optional', rtmpEncryption: 'optional' })
-    const shape = Object.fromEntries(endpoints.map(e => [e.protocol, {
-      clients: e.snippets.map(s => s.client),
-      links: e.links.map(l => `${l.kind} ${l.href}`),
-    }]))
+    const shape = Object.fromEntries(
+      endpoints.map(e => [
+        e.protocol,
+        {
+          clients: e.snippets.map(s => s.client),
+          links: e.links.map(l => `${l.kind} ${l.href}`),
+        },
+      ]),
+    )
     expect(shape).toEqual({
-      'RTSP': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer rtsp://h:8554/cam'] },
+      RTSP: { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer rtsp://h:8554/cam'] },
       // VLC can't read RTSPS (MediaMTX docs/4-read/10-vlc.md), and it is the
       // usual system handler, so neither the snippet nor the link is offered.
-      'RTSPS': { clients: ['ffmpeg', 'ffplay'], links: [] },
-      'RTMP': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
-      'RTMPS': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
-      'SRT': { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer srt://h:8890?streamid=read:cam'] },
-      'HLS': { clients: ['ffplay', 'VLC'], links: ['hlsPage http://h:8888/cam'] },
+      RTSPS: { clients: ['ffmpeg', 'ffplay'], links: [] },
+      RTMP: { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
+      RTMPS: { clients: ['ffmpeg', 'ffplay', 'VLC'], links: [] },
+      SRT: { clients: ['ffmpeg', 'ffplay', 'VLC'], links: ['systemPlayer srt://h:8890?streamid=read:cam'] },
+      HLS: { clients: ['ffplay', 'VLC'], links: ['hlsPage http://h:8888/cam'] },
       'WebRTC (WHEP)': { clients: [], links: ['webrtcPage http://h:8889/cam'] },
     })
     expect(endpoints[0]?.snippets.map(s => s.text)).toEqual([
@@ -224,7 +228,7 @@ describe('publishEndpoints and readEndpoints', () => {
     ])
   })
 
-  it('links WHIP to MediaMTX\'s browser publish page', () => {
+  it("links WHIP to MediaMTX's browser publish page", () => {
     const whip = publishEndpoints('h', 'cam', null).find(e => e.protocol === 'WebRTC (WHIP)')
     expect(whip?.links).toEqual([{ kind: 'browserPublish', href: 'http://h:8889/cam/publish' }])
   })
@@ -235,13 +239,12 @@ describe('publishHost', () => {
     expect(publishHost('http://cam.lan:8080')).toBe('cam.lan')
   })
 
-  it('falls back to the page\'s own host when none is configured', () => {
+  it("falls back to the page's own host when none is configured", () => {
     // A node suite has no window; stub one whose host no fixture uses.
     vi.stubGlobal('window', { location: { hostname: 'served-from.lan' } })
     try {
       expect(publishHost(null)).toBe('served-from.lan')
-    }
-    finally {
+    } finally {
       vi.unstubAllGlobals()
     }
   })

@@ -1,8 +1,9 @@
 import { Moon, Sun } from 'lucide-react'
 import { useCallback, useRef } from 'react'
+// flushSync is required so the View Transitions API captures the new DOM in this frame.
+// oxlint-disable-next-line no-restricted-imports
 import { flushSync } from 'react-dom'
 import { useTranslations } from 'use-intl'
-
 import { useTheme } from '@/components/theme-context'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -24,9 +25,9 @@ export function ModeToggle() {
     const apply = () => setTheme(next)
 
     if (
-      !button
-      || typeof document.startViewTransition !== 'function'
-      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      !button ||
+      typeof document.startViewTransition !== 'function' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
       apply()
       return
@@ -35,24 +36,16 @@ export function ModeToggle() {
     const { top, left, width, height } = button.getBoundingClientRect()
     const x = left + width / 2
     const y = top + height / 2
-    const maxRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y),
-    )
+    const maxRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
 
     const transition = document.startViewTransition(() => {
-      // flushSync is required so the View Transitions API captures the new DOM in this frame.
-      // eslint-disable-next-line react/dom-no-flush-sync
       flushSync(apply)
     })
 
-    transition.ready.then(() => {
+    void transition.ready.then(() => {
       document.documentElement.animate(
         {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${maxRadius}px at ${x}px ${y}px)`,
-          ],
+          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
         },
         {
           duration: TRANSITION_DURATION_MS,
@@ -64,14 +57,7 @@ export function ModeToggle() {
   }, [isDark, setTheme])
 
   return (
-    <Button
-      ref={buttonRef}
-      variant="ghost"
-      size="icon"
-      onClick={toggle}
-      aria-label={ariaLabel}
-      title={ariaLabel}
-    >
+    <Button ref={buttonRef} variant="ghost" size="icon" onClick={toggle} aria-label={ariaLabel} title={ariaLabel}>
       <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
         <Sun
           className={cn(

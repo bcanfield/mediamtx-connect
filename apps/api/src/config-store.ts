@@ -35,13 +35,12 @@ export async function bootstrapConfig(): Promise<AppConfig> {
       screenshotsDirectory: env.MEDIAMTX_SCREENSHOTS_DIR,
     })
     logger.info({ config }, 'Seeded config from env')
-  }
-  else {
+  } else {
     config = await getAppConfig()
 
     // Only flag vars the operator explicitly set — schema defaults aren't
     // drift, they're just the absence of a runtime override.
-    const candidates: Array<{ var: keyof typeof rawEnv, env: string, stored: string }> = [
+    const candidates: Array<{ var: keyof typeof rawEnv; env: string; stored: string }> = [
       { var: 'BACKEND_SERVER_MEDIAMTX_URL', env: env.BACKEND_SERVER_MEDIAMTX_URL, stored: config.mediaMtxUrl },
       { var: 'MEDIAMTX_API_PORT', env: env.MEDIAMTX_API_PORT, stored: String(config.mediaMtxApiPort) },
       { var: 'REMOTE_MEDIAMTX_URL', env: env.REMOTE_MEDIAMTX_URL, stored: config.remoteMediaMtxUrl ?? '' },

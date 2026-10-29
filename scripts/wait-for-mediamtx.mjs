@@ -17,8 +17,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 async function readyStreams() {
   const response = await fetch(`${API}/v3/paths/list`)
-  if (!response.ok)
-    throw new Error(`paths/list returned ${response.status}`)
+  if (!response.ok) throw new Error(`paths/list returned ${response.status}`)
   const body = await response.json()
   return new Map(body.items.map(item => [item.name, item.ready]))
 }
@@ -34,11 +33,9 @@ for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
       console.log(`MediaMTX ready with: ${EXPECTED.join(', ')}`)
       process.exit(0)
     }
-  }
-  catch (error) {
+  } catch (error) {
     missing = EXPECTED
-    if (attempt === ATTEMPTS)
-      console.error(`MediaMTX API unreachable: ${error.message}`)
+    if (attempt === ATTEMPTS) console.error(`MediaMTX API unreachable: ${error.message}`)
   }
   await sleep(INTERVAL_MS)
 }

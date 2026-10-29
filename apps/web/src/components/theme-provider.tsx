@@ -1,8 +1,6 @@
 import type { ResolvedTheme, Theme } from './theme-config'
 import type { ThemeContextValue } from './theme-context'
-
 import { useCallback, useEffect, useMemo, useState } from 'react'
-
 import { PREFERS_DARK, THEME_DEFAULT, THEME_STORAGE_KEY } from './theme-config'
 import { ThemeContext } from './theme-context'
 
@@ -16,8 +14,7 @@ function readStoredTheme(): Theme {
     if (stored === 'light' || stored === 'dark' || stored === 'system') {
       return stored
     }
-  }
-  catch {
+  } catch {
     // localStorage can throw in private mode — fall back to the default.
   }
   return THEME_DEFAULT
@@ -26,9 +23,7 @@ function readStoredTheme(): Theme {
 // Momentarily kill CSS transitions so a theme swap doesn't animate the whole page.
 function withTransitionsDisabled(apply: () => void) {
   const style = document.createElement('style')
-  style.appendChild(
-    document.createTextNode('*,*::before,*::after{transition:none!important}'),
-  )
+  style.appendChild(document.createTextNode('*,*::before,*::after{transition:none!important}'))
   document.head.appendChild(style)
   apply()
   // Force a reflow so the disabling styles take effect before we remove them.
@@ -63,8 +58,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(next)
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next)
-    }
-    catch {
+    } catch {
       // Ignore storage failures; the class change below still applies.
     }
     applyResolvedTheme(next === 'system' ? getSystemTheme() : next)
@@ -86,8 +80,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Keep tabs in sync when the theme changes elsewhere.
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
-      if (event.key !== THEME_STORAGE_KEY)
-        return
+      if (event.key !== THEME_STORAGE_KEY) return
       const next = readStoredTheme()
       setThemeState(next)
       applyResolvedTheme(next === 'system' ? getSystemTheme() : next)

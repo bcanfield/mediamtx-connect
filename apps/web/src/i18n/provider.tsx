@@ -13,18 +13,15 @@ type Messages = Record<string, unknown>
 const messageModules = import.meta.glob<{ default: Messages }>(['../../messages/*.json', '!../../messages/en.json'])
 
 async function loadMessages(locale: Locale): Promise<Messages> {
-  if (locale === 'en')
-    return enMessages
+  if (locale === 'en') return enMessages
   const loader = messageModules[`../../messages/${locale}.json`]
-  if (!loader)
-    return enMessages
+  if (!loader) return enMessages
   return (await loader()).default
 }
 
 function initialLocale(): Locale {
   const stored = localStorage.getItem(LOCALE_STORAGE_KEY)
-  if (stored && isLocale(stored))
-    return stored
+  if (stored && isLocale(stored)) return stored
   return detectLocale()
 }
 
@@ -44,9 +41,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let cancelled = false
     loadMessages(locale)
-      .then((m) => {
-        if (!cancelled)
-          setMessages(m)
+      .then(m => {
+        if (!cancelled) setMessages(m)
       })
       .catch(err => logger.error(`Failed to load messages for ${locale}`, err))
     document.documentElement.lang = locale

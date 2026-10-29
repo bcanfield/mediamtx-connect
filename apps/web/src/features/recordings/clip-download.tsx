@@ -8,20 +8,18 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { formatBytes } from '@/lib/format'
 import { cn } from '@/lib/utils'
-
 import { buildClipSchema, CLIP_START } from './clip-download.schemas'
 import { CLIP_PRESETS, clipFileName, clipRange } from './clip-range'
 import { useRecordingDownload } from './use-recording-download'
 
 const PRESET_LABELS = { 300: 'last5Min', 900: 'last15Min', 3600: 'last1Hour' } as const
 // A valid custom start and duration, read on the selected browser-local day.
-function customRange(day: Date, values: { start: string, minutes: number }): ClipRange {
+function customRange(day: Date, values: { start: string; minutes: number }): ClipRange {
   const [, hours, mins, secs = '0'] = CLIP_START.exec(values.start)!
   const start = dayjs(day).hour(Number(hours)).minute(Number(mins)).second(Number(secs)).toDate()
   return { start, duration: values.minutes * 60 }
@@ -39,7 +37,12 @@ function clipUrl(streamName: string, range: ClipRange): string {
   return `/media/playback/get?${query}`
 }
 
-export function ClipDownload({ streamName, day, spans, selected }: {
+export function ClipDownload({
+  streamName,
+  day,
+  spans,
+  selected,
+}: {
   streamName: string
   day: Date
   /** At least one. */
@@ -70,10 +73,8 @@ export function ClipDownload({ streamName, day, spans, selected }: {
   const custom = schema.safeParse(form.watch())
 
   let range: ClipRange | null = null
-  if (choice !== 'custom')
-    range = clipRange(spans, choice)
-  else if (custom.success)
-    range = customRange(day, custom.data)
+  if (choice !== 'custom') range = clipRange(spans, choice)
+  else if (custom.success) range = customRange(day, custom.data)
 
   const download = useRecordingDownload(
     range ? clipUrl(streamName, range) : '',
@@ -156,36 +157,32 @@ export function ClipDownload({ streamName, day, spans, selected }: {
         )}
       </fieldset>
       <div className="flex items-center justify-between gap-3">
-        <span aria-live="polite" className="font-mono text-label text-mute tabular-nums">{status()}</span>
-        {download.downloading
-          ? (
-              <Button type="button" variant="outline" size="sm" className="h-7.5 px-3" onClick={download.cancel}>
-                {t('cancel')}
-              </Button>
-            )
-          : (
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-7.5 px-3"
-                disabled={!range}
-                onClick={download.start}
-              >
-                <Download className="size-3.5" />
-                {t('download')}
-              </Button>
-            )}
+        <span aria-live="polite" className="font-mono text-label text-mute tabular-nums">
+          {status()}
+        </span>
+        {download.downloading ? (
+          <Button type="button" variant="outline" size="sm" className="h-7.5 px-3" onClick={download.cancel}>
+            {t('cancel')}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="h-7.5 px-3"
+            disabled={!range}
+            onClick={download.start}
+          >
+            <Download className="size-3.5" />
+            {t('download')}
+          </Button>
+        )}
       </div>
     </section>
   )
 }
 
-function ChoiceButton({ pressed, onClick, children }: {
-  pressed: boolean
-  onClick: () => void
-  children: ReactNode
-}) {
+function ChoiceButton({ pressed, onClick, children }: { pressed: boolean; onClick: () => void; children: ReactNode }) {
   return (
     <Button
       type="button"

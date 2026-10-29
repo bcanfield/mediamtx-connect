@@ -2,14 +2,12 @@ import type { PathCatalogEntry, PathCatalogState } from '@connect/contract'
 import { useQuery } from '@tanstack/react-query'
 import { X } from 'lucide-react'
 import { useTranslations } from 'use-intl'
-
 import { PageLayout } from '@/components/page-layout'
 import { StatusPanel } from '@/components/status-panel'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import { orpc } from '@/orpc'
-
 import { maskSourceCredentials } from './rtsp-source'
 
 export function PathsCatalogPage() {
@@ -23,11 +21,11 @@ export function PathsCatalogPage() {
       width="wide"
       header={t('pageHeader')}
       subHeader={t('pageSubHeader')}
-      actions={(
+      actions={
         <Button asChild>
           <Link href="/config/mediamtx/add-path">{t('addPath')}</Link>
         </Button>
-      )}
+      }
     >
       {state?.status === 'connection-error' && (
         <UnreachablePanel
@@ -36,18 +34,15 @@ export function PathsCatalogPage() {
           onRetry={() => paths.refetch()}
         />
       )}
-      {state?.status === 'connected' && (
-        state.paths.length === 0
-          ? <EmptyPanel />
-          : (
-              <div className="flex flex-col gap-4">
-                <p className="text-control text-muted-foreground">
-                  {t('summary', { count: state.paths.length })}
-                </p>
-                <PathsTable paths={state.paths} />
-              </div>
-            )
-      )}
+      {state?.status === 'connected' &&
+        (state.paths.length === 0 ? (
+          <EmptyPanel />
+        ) : (
+          <div className="flex flex-col gap-4">
+            <p className="text-control text-muted-foreground">{t('summary', { count: state.paths.length })}</p>
+            <PathsTable paths={state.paths} />
+          </div>
+        ))}
     </PageLayout>
   )
 }
@@ -60,9 +55,15 @@ function PathsTable({ paths }: { paths: PathCatalogEntry[] }) {
       <table className="w-full text-control">
         <thead>
           <tr className="border-b bg-card text-left text-meta text-muted-foreground">
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columnName')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columnSource')}</th>
-            <th scope="col" className="px-4 py-2.5 font-medium">{t('columnState')}</th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columnName')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columnSource')}
+            </th>
+            <th scope="col" className="px-4 py-2.5 font-medium">
+              {t('columnState')}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -77,7 +78,9 @@ function PathsTable({ paths }: { paths: PathCatalogEntry[] }) {
                     {path.name}
                   </Link>
                   {path.isRegex && (
-                    <Badge variant="secondary" title={t('regexTitle')}>{t('regexBadge')}</Badge>
+                    <Badge variant="secondary" title={t('regexTitle')}>
+                      {t('regexBadge')}
+                    </Badge>
                   )}
                 </div>
               </td>
@@ -87,14 +90,14 @@ function PathsTable({ paths }: { paths: PathCatalogEntry[] }) {
                 {path.source ? maskSourceCredentials(path.source) : t('sourceUnset')}
               </td>
               <td className="px-4 py-2.5">
-                {path.active
-                  ? (
-                      <span className="flex items-center gap-1.5 font-mono text-meta">
-                        <span aria-hidden className="size-1.5 rounded-full bg-live" />
-                        {t('stateActive')}
-                      </span>
-                    )
-                  : <span className="font-mono text-meta text-mute">{t('stateIdle')}</span>}
+                {path.active ? (
+                  <span className="flex items-center gap-1.5 font-mono text-meta">
+                    <span aria-hidden className="size-1.5 rounded-full bg-live" />
+                    {t('stateActive')}
+                  </span>
+                ) : (
+                  <span className="font-mono text-meta text-mute">{t('stateIdle')}</span>
+                )}
               </td>
             </tr>
           ))}
@@ -139,18 +142,15 @@ function UnreachablePanel({
       tone="error"
       icon={<X aria-hidden className="size-4" />}
       title={t('unreachableTitle')}
-      description={(
+      description={
         <>
-          {t('unreachableLead')}
-          {' '}
+          {t('unreachableLead')}{' '}
           <code className="font-mono text-foreground">
-            {mediaMtxUrl}
-            :
-            {mediaMtxApiPort}
+            {mediaMtxUrl}:{mediaMtxApiPort}
           </code>
         </>
-      )}
-      action={(
+      }
+      action={
         <div className="flex items-center gap-2">
           <Button asChild size="sm">
             <Link href="/config">{t('openAppConfig')}</Link>
@@ -159,7 +159,7 @@ function UnreachablePanel({
             {common('retry')}
           </Button>
         </div>
-      )}
+      }
     />
   )
 }

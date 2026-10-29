@@ -1,5 +1,4 @@
 import type { ClassValue } from 'clsx'
-
 import { clsx } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
 
@@ -20,7 +19,7 @@ const twMerge = extendTailwindMerge({
         'text-label',
         'text-micro',
       ],
-      'tracking': ['tracking-title'],
+      tracking: ['tracking-title'],
     },
   },
 })

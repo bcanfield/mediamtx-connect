@@ -60,7 +60,7 @@ describe('stream actions menu', () => {
   // then asserted the URL a real navigation landed on. The href IS the behaviour;
   // navigating to prove it needed a browser and a live MediaMTX to render the
   // destination page.
-  it('deep-links to the stream\'s own path config', async () => {
+  it("deep-links to the stream's own path config", async () => {
     await openMenu()
 
     expect(screen.getByRole('menuitem', { name: /Edit path config/ })).toHaveAttribute(
@@ -81,13 +81,10 @@ describe('stream actions menu', () => {
     )
   })
 
-  it('deep-links to the stream\'s recordings', async () => {
+  it("deep-links to the stream's recordings", async () => {
     await openMenu()
 
-    expect(screen.getByRole('menuitem', { name: /View recordings/ })).toHaveAttribute(
-      'href',
-      '/recordings/stream1',
-    )
+    expect(screen.getByRole('menuitem', { name: /View recordings/ })).toHaveAttribute('href', '/recordings/stream1')
   })
 
   it('reports the current record state in the menu', async () => {
@@ -116,16 +113,13 @@ describe('stream actions menu', () => {
   it('disables Copy publish URLs when the server serves no publish protocol', async () => {
     await openMenu('off', [])
 
-    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
-      .toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ })).toHaveAttribute('aria-disabled', 'true')
   })
 
   it('offers Copy publish URLs when the server serves one', async () => {
     await openMenu('off', [{ protocol: 'RTSP', prefix: 'rtsp://cam.lan:8554/' }])
 
-    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ }))
-      .not
-      .toHaveAttribute('aria-disabled')
+    expect(screen.getByRole('menuitem', { name: /Copy publish URLs/ })).not.toHaveAttribute('aria-disabled')
   })
 })
 
@@ -136,21 +130,20 @@ describe('menu actions reach the API', () => {
     await view.user.click(screen.getByRole('menuitem', { name: /Take snapshot/ }))
 
     expect(await screen.findByText('Snapshot captured')).toBeInTheDocument()
-    expect(snapshot).toHaveBeenCalledWith(
-      { name: 'stream1' } satisfies RpcInputs['streams']['snapshot'],
-    )
+    expect(snapshot).toHaveBeenCalledWith({ name: 'stream1' } satisfies RpcInputs['streams']['snapshot'])
   })
 
   // Writes this stream's own override and nothing else: patching path defaults
   // would start or stop recording for every stream on the server (ADR 0002).
-  it('toggles record by writing only this stream\'s override', async () => {
+  it("toggles record by writing only this stream's override", async () => {
     const view = await openMenu('off')
 
     await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
 
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      { name: 'stream1', conf: { record: true } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { record: true },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 
   it('turns record off from an on state', async () => {
@@ -158,9 +151,10 @@ describe('menu actions reach the API', () => {
 
     await view.user.click(screen.getByRole('menuitem', { name: /Record/ }))
 
-    expect(updatePathConfig).toHaveBeenCalledWith(
-      { name: 'stream1', conf: { record: false } } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'],
-    )
+    expect(updatePathConfig).toHaveBeenCalledWith({
+      name: 'stream1',
+      conf: { record: false },
+    } satisfies RpcInputs['config']['mediamtx']['updatePathConfig'])
   })
 })
 
@@ -169,11 +163,13 @@ describe('menu actions reach the API', () => {
 // `recordState` stays 'off' throughout — it is the settled query, and the point
 // is that the card stops rendering it while it knows better.
 function holdWriteOpen() {
-  const settle = {} as { resolve: () => void, reject: () => void }
-  updatePathConfig.mockReturnValueOnce(new Promise<void>((resolve, reject) => {
-    settle.resolve = resolve
-    settle.reject = () => reject(new Error('MediaMTX rejected the write'))
-  }))
+  const settle = {} as { resolve: () => void; reject: () => void }
+  updatePathConfig.mockReturnValueOnce(
+    new Promise<void>((resolve, reject) => {
+      settle.resolve = resolve
+      settle.reject = () => reject(new Error('MediaMTX rejected the write'))
+    }),
+  )
   return settle
 }
 
@@ -220,7 +216,7 @@ describe('record toggle while the write is in flight', () => {
 
     write.reject()
 
-    expect(await screen.findByText('Couldn\'t change recording')).toBeInTheDocument()
+    expect(await screen.findByText("Couldn't change recording")).toBeInTheDocument()
     expect(screen.queryByText('· ● REC')).not.toBeInTheDocument()
   })
 })

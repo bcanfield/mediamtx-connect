@@ -1,7 +1,7 @@
 # 0006 — Scope the pnpm trust policy around legacy semver rather than stay on pnpm 10
 
 **Date:** 2026-07-28
-**Status:** Accepted
+**Status:** Accepted. Exclusion removed 2026-10-29: the move to oxlint ([ADR 0008](./0008-oxlint-replaces-eslint.md)) dropped `eslint-plugin-react-hooks`, and with it the last path to `semver@5.7.2`/`6.3.1`.
 
 ## Context
 

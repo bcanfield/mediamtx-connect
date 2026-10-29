@@ -5,12 +5,10 @@ import dayjs from 'dayjs'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { StatusPanel } from '@/components/status-panel'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
-
 import { ClipDownload } from './clip-download'
 import { PlaybackEnableCard } from './playback-enable-card'
 import { RecordingPlayer } from './recording-player'
@@ -51,17 +49,15 @@ export function RecordingTimelineSection({ streamName }: { streamName: string })
     try {
       await queryClient.fetchQuery({
         ...options,
-        queryFn: async (context) => {
-          const result = await options.queryFn!(context)
-          if (result === null)
-            throw new Error('MediaMTX API unreachable')
+        queryFn: async context => {
+          const result = await options.queryFn(context)
+          if (result === null) throw new Error('MediaMTX API unreachable')
           return result
         },
         retry: 5,
         retryDelay: 1000,
       })
-    }
-    catch {
+    } catch {
       await queryClient.invalidateQueries({ queryKey: options.queryKey })
     }
     // After, not before: the card computes its change list from path defaults,
@@ -70,18 +66,10 @@ export function RecordingTimelineSection({ streamName }: { streamName: string })
   }
 
   if (timeline.isError) {
-    return (
-      <StatusPanel
-        tone="error"
-        layout="banner"
-        title={t('errorTitle')}
-        description={timeline.error.message}
-      />
-    )
+    return <StatusPanel tone="error" layout="banner" title={t('errorTitle')} description={timeline.error.message} />
   }
 
-  if (!timeline.isSuccess)
-    return null
+  if (!timeline.isSuccess) return null
 
   if (timeline.data === null) {
     return (
@@ -106,16 +94,11 @@ export function RecordingTimelineSection({ streamName }: { streamName: string })
   }
 
   return (
-    <DayTimeline
-      key={day.format(DAY_FORMAT)}
-      streamName={streamName}
-      day={day.toDate()}
-      spans={timeline.data.spans}
-    />
+    <DayTimeline key={day.format(DAY_FORMAT)} streamName={streamName} day={day.toDate()} spans={timeline.data.spans} />
   )
 }
 
-function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date, spans: RecordingSpan[] }) {
+function DayTimeline({ streamName, day, spans }: { streamName: string; day: Date; spans: RecordingSpan[] }) {
   const t = useTranslations('Recordings.timeline')
   const format = useFormatter()
   const navigate = useNavigate()
@@ -126,7 +109,7 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
   const dayLength = dayjs(day).add(1, 'day').valueOf() - dayStart
 
   const goToDay = (offset: number) => {
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({ ...prev, day: dayjs(day).add(offset, 'day').format(DAY_FORMAT) }),
       resetScroll: false,
@@ -147,15 +130,12 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
       format.number(value, { style: 'unit', unit, unitDisplay: 'short' })
     if (hours > 0 && minutes > 0)
       return t('durationParts', { hours: unit(hours, 'hour'), minutes: unit(minutes, 'minute') })
-    if (hours > 0)
-      return unit(hours, 'hour')
-    if (minutes > 0)
-      return unit(minutes, 'minute')
+    if (hours > 0) return unit(hours, 'hour')
+    if (minutes > 0) return unit(minutes, 'minute')
     return unit(Math.round(seconds), 'second')
   }
 
-  const toggle = (span: RecordingSpan) =>
-    setSelected(current => (current === span ? null : span))
+  const toggle = (span: RecordingSpan) => setSelected(current => (current === span ? null : span))
 
   return (
     <section className="flex flex-col gap-3 rounded-xl border bg-card p-3">
@@ -186,11 +166,7 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
       </div>
 
       <div>
-        <div
-          role="group"
-          aria-label={t('trackAria')}
-          className="relative h-6 overflow-hidden rounded-md bg-hatch"
-        >
+        <div role="group" aria-label={t('trackAria')} className="relative h-6 overflow-hidden rounded-md bg-hatch">
           {spans.map(span => (
             <button
               key={span.start.toISOString()}
@@ -209,7 +185,9 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
           ))}
         </div>
         <div aria-hidden className="mt-1 flex justify-between font-mono text-label text-faint">
-          {TRACK_HOURS.map(hour => <span key={hour}>{String(hour).padStart(2, '0')}</span>)}
+          {TRACK_HOURS.map(hour => (
+            <span key={hour}>{String(hour).padStart(2, '0')}</span>
+          ))}
         </div>
       </div>
 
@@ -221,27 +199,27 @@ function DayTimeline({ streamName, day, spans }: { streamName: string, day: Date
         />
       )}
 
-      {spans.length === 0
-        ? <p className="text-meta text-mute">{t('empty')}</p>
-        : (
-            <ul aria-label={t('spansAria')} className="flex flex-col gap-1">
-              {spans.map(span => (
-                <li key={span.start.toISOString()}>
-                  <button
-                    type="button"
-                    onClick={() => toggle(span)}
-                    aria-pressed={selected === span}
-                    className={cn(
-                      'w-full rounded-md px-2 py-1 text-left font-mono text-meta tabular-nums transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
-                      selected === span && 'bg-accent text-foreground',
-                    )}
-                  >
-                    {describe(span)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+      {spans.length === 0 ? (
+        <p className="text-meta text-mute">{t('empty')}</p>
+      ) : (
+        <ul aria-label={t('spansAria')} className="flex flex-col gap-1">
+          {spans.map(span => (
+            <li key={span.start.toISOString()}>
+              <button
+                type="button"
+                onClick={() => toggle(span)}
+                aria-pressed={selected === span}
+                className={cn(
+                  'w-full rounded-md px-2 py-1 text-left font-mono text-meta tabular-nums transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20',
+                  selected === span && 'bg-accent text-foreground',
+                )}
+              >
+                {describe(span)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {spans.length > 0 && <ClipDownload streamName={streamName} day={day} spans={spans} selected={selected} />}
     </section>

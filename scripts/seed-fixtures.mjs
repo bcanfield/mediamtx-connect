@@ -15,15 +15,12 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url))
 const fixtures = path.join(repoRoot, 'tests', 'fixtures')
 
 const argIdx = process.argv.indexOf('--target')
-const target = path.resolve(
-  argIdx !== -1 ? process.argv[argIdx + 1] : path.join(repoRoot, '.dev-data'),
-)
+const target = path.resolve(argIdx !== -1 ? process.argv[argIdx + 1] : path.join(repoRoot, '.dev-data'))
 
 async function isEmpty(dir) {
   try {
     return (await readdir(dir)).length === 0
-  }
-  catch {
+  } catch {
     return true // doesn't exist yet
   }
 }

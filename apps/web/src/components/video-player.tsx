@@ -1,8 +1,6 @@
 import type { PlaybackMode, PlaybackProtocol } from '@/lib/playback'
-
 import Hls from 'hls.js'
 import { useEffect, useRef } from 'react'
-
 import { logger } from '@/lib/logger'
 import { resolveTransport } from '@/lib/playback'
 import { cn } from '@/lib/utils'
@@ -32,12 +30,12 @@ export function VideoPlayer({
   // Kept in a ref so a new callback identity each render doesn't tear the
   // player down and renegotiate.
   const reportRef = useRef(onProtocolChange)
+  // oxlint-disable-next-line react/refs -- latest-callback ref, only read inside effects
   reportRef.current = onProtocolChange
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || !hlsUrl)
-      return
+    if (!video || !hlsUrl) return
 
     let disposed = false
     let hls: Hls | null = null
@@ -61,8 +59,7 @@ export function VideoPlayer({
         instance.on(Hls.Events.ERROR, (_evt, data) => {
           if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
             instance.recoverMediaError()
-          }
-          else if (data.fatal) {
+          } else if (data.fatal) {
             logger.error('fatal hls error, retrying in 2s', { hlsUrl, details: data.details })
             instance.destroy()
             retryTimer = setTimeout(create, 2000)
@@ -70,7 +67,7 @@ export function VideoPlayer({
         })
 
         instance.on(Hls.Events.MEDIA_ATTACHED, () => instance.loadSource(hlsUrl))
-        instance.on(Hls.Events.MANIFEST_PARSED, () => video.play())
+        instance.on(Hls.Events.MANIFEST_PARSED, () => void video.play())
         instance.attachMedia(video)
       }
 
@@ -81,8 +78,7 @@ export function VideoPlayer({
     // a playing stream beats a black card, so give up on WebRTC and play HLS.
     let fellBack = false
     const fallBackToHls = async (reason: string, error?: unknown) => {
-      if (fellBack || disposed)
-        return
+      if (fellBack || disposed) return
       fellBack = true
       logger.warn(reason, { whepUrl, error })
       if (pc) {
@@ -91,14 +87,13 @@ export function VideoPlayer({
         whepResource = null
       }
       video.srcObject = null
-      if (!disposed)
-        startHls()
+      if (!disposed) startHls()
     }
 
     const startWebrtc = async (url: string) => {
       const connection = new RTCPeerConnection({ iceServers })
       pc = connection
-      connection.ontrack = (event) => {
+      connection.ontrack = event => {
         video.srcObject = event.streams[0] ?? null
       }
       // recvonly: this is playback, we never publish from the browser
@@ -107,19 +102,22 @@ export function VideoPlayer({
 
       whepResource = await negotiateWhep(connection, url)
       await waitForConnected(connection)
-      if (disposed)
-        return
+      if (disposed) return
 
       // Connected — but a later route change or blip can still drop it. Without
       // this, only connect-time failure falls back and a mid-stream drop freezes
       // the card. `closed` is excluded: that's our own teardown firing.
-      connection.addEventListener('connectionstatechange', () => {
-        if (connection.connectionState === 'failed' && pc === connection)
-          void fallBackToHls('webrtc dropped mid-stream, falling back to hls')
-      }, { signal: teardown.signal })
+      connection.addEventListener(
+        'connectionstatechange',
+        () => {
+          if (connection.connectionState === 'failed' && pc === connection)
+            void fallBackToHls('webrtc dropped mid-stream, falling back to hls')
+        },
+        { signal: teardown.signal },
+      )
 
       reportRef.current?.('webrtc')
-      video.play()
+      void video.play()
     }
 
     const start = async () => {
@@ -132,36 +130,27 @@ export function VideoPlayer({
 
       try {
         await startWebrtc(whepUrl)
-      }
-      catch (error) {
+      } catch (error) {
         // Blocked UDP, no route to the WebRTC port, webrtc off server-side —
         // all of it lands here, and all of it means: play the stream anyway.
         await fallBackToHls('webrtc playback unavailable, falling back to hls', error)
       }
     }
 
-    start()
+    void start()
 
     return () => {
       disposed = true
       teardown.abort()
-      if (retryTimer)
-        clearTimeout(retryTimer)
+      if (retryTimer) clearTimeout(retryTimer)
       hls?.destroy()
       hls = null
-      if (pc)
-        closeWhepSession(pc, whepResource)
+      if (pc) void closeWhepSession(pc, whepResource)
       video.srcObject = null
     }
   }, [hlsUrl, whepUrl, mode, iceServers])
 
   return (
-    <video
-      className={cn('size-full bg-black object-contain', className)}
-      ref={videoRef}
-      muted
-      autoPlay
-      playsInline
-    />
+    <video className={cn('size-full bg-black object-contain', className)} ref={videoRef} muted autoPlay playsInline />
   )
 }

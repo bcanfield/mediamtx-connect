@@ -4,21 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
-
 import { SaveBar } from '@/components/save-bar'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
-
 import { buildLocalizedClientConfigSchema } from './client-config.schemas'
 
 const monoInput = 'h-9.5 font-mono'
@@ -31,11 +21,7 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function ClientConfigForm({
-  clientConfig,
-}: {
-  clientConfig: AppConfig
-}) {
+export function ClientConfigForm({ clientConfig }: { clientConfig: AppConfig }) {
   const t = useTranslations('Config.clientForm')
   const tSaveBar = useTranslations('Config.saveBar')
   const tForms = useTranslations('Forms.errors')
@@ -58,8 +44,7 @@ export function ClientConfigForm({
       await queryClient.invalidateQueries()
       form.reset(updated)
       toast.success(t('toasts.success'))
-    }
-    catch {
+    } catch {
       toast.error(t('toasts.errorTitle'), {
         description: t('toasts.errorDescription'),
       })
@@ -71,9 +56,10 @@ export function ClientConfigForm({
   const { isDirty, isValid, dirtyFields, errors } = form.formState
   const dirtyCount = Object.keys(dirtyFields).length
   const errorCount = Object.keys(errors).length
-  const summary = errorCount > 0
-    ? `${tSaveBar('unsaved', { count: dirtyCount })} · ${tSaveBar('needsAttention', { count: errorCount })}`
-    : tSaveBar('unsaved', { count: dirtyCount })
+  const summary =
+    errorCount > 0
+      ? `${tSaveBar('unsaved', { count: dirtyCount })} · ${tSaveBar('needsAttention', { count: errorCount })}`
+      : tSaveBar('unsaved', { count: dirtyCount })
 
   return (
     <Form {...form}>
@@ -90,9 +76,7 @@ export function ClientConfigForm({
                 <FormControl {...field}>
                   <Input className={monoInput} placeholder="http://mediamtx" />
                 </FormControl>
-                <FormDescription>
-                  {t('fields.mediaMtxUrl.description')}
-                </FormDescription>
+                <FormDescription>{t('fields.mediaMtxUrl.description')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -107,9 +91,7 @@ export function ClientConfigForm({
                 <FormControl {...field}>
                   <Input type="number" className={cn(monoInput, 'w-45')} placeholder="9997" />
                 </FormControl>
-                <FormDescription>
-                  {t('fields.mediaMtxApiPort.description')}
-                </FormDescription>
+                <FormDescription>{t('fields.mediaMtxApiPort.description')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -137,9 +119,7 @@ export function ClientConfigForm({
                       onChange={e => field.onChange(e.target.value || null)}
                     />
                   </FormControl>
-                  <FormDescription>
-                    {t('fields.remoteMediaMtxUrl.description')}
-                  </FormDescription>
+                  <FormDescription>{t('fields.remoteMediaMtxUrl.description')}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -159,9 +139,7 @@ export function ClientConfigForm({
                 <FormControl {...field}>
                   <Input className={monoInput} placeholder="/recordings" />
                 </FormControl>
-                <FormDescription>
-                  {t('fields.recordingsDirectory.description')}
-                </FormDescription>
+                <FormDescription>{t('fields.recordingsDirectory.description')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -176,9 +154,7 @@ export function ClientConfigForm({
                 <FormControl {...field}>
                   <Input className={monoInput} placeholder="/screenshots" />
                 </FormControl>
-                <FormDescription>
-                  {t('fields.screenshotsDirectory.description')}
-                </FormDescription>
+                <FormDescription>{t('fields.screenshotsDirectory.description')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

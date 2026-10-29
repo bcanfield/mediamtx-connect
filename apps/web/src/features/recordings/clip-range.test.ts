@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-
 import { clipFileName, clipRange } from './clip-range'
 
 const at = (iso: string) => new Date(iso)
@@ -30,7 +29,7 @@ describe('clipFileName', () => {
     expect(clipFileName('cams/front_door', at('2026-10-01T14:02:11Z'))).toBe('cams_front_door_2026-10-01_14-02-11.mp4')
   })
 
-  it('replaces every character a file name can\'t safely hold', () => {
+  it("replaces every character a file name can't safely hold", () => {
     expect(clipFileName('a b:c\\d*é.v-1', at('2026-10-01T00:00:00.750Z'))).toBe('a_b_c_d__.v-1_2026-10-01_00-00-00.mp4')
   })
 })

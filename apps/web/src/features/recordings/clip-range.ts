@@ -2,7 +2,7 @@ import type { RecordingSpan } from '@connect/contract'
 
 /** "Last 5 min", "Last 15 min" and "Last 1 h", in seconds. */
 export const CLIP_PRESETS = [300, 900, 3600] as const
-export type ClipPreset = typeof CLIP_PRESETS[number]
+export type ClipPreset = (typeof CLIP_PRESETS)[number]
 
 export interface ClipRange {
   start: Date

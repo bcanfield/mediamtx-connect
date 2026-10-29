@@ -13,10 +13,9 @@ let rejection: Error | null = null
 
 const server = createRpcServer({
   streamsList: () => ({ status: 'connected', streams: [] }),
-  addPath: (input) => {
+  addPath: input => {
     addPath(input)
-    if (rejection)
-      throw rejection
+    if (rejection) throw rejection
   },
 })
 
@@ -76,8 +75,7 @@ describe('guided rtsp add', () => {
     await fillCamera(user)
     await user.click(screen.getByRole('button', { name: 'Add path' }))
 
-    await vi.waitFor(() =>
-      expect(router.state.location.search).toEqual({ play: 'front-door' }))
+    await vi.waitFor(() => expect(router.state.location.search).toEqual({ play: 'front-door' }))
   })
 
   it('previews the URL it will write with the password masked', async () => {

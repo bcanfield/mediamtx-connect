@@ -6,9 +6,7 @@ import process from 'node:process'
 // Kept separate from the dev dir (.dev-data) so a running `pnpm dev` session and
 // a test run never clobber each other.
 export default function globalSetup() {
-  execFileSync(
-    process.execPath,
-    ['scripts/seed-fixtures.mjs', '--target', 'test-results/e2e-data'],
-    { stdio: 'inherit' },
-  )
+  execFileSync(process.execPath, ['scripts/seed-fixtures.mjs', '--target', 'test-results/e2e-data'], {
+    stdio: 'inherit',
+  })
 }

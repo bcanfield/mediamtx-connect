@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-
 import { logger } from '@/lib/logger'
 
 export interface DownloadProgress {
@@ -12,10 +11,14 @@ export interface DownloadProgress {
 // saves it as `fileName`. Cancelable via AbortController. `totalBytes` is 0
 // when the response has no Content-Length (MediaMTX's /get never sends one).
 // `onError` gets the HTTP status, or null when there was no response.
-export function useRecordingDownload(url: string, fileName: string, callbacks: {
-  onComplete: () => void
-  onError: (status: number | null) => void
-}) {
+export function useRecordingDownload(
+  url: string,
+  fileName: string,
+  callbacks: {
+    onComplete: () => void
+    onError: (status: number | null) => void
+  },
+) {
   const [progress, setProgress] = useState<DownloadProgress | null>(null)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -24,8 +27,7 @@ export function useRecordingDownload(url: string, fileName: string, callbacks: {
   }
 
   const start = async () => {
-    if (abortRef.current)
-      return
+    if (abortRef.current) return
     const controller = new AbortController()
     abortRef.current = controller
     const startedAt = performance.now()
@@ -45,8 +47,7 @@ export function useRecordingDownload(url: string, fileName: string, callbacks: {
 
       while (true) {
         const { done, value } = await reader.read()
-        if (done)
-          break
+        if (done) break
         chunks.push(value)
         receivedBytes += value.length
         const elapsedSec = (performance.now() - startedAt) / 1000
@@ -65,8 +66,7 @@ export function useRecordingDownload(url: string, fileName: string, callbacks: {
       a.click()
       URL.revokeObjectURL(objectUrl)
       callbacks.onComplete()
-    }
-    catch (error) {
+    } catch (error) {
       if (!controller.signal.aborted) {
         logger.error('Error downloading video', error)
         callbacks.onError(status)

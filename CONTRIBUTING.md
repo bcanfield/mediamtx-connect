@@ -27,7 +27,7 @@ catalog: `docs/FEATURES.md` §15.3. Monorepo commands and conventions: `AGENTS.m
 ## Tests
 
 ```bash
-pnpm verify           # what CI's Build job runs: lint, typecheck, i18n, unit/component tests, build
+pnpm verify           # what CI's Build job runs: lint, format, typecheck, i18n, unit/component tests, build
 pnpm test:changed     # only tests your edits can reach
 pnpm build            # e2e runs the built single-server
 pnpm test:e2e         # headless, chromium
@@ -42,7 +42,7 @@ There is no database. The five app settings persist in a Zod-validated `config.j
 
 ## Code style
 
-TypeScript, follow surrounding patterns, run `pnpm lint` before committing. Code rules and conventions live in `AGENTS.md`.
+TypeScript, follow surrounding patterns, run `pnpm lint` and `pnpm format` before committing. In VS Code, install the recommended Oxc extension (`oxc.oxc-vscode`) for format-on-save and lint fixes. Code rules and conventions live in `AGENTS.md`.
 
 ## Pull requests
 

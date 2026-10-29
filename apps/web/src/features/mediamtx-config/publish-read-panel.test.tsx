@@ -17,8 +17,7 @@ let globalFails = false
 const stub: StubApi = {
   streamsList: () => ({ status: 'connected', streams: [] }),
   globalConfig: () => {
-    if (globalFails)
-      throw new Error('MediaMTX is down')
+    if (globalFails) throw new Error('MediaMTX is down')
     return global
   },
   appConfig: () => ({
@@ -44,7 +43,7 @@ afterEach(() => {
 afterAll(() => server.close())
 
 describe('the publish and read tabs', () => {
-  it('lists each tab\'s URLs on the browser-facing host', async () => {
+  it("lists each tab's URLs on the browser-facing host", async () => {
     const view = await renderWithProviders(<PublishReadPanel name="cams/front" source={undefined} />)
 
     expect(await screen.findByText('rtmp://cam.lan:11935/cams/front')).toBeInTheDocument()
@@ -56,8 +55,7 @@ describe('the publish and read tabs', () => {
 
     expect(await screen.findByText('http://cam.lan:8888/cams/front/index.m3u8')).toBeInTheDocument()
     expect(screen.getByText('srt://cam.lan:8890?streamid=read:cams/front')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /WebRTC page/ }))
-      .toHaveAttribute('href', 'http://cam.lan:8889/cams/front')
+    expect(screen.getByRole('link', { name: /WebRTC page/ })).toHaveAttribute('href', 'http://cam.lan:8889/cams/front')
     expect(screen.queryByText(/\/\/mediamtx/)).not.toBeInTheDocument()
   })
 
@@ -99,7 +97,7 @@ it('renders on the page of a path MediaMTX cannot resolve', async () => {
   expect(screen.getByText(/No config to show/)).toBeInTheDocument()
 })
 
-it('says so when the server\'s listen addresses could not be read', async () => {
+it("says so when the server's listen addresses could not be read", async () => {
   global = null
   await renderWithProviders(<PublishReadPanel name="cam" source={undefined} />)
 
@@ -153,7 +151,7 @@ describe('copying', () => {
 
     await view.user.click(screen.getByRole('button', { name: 'Copy RTSP URL' }))
 
-    expect(await screen.findByText('Couldn\'t copy')).toBeInTheDocument()
+    expect(await screen.findByText("Couldn't copy")).toBeInTheDocument()
     expect(screen.queryByText('Copied to the clipboard')).not.toBeInTheDocument()
   })
 })
