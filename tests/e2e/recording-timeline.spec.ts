@@ -126,7 +126,7 @@ test.describe('Recording timeline', () => {
       expect(saved.suggestedFilename()).toMatch(
         new RegExp(`^${STREAM}_\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}\\.mp4$`),
       )
-      const bytes = await readFile((await saved.path())!)
+      const bytes = await readFile(await saved.path())
       expect(bytes.subarray(4, 8).toString('ascii')).toBe('ftyp')
       // More than ftyp + moov alone (well under 2 kB): stream4's HEVC keyframe
       // at 540p is several kB by itself.

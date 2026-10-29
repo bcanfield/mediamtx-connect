@@ -30,6 +30,7 @@ export function VideoPlayer({
   // Kept in a ref so a new callback identity each render doesn't tear the
   // player down and renegotiate.
   const reportRef = useRef(onProtocolChange)
+  // oxlint-disable-next-line react/refs -- latest-callback ref, only read inside effects
   reportRef.current = onProtocolChange
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export function VideoPlayer({
         })
 
         instance.on(Hls.Events.MEDIA_ATTACHED, () => instance.loadSource(hlsUrl))
-        instance.on(Hls.Events.MANIFEST_PARSED, () => video.play())
+        instance.on(Hls.Events.MANIFEST_PARSED, () => void video.play())
         instance.attachMedia(video)
       }
 
@@ -116,7 +117,7 @@ export function VideoPlayer({
       )
 
       reportRef.current?.('webrtc')
-      video.play()
+      void video.play()
     }
 
     const start = async () => {
@@ -136,7 +137,7 @@ export function VideoPlayer({
       }
     }
 
-    start()
+    void start()
 
     return () => {
       disposed = true
@@ -144,7 +145,7 @@ export function VideoPlayer({
       if (retryTimer) clearTimeout(retryTimer)
       hls?.destroy()
       hls = null
-      if (pc) closeWhepSession(pc, whepResource)
+      if (pc) void closeWhepSession(pc, whepResource)
       video.srcObject = null
     }
   }, [hlsUrl, whepUrl, mode, iceServers])

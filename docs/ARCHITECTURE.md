@@ -85,7 +85,7 @@ Layout rules:
 
 - **tsdown bundles the API, and is required.** Node's native type stripping can't run this code: relative imports would need `.ts` extensions, and `@connect/contract` exports raw `.ts` from `node_modules`, where Node refuses to strip types. `apps/api/tsdown.config.ts` bundles `@connect/*` into `dist/server.mjs` and leaves npm deps external.
 - **One version catalog.** Every third-party version lives in `pnpm-workspace.yaml` and is referenced as `catalog:`. Renovate bumps it. The TypeScript pin is explained in a comment there.
-- **ESLint, not Biome.** `@antfu/eslint-config` does linting and formatting in one tool, with no Prettier.
+- **oxlint and oxfmt, not ESLint.** oxlint lints with type-aware rules (`oxlint-tsgolint`, built on TypeScript 7's Go compiler) and oxfmt formats. ESLint's typescript-eslint parser blocked TypeScript 7. See [ADR 0008](./adr/0008-oxlint-replaces-eslint.md).
 - **No database.** The app has five settings, so it uses a Zod-validated `config.json` with atomic writes (`config-store.ts`). Env vars seed it on first boot; after that, the `/config` page owns it. If a real database ever earns its place, it goes in `packages/db`.
 - **use-intl, no URL locale prefix.** See [`I18N.md`](./I18N.md).
 - **Hand-rolled WHEP client.** See [ADR 0003](./adr/0003-hand-rolled-whep-client.md).

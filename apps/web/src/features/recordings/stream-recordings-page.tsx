@@ -160,7 +160,7 @@ function PaginationBar({
 
   const goTo = (p: number) => {
     if (p < 1 || p > totalPages || p === currentPage) return
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({
         ...prev,
@@ -192,7 +192,7 @@ function PaginationBar({
 
         {pageItems(currentPage, totalPages).map((item, i) =>
           item === 'ellipsis' ? (
-            // eslint-disable-next-line react/no-array-index-key
+            // oxlint-disable-next-line react/no-array-index-key
             <span key={`e${i}`} aria-hidden className="px-1 text-lead text-faint">
               …
             </span>

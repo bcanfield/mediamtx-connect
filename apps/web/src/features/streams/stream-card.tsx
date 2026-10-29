@@ -114,7 +114,7 @@ export function StreamCard({
     if (playDisabled) return
     const updated = isLive ? playing.filter(s => s !== streamName) : [...playing, streamName]
 
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({
         ...prev,

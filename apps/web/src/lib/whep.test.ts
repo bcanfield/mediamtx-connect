@@ -88,7 +88,7 @@ describe('negotiateWhep', () => {
     const pc = fakePc({ iceGatheringState: 'complete' })
     const fetchImpl = vi.fn(async () => sdpResponse('answer-sdp'))
 
-    await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl as unknown as typeof fetch)
+    await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl)
 
     expect(fetchImpl).toHaveBeenCalledOnce()
     const [url, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit]
@@ -103,7 +103,7 @@ describe('negotiateWhep', () => {
     const pc = fakePc({ iceGatheringState: 'complete' })
     const fetchImpl = vi.fn(async () => sdpResponse('answer-sdp'))
 
-    await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl as unknown as typeof fetch)
+    await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl)
 
     expect(pc.setRemoteDescription).toHaveBeenCalledWith({ type: 'answer', sdp: 'answer-sdp' })
   })
@@ -112,7 +112,7 @@ describe('negotiateWhep', () => {
     const pc = fakePc({ iceGatheringState: 'complete' })
     const fetchImpl = vi.fn(async () => sdpResponse('answer-sdp', { headers: { Location: '/front/whep/abc123' } }))
 
-    const resource = await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl as unknown as typeof fetch)
+    const resource = await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl)
 
     expect(resource).toBe('http://cam.lan:8889/front/whep/abc123')
   })
@@ -161,6 +161,8 @@ describe('waitForConnected', () => {
     vi.useFakeTimers()
     const pc = fakePc()
     const pending = waitForConnected(pc, 8000)
+    // Attached before the timers run so the rejection is never unhandled; awaited below.
+    // oxlint-disable-next-line vitest/valid-expect
     const assertion = expect(pending).rejects.toThrow(/timed out/)
     await vi.advanceTimersByTimeAsync(8000)
     await assertion
@@ -172,7 +174,7 @@ describe('closeWhepSession', () => {
     const pc = fakePc()
     const fetchImpl = vi.fn(async () => new Response(null, { status: 200 }))
 
-    await closeWhepSession(pc, 'http://cam.lan:8889/front/whep/abc123', fetchImpl as unknown as typeof fetch)
+    await closeWhepSession(pc, 'http://cam.lan:8889/front/whep/abc123', fetchImpl)
 
     expect(fetchImpl).toHaveBeenCalledWith('http://cam.lan:8889/front/whep/abc123', { method: 'DELETE' })
     expect(pc.closed).toBe(true)
@@ -184,7 +186,7 @@ describe('closeWhepSession', () => {
       throw new Error('network down')
     })
 
-    await closeWhepSession(pc, 'http://cam.lan:8889/front/whep/abc123', fetchImpl as unknown as typeof fetch)
+    await closeWhepSession(pc, 'http://cam.lan:8889/front/whep/abc123', fetchImpl)
 
     expect(pc.closed).toBe(true)
   })
@@ -193,7 +195,7 @@ describe('closeWhepSession', () => {
     const pc = fakePc()
     const fetchImpl = vi.fn()
 
-    await closeWhepSession(pc, null, fetchImpl as unknown as typeof fetch)
+    await closeWhepSession(pc, null, fetchImpl)
 
     expect(fetchImpl).not.toHaveBeenCalled()
     expect(pc.closed).toBe(true)

@@ -45,7 +45,7 @@ export function RecordingRow({
   const togglePlay = () => {
     const updated = isOpen ? playing.filter(s => s !== fileName) : [...playing, fileName]
 
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({
         ...prev,

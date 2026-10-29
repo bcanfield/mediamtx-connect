@@ -6,8 +6,10 @@
     "dev:stop": "docker compose -f docker-compose.dev.yml down",
     "build": "turbo build && rm -rf apps/api/public && cp -R apps/web/dist apps/api/public",
     "typecheck": "turbo typecheck",
-    "lint": "eslint --cache",
-    "lint:fix": "eslint --cache --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "i18n:check": "pnpm run i18n:check:messages && pnpm run i18n:check:readme",
     "i18n:check:messages": "node scripts/i18n-check.mjs",
     "i18n:check:readme": "node scripts/readme-i18n-check.mjs",
@@ -16,29 +18,33 @@
     "test:watch": "turbo test:watch",
     "test:changed": "turbo test --force -- --changed",
     "check": "node scripts/check.mjs",
-    "verify": "pnpm lint && pnpm typecheck && pnpm i18n:check && pnpm test && pnpm build",
+    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm i18n:check && pnpm test && pnpm build",
     "test:e2e": "playwright test",
     "test:e2e:dev": "playwright test --ui",
     "release": "semantic-release"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:",
     "@axe-core/playwright": "catalog:",
-    "@eslint-react/eslint-plugin": "catalog:",
+    "@e18e/eslint-plugin": "catalog:",
     "@playwright/test": "catalog:",
     "@semantic-release/changelog": "catalog:",
     "@semantic-release/git": "catalog:",
     "conventional-changelog-conventionalcommits": "catalog:",
-    "eslint": "catalog:",
-    "eslint-plugin-react-hooks": "catalog:",
-    "eslint-plugin-react-refresh": "catalog:",
+    "eslint-plugin-antfu": "catalog:",
+    "eslint-plugin-n": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-regexp": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-plugin-eslint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
     "semantic-release": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18"
   },
   "packageManager": "pnpm@11.28.5"
 }

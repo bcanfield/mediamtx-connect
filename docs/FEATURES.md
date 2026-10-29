@@ -488,11 +488,13 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 - **Runner config** (`playwright.config.ts`) — Chromium only by default; `E2E_ALL_BROWSERS=1` adds Firefox/WebKit/mobile and now matches **only `a11y.spec.ts`**, since the rest of the old UI-spec set is Vitest and `streams.spec.ts`'s remaining test spawns ffmpeg. Set only by the nightly `e2e-nightly.yml`. A `chromium-one-at-a-time` project (one worker) runs `recording-timeline.spec.ts`, and the `chromium` project skips it. 1280×720, `workers: '100%'` in CI, 1 retry, HTML reporter, traces on first retry, screenshots on failure, `webServer: node apps/api/dist/server.mjs` against `http://localhost:3000` with test-shaped env. The specs that write to live MediaMTX (`path-defaults`, `path-config`, `record-toggle`, `publish-urls`, `sessions`, `recording-timeline`, `forwarding`) stay out of that pattern deliberately: one browser is the correct number for a spec that mutates shared server state (`docs/TESTING.md`).
 
 ### 15.2 Linting & types
-- **ESLint 10 + `@antfu/eslint-config`** (lint + format in one tool) with custom rules:
+- **oxlint** (`oxlint.config.mts`) with type-aware rules via `oxlint-tsgolint`, plus JS plugins for ESLint rules oxlint has no native port of. Mapping from the old ESLint setup: `docs/adr/0008-oxlint-replaces-eslint.md`. Custom rules:
   - `console.*` ban — forces use of the shared loggers.
   - i18n hardcoded-string ban in `apps/web/src/features/**` and `apps/web/src/components/**`.
   - **No conditionals in a Playwright `test()` body** (`tests/e2e/**`) — a guarded assertion passes when the feature is broken. Cleanup guards in `afterEach` stay allowed. `docs/adr/0005-fast-test-suite.md`
   - shadcn primitive rule relaxations scoped to `apps/web/src/components/ui/**`.
+- **oxfmt** (`.oxfmtrc.json`) formats JS/TS/JSON/YAML and sorts imports. Markdown, CSS and HTML are left alone.
+- **Repo-config checks** (`scripts/repo-config.test.mjs`) — every dependency uses `catalog:`, no unused catalog entry, required pnpm settings present, tracked JSON is strict and has no duplicate keys.
 - **`tsc --noEmit` per package** via `pnpm typecheck` (Turborepo).
 
 ### 15.3 Scripts (root `package.json`)
@@ -502,14 +504,15 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | `pnpm dev:stop` | Stop the dev Docker stack (MediaMTX + fake streams). |
 | `pnpm build` | Turbo-cached build of all packages + SPA copy into `apps/api/public`. |
 | `pnpm typecheck` | TypeScript type check per package. |
-| `pnpm lint` / `lint:fix` | ESLint check / fix. |
+| `pnpm lint` / `lint:fix` | oxlint check / fix, type-aware. |
+| `pnpm format` / `format:check` | oxfmt write / check. |
 | `pnpm i18n:check` | Message-key parity + README translation staleness (runs both checks below). |
 | `pnpm i18n:check:messages` | Message-key parity only (`scripts/i18n-check.mjs`). |
 | `pnpm i18n:check:readme` | README translation staleness only (`scripts/readme-i18n-check.mjs`). |
 | `pnpm test` | Vitest unit + component suites across packages (turbo), then the root `scripts` project. |
 | `pnpm test:scripts` | Vitest over `scripts/` only (`--dir scripts`) — repo tooling turbo can't see. |
-| `pnpm check` | **The inner loop (~4s).** Lints only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue, a README or `docs/i18n/` moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `--since` with no ref (or with the next flag after it) is an error and exits 1 rather than silently degrading to working-tree mode. `scripts/check.mjs` |
-| `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + typecheck + i18n:check + test + **build**. No Docker, no browsers. |
+| `pnpm check` | **The inner loop (~4s).** Lints and format-checks only the changed files, typechecks the affected packages, runs only the tests the edit can reach, and skips `i18n:check` unless a message catalogue, a README or `docs/i18n/` moved. Steps run concurrently — each has a fixed startup cost that dominates its work. `--since <ref>` scopes it to a branch; bare paths override detection. `--since` with no ref (or with the next flag after it) is an error and exits 1 rather than silently degrading to working-tree mode. `scripts/check.mjs` |
+| `pnpm verify` | **The gate (~11s warm).** Reproduces the CI `build` job exactly: lint + format:check + typecheck + i18n:check + test + **build**. No Docker, no browsers. |
 | `pnpm test:changed` | Only tests reachable from your edits (`vitest --changed`); bypasses the turbo cache since git state isn't hashed. |
 | `pnpm test:watch` | Vitest watch mode across packages. |
 | `pnpm test:e2e` | Playwright suite (needs a prior build). |
@@ -526,7 +529,7 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 
 ## 16. CI / Release / Repo Hygiene
 
-- **GitHub Actions CI** (`.github/workflows/ci.yml`) — lint, typecheck, i18n guards, build, Playwright E2E against a real MediaMTX with fake streams, Docker image smoke test. Its conclusion on `main` is the signal the release train gates on.
+- **GitHub Actions CI** (`.github/workflows/ci.yml`) — lint, format check, typecheck, i18n guards, build, Playwright E2E against a real MediaMTX with fake streams, Docker image smoke test. Its conclusion on `main` is the signal the release train gates on.
 - **Docker publishing** (`.github/workflows/docker.yml`) — multi-arch `bcanfield/mediamtx-connect` + GHCR on release.
 - **Nightly release train** (`.github/workflows/release.yml`) — a scheduled run at ~07:00 `America/New_York` releases whatever landed overnight, so merges arriving around the clock produce one version, one changelog entry, and one multi-arch image build per day rather than one per merge. Refuses to run unless the latest CI run on `main` is green — checked as "latest completed run on `main`", not "the run for HEAD", because `@semantic-release/git` pushes the changelog commit with `[skip ci]`. `workflow_dispatch` triggers an out-of-band release.
 - **`semantic-release`** — `release.config.js` automates semver, changelog, and GitHub releases. `CHANGELOG.md` is auto-maintained. Both the commit analyzer and the notes generator run the `conventionalcommits` preset, which is held at 9.x (see `pnpm-workspace.yaml`, and the `allowedVersions` rule in `renovate.json`): 10.x targets a newer `conventional-changelog-writer` than semantic-release bundles and silently emits release notes with a header and no commit sections.
@@ -562,7 +565,8 @@ All in `packages/contract/src/index.ts` (the only place API shapes are defined):
 | Icons | Lucide React |
 | i18n | `use-intl` (client-side locale, 30 languages) |
 | Testing | Vitest (api unit, web logic + component, scripts) + Playwright (E2E) |
-| Linting | ESLint 10 + `@antfu/eslint-config` |
+| Linting | oxlint + oxlint-tsgolint (type-aware) |
+| Formatting | oxfmt |
 | Packaging | Docker (turbo-pruned multi-stage, multi-arch, single image) |
 | Release | semantic-release, Renovate |
 

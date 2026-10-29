@@ -50,7 +50,7 @@ export function RecordingTimelineSection({ streamName }: { streamName: string })
       await queryClient.fetchQuery({
         ...options,
         queryFn: async context => {
-          const result = await options.queryFn!(context)
+          const result = await options.queryFn(context)
           if (result === null) throw new Error('MediaMTX API unreachable')
           return result
         },
@@ -109,7 +109,7 @@ function DayTimeline({ streamName, day, spans }: { streamName: string; day: Date
   const dayLength = dayjs(day).add(1, 'day').valueOf() - dayStart
 
   const goToDay = (offset: number) => {
-    navigate({
+    void navigate({
       to: '.',
       search: prev => ({ ...prev, day: dayjs(day).add(offset, 'day').format(DAY_FORMAT) }),
       resetScroll: false,

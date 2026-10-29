@@ -24,7 +24,7 @@ export function RecordingPlayer({ src, fallbackDuration }: { src: string; fallba
   const togglePlay = () => {
     const video = videoRef.current
     if (!video) return
-    if (video.paused) video.play()
+    if (video.paused) void video.play()
     else video.pause()
   }
 

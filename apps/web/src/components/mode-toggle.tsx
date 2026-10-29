@@ -1,5 +1,7 @@
 import { Moon, Sun } from 'lucide-react'
 import { useCallback, useRef } from 'react'
+// flushSync is required so the View Transitions API captures the new DOM in this frame.
+// oxlint-disable-next-line no-restricted-imports
 import { flushSync } from 'react-dom'
 import { useTranslations } from 'use-intl'
 import { useTheme } from '@/components/theme-context'
@@ -37,12 +39,10 @@ export function ModeToggle() {
     const maxRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
 
     const transition = document.startViewTransition(() => {
-      // flushSync is required so the View Transitions API captures the new DOM in this frame.
-      // eslint-disable-next-line react/dom-no-flush-sync
       flushSync(apply)
     })
 
-    transition.ready.then(() => {
+    void transition.ready.then(() => {
       document.documentElement.animate(
         {
           clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],

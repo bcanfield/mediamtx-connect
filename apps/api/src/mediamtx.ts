@@ -220,7 +220,7 @@ export function mediaMtxPlayback(config: Pick<AppConfig, 'mediaMtxUrl'>, playbac
     // 404 is the playback server's answer for a range with no segments in it.
     list: async (path: string, start: Date, end: Date): Promise<MediaMtxPlaybackSpan[]> => {
       const query = new URLSearchParams({ path, start: start.toISOString(), end: end.toISOString() })
-      const res = await fetch(`${base}/list?${query}`)
+      const res = await fetch(`${base}/list?${query.toString()}`)
       if (res.status === 404) return []
       if (!res.ok) throw new MediaMtxError(res.status, await errorReason(res), 'GET /list')
       return (await res.json()) as MediaMtxPlaybackSpan[]
@@ -240,7 +240,7 @@ export function mediaMtxPlayback(config: Pick<AppConfig, 'mediaMtxUrl'>, playbac
         duration: String(params.duration),
         format: params.format,
       })
-      const res = await fetch(`${base}/get?${query}`)
+      const res = await fetch(`${base}/get?${query.toString()}`)
       if (!res.ok) throw new MediaMtxError(res.status, await errorReason(res), 'GET /get')
       return res
     },

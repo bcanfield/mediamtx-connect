@@ -43,8 +43,6 @@ const stub: StubApi = {
 const server = createRpcServer(stub)
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
 
 // happy-dom's control API, which it ships no global type augmentation for.
 const happyDom = (
@@ -70,6 +68,8 @@ beforeEach(() => {
   globalConfig = { webrtc: true, webrtcAddress: ':8889', webrtcAdditionalHosts: ['127.0.0.1'] }
   browsingFrom('cam.lan')
 })
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
 describe('the loopback WebRTC banner', () => {
   it('warns when the only advertised host is one this browser cannot route to', async () => {

@@ -75,7 +75,7 @@ function LiveHealth({ health }: { health: Extract<PathHealth, { status: 'live' }
           {health.tracks.map((track, index) => (
             // Two tracks of the same codec is normal, so the codec alone isn't
             // a key — and MediaMTX's own order is the only identity they have.
-            // eslint-disable-next-line react/no-array-index-key
+            // oxlint-disable-next-line react/no-array-index-key
             <Badge key={index} variant="secondary" className="font-mono">
               {track.resolution ? t('trackDetail', { codec: track.codec, resolution: track.resolution }) : track.codec}
             </Badge>

@@ -213,10 +213,10 @@ export function ListFieldRow<T extends FieldValues>({
                 {...field}
                 aria-label={name}
                 className="min-h-16 font-mono text-control"
-                value={toTextarea(field.value as string[] | undefined)}
+                value={toTextarea(field.value)}
                 onChange={e => field.onChange(fromTextarea(e))}
                 onBlur={() => {
-                  field.onChange(cleanLines(field.value as string[] | undefined))
+                  field.onChange(cleanLines(field.value))
                   field.onBlur()
                 }}
               />

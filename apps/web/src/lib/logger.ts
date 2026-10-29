@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 // Browser-side logger; the api has its own Pino logger. console.* is banned
 // outside this file.
 const isDev = import.meta.env.DEV
