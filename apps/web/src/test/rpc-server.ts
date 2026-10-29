@@ -95,12 +95,9 @@ export function createRpcServer(stub: StubApi) {
       }),
     },
     recordings: {
-      listStreams: os.recordings.listStreams.handler(
-        () => (stub.recordingStreams?.() ?? []) as never,
-      ),
+      listStreams: os.recordings.listStreams.handler(() => (stub.recordingStreams?.() ?? []) as never),
       listForStream: os.recordings.listForStream.handler(
-        ({ input }) =>
-          (stub.recordingsForStream?.(input) ?? { recordings: [], totalCount: 0 }) as never,
+        ({ input }) => (stub.recordingsForStream?.(input) ?? { recordings: [], totalCount: 0 }) as never,
       ),
       // Not `??`: a stub answering `null` is driving the unreachable branch.
       timeline: os.recordings.timeline.handler(
@@ -117,15 +114,11 @@ export function createRpcServer(stub: StubApi) {
         }),
       },
       mediamtx: {
-        getGlobal: os.config.mediamtx.getGlobal.handler(
-          () => (stub.globalConfig?.() ?? null) as never,
-        ),
+        getGlobal: os.config.mediamtx.getGlobal.handler(() => (stub.globalConfig?.() ?? null) as never),
         updateGlobal: os.config.mediamtx.updateGlobal.handler(async ({ input }) => {
           await stub.updateGlobalConfig?.(input)
         }),
-        getPathDefaults: os.config.mediamtx.getPathDefaults.handler(
-          () => (stub.pathDefaults?.() ?? null) as never,
-        ),
+        getPathDefaults: os.config.mediamtx.getPathDefaults.handler(() => (stub.pathDefaults?.() ?? null) as never),
         updatePathDefaults: os.config.mediamtx.updatePathDefaults.handler(async ({ input }) => {
           await stub.updatePathDefaults?.(input)
         }),
@@ -135,9 +128,7 @@ export function createRpcServer(stub: StubApi) {
         addPath: os.config.mediamtx.addPath.handler(async ({ input }) => {
           await stub.addPath?.(input)
         }),
-        getPathConfig: os.config.mediamtx.getPathConfig.handler(
-          () => (stub.pathConfig?.() ?? null) as never,
-        ),
+        getPathConfig: os.config.mediamtx.getPathConfig.handler(() => (stub.pathConfig?.() ?? null) as never),
         updatePathConfig: os.config.mediamtx.updatePathConfig.handler(async ({ input }) => {
           await stub.updatePathConfig?.(input)
         }),

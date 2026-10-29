@@ -29,8 +29,7 @@ beforeAll(() => {
   const recordings = path.join(root, 'recordings')
   const screenshots = path.join(root, 'screenshots')
 
-  for (const dir of ['stream1', 'stream2', 'dotted'])
-    mkdirSync(path.join(recordings, dir), { recursive: true })
+  for (const dir of ['stream1', 'stream2', 'dotted']) mkdirSync(path.join(recordings, dir), { recursive: true })
   // A loose file beside the stream directories — not a stream.
   writeFileSync(path.join(recordings, 'notes.txt'), '')
 
@@ -102,7 +101,7 @@ describe('summarizeStreamRecordings', () => {
 })
 
 describe('listStreamRecordingFiles', () => {
-  it('lists a stream\'s recordings newest first', () => {
+  it("lists a stream's recordings newest first", () => {
     const files = listStreamRecordingFiles(config.recordingsDirectory, 'stream1')
 
     expect(files).toEqual(['2026-07-02_10-00-00.mp4', '2026-07-01_10-00-00.mp4'])
@@ -121,7 +120,7 @@ describe('listStreamRecordingFiles', () => {
 })
 
 describe('screenshotUrlFor', () => {
-  it('points at the recording\'s sibling PNG', () => {
+  it("points at the recording's sibling PNG", () => {
     const url = screenshotUrlFor(config, 'stream1', '2026-07-02_10-00-00.mp4')
 
     expect(url).toBe('/media/screenshots/stream1/2026-07-02_10-00-00.png')
@@ -161,7 +160,7 @@ describe('latestScreenshotPathFor', () => {
 })
 
 describe('latestScreenshotUrlFor', () => {
-  it('points at the stream\'s /latest route', () => {
+  it("points at the stream's /latest route", () => {
     expect(latestScreenshotUrlFor(config, 'stream2')).toBe('/media/screenshots/stream2/latest')
   })
 

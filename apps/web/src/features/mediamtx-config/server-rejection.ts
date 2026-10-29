@@ -8,7 +8,5 @@
 // field to blame. Longest key first, or `record` would swallow `recordPath`.
 export function offendingField(reason: string, changedKeys: string[]): string | null {
   const haystack = reason.toLowerCase()
-  return [...changedKeys]
-    .sort((a, b) => b.length - a.length)
-    .find(key => haystack.includes(key.toLowerCase())) ?? null
+  return [...changedKeys].sort((a, b) => b.length - a.length).find(key => haystack.includes(key.toLowerCase())) ?? null
 }

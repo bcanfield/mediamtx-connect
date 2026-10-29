@@ -1,10 +1,6 @@
 {
   "name": "mediamtx-connect",
   "private": true,
-  "packageManager": "pnpm@11.28.5",
-  "engines": {
-    "node": ">=22"
-  },
   "scripts": {
     "dev": "node scripts/seed-fixtures.mjs && docker compose -f docker-compose.dev.yml up -d && turbo dev",
     "dev:stop": "docker compose -f docker-compose.dev.yml down",
@@ -40,5 +36,9 @@
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
-  }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.28.5"
 }

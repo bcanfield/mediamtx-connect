@@ -90,9 +90,7 @@
   "javascript.preferences.importModuleSpecifier": "project-relative",
   // give yourself a wider column and a ruler to aim for
   "editor.wordWrap": "off",
-  "editor.rulers": [
-    160
-  ],
+  "editor.rulers": [160],
   "editor.wordWrapColumn": 160,
   "search.exclude": {
     "docs/internal/archive": true,

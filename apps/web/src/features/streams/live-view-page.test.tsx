@@ -47,12 +47,14 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 // happy-dom's control API, which it ships no global type augmentation for.
-const happyDom = (window as unknown as {
-  happyDOM: {
-    setURL: (url: string) => void
-    settings: { fetch: { disableSameOriginPolicy: boolean } }
+const happyDom = (
+  window as unknown as {
+    happyDOM: {
+      setURL: (url: string) => void
+      settings: { fetch: { disableSameOriginPolicy: boolean } }
+    }
   }
-}).happyDOM
+).happyDOM
 
 // The oRPC client pinned `window.location.origin` when it was imported, so
 // moving the document off localhost makes every query cross-origin.
@@ -75,8 +77,10 @@ describe('the loopback WebRTC banner', () => {
 
     expect(await screen.findByText('front-door')).toBeInTheDocument()
     expect(banner()).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Open WebRTC Config' }))
-      .toHaveAttribute('href', '/config/mediamtx/global?section=webrtc')
+    expect(screen.getByRole('link', { name: 'Open WebRTC Config' })).toHaveAttribute(
+      'href',
+      '/config/mediamtx/global?section=webrtc',
+    )
   })
 
   it('says nothing to a browser on the machine MediaMTX is advertising', async () => {

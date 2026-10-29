@@ -48,24 +48,21 @@ export default antfu(
     // MediaMTX field labels pass because they render the config key verbatim
     // from a variable, never as a literal.
     files: ['apps/web/src/features/**/*.tsx', 'apps/web/src/components/**/*.tsx'],
-    ignores: [
-      '**/*.test.tsx',
-      'apps/web/src/components/ui/**',
-      'apps/web/src/components/locale-switcher.tsx',
-    ],
+    ignores: ['**/*.test.tsx', 'apps/web/src/components/ui/**', 'apps/web/src/components/locale-switcher.tsx'],
     rules: {
       'no-restricted-syntax': [
         'error',
         {
           selector: 'JSXText[value=/\\p{L}{2,}/u]',
-          message: 'No raw string literals in JSX. Move to messages/*.json and read via useTranslations. See docs/I18N.md.',
+          message:
+            'No raw string literals in JSX. Move to messages/*.json and read via useTranslations. See docs/I18N.md.',
         },
         {
-          selector: 'JSXAttribute[name.name=/^(title|alt)$/][value.type=\'Literal\'][value.value=/\\p{L}{2,}/u]',
+          selector: "JSXAttribute[name.name=/^(title|alt)$/][value.type='Literal'][value.value=/\\p{L}{2,}/u]",
           message: 'Translate title/alt props via useTranslations. See docs/I18N.md.',
         },
         {
-          selector: 'JSXAttribute[name.name=\'aria-label\'][value.type=\'Literal\'][value.value=/\\p{L}{2,}/u]',
+          selector: "JSXAttribute[name.name='aria-label'][value.type='Literal'][value.value=/\\p{L}{2,}/u]",
           message: 'Translate aria-label via useTranslations. See docs/I18N.md.',
         },
       ],
@@ -89,12 +86,15 @@ export default antfu(
       'no-restricted-syntax': [
         'error',
         {
-          selector: 'CallExpression[callee.name=\'test\'] > ArrowFunctionExpression IfStatement',
-          message: 'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
+          selector: "CallExpression[callee.name='test'] > ArrowFunctionExpression IfStatement",
+          message:
+            'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
         },
         {
-          selector: 'CallExpression[callee.object.name=\'test\'][callee.property.name=/^(only|skip|fixme)$/] > ArrowFunctionExpression IfStatement',
-          message: 'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
+          selector:
+            "CallExpression[callee.object.name='test'][callee.property.name=/^(only|skip|fixme)$/] > ArrowFunctionExpression IfStatement",
+          message:
+            'No conditionals in a test body — a guarded assertion passes when the feature is broken. Assert unconditionally against the fixtures, or move the test to the component layer. See docs/TESTING.md.',
         },
       ],
     },

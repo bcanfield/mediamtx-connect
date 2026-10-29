@@ -15,8 +15,7 @@ export const logger = {
     error !== undefined ? console.error(`[ERROR] ${message}`, error) : console.error(`[ERROR] ${message}`)
   },
   debug: (message: string, data?: Record<string, unknown>) => {
-    if (!isDev)
-      return
+    if (!isDev) return
     data ? console.log(`[DEBUG] ${message}`, data) : console.log(`[DEBUG] ${message}`)
   },
 }

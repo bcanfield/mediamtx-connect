@@ -36,36 +36,36 @@ export type Locale = (typeof locales)[number]
 export const defaultLocale: Locale = 'en'
 
 export const LANGUAGE_NAMES: Record<Locale, string> = {
-  'en': 'English',
-  'es': 'Español',
-  'zh': '中文',
-  'it': 'Italiano',
-  'de': 'Deutsch',
-  'ru': 'Русский',
-  'fr': 'Français',
-  'pt': 'Português',
-  'ja': '日本語',
-  'pl': 'Polski',
-  'ko': '한국어',
-  'tr': 'Türkçe',
-  'nl': 'Nederlands',
-  'cs': 'Čeština',
+  en: 'English',
+  es: 'Español',
+  zh: '中文',
+  it: 'Italiano',
+  de: 'Deutsch',
+  ru: 'Русский',
+  fr: 'Français',
+  pt: 'Português',
+  ja: '日本語',
+  pl: 'Polski',
+  ko: '한국어',
+  tr: 'Türkçe',
+  nl: 'Nederlands',
+  cs: 'Čeština',
   'zh-tw': '繁體中文',
   'pt-br': 'Português (BR)',
-  'id': 'Bahasa Indonesia',
-  'ro': 'Română',
-  'sv': 'Svenska',
-  'da': 'Dansk',
-  'no': 'Norsk',
-  'fi': 'Suomi',
-  'el': 'Ελληνικά',
-  'hu': 'Magyar',
-  'uk': 'Українська',
-  'vi': 'Tiếng Việt',
-  'tl': 'Tagalog',
-  'th': 'ไทย',
-  'hi': 'हिन्दी',
-  'bn': 'বাংলা',
+  id: 'Bahasa Indonesia',
+  ro: 'Română',
+  sv: 'Svenska',
+  da: 'Dansk',
+  no: 'Norsk',
+  fi: 'Suomi',
+  el: 'Ελληνικά',
+  hu: 'Magyar',
+  uk: 'Українська',
+  vi: 'Tiếng Việt',
+  tl: 'Tagalog',
+  th: 'ไทย',
+  hi: 'हिन्दी',
+  bn: 'বাংলা',
 }
 
 export function isLocale(value: string): value is Locale {
@@ -76,11 +76,9 @@ export function isLocale(value: string): value is Locale {
 export function detectLocale(): Locale {
   for (const lang of navigator.languages ?? []) {
     const lower = lang.toLowerCase()
-    if (isLocale(lower))
-      return lower
+    if (isLocale(lower)) return lower
     const base = lower.split('-')[0] ?? ''
-    if (isLocale(base))
-      return base
+    if (isLocale(base)) return base
   }
   return defaultLocale
 }

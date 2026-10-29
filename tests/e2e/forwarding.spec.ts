@@ -20,16 +20,17 @@ const DEST_URL = `rtsp://localhost:8554/${DST}`
 // here retries until it gets a fresh one. A retry can follow a call that landed
 // but whose answer was dropped, so `alsoDone` names the status that means the
 // earlier attempt already did the job.
-async function untilOk(send: () => Promise<{ ok: () => boolean, status: () => number }>, alsoDone?: number) {
-  await expect.poll(async () => {
-    try {
-      const res = await send()
-      return res.ok() || res.status() === alsoDone
-    }
-    catch {
-      return false
-    }
-  }).toBe(true)
+async function untilOk(send: () => Promise<{ ok: () => boolean; status: () => number }>, alsoDone?: number) {
+  await expect
+    .poll(async () => {
+      try {
+        const res = await send()
+        return res.ok() || res.status() === alsoDone
+      } catch {
+        return false
+      }
+    })
+    .toBe(true)
 }
 
 // The runtime path; `gone` once MediaMTX isn't running it (404), and undefined
@@ -37,33 +38,38 @@ async function untilOk(send: () => Promise<{ ok: () => boolean, status: () => nu
 async function runtimePath(request: APIRequestContext, name: string) {
   try {
     const res = await request.get(`${API}/paths/get/${name}`)
-    if (res.status() === 404)
-      return 'gone' as const
-    return res.ok() ? await res.json() as { ready: boolean, readyTime: string | null } : undefined
-  }
-  catch {
+    if (res.status() === 404) return 'gone' as const
+    return res.ok() ? ((await res.json()) as { ready: boolean; readyTime: string | null }) : undefined
+  } catch {
     return undefined
   }
 }
 
 async function isReady(request: APIRequestContext, name: string) {
   const path = await runtimePath(request, name)
-  if (path === 'gone')
-    return false
+  if (path === 'gone') return false
   return path?.ready
 }
 
 test.describe('Forwarding', () => {
-  test('forwards a path to a destination and stops when it is removed, without a restart', async ({ page, request }) => {
+  test('forwards a path to a destination and stops when it is removed, without a restart', async ({
+    page,
+    request,
+  }) => {
     // Left over from an earlier run that died before its `finally`.
     await untilOk(() => request.delete(`${API}/config/paths/delete/${SRC}`), 404)
     // 400 is "path already exists": an earlier attempt landed.
-    await untilOk(() => request.post(`${API}/config/paths/add/${SRC}`, {
-      data: {
-        runOnInit: 'ffmpeg -re -f lavfi -i testsrc=size=640x360:rate=15 -c:v libx264 -preset ultrafast -pix_fmt yuv420p -g 30 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH',
-        runOnInitRestart: true,
-      },
-    }), 400)
+    await untilOk(
+      () =>
+        request.post(`${API}/config/paths/add/${SRC}`, {
+          data: {
+            runOnInit:
+              'ffmpeg -re -f lavfi -i testsrc=size=640x360:rate=15 -c:v libx264 -preset ultrafast -pix_fmt yuv420p -g 30 -f rtsp rtsp://localhost:$RTSP_PORT/$MTX_PATH',
+            runOnInitRestart: true,
+          },
+        }),
+      400,
+    )
     try {
       await expect.poll(() => isReady(request, SRC), { timeout: 30_000 }).toBe(true)
       const readyTimeOf = async () => {
@@ -92,8 +98,7 @@ test.describe('Forwarding', () => {
       await expect(page.getByTestId('save-bar')).toBeHidden()
 
       await expect.poll(() => isReady(request, DST), { timeout: 20_000 }).toBe(false)
-    }
-    finally {
+    } finally {
       await untilOk(() => request.delete(`${API}/config/paths/delete/${SRC}`), 404)
     }
   })

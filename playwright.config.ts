@@ -44,14 +44,14 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] }, testIgnore: oneAtATime },
     { name: 'chromium-one-at-a-time', use: { ...devices['Desktop Chrome'] }, testMatch: oneAtATime, workers: 1 },
-    ...allBrowsers
+    ...(allBrowsers
       ? [
           { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: uiSpecs },
           { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: uiSpecs },
           { name: 'mobile-chrome', use: { ...devices['Pixel 7'] }, testMatch: uiSpecs },
           { name: 'mobile-safari', use: { ...devices['iPhone 14'] }, testMatch: uiSpecs },
         ]
-      : [],
+      : []),
   ],
   webServer: {
     // Requires a prior `pnpm build` (which also copies the SPA into
@@ -66,7 +66,7 @@ export default defineConfig({
       MEDIAMTX_SCREENSHOTS_DIR: './test-results/e2e-data/screenshots',
       BACKEND_SERVER_MEDIAMTX_URL: 'http://127.0.0.1',
       REMOTE_MEDIAMTX_URL: 'http://localhost',
-      ...Object.fromEntries(Object.entries(process.env).filter(([, v]) => v !== undefined)) as Record<string, string>,
+      ...(Object.fromEntries(Object.entries(process.env).filter(([, v]) => v !== undefined)) as Record<string, string>),
     },
   },
 })

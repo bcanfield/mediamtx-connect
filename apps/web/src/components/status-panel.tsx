@@ -1,6 +1,5 @@
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
-
 import { cn } from '@/lib/utils'
 
 const statusPanelVariants = cva('rounded-panel border', {
@@ -20,18 +19,15 @@ const statusPanelVariants = cva('rounded-panel border', {
   },
 })
 
-const iconCircleVariants = cva(
-  'flex size-10 items-center justify-center rounded-full border',
-  {
-    variants: {
-      tone: {
-        error: 'border-live/35 text-live-foreground',
-        warning: 'border-warning/40 text-warning',
-      },
+const iconCircleVariants = cva('flex size-10 items-center justify-center rounded-full border', {
+  variants: {
+    tone: {
+      error: 'border-live/35 text-live-foreground',
+      warning: 'border-warning/40 text-warning',
     },
-    defaultVariants: { tone: 'error' },
   },
-)
+  defaultVariants: { tone: 'error' },
+})
 
 const dotVariants = cva('size-1.5 shrink-0 rounded-full', {
   variants: {
@@ -67,9 +63,7 @@ export function StatusPanel({
           <span aria-hidden className={dotVariants({ tone })} />
           <div className="min-w-0">
             <p className="text-control font-medium">{title}</p>
-            {description && (
-              <p className="truncate text-meta text-muted-foreground">{description}</p>
-            )}
+            {description && <p className="truncate text-meta text-muted-foreground">{description}</p>}
           </div>
         </div>
         {action}
@@ -83,9 +77,7 @@ export function StatusPanel({
       {icon && <span className={iconCircleVariants({ tone })}>{icon}</span>}
       <div className="space-y-1.5">
         <h2 className="text-section font-semibold tracking-title">{title}</h2>
-        {description && (
-          <p className="text-lead text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="text-lead text-muted-foreground">{description}</p>}
       </div>
       {action}
       {children}

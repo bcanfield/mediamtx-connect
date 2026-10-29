@@ -29,12 +29,8 @@ export function PageLayout({
       {(header || subHeader || actions) && (
         <header className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-1">
-            {header && (
-              <h1 className="text-xl font-semibold tracking-title">{header}</h1>
-            )}
-            {subHeader && (
-              <p className="text-control text-muted-foreground">{subHeader}</p>
-            )}
+            {header && <h1 className="text-xl font-semibold tracking-title">{header}</h1>}
+            {subHeader && <p className="text-control text-muted-foreground">{subHeader}</p>}
           </div>
           {actions && <div className="flex items-center gap-2">{actions}</div>}
         </header>

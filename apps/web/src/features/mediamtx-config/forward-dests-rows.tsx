@@ -4,16 +4,9 @@ import { Eye, EyeOff, LockIcon, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { useFieldArray, useFormState } from 'react-hook-form'
 import { useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
 import { RowShell } from './config-field-row'
 
 // MediaMTX config key, rendered verbatim — never localized (docs/I18N.md).
@@ -28,18 +21,16 @@ export function ForwardDestsRows({ control }: { control: Control<PathConfigFormD
 
   return (
     <>
-      <p role="note" className="mt-3.5 flex items-start gap-2 rounded-panel border border-border-subtle p-3 text-meta text-muted-foreground">
+      <p
+        role="note"
+        className="mt-3.5 flex items-start gap-2 rounded-panel border border-border-subtle p-3 text-meta text-muted-foreground"
+      >
         <LockIcon aria-hidden className="mt-px size-3.5 shrink-0" />
         {t('plaintextNotice')}
       </p>
       <RowShell name={FORWARD_KEY} dirty={Boolean(dirtyFields.forward)}>
         {fields.map((field, index) => (
-          <ForwardDestRow
-            key={field.id}
-            control={control}
-            index={index}
-            onRemove={() => remove(index)}
-          />
+          <ForwardDestRow key={field.id} control={control} index={index} onRemove={() => remove(index)} />
         ))}
 
         <Button

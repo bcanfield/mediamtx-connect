@@ -8,30 +8,20 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslations } from 'use-intl'
 import { z } from 'zod'
-
 import { PageLayout } from '@/components/page-layout'
 import { StatusPanel } from '@/components/status-panel'
 import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { orpc } from '@/orpc'
-
 import { composeRtspSource, maskSourceCredentials } from './rtsp-source'
 
 const monoInput = 'h-9.5 font-mono'
 
-function buildAddPathSchema(messages: { required: string, mustBePositive: string }) {
+function buildAddPathSchema(messages: { required: string; mustBePositive: string }) {
   return z.object({
     name: z.string().min(1, { message: messages.required }),
     host: z.string().min(1, { message: messages.required }),
@@ -63,10 +53,12 @@ export function AddRtspPathPage() {
   const [rejection, setRejection] = useState<string | null>(null)
 
   const form = useForm({
-    resolver: zodResolver(buildAddPathSchema({
-      required: tForms('required'),
-      mustBePositive: tForms('mustBePositive'),
-    })),
+    resolver: zodResolver(
+      buildAddPathSchema({
+        required: tForms('required'),
+        mustBePositive: tForms('mustBePositive'),
+      }),
+    ),
     mode: 'onBlur',
     defaultValues: {
       name: '',
@@ -105,8 +97,7 @@ export function AddRtspPathPage() {
       // The point of the whole flow: the first thing after creating a path is
       // the picture from it.
       await navigate({ to: '/', search: { play: name } })
-    }
-    catch (error) {
+    } catch (error) {
       setRejection(error instanceof ORPCError ? error.message : t('errors.unreachable'))
     }
   }
@@ -261,7 +252,9 @@ export function AddRtspPathPage() {
             <Button asChild type="button" variant="ghost">
               <Link href="/config/mediamtx/paths">{t('cancel')}</Link>
             </Button>
-            <Button type="submit" disabled={addPath.isPending}>{t('submit')}</Button>
+            <Button type="submit" disabled={addPath.isPending}>
+              {t('submit')}
+            </Button>
           </div>
         </form>
       </Form>

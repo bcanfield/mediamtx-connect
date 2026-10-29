@@ -3,12 +3,10 @@ import { CircleDashed, Download } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { formatBytes } from '@/lib/format'
 import { cn } from '@/lib/utils'
-
 import { RecordingPlayer } from './recording-player'
 import { useRecordingDownload } from './use-recording-download'
 
@@ -45,9 +43,7 @@ export function RecordingRow({
   })
 
   const togglePlay = () => {
-    const updated = isOpen
-      ? playing.filter(s => s !== fileName)
-      : [...playing, fileName]
+    const updated = isOpen ? playing.filter(s => s !== fileName) : [...playing, fileName]
 
     navigate({
       to: '.',
@@ -85,88 +81,76 @@ export function RecordingRow({
             className="relative w-24 shrink-0 overflow-hidden rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 sm:w-29.5"
           >
             <div className="aspect-video bg-black">
-              {showThumbnail
-                ? (
-                    <img
-                      alt=""
-                      onError={() => setThumbnailError(true)}
-                      src={screenshotUrl}
-                      className="size-full object-cover"
-                    />
-                  )
-                : (
-                    <div className="flex size-full items-center justify-center bg-hatch">
-                      <CircleDashed className="size-4 text-faint" />
-                    </div>
-                  )}
+              {showThumbnail ? (
+                <img
+                  alt=""
+                  onError={() => setThumbnailError(true)}
+                  src={screenshotUrl}
+                  className="size-full object-cover"
+                />
+              ) : (
+                <div className="flex size-full items-center justify-center bg-hatch">
+                  <CircleDashed className="size-4 text-faint" />
+                </div>
+              )}
             </div>
           </button>
         )}
 
         <div className="min-w-0 flex-1">
           <p className="truncate text-body font-medium tabular-nums">{time}</p>
-          {download.progress
-            ? (
-                <div className="mt-1.5 flex max-w-md flex-col gap-1.5">
-                  <Progress
-                    value={download.progress.totalBytes > 0
-                      ? (download.progress.receivedBytes / download.progress.totalBytes) * 100
-                      : 0}
-                    className="h-0.75"
-                    indicatorClassName="bg-link"
-                  />
-                  <span aria-live="polite" className="font-mono text-label text-mute">
-                    {t('downloading', {
-                      received: formatBytes(format, download.progress.receivedBytes),
-                      total: formatBytes(format, download.progress.totalBytes),
-                      rate: formatRate(download.progress.bytesPerSec),
-                    })}
-                  </span>
-                </div>
-              )
-            : (
-                <p className="truncate text-meta text-mute">
-                  {formatBytes(format, fileSize)}
-                </p>
-              )}
+          {download.progress ? (
+            <div className="mt-1.5 flex max-w-md flex-col gap-1.5">
+              <Progress
+                value={
+                  download.progress.totalBytes > 0
+                    ? (download.progress.receivedBytes / download.progress.totalBytes) * 100
+                    : 0
+                }
+                className="h-0.75"
+                indicatorClassName="bg-link"
+              />
+              <span aria-live="polite" className="font-mono text-label text-mute">
+                {t('downloading', {
+                  received: formatBytes(format, download.progress.receivedBytes),
+                  total: formatBytes(format, download.progress.totalBytes),
+                  rate: formatRate(download.progress.bytesPerSec),
+                })}
+              </span>
+            </div>
+          ) : (
+            <p className="truncate text-meta text-mute">{formatBytes(format, fileSize)}</p>
+          )}
         </div>
 
         <div className="flex shrink-0 items-center gap-1.5">
-          {download.downloading
-            ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="h-7.5 px-3"
-                  onClick={download.cancel}
-                >
-                  {t('cancel')}
-                </Button>
-              )
-            : (
-                <>
-                  <Button
-                    type="button"
-                    variant={isOpen ? 'default' : 'outline'}
-                    size="sm"
-                    className="h-7.5 px-3"
-                    onClick={togglePlay}
-                  >
-                    {isOpen ? t('close') : t('play')}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="size-7.5"
-                    aria-label={t('downloadAria', { file: fileName })}
-                    onClick={download.start}
-                  >
-                    <Download className="size-3.5" />
-                  </Button>
-                </>
-              )}
+          {download.downloading ? (
+            <Button type="button" variant="outline" size="sm" className="h-7.5 px-3" onClick={download.cancel}>
+              {t('cancel')}
+            </Button>
+          ) : (
+            <>
+              <Button
+                type="button"
+                variant={isOpen ? 'default' : 'outline'}
+                size="sm"
+                className="h-7.5 px-3"
+                onClick={togglePlay}
+              >
+                {isOpen ? t('close') : t('play')}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="size-7.5"
+                aria-label={t('downloadAria', { file: fileName })}
+                onClick={download.start}
+              >
+                <Download className="size-3.5" />
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

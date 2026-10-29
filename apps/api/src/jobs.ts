@@ -17,8 +17,7 @@ function getSubdirectories(dirPath: string): string[] {
 // The recording segments in one stream's directory. A segment's thumbnail is
 // `<stem>.png`.
 function segmentFiles(recordingDirectory: string): string[] {
-  if (!fs.existsSync(recordingDirectory))
-    return []
+  if (!fs.existsSync(recordingDirectory)) return []
   return fs.readdirSync(recordingDirectory).filter(isRecordingSegment)
 }
 
@@ -33,7 +32,7 @@ function createSpawnGate(limit: number) {
         active++
         return Promise.resolve()
       }
-      return new Promise<void>((resolve) => {
+      return new Promise<void>(resolve => {
         waiters.push(resolve)
       })
     },
@@ -85,7 +84,7 @@ export function __resetSpawnGates() {
 async function generateScreenshot(inputFile: string, outputFile: string): Promise<void> {
   await thumbnailGate.acquire()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const proc = cp.spawn('ffmpeg', ['-ss', '00:00:00', '-i', inputFile, '-frames:v', '1', outputFile])
 
     // A failed spawn fires both 'error' and 'close', so release the permit
@@ -93,22 +92,19 @@ async function generateScreenshot(inputFile: string, outputFile: string): Promis
     // ffmpeg past the cap.
     let settled = false
     const finish = () => {
-      if (settled)
-        return
+      if (settled) return
       settled = true
       thumbnailGate.release()
       resolve()
     }
 
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish()
     })
-    proc.on('close', (code) => {
-      if (code === 0)
-        logger.info(`Finished generating screenshot ${outputFile}`)
-      else
-        logger.warn(`ffmpeg exited ${code} generating screenshot ${outputFile}`)
+    proc.on('close', code => {
+      if (code === 0) logger.info(`Finished generating screenshot ${outputFile}`)
+      else logger.warn(`ffmpeg exited ${code} generating screenshot ${outputFile}`)
       finish()
     })
   })
@@ -132,12 +128,12 @@ export async function generateScreenshots() {
 
     const recordingDirectory = path.join(config.recordingsDirectory, subdirectory)
     const thumbnails = new Set(
-      fs.readdirSync(streamScreenshotDirectory)
+      fs
+        .readdirSync(streamScreenshotDirectory)
         .filter(f => f.endsWith('.png'))
         .map(f => path.parse(f).name),
     )
-    const missing = segmentFiles(recordingDirectory)
-      .filter(file => !thumbnails.has(path.parse(file).name))
+    const missing = segmentFiles(recordingDirectory).filter(file => !thumbnails.has(path.parse(file).name))
 
     logger.info(`${missing.length} recordings without screenshots in: ${subdirectory}`)
 
@@ -168,8 +164,7 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
   const dir = path.join(screenshotsDirectory, streamName)
   try {
     fs.mkdirSync(dir, { recursive: true })
-  }
-  catch (err) {
+  } catch (err) {
     captureGate.release()
     throw err
   }
@@ -206,15 +201,14 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
     // an extra ffmpeg past the cap.
     let settled = false
     const finish = (done: () => void) => {
-      if (settled)
-        return
+      if (settled) return
       settled = true
       clearTimeout(killTimer)
       captureGate.release()
       done()
     }
 
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       logger.error({ err }, `Failed to spawn ffmpeg for ${outputFile}`)
       finish(() => reject(err))
     })
@@ -223,15 +217,14 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
     const fail = (message: string, err?: unknown) => {
       try {
         fs.rmSync(tmp, { force: true })
-      }
-      catch (rmErr) {
+      } catch (rmErr) {
         logger.warn({ err: rmErr }, `Could not remove ${tmp}`)
       }
       logger.warn({ err }, message)
       reject(new Error(message, { cause: err }))
     }
 
-    proc.on('close', (code) => {
+    proc.on('close', code => {
       finish(() => {
         if (code !== 0) {
           fail(`ffmpeg exited ${code} capturing snapshot for ${streamName}`)
@@ -241,8 +234,7 @@ async function captureFrame(streamName: string, rtspUrl: string, screenshotsDire
         // a frame arrives (a path removed mid-capture), so the rename can miss.
         try {
           fs.renameSync(tmp, outputFile)
-        }
-        catch (err) {
+        } catch (err) {
           fail(`ffmpeg wrote no frame capturing snapshot for ${streamName}`, err)
           return
         }
@@ -281,8 +273,7 @@ export async function captureLiveSnapshots() {
 // the ffmpeg exit and rejects on failure so the caller can report the outcome.
 export async function captureSnapshot(streamName: string): Promise<void> {
   const config = await getAppConfig()
-  if (!safeJoin(config.screenshotsDirectory, streamName))
-    throw new Error(`No stream named ${streamName}`)
+  if (!safeJoin(config.screenshotsDirectory, streamName)) throw new Error(`No stream named ${streamName}`)
   const globalConf = await mediaMtxApi(config).configGlobalGet()
   await captureFrame(
     streamName,
@@ -303,10 +294,11 @@ export async function cleanupScreenshots() {
 
   for (const subdirectory of streamDirectories) {
     const dir = path.join(config.screenshotsDirectory, subdirectory)
-    const segments = new Set(segmentFiles(path.join(config.recordingsDirectory, subdirectory)).map(f => path.parse(f).name))
+    const segments = new Set(
+      segmentFiles(path.join(config.recordingsDirectory, subdirectory)).map(f => path.parse(f).name),
+    )
     for (const file of fs.readdirSync(dir).filter(f => !f.startsWith('.'))) {
-      if (file.endsWith('.png') && segments.has(path.parse(file).name))
-        continue
+      if (file.endsWith('.png') && segments.has(path.parse(file).name)) continue
       const filePath = path.join(dir, file)
       const fileStat = fs.statSync(filePath)
       if (fileStat.isFile() && fileStat.mtimeMs < twoDaysAgo) {
@@ -318,29 +310,29 @@ export async function cleanupScreenshots() {
 }
 
 export function startJobs() {
-  captureLiveSnapshots().catch((error) => {
+  captureLiveSnapshots().catch(error => {
     logger.error({ err: error }, 'Unable to run captureLiveSnapshots')
   })
   cron.schedule('*/30 * * * * *', () => {
-    captureLiveSnapshots().catch((error) => {
+    captureLiveSnapshots().catch(error => {
       logger.error({ err: error }, 'Unable to run captureLiveSnapshots')
     })
   })
 
-  generateScreenshots().catch((error) => {
+  generateScreenshots().catch(error => {
     logger.error({ err: error }, 'Unable to run generateScreenshots')
   })
   cron.schedule('*/30 * * * *', () => {
-    generateScreenshots().catch((error) => {
+    generateScreenshots().catch(error => {
       logger.error({ err: error }, 'Unable to run generateScreenshots')
     })
   })
 
-  cleanupScreenshots().catch((error) => {
+  cleanupScreenshots().catch(error => {
     logger.error({ err: error }, 'Unable to run cleanupScreenshots')
   })
   cron.schedule('0 0 0 * * *', () => {
-    cleanupScreenshots().catch((error) => {
+    cleanupScreenshots().catch(error => {
       logger.error({ err: error }, 'Unable to run cleanupScreenshots')
     })
   })

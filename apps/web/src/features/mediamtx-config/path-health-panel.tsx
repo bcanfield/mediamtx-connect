@@ -1,7 +1,6 @@
 import type { PathHealth } from '@connect/contract'
 import { useQuery } from '@tanstack/react-query'
 import { useFormatter, useTranslations } from 'use-intl'
-
 import { Badge } from '@/components/ui/badge'
 import { formatBytes, formatUptime } from '@/lib/format'
 import { orpc } from '@/orpc'
@@ -29,16 +28,15 @@ export function PathHealthPanel({ name }: { name: string }) {
     <section className="rounded-panel border">
       <header className="flex items-center justify-between gap-3 border-b px-4 py-2.5">
         <h2 className="text-control font-medium">{t('title')}</h2>
-        {state && (
-          live
-            ? (
-                <span className="flex items-center gap-1.5 font-mono text-meta">
-                  <span aria-hidden className="size-1.5 rounded-full bg-live" />
-                  {t('stateLive')}
-                </span>
-              )
-            : <span className="font-mono text-meta text-mute">{t('stateIdle')}</span>
-        )}
+        {state &&
+          (live ? (
+            <span className="flex items-center gap-1.5 font-mono text-meta">
+              <span aria-hidden className="size-1.5 rounded-full bg-live" />
+              {t('stateLive')}
+            </span>
+          ) : (
+            <span className="font-mono text-meta text-mute">{t('stateIdle')}</span>
+          ))}
       </header>
 
       {/* An unreachable server is its own answer: an idle state here would
@@ -46,9 +44,7 @@ export function PathHealthPanel({ name }: { name: string }) {
       {health.isSuccess && state === null && (
         <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('unreachable')}</p>
       )}
-      {state?.status === 'idle' && (
-        <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('idleLead')}</p>
-      )}
+      {state?.status === 'idle' && <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('idleLead')}</p>}
       {live && <LiveHealth health={live} />}
     </section>
   )
@@ -81,9 +77,7 @@ function LiveHealth({ health }: { health: Extract<PathHealth, { status: 'live' }
             // a key — and MediaMTX's own order is the only identity they have.
             // eslint-disable-next-line react/no-array-index-key
             <Badge key={index} variant="secondary" className="font-mono">
-              {track.resolution
-                ? t('trackDetail', { codec: track.codec, resolution: track.resolution })
-                : track.codec}
+              {track.resolution ? t('trackDetail', { codec: track.codec, resolution: track.resolution }) : track.codec}
             </Badge>
           ))}
         </div>
@@ -99,7 +93,7 @@ function LiveHealth({ health }: { health: Extract<PathHealth, { status: 'live' }
   )
 }
 
-function Stat({ label, value }: { label: string, value: string }) {
+function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-0.5">
       <dt className="text-meta text-muted-foreground">{label}</dt>

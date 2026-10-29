@@ -42,9 +42,9 @@ test.describe('Live playback protocol', () => {
     // The pill repeats what the player told it; this is the media itself.
     // hls.js drives `src`, so a MediaStream here can only have come from
     // the peer connection's ontrack.
-    const trackCount = await card.locator('video').evaluate(
-      video => ((video as HTMLVideoElement).srcObject as MediaStream | null)?.getTracks().length ?? 0,
-    )
+    const trackCount = await card
+      .locator('video')
+      .evaluate(video => ((video as HTMLVideoElement).srcObject as MediaStream | null)?.getTracks().length ?? 0)
     expect(trackCount).toBeGreaterThan(0)
   })
 

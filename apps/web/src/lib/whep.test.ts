@@ -1,5 +1,4 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-
 import { closeWhepSession, gatherCandidates, negotiateWhep, toIceServers, waitForConnected } from './whep'
 
 // Enough of RTCPeerConnection for the negotiation to run in node. Only the
@@ -10,19 +9,18 @@ function fakePc(overrides: Partial<Record<string, unknown>> = {}) {
     iceGatheringState: 'new',
     connectionState: 'new',
     localDescription: { sdp: 'offer-sdp-with-candidates' },
-    remoteDescription: null as { type: string, sdp: string } | null,
+    remoteDescription: null as { type: string; sdp: string } | null,
     closed: false,
     createOffer: vi.fn(async () => ({ type: 'offer', sdp: 'offer-sdp' })),
     setLocalDescription: vi.fn(async () => {}),
-    setRemoteDescription: vi.fn(async (desc: { type: string, sdp: string }) => {
+    setRemoteDescription: vi.fn(async (desc: { type: string; sdp: string }) => {
       pc.remoteDescription = desc
     }),
     close: vi.fn(() => {
       pc.closed = true
     }),
     addEventListener: (event: string, fn: () => void) => {
-      if (!listeners.has(event))
-        listeners.set(event, new Set())
+      if (!listeners.has(event)) listeners.set(event, new Set())
       listeners.get(event)!.add(fn)
     },
     removeEventListener: (event: string, fn: () => void) => {
@@ -48,9 +46,7 @@ afterEach(() => {
 
 describe('toIceServers', () => {
   it('maps MediaMTX webrtcICEServers2 entries onto RTCIceServer', () => {
-    expect(toIceServers([{ url: 'stun:stun.l.google.com:19302' }])).toEqual([
-      { urls: 'stun:stun.l.google.com:19302' },
-    ])
+    expect(toIceServers([{ url: 'stun:stun.l.google.com:19302' }])).toEqual([{ urls: 'stun:stun.l.google.com:19302' }])
   })
 
   it('carries credentials through for TURN entries', () => {
@@ -114,9 +110,7 @@ describe('negotiateWhep', () => {
 
   it('resolves a relative Location against the whep url so teardown can find the session', async () => {
     const pc = fakePc({ iceGatheringState: 'complete' })
-    const fetchImpl = vi.fn(async () =>
-      sdpResponse('answer-sdp', { headers: { Location: '/front/whep/abc123' } }),
-    )
+    const fetchImpl = vi.fn(async () => sdpResponse('answer-sdp', { headers: { Location: '/front/whep/abc123' } }))
 
     const resource = await negotiateWhep(pc, 'http://cam.lan:8889/front/whep', fetchImpl as unknown as typeof fetch)
 

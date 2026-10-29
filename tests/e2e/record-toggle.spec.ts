@@ -25,8 +25,7 @@ test.describe('Stream card record toggle', () => {
   let materialized = false
 
   test.afterEach(async ({ request }) => {
-    if (!materialized)
-      return
+    if (!materialized) return
     await request.delete(`${API}/config/paths/delete/${STREAM}`)
     materialized = false
   })

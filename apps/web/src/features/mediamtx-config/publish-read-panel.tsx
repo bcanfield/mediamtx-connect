@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import { CopyIcon, ExternalLinkIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
-
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { publishEndpoints, publishHost, readEndpoints } from '@/lib/publish'
@@ -12,13 +11,12 @@ import { orpc } from '@/orpc'
 // "What URL do I put in OBS?" answered from the server's own listen addresses.
 // `source` is the path's effective source: anything but `publisher` (MediaMTX's
 // default when unset) means MediaMTX pulls the stream and refuses publishers.
-export function PublishReadPanel({ name, source }: { name: string, source: string | undefined }) {
+export function PublishReadPanel({ name, source }: { name: string; source: string | undefined }) {
   const t = useTranslations('Config.pathConfig.publishRead')
   const appConfig = useQuery(orpc.config.app.get.queryOptions())
   const global = useQuery(orpc.config.mediamtx.getGlobal.queryOptions())
 
-  if (global.isPending || appConfig.isPending)
-    return null
+  if (global.isPending || appConfig.isPending) return null
 
   const pulled = source !== undefined && source !== 'publisher'
   // Never `mediaMtxUrl`: that's where the API reaches MediaMTX, not the browser.
@@ -31,35 +29,38 @@ export function PublishReadPanel({ name, source }: { name: string, source: strin
       </header>
       {/* A failed read is as unknown as a null one, and default ports here
           would look right while pointing at the wrong place. */}
-      {global.isError || global.data === null
-        ? <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('readFailed')}</p>
-        : (
-            <Tabs defaultValue="publish" className="px-4 py-3.5">
-              <TabsList>
-                <TabsTrigger value="publish">{t('publishTab')}</TabsTrigger>
-                <TabsTrigger value="read">{t('readTab')}</TabsTrigger>
-              </TabsList>
-              <TabsContent value="publish">
-                {pulled
-                  ? <p className="py-2 text-meta text-muted-foreground">{t('pullSource')}</p>
-                  : <EndpointList endpoints={publishEndpoints(host, name, global.data)} />}
-              </TabsContent>
-              <TabsContent value="read">
-                <EndpointList endpoints={readEndpoints(host, name, global.data)} />
-              </TabsContent>
-            </Tabs>
-          )}
+      {global.isError || global.data === null ? (
+        <p className="px-4 py-3.5 text-meta text-muted-foreground">{t('readFailed')}</p>
+      ) : (
+        <Tabs defaultValue="publish" className="px-4 py-3.5">
+          <TabsList>
+            <TabsTrigger value="publish">{t('publishTab')}</TabsTrigger>
+            <TabsTrigger value="read">{t('readTab')}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="publish">
+            {pulled ? (
+              <p className="py-2 text-meta text-muted-foreground">{t('pullSource')}</p>
+            ) : (
+              <EndpointList endpoints={publishEndpoints(host, name, global.data)} />
+            )}
+          </TabsContent>
+          <TabsContent value="read">
+            <EndpointList endpoints={readEndpoints(host, name, global.data)} />
+          </TabsContent>
+        </Tabs>
+      )}
     </section>
   )
 }
 
 function EndpointList({ endpoints }: { endpoints: Endpoint[] }) {
   const t = useTranslations('Config.pathConfig.publishRead')
-  if (endpoints.length === 0)
-    return <p className="py-2 text-meta text-muted-foreground">{t('noProtocols')}</p>
+  if (endpoints.length === 0) return <p className="py-2 text-meta text-muted-foreground">{t('noProtocols')}</p>
   return (
     <div className="flex flex-col divide-y">
-      {endpoints.map(endpoint => <EndpointBlock key={endpoint.protocol} endpoint={endpoint} />)}
+      {endpoints.map(endpoint => (
+        <EndpointBlock key={endpoint.protocol} endpoint={endpoint} />
+      ))}
     </div>
   )
 }
@@ -72,7 +73,9 @@ function EndpointBlock({ endpoint }: { endpoint: Endpoint }) {
     <section className="flex flex-col gap-2 py-3">
       <h3 className="text-meta font-medium">{protocol}</h3>
       <div className="flex items-center gap-2">
-        <code className="min-w-0 flex-1 truncate rounded-md bg-muted px-2 py-1 font-mono text-meta">{endpoint.url}</code>
+        <code className="min-w-0 flex-1 truncate rounded-md bg-muted px-2 py-1 font-mono text-meta">
+          {endpoint.url}
+        </code>
         <CopyButton text={endpoint.url} label={t('copyUrl', { protocol })} />
       </div>
       {endpoint.snippets.map(snippet => (
@@ -114,15 +117,14 @@ function EndpointBlock({ endpoint }: { endpoint: Endpoint }) {
   )
 }
 
-function CopyButton({ text, label }: { text: string, label: string }) {
+function CopyButton({ text, label }: { text: string; label: string }) {
   const t = useTranslations('Config.pathConfig.publishRead.toasts')
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(text)
       toast.success(t('copied'))
-    }
-    catch {
+    } catch {
       toast.error(t('copyFailedTitle'), { description: t('copyFailedDescription') })
     }
   }

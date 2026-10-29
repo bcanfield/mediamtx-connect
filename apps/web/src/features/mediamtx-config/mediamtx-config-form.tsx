@@ -8,13 +8,11 @@ import { useEffect, useMemo } from 'react'
 import { useForm, useFormState, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useTranslations } from 'use-intl'
-
 import { SaveBar } from '@/components/save-bar'
 import { Form, FormField } from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 import { useScrollSpy } from '@/hooks/use-scroll-spy'
 import { cn } from '@/lib/utils'
-
 import { EnumFieldRow, InheritanceMarker, ListFieldRow, SwitchFieldRow, TextFieldRow } from './config-field-row'
 import { ForwardDestsRows } from './forward-dests-rows'
 import { IceServersRows } from './ice-servers-rows'
@@ -61,17 +59,13 @@ export function MediaMTXConfigForm<T extends FieldValues>({
       await onSave(values, changed)
       form.reset(values)
       toast.success(t('toasts.success'))
-    }
-    catch (error) {
+    } catch (error) {
       // MediaMTX's own words for a write it turned down, forwarded as a
       // BAD_REQUEST. It names the key it disliked, so the message goes on that
       // field too — a toast alone leaves the operator hunting for it.
-      const reason = error instanceof ORPCError && error.code === 'BAD_REQUEST'
-        ? error.message
-        : null
+      const reason = error instanceof ORPCError && error.code === 'BAD_REQUEST' ? error.message : null
       const field = reason && offendingField(reason, Object.keys(changed))
-      if (field)
-        form.setError(field as FieldPath<T>, { message: reason })
+      if (field) form.setError(field as FieldPath<T>, { message: reason })
       toast.error(t('toasts.errorTitle'), {
         description: reason ?? t('toasts.errorDescription'),
       })
@@ -83,8 +77,7 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   // Jump straight there rather than smooth-scrolling the whole page past every
   // section above it. Sections are rendered by the time this runs.
   useEffect(() => {
-    if (initialSection)
-      document.getElementById(`mtx-${initialSection}`)?.scrollIntoView({ block: 'start' })
+    if (initialSection) document.getElementById(`mtx-${initialSection}`)?.scrollIntoView({ block: 'start' })
   }, [initialSection])
 
   const offById = useOffById(form.control, scope)
@@ -92,9 +85,10 @@ export function MediaMTXConfigForm<T extends FieldValues>({
   const errors = form.formState.errors as Record<string, unknown>
   const dirtyKeys = Object.keys(dirtyFields)
   const errorCount = Object.keys(errors).length
-  const summary = errorCount > 0
-    ? `${tSaveBar('unsaved', { count: dirtyKeys.length })} · ${tSaveBar('needsAttention', { count: errorCount })}`
-    : tSaveBar('unsaved', { count: dirtyKeys.length })
+  const summary =
+    errorCount > 0
+      ? `${tSaveBar('unsaved', { count: dirtyKeys.length })} · ${tSaveBar('needsAttention', { count: errorCount })}`
+      : tSaveBar('unsaved', { count: dirtyKeys.length })
 
   return (
     <Form {...form}>
@@ -134,14 +128,9 @@ export function MediaMTXConfigForm<T extends FieldValues>({
 
 // Watches only the sections' enable switches — never the whole form, which
 // would re-render every section on each keystroke.
-function useOffById<T extends FieldValues>(
-  control: Control<T>,
-  scope: ConfigScope<T>,
-): Record<string, boolean> {
+function useOffById<T extends FieldValues>(control: Control<T>, scope: ConfigScope<T>): Record<string, boolean> {
   const enableFields = useMemo(
-    () => scope.sections
-      .map(s => s.enableField)
-      .filter((name): name is FieldPath<T> => Boolean(name)),
+    () => scope.sections.map(s => s.enableField).filter((name): name is FieldPath<T> => Boolean(name)),
     [scope],
   )
   const values = useWatch({ control, name: enableFields })
@@ -227,9 +216,7 @@ function SectionRail<T extends FieldValues>({
             )}
           >
             {t(`sectionTitles.${section.id}`)}
-            {errCount > 0
-              ? <RailErrorBadge count={errCount} />
-              : off && <RailOffLabel />}
+            {errCount > 0 ? <RailErrorBadge count={errCount} /> : off && <RailOffLabel />}
           </button>
         ))}
       </nav>
@@ -247,11 +234,7 @@ function RailErrorBadge({ count }: { count: number }) {
 
 function RailOffLabel() {
   const t = useTranslations('Config.mediamtxForm')
-  return (
-    <span className="font-mono text-micro uppercase tracking-[0.06em] text-faint">
-      {t('off')}
-    </span>
-  )
+  return <span className="font-mono text-micro uppercase tracking-[0.06em] text-faint">{t('off')}</span>
 }
 
 function ConfigSection<T extends FieldValues>({
@@ -276,56 +259,40 @@ function ConfigSection<T extends FieldValues>({
         )}
       >
         <div className="min-w-0">
-          <h2 className="text-section font-semibold tracking-title">
-            {t(`sectionTitles.${section.id}`)}
-          </h2>
-          <p className="mt-0.5 text-meta text-muted-foreground">
-            {t(`sectionDescriptions.${section.id}`)}
-          </p>
+          <h2 className="text-section font-semibold tracking-title">{t(`sectionTitles.${section.id}`)}</h2>
+          <p className="mt-0.5 text-meta text-muted-foreground">{t(`sectionDescriptions.${section.id}`)}</p>
         </div>
 
         {section.enableField && (
-          <SectionEnableSwitch
-            control={control}
-            section={section}
-            inheritedValues={inheritedValues}
-          />
+          <SectionEnableSwitch control={control} section={section} inheritedValues={inheritedValues} />
         )}
       </header>
 
       {section.warnsOnSave && (
-        <p role="note" className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground">
+        <p
+          role="note"
+          className="mt-3.5 flex items-start gap-2 rounded-panel border border-warning/30 bg-linear-to-b from-warning/[0.06] to-transparent p-3 text-meta text-muted-foreground"
+        >
           <TriangleAlertIcon aria-hidden className="mt-px size-3.5 shrink-0 text-warning" />
           {t(`sectionWarnings.${section.id}`)}
         </p>
       )}
 
-      {isOff
-        ? (
-            <p className="py-3.5 font-mono text-status text-faint">
-              {t('hiddenWhileOff', { count: section.fields.length + (section.hasIceServers ? 1 : 0) })}
-            </p>
-          )
-        : (
-            <div className="flex flex-col">
-              {section.fields.map(field => (
-                <FieldRow
-                  key={field.name}
-                  field={field}
-                  control={control}
-                  inheritedValues={inheritedValues}
-                />
-              ))}
-              {/* webrtcICEServers2 exists only on the global scope. */}
-              {section.hasIceServers && (
-                <IceServersRows control={control as unknown as Control<GlobalConfigFormData>} />
-              )}
-              {/* `forward` exists only on a path's own scope. */}
-              {section.hasForwardDests && (
-                <ForwardDestsRows control={control as unknown as Control<PathConfigFormData>} />
-              )}
-            </div>
-          )}
+      {isOff ? (
+        <p className="py-3.5 font-mono text-status text-faint">
+          {t('hiddenWhileOff', { count: section.fields.length + (section.hasIceServers ? 1 : 0) })}
+        </p>
+      ) : (
+        <div className="flex flex-col">
+          {section.fields.map(field => (
+            <FieldRow key={field.name} field={field} control={control} inheritedValues={inheritedValues} />
+          ))}
+          {/* webrtcICEServers2 exists only on the global scope. */}
+          {section.hasIceServers && <IceServersRows control={control as unknown as Control<GlobalConfigFormData>} />}
+          {/* `forward` exists only on a path's own scope. */}
+          {section.hasForwardDests && <ForwardDestsRows control={control as unknown as Control<PathConfigFormData>} />}
+        </div>
+      )}
     </section>
   )
 }
@@ -346,22 +313,10 @@ function FieldRow<T extends FieldValues>({
       return <ListFieldRow control={control} name={field.name} inheritedValues={inheritedValues} />
     case 'enum':
       return (
-        <EnumFieldRow
-          control={control}
-          name={field.name}
-          options={field.options}
-          inheritedValues={inheritedValues}
-        />
+        <EnumFieldRow control={control} name={field.name} options={field.options} inheritedValues={inheritedValues} />
       )
     default:
-      return (
-        <TextFieldRow
-          control={control}
-          name={field.name}
-          kind={field.kind}
-          inheritedValues={inheritedValues}
-        />
-      )
+      return <TextFieldRow control={control} name={field.name} kind={field.kind} inheritedValues={inheritedValues} />
   }
 }
 
@@ -384,11 +339,7 @@ function SectionEnableSwitch<T extends FieldValues>({
         <span className="flex shrink-0 items-center gap-2.5">
           {/* `record` lives in the header rather than in a row, so it would
               otherwise be the one path key with no inheritance marker. */}
-          <InheritanceMarker
-            inheritedValues={inheritedValues}
-            name={section.enableField!}
-            value={field.value}
-          />
+          <InheritanceMarker inheritedValues={inheritedValues} name={section.enableField!} value={field.value} />
           <span
             className={cn(
               'font-mono text-micro font-medium uppercase tracking-[0.07em]',

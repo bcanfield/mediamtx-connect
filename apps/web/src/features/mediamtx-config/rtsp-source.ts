@@ -11,19 +11,9 @@ export interface RtspSourceParts {
  * asks for. Credentials are percent-encoded: camera passwords routinely contain
  * `@`, `:` and `/`, which would otherwise cut the URL in the wrong place.
  */
-export function composeRtspSource({
-  host,
-  port,
-  streamPath,
-  username,
-  password,
-}: RtspSourceParts): string {
+export function composeRtspSource({ host, port, streamPath, username, password }: RtspSourceParts): string {
   const user = encodeURIComponent(username.trim())
-  const credentials = user
-    ? password
-      ? `${user}:${encodeURIComponent(password)}@`
-      : `${user}@`
-    : ''
+  const credentials = user ? (password ? `${user}:${encodeURIComponent(password)}@` : `${user}@`) : ''
   return `rtsp://${credentials}${host.trim()}:${port}/${streamPath.trim().replace(/^\/+/, '')}`
 }
 

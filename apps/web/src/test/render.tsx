@@ -1,11 +1,6 @@
 import type { ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {
-  createMemoryHistory,
-  createRootRoute,
-  createRouter,
-  RouterProvider,
-} from '@tanstack/react-router'
+import { createMemoryHistory, createRootRoute, createRouter, RouterProvider } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { IntlProvider } from 'use-intl'
@@ -37,10 +32,7 @@ export interface RenderOptions {
   realI18n?: boolean
 }
 
-export async function renderWithProviders(
-  ui: ReactNode,
-  { path = '/', realI18n = false }: RenderOptions = {},
-) {
+export async function renderWithProviders(ui: ReactNode, { path = '/', realI18n = false }: RenderOptions = {}) {
   const queryClient = new QueryClient({
     // A retrying mutation turns an asserted error toast into a 3-attempt wait.
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
@@ -61,18 +53,13 @@ export async function renderWithProviders(
 
   const result = render(
     <QueryClientProvider client={queryClient}>
-      {realI18n
-        ? <I18nProvider>{inner}</I18nProvider>
-        : (
-            <IntlProvider
-              locale="en"
-              messages={messages}
-              timeZone="UTC"
-              now={new Date('2026-07-27T12:00:00Z')}
-            >
-              {inner}
-            </IntlProvider>
-          )}
+      {realI18n ? (
+        <I18nProvider>{inner}</I18nProvider>
+      ) : (
+        <IntlProvider locale="en" messages={messages} timeZone="UTC" now={new Date('2026-07-27T12:00:00Z')}>
+          {inner}
+        </IntlProvider>
+      )}
     </QueryClientProvider>,
   )
 

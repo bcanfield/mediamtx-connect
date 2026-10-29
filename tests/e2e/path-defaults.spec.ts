@@ -13,8 +13,7 @@ test.describe('MediaMTX Path Defaults Page', () => {
   })
 
   test.afterEach(async ({ request }) => {
-    if (touched === null)
-      return
+    if (touched === null) return
     await request.patch(`${PATH_DEFAULTS_API}/patch`, { data: { recordDeleteAfter: touched } })
     touched = null
   })

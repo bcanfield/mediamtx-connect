@@ -43,10 +43,8 @@ function git(...a) {
 }
 
 function changedFiles() {
-  if (explicit.length)
-    return explicit
-  if (since)
-    return git('diff', '--name-only', '--diff-filter=d', `${since}...HEAD`)
+  if (explicit.length) return explicit
+  if (since) return git('diff', '--name-only', '--diff-filter=d', `${since}...HEAD`)
   // Working tree: tracked modifications plus untracked files. A new file that
   // has never been added is exactly the one most likely to have a lint error.
   return [
@@ -87,7 +85,7 @@ process.stdout.write(`check: ${files.length} changed file(s), ${lintable.length}
 // verdict you can act on.
 function run([name, cmd, cmdArgs]) {
   const t0 = Date.now()
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const child = spawn(cmd, cmdArgs, { stdio: ['ignore', 'pipe', 'pipe'] })
     let out = ''
     child.stdout.on('data', d => (out += d))
@@ -102,8 +100,7 @@ function run([name, cmd, cmdArgs]) {
 const results = await Promise.all(steps.map(run))
 
 for (const { name, ok, out, ms } of results) {
-  if (!ok)
-    process.stdout.write(out.endsWith('\n') ? out : `${out}\n`)
+  if (!ok) process.stdout.write(out.endsWith('\n') ? out : `${out}\n`)
   process.stdout.write(`check: ${name} ${ok ? 'ok' : 'FAILED'} (${ms}ms)\n`)
 }
 
