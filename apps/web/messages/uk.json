@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# запис} few {# записи} many {# записів} other {# запису}}",
-      "latest": "останній {time}",
-      "openAria": "Переглянути записи для {name}"
+      "latest": "останній {time}"
     },
     "empty": {
       "noRecordingsTitle": "Записів ще немає",

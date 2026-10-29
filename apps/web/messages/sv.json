@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# inspelning} other {# inspelningar}}",
-      "latest": "senaste {time}",
-      "openAria": "Visa inspelningar för {name}"
+      "latest": "senaste {time}"
     },
     "empty": {
       "noRecordingsTitle": "Inga inspelningar än",

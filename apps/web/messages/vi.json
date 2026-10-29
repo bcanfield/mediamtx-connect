@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# bản ghi}}",
-      "latest": "mới nhất {time}",
-      "openAria": "Xem bản ghi của {name}"
+      "latest": "mới nhất {time}"
     },
     "empty": {
       "noRecordingsTitle": "Chưa có bản ghi nào",
