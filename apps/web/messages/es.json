@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# grabación} other {# grabaciones}}",
-      "latest": "última {time}",
-      "openAria": "Ver grabaciones de {name}"
+      "latest": "última {time}"
     },
     "empty": {
       "noRecordingsTitle": "Aún no hay grabaciones",

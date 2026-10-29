@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# záznam} few {# záznamy} many {# záznamu} other {# záznamů}}",
-      "latest": "poslední {time}",
-      "openAria": "Zobrazit záznamy pro {name}"
+      "latest": "poslední {time}"
     },
     "empty": {
       "noRecordingsTitle": "Zatím žádné záznamy",

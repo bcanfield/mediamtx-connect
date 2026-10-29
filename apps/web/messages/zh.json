@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# 个录像}}",
-      "latest": "最新 {time}",
-      "openAria": "查看 {name} 的录像"
+      "latest": "最新 {time}"
     },
     "empty": {
       "noRecordingsTitle": "暂无录像",

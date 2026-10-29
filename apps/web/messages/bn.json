@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# রেকর্ডিং} other {# রেকর্ডিং}}",
-      "latest": "সাম্প্রতিক {time}",
-      "openAria": "{name}-এর রেকর্ডিং দেখুন"
+      "latest": "সাম্প্রতিক {time}"
     },
     "empty": {
       "noRecordingsTitle": "এখনও কোনো রেকর্ডিং নেই",

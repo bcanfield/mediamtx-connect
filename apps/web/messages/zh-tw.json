@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# 個錄影}}",
-      "latest": "最新 {time}",
-      "openAria": "檢視 {name} 的錄影"
+      "latest": "最新 {time}"
     },
     "empty": {
       "noRecordingsTitle": "尚無錄影",
