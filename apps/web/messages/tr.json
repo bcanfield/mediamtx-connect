@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# kayıt}}",
-      "latest": "en son {time}",
-      "openAria": "{name} için kayıtları görüntüle"
+      "latest": "en son {time}"
     },
     "empty": {
       "noRecordingsTitle": "Henüz kayıt yok",

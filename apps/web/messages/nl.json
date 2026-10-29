@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# opname} other {# opnames}}",
-      "latest": "laatste {time}",
-      "openAria": "Opnames voor {name} bekijken"
+      "latest": "laatste {time}"
     },
     "empty": {
       "noRecordingsTitle": "Nog geen opnames",

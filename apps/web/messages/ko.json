@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {녹화 #개}}",
-      "latest": "최근 {time}",
-      "openAria": "{name}의 녹화 보기"
+      "latest": "최근 {time}"
     },
     "empty": {
       "noRecordingsTitle": "아직 녹화가 없습니다",

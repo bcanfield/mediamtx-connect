@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# 件の録画}}",
-      "latest": "最新 {time}",
-      "openAria": "{name} の録画を表示"
+      "latest": "最新 {time}"
     },
     "empty": {
       "noRecordingsTitle": "録画はまだありません",
