@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# recording} other {# na recording}}",
-      "latest": "pinakabago {time}",
-      "openAria": "Tingnan ang mga recording para sa {name}"
+      "latest": "pinakabago {time}"
     },
     "empty": {
       "noRecordingsTitle": "Wala pang recording",

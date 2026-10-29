@@ -86,7 +86,6 @@ function StreamSummaryCard({ stream }: { stream: RecordingStreamSummary }) {
   return (
     <Link
       href={`/recordings/${stream.name}`}
-      aria-label={t('openAria', { name: stream.name })}
       data-testid="stream-summary-card"
       className={cn(
         mediaCardShell,

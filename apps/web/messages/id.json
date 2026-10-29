@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# rekaman}}",
-      "latest": "terbaru {time}",
-      "openAria": "Lihat rekaman untuk {name}"
+      "latest": "terbaru {time}"
     },
     "empty": {
       "noRecordingsTitle": "Belum ada rekaman",

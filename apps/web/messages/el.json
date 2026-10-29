@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# εγγραφή} other {# εγγραφές}}",
-      "latest": "τελευταία {time}",
-      "openAria": "Προβολή εγγραφών για {name}"
+      "latest": "τελευταία {time}"
     },
     "empty": {
       "noRecordingsTitle": "Καμία εγγραφή ακόμη",

@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, one {# felvétel} other {# felvétel}}",
-      "latest": "legutóbbi {time}",
-      "openAria": "Felvételek megtekintése ehhez: {name}"
+      "latest": "legutóbbi {time}"
     },
     "empty": {
       "noRecordingsTitle": "Még nincsenek felvételek",

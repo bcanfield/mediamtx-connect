@@ -126,8 +126,7 @@
     },
     "card": {
       "recordingsChip": "{count, plural, other {# การบันทึก}}",
-      "latest": "ล่าสุด {time}",
-      "openAria": "ดูการบันทึกของ {name}"
+      "latest": "ล่าสุด {time}"
     },
     "empty": {
       "noRecordingsTitle": "ยังไม่มีการบันทึก",
