@@ -1,3 +1,10 @@
+## [2.6.8](https://github.com/bcanfield/mediamtx-connect/compare/2.6.7...2.6.8) (2026-10-30)
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#381](https://github.com/bcanfield/mediamtx-connect/issues/381)) ([91b6558](https://github.com/bcanfield/mediamtx-connect/commit/91b65589c79da008c055e0a2f5a3a272c4a93a34)), closes [#380](https://github.com/bcanfield/mediamtx-connect/issues/380) [#380](https://github.com/bcanfield/mediamtx-connect/issues/380) [#279](https://github.com/bcanfield/mediamtx-connect/issues/279)
+* **deps:** update pnpm to v11.28.9 ([#380](https://github.com/bcanfield/mediamtx-connect/issues/380)) ([b3c3479](https://github.com/bcanfield/mediamtx-connect/commit/b3c347983a93c42effad74d5bd7f731d9e732275))
+
 ## [2.6.7](https://github.com/bcanfield/mediamtx-connect/compare/2.6.6...2.6.7) (2026-10-19)
 
 ### Bug Fixes
