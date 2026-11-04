@@ -107,7 +107,7 @@ catalogs:
       version: 1.7.4
     hono:
       specifier: ^4.12.30
-      version: 4.13.14
+      version: 4.13.16
     lucide-react:
       specifier: ^1.0.0
       version: 1.66.0
@@ -250,7 +250,7 @@ importers:
         version: link:../../packages/contract
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.1.5(hono@4.13.14)
+        version: 2.1.5(hono@4.13.16)
       '@orpc/contract':
         specifier: 'catalog:'
         version: 1.16.1
@@ -262,7 +262,7 @@ importers:
         version: 0.13.11(typescript@7.0.2)(zod@4.6.7)
       hono:
         specifier: 'catalog:'
-        version: 4.13.14
+        version: 4.13.16
       node-cron:
         specifier: 'catalog:'
         version: 4.6.0
@@ -3462,8 +3462,8 @@ packages:
   hls.js@1.7.4:
     resolution: {integrity: sha512-3GlxGdPvT2YHvQYOt+yOzT/DEior/qJVNIylHA77kgeoBTdQQqi70GwefNEUmHQeNGyjC8U62+bruqW/Tpm+tg==}
 
-  hono@4.13.14:
-    resolution: {integrity: sha512-yhRLQ21U6qa9Hsu2N7Qcbh8tE+WKEcoErjIo56LeSGiGXGp9sA7UpE86Ui9uexb61KakiGwuHMn2QdV7w6i6kQ==}
+  hono@4.13.16:
+    resolution: {integrity: sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A==}
     engines: {node: '>=16.9.0'}
 
   hook-std@4.0.0:
@@ -5308,9 +5308,9 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@hono/node-server@2.1.5(hono@4.13.14)':
+  '@hono/node-server@2.1.5(hono@4.13.16)':
     dependencies:
-      hono: 4.13.14
+      hono: 4.13.16
 
   '@hookform/resolvers@5.9.2(@sinclair/typebox@0.27.12)(@standard-schema/spec@1.1.0)(react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)':
     dependencies:
@@ -7848,7 +7848,7 @@ snapshots:
 
   hls.js@1.7.4: {}
 
-  hono@4.13.14: {}
+  hono@4.13.16: {}
 
   hook-std@4.0.0: {}
 
