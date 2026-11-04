@@ -1,3 +1,10 @@
+## [2.6.10](https://github.com/bcanfield/mediamtx-connect/compare/2.6.9...2.6.10) (2026-11-04)
+
+### Bug Fixes
+
+* **deps:** update dependency hono to v4.13.16 ([#385](https://github.com/bcanfield/mediamtx-connect/issues/385)) ([0d026c4](https://github.com/bcanfield/mediamtx-connect/commit/0d026c4abd152d209b792acffcbc5603b85fba06))
+* **deps:** update pnpm to v11.28.10 ([#384](https://github.com/bcanfield/mediamtx-connect/issues/384)) ([76485f9](https://github.com/bcanfield/mediamtx-connect/commit/76485f9fc8d2f478749bdec81e5e4eed7a94c600))
+
 ## [2.6.9](https://github.com/bcanfield/mediamtx-connect/compare/2.6.8...2.6.9) (2026-11-02)
 
 ### Bug Fixes
