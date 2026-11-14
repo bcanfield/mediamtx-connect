@@ -14,7 +14,7 @@ catalogs:
       version: 0.8.1
     '@hono/node-server':
       specifier: ^2.0.9
-      version: 2.1.6
+      version: 2.1.8
     '@hookform/resolvers':
       specifier: ^5.2.2
       version: 5.9.2
@@ -107,7 +107,7 @@ catalogs:
       version: 1.7.4
     hono:
       specifier: ^4.12.30
-      version: 4.13.17
+      version: 4.13.18
     lucide-react:
       specifier: ^1.0.0
       version: 1.72.0
@@ -143,7 +143,7 @@ catalogs:
       version: 19.3.1
     react-hook-form:
       specifier: ^7.71.1
-      version: 7.91.0
+      version: 7.92.0
     semantic-release:
       specifier: ^25.0.2
       version: 25.0.9
@@ -250,7 +250,7 @@ importers:
         version: link:../../packages/contract
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.1.6(hono@4.13.17)
+        version: 2.1.8(hono@4.13.18)
       '@orpc/contract':
         specifier: 'catalog:'
         version: 1.16.2
@@ -262,7 +262,7 @@ importers:
         version: 0.13.11(typescript@7.0.2)(zod@4.6.7)
       hono:
         specifier: 'catalog:'
-        version: 4.13.17
+        version: 4.13.18
       node-cron:
         specifier: 'catalog:'
         version: 4.6.0
@@ -299,7 +299,7 @@ importers:
         version: link:../../packages/contract
       '@hookform/resolvers':
         specifier: 'catalog:'
-        version: 5.9.2(@sinclair/typebox@0.27.12)(@standard-schema/spec@1.1.0)(react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)
+        version: 5.9.2(@sinclair/typebox@0.27.12)(@standard-schema/spec@1.1.0)(react-hook-form@7.92.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)
       '@orpc/client':
         specifier: 'catalog:'
         version: 1.16.2
@@ -344,7 +344,7 @@ importers:
         version: 19.3.1(react@19.3.1)
       react-hook-form:
         specifier: 'catalog:'
-        version: 7.91.0(@types/react@19.3.0)(react@19.3.1)
+        version: 7.92.0(@types/react@19.3.0)(react@19.3.1)
       sonner:
         specifier: 'catalog:'
         version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -700,8 +700,8 @@ packages:
   '@formatjs/icu-skeleton-parser@2.1.11':
     resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
-  '@hono/node-server@2.1.6':
-    resolution: {integrity: sha512-p/KH9MnfNcsm3sR6x4lNgm5j+QN4Et8srKredl9DZfXiyZ1UQ3aQ2YVpFLbqktYN5JI+DB+VZFKM2PqE5hLKjQ==}
+  '@hono/node-server@2.1.8':
+    resolution: {integrity: sha512-jdf7FHh6A1lzjpHHQUgxsg2GeER2vMetnAOfeActzcoli6jamlK+NAwL6Dsr5Fl3BS3tYUQzCdtZjU8Qxv7bEA==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4 || ^5.0.0-0
@@ -3549,8 +3549,8 @@ packages:
   hls.js@1.7.4:
     resolution: {integrity: sha512-3GlxGdPvT2YHvQYOt+yOzT/DEior/qJVNIylHA77kgeoBTdQQqi70GwefNEUmHQeNGyjC8U62+bruqW/Tpm+tg==}
 
-  hono@4.13.17:
-    resolution: {integrity: sha512-vZIcbkvjOR5hHRWERbGkr8fGfF0GGM1ooYkuH448iO3b2AdVEr3AXZSw4Z3Kn+1L5z0CVoVeyV29VGYmFh05kQ==}
+  hono@4.13.18:
+    resolution: {integrity: sha512-H9q/E1XizaWstJxUW881dmLxEj+t/TrGGnyxINkm4+sK0qUwsMtFdo2BWI9Vs3cIS19MU6b6iCijoUoEf4f3DA==}
     engines: {node: '>=16.9.0'}
 
   hook-std@4.0.0:
@@ -4343,8 +4343,8 @@ packages:
     peerDependencies:
       react: ^19.3.1
 
-  react-hook-form@7.91.0:
-    resolution: {integrity: sha512-5BEBUnCBwa28AFXYTYmOaB/+CSpJ/+CWVASHEvIGUzFdHyUiPHeRhG7r5hOZ8nZi0yP7pbHdFNXO/p31EKTJFQ==}
+  react-hook-form@7.92.0:
+    resolution: {integrity: sha512-O5ILyY5fYHN7N13Pfxpe55KboyNFsJdM03BHpshQkClJd8raugiAUGY7VjifITrfhVxyx81ko25azXCoayhf1w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@types/react': '*'
@@ -5334,14 +5334,14 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@hono/node-server@2.1.6(hono@4.13.17)':
+  '@hono/node-server@2.1.8(hono@4.13.18)':
     dependencies:
-      hono: 4.13.17
+      hono: 4.13.18
 
-  '@hookform/resolvers@5.9.2(@sinclair/typebox@0.27.12)(@standard-schema/spec@1.1.0)(react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)':
+  '@hookform/resolvers@5.9.2(@sinclair/typebox@0.27.12)(@standard-schema/spec@1.1.0)(react-hook-form@7.92.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)':
     dependencies:
       '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.91.0(@types/react@19.3.0)(react@19.3.1)
+      react-hook-form: 7.92.0(@types/react@19.3.0)(react@19.3.1)
     optionalDependencies:
       '@sinclair/typebox': 0.27.12
       '@standard-schema/spec': 1.1.0
@@ -7924,7 +7924,7 @@ snapshots:
 
   hls.js@1.7.4: {}
 
-  hono@4.13.17: {}
+  hono@4.13.18: {}
 
   hook-std@4.0.0: {}
 
@@ -8621,7 +8621,7 @@ snapshots:
       react: 19.3.1
       scheduler: 0.28.0
 
-  react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.1):
+  react-hook-form@7.92.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
     optionalDependencies:
