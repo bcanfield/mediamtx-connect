@@ -58,7 +58,7 @@ catalog:
   lucide-react: ^1.0.0
   msw: ^2.15.0
   node-cron: ^4.2.1
-  oxfmt: ^0.75.0
+  oxfmt: ^0.78.0
   oxlint: ^1.90.0
   oxlint-plugin-eslint: ^1.90.0
   oxlint-tsgolint: ^7.0.2005
