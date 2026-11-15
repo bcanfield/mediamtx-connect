@@ -1,3 +1,10 @@
+## [2.6.16](https://github.com/bcanfield/mediamtx-connect/compare/2.6.15...2.6.16) (2026-11-15)
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#392](https://github.com/bcanfield/mediamtx-connect/issues/392)) ([b162e71](https://github.com/bcanfield/mediamtx-connect/commit/b162e71bc1520b45fcd9138be30e6c07773e1c90))
+* **deps:** update dependency turbo to v2.11.11 ([#393](https://github.com/bcanfield/mediamtx-connect/issues/393)) ([5f5111c](https://github.com/bcanfield/mediamtx-connect/commit/5f5111ca320694d00bfe2dedfee22ea6e9d1551b))
+
 ## [2.6.15](https://github.com/bcanfield/mediamtx-connect/compare/2.6.14...2.6.15) (2026-11-14)
 
 ### Bug Fixes
